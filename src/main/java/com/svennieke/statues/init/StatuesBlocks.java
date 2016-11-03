@@ -1,5 +1,6 @@
 package com.svennieke.statues.init;
 
+import com.svennieke.statues.blocks.BlockBlaze_Statue;
 import com.svennieke.statues.blocks.BlockSlime_Statue;
 
 import net.minecraft.block.Block;
@@ -12,15 +13,18 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class StatuesBlocks {
 	
 	public static Block slime_statue;
+	public static Block blaze_statue;
 	
 	public static void init()
 	{
 		slime_statue = new BlockSlime_Statue();
+		blaze_statue = new BlockBlaze_Statue();
 	}
 	
 	public static void register()
 	{
 		registerBlock(slime_statue);
+		registerBlock(blaze_statue);
 	}
 	
 	public static void registerBlock(Block block) 
@@ -38,6 +42,7 @@ public class StatuesBlocks {
 	public static void registerRenders()
 	{
 		registerRender(slime_statue);
+		registerRender(blaze_statue);
 	}
 	
 	public static void registerRender(Block block)
