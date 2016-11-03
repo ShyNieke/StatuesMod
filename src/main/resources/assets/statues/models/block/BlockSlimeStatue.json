@@ -1,0 +1,89 @@
+{
+	"__comment": "Designed by Svennieke with Cubik Studio - https://cubik.studio",
+	"textures": {
+		"particle": "blocks/slime",
+		"base": "blocks/quartz_block_bottom",
+		"Slime": "blocks/slime",
+		"mouth": "blocks/coal_block",
+		"eye": "blocks/hardened_clay_stained_green"
+	},
+	"elements": [
+		{
+			"__comment": "Cube1",
+			"from": [ 2.999849, 0.000779474, 2.9998 ],
+			"to": [ 12.99985, 1.00078, 12.9998 ],
+			"faces": {
+				"down": { "uv": [ 3, 3, 13, 13 ], "texture": "#base", "cullface": "down" },
+				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#base" },
+				"north": { "uv": [ 3, 15, 13, 16 ], "texture": "#base" },
+				"south": { "uv": [ 3, 15, 13, 16 ], "texture": "#base" },
+				"west": { "uv": [ 3, 15, 13, 16 ], "texture": "#base" },
+				"east": { "uv": [ 3, 15, 13, 16 ], "texture": "#base" }
+			}
+		},
+		{
+			"__comment": "Cube2",
+			"from": [ 4.000268, 0.9999743, 4.000694 ],
+			"to": [ 12.00027, 8.999974, 12.00069 ],
+			"faces": {
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" }
+			}
+		},
+		{
+			"__comment": "Cube7",
+			"from": [ 5.999231, 2.999307, 6.000392 ],
+			"to": [ 9.999231, 6.999307, 10.00039 ],
+			"faces": {
+				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#Slime" }
+			}
+		},
+		{
+			"__comment": "Cube7",
+			"from": [ 5.500491, 6.000123, 3.500643 ],
+			"to": [ 7.000491, 7.500123, 4.000643 ],
+			"faces": {
+				"down": { "uv": [ 5.5, 12, 7, 12.5 ], "texture": "#eye" },
+				"up": { "uv": [ 5.5, 3.5, 7, 4 ], "texture": "#eye" },
+				"north": { "uv": [ 9, 8.5, 10.5, 10 ], "texture": "#eye" },
+				"south": { "uv": [ 5.5, 8.5, 7, 10 ], "texture": "#eye" },
+				"west": { "uv": [ 3.5, 8.5, 4, 10 ], "texture": "#eye" },
+				"east": { "uv": [ 12, 8.5, 12.5, 10 ], "texture": "#eye" }
+			}
+		},
+		{
+			"__comment": "Cube8",
+			"from": [ 9.000516, 5.999481, 3.500337 ],
+			"to": [ 10.50052, 7.499481, 4.000338 ],
+			"faces": {
+				"down": { "uv": [ 9, 12, 10.5, 12.5 ], "texture": "#eye" },
+				"up": { "uv": [ 9, 3.5, 10.5, 4 ], "texture": "#eye" },
+				"north": { "uv": [ 5.5, 8.5, 7, 10 ], "texture": "#eye" },
+				"south": { "uv": [ 9, 8.5, 10.5, 10 ], "texture": "#eye" },
+				"west": { "uv": [ 3.5, 8.5, 4, 10 ], "texture": "#eye" },
+				"east": { "uv": [ 12, 8.5, 12.5, 10 ], "texture": "#eye" }
+			}
+		},
+		{
+			"__comment": "Cube9",
+			"from": [ 7.000754, 2.999323, 3.49998 ],
+			"to": [ 8.000753, 3.999323, 3.99998 ],
+			"faces": {
+				"down": { "uv": [ 7, 12, 8, 12.5 ], "texture": "#mouth" },
+				"up": { "uv": [ 7, 3.5, 8, 4 ], "texture": "#mouth" },
+				"north": { "uv": [ 8, 12, 9, 13 ], "texture": "#mouth" },
+				"south": { "uv": [ 7, 12, 8, 13 ], "texture": "#mouth" },
+				"west": { "uv": [ 3.5, 12, 4, 13 ], "texture": "#mouth" },
+				"east": { "uv": [ 12, 12, 12.5, 13 ], "texture": "#mouth" }
+			}
+		}
+	]
+}
