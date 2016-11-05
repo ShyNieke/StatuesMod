@@ -37,6 +37,7 @@ public class BlockSlime_Statue extends BaseTranslucent{
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		playerIn.playSound(SoundEvents.ENTITY_SLIME_SQUISH, 1F, 1F);
+		
 		//playerIn.dropItem(Items.SLIME_BALL, 1);
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}

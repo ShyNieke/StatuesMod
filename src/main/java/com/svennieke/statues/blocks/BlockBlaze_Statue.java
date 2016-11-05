@@ -40,13 +40,7 @@ public class BlockBlaze_Statue extends BaseNormal{
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		playerIn.playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, 1F, 1F);
 		
-		playerIn.dropItem(new ItemStack(Items.BLAZE_ROD, 1), true);
-		try {
-    	    Thread.sleep(100);
-    	} catch(InterruptedException ex) {
-    	    Thread.currentThread().interrupt();
-    	}
-
+		//playerIn.dropItem(new ItemStack(Items.BLAZE_ROD, 1), true);
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	

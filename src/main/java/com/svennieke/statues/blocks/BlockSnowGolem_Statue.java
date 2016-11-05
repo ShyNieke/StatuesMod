@@ -38,9 +38,10 @@ public class BlockSnowGolem_Statue extends BaseCutout{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		playerIn.dropItem(Items.SNOWBALL, 1);
-		//playerIn.dropItem(Blocks.PUMPKIN, 1);
 		playerIn.playSound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, 1F, 1F);
+		
+		//playerIn.dropItem(Items.SNOWBALL, 1);
+		//playerIn.dropItem(Blocks.PUMPKIN, 1);
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
