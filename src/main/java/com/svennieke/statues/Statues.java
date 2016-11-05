@@ -1,10 +1,11 @@
 package com.svennieke.statues;
 
 import com.svennieke.statues.init.StatuesBlocks;
+import com.svennieke.statues.init.StatuesConfigGen;
 import com.svennieke.statues.proxy.CommonProxy;
 
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -25,6 +26,9 @@ public class Statues {
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event)
 	{
+		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
+		StatuesConfigGen.configOptions(cfg);
+		
 		StatuesBlocks.init();
 		StatuesBlocks.register();
 		
