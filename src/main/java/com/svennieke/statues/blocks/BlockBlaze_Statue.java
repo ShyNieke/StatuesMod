@@ -38,8 +38,15 @@ public class BlockBlaze_Statue extends BaseNormal{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		playerIn.dropItem(Items.BLAZE_ROD, 1);
 		playerIn.playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, 1F, 1F);
+		
+		playerIn.dropItem(new ItemStack(Items.BLAZE_ROD, 1), true);
+		try {
+    	    Thread.sleep(100);
+    	} catch(InterruptedException ex) {
+    	    Thread.currentThread().interrupt();
+    	}
+
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
