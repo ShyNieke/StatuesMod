@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -43,9 +44,7 @@ public class BlockSnowGolem_Statue extends BaseCutout{
 		cooldown = Math.random();
 		if (cooldown < 0.15) cooldown = StatueBehavior(this, playerIn);
 			
-			
 		//playerIn.playSound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, 1F, 1F);
-		
 		//playerIn.dropItem(Items.SNOWBALL, 1);
 		//playerIn.dropItem(Blocks.PUMPKIN, 1);
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
@@ -53,7 +52,12 @@ public class BlockSnowGolem_Statue extends BaseCutout{
 	
 	public int StatueBehavior(BlockSnowGolem_Statue statue, EntityPlayer playerIn) {
 		playerIn.playSound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, 1F, 1F);
+		if (cooldown < 0.01){
+			playerIn.dropItem(new ItemStack(Blocks.PUMPKIN, 1), true);
+		}
+		else
 		playerIn.dropItem(new ItemStack(Items.SNOWBALL, 1), true);
+		
 		return 0;
 }
 	

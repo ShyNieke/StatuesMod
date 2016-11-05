@@ -25,6 +25,9 @@ public class BlockBlaze_Statue extends BaseNormal{
 
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 3, 0, 0.0625 * 3, 0.0625 * 13, 0.0625 * 11, 0.0625 * 13);
 	
+	private final String TAG_COOLDOWN = "cooldown";
+	public static double cooldown;
+	
 	public BlockBlaze_Statue() {
 		super(Material.TNT);
 		setUnlocalizedName(Reference.StatuesBlocks.BLAZESTATUE.getUnlocalisedName());
@@ -38,11 +41,20 @@ public class BlockBlaze_Statue extends BaseNormal{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		playerIn.playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, 1F, 1F);
+		cooldown = Math.random();
+		if (cooldown < 0.15) cooldown = StatueBehavior(this, playerIn);
 		
+		//playerIn.playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, 1F, 1F);
 		//playerIn.dropItem(new ItemStack(Items.BLAZE_ROD, 1), true);
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
+	
+	public int StatueBehavior(BlockBlaze_Statue blockBlaze_Statue, EntityPlayer playerIn) {
+		playerIn.playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, 1F, 1F);
+		playerIn.dropItem(new ItemStack(Items.BLAZE_ROD, 1), true);
+		
+		return 0;
+}
 	
 	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)

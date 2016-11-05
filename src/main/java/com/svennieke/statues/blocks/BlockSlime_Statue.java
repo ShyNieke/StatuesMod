@@ -11,6 +11,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -24,6 +26,9 @@ public class BlockSlime_Statue extends BaseTranslucent{
 	//																		X1, Y1,Z1,         X2,Y2,Z2
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 3, 0, 0.0625 * 3, 0.0625 * 13, 0.0625 * 10, 0.0625 * 13);
 	
+	private final String TAG_COOLDOWN = "cooldown";
+	public static double cooldown;
+	
 	public BlockSlime_Statue() {
 		super(Material.TNT);
 		setUnlocalizedName(Reference.StatuesBlocks.SLIMESTATUE.getUnlocalisedName());
@@ -36,12 +41,20 @@ public class BlockSlime_Statue extends BaseTranslucent{
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		playerIn.playSound(SoundEvents.ENTITY_SLIME_SQUISH, 1F, 1F);
+		cooldown = Math.random();
+		if (cooldown < 0.15) cooldown = StatueBehavior(this, playerIn);
 		
+		//playerIn.playSound(SoundEvents.ENTITY_SLIME_SQUISH, 1F, 1F);
 		//playerIn.dropItem(Items.SLIME_BALL, 1);
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
     
+	public int StatueBehavior(BlockSlime_Statue statue, EntityPlayer playerIn) {
+		playerIn.playSound(SoundEvents.ENTITY_SLIME_SQUISH, 1F, 1F);
+		playerIn.dropItem(new ItemStack(Items.SLIME_BALL, 1), true);
+		
+		return 0;
+}
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
