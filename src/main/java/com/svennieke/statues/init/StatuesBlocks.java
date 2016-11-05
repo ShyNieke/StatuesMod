@@ -2,6 +2,7 @@ package com.svennieke.statues.init;
 
 import com.svennieke.statues.blocks.BlockBlaze_Statue;
 import com.svennieke.statues.blocks.BlockSlime_Statue;
+import com.svennieke.statues.blocks.BlockSnowGolem_Statue;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -14,17 +15,20 @@ public class StatuesBlocks {
 	
 	public static Block slime_statue;
 	public static Block blaze_statue;
+	public static Block snowgolem_statue;
 	
 	public static void init()
 	{
 		slime_statue = new BlockSlime_Statue();
 		blaze_statue = new BlockBlaze_Statue();
+		snowgolem_statue = new BlockSnowGolem_Statue();
 	}
 	
 	public static void register()
 	{
 		registerBlock(slime_statue);
 		registerBlock(blaze_statue);
+		registerBlock(snowgolem_statue);
 	}
 	
 	public static void registerBlock(Block block) 
@@ -43,6 +47,7 @@ public class StatuesBlocks {
 	{
 		registerRender(slime_statue);
 		registerRender(blaze_statue);
+		registerRender(snowgolem_statue);
 	}
 	
 	public static void registerRender(Block block)

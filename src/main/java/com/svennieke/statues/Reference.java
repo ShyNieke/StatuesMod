@@ -11,7 +11,8 @@ public class Reference {
 	
 	public static enum StatuesBlocks {
 		SLIMESTATUE("slimestatue", "BlockSlimeStatue"),
-		BLAZESTATUE("blazestatue", "BlockBlazeStatue");
+		BLAZESTATUE("blazestatue", "BlockBlazeStatue"),
+		SNOWGOLEMSTATUE("snowgolemstatue", "BlockSnowGolemStatue");
 		
 		private String unlocalisedName;
 		private String registryName;

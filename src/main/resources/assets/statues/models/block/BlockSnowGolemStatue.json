@@ -1,0 +1,137 @@
+{
+	"__comment": "Designed by Svennieke with Cubik Studio - https://cubik.studio",
+	"textures": {
+		"Base": "blocks/quartz_block_bottom",
+		"SnowGolemSnow": "blocks/snow",
+		"ONLYTHEBESTPARTCHAPTER2": "blocks/pumpkin_side",
+		"ONLYTHEBESTPARTFINALE": "blocks/pumpkin_top",
+		"ONLYTHEBESTPART": "blocks/pumpkin_face_off",
+		"Stick": "blocks/log_big_oak",
+		"Christmaspresentforsnoopinginthecode": "items/coal"
+	},
+	"elements": [
+		{
+			"__comment": "Cube1",
+			"from": [ 2.999587, 0.0007891698, 3.000669 ],
+			"to": [ 12.99959, 1.000789, 13.00067 ],
+			"faces": {
+				"down": { "uv": [ 3, 3, 13, 13 ], "texture": "#Base", "cullface": "down" },
+				"up": { "uv": [ 3, 3, 13, 13 ], "texture": "#Base" },
+				"north": { "uv": [ 3, 15, 13, 16 ], "texture": "#Base" },
+				"south": { "uv": [ 3, 15, 13, 16 ], "texture": "#Base" },
+				"west": { "uv": [ 3, 15, 13, 16 ], "texture": "#Base" },
+				"east": { "uv": [ 3, 15, 13, 16 ], "texture": "#Base" }
+			}
+		},
+		{
+			"__comment": "Cube2",
+			"from": [ 6.000753, 0.9995908, 5.999393 ],
+			"to": [ 10.00075, 4.999591, 9.999393 ],
+			"faces": {
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" }
+			}
+		},
+		{
+			"__comment": "Cube3",
+			"from": [ 6.500504, 5.000277, 6.50068 ],
+			"to": [ 9.500504, 7.500277, 9.500681 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" }
+			}
+		},
+		{
+			"__comment": "Cube4",
+			"from": [ 6.000721, 7.500606, 6.000968 ],
+			"to": [ 10.00072, 11.50061, 10.00097 ],
+			"faces": {
+				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#ONLYTHEBESTPARTCHAPTER2" },
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#ONLYTHEBESTPARTFINALE", "rotation": 270 },
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#ONLYTHEBESTPART" },
+				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#ONLYTHEBESTPARTCHAPTER2" },
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#ONLYTHEBESTPARTCHAPTER2" },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#ONLYTHEBESTPARTCHAPTER2" }
+			}
+		},
+		{
+			"__comment": "Cube6",
+			"from": [ 10.62476, 3.749173, 7.875258 ],
+			"to": [ 10.87576, 7.249173, 8.126259 ],
+			"rotation": { "origin": [ 10.625, 3.75, 7.875 ], "axis": "z", "angle": 22.5 },
+			"faces": {
+				"down": { "uv": [ 12.5, 2.5, 13.5, 3.5 ], "texture": "#Stick" },
+				"north": { "uv": [ 6.5, 4, 7.5, 10 ], "texture": "#Stick" },
+				"south": { "uv": [ 6.5, 4, 7.5, 10 ], "texture": "#Stick" },
+				"west": { "uv": [ 6.5, 4, 7.5, 10 ], "texture": "#Stick" },
+				"east": { "uv": [ 6.5, 4, 7.5, 10 ], "texture": "#Stick" }
+			}
+		},
+		{
+			"__comment": "Cube6",
+			"from": [ 5.125402, 3.999181, 7.875293 ],
+			"to": [ 5.376402, 7.499181, 8.126293 ],
+			"rotation": { "origin": [ 5.125, 4, 7.875 ], "axis": "z", "angle": -22.5 },
+			"faces": {
+				"down": { "uv": [ 12.5, 2.5, 13.5, 3.5 ], "texture": "#Stick" },
+				"north": { "uv": [ 6.5, 4, 7.5, 10 ], "texture": "#Stick" },
+				"south": { "uv": [ 6.5, 4, 7.5, 10 ], "texture": "#Stick" },
+				"west": { "uv": [ 6.5, 4, 7.5, 10 ], "texture": "#Stick" },
+				"east": { "uv": [ 6.5, 4, 7.5, 10 ], "texture": "#Stick" }
+			}
+		},
+		{
+			"__comment": "Cube12",
+			"from": [ 7.75021, 2.000795, 5.874884 ],
+			"to": [ 8.12521, 2.376795, 6.000884 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#Christmaspresentforsnoopinginthecode" }
+			}
+		},
+		{
+			"__comment": "Cube12",
+			"from": [ 7.749523, 2.874729, 5.874822 ],
+			"to": [ 8.124523, 3.250729, 6.000822 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#Christmaspresentforsnoopinginthecode" }
+			}
+		},
+		{
+			"__comment": "Cube12",
+			"from": [ 7.749866, 3.74954, 5.875025 ],
+			"to": [ 8.124866, 4.12554, 6.001025 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#Christmaspresentforsnoopinginthecode" }
+			}
+		},
+		{
+			"__comment": "Cube12",
+			"from": [ 7.749609, 5.000495, 6.374495 ],
+			"to": [ 8.124609, 5.376495, 6.500495 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#Christmaspresentforsnoopinginthecode" }
+			}
+		},
+		{
+			"__comment": "Cube12",
+			"from": [ 7.749714, 5.875973, 6.374775 ],
+			"to": [ 8.124714, 6.251973, 6.500775 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#Christmaspresentforsnoopinginthecode" }
+			}
+		},
+		{
+			"__comment": "Cube12",
+			"from": [ 7.750688, 6.74919, 6.374858 ],
+			"to": [ 8.125688, 7.12519, 6.500858 ],
+			"faces": {
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#Christmaspresentforsnoopinginthecode" }
+			}
+		}
+	]
+}
