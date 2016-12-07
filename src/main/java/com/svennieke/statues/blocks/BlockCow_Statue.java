@@ -50,7 +50,7 @@ public class BlockCow_Statue extends BaseNormal{
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
-	public int StatueBehavior(BlockCow_Statue blockBlaze_Statue, EntityPlayer playerIn, World worldIn, EnumHand hand, @Nullable ItemStack stack) {
+	public int StatueBehavior(BlockCow_Statue statue, EntityPlayer playerIn, World worldIn, EnumHand hand, @Nullable ItemStack stack) {
 		playerIn.playSound(SoundEvents.ENTITY_COW_AMBIENT, 1F, 1F);
 		ItemStack i = playerIn.inventory.getCurrentItem();
 				
@@ -67,7 +67,7 @@ public class BlockCow_Statue extends BaseNormal{
 	            {
 	            	playerIn.dropItem(new ItemStack(Items.MILK_BUCKET), false);
 	            }
-				System.out.println(playerIn.getDisplayName());
+				//System.out.println(playerIn.getDisplayName());
 			}
 		}
 		return 0;

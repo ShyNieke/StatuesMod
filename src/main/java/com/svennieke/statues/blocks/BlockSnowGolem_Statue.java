@@ -51,7 +51,7 @@ public class BlockSnowGolem_Statue extends BaseCutout{
 	}
 	
 	public int StatueBehavior(BlockSnowGolem_Statue statue, EntityPlayer playerIn) {
-		playerIn.playSound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, 1F, 1F);
+		playerIn.playSound(SoundEvents.BLOCK_SNOW_STEP, 1F, 1F);
 		if (cooldown < 0.01){
 			playerIn.dropItem(new ItemStack(Blocks.PUMPKIN, 1), true);
 		}

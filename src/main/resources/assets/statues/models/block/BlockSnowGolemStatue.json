@@ -1,6 +1,7 @@
 {
 	"__comment": "Designed by Svennieke with Cubik Studio - https://cubik.studio",
 	"textures": {
+		"particle": "blocks/snow",
 		"Base": "blocks/quartz_block_bottom",
 		"SnowGolemSnow": "blocks/snow",
 		"ONLYTHEBESTPARTCHAPTER2": "blocks/pumpkin_side",
