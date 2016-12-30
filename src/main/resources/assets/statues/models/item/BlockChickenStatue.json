@@ -1,0 +1,35 @@
+{
+	"parent": "statues:block/BlockChickenStatue",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation":  [ -89, 0, 0 ],
+			"translation":  [ 0, -1.9, -3.478 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"thirdperson_lefthand": {
+			"rotation":  [ -89, 0, 0 ],
+			"translation":  [ 0, -1.9, -3.478 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"firstperson_righthand": {
+			"rotation":  [ -19, 111, 4 ],
+			"translation":  [ -0.695, 7.8695, 4.1739 ]
+		},
+		"firstperson_lefthand": {
+			"rotation":  [ -19, 111, 4 ],
+			"translation":  [ -0.695, 7.8695, 4.1739 ]
+		},
+		"gui": {
+			"rotation":  [ 30, 225, 0 ],
+			"scale":  [ 0.625, 0.625, 0.625 ]
+		},
+		"head": {
+			"translation":  [ 0, 10.017, 0 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"ground": {
+			"translation":  [ 0, 2, 0 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		}
+	}
+}

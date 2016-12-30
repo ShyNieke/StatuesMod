@@ -1,6 +1,7 @@
 package com.svennieke.statues.init;
 
 import com.svennieke.statues.blocks.BlockBlaze_Statue;
+import com.svennieke.statues.blocks.BlockChicken_Statue;
 import com.svennieke.statues.blocks.BlockCow_Statue;
 import com.svennieke.statues.blocks.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.BlockSlime_Statue;
@@ -17,6 +18,7 @@ public class StatuesBlocks {
 	
 	public static Block slime_statue;
 	public static Block blaze_statue;
+	public static Block chicken_statue;
 	public static Block snowgolem_statue;
 	public static Block cow_statue;
 	public static Block mooshroom_statue;
@@ -26,6 +28,7 @@ public class StatuesBlocks {
 		slime_statue = new BlockSlime_Statue();
 		blaze_statue = new BlockBlaze_Statue();
 		snowgolem_statue = new BlockSnowGolem_Statue();
+		chicken_statue = new BlockChicken_Statue();
 		cow_statue = new BlockCow_Statue();
 		mooshroom_statue = new BlockMooshroom_Statue();
 	}
@@ -36,6 +39,7 @@ public class StatuesBlocks {
 		registerBlock(blaze_statue);
 		registerBlock(snowgolem_statue);
 		registerBlock(cow_statue);
+		registerBlock(chicken_statue);
 		registerBlock(mooshroom_statue);
 	}
 	
@@ -57,6 +61,7 @@ public class StatuesBlocks {
 		registerRender(blaze_statue);
 		registerRender(snowgolem_statue);
 		registerRender(cow_statue);
+		registerRender(chicken_statue);
 		registerRender(mooshroom_statue);
 	}
 	
