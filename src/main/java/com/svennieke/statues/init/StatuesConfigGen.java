@@ -5,7 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 public class StatuesConfigGen {
 	public static void configOptions(Configuration config) {
 		config.load();
-		// Mature Sounds
+		// Drop chance
 		StatuesConfig.DropChance = config.get("Statues Drop Chance", "DropChance", 0.001).getDouble(0.001);
 		
 		config.save();
