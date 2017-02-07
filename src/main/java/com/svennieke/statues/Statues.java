@@ -38,7 +38,8 @@ public class Statues {
 	@EventHandler
     public void init(FMLInitializationEvent event)
     {
-			MinecraftForge.EVENT_BUS.register(new com.svennieke.statues.handler.EventHandler());
+		proxy.Init();
+		MinecraftForge.EVENT_BUS.register(new com.svennieke.statues.handler.EventHandler());
     }
 	
 	@EventHandler
