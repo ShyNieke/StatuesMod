@@ -14,6 +14,7 @@ public class Reference {
 		BLAZESTATUE("blazestatue", "BlockBlazeStatue"),
 		COWSTATUE("cowstatue", "BlockCowStatue"),
 		CHICKENSTATUE("chickenstatue", "BlockChickenStatue"),
+		KINGCLUCKSTATUE("kingcluckstatue", "BlockkingcluckStatue"),
 		MOOSHROOMSTATUE("mooshroomstatue", "BlockMooshroomStatue"),
 		CREEPERSTATUE("creeperstatue", "BlockCreeperStatue"),
 		SNOWGOLEMSTATUE("snowgolemstatue", "BlockSnowGolemStatue");
@@ -22,6 +23,27 @@ public class Reference {
 		private String registryName;
 		
 		StatuesBlocks(String unlocalisedName, String registryName) {
+			this.unlocalisedName = unlocalisedName;
+			this.registryName = registryName;
+		}
+		
+		public String getUnlocalisedName() {
+			return unlocalisedName;
+		}
+		
+		public String getRegistryName() {
+			return registryName;
+		}
+	}
+	
+	public static enum StatuesItems {
+		
+		ROYALNUGGET("royalnugget", "itemroyalnugget");
+		
+		private String unlocalisedName;
+		private String registryName;
+		
+		StatuesItems(String unlocalisedName, String registryName) {
 			this.unlocalisedName = unlocalisedName;
 			this.registryName = registryName;
 		}

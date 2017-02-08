@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 public class BlockSlime_Statue extends BaseTranslucent{
 	//																		X1, Y1,Z1,         X2,Y2,Z2
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 3, 0, 0.0625 * 3, 0.0625 * 13, 0.0625 * 10, 0.0625 * 13);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 8, 0.0625 * 12);
 	
 	private final String TAG_COOLDOWN = "cooldown";
 	public static double cooldown;

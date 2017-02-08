@@ -26,7 +26,7 @@ import net.minecraft.world.World;
 public class BlockCow_Statue extends BaseNormal{
 	public boolean milk = true;
 
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 3, 0, 0.0625 * 3, 0.0625 * 13, 0.0625 * 11, 0.0625 * 13);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 5, 0.0625 * 12, 0.0625 * 6, 0.0625 * 12);
 	
 	private final String TAG_COOLDOWN = "cooldown";
 	public static double cooldown;
@@ -55,7 +55,7 @@ public class BlockCow_Statue extends BaseNormal{
 		ItemStack i = playerIn.inventory.getCurrentItem();
 				
 		if(!worldIn.isRemote)
-			System.out.println(i);
+			//System.out.println(i);
 		if(milk){
 			if (stack != null && stack.getItem() == Items.BUCKET)
 			{

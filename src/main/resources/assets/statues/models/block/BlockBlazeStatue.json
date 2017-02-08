@@ -6,7 +6,7 @@
 		"Blazeheadbottom": "blocks/soul_sand",
 		"Eyes": "blocks/hardened_clay_stained_black",
 		"Base": "blocks/quartz_block_bottom",
-		"Eyewhite": "blocks/hardened_clay_stained_white"
+		"Eyewhite": "blocks/iron_block"
 	},
 	"elements": [
 		{
@@ -218,19 +218,6 @@
 			}
 		},
 		{
-			"__comment": "Base",
-			"from": [ 3, 0, 3 ],
-			"to": [ 13, 1, 13 ],
-			"faces": {
-				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#Base" },
-				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#Base" },
-				"north": { "uv": [ 3, 15, 13, 16 ], "texture": "#Base" },
-				"south": { "uv": [ 3, 15, 13, 16 ], "texture": "#Base" },
-				"west": { "uv": [ 3, 15, 13, 16 ], "texture": "#Base" },
-				"east": { "uv": [ 3, 15, 13, 16 ], "texture": "#Base" }
-			}
-		},
-		{
 			"__comment": "Eye white",
 			"from": [ 9, 8, 5.875 ],
 			"to": [ 9.5, 8.5, 6.375 ],
@@ -257,4 +244,5 @@
 			}
 		}
 	]
+
 }

@@ -1,5 +1,5 @@
 {
-	"parent": "statues:block/BlockChickenStatue",
+	"parent": "statues:block/BlockKingCluckStatue",
 	"display": {
 		"thirdperson_righthand": {
 			"rotation":  [ -89, 0, 0 ],
@@ -16,15 +16,15 @@
 			"translation":  [ 2, 3, 0 ]
 		},
 		"firstperson_lefthand": {
-			"rotation":  [ -19, 111, 4 ],
-			"translation":  [ -0.695, 7.8695, 4.1739 ]
+			"rotation":  [ 0, 0, 30 ],
+			"translation":  [ 2, 3, 0 ]
 		},
 		"gui": {
-			"rotation":  [ 30, -149, 0 ],
-			"translation":  [ 0, 4.1739, 0 ]
+			"rotation":  [ 19, -150, 0 ],
+			"translation":  [ 0, 2.0869, 0 ]
 		},
 		"head": {
-			"translation":  [ 0, 32.695, 0 ],
+			"translation":  [ 0, 24.347, 2.0256 ],
 			"scale":  [ 4, 4, 4 ]
 		},
 		"ground": {
@@ -32,7 +32,8 @@
 			"scale":  [ 0.5, 0.5, 0.5 ]
 		},
 		"fixed": {
-			"translation":  [ 0, 21.5, 1 ],
+			"rotation":  [ -25, 0, 0 ],
+			"translation":  [ 0, 25, -3.869 ],
 			"scale":  [ 4, 4, 4 ]
 		}
 	}

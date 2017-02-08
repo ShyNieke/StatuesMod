@@ -3,7 +3,8 @@ package com.svennieke.statues.blocks;
 import java.util.List;
 
 import com.svennieke.statues.Reference;
-import com.svennieke.statues.blocks.BaseBlock.BaseNormal;
+import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
+import com.svennieke.statues.init.StatuesItems;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -21,37 +22,37 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBlaze_Statue extends BaseNormal{
-
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0.0625 * 1, 0.0625 * 4, 0.0625 * 12, 0.0625 * 10, 0.0625 * 12);
+public class BlockKingCluck_Statue extends BaseCutout{
+	
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6, 0.0625 * 9.5, 0.0625 * 4.5, 0.0625 * 9);
 	
 	private final String TAG_COOLDOWN = "cooldown";
 	public static double cooldown;
 	
-	public BlockBlaze_Statue() {
+	public BlockKingCluck_Statue() {
 		super(Material.TNT);
-		setUnlocalizedName(Reference.StatuesBlocks.BLAZESTATUE.getUnlocalisedName());
-		setRegistryName(Reference.StatuesBlocks.BLAZESTATUE.getRegistryName());
+		setUnlocalizedName(Reference.StatuesBlocks.KINGCLUCKSTATUE.getUnlocalisedName());
+		setRegistryName(Reference.StatuesBlocks.KINGCLUCKSTATUE.getRegistryName());
 		this.setCreativeTab(CreativeTabs.DECORATIONS);
 		this.setHardness(3.0F);
-		this.setSoundType(SoundType.GLASS);
-		this.setLightLevel(0.5F);
+		this.setSoundType(SoundType.CLOTH);
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		cooldown = Math.random();
 		if (cooldown < 0.15) cooldown = StatueBehavior(this, playerIn);
-		
-		//playerIn.playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, 1F, 1F);
-		//playerIn.dropItem(new ItemStack(Items.BLAZE_ROD, 1), true);
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
-	public int StatueBehavior(BlockBlaze_Statue statue, EntityPlayer playerIn) {
-		playerIn.playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, 1F, 1F);
-		playerIn.dropItem(new ItemStack(Items.BLAZE_ROD, 1), true);
+	public int StatueBehavior(BlockKingCluck_Statue statue, EntityPlayer playerIn) {
+		playerIn.playSound(SoundEvents.ENTITY_CHICKEN_AMBIENT , 1F, 1F);
+		if (cooldown < 0.01){
+			playerIn.dropItem(new ItemStack(Items.GOLD_NUGGET, 1), true);
+		}
+		else
+		playerIn.dropItem(new ItemStack(StatuesItems.nugget, 1), true);
 		
 		return 0;
 }

@@ -2,6 +2,8 @@ package com.svennieke.statues.blocks;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
 
@@ -23,10 +25,11 @@ import net.minecraft.world.World;
 
 public class BlockChicken_Statue extends BaseCutout{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 3, 0.0625 * 13, 0.0625 * 4.5, 0.0625 * 13);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6, 0.0625 * 9.5, 0.0625 * 4.5, 0.0625 * 9);
 	
 	private final String TAG_COOLDOWN = "cooldown";
 	public static double cooldown;
+	public boolean goldblock = true;
 	
 	public BlockChicken_Statue() {
 		super(Material.TNT);
@@ -41,12 +44,29 @@ public class BlockChicken_Statue extends BaseCutout{
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		cooldown = Math.random();
-		if (cooldown < 0.15) cooldown = StatueBehavior(this, playerIn);
+		if (cooldown < 0.15) cooldown = StatueBehavior(this, playerIn, worldIn, pos, hand, heldItem);
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
-	public int StatueBehavior(BlockChicken_Statue statue, EntityPlayer playerIn) {
+	public int StatueBehavior(BlockChicken_Statue statue, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, @Nullable ItemStack stack) {
 		playerIn.playSound(SoundEvents.ENTITY_CHICKEN_AMBIENT , 1F, 1F);
+		ItemStack i = playerIn.inventory.getCurrentItem();
+		
+		/*
+		if(goldblock){
+			if (stack != null && stack.getItem() == Items.GOLDEN_APPLE)
+			{
+				if (--stack.stackSize == 0)
+	            {
+	                playerIn.setHeldItem(hand, new ItemStack(Items.GOLDEN_APPLE));
+	                worldIn.setBlockState(pos, Blocks.CHEST.getDefaultState()); 
+	        		TileEntityChest chest = (TileEntityChest) worldIn.getTileEntity(pos);
+	            }
+				//System.out.println(playerIn.getDisplayName());
+			}
+		}
+		*/
+		
 		if (cooldown < 0.01){
 			playerIn.dropItem(new ItemStack(Items.EGG, 1), true);
 		}

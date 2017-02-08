@@ -4,6 +4,7 @@ import com.svennieke.statues.blocks.BlockBlaze_Statue;
 import com.svennieke.statues.blocks.BlockChicken_Statue;
 import com.svennieke.statues.blocks.BlockCow_Statue;
 import com.svennieke.statues.blocks.BlockCreeper_Statue;
+import com.svennieke.statues.blocks.BlockKingCluck_Statue;
 import com.svennieke.statues.blocks.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.BlockSlime_Statue;
 import com.svennieke.statues.blocks.BlockSnowGolem_Statue;
@@ -20,6 +21,7 @@ public class StatuesBlocks {
 	public static Block slime_statue;
 	public static Block blaze_statue;
 	public static Block chicken_statue;
+	public static Block kingcluck_statue;
 	public static Block creeper_statue;
 	public static Block snowgolem_statue;
 	public static Block cow_statue;
@@ -31,6 +33,7 @@ public class StatuesBlocks {
 		blaze_statue = new BlockBlaze_Statue();
 		snowgolem_statue = new BlockSnowGolem_Statue();
 		chicken_statue = new BlockChicken_Statue();
+		kingcluck_statue = new BlockKingCluck_Statue();
 		creeper_statue = new BlockCreeper_Statue();
 		cow_statue = new BlockCow_Statue();
 		mooshroom_statue = new BlockMooshroom_Statue();
@@ -43,6 +46,7 @@ public class StatuesBlocks {
 		registerBlock(snowgolem_statue);
 		registerBlock(cow_statue);
 		registerBlock(chicken_statue);
+		registerBlock(kingcluck_statue);
 		registerBlock(creeper_statue);
 		registerBlock(mooshroom_statue);
 	}
@@ -66,6 +70,7 @@ public class StatuesBlocks {
 		registerRender(snowgolem_statue);
 		registerRender(cow_statue);
 		registerRender(chicken_statue);
+		registerRender(kingcluck_statue);
 		registerRender(creeper_statue);
 		registerRender(mooshroom_statue);
 	}
@@ -74,6 +79,5 @@ public class StatuesBlocks {
 	{
 		Item item = Item.getItemFromBlock(block);
 		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
-		//Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, new ModelResourceLocation(Reference.MOD_ID + ":" + block.getUnlocalizedName().substring(5).toLowerCase(Locale.US), "inventory"));
 	}
 }

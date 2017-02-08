@@ -2,36 +2,35 @@
     "parent": "statues:block/BlockSnowGolemStatue",
 	"display": {
 		"thirdperson_righthand": {
-			"rotation":  [ -91, 0, 0 ],
-			"translation":  [ 0, -1.878, -3.965 ],
+			"rotation":  [ -89, 0, 0 ],
+			"translation":  [ 0, -1.9, -3.478 ],
 			"scale":  [ 0.5, 0.5, 0.5 ]
 		},
 		"thirdperson_lefthand": {
-			"rotation":  [ -91, 0, 0 ],
-			"translation":  [ 0, -1.878, -3.965 ],
+			"rotation":  [ -89, 0, 0 ],
+			"translation":  [ 0, -1.9, -3.478 ],
 			"scale":  [ 0.5, 0.5, 0.5 ]
 		},
 		"firstperson_righthand": {
-			"rotation":  [ 0, 118, -25 ],
-			"translation":  [ 1.13, 3.2, 1.13 ],
-			"scale":  [ 0.68, 0.68, 0.68 ]
+			"rotation":  [ 0, 0, 30 ],
+			"translation":  [ 2, 3, 0 ]
 		},
 		"firstperson_lefthand": {
-			"rotation":  [ 0, 118, -25 ],
-			"translation":  [ 1.13, 3.2, 1.13 ],
-			"scale":  [ 0.68, 0.68, 0.68 ]
-		},
-		"gui": {
-			"rotation":  [ 30, 225, 0 ],
-			"scale":  [ 0.625, 0.625, 0.625 ]
+			"rotation":  [ 0, 0, 30 ],
+			"translation":  [ 2, 3, 0 ]
 		},
 		"head": {
-			"translation":  [ 0, 10.017, 0 ],
-			"scale":  [ 0.5, 0.5, 0.5 ]
+			"translation":  [ 0, 18.66, 0 ],
+			"scale":  [ 3, 3, 3 ]
 		},
 		"ground": {
 			"translation":  [ 0, 2, 0 ],
 			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"fixed": {
+			"rotation":  [ 0, -44, 0 ],
+			"translation":  [ 0, 2.2173, 1 ],
+			"scale":  [ 1.5, 1.5, 1.5 ]
 		}
 	}
 }

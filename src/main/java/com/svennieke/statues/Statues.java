@@ -2,6 +2,7 @@ package com.svennieke.statues;
 
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesConfigGen;
+import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.proxy.CommonProxy;
 
 import net.minecraftforge.common.MinecraftForge;
@@ -31,6 +32,8 @@ public class Statues {
 		
 		StatuesBlocks.init();
 		StatuesBlocks.register();
+		StatuesItems.init();
+		StatuesItems.register();
 		
 		proxy.Preinit();
 	}
