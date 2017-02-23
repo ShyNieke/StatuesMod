@@ -1,4 +1,4 @@
-package com.svennieke.statues.init;
+/*package com.svennieke.statues.init;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -10,3 +10,4 @@ public class StatuesCrafting {
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.kingcluck_statue), "NGN", "GCG", "NGN", 'N', Items.GOLD_NUGGET, 'G', Items.GOLD_INGOT, 'C', StatuesBlocks.chicken_statue);
 	}
 }
+*/

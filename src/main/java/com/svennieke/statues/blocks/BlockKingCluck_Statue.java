@@ -19,8 +19,12 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockKingCluck_Statue extends BaseCutout{
 	
@@ -67,5 +71,11 @@ public class BlockKingCluck_Statue extends BaseCutout{
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
     		List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
     	super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn);
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+    {
+        	tooltip.add(TextFormatting.GOLD + I18n.translateToLocal("cluckington.info"));
     }
 }

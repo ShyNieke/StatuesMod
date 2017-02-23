@@ -1,7 +1,18 @@
+#Block names
 tile.slimestatue.name=Slime Statue
 tile.blazestatue.name=Blaze Statue
 tile.snowgolemstatue.name=Snow Man Statue
 tile.cowstatue.name=Cow Statue
 tile.mooshroomstatue.name=Mooshroom Statue
+tile.kingcluckstatue.name=King Cluck Statue
 tile.chickenstatue.name=Chicken Statue
 tile.creeperstatue.name=Creeper Statue
+
+
+#Item names
+item.royalnugget.name=Royal Nugget
+
+#Special Lore
+
+cluckington.info=also known as Cluckington
+royalnugget.info=Made for and from royals

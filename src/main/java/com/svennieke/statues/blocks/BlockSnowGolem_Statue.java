@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 
 public class BlockSnowGolem_Statue extends BaseCutout{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 3, 0, 0.0625 * 3, 0.0625 * 13, 0.0625 * 12, 0.0625 * 13);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6, 0, 0.0625 * 6, 0.0625 * 10, 0.0625 * 10.5, 0.0625 * 10);
 	
 	private final String TAG_COOLDOWN = "cooldown";
 	public static double cooldown;
@@ -43,10 +43,7 @@ public class BlockSnowGolem_Statue extends BaseCutout{
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		cooldown = Math.random();
 		if (cooldown < 0.15) cooldown = StatueBehavior(this, playerIn);
-			
-		//playerIn.playSound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, 1F, 1F);
-		//playerIn.dropItem(Items.SNOWBALL, 1);
-		//playerIn.dropItem(Blocks.PUMPKIN, 1);
+
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
