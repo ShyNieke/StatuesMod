@@ -2,6 +2,7 @@ package com.svennieke.statues;
 
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesConfigGen;
+import com.svennieke.statues.init.StatuesCrafting;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.proxy.CommonProxy;
 
@@ -34,6 +35,7 @@ public class Statues {
 		StatuesBlocks.register();
 		StatuesItems.init();
 		StatuesItems.register();
+		StatuesCrafting.register();
 		
 		proxy.Preinit();
 	}
