@@ -24,8 +24,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockMooshroom_Statue extends BaseNormal{
-	public boolean milk = true;
-
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 5, 0.0625 * 12, 0.0625 * 6, 0.0625 * 12);
 	
 	private final String TAG_COOLDOWN = "cooldown";
@@ -43,33 +41,32 @@ public class BlockMooshroom_Statue extends BaseNormal{
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		cooldown = Math.random();
-		if (cooldown < 0.9) cooldown = StatueBehavior(this, playerIn, worldIn, hand, heldItem);
-		
-		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+		if (cooldown < 0.15) cooldown = StatueBehavior(this, playerIn, worldIn, hand);
+
+		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 	
-	public int StatueBehavior(BlockMooshroom_Statue statue, EntityPlayer playerIn, World worldIn, EnumHand hand, @Nullable ItemStack stack) {
+	public int StatueBehavior(BlockMooshroom_Statue statue, EntityPlayer playerIn, World worldIn, EnumHand hand) {
 		playerIn.playSound(SoundEvents.ENTITY_COW_AMBIENT, 1F, 1F);
-		ItemStack i = playerIn.inventory.getCurrentItem();
+		ItemStack stack = playerIn.getHeldItem(hand);
 				
 		if(!worldIn.isRemote)
 			//System.out.println(i);
-		if(milk){
-			if (stack != null && stack.getItem() == Items.BOWL)
-			{
-				if (--stack.stackSize == 0)
+			if (stack.getItem() == Items.BOWL)
+	        {
+				stack.shrink(1);
+
+	            if (stack.isEmpty())
 	            {
-	                playerIn.setHeldItem(hand, new ItemStack(Items.MUSHROOM_STEW));
+	            	playerIn.setHeldItem(hand, new ItemStack(Items.MUSHROOM_STEW));
 	            }
 	            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MUSHROOM_STEW)))
 	            {
 	            	playerIn.dropItem(new ItemStack(Items.MUSHROOM_STEW), false);
 	            }
-				//System.out.println(playerIn.getDisplayName());
 			}
-		}
 		return 0;
 	}
 	
@@ -79,9 +76,10 @@ public class BlockMooshroom_Statue extends BaseNormal{
         return BOUNDING_BOX;
     }
     
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
-    		List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
-    	super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn);
-    }
+	@Override
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
+			List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean p_185477_7_) {
+		// TODO Auto-generated method stub
+		super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn, p_185477_7_);
+	}
 }

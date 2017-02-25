@@ -27,7 +27,7 @@ public class EventHandler {
             if ( random_drop < StatuesConfig.DropChance )
             {
             	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue, 1);
-            	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
+            	event.getDrops().add(new EntityItem(event.getEntity().world, event.getEntity().posX, 
             			
             		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
             }
@@ -37,7 +37,7 @@ public class EventHandler {
             if ( random_drop < StatuesConfig.DropChance )
             {
             	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.blaze_statue, 1);
-            	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
+            	event.getDrops().add(new EntityItem(event.getEntity().world, event.getEntity().posX, 
             			
             		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
             }
@@ -47,7 +47,7 @@ public class EventHandler {
             if ( random_drop < StatuesConfig.DropChance )
             {
             	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.snowgolem_statue, 1);
-            	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
+            	event.getDrops().add(new EntityItem(event.getEntity().world, event.getEntity().posX, 
             			
             		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
             }
@@ -57,7 +57,7 @@ public class EventHandler {
             if ( random_drop < StatuesConfig.DropChance )
             {
             	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.cow_statue, 1);
-            	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
+            	event.getDrops().add(new EntityItem(event.getEntity().world, event.getEntity().posX, 
             			
             		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
             }
@@ -67,7 +67,7 @@ public class EventHandler {
                 if ( random_drop < StatuesConfig.DropChance )
                 {
                 	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.mooshroom_statue, 1);
-                	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
+                	event.getDrops().add(new EntityItem(event.getEntity().world, event.getEntity().posX, 
                 			
                 		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
                 }
@@ -77,7 +77,7 @@ public class EventHandler {
                 if ( random_drop < StatuesConfig.DropChance )
                 {
                 	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.chicken_statue, 1);
-                	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
+                	event.getDrops().add(new EntityItem(event.getEntity().world, event.getEntity().posX, 
                 			
                 		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
                 }
@@ -87,7 +87,7 @@ public class EventHandler {
             	if ( random_drop < StatuesConfig.DropChance )
             	{
             		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.creeper_statue, 1);
-            		event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
+            		event.getDrops().add(new EntityItem(event.getEntity().world, event.getEntity().posX, 
             				
             				event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
             	}
@@ -97,7 +97,7 @@ public class EventHandler {
             	if ( random_drop < StatuesConfig.DropChance )
             	{
             		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.kingcluck_statue, 1);
-            		event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
+            		event.getDrops().add(new EntityItem(event.getEntity().world, event.getEntity().posX, 
             				
             				event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
             	}
