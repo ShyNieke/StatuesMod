@@ -8,7 +8,6 @@ import com.svennieke.statues.blocks.BlockKingCluck_Statue;
 import com.svennieke.statues.blocks.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.BlockSlime_Statue;
 import com.svennieke.statues.blocks.BlockSnowGolem_Statue;
-import com.svennieke.statues.blocks.BlockTest_Statue;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -27,7 +26,6 @@ public class StatuesBlocks {
 	public static Block snowgolem_statue;
 	public static Block cow_statue;
 	public static Block mooshroom_statue;
-	public static Block test_statue;
 	
 	public static void init()
 	{
@@ -39,7 +37,6 @@ public class StatuesBlocks {
 		creeper_statue = new BlockCreeper_Statue();
 		cow_statue = new BlockCow_Statue();
 		mooshroom_statue = new BlockMooshroom_Statue();
-		test_statue = new BlockTest_Statue();
 	}
 	
 	public static void register()
@@ -52,7 +49,6 @@ public class StatuesBlocks {
 		registerBlock(kingcluck_statue);
 		registerBlock(creeper_statue);
 		registerBlock(mooshroom_statue);
-		registerBlock(test_statue);
 	}
 	
 	public static void registerBlock(Block block) 
@@ -77,7 +73,6 @@ public class StatuesBlocks {
 		registerRender(kingcluck_statue);
 		registerRender(creeper_statue);
 		registerRender(mooshroom_statue);
-		registerRender(test_statue);
 	}
 	
 	public static void registerRender(Block block)
