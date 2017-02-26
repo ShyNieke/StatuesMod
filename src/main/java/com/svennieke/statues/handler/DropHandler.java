@@ -3,6 +3,7 @@ package com.svennieke.statues.handler;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesConfig;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -22,86 +23,69 @@ public class DropHandler {
 	
 	@SubscribeEvent
 	public void onLivingDrop(LivingDropsEvent event) {
-		if (event.getEntity() instanceof EntitySlime) {
+		Entity entity = event.getEntity();
+		
+		if (entity instanceof EntitySlime) {
 			random_drop = Math.random();
             if ( random_drop < StatuesConfig.DropChance )
             {
             	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue, 1);
-            	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
-            			
-            		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
+            	event.getDrops().add(new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
             }
 		}
-		if (event.getEntity() instanceof EntityBlaze) {
+		
+		if (entity instanceof EntityBlaze) {
 			random_drop = Math.random();
             if ( random_drop < StatuesConfig.DropChance )
             {
             	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.blaze_statue, 1);
-            	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
-            			
-            		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
+            	event.getDrops().add(new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
             }
 		}
-		if (event.getEntity() instanceof EntitySnowman) {
+		
+		if (entity instanceof EntitySnowman) {
 			random_drop = Math.random();
             if ( random_drop < StatuesConfig.DropChance )
             {
             	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.snowgolem_statue, 1);
-            	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
-            			
-            		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
+            	event.getDrops().add(new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
             }
 		}
-		if (event.getEntity() instanceof EntityCow) {
+		
+		if (entity instanceof EntityCow) {
 			random_drop = Math.random();
             if ( random_drop < StatuesConfig.DropChance )
             {
             	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.cow_statue, 1);
-            	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
-            			
-            		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
+            	event.getDrops().add(new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
             }
+		}
 		
-            if (event.getEntity() instanceof EntityMooshroom) {
-    			random_drop = Math.random();
-                if ( random_drop < StatuesConfig.DropChance )
-                {
-                	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.mooshroom_statue, 1);
-                	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
-                			
-                		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
-                }
+        if (entity instanceof EntityMooshroom) {
+			random_drop = Math.random();
+            if ( random_drop < StatuesConfig.DropChance )
+            {
+            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.mooshroom_statue, 1);
+            	event.getDrops().add(new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
             }
-            if (event.getEntity() instanceof EntityChicken) {
-    			random_drop = Math.random();
-                if ( random_drop < StatuesConfig.DropChance )
-                {
-                	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.chicken_statue, 1);
-                	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
-                			
-                		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
-                }
-    		}
-            if (event.getEntity() instanceof EntityCreeper) {
-            	random_drop = Math.random();
-            	if ( random_drop < StatuesConfig.DropChance )
-            	{
-            		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.creeper_statue, 1);
-            		event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
-            				
-            				event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
-            	}
+        }
+        
+        if (entity instanceof EntityChicken) {
+			random_drop = Math.random();
+            if ( random_drop < StatuesConfig.DropChance )
+            {
+            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.chicken_statue, 1);
+            	event.getDrops().add(new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
             }
-            if (event.getEntity() instanceof EntityChicken) {
-            	random_drop = Math.random();
-            	if ( random_drop < StatuesConfig.DropChance )
-            	{
-            		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.kingcluck_statue, 1);
-            		event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
-            				
-            				event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
-            	}
-            }
-            }
+		}
+        
+        if (entity instanceof EntityCreeper) {
+        	random_drop = Math.random();
+        	if ( random_drop < StatuesConfig.DropChance )
+        	{
+        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.creeper_statue, 1);
+        		event.getDrops().add(new EntityItem(entity.worldObj, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+        	}
+        }
 	}
 }
