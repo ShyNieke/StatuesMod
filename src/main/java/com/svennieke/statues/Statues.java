@@ -1,5 +1,6 @@
 package com.svennieke.statues;
 
+import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesItems;
@@ -43,7 +44,7 @@ public class Statues {
     public void init(FMLInitializationEvent event)
     {
 		proxy.Init();
-		MinecraftForge.EVENT_BUS.register(new com.svennieke.statues.handler.EventHandler());
+		MinecraftForge.EVENT_BUS.register(new DropHandler());
     }
 	
 	@EventHandler
