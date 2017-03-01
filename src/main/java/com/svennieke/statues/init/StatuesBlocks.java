@@ -6,6 +6,7 @@ import com.svennieke.statues.blocks.BlockCow_Statue;
 import com.svennieke.statues.blocks.BlockCreeper_Statue;
 import com.svennieke.statues.blocks.BlockKingCluck_Statue;
 import com.svennieke.statues.blocks.BlockMooshroom_Statue;
+import com.svennieke.statues.blocks.BlockPig_Statue;
 import com.svennieke.statues.blocks.BlockSlime_Statue;
 import com.svennieke.statues.blocks.BlockSnowGolem_Statue;
 
@@ -26,6 +27,7 @@ public class StatuesBlocks {
 	public static Block snowgolem_statue;
 	public static Block cow_statue;
 	public static Block mooshroom_statue;
+	public static Block pig_statue;
 	
 	public static void init()
 	{
@@ -37,6 +39,7 @@ public class StatuesBlocks {
 		creeper_statue = new BlockCreeper_Statue();
 		cow_statue = new BlockCow_Statue();
 		mooshroom_statue = new BlockMooshroom_Statue();
+		mooshroom_statue = new BlockPig_Statue();
 	}
 	
 	public static void register()
@@ -49,6 +52,7 @@ public class StatuesBlocks {
 		registerBlock(kingcluck_statue);
 		registerBlock(creeper_statue);
 		registerBlock(mooshroom_statue);
+		registerBlock(pig_statue);
 	}
 	
 	public static void registerBlock(Block block) 

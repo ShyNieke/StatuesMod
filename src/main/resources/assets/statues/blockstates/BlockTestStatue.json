@@ -1,8 +1,0 @@
-{
-    "variants": {
-		"facing=east":  { "model": "statues:BlockTestStatue", "y": 90},
-		"facing=north": { "model": "statues:BlockTestStatue"},
-		"facing=west":  { "model": "statues:BlockTestStatue", "y": 270},
-        "facing=south": { "model": "statues:BlockTestStatue", "y": 180}
-    }
-}

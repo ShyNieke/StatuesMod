@@ -11,6 +11,7 @@ import net.minecraft.entity.monster.EntitySnowman;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityMooshroom;
+import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -60,7 +61,8 @@ public class DropHandler {
             	event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
             			
             		event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
-            }
+            	}
+           }
 		
             if (event.getEntity() instanceof EntityMooshroom) {
     			random_drop = Math.random();
@@ -92,16 +94,15 @@ public class DropHandler {
             				event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
             	}
             }
-            if (event.getEntity() instanceof EntityChicken) {
+            if (event.getEntity() instanceof EntityPig) {
             	random_drop = Math.random();
             	if ( random_drop < StatuesConfig.DropChance )
             	{
-            		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.kingcluck_statue, 1);
+            		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.pig_statue, 1);
             		event.getDrops().add(new EntityItem(event.getEntity().worldObj, event.getEntity().posX, 
             				
             				event.getEntity().posY, event.getEntity().posZ, itemStackToDrop));
             	}
-            }
             }
 	}
 }

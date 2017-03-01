@@ -17,8 +17,8 @@ public class Reference {
 		KINGCLUCKSTATUE("kingcluckstatue", "BlockKingCluckStatue"),
 		MOOSHROOMSTATUE("mooshroomstatue", "BlockMooshroomStatue"),
 		CREEPERSTATUE("creeperstatue", "BlockCreeperStatue"),
-		TESTSTATUE("teststatue", "BlockTestStatue"),
-		SNOWGOLEMSTATUE("snowgolemstatue", "BlockSnowGolemStatue");
+		SNOWGOLEMSTATUE("snowgolemstatue", "BlockSnowGolemStatue"),
+		PIGSTATUE("pigstatue", "BlockpigStatue");
 		
 		private String unlocalisedName;
 		private String registryName;
