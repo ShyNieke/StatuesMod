@@ -39,7 +39,7 @@ public class StatuesBlocks {
 		creeper_statue = new BlockCreeper_Statue();
 		cow_statue = new BlockCow_Statue();
 		mooshroom_statue = new BlockMooshroom_Statue();
-		mooshroom_statue = new BlockPig_Statue();
+		pig_statue = new BlockPig_Statue();
 	}
 	
 	public static void register()
@@ -77,6 +77,7 @@ public class StatuesBlocks {
 		registerRender(kingcluck_statue);
 		registerRender(creeper_statue);
 		registerRender(mooshroom_statue);
+		registerRender(pig_statue);
 	}
 	
 	public static void registerRender(Block block)
