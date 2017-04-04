@@ -1,42 +1,29 @@
-package com.svennieke.statues.blocks;
-
-import java.util.List;
+package com.svennieke.statues.blocks.tiers.muted;
 
 import com.svennieke.statues.Reference;
-import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
+import com.svennieke.statues.blocks.tiers.base.BlockCreeper_Statue;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockCreeper_Statue extends BaseCutout{
-	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6.5, 0.0625 * 9.5, 0.0625 * 9.5, 0.0625 * 9.5);
-	
+public class BlockCreeper_Statue_T4 extends BlockCreeper_Statue{
+		
 	private final String TAG_COOLDOWN = "cooldown";
 	public static double cooldown;
 	
-	public BlockCreeper_Statue() {
-		super(Material.TNT);
-		setUnlocalizedName(Reference.StatuesBlocks.CREEPERSTATUE.getUnlocalisedName());
-		setRegistryName(Reference.StatuesBlocks.CREEPERSTATUE.getRegistryName());
-		this.setCreativeTab(CreativeTabs.DECORATIONS);
-		this.setHardness(3.0F);
-		this.setSoundType(SoundType.PLANT);
+	public BlockCreeper_Statue_T4() {
+		super();
+		setUnlocalizedName(Reference.StatuesBlocks.CREEPERSTATUET4.getUnlocalisedName());
+		setRegistryName(Reference.StatuesBlocks.CREEPERSTATUET4.getRegistryName());
+
 	}
 
 	@Override
@@ -47,8 +34,7 @@ public class BlockCreeper_Statue extends BaseCutout{
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
-	public int StatueBehavior(BlockCreeper_Statue statue, EntityPlayer playerIn, World worldIn, BlockPos pos) {
-		playerIn.playSound(SoundEvents.ENTITY_CREEPER_HURT , 1F, 1F);
+	public int StatueBehavior(BlockCreeper_Statue_T4 statue, EntityPlayer playerIn, World worldIn, BlockPos pos) {
 		if (cooldown < 0.01){
 			playerIn.dropItem(new ItemStack(Items.GUNPOWDER, 1), true);
 		}
@@ -67,17 +53,5 @@ public class BlockCreeper_Statue extends BaseCutout{
 		}
 		
 		return 0;
-}
-	
-	@Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return BOUNDING_BOX;
-    }
-    
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
-    		List<AxisAlignedBB> collidingBoxes, Entity entityIn) {
-    	super.addCollisionBoxToList(state, worldIn, pos, entityBox, collidingBoxes, entityIn);
-    }
+	}
 }

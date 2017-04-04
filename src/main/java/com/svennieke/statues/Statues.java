@@ -3,9 +3,12 @@ package com.svennieke.statues;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesConfigGen;
+import com.svennieke.statues.init.StatuesCrafting;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.proxy.CommonProxy;
 
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -25,6 +28,13 @@ public class Statues {
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
 	
+	public static CreativeTabs tabStatues = new CreativeTabs("tabStatues") {
+		@Override
+		public Item getTabIconItem() {
+			return StatuesItems.nugget;
+		}
+	};
+	
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event)
 	{
@@ -35,7 +45,7 @@ public class Statues {
 		StatuesBlocks.register();
 		StatuesItems.init();
 		StatuesItems.register();
-		//StatuesCrafting.register();
+		StatuesCrafting.register();
 		
 		proxy.Preinit();
 	}
