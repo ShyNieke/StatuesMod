@@ -69,7 +69,8 @@ public class Reference {
 	
 	public static enum StatuesItems {
 		
-		ROYALNUGGET("royalnugget", "itemroyalnugget");
+		ROYALNUGGET("royalnugget", "itemroyalnugget"),
+		STATUECORE("statuecore", "itemstatuecore");
 		
 		private String unlocalisedName;
 		private String registryName;
