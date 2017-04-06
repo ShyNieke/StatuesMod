@@ -31,7 +31,7 @@ public class Statues {
 	public static CreativeTabs tabStatues = new CreativeTabs("tabStatues") {
 		@Override
 		public Item getTabIconItem() {
-			return StatuesItems.nugget;
+			return StatuesItems.core;
 		}
 	};
 	

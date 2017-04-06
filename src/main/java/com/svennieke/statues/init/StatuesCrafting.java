@@ -6,6 +6,8 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class StatuesCrafting {
 
@@ -36,15 +38,27 @@ public class StatuesCrafting {
 		
 		//tier three statues (sounds and functions)
 		
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.blaze_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.blaze_statuet2);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.chicken_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.chicken_statuet2);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.cow_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.cow_statuet2);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.creeper_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.creeper_statuet2);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.kingcluck_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.kingcluck_statuet2);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.mooshroom_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.mooshroom_statuet2);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.pig_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.pig_statuet2);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.slime_statuet2);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statuet3),"NCN","CSC", "CRC", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.snowgolem_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.blaze_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.blaze_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.chicken_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.chicken_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.cow_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.cow_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.creeper_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.creeper_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.kingcluck_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.kingcluck_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.mooshroom_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.mooshroom_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.pig_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.pig_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.slime_statuet2);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.snowgolem_statuet2);
+		
+		//tier four statues (only functions)
+		
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.blaze_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.blaze_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.chicken_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.chicken_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.cow_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.cow_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.creeper_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.creeper_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.kingcluck_statuet4),"WWW","WSW", "WWw", 'W', Blocks.WOOL, 'S', StatuesBlocks.kingcluck_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.mooshroom_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.mooshroom_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.pig_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.pig_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.slime_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.snowgolem_statuet3);
 	}
 }
 
