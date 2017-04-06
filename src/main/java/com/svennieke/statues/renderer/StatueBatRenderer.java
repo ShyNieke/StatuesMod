@@ -5,6 +5,7 @@ import com.svennieke.statues.entity.EntityStatueBat;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderBat;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
@@ -18,7 +19,7 @@ public class StatueBatRenderer extends RenderBat{
 	public StatueBatRenderer(RenderManager manager) {
 		super(manager);
 	}
-	
+
 	@Override
 	protected ResourceLocation getEntityTexture(EntityBat entity) {
 	  return texture;

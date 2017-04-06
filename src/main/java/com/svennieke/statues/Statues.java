@@ -1,5 +1,6 @@
 package com.svennieke.statues;
 
+import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.init.StatueEntity;
 import com.svennieke.statues.init.StatuesBlocks;
@@ -9,6 +10,7 @@ import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.proxy.CommonProxy;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -19,6 +21,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS)
 public class Statues {
@@ -49,6 +52,7 @@ public class Statues {
 		StatuesCrafting.register();
 		
 		StatueEntity.register();
+	
 		proxy.registerRendererFactories();
 		proxy.Preinit();
 	}

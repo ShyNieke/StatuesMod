@@ -44,8 +44,11 @@ tile.snowgolemstatuet4.name=Muted Snow Man Statue
 
 #Item names
 item.royalnugget.name=Royal Nugget
+item.statuecore.name=Statue Core
 
 #Special Lore
-
 cluckington.info=also known as Cluckington
 royalnugget.info=Made for and from royals
+
+#Entity
+entity.statues.StatueBat.name=Statue Bat
