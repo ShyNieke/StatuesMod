@@ -9,4 +9,8 @@ public class CommonProxy {
 	public void Init() {
 		
 	}
+
+	public void registerRendererFactories() {
+		
+	}
 }

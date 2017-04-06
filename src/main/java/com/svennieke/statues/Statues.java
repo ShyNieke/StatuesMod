@@ -1,6 +1,7 @@
 package com.svennieke.statues;
 
 import com.svennieke.statues.handler.DropHandler;
+import com.svennieke.statues.init.StatueEntity;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesCrafting;
@@ -47,6 +48,8 @@ public class Statues {
 		StatuesItems.register();
 		StatuesCrafting.register();
 		
+		StatueEntity.register();
+		proxy.registerRendererFactories();
 		proxy.Preinit();
 	}
 	
