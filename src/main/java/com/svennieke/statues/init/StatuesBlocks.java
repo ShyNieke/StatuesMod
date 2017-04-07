@@ -47,8 +47,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class StatuesBlocks {
 	
 	public static Block blaze_statue, chicken_statue,cow_statue,creeper_statue, 
-						kingcluck_statue, mooshroom_statue, pig_statue, slime_statue, 
-						snowgolem_statue;
+						kingcluck_statue, mooshroom_statue, pig_statue,
+						slime_statue, snowgolem_statue;
 	
 	public static Block blaze_statuet2, chicken_statuet2, cow_statuet2,creeper_statuet2, 
 						kingcluck_statuet2, mooshroom_statuet2, pig_statuet2, slime_statuet2, 
