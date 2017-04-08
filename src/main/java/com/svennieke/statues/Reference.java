@@ -19,6 +19,9 @@ public class Reference {
 		CREEPERSTATUE("creeperstatue", "BlockCreeperStatue"),
 		SNOWGOLEMSTATUE("snowgolemstatue", "BlockSnowGolemStatue"),
 		PIGSTATUE("pigstatue", "BlockpigStatue"),
+		RABBITSTATUE("rabbitstatue", "BlockrabbitStatue"),
+		SHEEPSTATUE("sheepstatue", "BlocksheepStatue"),
+		SHEEPSHAVENSTATUE("sheepshavenstatue", "BlocksheepshavenStatue"),
 		
 		SLIMESTATUET2("slimestatuet2", "BlockSlimeStatuet2"),
 		BLAZESTATUET2("blazestatuet2", "BlockBlazeStatuet2"),
@@ -29,6 +32,9 @@ public class Reference {
 		CREEPERSTATUET2("creeperstatuet2", "BlockCreeperStatuet2"),
 		SNOWGOLEMSTATUET2("snowgolemstatuet2", "BlockSnowGolemStatuet2"),
 		PIGSTATUET2("pigstatuet2", "BlockpigStatuet2"),
+		RABBITSTATUET2("rabbitstatuet2", "BlockrabbitStatuet2"),
+		SHEEPSTATUET2("sheepstatuet2", "BlocksheepStatuet2"),
+		SHEEPSHAVENSTATUET2("sheepshavenstatuet2", "BlocksheepshavenStatuet2"),
 		
 		SLIMESTATUET3("slimestatuet3", "BlockSlimeStatuet3"),
 		BLAZESTATUET3("blazestatuet3", "BlockBlazeStatuet3"),
@@ -39,6 +45,9 @@ public class Reference {
 		CREEPERSTATUET3("creeperstatuet3", "BlockCreeperStatuet3"),
 		SNOWGOLEMSTATUET3("snowgolemstatuet3", "BlockSnowGolemStatuet3"),
 		PIGSTATUET3("pigstatuet3", "BlockpigStatuet3"),
+		RABBITSTATUET3("rabbitstatuet3", "BlockrabbitStatuet3"),
+		SHEEPSTATUET3("sheepstatuet3", "BlocksheepStatuet3"),
+		SHEEPSHAVENSTATUET3("sheepshavenstatuet3", "BlocksheepshavenStatuet3"),
 		
 		SLIMESTATUET4("slimestatuet4", "BlockSlimeStatuet4"),
 		BLAZESTATUET4("blazestatuet4", "BlockBlazeStatuet4"),
@@ -48,7 +57,10 @@ public class Reference {
 		MOOSHROOMSTATUET4("mooshroomstatuet4", "BlockMooshroomStatuet4"),
 		CREEPERSTATUET4("creeperstatuet4", "BlockCreeperStatuet4"),
 		SNOWGOLEMSTATUET4("snowgolemstatuet4", "BlockSnowGolemStatuet4"),
-		PIGSTATUET4("pigstatuet4", "BlockpigStatuet4");
+		PIGSTATUET4("pigstatuet4", "BlockpigStatuet4"),
+		RABBITSTATUET4("rabbitstatuet4", "BlockrabbitStatuet4"),
+		SHEEPSTATUET4("sheepstatuet4", "BlocksheepStatuet4"),
+		SHEEPSHAVENSTATUET4("sheepshavenstatuet4", "BlocksheepshavenStatuet4");
 		
 		private String unlocalisedName;
 		private String registryName;
