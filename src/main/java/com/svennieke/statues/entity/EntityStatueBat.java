@@ -1,11 +1,18 @@
 package com.svennieke.statues.entity;
 
+import java.util.Calendar;
+
+import javax.annotation.Nullable;
+
+import com.svennieke.statues.Reference;
+
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityBat;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 
 public class EntityStatueBat extends EntityBat{
@@ -16,6 +23,8 @@ public class EntityStatueBat extends EntityBat{
 	public EntityStatueBat(World worldIn) {
 		super(worldIn);
 	}
+	
+	//public static final ResourceLocation LOOT = new ResourceLocation(Reference.MOD_ID, "entities/statue_bat");
 	
 	@Override
 	protected void applyEntityAttributes()
@@ -28,4 +37,44 @@ public class EntityStatueBat extends EntityBat{
     {
         EntityLiving.registerFixesMob(fixer, "StatueBat");
     }
+	
+	@Override
+	public boolean getCanSpawnHere() {
+		BlockPos blockpos = new BlockPos(this.posX, this.getEntityBoundingBox().minY, this.posZ);
+
+        if (blockpos.getY() >= this.worldObj.getSeaLevel())
+        {
+            return false;
+        }
+        else
+        {
+            int i = this.worldObj.getLightFromNeighbors(blockpos);
+            int j = 4;
+
+            if (this.isDateAroundHalloween(this.worldObj.getCurrentDate()))
+            {
+                j = 7;
+            }
+            else if (this.rand.nextBoolean())
+            {
+                return false;
+            }
+
+            return i > this.rand.nextInt(j) ? false : super.getCanSpawnHere() && dimension == DimensionType.OVERWORLD.getId();
+        }
+	}
+	
+	private boolean isDateAroundHalloween(Calendar p_175569_1_)
+    {
+        return p_175569_1_.get(2) + 1 == 10 && p_175569_1_.get(5) >= 20 || p_175569_1_.get(2) + 1 == 11 && p_175569_1_.get(5) <= 3;
+    }
+	
+	/*
+	@Override
+	@Nullable
+    protected ResourceLocation getLootTable()
+    {
+        return LOOT;
+    }
+    */
 }

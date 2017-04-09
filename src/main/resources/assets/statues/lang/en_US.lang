@@ -2,10 +2,12 @@
 itemGroup.tabStatues=Statues
 
 #Block names
+tile.babyzombiestatue.name=Decorative Baby Zombie Statue
 tile.blazestatue.name=Decorative Blaze Statue
 tile.chickenstatue.name=Decorative Chicken Statue
 tile.cowstatue.name=Decorative Cow Statue
 tile.creeperstatue.name=Decorative Creeper Statue
+tile.floodstatue.name=Decorative Flood Statue
 tile.kingcluckstatue.name=Decorative King Cluck Statue
 tile.mooshroomstatue.name=Decorative Mooshroom Statue
 tile.pigstatue.name=Decorative Pig Statue
@@ -15,10 +17,12 @@ tile.sheepstatue.name=Decorative Sheep Statue
 tile.slimestatue.name=Decorative Slime Statue
 tile.snowgolemstatue.name=Decorative Snow Man Statue
 
+tile.babyzombiestatuet2.name=Sound Baby Zombie Statue
 tile.blazestatuet2.name=Sound Blaze Statue
 tile.chickenstatuet2.name=Sound Chicken Statue
 tile.cowstatuet2.name=Sound Cow Statue
 tile.creeperstatuet2.name=Sound Creeper Statue
+tile.floodstatuet2.name=Sound Flood Statue
 tile.kingcluckstatuet2.name=Sound King Cluck Statue
 tile.mooshroomstatuet2.name=Sound Mooshroom Statue
 tile.pigstatuet2.name=Sound Pig Statue
@@ -28,10 +32,12 @@ tile.sheepstatuet2.name=Sound Sheep Statue
 tile.slimestatuet2.name=Sound Slime Statue
 tile.snowgolemstatuet2.name=Sound Snow Man Statue
 
+tile.babyzombiestatuet3.name=Functional Baby Zombie Statue
 tile.blazestatuet3.name=Functional Blaze Statue
 tile.chickenstatuet3.name=Functional Chicken Statue
 tile.cowstatuet3.name=Functional Cow Statue
 tile.creeperstatuet3.name=Functional Creeper Statue
+tile.floodstatuet3.name=Functional Flood Statue
 tile.kingcluckstatuet3.name=Functional King Cluck Statue
 tile.mooshroomstatuet3.name=Functional Mooshroom Statue
 tile.pigstatuet3.name=Functional Pig Statue
@@ -41,10 +47,12 @@ tile.sheepstatuet3.name=Functional Sheep Statue
 tile.slimestatuet3.name=Functional Slime Statue
 tile.snowgolemstatuet3.name=Functional Snow Man Statue
 
+tile.babyzombiestatuet4.name=Muted Baby Zombie Statue
 tile.blazestatuet4.name=Muted Blaze Statue
 tile.chickenstatuet4.name=Muted Chicken Statue
 tile.cowstatuet4.name=Muted Cow Statue
 tile.creeperstatuet4.name=Muted Creeper Statue
+tile.floodstatuet4.name=Muted Flood Statue
 tile.kingcluckstatuet4.name=Muted King Cluck Statue
 tile.mooshroomstatuet4.name=Muted Mooshroom Statue
 tile.pigstatuet4.name=Muted Pig Statue

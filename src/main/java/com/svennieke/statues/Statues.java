@@ -12,6 +12,8 @@ import com.svennieke.statues.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.Item;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
@@ -21,7 +23,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 @Mod(modid = Reference.MOD_ID, name = Reference.MOD_NAME, version = Reference.VERSION, acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS)
 public class Statues {
@@ -45,13 +46,13 @@ public class Statues {
 		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
 		StatuesConfigGen.configOptions(cfg);
 		
+		StatueEntity.register();
+		
 		StatuesBlocks.init();
 		StatuesBlocks.register();
 		StatuesItems.init();
 		StatuesItems.register();
 		StatuesCrafting.register();
-		
-		StatueEntity.register();
 	
 		proxy.registerRendererFactories();
 		proxy.Preinit();
@@ -60,6 +61,11 @@ public class Statues {
 	@EventHandler
     public void init(FMLInitializationEvent event)
     {
+		for (Biome biome : Biome.REGISTRY) {
+		    biome.getSpawnableList(EnumCreatureType.AMBIENT).add(new SpawnListEntry(EntityStatueBat.class, 4, 1, 2));
+		}
+		System.out.println("Registered Statues Bat Spawn");
+		
 		proxy.Init();
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
     }
