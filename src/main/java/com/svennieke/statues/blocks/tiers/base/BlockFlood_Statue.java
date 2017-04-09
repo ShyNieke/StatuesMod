@@ -16,13 +16,13 @@ import net.minecraft.world.World;
 
 public class BlockFlood_Statue extends BaseNormal{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6.5, 0.0625 * 9.5, 0.0625 * 9.5, 0.0625 * 9.5);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 0, 0, 0.0625 * 0, 0.0625 * 16, 0.0625 * 16, 0.0625 * 16);
 	
 	public BlockFlood_Statue() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
 		this.setHardness(3.0F);
-		this.setSoundType(SoundType.PLANT);
+		this.setSoundType(SoundType.GLASS);
 	}
 	
 	@Override

@@ -35,7 +35,7 @@ public class BlockSheep_Statue_T4 extends BlockSheep_Statue{
 	}
 	
 	public int StatueBehavior(BlockSheep_Statue_T4 statue, EntityPlayer playerIn) {
-		if (cooldown < 0.01){
+		if (cooldown < 0.1){
 			playerIn.dropItem(new ItemStack(Blocks.WOOL, 1), true);
 		}
 		else

@@ -36,7 +36,7 @@ public class BlockSheep_Statue_T3 extends BlockSheep_Statue{
 	
 	public int StatueBehavior(BlockSheep_Statue_T3 statue, EntityPlayer playerIn) {
 		playerIn.playSound(SoundEvents.ENTITY_SHEEP_AMBIENT, 1F, 1F);
-		if (cooldown < 0.01){
+		if (cooldown < 0.1){
 			playerIn.dropItem(new ItemStack(Blocks.WOOL, 1), true);
 		}
 		else

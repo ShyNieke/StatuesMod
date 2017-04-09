@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class BlockSheep_Statue extends BaseCutout{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6, 0, 0.0625 * 6, 0.0625 * 10, 0.0625 * 10.5, 0.0625 * 10);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 5, 0, 0.0625 * 5, 0.0625 * 11, 0.0625 * 8, 0.0625 * 11);
 	
 	public BlockSheep_Statue() {
 		super(Material.TNT);

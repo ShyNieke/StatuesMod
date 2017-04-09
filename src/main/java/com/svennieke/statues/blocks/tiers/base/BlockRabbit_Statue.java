@@ -15,8 +15,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockRabbit_Statue extends BaseCutout{
-	//																		X1, Y1,Z1,         X2,Y2,Z2
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 8, 0.0625 * 12);
+	//																		
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6, 0, 0.0625 * 6, 0.0625 * 10, 0.0625 * 6, 0.0625 * 10);
 	
 	private final String TAG_COOLDOWN = "cooldown";
 	public static double cooldown;
@@ -25,7 +25,7 @@ public class BlockRabbit_Statue extends BaseCutout{
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
 		this.setHardness(3.0F);
-		this.setSoundType(SoundType.SLIME);
+		this.setSoundType(SoundType.GLASS);
 	}
 	
     @Override
