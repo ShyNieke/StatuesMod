@@ -3,7 +3,7 @@ package com.svennieke.statues.blocks.tiers.sounds;
 import javax.annotation.Nullable;
 
 import com.svennieke.statues.Reference;
-import com.svennieke.statues.blocks.tiers.base.BlockCow_Statue;
+import com.svennieke.statues.blocks.tiers.base.BlockFlood_Statue;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,15 +14,15 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockCow_Statue_T2 extends BlockCow_Statue{
+public class BlockFlood_Statue_T2 extends BlockFlood_Statue{
 	
 	private final String TAG_COOLDOWN = "cooldown";
 	public static double cooldown;
 	
-	public BlockCow_Statue_T2() {
+	public BlockFlood_Statue_T2() {
 		super();
-		setUnlocalizedName(Reference.StatuesBlocks.COWSTATUET2.getUnlocalisedName());
-		setRegistryName(Reference.StatuesBlocks.COWSTATUET2.getRegistryName());
+		setUnlocalizedName(Reference.StatuesBlocks.FLOODSTATUET2.getUnlocalisedName());
+		setRegistryName(Reference.StatuesBlocks.FLOODSTATUET2.getRegistryName());
 	}
 	
 	@Override
@@ -34,8 +34,8 @@ public class BlockCow_Statue_T2 extends BlockCow_Statue{
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
-	public int StatueBehavior(BlockCow_Statue_T2 statue, EntityPlayer playerIn, World worldIn, EnumHand hand, @Nullable ItemStack stack) {
-		playerIn.playSound(SoundEvents.ENTITY_COW_AMBIENT, 1F, 1F);
+	public int StatueBehavior(BlockFlood_Statue_T2 statue, EntityPlayer playerIn, World worldIn, EnumHand hand, @Nullable ItemStack stack) {
+		playerIn.playSound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, 1F, 1F);
 				
 		return 0;
 	}
