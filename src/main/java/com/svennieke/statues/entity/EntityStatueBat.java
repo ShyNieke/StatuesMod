@@ -1,9 +1,11 @@
 package com.svennieke.statues.entity;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.world.World;
 
 public class EntityStatueBat extends EntityBat{
@@ -22,4 +24,8 @@ public class EntityStatueBat extends EntityBat{
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12.0D);
     }
 
+	public static void registerFixesStatueBat(DataFixer fixer)
+    {
+        EntityLiving.registerFixesMob(fixer, "StatueBat");
+    }
 }

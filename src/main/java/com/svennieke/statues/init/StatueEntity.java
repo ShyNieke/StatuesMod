@@ -10,7 +10,7 @@ public class StatueEntity {
 	
 	public static void register() {
 		EntityRegistry.registerModEntity(EntityStatueBat.class, "StatueBat", 0, Statues.instance, 80, 3, true);
-		EntityRegistry.addSpawn(EntityStatueBat.class, 1, 1, 2, EnumCreatureType.AMBIENT);
+		EntityRegistry.addSpawn(EntityStatueBat.class, 5, 1, 2, EnumCreatureType.AMBIENT);
 		EntityRegistry.registerEgg(EntityStatueBat.class, 3421236, 3556687);
 	}
 }
