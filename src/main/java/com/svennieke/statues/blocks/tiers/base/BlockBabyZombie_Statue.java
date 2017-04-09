@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class BlockBabyZombie_Statue extends BaseNormal{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6.5, 0.0625 * 9.5, 0.0625 * 9.5, 0.0625 * 9.5);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6.5, 0.0625 * 9.5, 0.0625 * 8, 0.0625 * 9.5);
 	
 	public BlockBabyZombie_Statue() {
 		super(Material.TNT);
