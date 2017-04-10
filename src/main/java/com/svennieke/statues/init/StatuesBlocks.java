@@ -56,11 +56,11 @@ import com.svennieke.statues.blocks.tiers.sounds.BlockSheepShaven_Statue_T2;
 import com.svennieke.statues.blocks.tiers.sounds.BlockSheep_Statue_T2;
 import com.svennieke.statues.blocks.tiers.sounds.BlockSlime_Statue_T2;
 import com.svennieke.statues.blocks.tiers.sounds.BlockSnowGolem_Statue_T2;
+import com.svennieke.statues.items.ItemBlockStatue;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -210,10 +210,10 @@ public class StatuesBlocks {
 	
 	public static void registerBlock(Block block) 
 	{
-		registerBlock(block, new ItemBlock(block));
+		registerBlock(block, new ItemBlockStatue(block));
 	}
 	
-	public static void registerBlock(Block block, ItemBlock item) 
+	public static void registerBlock(Block block, ItemBlockStatue item) 
 	{
 		GameRegistry.register(block);
 		item.setRegistryName(block.getRegistryName());
