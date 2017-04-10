@@ -1,8 +1,0 @@
-{
-    "variants": {
-		"facing=east":  { "model": "statues:BlockSnowGolemStatue", "y": 90},
-		"facing=north": { "model": "statues:BlockSnowGolemStatue"},
-		"facing=west":  { "model": "statues:BlockSnowGolemStatue", "y": 270},
-        "facing=south": { "model": "statues:BlockSnowGolemStatue", "y": 180}
-    }
-}
