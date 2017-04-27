@@ -31,13 +31,13 @@ public class BlockFlood_Statue_T4 extends BlockFlood_Statue{
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		cooldown = Math.random();
-		if (cooldown < 0.9) cooldown = StatueBehavior(this, playerIn, worldIn, hand, heldItem, pos, hitZ, hitZ, hitZ);
+		if (cooldown < 0.9) cooldown = StatueBehavior(this, playerIn, worldIn, hand, pos, hitZ, hitZ, hitZ);
 		
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
-	public int StatueBehavior(BlockFlood_Statue_T4 statue, EntityPlayer playerIn, World worldIn, EnumHand hand, @Nullable ItemStack stack, BlockPos pos, float hitX, float hitY, float hitZ) {
-		ItemStack i = playerIn.inventory.getCurrentItem();
+	public int StatueBehavior(BlockFlood_Statue_T4 statue, EntityPlayer playerIn, World worldIn, EnumHand hand, BlockPos pos, float hitX, float hitY, float hitZ) {
+		ItemStack stack = playerIn.inventory.getCurrentItem();
 		
 		EntityFireworkRocket entityfireworkrocket = new EntityFireworkRocket(worldIn, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), stack);
 		
@@ -47,10 +47,11 @@ public class BlockFlood_Statue_T4 extends BlockFlood_Statue{
 		}
 		
 		if(WATER){
-			if (stack != null && stack.getItem() == Items.BUCKET)
+			if (stack != null && stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
 			{
 				ItemStack floodbucket = new ItemStack(Items.WATER_BUCKET); 
 				floodbucket.setStackDisplayName("The Flood");
+				
 				if (--stack.stackSize == 0)
 	            {
 	                playerIn.setHeldItem(hand, floodbucket);

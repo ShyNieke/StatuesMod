@@ -31,15 +31,15 @@ public class BlockMooshroom_Statue_T3 extends BlockMooshroom_Statue{
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		cooldown = Math.random();
-		if (cooldown < 0.9) cooldown = StatueBehavior(this, playerIn, worldIn, hand, heldItem);
+		if (cooldown < 0.9) cooldown = StatueBehavior(this, playerIn, worldIn, hand);
 		
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 	
-	public int StatueBehavior(BlockMooshroom_Statue_T3 statue, EntityPlayer playerIn, World worldIn, EnumHand hand, @Nullable ItemStack stack) {
+	public int StatueBehavior(BlockMooshroom_Statue_T3 statue, EntityPlayer playerIn, World worldIn, EnumHand hand) {
 		playerIn.playSound(SoundEvents.ENTITY_COW_AMBIENT, 1F, 1F);
-		ItemStack i = playerIn.inventory.getCurrentItem();
-				
+		ItemStack stack = playerIn.inventory.getCurrentItem();
+		
 		if(!worldIn.isRemote)
 			//System.out.println(i);
 		if(milk){
