@@ -28,7 +28,7 @@ public class BlockChicken_Statue extends BaseCutout{
 	}
 	
 	@Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return BOUNDING_BOX;
     }
