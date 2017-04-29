@@ -3,10 +3,6 @@ package com.svennieke.statues.init;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.entity.EntityStatueBat;
 
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Biomes;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class StatueEntity {
