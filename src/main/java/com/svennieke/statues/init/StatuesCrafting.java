@@ -1,18 +1,12 @@
 package com.svennieke.statues.init;
 
-import akka.util.BoundedBlockingQueue;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class StatuesCrafting {
 
 	public static void register() {
-		
+
+		/* No longer the way
 		// Tier one statues (decorative only)
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.blaze_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.BLAZE_ROD, 'C', StatuesItems.core);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.baby_zombie_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.ROTTEN_FLESH, 'C', StatuesItems.core);
@@ -77,6 +71,7 @@ public class StatuesCrafting {
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheepshaven_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.sheepshaven_statuet3);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.slime_statuet3);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.snowgolem_statuet3);
+		 */
 	}
 }
 

@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "statues:blocksnowgolemstatue"
+  },
+  "pattern": [
+    "GPG",
+    "MCM",
+    "GMG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": {
+      "item": "minecraft:pumpkin"
+    },
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "M": {
+      "item": "minecraft:snow"
+    }
+  }
+}

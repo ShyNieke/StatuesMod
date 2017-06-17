@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "statues:blockcowstatue"
+  },
+  "pattern": [
+    "GMG",
+    "LCL",
+    "GBG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:beef"
+    },
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "M": {
+      "item": "minecraft:milk_bucket"
+    }
+  }
+}
