@@ -7,7 +7,6 @@ import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesConfigGen;
-import com.svennieke.statues.init.StatuesCrafting;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.proxy.CommonProxy;
@@ -68,7 +67,8 @@ public class Statues {
 		StatuesBlocks.register();
 		StatuesItems.init();
 		StatuesItems.register();
-		StatuesCrafting.register();
+
+		//StatuesCrafting.register();
 		
 		proxy.Preinit();
 	}

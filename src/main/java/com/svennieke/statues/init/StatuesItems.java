@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class StatuesItems {
 	
@@ -21,8 +21,8 @@ public class StatuesItems {
 	
 	public static void register()
 	{
-		GameRegistry.register(nugget);
-		GameRegistry.register(core);
+		ForgeRegistries.ITEMS.register(nugget);
+		ForgeRegistries.ITEMS.register(core);
 	}
 	
 	public static void registerRenders()

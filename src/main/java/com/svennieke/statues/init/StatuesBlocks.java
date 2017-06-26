@@ -62,7 +62,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class StatuesBlocks {
 	
@@ -215,9 +215,9 @@ public class StatuesBlocks {
 	
 	public static void registerBlock(Block block, ItemBlockStatue item) 
 	{
-		GameRegistry.register(block);
+		ForgeRegistries.BLOCKS.register(block);
 		item.setRegistryName(block.getRegistryName());
-		GameRegistry.register(item);
+		ForgeRegistries.ITEMS.register(item);
 	}
 	
 	public static void registerRenders()
