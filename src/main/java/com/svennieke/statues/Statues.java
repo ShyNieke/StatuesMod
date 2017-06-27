@@ -3,10 +3,10 @@ package com.svennieke.statues;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.init.StatuesBlocks;
-import com.svennieke.statues.init.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesCrafting;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesItems;
@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -55,12 +54,11 @@ public class Statues {
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event)
 	{
-		isBaublesEnabled = Loader.isModLoaded("Baubles");
+		isBaublesEnabled = Loader.isModLoaded("baubles");
 		if(isBaublesEnabled)logger.info("Loading With Baubles Compat");
 		else{logger.info("Loading Without Baubles Compat");}
 		
-		Configuration cfg = new Configuration(event.getSuggestedConfigurationFile());
-		StatuesConfigGen.configOptions(cfg);
+		MinecraftForge.EVENT_BUS.register(new StatuesConfigGen());
 		
 		StatuesEntity.register();
 		

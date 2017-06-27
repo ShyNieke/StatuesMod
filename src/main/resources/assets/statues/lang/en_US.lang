@@ -1,6 +1,9 @@
 #Tab
 itemGroup.tabStatues=Statues
 
+#Config Title
+statues.config.title=Statues Config
+
 #Block names
 tile.babyzombiestatue.name=Decorative Baby Zombie Statue
 tile.blazestatue.name=Decorative Blaze Statue
@@ -71,4 +74,4 @@ cluckington.info=also known as Cluckington
 royalnugget.info=Made for and from royals
 
 #Entity
-entity.statues.StatueBat.name=Statue Bat
+entity.statues:StatueBat.name=Statue Bat

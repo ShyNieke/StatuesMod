@@ -5,6 +5,7 @@ import java.util.Calendar;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityBat;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DimensionType;
@@ -64,12 +65,9 @@ public class EntityStatueBat extends EntityBat{
         return p_175569_1_.get(2) + 1 == 10 && p_175569_1_.get(5) >= 20 || p_175569_1_.get(2) + 1 == 11 && p_175569_1_.get(5) <= 3;
     }
 	
-	/*
-	@Override
-	@Nullable
+    @Override
     protected ResourceLocation getLootTable()
     {
-        return LOOT;
+    	return new ResourceLocation("statues:entity/statuebat");
     }
-    */
 }
