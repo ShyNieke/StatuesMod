@@ -1,6 +1,9 @@
 #Tab
 itemGroup.tabStatues=Statues
 
+#Config name
+statues.config.title=Statues config
+
 #Block names
 tile.babyzombiestatue.name=Decorative Baby Zombie Statue
 tile.blazestatue.name=Decorative Blaze Statue
