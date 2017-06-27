@@ -9,9 +9,13 @@ import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.EntitySnowman;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityMooshroom;
+import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntityRabbit;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -85,6 +89,42 @@ public class DropHandler {
 	        	if ( random_drop < StatuesConfigGen.DropChance )
 	        	{
 	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.creeper_statue, 1);
+	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+	        	}
+	        }
+	        
+	        if (entity instanceof EntityPig) {
+	        	random_drop = Math.random();
+	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.pig_statue, 1);
+	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+	        	}
+	        }
+	        
+	        if (entity instanceof EntityRabbit) {
+	        	random_drop = Math.random();
+	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_statue, 1);
+	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+	        	}
+	        }
+	        
+	        if (entity instanceof EntitySheep) {
+	        	random_drop = Math.random();
+	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue, 1);
+	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+	        	}
+	        }
+	        
+	        if (entity instanceof EntityZombie) {
+	        	random_drop = Math.random();
+	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.baby_zombie_statue, 1);
 	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 	        	}
 	        }
