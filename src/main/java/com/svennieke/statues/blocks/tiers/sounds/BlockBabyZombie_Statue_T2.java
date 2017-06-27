@@ -22,7 +22,7 @@ public class BlockBabyZombie_Statue_T2 extends BlockBabyZombie_Statue{
 		setRegistryName(Reference.StatuesBlocks.BABYZOMBIESTATUET2.getRegistryName());
 
 	}
-
+	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {

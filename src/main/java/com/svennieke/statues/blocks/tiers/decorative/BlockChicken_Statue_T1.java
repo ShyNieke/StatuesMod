@@ -23,14 +23,14 @@ public class BlockChicken_Statue_T1 extends BlockChicken_Statue{
 	}
 	
 	@Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) 
+	{
     	Block block = worldIn.getBlockState(pos.down()).getBlock();
-    	if (block == Blocks.GOLD_BLOCK) {
+		if (block == Blocks.GOLD_BLOCK) {
     		worldIn.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, pos.down().getX(), pos.down().getY(), pos.down().getZ(), 0.0D, 0.0D, 0.0D, new int[0]);
     		worldIn.setBlockState(pos.down(), StatuesBlocks.kingcluck_statue.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));
     		worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
     	}
     	super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-    }
+	}
 }

@@ -14,8 +14,10 @@ import com.svennieke.statues.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
+import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Loader;
@@ -43,7 +45,7 @@ public class Statues {
 	
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 	public static boolean isBaublesEnabled = false;
-	
+		
 	public static CreativeTabs tabStatues = new CreativeTabs("tabStatues") {
 		@Override
 		public ItemStack getTabIconItem() {
@@ -62,7 +64,6 @@ public class Statues {
 		StatuesConfigGen.configOptions(cfg);
 		
 		StatuesEntity.register();
-		
 		StatuesBlocks.init();
 		StatuesBlocks.register();
 		StatuesItems.init();

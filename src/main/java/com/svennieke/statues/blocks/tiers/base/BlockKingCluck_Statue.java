@@ -11,6 +11,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -39,11 +40,13 @@ public class BlockKingCluck_Statue extends BaseCutout{
         return BOUNDING_BOX;
     }
     
-	@Override
-	@Deprecated
+    @Override
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
     {
-        addCollisionBoxToList(pos, entityBox, collidingBoxes, state.getCollisionBoundingBox(worldIn, pos));
+        if (!(entityIn instanceof EntityBoat))
+        {
+            addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
+        }
     }
     
     @SideOnly(Side.CLIENT)
