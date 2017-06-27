@@ -63,7 +63,7 @@ public class StatuesCrafting {
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.cow_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.cow_statuet3);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.creeper_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.creeper_statuet3);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.flood_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.flood_statuet3);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.kingcluck_statuet4),"WWW","WSW", "WWw", 'W', Blocks.WOOL, 'S', StatuesBlocks.kingcluck_statuet3);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.kingcluck_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.kingcluck_statuet3);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.mooshroom_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.mooshroom_statuet3);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.pig_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.pig_statuet3);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.rabbit_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.rabbit_statuet3);
