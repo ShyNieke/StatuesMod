@@ -28,7 +28,7 @@ public class DropHandler {
 	@SubscribeEvent
 	public void onLivingDrop(LivingDropsEvent event) {
 		Entity entity = event.getEntity();
-		if(StatuesConfigGen.DropStatues = true)
+		if(StatuesConfigGen.DropStatues == true)
 		{
 			if (entity instanceof EntitySlime) {
 				random_drop = Math.random();

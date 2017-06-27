@@ -53,7 +53,7 @@ public class Statues {
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event)
 	{
-		isBaublesEnabled = Loader.isModLoaded("Baubles");
+		isBaublesEnabled = Loader.isModLoaded("baubles");
 		if(isBaublesEnabled)logger.info("Loading With Baubles Compat");
 		else{logger.info("Loading Without Baubles Compat");}
 		
