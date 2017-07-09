@@ -19,6 +19,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BaseTranslucent extends BlockHorizontal{
 
+    //public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+
 	protected BaseTranslucent(Material materialIn) {
 		super(materialIn);
 	}
