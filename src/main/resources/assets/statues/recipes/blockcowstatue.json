@@ -24,5 +24,8 @@
     "M": {
       "item": "minecraft:milk_bucket"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

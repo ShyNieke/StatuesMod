@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:mutton"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

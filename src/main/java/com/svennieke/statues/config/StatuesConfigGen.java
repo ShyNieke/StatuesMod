@@ -12,11 +12,23 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Config.LangKey("statues.config.title")
 public class StatuesConfigGen {
 	
-	@Config.Comment("Can statues drop from mobs (default: false)")
-	public static boolean DropStatues = false;
+	@Config.Comment({"General settings"})
+	public static General general = new General();
 	
-	@Config.Comment("The drop chance of statues when statue drops is true (default: 0.01)")
-	public static double DropChance = 0.01;
+	public static class General{
+		@Config.Comment("Tier 1 needs to be crafted with Statue Core (default: true)" +
+						"Disabling this makes tier1 statues drop from mobs.")
+		public boolean NewSystem = true;
+		
+		@Config.Comment("The drop chance of statues when statue drops is true (default: 0.01)" +
+						"This option only has effects ")
+		public double DropChance = 0.01;
+		
+		@Config.Comment("The amount of time [in seconds] that you have to wait before being able to interact with the statues (tier 2 and higher)"+
+						"(default: 60)")
+		public double InteractionTimer = 3;
+	}
+	
 
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
 	private static class EventHandler {

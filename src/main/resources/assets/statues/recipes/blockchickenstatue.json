@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:egg"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

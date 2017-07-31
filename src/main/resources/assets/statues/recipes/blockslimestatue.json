@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:slime_ball"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

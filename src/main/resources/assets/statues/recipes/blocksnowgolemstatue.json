@@ -21,5 +21,8 @@
     "M": {
       "item": "minecraft:snow"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

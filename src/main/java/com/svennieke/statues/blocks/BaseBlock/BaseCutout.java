@@ -19,8 +19,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BaseCutout extends BlockHorizontal{
 
-    //public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-
 	protected BaseCutout(Material materialIn) {
 		super(materialIn);
 	}

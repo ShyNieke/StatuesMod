@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:porkchop"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

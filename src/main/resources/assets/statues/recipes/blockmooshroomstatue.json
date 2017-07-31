@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:mushroom_stew"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

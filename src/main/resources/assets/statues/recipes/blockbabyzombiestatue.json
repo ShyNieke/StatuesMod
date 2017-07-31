@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:rotten_flesh"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

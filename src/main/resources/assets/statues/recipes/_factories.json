@@ -1,0 +1,5 @@
+{
+    "conditions" : {
+        "newsystem": "com.svennieke.statues.init.StatuesRecipeCondition"
+    }
+}

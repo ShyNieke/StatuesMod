@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:blaze_rod"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

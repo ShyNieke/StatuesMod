@@ -3,6 +3,7 @@ package com.svennieke.statues.items;
 import java.util.List;
 
 import com.svennieke.statues.Reference;
+import com.svennieke.statues.Statues;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,6 +20,7 @@ public class ItemRoyalNugget extends ItemFood {
 		setUnlocalizedName(Reference.StatuesItems.ROYALNUGGET.getUnlocalisedName());
 		setRegistryName(Reference.StatuesItems.ROYALNUGGET.getRegistryName());
 		setCreativeTab(CreativeTabs.FOOD);
+		setCreativeTab(Statues.tabStatues);
 	}
 	
     @SideOnly(Side.CLIENT)

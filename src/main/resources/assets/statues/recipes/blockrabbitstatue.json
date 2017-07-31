@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:rabbit_hide"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

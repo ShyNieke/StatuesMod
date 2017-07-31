@@ -18,5 +18,8 @@
     "M": {
       "item": "minecraft:gunpowder"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

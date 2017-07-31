@@ -28,11 +28,11 @@ public class DropHandler {
 	@SubscribeEvent
 	public void onLivingDrop(LivingDropsEvent event) {
 		Entity entity = event.getEntity();
-		if(StatuesConfigGen.DropStatues == true)
+		if(StatuesConfigGen.general.NewSystem == false)
 		{
 			if (entity instanceof EntitySlime) {
 				random_drop = Math.random();
-	            if ( random_drop < StatuesConfigGen.DropChance )
+	            if ( random_drop < StatuesConfigGen.general.DropChance )
 	            {
 	            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue, 1);
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -41,7 +41,7 @@ public class DropHandler {
 			
 			if (entity instanceof EntityBlaze) {
 				random_drop = Math.random();
-	            if ( random_drop < StatuesConfigGen.DropChance )
+	            if ( random_drop < StatuesConfigGen.general.DropChance )
 	            {
 	            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.blaze_statue, 1);
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -50,7 +50,7 @@ public class DropHandler {
 			
 			if (entity instanceof EntitySnowman) {
 				random_drop = Math.random();
-	            if ( random_drop < StatuesConfigGen.DropChance )
+	            if ( random_drop < StatuesConfigGen.general.DropChance )
 	            {
 	            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.snowgolem_statue, 1);
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -59,7 +59,7 @@ public class DropHandler {
 			
 			if (entity instanceof EntityCow) {
 				random_drop = Math.random();
-	            if ( random_drop < StatuesConfigGen.DropChance )
+	            if ( random_drop < StatuesConfigGen.general.DropChance )
 	            {
 	            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.cow_statue, 1);
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -68,7 +68,7 @@ public class DropHandler {
 			
 	        if (entity instanceof EntityMooshroom) {
 				random_drop = Math.random();
-	            if ( random_drop < StatuesConfigGen.DropChance )
+	            if ( random_drop < StatuesConfigGen.general.DropChance )
 	            {
 	            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.mooshroom_statue, 1);
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -77,7 +77,7 @@ public class DropHandler {
 	        
 	        if (entity instanceof EntityChicken) {
 				random_drop = Math.random();
-	            if ( random_drop < StatuesConfigGen.DropChance )
+	            if ( random_drop < StatuesConfigGen.general.DropChance )
 	            {
 	            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.chicken_statue, 1);
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -86,7 +86,7 @@ public class DropHandler {
 	        
 	        if (entity instanceof EntityCreeper) {
 	        	random_drop = Math.random();
-	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	if ( random_drop < StatuesConfigGen.general.DropChance )
 	        	{
 	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.creeper_statue, 1);
 	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -95,7 +95,7 @@ public class DropHandler {
 	        
 	        if (entity instanceof EntityPig) {
 	        	random_drop = Math.random();
-	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	if ( random_drop < StatuesConfigGen.general.DropChance )
 	        	{
 	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.pig_statue, 1);
 	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -104,7 +104,7 @@ public class DropHandler {
 	        
 	        if (entity instanceof EntityRabbit) {
 	        	random_drop = Math.random();
-	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	if ( random_drop < StatuesConfigGen.general.DropChance )
 	        	{
 	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_statue, 1);
 	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -113,7 +113,7 @@ public class DropHandler {
 	        
 	        if (entity instanceof EntitySheep) {
 	        	random_drop = Math.random();
-	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	if ( random_drop < StatuesConfigGen.general.DropChance )
 	        	{
 	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue, 1);
 	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
@@ -122,7 +122,7 @@ public class DropHandler {
 	        
 	        if (entity instanceof EntityZombie) {
 	        	random_drop = Math.random();
-	        	if ( random_drop < StatuesConfigGen.DropChance )
+	        	if ( random_drop < StatuesConfigGen.general.DropChance )
 	        	{
 	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.baby_zombie_statue, 1);
 	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));

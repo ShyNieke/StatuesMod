@@ -15,8 +15,6 @@ import net.minecraft.world.World;
 
 public class BaseNormal extends BlockHorizontal{
 
-    //public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-
 	protected BaseNormal(Material materialIn) {
 		super(materialIn);
 	}
