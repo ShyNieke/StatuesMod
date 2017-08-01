@@ -7,7 +7,6 @@ import com.svennieke.statues.tileentity.StatueTileEntity;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -57,7 +56,7 @@ public class BlockRabbit_Statue extends BlockRabbit implements iStatue, ITileEnt
 	        	ItemStack hide = new ItemStack(Items.RABBIT_HIDE, 1);
 	        	ItemStack rabbit = new ItemStack(Items.RABBIT, 1);
 	        	ItemStack foot = new ItemStack(Items.RABBIT_FOOT, 1);
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_RABBIT_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_RABBIT_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(hide, rabbit, foot, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}

@@ -56,7 +56,7 @@ public class BlockCreeper_Statue extends BlockCreeper implements iStatue, ITileE
 	        	
 	        	EntityCreeper entitycreeper = new EntityCreeper(worldIn);
 	        	ItemStack gunpowder = new ItemStack(Items.GUNPOWDER, 1);
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CREEPER_PRIMED, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CREEPER_PRIMED, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(gunpowder, null, null, entitycreeper, true, true, this, playerIn, worldIn, pos);
 	        }
 		}

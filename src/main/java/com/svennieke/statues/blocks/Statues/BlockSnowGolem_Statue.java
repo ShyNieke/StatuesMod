@@ -56,7 +56,7 @@ public class BlockSnowGolem_Statue extends BlockSnowGolem implements iStatue, IT
 	        	
 	        	ItemStack pumpkin = new ItemStack(Blocks.PUMPKIN, 1);
 	        	ItemStack snowball = new ItemStack(Items.SNOWBALL, 1);
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(snowball, null, pumpkin, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}

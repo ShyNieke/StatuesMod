@@ -50,7 +50,7 @@ public class BlockMooshroom_Statue extends BlockMooshroom implements iStatue, IT
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_COW_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_COW_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).SpecialInteraction(false, true, false, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
 	        	getTE(worldIn, pos).StatueBehavior(null, null, null, null, false, false, this, playerIn, worldIn, pos);
 	        }

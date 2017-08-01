@@ -10,7 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -57,7 +56,7 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 	        	
 	        	ItemStack wool = new ItemStack(Blocks.WOOL, 1);
 	        	ItemStack mutton = new ItemStack(Items.MUTTON, 1);
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(wool, null, mutton, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}

@@ -62,7 +62,7 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements iStatue, IT
 	        	
 	        	ItemStack nugget = new ItemStack(StatuesItems.nugget, 1);
 	        	ItemStack gold = new ItemStack(Items.GOLD_NUGGET, 1);
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(nugget, null, gold, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}

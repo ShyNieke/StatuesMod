@@ -73,7 +73,7 @@ public class BlockFlood_Statue extends BlockFlood implements iStatue, ITileEntit
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).SpecialInteraction(false, false, true, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
 	        	getTE(worldIn, pos).StatueBehavior(null, null, null, null, false, false, this, playerIn, worldIn, pos);
 	        }

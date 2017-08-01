@@ -34,9 +34,11 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
 			return new StatueTileEntity();
 		}
 		else
+		{
 		return null;
+		}
 	}
-	
+
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
@@ -55,7 +57,7 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
 	        	
 	        	ItemStack flesh = new ItemStack(Items.ROTTEN_FLESH, 1);
 	        	ItemStack ironnugget = new ItemStack(Items.IRON_NUGGET, 1);
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(flesh, ironnugget, null, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}

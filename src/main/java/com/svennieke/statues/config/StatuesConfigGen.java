@@ -21,8 +21,8 @@ public class StatuesConfigGen {
 		public boolean NewSystem = true;
 		
 		@Config.Comment("The drop chance of statues when statue drops is true (default: 0.01)" +
-						"This option only has effects ")
-		public double DropChance = 0.01;
+						"This option only has effects when NewSystem is false")
+		public double OldDropChance = 0.01;
 		
 		@Config.Comment("The amount of time [in seconds] that you have to wait before being able to interact with the statues (tier 2 and higher)"+
 						"(default: 60)")

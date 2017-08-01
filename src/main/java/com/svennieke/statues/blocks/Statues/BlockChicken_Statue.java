@@ -74,7 +74,7 @@ public class BlockChicken_Statue extends BlockChicken implements iStatue, ITileE
 	        	}
 	        	ItemStack feather = new ItemStack(Items.FEATHER, 1);
 	        	ItemStack egg = new ItemStack(Items.EGG, 1);
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(feather, egg, null, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}

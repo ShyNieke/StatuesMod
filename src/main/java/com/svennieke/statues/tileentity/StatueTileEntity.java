@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,7 +24,6 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	private int Cooldown;
 	private boolean able;
 	private int tier;
-	private int random = world.rand.nextInt(100);
 	
 	public StatueTileEntity() {
 		this.Cooldown = 0;
@@ -37,10 +37,11 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 		return this.tier;
 	}
 	
-	public void PlaySound(SoundEvent Mobsound, EntityPlayer playerIn) {
+	public void PlaySound(SoundEvent Mobsound, BlockPos pos, World worldIn) {
 		if(tier == 2 || tier == 3)
 		{
-			playerIn.playSound(Mobsound , 1F, 1F);
+			worldIn.playSound(null, pos, Mobsound, SoundCategory.NEUTRAL, 1F, 1F);
+			//Statues.logger.info("playing sound");
 		}
 	}
 	
@@ -49,6 +50,8 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 		EntityFireworkRocket firework = new EntityFireworkRocket(worldIn, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), stack);
 		if(isAble()) 
 		{
+			int random = world.rand.nextInt(100);
+			
 			if(isCow)
 			{
 				if(!worldIn.isRemote)
@@ -113,7 +116,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 			            }
 					}
 				
-					if (this.random < 50){
+					if (random < 50){
 						 worldIn.spawnEntity(firework);
 					}	
 			}
@@ -127,11 +130,12 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 		
 		if(isAble()) 
 		{
+			int random = world.rand.nextInt(100);
 			if(tier == 3 || tier == 4)
 			{
-				if (this.random < 100 && stack1 != null){playerIn.dropItem(stack1, true);}
+				if (random < 100 && stack1 != null){playerIn.dropItem(stack1, true);}
 				
-				if (this.random < 10 && spawnEntity)
+				if (random < 10 && spawnEntity)
 				{
 					if (!worldIn.isRemote)
 					{
@@ -157,14 +161,14 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 				}
 				
 				if(stack2 != null){
-					if(this.random < 50)
+					if(random < 50)
 					{
 						playerIn.dropItem(stack2, true);
 					}
 				}
 				
 				if(stack3 != null){
-					if(this.random < 10)
+					if(random < 10)
 					{
 						playerIn.dropItem(stack3, true);
 					}

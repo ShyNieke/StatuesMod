@@ -6,9 +6,7 @@ import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -52,7 +50,7 @@ public class BlockCow_Statue extends BlockCow implements iStatue, ITileEntityPro
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_COW_AMBIENT, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_COW_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).SpecialInteraction(true, false, false, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
 	        	getTE(worldIn, pos).StatueBehavior(null, null, null, null, false, false, this, playerIn, worldIn, pos);
 	        }

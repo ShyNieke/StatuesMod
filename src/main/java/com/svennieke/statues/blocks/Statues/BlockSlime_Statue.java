@@ -6,7 +6,6 @@ import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -55,7 +54,7 @@ public class BlockSlime_Statue extends BlockSlime implements iStatue, ITileEntit
 	        	}
 	
 	        	ItemStack slimeball = new ItemStack(Items.SLIME_BALL, 1);
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SLIME_SQUISH, playerIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SLIME_SQUISH, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(null, slimeball, null, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}
