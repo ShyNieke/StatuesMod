@@ -16,5 +16,8 @@
       "item": "minecraft:wool",
       "data": 0
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
 }

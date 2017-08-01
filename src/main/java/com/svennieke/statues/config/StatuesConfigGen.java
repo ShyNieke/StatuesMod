@@ -16,17 +16,20 @@ public class StatuesConfigGen {
 	public static General general = new General();
 	
 	public static class General{
-		@Config.Comment("Tier 1 needs to be crafted with Statue Core (default: true)" +
+		@Config.Comment("Tier 1 needs to be crafted with Statue Core (Default: true)" +
 						"Disabling this makes tier1 statues drop from mobs.")
 		public boolean NewSystem = true;
 		
-		@Config.Comment("The drop chance of statues when statue drops is true (default: 0.01)" +
+		@Config.Comment("The drop chance of statues when statue drops is true (Default: 0.01)" +
 						" [This option only takes effect when NewSystem is false]")
 		public double OldDropChance = 0.01;
 		
 		@Config.Comment("The amount of time [in seconds] that you have to wait before being able to interact with the statues (tier 2 and higher)"+
-						"(default: 60)")
+						"(Default: 60)")
 		public double InteractionTimer = 3;
+		
+		@Config.Comment("Setting this to false disables the tier 3 and 4 recipes. (Default: true)")
+		public boolean CraftableInteraction = true;
 	}
 	
 

@@ -18,5 +18,8 @@
     "N": {
       "item": "minecraft:quartz_ore"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
 }
