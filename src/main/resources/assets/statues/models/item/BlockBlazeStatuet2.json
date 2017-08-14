@@ -1,5 +1,5 @@
 {
-	"parent": "statues:block/BlockBlazeStatue",
+	"parent": "statues:block/blockblazestatue",
 	"display": {
 		"thirdperson_righthand": {
 			"rotation":  [ -89, 0, 0 ],

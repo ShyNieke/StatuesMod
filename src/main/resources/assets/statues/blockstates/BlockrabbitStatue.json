@@ -1,8 +1,8 @@
 {
     "variants": {
-		"facing=east":  { "model": "statues:BlockRabbitBrownWhiteStatue", "y": 90},
-		"facing=north": { "model": "statues:BlockRabbitBrownWhiteStatue"},
-		"facing=west":  { "model": "statues:BlockRabbitBrownWhiteStatue", "y": 270},
-        "facing=south": { "model": "statues:BlockRabbitBrownWhiteStatue", "y": 180}
+		"facing=east":  { "model": "statues:blockrabbitbrownwhitestatue", "y": 90},
+		"facing=north": { "model": "statues:blockrabbitbrownwhitestatue"},
+		"facing=west":  { "model": "statues:blockrabbitbrownwhitestatue", "y": 270},
+        "facing=south": { "model": "statues:blockrabbitbrownwhitestatue", "y": 180}
     }
 }

@@ -1,5 +1,5 @@
 {	
-    "parent": "statues:block/BlockSnowGolemStatue",
+    "parent": "statues:block/blocksnowgolemstatue",
 	"display": {
 		"thirdperson_righthand": {
 			"rotation":  [ -89, 0, 0 ],

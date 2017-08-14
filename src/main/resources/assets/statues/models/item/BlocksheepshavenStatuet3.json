@@ -1,5 +1,5 @@
 {
-	"parent": "statues:block/BlockShearedSheepStatue",
+	"parent": "statues:block/blockshearedsheepstatue",
 	"display": {
 		"thirdperson_righthand": {
 			"rotation":  [ -89, 180, 0 ],

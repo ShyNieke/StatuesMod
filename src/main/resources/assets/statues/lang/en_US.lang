@@ -1,77 +1,99 @@
-#Tab
-itemGroup.tabStatues=Statues
+#Creative Tab Name
+itemGroup.statues=Statues
 
 #Config name
 statues.config.title=Statues config
 
 #Block names
 tile.babyzombiestatue.name=Decorative Baby Zombie Statue
-tile.blazestatue.name=Decorative Blaze Statue
-tile.chickenstatue.name=Decorative Chicken Statue
-tile.cowstatue.name=Decorative Cow Statue
-tile.creeperstatue.name=Decorative Creeper Statue
-tile.floodstatue.name=Decorative Flood Statue
-tile.kingcluckstatue.name=Decorative King Cluck Statue
-tile.mooshroomstatue.name=Decorative Mooshroom Statue
-tile.pigstatue.name=Decorative Pig Statue
-tile.rabbitstatue.name=Decorative Rabbit Statue
-tile.sheepshavenstatue.name=Decorative Shaven Sheep Statue
-tile.sheepstatue.name=Decorative Sheep Statue
-tile.slimestatue.name=Decorative Slime Statue
-tile.snowgolemstatue.name=Decorative Snow Man Statue
-
 tile.babyzombiestatuet2.name=Sound Baby Zombie Statue
-tile.blazestatuet2.name=Sound Blaze Statue
-tile.chickenstatuet2.name=Sound Chicken Statue
-tile.cowstatuet2.name=Sound Cow Statue
-tile.creeperstatuet2.name=Sound Creeper Statue
-tile.floodstatuet2.name=Sound Flood Statue
-tile.kingcluckstatuet2.name=Sound King Cluck Statue
-tile.mooshroomstatuet2.name=Sound Mooshroom Statue
-tile.pigstatuet2.name=Sound Pig Statue
-tile.rabbitstatuet2.name=Sound Rabbit Statue
-tile.sheepshavenstatuet2.name=Sound Shaven Sheep Statue
-tile.sheepstatuet2.name=Sound Sheep Statue
-tile.slimestatuet2.name=Sound Slime Statue
-tile.snowgolemstatuet2.name=Sound Snow Man Statue
-
 tile.babyzombiestatuet3.name=Functional Baby Zombie Statue
-tile.blazestatuet3.name=Functional Blaze Statue
-tile.chickenstatuet3.name=Functional Chicken Statue
-tile.cowstatuet3.name=Functional Cow Statue
-tile.creeperstatuet3.name=Functional Creeper Statue
-tile.floodstatuet3.name=Functional Flood Statue
-tile.kingcluckstatuet3.name=Functional King Cluck Statue
-tile.mooshroomstatuet3.name=Functional Mooshroom Statue
-tile.pigstatuet3.name=Functional Pig Statue
-tile.rabbitstatuet3.name=Functional Rabbit Statue
-tile.sheepshavenstatuet3.name=Functional Shaven Sheep Statue
-tile.sheepstatuet3.name=Functional Sheep Statue
-tile.slimestatuet3.name=Functional Slime Statue
-tile.snowgolemstatuet3.name=Functional Snow Man Statue
-
 tile.babyzombiestatuet4.name=Muted Baby Zombie Statue
+
+tile.blazestatue.name=Decorative Blaze Statue
+tile.blazestatuet2.name=Sound Blaze Statue
+tile.blazestatuet3.name=Functional Blaze Statue
 tile.blazestatuet4.name=Muted Blaze Statue
+
+tile.chickenstatue.name=Decorative Chicken Statue
+tile.chickenstatuet2.name=Sound Chicken Statue
+tile.chickenstatuet3.name=Functional Chicken Statue
 tile.chickenstatuet4.name=Muted Chicken Statue
+
+tile.cowstatue.name=Decorative Cow Statue
+tile.cowstatuet2.name=Sound Cow Statue
+tile.cowstatuet3.name=Functional Cow Statue
 tile.cowstatuet4.name=Muted Cow Statue
+
+tile.creeperstatue.name=Decorative Creeper Statue
+tile.creeperstatuet2.name=Sound Creeper Statue
+tile.creeperstatuet3.name=Functional Creeper Statue
 tile.creeperstatuet4.name=Muted Creeper Statue
+
+tile.floodstatue.name=Decorative Flood Statue
+tile.floodstatuet2.name=Sound Flood Statue
+tile.floodstatuet3.name=Functional Flood Statue
 tile.floodstatuet4.name=Muted Flood Statue
+
+tile.kingcluckstatue.name=Decorative King Cluck Statue
+tile.kingcluckstatuet2.name=Sound King Cluck Statue
+tile.kingcluckstatuet3.name=Functional King Cluck Statue
 tile.kingcluckstatuet4.name=Muted King Cluck Statue
+
+tile.mooshroomstatue.name=Decorative Mooshroom Statue
+tile.mooshroomstatuet2.name=Sound Mooshroom Statue
+tile.mooshroomstatuet3.name=Functional Mooshroom Statue
 tile.mooshroomstatuet4.name=Muted Mooshroom Statue
+
+tile.pigstatue.name=Decorative Pig Statue
+tile.pigstatuet2.name=Sound Pig Statue
+tile.pigstatuet3.name=Functional Pig Statue
 tile.pigstatuet4.name=Muted Pig Statue
+
+tile.rabbitstatue.name=Decorative Rabbit Statue
+tile.rabbitstatuet2.name=Sound Rabbit Statue
+tile.rabbitstatuet3.name=Functional Rabbit Statue
 tile.rabbitstatuet4.name=Muted Rabbit Statue
+
+tile.sheepshavenstatue.name=Decorative Shaven Sheep Statue
+tile.sheepshavenstatuet2.name=Sound Shaven Sheep Statue
+tile.sheepshavenstatuet3.name=Functional Shaven Sheep Statue
 tile.sheepshavenstatuet4.name=Muted Shaven Sheep Statue
+
+tile.sheepstatue.name=Decorative Sheep Statue
+tile.sheepstatuet2.name=Sound Sheep Statue
+tile.sheepstatuet3.name=Functional Sheep Statue
 tile.sheepstatuet4.name=Muted Sheep Statue
+
+tile.slimestatue.name=Decorative Slime Statue
+tile.slimestatuet2.name=Sound Slime Statue
+tile.slimestatuet3.name=Functional Slime Statue
 tile.slimestatuet4.name=Muted Slime Statue
+
+tile.snowgolemstatue.name=Decorative Snow Man Statue
+tile.snowgolemstatuet2.name=Sound Snow Man Statue
+tile.snowgolemstatuet3.name=Functional Snow Man Statue
 tile.snowgolemstatuet4.name=Muted Snow Man Statue
+
+tile.squidstatue.name=Decorative Squid Statue
+tile.squidstatuet2.name=Sound Squid Statue
+tile.squidstatuet3.name=Functional Squid Statue
+tile.squidstatuet4.name=Muted Squid Statue
+
+tile.villagerstatue.name=Decorative Villager Statue
+tile.villagerstatuet2.name=Sound Villager Statue
+tile.villagerstatuet3.name=Functional Villager Statue
+tile.villagerstatuet4.name=Muted Villager Statue
 
 #Item names
 item.royalnugget.name=Royal Nugget
+item.mooshroomsoup.name=Mooshroom Soup
 item.statuecore.name=Statue Core
 
 #Special Lore
-cluckington.info=also known as Cluckington
+cluckington.info=Also known as Cluckington
 royalnugget.info=Made for and from royals
+villager.info=WIP, Trades in the future
 
 #Entity
 entity.statues:StatueBat.name=Statue Bat

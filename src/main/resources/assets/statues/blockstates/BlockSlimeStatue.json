@@ -1,8 +1,8 @@
 {
     "variants": {
-		"facing=east":  { "model": "statues:BlockSlimeStatue", "y": 90},
-		"facing=north": { "model": "statues:BlockSlimeStatue"},
-		"facing=west":  { "model": "statues:BlockSlimeStatue", "y": 270},
-        "facing=south": { "model": "statues:BlockSlimeStatue", "y": 180}
+        "facing=east":  { "model": "statues:blockslimestatue", "y": 90},
+        "facing=north": { "model": "statues:blockslimestatue"},
+        "facing=west":  { "model": "statues:blockslimestatue", "y": 270},
+        "facing=south": { "model": "statues:blockslimestatue", "y": 180}
     }
 }

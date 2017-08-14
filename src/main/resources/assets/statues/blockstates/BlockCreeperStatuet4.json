@@ -1,8 +1,8 @@
 {
     "variants": {
-		"facing=east":  { "model": "statues:BlockCreeperStatue", "y": 90},
-		"facing=north": { "model": "statues:BlockCreeperStatue"},
-		"facing=west":  { "model": "statues:BlockCreeperStatue", "y": 270},
-        "facing=south": { "model": "statues:BlockCreeperStatue", "y": 180}
+		"facing=east":  { "model": "statues:blockcreeperstatue", "y": 90},
+		"facing=north": { "model": "statues:blockcreeperstatue"},
+		"facing=west":  { "model": "statues:blockcreeperstatue", "y": 270},
+        "facing=south": { "model": "statues:blockcreeperstatue", "y": 180}
     }
 }

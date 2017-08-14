@@ -1,5 +1,5 @@
 {
-	"parent": "statues:block/BlockChickenStatue",
+	"parent": "statues:block/blockchickenstatue",
 	"display": {
 		"thirdperson_righthand": {
 			"rotation":  [ -89, 0, 0 ],

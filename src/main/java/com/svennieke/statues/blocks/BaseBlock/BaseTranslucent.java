@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-
 public class BaseTranslucent extends BlockHorizontal{
 
 	protected BaseTranslucent(Material materialIn) {
@@ -32,6 +31,11 @@ public class BaseTranslucent extends BlockHorizontal{
     {
         return false;
     }
+	
+	@Override
+	public boolean isTranslucent(IBlockState state) {
+		return true;
+	}
 	
 	@SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer()

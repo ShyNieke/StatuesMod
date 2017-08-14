@@ -13,15 +13,11 @@ public class ClientProxy extends ServerProxy{
 	public void Preinit() {
 		StatuesBlocks.registerRenders();
 		StatuesItems.registerRenders();
+		RenderingRegistry.registerEntityRenderingHandler(EntityStatueBat.class, StatueBatRenderer.FACTORY);
 	}
 	
 	@Override
 	public void Init() {
 
-	}
-	
-	@Override
-	public void registerRendererFactories(){
-		RenderingRegistry.registerEntityRenderingHandler(EntityStatueBat.class, StatueBatRenderer.FACTORY);
 	}
 }
