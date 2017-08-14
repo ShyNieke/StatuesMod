@@ -98,8 +98,9 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 			{
 				if(!worldIn.isRemote)
 				{
-					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
+					if (stack.getItem() == Items.BOWL && !playerIn.capabilities.isCreativeMode)
 			        {
+						//System.out.println("NO");
 						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
 			            stack.shrink(1);
 	

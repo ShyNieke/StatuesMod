@@ -12,7 +12,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -41,10 +40,7 @@ public class BlockKingCluck extends BaseCutout{
     @Override
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
     {
-        if (!(entityIn instanceof EntityBoat))
-        {
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-        }
+    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
     }
     
     @Override

@@ -11,7 +11,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -20,9 +19,6 @@ import net.minecraft.world.World;
 public class BlockSlime extends BaseTranslucent{
 	//																		X1, Y1,Z1,         X2,Y2,Z2
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 8, 0.0625 * 12);
-	
-	private final String TAG_COOLDOWN = "cooldown";
-	public static double cooldown;
 	
 	public BlockSlime() {
 		super(Material.TNT);
@@ -40,9 +36,6 @@ public class BlockSlime extends BaseTranslucent{
     @Override
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
     {
-        if (!(entityIn instanceof EntityBoat))
-        {
-            addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-        }
+    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
     }
 }
