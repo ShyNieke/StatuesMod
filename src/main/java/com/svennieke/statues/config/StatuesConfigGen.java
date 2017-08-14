@@ -30,6 +30,9 @@ public class StatuesConfigGen {
 		
 		@Config.Comment("Setting this to false disables the tier 3 and 4 recipes. (Default: true)")
 		public boolean CraftableInteraction = true;
+		
+		@Config.Comment("Changing this changes the stacksize of the mushroom soup (Default: 8)")
+		public int SoupStack = 8;
 	}
 	
 

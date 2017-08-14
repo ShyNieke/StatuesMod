@@ -14,7 +14,8 @@ public class Reference {
 	public static enum StatuesItems {
 		
 		ROYALNUGGET("royalnugget", "itemroyalnugget"),
-		STATUECORE("statuecore", "itemstatuecore");
+		STATUECORE("statuecore", "itemstatuecore"),
+		MOOSHROOMSOUP("mooshroomsoup", "itemmooshroomsoup");
 		
 		private String unlocalisedName;
 		private String registryName;

@@ -14,6 +14,8 @@ import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSnowGolem_Statue;
+import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
+import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
 import com.svennieke.statues.items.ItemBlockStatue;
 
 import net.minecraft.block.Block;
@@ -26,19 +28,19 @@ public class StatuesBlocks {
 
 	public static Block baby_zombie_statue, blaze_statue, chicken_statue,cow_statue, creeper_statue, flood_statue,
 						kingcluck_statue, mooshroom_statue, pig_statue, rabbit_statue,
-						sheep_statue, sheepshaven_statue, slime_statue, snowgolem_statue;
+						sheep_statue, sheepshaven_statue, slime_statue, snowgolem_statue, villager_statue, squid_statue;
 	
 	public static Block baby_zombie_statuet2, blaze_statuet2, chicken_statuet2, cow_statuet2, creeper_statuet2, flood_statuet2,
 						kingcluck_statuet2, mooshroom_statuet2, pig_statuet2, rabbit_statuet2, 
-						sheep_statuet2, sheepshaven_statuet2, slime_statuet2, snowgolem_statuet2;
+						sheep_statuet2, sheepshaven_statuet2, slime_statuet2, snowgolem_statuet2, villager_statuet2, squid_statuet2;
 	
 	public static Block baby_zombie_statuet3, blaze_statuet3, chicken_statuet3,cow_statuet3, creeper_statuet3, flood_statuet3,
 						kingcluck_statuet3, mooshroom_statuet3, pig_statuet3, rabbit_statuet3, 
-						sheep_statuet3, sheepshaven_statuet3, slime_statuet3, snowgolem_statuet3;
+						sheep_statuet3, sheepshaven_statuet3, slime_statuet3, snowgolem_statuet3, villager_statuet3, squid_statuet3;
 	
 	public static Block baby_zombie_statuet4, blaze_statuet4, chicken_statuet4,cow_statuet4, creeper_statuet4, flood_statuet4,
 						kingcluck_statuet4, mooshroom_statuet4, pig_statuet4, rabbit_statuet4, 
-						sheep_statuet4, sheepshaven_statuet4, slime_statuet4, snowgolem_statuet4;
+						sheep_statuet4, sheepshaven_statuet4, slime_statuet4, snowgolem_statuet4, villager_statuet4, squid_statuet4;
 	
 	public static void init()
 	{
@@ -111,6 +113,16 @@ public class StatuesBlocks {
 		snowgolem_statuet2 = new BlockSnowGolem_Statue("snowgolemstatuet2", "blocksnowgolemstatuet2", 2);
 		snowgolem_statuet3 = new BlockSnowGolem_Statue("snowgolemstatuet3", "blocksnowgolemstatuet3", 3);
 		snowgolem_statuet4 = new BlockSnowGolem_Statue("snowgolemstatuet4", "blocksnowgolemstatuet4", 4);
+		
+		squid_statue = new BlockSquid_Statue("squidstatue", "blocksquidstatue", 1);
+		squid_statuet2 = new BlockSquid_Statue("squidstatuet2", "blocksquidstatuet2", 2);
+		squid_statuet3 = new BlockSquid_Statue("squidstatuet3", "blocksquidstatuet3", 3);
+		squid_statuet4 = new BlockSquid_Statue("squidstatuet4", "blocksquidstatuet4", 4);
+		
+		villager_statue = new BlockVillager_Statue("villagerstatue", "blockvillagerstatue", 1);
+		villager_statuet2 = new BlockVillager_Statue("villagerstatuet2", "blockvillagerstatuet2", 2);
+		villager_statuet3 = new BlockVillager_Statue("villagerstatuet3", "blockvillagerstatuet3", 3);
+		villager_statuet4 = new BlockVillager_Statue("villagerstatuet4", "blockvillagerstatuet4", 4);
 	}
 	
 	public static void register()
@@ -184,6 +196,16 @@ public class StatuesBlocks {
 		registerBlock(snowgolem_statuet2);
 		registerBlock(snowgolem_statuet3);
 		registerBlock(snowgolem_statuet4);
+		
+		registerBlock(squid_statue);
+		registerBlock(squid_statuet2);
+		registerBlock(squid_statuet3);
+		registerBlock(squid_statuet4);
+		
+		registerBlock(villager_statue);
+		registerBlock(villager_statuet2);
+		registerBlock(villager_statuet3);
+		registerBlock(villager_statuet4);
 	}
 	
 	public static void registerBlock(Block block) 
@@ -269,6 +291,16 @@ public class StatuesBlocks {
 		registerRender(snowgolem_statuet2);
 		registerRender(snowgolem_statuet3);
 		registerRender(snowgolem_statuet4);
+		
+		registerRender(squid_statue);
+		registerRender(squid_statuet2);
+		registerRender(squid_statuet3);
+		registerRender(squid_statuet4);
+		
+		registerRender(villager_statue);
+		registerRender(villager_statuet2);
+		registerRender(villager_statuet3);
+		registerRender(villager_statuet4);
 	}
 	
 	public static void registerRender(Block block)

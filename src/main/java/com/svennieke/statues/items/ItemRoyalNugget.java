@@ -5,14 +5,13 @@ import java.util.List;
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.world.World;
 
 public class ItemRoyalNugget extends ItemFood {
 	public ItemRoyalNugget(int amount, float saturation, boolean isWolfFood) {
@@ -23,8 +22,8 @@ public class ItemRoyalNugget extends ItemFood {
 		setCreativeTab(Statues.tabStatues);
 	}
 	
-    @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
+	@Override
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
     {
         	tooltip.add(TextFormatting.GOLD + I18n.translateToLocal("royalnugget.info"));
     }

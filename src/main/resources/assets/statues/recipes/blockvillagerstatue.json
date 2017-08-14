@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "statues:blockvillagerstatue"
+  },
+  "pattern": [
+    "GEG",
+    "ECE",
+    "GEG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
+}

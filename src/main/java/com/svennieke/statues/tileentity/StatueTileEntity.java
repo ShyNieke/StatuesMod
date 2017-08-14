@@ -3,6 +3,7 @@ package com.svennieke.statues.tileentity;
 import javax.annotation.Nullable;
 
 import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.init.StatuesItems;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
@@ -12,6 +13,8 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
@@ -45,6 +48,25 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 		}
 	}
 	
+	public void GiveEffect(BlockPos pos, World worldIn, EntityPlayer player, Potion effect) {
+		if(isAble())
+		{
+			int random = world.rand.nextInt(100);
+			if(tier == 3 || tier == 4)
+			{
+				if(random < 10)
+				{
+					if (!world.isRemote) {
+						if (player.getActivePotionEffect(effect) == null) {
+							player.addPotionEffect(new PotionEffect(effect, 20));
+						}
+					}
+				}
+			}
+			//Statues.logger.info("playing sound");
+		}
+	}
+	
 	public void SpecialInteraction(boolean isCow, boolean isMooshroom, boolean isFlood, Block statue, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, float hitX, float hitY, float hitZ) {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		EntityFireworkRocket firework = new EntityFireworkRocket(worldIn, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), stack);
@@ -58,7 +80,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 				{
 					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
 			        {
-			            playerIn.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
+						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
 			            stack.shrink(1);
 	
 			            if (stack.isEmpty())
@@ -79,16 +101,16 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 				{
 					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
 			        {
-			            playerIn.playSound(SoundEvents.ENTITY_COW_MILK, 1.0F, 1.0F);
+						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
 			            stack.shrink(1);
 	
 			            if (stack.isEmpty())
 			            {
-			            	playerIn.setHeldItem(hand, new ItemStack(Items.MUSHROOM_STEW));
+			            	playerIn.setHeldItem(hand, new ItemStack(StatuesItems.soup));
 			            }
-			            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MUSHROOM_STEW)))
+			            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(StatuesItems.soup)))
 			            {
-			            	playerIn.dropItem(new ItemStack(Items.MUSHROOM_STEW), false);
+			            	playerIn.dropItem(new ItemStack(StatuesItems.soup), false);
 			            }
 			        }
 				}
@@ -99,7 +121,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 				if(!worldIn.isRemote)
 					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
 					{
-						playerIn.playSound(SoundEvents.ITEM_BUCKET_FILL, 1.0F, 1.0F);
+						worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
 						stack.shrink(1);
 						
 						ItemStack floodbucket = new ItemStack(Items.WATER_BUCKET); 
