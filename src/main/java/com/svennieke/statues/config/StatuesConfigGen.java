@@ -31,7 +31,7 @@ public class StatuesConfigGen {
 		
 		@Config.Comment("The amount of time [in seconds] that you have to wait before being able to interact with the statues (tier 2 and higher)"+
 						"(Default: 60)")
-		public double InteractionTimer = 60;
+		public int InteractionTimer = 60;
 		
 		@Config.RequiresMcRestart
 		@Config.Comment("Setting this to false disables the tier 3 and 4 recipes. (Default: true)")

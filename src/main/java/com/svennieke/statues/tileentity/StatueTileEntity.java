@@ -225,9 +225,11 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	            if(cooldown == (StatuesConfigGen.general.InteractionTimer * 20)){
 	                this.Cooldown = 0;
 	                setAble(true);
+	                //Statues.logger.info(isAble());
 	            }
 	            else
 	            {
+	            	//Statues.logger.info(isAble());
 	            	setAble(false);
 	            }
 	    	}
