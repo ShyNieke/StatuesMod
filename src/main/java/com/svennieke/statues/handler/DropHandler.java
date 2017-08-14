@@ -16,6 +16,8 @@ import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.passive.EntitySquid;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -122,9 +124,30 @@ public class DropHandler {
 	        
 	        if (entity instanceof EntityZombie) {
 	        	random_drop = Math.random();
+	        	if(((EntityZombie) entity).isChild())
+	        	{
+		        	if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.baby_zombie_statue, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        }
+	        
+	        if (entity instanceof EntitySquid) {
+	        	random_drop = Math.random();
 	        	if ( random_drop < StatuesConfigGen.general.OldDropChance )
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.baby_zombie_statue, 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.squid_statue, 1);
+	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+	        	}
+	        }
+	        
+	        if (entity instanceof EntityVillager) {
+	        	random_drop = Math.random();
+	        	if ( random_drop < StatuesConfigGen.general.OldDropChance )
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_statue, 1);
 	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 	        	}
 	        }

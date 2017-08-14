@@ -69,8 +69,6 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	public void SpecialInteraction(boolean isCow, boolean isMooshroom, boolean isFlood, Block statue, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, float hitX, float hitY, float hitZ) {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		EntityFireworkRocket firework = new EntityFireworkRocket(worldIn, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), stack);
-		if(isAble()) 
-		{
 			int random = world.rand.nextInt(100);
 			
 			if(isCow)
@@ -142,9 +140,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 						 worldIn.spawnEntity(firework);
 					}	
 			}
-			setAble(false);
 		}
-	}
 	
 	public void StatueBehavior(@Nullable ItemStack stack1, @Nullable ItemStack stack2, @Nullable ItemStack stack3, 
 			EntityLiving spawnableentity, boolean spawnEntity, boolean isCreeper,Block statue, EntityPlayer playerIn, 
