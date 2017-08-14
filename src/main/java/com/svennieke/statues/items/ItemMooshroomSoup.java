@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class ItemMooshroomSoup extends ItemFood {
 	public ItemMooshroomSoup(int amount, float saturation, boolean isWolfFood) {
 		super(amount, saturation, isWolfFood);
-		setMaxStackSize(StatuesConfigGen.general.SoupStack);
+		setMaxStackSize(StatuesConfigGen.othersettings.SoupStack);
 		setUnlocalizedName(Reference.StatuesItems.MOOSHROOMSOUP.getUnlocalisedName());
 		setRegistryName(Reference.StatuesItems.MOOSHROOMSOUP.getRegistryName());
 		setCreativeTab(CreativeTabs.FOOD);

@@ -15,7 +15,12 @@ public class StatuesConfigGen {
 	@Config.Comment({"General settings"})
 	public static General general = new General();
 	
+	@Config.Comment({"Other settings"})
+	public static OtherStuff othersettings = new OtherStuff();
+	
 	public static class General{
+		
+		@Config.RequiresMcRestart
 		@Config.Comment("Tier 1 needs to be crafted with Statue Core (Default: true)" +
 						"Disabling this makes tier1 statues drop from mobs.")
 		public boolean NewSystem = true;
@@ -26,16 +31,20 @@ public class StatuesConfigGen {
 		
 		@Config.Comment("The amount of time [in seconds] that you have to wait before being able to interact with the statues (tier 2 and higher)"+
 						"(Default: 60)")
-		public double InteractionTimer = 3;
+		public double InteractionTimer = 60;
 		
+		@Config.RequiresMcRestart
 		@Config.Comment("Setting this to false disables the tier 3 and 4 recipes. (Default: true)")
 		public boolean CraftableInteraction = true;
+	}
+	
+	public static class OtherStuff{
 		
+		@Config.RequiresMcRestart
 		@Config.Comment("Changing this changes the stacksize of the mushroom soup (Default: 8)")
 		public int SoupStack = 8;
 	}
 	
-
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
 	private static class EventHandler {
 

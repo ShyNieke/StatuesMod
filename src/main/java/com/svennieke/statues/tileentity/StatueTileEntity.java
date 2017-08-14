@@ -44,13 +44,13 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 		if(tier == 2 || tier == 3)
 		{
 			worldIn.playSound(null, pos, Mobsound, SoundCategory.NEUTRAL, 1F, 1F);
-			//Statues.logger.info("playing sound");
 		}
 	}
 	
-	public void GiveEffect(BlockPos pos, World worldIn, EntityPlayer player, Potion effect) {
+	public void GiveEffect(BlockPos pos, World worldIn, EntityPlayer entity, Potion effect) {
 		if(isAble())
 		{
+			EntityPlayer player = (EntityPlayer)entity;
 			int random = world.rand.nextInt(100);
 			if(tier == 3 || tier == 4)
 			{
@@ -58,12 +58,11 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 				{
 					if (!world.isRemote) {
 						if (player.getActivePotionEffect(effect) == null) {
-							player.addPotionEffect(new PotionEffect(effect, 20));
+							player.addPotionEffect(new PotionEffect(effect, 20 * 20, 1, true, true));
 						}
 					}
 				}
 			}
-			//Statues.logger.info("playing sound");
 		}
 	}
 	
@@ -222,16 +221,16 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	    		int cooldown = this.Cooldown + 1;
             	//Statues.logger.info(cooldown);
 	            this.Cooldown = cooldown;
-		            if(cooldown == (StatuesConfigGen.general.InteractionTimer * 20)){
-		                this.Cooldown = 0;
-		                setAble(true);
-		            }
-		            else
-		            {
-		            	setAble(false);
-		            }
+	            
+	            if(cooldown == (StatuesConfigGen.general.InteractionTimer * 20)){
+	                this.Cooldown = 0;
+	                setAble(true);
+	            }
+	            else
+	            {
+	            	setAble(false);
+	            }
 	    	}
-	    	
 	    }
     }
     
