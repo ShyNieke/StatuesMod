@@ -55,7 +55,6 @@ public class ItemMooshroomSoup extends ItemFood {
 				}
 			}
 			stack.shrink(1);
-			
 		}
 		return stack;
     }
