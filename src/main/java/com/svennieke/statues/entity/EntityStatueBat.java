@@ -19,9 +19,7 @@ public class EntityStatueBat extends EntityBat{
 	public EntityStatueBat(World worldIn) {
 		super(worldIn);
 	}
-	
-	//public static final ResourceLocation LOOT = new ResourceLocation(Reference.MOD_ID, "entities/statue_bat");
-	
+		
 	@Override
 	protected void applyEntityAttributes()
     {

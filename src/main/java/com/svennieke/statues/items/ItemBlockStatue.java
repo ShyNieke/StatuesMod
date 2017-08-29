@@ -16,8 +16,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @InterfaceList({
-	@Interface(iface="baubles.api.IBauble", modid="Baubles", striprefs=true),
-	@Interface(iface="baubles.api.BaubleType", modid="Baubles", striprefs=true)})
+	@Interface(iface="baubles.api.IBauble", modid="baubles", striprefs=true),
+	@Interface(iface="baubles.api.BaubleType", modid="baubles", striprefs=true)})
 
 public class ItemBlockStatue extends ItemBlock implements IBauble, IRenderBauble{
 
