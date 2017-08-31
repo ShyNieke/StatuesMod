@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class BaseNormal extends BlockHorizontal{
 
 	public float hardness = (float) StatuesConfigGen.othersettings.StatueHardness;
-
+	
 	protected BaseNormal(Material materialIn) {
 		super(materialIn);
 		this.setHardness(this.hardness);

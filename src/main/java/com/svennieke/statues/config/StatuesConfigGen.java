@@ -60,9 +60,9 @@ public class StatuesConfigGen {
 		public String[] info_messages = new String[]
 				{
 				"Statues is still in beta not all mobs have a statue yet", 
-				"Chickens are not royal, Prove me wrong by placing the right statue on a royal looking block",
-				"Undead stop burning in water Would a statue burn on a block that looks like water?",
-				"Fun Fact: i was suposed to be a christmass special item, but plans got changed and now i am here"
+				"Chickens are not royal, prove me wrong by placing the right statue on a royal looking block",
+				"Undead stop burning in water, would a statue burn on a block that looks like water?",
+				"Fun Fact: I was supposed to be a christmas special item, but plans got changed and now I am here"
 				};
 		
 	}

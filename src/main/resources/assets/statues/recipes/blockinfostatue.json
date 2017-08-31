@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "statues:blockinfostatue"
+  },
+  "pattern": [
+    " R ",
+    "BCB",
+    "CCC"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:cobblestone"
+    },
+    "B": {
+      "item": "minecraft:book"
+    },
+    "R": {
+      "item": "minecraft:dye",
+      "data": 1
+    }
+  }
+}
