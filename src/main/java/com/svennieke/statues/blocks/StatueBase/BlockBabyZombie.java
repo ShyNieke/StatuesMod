@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.blocks.BaseBlock.BaseNormal;
+import com.svennieke.statues.config.StatuesConfigGen;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -23,7 +24,6 @@ public class BlockBabyZombie extends BaseNormal{
 	public BlockBabyZombie() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
-		this.setHardness(3.0F);
 		this.setSoundType(SoundType.PLANT);
 	}
 	

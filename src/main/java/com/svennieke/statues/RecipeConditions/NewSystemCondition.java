@@ -12,6 +12,6 @@ public class NewSystemCondition implements IConditionFactory{
 
 	@Override
 	public BooleanSupplier parse(JsonContext context, JsonObject json) {
-		return () -> StatuesConfigGen.general.NewSystem;
+		return () -> StatuesConfigGen.general.Tier1Crafting;
 	}
 }

@@ -1,5 +1,7 @@
 package com.svennieke.statues.blocks.BaseBlock;
 
+import com.svennieke.statues.config.StatuesConfigGen;
+
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -15,8 +17,11 @@ import net.minecraft.world.World;
 
 public class BaseNormal extends BlockHorizontal{
 
+	public float hardness = (float) StatuesConfigGen.othersettings.StatueHardness;
+
 	protected BaseNormal(Material materialIn) {
 		super(materialIn);
+		this.setHardness(this.hardness);
 	}
 
 	@Override

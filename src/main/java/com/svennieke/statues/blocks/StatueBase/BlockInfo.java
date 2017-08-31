@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.svennieke.statues.Statues;
-import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
+import com.svennieke.statues.blocks.BaseBlock.BaseNormal;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -16,16 +16,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockPig extends BaseCutout{
+public class BlockInfo extends BaseNormal{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6, 0, 0.0625 * 6, 0.0625 * 10, 0.0625 * 10.5, 0.0625 * 10);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 8, 0.0625 * 12);
 	
-	public BlockPig() {
+	public BlockInfo() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
-		this.setSoundType(SoundType.CLOTH);
+		this.setSoundType(SoundType.STONE);
 	}
-	
+
 	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {

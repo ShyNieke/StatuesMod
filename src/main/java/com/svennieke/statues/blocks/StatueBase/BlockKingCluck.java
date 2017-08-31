@@ -27,7 +27,6 @@ public class BlockKingCluck extends BaseCutout{
 	public BlockKingCluck() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
-		this.setHardness(3.0F);
 		this.setSoundType(SoundType.CLOTH);
 	}
 
