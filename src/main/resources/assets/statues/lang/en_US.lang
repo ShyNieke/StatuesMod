@@ -85,6 +85,8 @@ tile.villagerstatuet2.name=Sound Villager Statue
 tile.villagerstatuet3.name=Functional Villager Statue
 tile.villagerstatuet4.name=Muted Villager Statue
 
+tile.infostatue.name=Informative Statue
+
 #Item names
 item.royalnugget.name=Royal Nugget
 item.mooshroomsoup.name=Mooshroom Soup
@@ -96,4 +98,4 @@ royalnugget.info=Made for and from royals
 villager.info=WIP, Trades in the future
 
 #Entity
-entity.statues:StatueBat.name=Statue Bat
+entity.statues.StatueBat.name=Statue Bat

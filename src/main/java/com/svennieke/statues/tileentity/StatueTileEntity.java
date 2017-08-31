@@ -1,5 +1,7 @@
 package com.svennieke.statues.tileentity;
 
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import com.svennieke.statues.config.StatuesConfigGen;
@@ -21,6 +23,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 
 public class StatueTileEntity extends TileEntity implements ITickable{
@@ -45,6 +48,19 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 		{
 			worldIn.playSound(null, pos, Mobsound, SoundCategory.NEUTRAL, 1F, 1F);
 		}
+	}
+
+	public void SendInfoMessage(EntityPlayer entity, World worldIn, BlockPos pos) {
+			EntityPlayer player = (EntityPlayer)entity;
+			int random = worldObj.rand.nextInt(100);
+			
+			if (!worldObj.isRemote) {
+				int idx = new Random().nextInt(StatuesConfigGen.messages.info_messages.length);
+				String randommessage = (StatuesConfigGen.messages.info_messages[idx]);
+				
+				player.addChatMessage(new TextComponentTranslation(randommessage));;
+				
+			}
 	}
 	
 	public void GiveEffect(BlockPos pos, World worldIn, EntityPlayer entity, Potion effect) {

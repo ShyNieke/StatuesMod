@@ -11,7 +11,7 @@ public class StatuesCrafting {
 
 	public static void register() {
 		
-		if(StatuesConfigGen.general.CraftableInteraction)
+		if(StatuesConfigGen.general.Tier1Crafting)
 		{
 			// Tier one statues (decorative only)
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.baby_zombie_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.ROTTEN_FLESH, 'C', StatuesItems.core);
@@ -27,7 +27,10 @@ public class StatuesCrafting {
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.SLIME_BALL, 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statue),"GPG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Blocks.SNOW, 'P', Blocks.PUMPKIN, 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.squid_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M',  new ItemStack(Items.DYE, 1, 0), 'C', StatuesItems.core);
-			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.villager_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.EMERALD, 'C', StatuesItems.core);GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.SLIME_BALL, 'C', StatuesItems.core);		}
+			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.villager_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.EMERALD, 'C', StatuesItems.core);GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.SLIME_BALL, 'C', StatuesItems.core);
+		}
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.info_statue)," R ","BCB", "CCC", 'C', Blocks.COBBLESTONE, 'B', Items.BOOK, 'R', new ItemStack(Items.DYE, 1, 1));
+		
 		//tier two statues (sounds only)
 		
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.baby_zombie_statuet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.baby_zombie_statue);
@@ -86,7 +89,6 @@ public class StatuesCrafting {
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.snowgolem_statuet3);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.squid_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.squid_statuet3);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.villager_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.villager_statuet3);
-			
 		}
 	}
 }

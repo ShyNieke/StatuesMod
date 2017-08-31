@@ -1,5 +1,7 @@
 package com.svennieke.statues.blocks.BaseBlock;
 
+import com.svennieke.statues.config.StatuesConfigGen;
+
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -17,8 +19,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BaseTranslucent extends BlockHorizontal{
 
+	public float hardness = (float) StatuesConfigGen.othersettings.StatueHardness;
+
 	protected BaseTranslucent(Material materialIn) {
 		super(materialIn);
+		this.setHardness(this.hardness);
 	}
 
 	@Override

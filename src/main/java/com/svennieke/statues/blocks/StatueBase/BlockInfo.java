@@ -2,6 +2,8 @@ package com.svennieke.statues.blocks.StatueBase;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.blocks.BaseBlock.BaseNormal;
 
@@ -14,16 +16,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBabyZombie extends BaseNormal{
+public class BlockInfo extends BaseNormal{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6.5, 0.0625 * 9.5, 0.0625 * 8.5, 0.0625 * 9.5);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 8, 0.0625 * 12);
 	
-	public BlockBabyZombie() {
+	public BlockInfo() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.tabStatues);
-		this.setSoundType(SoundType.PLANT);
+		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setSoundType(SoundType.STONE);
 	}
-	
+
 	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {

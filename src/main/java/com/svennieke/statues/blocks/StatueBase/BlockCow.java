@@ -22,7 +22,6 @@ public class BlockCow extends BaseNormal{
 	public BlockCow() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.tabStatues);
-		this.setHardness(3.0F);
 		this.setSoundType(SoundType.GLASS);
 	}
 	

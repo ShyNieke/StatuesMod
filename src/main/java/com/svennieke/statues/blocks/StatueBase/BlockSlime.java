@@ -21,7 +21,6 @@ public class BlockSlime extends BaseTranslucent{
 	public BlockSlime() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.tabStatues);
-		this.setHardness(3.0F);
 		this.setSoundType(SoundType.SLIME);
 	}
 	

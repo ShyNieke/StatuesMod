@@ -21,7 +21,6 @@ public class BlockSquid extends BaseNormal{
 	public BlockSquid() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.tabStatues);
-		this.setHardness(3.0F);
 		this.setSoundType(SoundType.SLIME);
 	}
 	
