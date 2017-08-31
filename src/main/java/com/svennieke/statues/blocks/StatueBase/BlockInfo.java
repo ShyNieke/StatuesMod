@@ -16,22 +16,22 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockBabyZombie extends BaseNormal{
+public class BlockInfo extends BaseNormal{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6.5, 0.0625 * 9.5, 0.0625 * 8.5, 0.0625 * 9.5);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 8, 0.0625 * 12);
 	
-	public BlockBabyZombie() {
+	public BlockInfo() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
-		this.setSoundType(SoundType.PLANT);
+		this.setSoundType(SoundType.STONE);
 	}
-	
+
 	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         return BOUNDING_BOX;
     }
-	
+    
     @Override
     public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
     {

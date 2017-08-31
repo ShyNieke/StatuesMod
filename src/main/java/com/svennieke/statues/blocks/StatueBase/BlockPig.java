@@ -23,7 +23,6 @@ public class BlockPig extends BaseCutout{
 	public BlockPig() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
-		this.setHardness(3.0F);
 		this.setSoundType(SoundType.CLOTH);
 	}
 	

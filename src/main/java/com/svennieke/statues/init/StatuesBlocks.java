@@ -6,6 +6,7 @@ import com.svennieke.statues.blocks.Statues.BlockChicken_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCreeper_Statue;
 import com.svennieke.statues.blocks.Statues.BlockFlood_Statue;
+import com.svennieke.statues.blocks.Statues.BlockInfo_Statue;
 import com.svennieke.statues.blocks.Statues.BlockKingCluck_Statue;
 import com.svennieke.statues.blocks.Statues.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPig_Statue;
@@ -28,7 +29,7 @@ public class StatuesBlocks {
 
 	public static Block baby_zombie_statue, blaze_statue, chicken_statue,cow_statue, creeper_statue, flood_statue,
 						kingcluck_statue, mooshroom_statue, pig_statue, rabbit_statue,
-						sheep_statue, sheepshaven_statue, slime_statue, snowgolem_statue, villager_statue, squid_statue;
+						sheep_statue, sheepshaven_statue, slime_statue, snowgolem_statue, villager_statue, squid_statue, info_statue;
 	
 	public static Block baby_zombie_statuet2, blaze_statuet2, chicken_statuet2, cow_statuet2, creeper_statuet2, flood_statuet2,
 						kingcluck_statuet2, mooshroom_statuet2, pig_statuet2, rabbit_statuet2, 
@@ -123,6 +124,8 @@ public class StatuesBlocks {
 		villager_statuet2 = new BlockVillager_Statue("villagerstatuet2", "blockvillagerstatuet2", 2);
 		villager_statuet3 = new BlockVillager_Statue("villagerstatuet3", "blockvillagerstatuet3", 3);
 		villager_statuet4 = new BlockVillager_Statue("villagerstatuet4", "blockvillagerstatuet4", 4);
+		
+		info_statue = new BlockInfo_Statue("infostatue", "blockinfostatue", 1);
 	}
 	
 	public static void register()
@@ -206,6 +209,8 @@ public class StatuesBlocks {
 		registerBlock(villager_statuet2);
 		registerBlock(villager_statuet3);
 		registerBlock(villager_statuet4);
+		
+		registerBlock(info_statue);
 	}
 	
 	public static void registerBlock(Block block) 
@@ -301,6 +306,8 @@ public class StatuesBlocks {
 		registerRender(villager_statuet2);
 		registerRender(villager_statuet3);
 		registerRender(villager_statuet4);
+		
+		registerRender(info_statue);
 	}
 	
 	public static void registerRender(Block block)

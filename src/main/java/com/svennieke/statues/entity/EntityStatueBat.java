@@ -1,13 +1,20 @@
 package com.svennieke.statues.entity;
 
 import java.util.Calendar;
+import java.util.Random;
 
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.passive.EntityBat;
+import net.minecraft.init.MobEffects;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 
@@ -31,6 +38,30 @@ public class EntityStatueBat extends EntityBat{
     {
         EntityLiving.registerFixesMob(fixer, EntityStatueBat.class);
     }
+	
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		int random = new Random().nextInt(10);
+		if(random < 5) {
+			addPotionEffect(new PotionEffect(MobEffects.SPEED, 2000 * 20, 2, true, false));
+		}
+		return super.onInitialSpawn(difficulty, livingdata);
+	}
+	 
+	@Override
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (!source.isMagicDamage() && source.getSourceOfDamage() instanceof EntityLivingBase)
+        {
+            EntityLivingBase entitylivingbase = (EntityLivingBase)source.getSourceOfDamage();
+
+            if (!source.isExplosion())
+            {
+                entitylivingbase.attackEntityFrom(DamageSource.causeThornsDamage(this), 2.0F);
+            }
+        }
+		
+		return super.attackEntityFrom(source, amount);
+	}
 	
 	@Override
 	public boolean getCanSpawnHere() {

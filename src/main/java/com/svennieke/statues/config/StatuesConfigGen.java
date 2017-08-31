@@ -18,12 +18,15 @@ public class StatuesConfigGen {
 	@Config.Comment({"Other settings"})
 	public static OtherStuff othersettings = new OtherStuff();
 	
+	@Config.Comment({"Other settings"})
+	public static TextMessages messages = new TextMessages();
+	
 	public static class General{
 		
 		@Config.RequiresMcRestart
 		@Config.Comment("Tier 1 needs to be crafted with Statue Core (Default: true)" +
 						"Disabling this makes tier1 statues drop from mobs.")
-		public boolean NewSystem = true;
+		public boolean Tier1Crafting = true;
 		
 		@Config.Comment("The drop chance of statues when statue drops is true (Default: 0.01)" +
 						" [This option only takes effect when NewSystem is false]")
@@ -41,10 +44,27 @@ public class StatuesConfigGen {
 	public static class OtherStuff{
 		
 		@Config.RequiresMcRestart
+		@Config.Comment("Changing this changes the amount of time needed to harvest a statue, Higher = more time needed. Lower = faster harvested "+
+						"(Default: 0.6) [0.6 is the same as vanilla grass]")
+		public double StatueHardness = 0.6;
+		
+		@Config.RequiresMcRestart
 		@Config.Comment("Changing this changes the stacksize of the mushroom soup (Default: 8)")
 		public int SoupStack = 8;
 	}
 	
+	public static class TextMessages{
+		@Config.Comment("Adding lines / removing lines specifies what the informative statue can say")
+		public String[] info_messages = new String[]
+				{
+				"Statues is still in beta not all mobs have a statue yet", 
+				"Chickens are not royal, prove me wrong by placing the right statue on a royal looking block",
+				"Undead stop burning in water, would a statue burn on a block that looks like water?",
+				"Fun Fact: I was supposed to be a christmas special item, but plans got changed and now I am here"
+				};
+		
+	}
+
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)
 	private static class EventHandler {
 

@@ -23,7 +23,6 @@ public class BlockCreeper extends BaseCutout{
 	public BlockCreeper() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
-		this.setHardness(3.0F);
 		this.setSoundType(SoundType.PLANT);
 	}
 	

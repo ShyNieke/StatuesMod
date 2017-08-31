@@ -85,6 +85,8 @@ tile.villagerstatuet2.name=Sound Villager Statue
 tile.villagerstatuet3.name=Functional Villager Statue
 tile.villagerstatuet4.name=Muted Villager Statue
 
+tile.infostatue.name=Informative Statue
+
 #Item names
 item.royalnugget.name=Royal Nugget
 item.mooshroomsoup.name=Mooshroom Soup
