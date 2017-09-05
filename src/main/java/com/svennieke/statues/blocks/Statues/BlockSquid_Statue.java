@@ -2,6 +2,7 @@ package com.svennieke.statues.blocks.Statues;
 
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockSquid;
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -10,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -55,10 +57,17 @@ public class BlockSquid_Statue extends BlockSquid implements iStatue, ITileEntit
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	
-	        	ItemStack ink = new ItemStack(Items.DYE, 1);
+	        	int meta1 = StatuesConfigGen.statues.squid.item1meta;
+	        	int meta2 = StatuesConfigGen.statues.squid.item2meta;
+	        	int meta3 = StatuesConfigGen.statues.squid.item3meta;
+	        	
+	        	ItemStack stack1 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.squid.item1), 1, meta1);
+        		ItemStack stack2 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.squid.item2), 1, meta2);
+        		ItemStack stack3 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.squid.item3), 1, meta3);
+        		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SQUID_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).GiveEffect(pos, worldIn, playerIn, MobEffects.BLINDNESS);
-	        	getTE(worldIn, pos).StatueBehavior(null, ink, null, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}
 		return true;

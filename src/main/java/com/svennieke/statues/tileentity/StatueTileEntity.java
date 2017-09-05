@@ -211,7 +211,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 			setAble(false);
 		}
 	}
-
+	
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
@@ -226,6 +226,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
         compound.setInteger("StatueTier", this.tier);
         return compound;
     }
+    
     @Override
     public void update(){
 	    if (!world.isRemote) {

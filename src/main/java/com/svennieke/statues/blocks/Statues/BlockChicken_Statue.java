@@ -2,6 +2,7 @@ package com.svennieke.statues.blocks.Statues;
 
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockChicken;
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
@@ -11,8 +12,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -72,10 +73,17 @@ public class BlockChicken_Statue extends BlockChicken implements iStatue, ITileE
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
-	        	ItemStack feather = new ItemStack(Items.FEATHER, 1);
-	        	ItemStack egg = new ItemStack(Items.EGG, 1);
+	        	
+	        	int meta1 = StatuesConfigGen.statues.chicken.item1meta;
+	        	int meta2 = StatuesConfigGen.statues.chicken.item2meta;
+	        	int meta3 = StatuesConfigGen.statues.chicken.item3meta;
+	        	
+	        	ItemStack stack1 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.chicken.item1), 1, meta1);
+        		ItemStack stack2 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.chicken.item2), 1, meta2);
+        		ItemStack stack3 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.chicken.item3), 1, meta3);
+        		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).StatueBehavior(feather, egg, null, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}
 		return true;

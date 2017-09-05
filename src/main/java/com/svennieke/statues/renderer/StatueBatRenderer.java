@@ -30,6 +30,6 @@ public class StatueBatRenderer extends RenderBat
 	  public Render<? super EntityStatueBat> createRenderFor(RenderManager manager) {
 	    return new StatueBatRenderer(manager);
 	  }
-}
+	}
 
 }

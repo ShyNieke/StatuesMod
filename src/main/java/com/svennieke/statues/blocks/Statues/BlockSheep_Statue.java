@@ -2,6 +2,7 @@ package com.svennieke.statues.blocks.Statues;
 
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockSheep;
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -10,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -54,10 +56,16 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	        	
-	        	ItemStack wool = new ItemStack(Blocks.WOOL, 1);
-	        	ItemStack mutton = new ItemStack(Items.MUTTON, 1);
+	        	int meta1 = StatuesConfigGen.statues.sheep.item1meta;
+	        	int meta2 = StatuesConfigGen.statues.sheep.item2meta;
+	        	int meta3 = StatuesConfigGen.statues.sheep.item3meta;
+	        	
+	        	ItemStack stack1 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.sheep.item1), 1, meta1);
+        		ItemStack stack2 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.sheep.item2), 1, meta2);
+        		ItemStack stack3 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.sheep.item3), 1, meta3);
+        		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).StatueBehavior(wool, null, mutton, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}
 		return true;
