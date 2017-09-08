@@ -86,6 +86,7 @@ tile.villagerstatuet3.name=Functional Villager Statue
 tile.villagerstatuet4.name=Muted Villager Statue
 
 tile.infostatue.name=Informative Statue
+tile.playerstatue.name=Player Statue
 
 #Item names
 item.royalnugget.name=Royal Nugget

@@ -3,8 +3,12 @@ package com.svennieke.statues.proxy;
 import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesItems;
+import com.svennieke.statues.renderer.PlayerStatueRenderer;
 import com.svennieke.statues.renderer.StatueBatRenderer;
+import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends ServerProxy{
@@ -18,6 +22,6 @@ public class ClientProxy extends ServerProxy{
 	
 	@Override
 	public void Init() {
-
+		ClientRegistry.bindTileEntitySpecialRenderer(PlayerStatueTileEntity.class, new PlayerStatueRenderer());
 	}
 }

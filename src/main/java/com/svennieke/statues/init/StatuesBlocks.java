@@ -10,6 +10,7 @@ import com.svennieke.statues.blocks.Statues.BlockInfo_Statue;
 import com.svennieke.statues.blocks.Statues.BlockKingCluck_Statue;
 import com.svennieke.statues.blocks.Statues.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPig_Statue;
+import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.blocks.Statues.BlockRabbit_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
@@ -18,19 +19,21 @@ import com.svennieke.statues.blocks.Statues.BlockSnowGolem_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
 import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
 import com.svennieke.statues.items.ItemBlockStatue;
+import com.svennieke.statues.renderer.PlayerStatueRenderer;
+import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class StatuesBlocks {
 
 	public static Block baby_zombie_statue, blaze_statue, chicken_statue,cow_statue, creeper_statue, flood_statue,
 						kingcluck_statue, mooshroom_statue, pig_statue, rabbit_statue,
-						sheep_statue, sheepshaven_statue, slime_statue, snowgolem_statue, villager_statue, squid_statue, 
-						info_statue;
+						sheep_statue, sheepshaven_statue, slime_statue, snowgolem_statue, villager_statue, squid_statue;
 	
 	public static Block baby_zombie_statuet2, blaze_statuet2, chicken_statuet2, cow_statuet2, creeper_statuet2, flood_statuet2,
 						kingcluck_statuet2, mooshroom_statuet2, pig_statuet2, rabbit_statuet2, 
@@ -43,6 +46,8 @@ public class StatuesBlocks {
 	public static Block baby_zombie_statuet4, blaze_statuet4, chicken_statuet4,cow_statuet4, creeper_statuet4, flood_statuet4,
 						kingcluck_statuet4, mooshroom_statuet4, pig_statuet4, rabbit_statuet4, 
 						sheep_statuet4, sheepshaven_statuet4, slime_statuet4, snowgolem_statuet4, villager_statuet4, squid_statuet4;
+	
+	public static Block info_statue, player_statue;
 	
 	public static void init()
 	{
@@ -127,6 +132,7 @@ public class StatuesBlocks {
 		villager_statuet4 = new BlockVillager_Statue("villagerstatuet4", "blockvillagerstatuet4", 4);
 		
 		info_statue = new BlockInfo_Statue("infostatue", "blockinfostatue", 1);
+		player_statue = new BlockPlayer_Statue("playerstatue", "blockplayerstatue", "");
 	}
 	
 	public static void register()
@@ -212,6 +218,7 @@ public class StatuesBlocks {
 		registerBlock(villager_statuet4);
 		
 		registerBlock(info_statue);
+		registerBlock(player_statue);
 	}
 	
 	public static void registerBlock(Block block) 
@@ -309,6 +316,7 @@ public class StatuesBlocks {
 		registerRender(villager_statuet4);
 		
 		registerRender(info_statue);
+		registerRender(player_statue);
 	}
 	
 	public static void registerRender(Block block)
