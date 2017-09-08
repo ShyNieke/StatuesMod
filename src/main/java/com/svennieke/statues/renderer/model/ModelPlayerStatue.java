@@ -7,12 +7,18 @@ import net.minecraft.entity.Entity;
 public class ModelPlayerStatue extends ModelBase {
 
     //fields
-    public final ModelRenderer e1;
-    public final ModelRenderer e2;
-    public final ModelRenderer e3;
-    public final ModelRenderer e4;
-    public final ModelRenderer e5;
-    public final ModelRenderer e6;
+	public final ModelRenderer e1;
+	public final ModelRenderer e2;
+	public final ModelRenderer e3;
+	public final ModelRenderer e4;
+	public final ModelRenderer e5;
+	public final ModelRenderer e6;
+	public final ModelRenderer e7;
+	public final ModelRenderer e8;
+	public final ModelRenderer e9;
+	public final ModelRenderer e10;
+	public final ModelRenderer e11;
+	public final ModelRenderer e12;
 
     public ModelPlayerStatue()
     {
@@ -43,6 +49,31 @@ public class ModelPlayerStatue extends ModelBase {
         e6.addBox(6F, 6F, 7F, 4, 6, 2);
         e6.setRotationPoint(6F, 6F, 7F);
         e6.mirror = false;
+        e7 = new ModelRenderer(this, 0, 54);
+        e7.addBox(5.75F, 11.75F, 5.75F, 5, 5, 5);
+        e7.setRotationPoint(5.75F, 11.75F, 5.75F);
+        e7.setTextureSize(64, 64);
+        e7.mirror = false;
+        e8 = new ModelRenderer(this, 20, 54);
+        e8.addBox(7.75F, -0.25F, 6.5F, 3, 7, 3);
+        e8.setRotationPoint(7.75F, -0.25F, 6.5F);
+        e8.mirror = false;
+        e9 = new ModelRenderer(this, 20, 54);
+        e9.addBox(5.75F, -0.25F, 6.75F, 3, 7, 3);
+        e9.setRotationPoint(5.75F, -0.25F, 6.75F);
+        e9.mirror = false;
+        e10 = new ModelRenderer(this, 0, 44);
+        e10.addBox(5.75F, 5.5F, 6.75F, 5, 7, 3);
+        e10.setRotationPoint(5.75F, 5.5F, 6.75F);
+        e10.mirror = false;
+        e11 = new ModelRenderer(this, 20, 54);
+        e11.addBox(9.75F, 5.75F, 6.5F, 3, 7, 3);
+        e11.setRotationPoint(9.75F, 5.75F, 6.5F);
+        e11.mirror = false;
+        e12 = new ModelRenderer(this, 20, 54);
+        e12.addBox(3.75F, 5.75F, 6.5F, 3, 7, 3);
+        e12.setRotationPoint(3.75F, 5.75F, 6.5F);
+        e12.mirror = false;
     }
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
@@ -55,6 +86,12 @@ public class ModelPlayerStatue extends ModelBase {
         e4.render(f5);
         e5.render(f5);
         e6.render(f5);
+        e7.render(f5);
+        e8.render(f5);
+        e9.render(f5);
+        e10.render(f5);
+        e11.render(f5);
+        e12.render(f5);
     }
      
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
