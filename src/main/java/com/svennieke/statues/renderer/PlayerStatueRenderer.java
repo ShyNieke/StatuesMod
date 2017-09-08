@@ -30,8 +30,6 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	{
 		EnumFacing enumfacing = EnumFacing.UP;
 		
-		this.bindTexture(Steve);
-		
 		if (te.hasWorld())
         {
             IBlockState iblockstate = this.getWorld().getBlockState(te.getPos());
@@ -114,6 +112,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         this.modelPlayer.e10.render(0.0625F);
         this.modelPlayer.e11.render(0.0625F);
         this.modelPlayer.e12.render(0.0625F);
+        this.bindTexture(Steve);
         
         GlStateManager.enableCull();
         GlStateManager.disableRescaleNormal();
