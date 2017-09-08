@@ -1,10 +1,10 @@
 package com.svennieke.statues.renderer;
 
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
-import com.svennieke.statues.renderer.model.ModelPlayerStatue;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
@@ -12,8 +12,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity>{
 	public static final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
+	public static final ResourceLocation Bysco = new ResourceLocation("statues:textures/entity/mrbysco.png");
 	
-	public static final ModelPlayerStatue modelPlayer = new ModelPlayerStatue();
+	public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
 
 	
 	public PlayerStatueRenderer() {
@@ -63,7 +64,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		
         if (destroyStage < 0)
         {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
+            //GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
         }
         
         GlStateManager.translate((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
@@ -80,26 +81,43 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             default:
                 break;
             case NORTH:
-                GlStateManager.translate(0.0F, 1.0F, 1.0F);
-                GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
+            	GlStateManager.translate(0F, 0.75F, 0F);
+                GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
+                //GlStateManager.rotate(180.0F, 0.0F, 0.0F, 0.0F);
                 break;
             case SOUTH:
-                GlStateManager.translate(0.0F, 1.0F, -1.0F);
-                GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
+            	GlStateManager.translate(0F, 0.75F, 0F);
+                GlStateManager.rotate(0.0F, 0.0F, 90.0F, 0.0F);
                 break;
             case WEST:
-                GlStateManager.translate(-1.0F, 1.0F, 0.0F);
-                GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(-90.0F, 0.0F, 0.0F, 1.0F);
+            	GlStateManager.translate(0F, 0.75F, 0F);
+                GlStateManager.rotate(-90.0F, 0.0F, -90.0F, 0.0F);
+                //GlStateManager.rotate(-90.0F, 90.0F, 0.0F, 1.0F);
                 break;
             case EAST:
-                GlStateManager.translate(1.0F, 1.0F, 0.0F);
-                GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
-                GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
+            	GlStateManager.translate(0F, 0.75F, 0F);
+                GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
+                //GlStateManager.rotate(90.0F, 0.0F, 0.0F, 0.0F);
         }
-        this.bindTexture(Steve);
+        this.bindTexture(Bysco);
         
+        this.model.bipedBody.render(0.03125F);
+        this.model.bipedHead.render(0.03125F);
+        this.model.bipedLeftArm.render(0.03125F);
+        this.model.bipedRightArm.render(0.03125F);
+        this.model.bipedLeftLeg.render(0.03125F);
+        this.model.bipedRightLeg.render(0.03125F);
+
+        GlStateManager.enableBlend();
+        this.model.bipedBodyWear.render(0.03125F);
+        this.model.bipedHeadwear.render(0.03125F);
+        this.model.bipedLeftArmwear.render(0.03125F);
+        this.model.bipedRightArmwear.render(0.03125F);
+        this.model.bipedLeftLegwear.render(0.03125F);
+        this.model.bipedRightLegwear.render(0.03125F);
+        GlStateManager.disableBlend();
+        
+        /*
         this.modelPlayer.e1.render(0.0625F);
         this.modelPlayer.e2.render(0.0625F);
         this.modelPlayer.e3.render(0.0625F);
@@ -112,6 +130,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         this.modelPlayer.e10.render(0.0625F);
         this.modelPlayer.e11.render(0.0625F);
         this.modelPlayer.e12.render(0.0625F);
+        */
         
         GlStateManager.enableCull();
         GlStateManager.disableRescaleNormal();

@@ -42,7 +42,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 	
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
+		return EnumBlockRenderType.INVISIBLE;
 	}
 	
 	@Override
