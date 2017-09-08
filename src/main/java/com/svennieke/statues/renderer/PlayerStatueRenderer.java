@@ -106,12 +106,12 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         this.modelPlayer.e4.render(0.0625F);
         this.modelPlayer.e5.render(0.0625F);
         this.modelPlayer.e6.render(0.0625F);
-        this.modelPlayer.e7.render(0.0625F);
-        this.modelPlayer.e8.render(0.0625F);
-        this.modelPlayer.e9.render(0.0625F);
-        this.modelPlayer.e10.render(0.0625F);
-        this.modelPlayer.e11.render(0.0625F);
-        this.modelPlayer.e12.render(0.0625F);
+        //this.modelPlayer.e7.render(0.0625F);
+        //this.modelPlayer.e8.render(0.0625F);
+        //this.modelPlayer.e9.render(0.0625F);
+        //this.modelPlayer.e10.render(0.0625F);
+        //this.modelPlayer.e11.render(0.0625F);
+        //this.modelPlayer.e12.render(0.0625F);
         this.bindTexture(Steve);
         
         GlStateManager.enableCull();
