@@ -7,18 +7,18 @@ import net.minecraft.entity.Entity;
 public class ModelPlayerStatue extends ModelBase {
 
     //fields
-    ModelRenderer e1;
-    ModelRenderer e2;
-    ModelRenderer e3;
-    ModelRenderer e4;
-    ModelRenderer e5;
-    ModelRenderer e6;
-    ModelRenderer e7;
-    ModelRenderer e8;
-    ModelRenderer e9;
-    ModelRenderer e10;
-    ModelRenderer e11;
-    ModelRenderer e12;
+    public ModelRenderer e1;
+    public ModelRenderer e2;
+    public ModelRenderer e3;
+    public ModelRenderer e4;
+    public ModelRenderer e5;
+    public ModelRenderer e6;
+    public ModelRenderer e7;
+    public ModelRenderer e8;
+    public ModelRenderer e9;
+    public ModelRenderer e10;
+    public ModelRenderer e11;
+    public ModelRenderer e12;
 
     public ModelPlayerStatue()
     {
