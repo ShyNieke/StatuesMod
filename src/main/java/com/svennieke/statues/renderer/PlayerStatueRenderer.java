@@ -98,6 +98,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
                 GlStateManager.rotate(90.0F, 1.0F, 0.0F, 0.0F);
                 GlStateManager.rotate(90.0F, 0.0F, 0.0F, 1.0F);
         }
+        this.bindTexture(Steve);
         
         this.modelPlayer.e1.render(0.0625F);
         this.modelPlayer.e2.render(0.0625F);
@@ -111,7 +112,6 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         this.modelPlayer.e10.render(0.0625F);
         this.modelPlayer.e11.render(0.0625F);
         this.modelPlayer.e12.render(0.0625F);
-        this.bindTexture(Steve);
         
         GlStateManager.enableCull();
         GlStateManager.disableRescaleNormal();
