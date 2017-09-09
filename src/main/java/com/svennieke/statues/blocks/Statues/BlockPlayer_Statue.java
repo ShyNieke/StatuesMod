@@ -4,7 +4,6 @@ import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockPlayer;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -87,14 +86,13 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos,
 			EntityPlayer player) {
-		ItemStack playerblock = new ItemStack(state.getBlock(), 1);
 		if (getTE(world, pos).hasCustomName())
 		{
-		return playerblock.setStackDisplayName(getTE(world, pos).getName());
+		return new ItemStack(state.getBlock(), 1).setStackDisplayName(getTE(world, pos).getName());
 		}
 		else
 		{
-			return playerblock;
+			return new ItemStack(state.getBlock(), 1);
 		}
 	}
 	
