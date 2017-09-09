@@ -33,6 +33,7 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWo
         compound.setString("PlayerName", this.BlockName);
         return compound;
     }
+    
     @Override
     public NBTTagCompound getUpdateTag() {
     	return this.writeToNBT(new NBTTagCompound());
