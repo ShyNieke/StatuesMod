@@ -61,7 +61,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         }
         else
         {
-            this.bindTexture(Steve);
+            this.bindTexture(skinlocation);
         }
         
         GlStateManager.pushMatrix();
