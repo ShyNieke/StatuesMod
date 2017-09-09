@@ -46,6 +46,13 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 	}
 	
 	@Override
+	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity te,
+			ItemStack stack) {
+		stack.setStackDisplayName(getTE(worldIn, pos).getName());
+		super.harvestBlock(worldIn, player, pos, state, te, stack);
+	}
+	
+	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
 		String stackname = stack.getDisplayName();
