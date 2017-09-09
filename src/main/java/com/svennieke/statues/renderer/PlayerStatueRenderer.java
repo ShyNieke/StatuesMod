@@ -138,7 +138,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	@Nullable
     private ResourceLocation getSkinResourceLocation(PlayerStatueTileEntity pste)
     {			
-		if(pste.getName() == "" || pste.getName() == "Statue Block" || pste.getName().contains(" "))
+		if(pste.getName() == "" || pste.getName().contains(" "))
 		{
 			final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
 			return Steve;

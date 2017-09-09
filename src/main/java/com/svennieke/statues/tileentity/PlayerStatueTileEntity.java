@@ -1,17 +1,15 @@
 package com.svennieke.statues.tileentity;
 
-import net.minecraft.client.network.NetworkPlayerInfo;
-import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.IWorldNameable;
 
-public class PlayerStatueTileEntity extends TileEntity implements ITickable{
+public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWorldNameable{
 	private String BlockName;
 	
 	public PlayerStatueTileEntity() {
-		this.BlockName = "Player Statue";
+		this.BlockName = "";
 	}
 	
 	public String setName(String name) {
@@ -19,20 +17,31 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable{
 	}
 	
 	public String getName() {
-		//System.out.println(this.BlockName);
-		return this.BlockName;
+		return this.hasCustomName() ? this.BlockName : "statue.player";
 	}
 	
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        this.BlockName = compound.getString("PlayerName");
+        
+        if (compound.hasKey("CustomName", 8))
+        {
+            this.BlockName = compound.getString("PlayerName");
+        }
+        
+        //this.BlockName = compound.getString("PlayerName");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        compound.setString("PlayerName", this.BlockName);
+        
+        if (this.hasCustomName())
+        {
+            compound.setString("PlayerName", this.BlockName);
+        }
+        
+        //compound.setString("PlayerName", this.BlockName);
         return compound;
     }
     
@@ -40,4 +49,9 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable{
     public void update(){
 
     }
+
+	@Override
+	public boolean hasCustomName() {
+		return this.BlockName != null && !this.BlockName.isEmpty();
+	}
 }

@@ -29,5 +29,5 @@ public class SkinUtil {
 		}
 
 		return skinlocation;
-}
+	}
 }

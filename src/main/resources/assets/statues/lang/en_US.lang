@@ -100,3 +100,6 @@ villager.info=WIP, Trades in the future
 
 #Entity
 entity.statues:StatueBat.name=Statue Bat
+
+#tileentity
+statue.player=Player Statue
