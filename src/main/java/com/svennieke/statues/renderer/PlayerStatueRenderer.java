@@ -118,21 +118,6 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         this.model.bipedRightLegwear.render(0.03125F);
         GlStateManager.disableBlend();
         
-        /*
-        this.modelPlayer.e1.render(0.0625F);
-        this.modelPlayer.e2.render(0.0625F);
-        this.modelPlayer.e3.render(0.0625F);
-        this.modelPlayer.e4.render(0.0625F);
-        this.modelPlayer.e5.render(0.0625F);
-        this.modelPlayer.e6.render(0.0625F);
-        this.modelPlayer.e7.render(0.0625F);
-        this.modelPlayer.e8.render(0.0625F);
-        this.modelPlayer.e9.render(0.0625F);
-        this.modelPlayer.e10.render(0.0625F);
-        this.modelPlayer.e11.render(0.0625F);
-        this.modelPlayer.e12.render(0.0625F);
-        */
-        
         GlStateManager.enableCull();
         GlStateManager.disableRescaleNormal();
         GlStateManager.popMatrix();
