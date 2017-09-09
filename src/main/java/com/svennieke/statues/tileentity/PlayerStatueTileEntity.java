@@ -23,25 +23,13 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWo
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        
-        if (compound.hasKey("CustomName", 8))
-        {
-            this.BlockName = compound.getString("PlayerName");
-        }
-        
-        //this.BlockName = compound.getString("PlayerName");
+        this.BlockName = compound.getString("PlayerName");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
-        
-        if (this.hasCustomName())
-        {
-            compound.setString("PlayerName", this.BlockName);
-        }
-        
-        //compound.setString("PlayerName", this.BlockName);
+        compound.setString("PlayerName", this.BlockName);
         return compound;
     }
     

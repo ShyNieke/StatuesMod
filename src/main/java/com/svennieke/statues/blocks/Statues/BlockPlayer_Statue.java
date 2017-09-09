@@ -114,7 +114,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
 	        if (!world.isRemote) {
-
+	        	System.out.println(getTE(world,pos).getName());
 	        }
 		return true;
 	}
