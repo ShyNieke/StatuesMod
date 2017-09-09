@@ -42,6 +42,9 @@ public class StatuesConfigGen {
 		@Config.RequiresMcRestart
 		@Config.Comment("Setting this to false disables the tier 3 and 4 recipes. (Default: true)")
 		public boolean CraftableInteraction = true;
+		
+		@Config.Comment("Players drop their players Player Statue")
+		public boolean PlayersDropStatue = false;
 	}
 	
 	public static class OtherStuff{

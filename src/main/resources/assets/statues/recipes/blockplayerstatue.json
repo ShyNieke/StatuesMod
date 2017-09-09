@@ -16,16 +16,16 @@
       "item": "minecraft:gold_ingot"
     },
     "S": {
-      "item": "minecraft:wooden_sword"
+      "item": "#statues:woodsword"
     },
 	"P": {
-      "item": "minecraft:wooden_pickaxe"
+      "item": "#statues:woodpickaxe"
     },
 	"A": {
-      "item": "minecraft:wooden_axe"
+      "item": "#statues:woodaxe"
     },
 	"H": {
-      "item": "minecraft:wooden_shovel"
+      "item": "#statues:woodshovel"
     }
   }
 }

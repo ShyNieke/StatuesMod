@@ -11,7 +11,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -30,7 +29,20 @@ public class BlockPlayer extends BaseCutout{
 	@Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
-        return BOUNDING_BOX;
+		//Disabled until we re-do all bounding boxes
+		/*
+		EnumFacing enumfacing = (EnumFacing)state.getValue(FACING);
+		if(enumfacing == enumfacing.NORTH || enumfacing == enumfacing.SOUTH)
+		{
+			return BOUNDING_BOX;
+		}
+		else
+		{
+			return BOUNDING_BOX;
+		}
+		*/
+		
+		return BOUNDING_BOX;
     }
 	
     @Override

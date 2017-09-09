@@ -1,0 +1,38 @@
+[
+	{
+		"name": "statues:woodsword",
+		"ingredient": [
+		  {
+			"item": "minecraft:wooden_sword",
+			"data": 32767
+		  }
+		]
+	},
+	{
+		"name": "statues:woodshovel",
+		"ingredient": [
+		  {
+			"item": "minecraft:wooden_shovel",
+			"data": 32767
+		  }
+		]
+	},
+	{
+		"name": "statues:woodaxe",
+		"ingredient": [
+		  {
+			"item": "minecraft:wooden_axe",
+			"data": 32767
+		  }
+		]
+	},
+	{
+		"name": "statues:woodpickaxe",
+		"ingredient": [
+		  {
+			"item": "minecraft:wooden_pickaxe",
+			"data": 32767
+		  }
+		]
+	}
+]

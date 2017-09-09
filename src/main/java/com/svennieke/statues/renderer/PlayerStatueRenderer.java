@@ -7,7 +7,6 @@ import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.util.SkinUtil;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -16,7 +15,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity>{
 	public static final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
-	public static final ResourceLocation Bysco = new ResourceLocation("statues:textures/entity/mrbysco.png");
 	
 	public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
 
