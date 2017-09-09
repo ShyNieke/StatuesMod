@@ -61,7 +61,10 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         }
         else
         {
-            this.bindTexture(skinlocation);
+        	if (skinlocation != null)
+            {
+            	this.bindTexture(skinlocation);
+    		}
         }
         
         GlStateManager.pushMatrix();
@@ -138,7 +141,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	@Nullable
     private ResourceLocation getSkinResourceLocation(PlayerStatueTileEntity pste)
     {			
-		if(pste.getName() == "" || pste.getName().contains(" "))
+		if(pste.getName().equals("") || pste.getName().contains(" "))
 		{
 			final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
 			return Steve;
