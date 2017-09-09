@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
+import com.svennieke.statues.util.SkinUtil;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.entity.AbstractClientPlayer;
@@ -136,18 +137,15 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	
 	@Nullable
     private ResourceLocation getSkinResourceLocation(PlayerStatueTileEntity pste)
-    {
-		if(pste.getName() == "" || pste.getName() == "Statue Block")
+    {			
+		if(pste.getName() == "" || pste.getName() == "Statue Block" || pste.getName().contains(" "))
 		{
 			final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
 			return Steve;
 		}
 		else
 		{
-			ResourceLocation playerskin = AbstractClientPlayer.getLocationSkin(pste.getName());
-			return playerskin;
+			return SkinUtil.getSkinTexture(pste.getName());
 		}
     }
-	
-	
 }
