@@ -1,0 +1,31 @@
+{
+  "result": {
+    "item": "statues:blockplayerstatue"
+  },
+  "pattern": [
+    "GSG",
+    "PCA",
+    "GHG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "item": "minecraft:wooden_sword"
+    },
+	"P": {
+      "item": "minecraft:wooden_pickaxe"
+    },
+	"A": {
+      "item": "minecraft:wooden_axe"
+    },
+	"H": {
+      "item": "minecraft:wooden_shovel"
+    }
+  }
+}
