@@ -1,8 +1,11 @@
 package com.svennieke.statues.tileentity;
 
+import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 
 public class PlayerStatueTileEntity extends TileEntity implements ITickable{
 	private String BlockName;

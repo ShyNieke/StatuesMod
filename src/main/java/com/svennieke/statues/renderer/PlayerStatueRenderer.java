@@ -1,9 +1,12 @@
 package com.svennieke.statues.renderer;
 
+import javax.annotation.Nullable;
+
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -29,6 +32,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) 
 	{
 		EnumFacing enumfacing = EnumFacing.UP;
+		ResourceLocation skinlocation = this.getSkinResourceLocation(te);
 		
 		if (te.hasWorld())
         {
@@ -64,7 +68,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		
         if (destroyStage < 0)
         {
-            //GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
+            GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
         }
         
         GlStateManager.translate((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
@@ -83,7 +87,6 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             case NORTH:
             	GlStateManager.translate(0F, 0.75F, 0F);
                 GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
-                //GlStateManager.rotate(180.0F, 0.0F, 0.0F, 0.0F);
                 break;
             case SOUTH:
             	GlStateManager.translate(0F, 0.75F, 0F);
@@ -92,14 +95,15 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             case WEST:
             	GlStateManager.translate(0F, 0.75F, 0F);
                 GlStateManager.rotate(-90.0F, 0.0F, -90.0F, 0.0F);
-                //GlStateManager.rotate(-90.0F, 90.0F, 0.0F, 1.0F);
                 break;
             case EAST:
             	GlStateManager.translate(0F, 0.75F, 0F);
                 GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
-                //GlStateManager.rotate(90.0F, 0.0F, 0.0F, 0.0F);
         }
-        this.bindTexture(Bysco);
+        if (skinlocation != null)
+        {
+        	this.bindTexture(skinlocation);
+		}
         
         this.model.bipedBody.render(0.03125F);
         this.model.bipedHead.render(0.03125F);
@@ -129,4 +133,21 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             GlStateManager.matrixMode(5888);
         }    
 	}
+	
+	@Nullable
+    private ResourceLocation getSkinResourceLocation(PlayerStatueTileEntity pste)
+    {
+		if(pste.getName() == "" || pste.getName() == "Statue Block")
+		{
+			final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
+			return Steve;
+		}
+		else
+		{
+			ResourceLocation playerskin = AbstractClientPlayer.getLocationSkin(pste.getName());
+			return playerskin;
+		}
+    }
+	
+	
 }
