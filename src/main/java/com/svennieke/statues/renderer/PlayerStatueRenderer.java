@@ -119,7 +119,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         this.model.bipedHeadwear.render(0.03125F);
         this.model.bipedLeftArmwear.render(0.03125F);
         this.model.bipedRightArmwear.render(0.03125F);
-        this.model.bipedRightArmwear.offsetZ = -0.30F;
+        this.model.bipedRightArmwear.offsetZ = -0.3125F;
         this.model.bipedLeftLegwear.render(0.03125F);
         this.model.bipedRightLegwear.render(0.03125F);
         GlStateManager.disableBlend();
