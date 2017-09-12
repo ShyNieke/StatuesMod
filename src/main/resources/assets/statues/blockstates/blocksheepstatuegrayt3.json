@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"facing=east":  { "model": "statues:blocksheepstatuegray", "y": 90},
+		"facing=north": { "model": "statues:blocksheepstatuegray"},
+		"facing=west":  { "model": "statues:blocksheepstatuegray", "y": 270},
+        "facing=south": { "model": "statues:blocksheepstatuegray", "y": 180}
+    }
+}

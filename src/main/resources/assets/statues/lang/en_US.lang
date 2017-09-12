@@ -60,10 +60,85 @@ tile.sheepshavenstatuet2.name=Sound Shaven Sheep Statue
 tile.sheepshavenstatuet3.name=Functional Shaven Sheep Statue
 tile.sheepshavenstatuet4.name=Muted Shaven Sheep Statue
 
-tile.sheepstatue.name=Decorative Sheep Statue
-tile.sheepstatuet2.name=Sound Sheep Statue
-tile.sheepstatuet3.name=Functional Sheep Statue
-tile.sheepstatuet4.name=Muted Sheep Statue
+tile.sheepstatue.name=Decorative White Sheep Statue
+tile.sheepstatuet2.name=Sound White Sheep Statue
+tile.sheepstatuet3.name=Functional White Sheep Statue
+tile.sheepstatuet4.name=Muted White Sheep Statue
+
+tile.sheepstatueorange.name=Decorative Orange Sheep Statue
+tile.sheepstatueoranget2.name=Sound Orange Sheep Statue
+tile.sheepstatueoranget3.name=Functional Orange Sheep Statue
+tile.sheepstatueoranget4.name=Muted Orange Sheep Statue
+
+tile.sheepstatuemagenta.name=Decorative Magenta Sheep Statue
+tile.sheepstatuemagentat2.name=Sound Magenta Sheep Statue
+tile.sheepstatuemagentat3.name=Functional Magenta Sheep Statue
+tile.sheepstatuemagentat4.name=Muted Magenta Sheep Statue
+
+tile.sheepstatuelightblue.name=Decorative Light Blue Sheep Statue
+tile.sheepstatuelightbluet2.name=Sound Light Blue Sheep Statue
+tile.sheepstatuelightbluet3.name=Functional Light Blue Sheep Statue
+tile.sheepstatuelightbluet4.name=Muted Light Blue Sheep Statue
+
+tile.sheepstatueyellow.name=Decorative Yellow Sheep Statue
+tile.sheepstatueyellowt2.name=Sound Yellow Sheep Statue
+tile.sheepstatueyellowt3.name=Functional Yellow Sheep Statue
+tile.sheepstatueyellowt4.name=Muted Yellow Sheep Statue
+
+tile.sheepstatuelime.name=Decorative Lime Sheep Statue
+tile.sheepstatuelimet2.name=Sound Lime Sheep Statue
+tile.sheepstatuelimet3.name=Functional Lime Sheep Statue
+tile.sheepstatuelimet4.name=Muted Lime Sheep Statue
+
+tile.sheepstatuepink.name=Decorative Pink Sheep Statue
+tile.sheepstatuepinkt2.name=Sound Pink Sheep Statue
+tile.sheepstatuepinkt3.name=Functional Pink Sheep Statue
+tile.sheepstatuepinkt4.name=Muted Pink Sheep Statue
+
+tile.sheepstatuegray.name=Decorative Gray Sheep Statue
+tile.sheepstatuegrayt2.name=Sound Gray Sheep Statue
+tile.sheepstatuegrayt3.name=Functional Gray Sheep Statue
+tile.sheepstatuegrayt4.name=Muted Gray Sheep Statue
+
+tile.sheepstatuelightgray.name=Decorative Light Gray Sheep Statue
+tile.sheepstatuelightgrayt2.name=Sound Light Gray Sheep Statue
+tile.sheepstatuelightgrayt3.name=Functional Light Gray Sheep Statue
+tile.sheepstatuelightgrayt4.name=Muted Light Gray Sheep Statue
+
+tile.sheepstatuecyan.name=Decorative Cyan Sheep Statue
+tile.sheepstatuecyant2.name=Sound Cyan Sheep Statue
+tile.sheepstatuecyant3.name=Functional Cyan Sheep Statue
+tile.sheepstatuecyant4.name=Muted Cyan Sheep Statue
+
+tile.sheepstatuepurple.name=Decorative Purple Sheep Statue
+tile.sheepstatuepurplet2.name=Sound Purple Sheep Statue
+tile.sheepstatuepurplet3.name=Functional Purple Sheep Statue
+tile.sheepstatuepurplet4.name=Muted Purple Sheep Statue
+
+tile.sheepstatueblue.name=Decorative Blue Sheep Statue
+tile.sheepstatuebluet2.name=Sound Blue Sheep Statue
+tile.sheepstatuebluet3.name=Functional Blue Sheep Statue
+tile.sheepstatuebluet4.name=Muted Blue Sheep Statue
+
+tile.sheepstatuebrown.name=Decorative Brown Sheep Statue
+tile.sheepstatuebrownt2.name=Sound Brown Sheep Statue
+tile.sheepstatuebrownt3.name=Functional Brown Sheep Statue
+tile.sheepstatuebrownt4.name=Muted Brown Sheep Statue
+
+tile.sheepstatuegreen.name=Decorative Green Sheep Statue
+tile.sheepstatuegreent2.name=Sound Green Sheep Statue
+tile.sheepstatuegreent3.name=Functional Green Sheep Statue
+tile.sheepstatuegreent4.name=Muted Green Sheep Statue
+
+tile.sheepstatuered.name=Decorative Red Sheep Statue
+tile.sheepstatueredt2.name=Sound Red Sheep Statue
+tile.sheepstatueredt3.name=Functional Red Sheep Statue
+tile.sheepstatueredt4.name=Muted Red Sheep Statue
+
+tile.sheepstatueblack.name=Decorative Black Sheep Statue
+tile.sheepstatueblackt2.name=Sound Black Sheep Statue
+tile.sheepstatueblackt3.name=Functional Black Sheep Statue
+tile.sheepstatueblackt4.name=Muted Black Sheep Statue
 
 tile.slimestatue.name=Decorative Slime Statue
 tile.slimestatuet2.name=Sound Slime Statue

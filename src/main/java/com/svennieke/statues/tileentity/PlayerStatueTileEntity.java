@@ -34,14 +34,19 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWo
         return compound;
     }
     
-    @Override
-    public NBTTagCompound getUpdateTag() {
-    	return this.writeToNBT(new NBTTagCompound());
-    }
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound tag = super.getUpdateTag();
+		tag.setString("BlockName", BlockName);
+		return tag;
+
+		//return this.writeToNBT(new NBTTagCompound());
+	}
     
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(this.pos, 4, this.getUpdateTag());
+    public void handleUpdateTag(NBTTagCompound tag) {
+    	super.handleUpdateTag(tag);
+    	BlockName = tag.getString("PlayerName");
     }
     
     @Override

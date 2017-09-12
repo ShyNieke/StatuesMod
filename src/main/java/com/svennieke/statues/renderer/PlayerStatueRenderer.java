@@ -9,6 +9,7 @@ import com.svennieke.statues.util.SkinUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -16,16 +17,16 @@ import net.minecraft.util.ResourceLocation;
 public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity>{
 	public static final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
 	
+    public static PlayerStatueRenderer instance;
+	
 	public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
 
 	
-	public PlayerStatueRenderer() {
-		super();
-	}
-	
-	public void setSkinResourceLocation() {
-
-	}
+	public void setRendererDispatcher(TileEntityRendererDispatcher rendererDispatcherIn)
+    {
+        super.setRendererDispatcher(rendererDispatcherIn);
+        instance = this;
+    }
 	
 	@Override
 	public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) 

@@ -27,5 +27,8 @@
 	"H": {
       "item": "#statues:woodshovel"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
 }

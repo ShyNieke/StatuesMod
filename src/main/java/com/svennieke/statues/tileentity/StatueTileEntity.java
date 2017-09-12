@@ -5,6 +5,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesItems;
 
 import net.minecraft.block.Block;

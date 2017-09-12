@@ -15,8 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IWorldNameable;
@@ -45,12 +43,6 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.INVISIBLE;
-	}
-	
-	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		super.breakBlock(worldIn, pos, state);
-        worldIn.removeTileEntity(pos);
 	}
 	
 	@Override
@@ -108,14 +100,5 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 		}
 		
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-	}
-	
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
-	        if (!world.isRemote) {
-	        	System.out.println(getTE(world,pos).getName());
-	        }
-		return true;
 	}
 }

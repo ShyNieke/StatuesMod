@@ -19,9 +19,11 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import scala.util.Random;
 
 public class DropHandler {
 
@@ -116,11 +118,142 @@ public class DropHandler {
 	        
 	        if (entity instanceof EntitySheep) {
 	        	random_drop = Math.random();
-	        	if ( random_drop < StatuesConfigGen.general.OldDropChance )
+	        	if (((EntitySheep) entity).getSheared() == true)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue, 1);
-	        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheepshaven_statue, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
 	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.WHITE)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_white, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.ORANGE)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_orange, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.MAGENTA)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_magenta, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.LIGHT_BLUE)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lightblue, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.YELLOW)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_yellow, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.LIME)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lime, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.PINK)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_pink, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.GRAY)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_gray, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.SILVER)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lightgray, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.CYAN)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_cyan, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.PURPLE)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_purple, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.BLUE)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_blue, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.BROWN)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_brown, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.GREEN)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_green, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.RED)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_red, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.BLACK)
+	        	{
+	        		if ( random_drop < StatuesConfigGen.general.OldDropChance )
+		        	{
+		        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_black, 1);
+		        		event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+		        	}
+	        	}   	
 	        }
 	        
 	        if (entity instanceof EntityZombie) {
@@ -157,10 +290,17 @@ public class DropHandler {
 		if(StatuesConfigGen.general.PlayersDropStatue == true)
 		{
 			if (entity instanceof EntityPlayer) {
-				EntityPlayer player = (EntityPlayer) entity;
-            	ItemStack playerstatuestack = new ItemStack(StatuesBlocks.player_statue, 1).setStackDisplayName(player.getName());
-            	
-            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY +0.5, entity.posZ, playerstatuestack));
+				if(event.getSource().getTrueSource() instanceof EntityPlayer)
+				{
+					int random = entity.world.rand.nextInt(StatuesConfigGen.general.PlayerDropChance);
+					
+					EntityPlayer player = (EntityPlayer) entity;
+					if(random < 1)
+					{
+						ItemStack playerstatuestack = new ItemStack(StatuesBlocks.player_statue, 1).setStackDisplayName(player.getName());
+						event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY +0.5, entity.posZ, playerstatuestack));
+					}
+				}
 			}
 		}
 	}

@@ -44,7 +44,10 @@ public class StatuesConfigGen {
 		public boolean CraftableInteraction = true;
 		
 		@Config.Comment("Players drop their players Player Statue")
-		public boolean PlayersDropStatue = false;
+		public boolean PlayersDropStatue = true;
+		
+		@Config.Comment("Changing this will change the chance a player has of dropping a Player Statue when killed by a player [1 in a x chance] (Default: 1)")
+		public int PlayerDropChance = 1;
 	}
 	
 	public static class OtherStuff{
@@ -256,13 +259,7 @@ public class StatuesConfigGen {
 			
 		}
 		
-		public static class Sheep{
-			@Config.Comment("Changing this changes the item that drops 100% of the time")
-			public String item1 = "";
-			
-			@Config.Comment("Metadata for the item")
-			public int item1meta = 0;
-			
+		public static class Sheep{		
 			@Config.Comment("Changing this changes the item that drops 50% of the time")
 			public String item2 = "minecraft:mutton";
 			
@@ -279,7 +276,7 @@ public class StatuesConfigGen {
 		
 		public static class SheepShaven{
 			@Config.Comment("Changing this changes the item that drops 100% of the time")
-			public String item1 = "minecraft:wool";
+			public String item1 = "";
 			
 			@Config.Comment("Metadata for the item")
 			public int item1meta = 0;
