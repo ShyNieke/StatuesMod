@@ -31,6 +31,10 @@ public class StatuesConfigGen {
 						"Disabling this makes tier1 statues drop from mobs.")
 		public boolean Tier1Crafting = true;
 		
+		@Config.RequiresMcRestart
+		@Config.Comment("Setting this to true enables a recipe where the core is replaced by a diamond [ideal for singleplayer when tier 1 crafting is turned off] (Default: false)")
+		public boolean PlayerStatueAlternateRecipe = false;
+		
 		@Config.Comment("The drop chance of statues when statue drops is true (Default: 0.01)" +
 						" [This option only takes effect when NewSystem is false]")
 		public double OldDropChance = 0.01;

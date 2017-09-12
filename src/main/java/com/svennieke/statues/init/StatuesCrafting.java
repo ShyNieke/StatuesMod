@@ -31,6 +31,12 @@ public class StatuesCrafting {
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.villager_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.EMERALD, 'C', StatuesItems.core);GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.SLIME_BALL, 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.player_statue),"GSG","PCA", "GHG", 'C', StatuesItems.core, 'G', Items.GOLD_INGOT, 'S', new ItemStack(Items.WOODEN_SWORD, 1, OreDictionary.WILDCARD_VALUE), 'P', new ItemStack(Items.WOODEN_PICKAXE, 1, OreDictionary.WILDCARD_VALUE), 'A', new ItemStack(Items.WOODEN_AXE, 1, OreDictionary.WILDCARD_VALUE), 'H', new ItemStack(Items.WOODEN_SHOVEL, 1, OreDictionary.WILDCARD_VALUE));
 		}
+		
+		if(StatuesConfigGen.general.PlayerStatueAlternateRecipe)
+		{
+			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.player_statue),"GSG","PCA", "GHG", 'C', Items.DIAMOND, 'G', Items.GOLD_INGOT, 'S', new ItemStack(Items.WOODEN_SWORD, 1, OreDictionary.WILDCARD_VALUE), 'P', new ItemStack(Items.WOODEN_PICKAXE, 1, OreDictionary.WILDCARD_VALUE), 'A', new ItemStack(Items.WOODEN_AXE, 1, OreDictionary.WILDCARD_VALUE), 'H', new ItemStack(Items.WOODEN_SHOVEL, 1, OreDictionary.WILDCARD_VALUE));
+		}
+		
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.info_statue)," R ","BCB", "CCC", 'C', Blocks.COBBLESTONE, 'B', Items.BOOK, 'R', new ItemStack(Items.DYE, 1, 1));
 		
 		//tier two statues (sounds only)
