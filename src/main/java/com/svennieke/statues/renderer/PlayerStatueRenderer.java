@@ -11,6 +11,7 @@ import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
@@ -32,7 +33,12 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) 
 	{
 		EnumFacing enumfacing = EnumFacing.UP;
-		ResourceLocation skinlocation = this.getSkinResourceLocation(te);
+		this.renderPlayer(te, x, y, z, te.getName(), destroyStage, enumfacing);
+	}
+	
+	public void renderPlayer(PlayerStatueTileEntity te, double x, double y, double z, String playerName, int destroyStage, EnumFacing enumfacing) 
+	{
+		ResourceLocation skinlocation = this.getSkinResourceLocation(playerName);
 		
 		if (te.hasWorld())
         {
@@ -71,7 +77,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		
         if (destroyStage < 0)
         {
-            GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
+            GlStateManager.color(1.0F, 1.0F, 1.0F);
         }
         
         GlStateManager.translate((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
@@ -103,6 +109,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             	GlStateManager.translate(0F, 0.75F, 0F);
                 GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
         }
+        
         if (skinlocation != null)
         {
         	this.bindTexture(skinlocation);
@@ -134,20 +141,20 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             GlStateManager.matrixMode(5890);
             GlStateManager.popMatrix();
             GlStateManager.matrixMode(5888);
-        }    
+        } 
 	}
 	
 	@Nullable
-    private ResourceLocation getSkinResourceLocation(PlayerStatueTileEntity pste)
+    private ResourceLocation getSkinResourceLocation(String name)
     {			
-		if(pste.getName().equals("") || pste.getName().contains(" "))
+		if(name.equals("") || name.contains(" "))
 		{
-			final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
+			final ResourceLocation Steve = DefaultPlayerSkin.getDefaultSkinLegacy();
 			return Steve;
 		}
 		else
 		{
-			return SkinUtil.getSkinTexture(pste.getName());
+			return SkinUtil.getSkinTexture(name);
 		}
     }
 }

@@ -37,9 +37,9 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWo
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound tag = super.getUpdateTag();
-		tag.setString("BlockName", BlockName);
+		tag.setString("PlayerName", BlockName);
 		return tag;
-
+		
 		//return this.writeToNBT(new NBTTagCompound());
 	}
     
@@ -48,6 +48,11 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWo
     	super.handleUpdateTag(tag);
     	BlockName = tag.getString("PlayerName");
     }
+    
+    @Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
+	}
     
     @Override
     public void update(){

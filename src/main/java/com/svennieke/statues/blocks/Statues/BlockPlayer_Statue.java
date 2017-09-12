@@ -15,6 +15,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IWorldNameable;
@@ -91,14 +93,21 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 		String stackname = stack.getDisplayName();
 		String tilename = getTE(worldIn, pos).getName();
 		if (tilename != stackname)
 		{
 			this.playername = stackname;
 			getTE(worldIn, pos).setName(playername);
+			getTE(worldIn, pos).markDirty();
 		}
-		
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+	}
+	
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		System.out.println(getTE(worldIn, pos).getName());
+		return true;
 	}
 }
