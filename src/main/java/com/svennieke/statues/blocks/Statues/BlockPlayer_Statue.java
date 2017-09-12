@@ -15,8 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IWorldNameable;
@@ -102,12 +100,5 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 			getTE(worldIn, pos).setName(playername);
 			getTE(worldIn, pos).markDirty();
 		}
-	}
-	
-	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		System.out.println(getTE(worldIn, pos).getName());
-		return true;
 	}
 }

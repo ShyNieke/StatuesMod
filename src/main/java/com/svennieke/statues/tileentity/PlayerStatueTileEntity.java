@@ -1,6 +1,8 @@
 package com.svennieke.statues.tileentity;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
@@ -47,6 +49,16 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWo
     public void handleUpdateTag(NBTTagCompound tag) {
     	super.handleUpdateTag(tag);
     	BlockName = tag.getString("PlayerName");
+    }
+    
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    	super.onDataPacket(net, pkt);
+    	readFromNBT(pkt.getNbtCompound());
+    	
+    	 final IBlockState state = getWorld().getBlockState(getPos());
+    	 getWorld().notifyBlockUpdate(getPos(), state, state, 3);
+    	
     }
     
     @Override

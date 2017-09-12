@@ -13,12 +13,9 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class StatuesEntity {
 	
 	public static void register() {		
-		if(StatuesConfigGen.general.Tier1Crafting == true)
-		{
-			EntityRegistry.registerModEntity(StatuesEntityName.STATUE_BAT_REGISTRY, EntityStatueBat.class, 
-					StatuesEntityName.STATUE_BAT, 0, Statues.instance, 80, 3, true, 3421236, 3556687);
-			System.out.println("Registered Statues Bat");
-		}
+		EntityRegistry.registerModEntity(StatuesEntityName.STATUE_BAT_REGISTRY, EntityStatueBat.class, 
+				StatuesEntityName.STATUE_BAT, 0, Statues.instance, 80, 3, true, 3421236, 3556687);
+		System.out.println("Registered Statues Bat");
 		
 		GameRegistry.registerTileEntity(StatueTileEntity.class, Reference.MOD_ID + "_tileentity");
 		GameRegistry.registerTileEntity(PlayerStatueTileEntity.class, Reference.MOD_ID + "_playertileentity");
