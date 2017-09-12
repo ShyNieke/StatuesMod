@@ -46,11 +46,6 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
                 enumfacing = (EnumFacing)iblockstate.getValue(BlockPlayer_Statue.FACING);
             }
         }
-		
-		GlStateManager.enableDepth();
-        GlStateManager.depthFunc(515);
-        GlStateManager.depthMask(true);
-        GlStateManager.disableCull();
         
         if (destroyStage >= 0)
         {
@@ -70,12 +65,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         }
         
         GlStateManager.pushMatrix();
-        GlStateManager.enableRescaleNormal();
-		
-        if (destroyStage < 0)
-        {
-            GlStateManager.color(1.0F, 1.0F, 1.0F);
-        }
+        GlStateManager.disableCull();
         
         GlStateManager.translate((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
         GlStateManager.scale(1.0F, -1.0F, -1.0F);
@@ -112,25 +102,27 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         	this.bindTexture(skinlocation);
 		}
         
-        this.model.bipedBody.render(0.03125F);
-        this.model.bipedHead.render(0.03125F);
-        this.model.bipedLeftArm.render(0.03125F);
-        this.model.bipedRightArm.render(0.03125F);
-        this.model.bipedLeftLeg.render(0.03125F);
-        this.model.bipedRightLeg.render(0.03125F);
-
-        GlStateManager.enableBlend();
-        this.model.bipedBodyWear.render(0.03125F);
-        this.model.bipedHeadwear.render(0.03125F);
-        this.model.bipedLeftArmwear.render(0.03125F);
-        this.model.bipedRightArmwear.render(0.03125F);
-        this.model.bipedRightArmwear.offsetZ = -0.3125F;
-        this.model.bipedLeftLegwear.render(0.03125F);
-        this.model.bipedRightLegwear.render(0.03125F);
-        GlStateManager.disableBlend();
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
         
-        GlStateManager.enableCull();
-        GlStateManager.disableRescaleNormal();
+        float scale = 0.03125F;
+        
+        this.model.bipedBody.render(scale);
+        this.model.bipedHead.render(scale);
+        this.model.bipedLeftArm.render(scale);
+        this.model.bipedRightArm.render(scale);
+        this.model.bipedLeftLeg.render(scale);
+        this.model.bipedRightLeg.render(scale);
+
+        this.model.bipedBodyWear.render(scale);
+        this.model.bipedHeadwear.render(scale);
+        this.model.bipedLeftArmwear.render(scale);
+        this.model.bipedRightArmwear.render(scale);
+        this.model.bipedRightArmwear.offsetZ = -0.3125F;
+        this.model.bipedLeftLegwear.render(scale);
+        this.model.bipedRightLegwear.render(scale);
+        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
         
         if (destroyStage >= 0)
