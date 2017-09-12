@@ -68,10 +68,13 @@ public class Statues {
 	@EventHandler
     public void init(FMLInitializationEvent event)
 	{
-		for (Biome biome : Biome.REGISTRY) {
-		    biome.getSpawnableList(EnumCreatureType.AMBIENT).add(new SpawnListEntry(EntityStatueBat.class, 4, 1, 2));
+		if(StatuesConfigGen.general.Tier1Crafting == true)
+		{
+			for (Biome biome : Biome.REGISTRY) {
+			    biome.getSpawnableList(EnumCreatureType.AMBIENT).add(new SpawnListEntry(EntityStatueBat.class, 4, 1, 2));
+			}
+			System.out.println("Registered Statues Bat Spawn");
 		}
-		System.out.println("Registered Statues Bat Spawn");
 		
 		proxy.Init();
 		MinecraftForge.EVENT_BUS.register(new DropHandler());

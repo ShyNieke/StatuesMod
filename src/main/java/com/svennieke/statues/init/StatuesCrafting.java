@@ -6,6 +6,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class StatuesCrafting {
 
@@ -23,11 +24,12 @@ public class StatuesCrafting {
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.pig_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.PORKCHOP, 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.rabbit_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.RABBIT_HIDE, 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheepshaven_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.MUTTON, 'C', StatuesItems.core);
-			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheep_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Blocks.WOOL, 'C', StatuesItems.core);
+			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheep_statue_white),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Blocks.WOOL, 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.SLIME_BALL, 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statue),"GPG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Blocks.SNOW, 'P', Blocks.PUMPKIN, 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.squid_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M',  new ItemStack(Items.DYE, 1, 0), 'C', StatuesItems.core);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.villager_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.EMERALD, 'C', StatuesItems.core);GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statue),"GMG","MCM", "GMG", 'G', Items.GOLD_INGOT, 'M', Items.SLIME_BALL, 'C', StatuesItems.core);
+			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.player_statue),"GSG","PCA", "GHG", 'C', StatuesItems.core, 'G', Items.GOLD_INGOT, 'S', new ItemStack(Items.WOODEN_SWORD, 1, OreDictionary.WILDCARD_VALUE), 'P', new ItemStack(Items.WOODEN_PICKAXE, 1, OreDictionary.WILDCARD_VALUE), 'A', new ItemStack(Items.WOODEN_AXE, 1, OreDictionary.WILDCARD_VALUE), 'H', new ItemStack(Items.WOODEN_SHOVEL, 1, OreDictionary.WILDCARD_VALUE));
 		}
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.info_statue)," R ","BCB", "CCC", 'C', Blocks.COBBLESTONE, 'B', Items.BOOK, 'R', new ItemStack(Items.DYE, 1, 1));
 		
@@ -44,7 +46,7 @@ public class StatuesCrafting {
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.pig_statuet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.pig_statue);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.rabbit_statuet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.rabbit_statue);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheepshaven_statuet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.sheepshaven_statue);
-		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheep_statuet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.sheep_statue);
+		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheep_statue_whitet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.sheep_statue_white);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statuet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.slime_statue);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statuet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.snowgolem_statue);
 		GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.squid_statuet2),"NRN","RSR", "NRN", 'N', Blocks.NOTEBLOCK, 'R', Blocks.REDSTONE_BLOCK, 'S', StatuesBlocks.squid_statue);
@@ -65,7 +67,7 @@ public class StatuesCrafting {
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.pig_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.pig_statuet2);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.rabbit_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.rabbit_statuet2);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheepshaven_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.sheepshaven_statuet2);
-			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheep_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.sheep_statuet2);
+			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheep_statue_whitet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.sheep_statue_whitet2);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.slime_statuet2);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.snowgolem_statuet2);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.squid_statuet3),"NCN","CSC", "NCN", 'N', Blocks.QUARTZ_ORE, 'C', Blocks.CHORUS_FLOWER, 'S', StatuesBlocks.squid_statuet2);
@@ -84,12 +86,12 @@ public class StatuesCrafting {
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.pig_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.pig_statuet3);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.rabbit_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.rabbit_statuet3);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheepshaven_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.sheepshaven_statuet3);
-			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheep_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.sheep_statuet3);
+			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.sheep_statue_whitet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.sheep_statue_whitet3);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.slime_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.slime_statuet3);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.snowgolem_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.snowgolem_statuet3);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.squid_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.squid_statuet3);
 			GameRegistry.addShapedRecipe(new ItemStack(StatuesBlocks.villager_statuet4),"WWW","WSW", "WWW", 'W', Blocks.WOOL, 'S', StatuesBlocks.villager_statuet3);
-			
 		}
 	}
 }
+

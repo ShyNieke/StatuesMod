@@ -86,4 +86,10 @@ public class BaseCutout extends BlockHorizontal{
     {
         return new BlockStateContainer(this, new IProperty[] {FACING});
     }
+    
+    @Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		super.breakBlock(worldIn, pos, state);
+        worldIn.removeTileEntity(pos);
+	}
 }
