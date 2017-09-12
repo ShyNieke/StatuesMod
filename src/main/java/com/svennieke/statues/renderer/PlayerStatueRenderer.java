@@ -15,13 +15,10 @@ import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 
-public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity>{
-	public static final ResourceLocation Steve = new ResourceLocation("textures/entity/steve.png");
-	
+public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity>{	
     public static PlayerStatueRenderer instance;
 	
 	public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
-
 	
 	public void setRendererDispatcher(TileEntityRendererDispatcher rendererDispatcherIn)
     {
