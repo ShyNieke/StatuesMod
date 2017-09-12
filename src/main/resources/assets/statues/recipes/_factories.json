@@ -1,6 +1,7 @@
 {
     "conditions" : {
         "newsystem": "com.svennieke.statues.RecipeConditions.NewSystemCondition",
+        "playerrecipe": "com.svennieke.statues.RecipeConditions.AlternatePlayerRecipe",
         "interaction": "com.svennieke.statues.RecipeConditions.InteractionCondition"
     }
 }
