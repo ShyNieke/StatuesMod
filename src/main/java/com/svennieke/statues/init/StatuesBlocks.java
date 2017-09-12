@@ -10,6 +10,7 @@ import com.svennieke.statues.blocks.Statues.BlockInfo_Statue;
 import com.svennieke.statues.blocks.Statues.BlockKingCluck_Statue;
 import com.svennieke.statues.blocks.Statues.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPig_Statue;
+import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.blocks.Statues.BlockRabbit_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
@@ -21,6 +22,7 @@ import com.svennieke.statues.items.ItemBlockStatue;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -29,19 +31,37 @@ public class StatuesBlocks {
 
 	public static Block baby_zombie_statue, blaze_statue, chicken_statue,cow_statue, creeper_statue, flood_statue,
 						kingcluck_statue, mooshroom_statue, pig_statue, rabbit_statue,
-						sheep_statue, sheepshaven_statue, slime_statue, snowgolem_statue, villager_statue, squid_statue, info_statue;
+						sheepshaven_statue, slime_statue, snowgolem_statue, villager_statue, squid_statue;
 	
 	public static Block baby_zombie_statuet2, blaze_statuet2, chicken_statuet2, cow_statuet2, creeper_statuet2, flood_statuet2,
 						kingcluck_statuet2, mooshroom_statuet2, pig_statuet2, rabbit_statuet2, 
-						sheep_statuet2, sheepshaven_statuet2, slime_statuet2, snowgolem_statuet2, villager_statuet2, squid_statuet2;
-	
+						sheepshaven_statuet2, slime_statuet2, snowgolem_statuet2, villager_statuet2, squid_statuet2;
+
 	public static Block baby_zombie_statuet3, blaze_statuet3, chicken_statuet3,cow_statuet3, creeper_statuet3, flood_statuet3,
 						kingcluck_statuet3, mooshroom_statuet3, pig_statuet3, rabbit_statuet3, 
-						sheep_statuet3, sheepshaven_statuet3, slime_statuet3, snowgolem_statuet3, villager_statuet3, squid_statuet3;
-	
+						sheepshaven_statuet3, slime_statuet3, snowgolem_statuet3, villager_statuet3, squid_statuet3;
+
 	public static Block baby_zombie_statuet4, blaze_statuet4, chicken_statuet4,cow_statuet4, creeper_statuet4, flood_statuet4,
 						kingcluck_statuet4, mooshroom_statuet4, pig_statuet4, rabbit_statuet4, 
-						sheep_statuet4, sheepshaven_statuet4, slime_statuet4, snowgolem_statuet4, villager_statuet4, squid_statuet4;
+						sheepshaven_statuet4, slime_statuet4, snowgolem_statuet4, villager_statuet4, squid_statuet4;
+	
+	public static Block sheep_statue_white, sheep_statue_orange, sheep_statue_magenta, sheep_statue_lightblue, sheep_statue_yellow, 
+						sheep_statue_lime, sheep_statue_pink, sheep_statue_gray, sheep_statue_lightgray, sheep_statue_cyan, 
+						sheep_statue_purple, sheep_statue_blue, sheep_statue_brown, sheep_statue_green, sheep_statue_red, sheep_statue_black;
+	
+	public static Block sheep_statue_whitet2, sheep_statue_oranget2, sheep_statue_magentat2, sheep_statue_lightbluet2, sheep_statue_yellowt2, 
+						sheep_statue_limet2, sheep_statue_pinkt2, sheep_statue_grayt2, sheep_statue_lightgrayt2, sheep_statue_cyant2, 
+						sheep_statue_purplet2, sheep_statue_bluet2, sheep_statue_brownt2, sheep_statue_greent2, sheep_statue_redt2, sheep_statue_blackt2;
+	
+	public static Block sheep_statue_whitet3, sheep_statue_oranget3, sheep_statue_magentat3, sheep_statue_lightbluet3, sheep_statue_yellowt3, 
+						sheep_statue_limet3, sheep_statue_pinkt3, sheep_statue_grayt3, sheep_statue_lightgrayt3, sheep_statue_cyant3, 
+						sheep_statue_purplet3, sheep_statue_bluet3, sheep_statue_brownt3, sheep_statue_greent3, sheep_statue_redt3, sheep_statue_blackt3;
+	
+	public static Block sheep_statue_whitet4, sheep_statue_oranget4, sheep_statue_magentat4, sheep_statue_lightbluet4, sheep_statue_yellowt4, 
+						sheep_statue_limet4, sheep_statue_pinkt4, sheep_statue_grayt4, sheep_statue_lightgrayt4, sheep_statue_cyant4, 
+						sheep_statue_purplet4, sheep_statue_bluet4, sheep_statue_brownt4, sheep_statue_greent4, sheep_statue_redt4, sheep_statue_blackt4;
+	
+	public static Block info_statue, player_statue;
 	
 	public static void init()
 	{
@@ -100,10 +120,85 @@ public class StatuesBlocks {
 		sheepshaven_statuet3 = new BlockSheepShaven_Statue("sheepshavenstatuet3", "blocksheepshavenstatuet3", 3);
 		sheepshaven_statuet4 = new BlockSheepShaven_Statue("sheepshavenstatuet4", "blocksheepshavenstatuet4", 4);
 		
-		sheep_statue = new BlockSheep_Statue("sheepstatue", "blocksheepstatue", 1);
-		sheep_statuet2 = new BlockSheep_Statue("sheepstatuet2", "blocksheepstatuet2", 2);
-		sheep_statuet3 = new BlockSheep_Statue("sheepstatuet3", "blocksheepstatuet3", 3);
-		sheep_statuet4 = new BlockSheep_Statue("sheepstatuet4", "blocksheepstatuet4", 4);
+		sheep_statue_white = new BlockSheep_Statue("sheepstatue", "blocksheepstatue", 1, EnumDyeColor.WHITE);
+		sheep_statue_whitet2 = new BlockSheep_Statue("sheepstatuet2", "blocksheepstatuet2", 2, EnumDyeColor.WHITE);
+		sheep_statue_whitet3 = new BlockSheep_Statue("sheepstatuet3", "blocksheepstatuet3", 3, EnumDyeColor.WHITE);
+		sheep_statue_whitet4 = new BlockSheep_Statue("sheepstatuet4", "blocksheepstatuet4", 4, EnumDyeColor.WHITE);
+		
+		sheep_statue_orange = new BlockSheep_Statue("sheepstatueorange", "blocksheepstatueorange", 1, EnumDyeColor.ORANGE);
+		sheep_statue_oranget2 = new BlockSheep_Statue("sheepstatueoranget2", "blocksheepstatueoranget2", 2, EnumDyeColor.ORANGE);
+		sheep_statue_oranget3 = new BlockSheep_Statue("sheepstatueoranget3", "blocksheepstatueoranget3", 3, EnumDyeColor.ORANGE);
+		sheep_statue_oranget4 = new BlockSheep_Statue("sheepstatueoranget4", "blocksheepstatueoranget4", 4, EnumDyeColor.ORANGE);
+		
+		sheep_statue_magenta = new BlockSheep_Statue("sheepstatuemagenta", "blocksheepstatuemagenta", 1, EnumDyeColor.MAGENTA);
+		sheep_statue_magentat2 = new BlockSheep_Statue("sheepstatuemagentat2", "blocksheepstatuemagentat2", 2, EnumDyeColor.MAGENTA);
+		sheep_statue_magentat3 = new BlockSheep_Statue("sheepstatuemagentat3", "blocksheepstatuemagentat3", 3, EnumDyeColor.MAGENTA);
+		sheep_statue_magentat4 = new BlockSheep_Statue("sheepstatuemagentat4", "blocksheepstatuemagentat4", 4, EnumDyeColor.MAGENTA);
+		
+		sheep_statue_lightblue = new BlockSheep_Statue("sheepstatuelightblue", "blocksheepstatuelightblue", 1, EnumDyeColor.LIGHT_BLUE);
+		sheep_statue_lightbluet2 = new BlockSheep_Statue("sheepstatuelightbluet2", "blocksheepstatuelightbluet2", 2, EnumDyeColor.LIGHT_BLUE);
+		sheep_statue_lightbluet3 = new BlockSheep_Statue("sheepstatuelightbluet3", "blocksheepstatuelightbluet3", 3, EnumDyeColor.LIGHT_BLUE);
+		sheep_statue_lightbluet4 = new BlockSheep_Statue("sheepstatuelightbluet4", "blocksheepstatuelightbluet4", 4, EnumDyeColor.LIGHT_BLUE);
+		
+		sheep_statue_yellow = new BlockSheep_Statue("sheepstatueyellow", "blocksheepstatueyellow", 1, EnumDyeColor.YELLOW);
+		sheep_statue_yellowt2 = new BlockSheep_Statue("sheepstatueyellowt2", "blocksheepstatueyellowt2", 2, EnumDyeColor.YELLOW);
+		sheep_statue_yellowt3 = new BlockSheep_Statue("sheepstatueyellowt3", "blocksheepstatueyellowt3", 3, EnumDyeColor.YELLOW);
+		sheep_statue_yellowt4 = new BlockSheep_Statue("sheepstatueyellowt4", "blocksheepstatueyellowt4", 4, EnumDyeColor.YELLOW);
+		
+		sheep_statue_lime = new BlockSheep_Statue("sheepstatuelime", "blocksheepstatuelime", 1, EnumDyeColor.LIME);
+		sheep_statue_limet2 = new BlockSheep_Statue("sheepstatuelimet2", "blocksheepstatuelimet2", 2, EnumDyeColor.LIME);
+		sheep_statue_limet3 = new BlockSheep_Statue("sheepstatuelimet3", "blocksheepstatuelimet3", 3, EnumDyeColor.LIME);
+		sheep_statue_limet4 = new BlockSheep_Statue("sheepstatuelimet4", "blocksheepstatuelimet4", 4, EnumDyeColor.LIME);
+		
+		sheep_statue_pink = new BlockSheep_Statue("sheepstatuepink", "blocksheepstatuepink", 1, EnumDyeColor.PINK);
+		sheep_statue_pinkt2 = new BlockSheep_Statue("sheepstatuepinkt2", "blocksheepstatuepinkt2", 2, EnumDyeColor.PINK);
+		sheep_statue_pinkt3 = new BlockSheep_Statue("sheepstatuepinkt3", "blocksheepstatuepinkt3", 3, EnumDyeColor.PINK);
+		sheep_statue_pinkt4 = new BlockSheep_Statue("sheepstatuepinkt4", "blocksheepstatuepinkt4", 4, EnumDyeColor.PINK);
+		
+		sheep_statue_gray = new BlockSheep_Statue("sheepstatuegray", "blocksheepstatuegray", 1, EnumDyeColor.GRAY);
+		sheep_statue_grayt2 = new BlockSheep_Statue("sheepstatuegrayt2", "blocksheepstatuegrayt2", 2, EnumDyeColor.GRAY);
+		sheep_statue_grayt3 = new BlockSheep_Statue("sheepstatuegrayt3", "blocksheepstatuegrayt3", 3, EnumDyeColor.GRAY);
+		sheep_statue_grayt4 = new BlockSheep_Statue("sheepstatuegrayt4", "blocksheepstatuegrayt4", 4, EnumDyeColor.GRAY);
+
+		sheep_statue_lightgray = new BlockSheep_Statue("sheepstatuelightgray", "blocksheepstatuelightgray", 1, EnumDyeColor.SILVER);
+		sheep_statue_lightgrayt2 = new BlockSheep_Statue("sheepstatuelightgrayt2", "blocksheepstatuelightgrayt2", 2, EnumDyeColor.SILVER);
+		sheep_statue_lightgrayt3 = new BlockSheep_Statue("sheepstatuelightgrayt3", "blocksheepstatuelightgrayt3", 3, EnumDyeColor.SILVER);
+		sheep_statue_lightgrayt4 = new BlockSheep_Statue("sheepstatuelightgrayt4", "blocksheepstatuelightgrayt4", 4, EnumDyeColor.SILVER);
+
+		sheep_statue_cyan = new BlockSheep_Statue("sheepstatuecyan", "blocksheepstatuecyan", 1, EnumDyeColor.CYAN);
+		sheep_statue_cyant2 = new BlockSheep_Statue("sheepstatuecyant2", "blocksheepstatuecyant2", 2, EnumDyeColor.CYAN);
+		sheep_statue_cyant3 = new BlockSheep_Statue("sheepstatuecyant3", "blocksheepstatuecyant3", 3, EnumDyeColor.CYAN);
+		sheep_statue_cyant4 = new BlockSheep_Statue("sheepstatuecyant4", "blocksheepstatuecyant4", 4, EnumDyeColor.CYAN);
+
+		sheep_statue_purple = new BlockSheep_Statue("sheepstatuepurple", "blocksheepstatuepurple", 1, EnumDyeColor.PURPLE);
+		sheep_statue_purplet2 = new BlockSheep_Statue("sheepstatuepurplet2", "blocksheepstatuepurplet2", 2, EnumDyeColor.PURPLE);
+		sheep_statue_purplet3 = new BlockSheep_Statue("sheepstatuepurplet3", "blocksheepstatuepurplet3", 3, EnumDyeColor.PURPLE);
+		sheep_statue_purplet4 = new BlockSheep_Statue("sheepstatuepurplet4", "blocksheepstatuepurplet4", 4, EnumDyeColor.PURPLE);
+
+		sheep_statue_blue = new BlockSheep_Statue("sheepstatueblue", "blocksheepstatueblue", 1, EnumDyeColor.BLUE);
+		sheep_statue_bluet2 = new BlockSheep_Statue("sheepstatuebluet2", "blocksheepstatuebluet2", 2, EnumDyeColor.BLUE);
+		sheep_statue_bluet3 = new BlockSheep_Statue("sheepstatuebluet3", "blocksheepstatuebluet3", 3, EnumDyeColor.BLUE);
+		sheep_statue_bluet4 = new BlockSheep_Statue("sheepstatuebluet4", "blocksheepstatuebluet4", 4, EnumDyeColor.BLUE);
+
+		sheep_statue_brown = new BlockSheep_Statue("sheepstatuebrown", "blocksheepstatuebrown", 1, EnumDyeColor.BROWN);
+		sheep_statue_brownt2 = new BlockSheep_Statue("sheepstatuebrownt2", "blocksheepstatuebrownt2", 2, EnumDyeColor.BROWN);
+		sheep_statue_brownt3 = new BlockSheep_Statue("sheepstatuebrownt3", "blocksheepstatuebrownt3", 3, EnumDyeColor.BROWN);
+		sheep_statue_brownt4 = new BlockSheep_Statue("sheepstatuebrownt4", "blocksheepstatuebrownt4", 4, EnumDyeColor.BROWN);
+
+		sheep_statue_green = new BlockSheep_Statue("sheepstatuegreen", "blocksheepstatuegreen", 1, EnumDyeColor.GREEN);
+		sheep_statue_greent2 = new BlockSheep_Statue("sheepstatuegreent2", "blocksheepstatuegreent2", 2, EnumDyeColor.GREEN);
+		sheep_statue_greent3 = new BlockSheep_Statue("sheepstatuegreent3", "blocksheepstatuegreent3", 3, EnumDyeColor.GREEN);
+		sheep_statue_greent4 = new BlockSheep_Statue("sheepstatuegreent4", "blocksheepstatuegreent4", 4, EnumDyeColor.GREEN);
+		
+		sheep_statue_red = new BlockSheep_Statue("sheepstatuered", "blocksheepstatuered", 1, EnumDyeColor.RED);
+		sheep_statue_redt2 = new BlockSheep_Statue("sheepstatueredt2", "blocksheepstatueredt2", 2, EnumDyeColor.RED);
+		sheep_statue_redt3 = new BlockSheep_Statue("sheepstatueredt3", "blocksheepstatueredt3", 3, EnumDyeColor.RED);
+		sheep_statue_redt4 = new BlockSheep_Statue("sheepstatueredt4", "blocksheepstatueredt4", 4, EnumDyeColor.RED);
+
+		sheep_statue_black = new BlockSheep_Statue("sheepstatueblack", "blocksheepstatueblack", 1, EnumDyeColor.BLACK);
+		sheep_statue_blackt2 = new BlockSheep_Statue("sheepstatueblackt2", "blocksheepstatueblackt2", 2, EnumDyeColor.BLACK);
+		sheep_statue_blackt3 = new BlockSheep_Statue("sheepstatueblackt3", "blocksheepstatueblackt3", 3, EnumDyeColor.BLACK);
+		sheep_statue_blackt4 = new BlockSheep_Statue("sheepstatueblackt4", "blocksheepstatueblackt4", 4, EnumDyeColor.BLACK);
 		
 		slime_statue = new BlockSlime_Statue("slimestatue", "blockslimestatue", 1);
 		slime_statuet2 = new BlockSlime_Statue("slimestatuet2", "blockslimestatuet2", 2);
@@ -126,6 +221,7 @@ public class StatuesBlocks {
 		villager_statuet4 = new BlockVillager_Statue("villagerstatuet4", "blockvillagerstatuet4", 4);
 		
 		info_statue = new BlockInfo_Statue("infostatue", "blockinfostatue", 1);
+		player_statue = new BlockPlayer_Statue("playerstatue", "blockplayerstatue", "");
 	}
 	
 	public static void register()
@@ -185,10 +281,85 @@ public class StatuesBlocks {
 		registerBlock(sheepshaven_statuet3);
 		registerBlock(sheepshaven_statuet4);
 		
-		registerBlock(sheep_statue);
-		registerBlock(sheep_statuet2);
-		registerBlock(sheep_statuet3);
-		registerBlock(sheep_statuet4);
+		registerBlock(sheep_statue_white);
+		registerBlock(sheep_statue_whitet2);
+		registerBlock(sheep_statue_whitet3);
+		registerBlock(sheep_statue_whitet4);
+		
+		registerBlock(sheep_statue_orange);
+		registerBlock(sheep_statue_oranget2);
+		registerBlock(sheep_statue_oranget3);
+		registerBlock(sheep_statue_oranget4);
+		
+		registerBlock(sheep_statue_magenta);
+		registerBlock(sheep_statue_magentat2);
+		registerBlock(sheep_statue_magentat3);
+		registerBlock(sheep_statue_magentat4);
+		
+		registerBlock(sheep_statue_lightblue);
+		registerBlock(sheep_statue_lightbluet2);
+		registerBlock(sheep_statue_lightbluet3);
+		registerBlock(sheep_statue_lightbluet4);
+		
+		registerBlock(sheep_statue_yellow);
+		registerBlock(sheep_statue_yellowt2);
+		registerBlock(sheep_statue_yellowt3);
+		registerBlock(sheep_statue_yellowt4);
+		
+		registerBlock(sheep_statue_lime);
+		registerBlock(sheep_statue_limet2);
+		registerBlock(sheep_statue_limet3);
+		registerBlock(sheep_statue_limet4);
+		
+		registerBlock(sheep_statue_pink);
+		registerBlock(sheep_statue_pinkt2);
+		registerBlock(sheep_statue_pinkt3);
+		registerBlock(sheep_statue_pinkt4);
+		
+		registerBlock(sheep_statue_gray);
+		registerBlock(sheep_statue_grayt2);
+		registerBlock(sheep_statue_grayt3);
+		registerBlock(sheep_statue_grayt4);
+		
+		registerBlock(sheep_statue_lightgray);
+		registerBlock(sheep_statue_lightgrayt2);
+		registerBlock(sheep_statue_lightgrayt3);
+		registerBlock(sheep_statue_lightgrayt4);
+		
+		registerBlock(sheep_statue_cyan);
+		registerBlock(sheep_statue_cyant2);
+		registerBlock(sheep_statue_cyant3);
+		registerBlock(sheep_statue_cyant4);
+		
+		registerBlock(sheep_statue_purple);
+		registerBlock(sheep_statue_purplet2);
+		registerBlock(sheep_statue_purplet3);
+		registerBlock(sheep_statue_purplet4);
+		
+		registerBlock(sheep_statue_blue);
+		registerBlock(sheep_statue_bluet2);
+		registerBlock(sheep_statue_bluet3);
+		registerBlock(sheep_statue_bluet4);
+		
+		registerBlock(sheep_statue_brown);
+		registerBlock(sheep_statue_brownt2);
+		registerBlock(sheep_statue_brownt3);
+		registerBlock(sheep_statue_brownt4);
+		
+		registerBlock(sheep_statue_green);
+		registerBlock(sheep_statue_greent2);
+		registerBlock(sheep_statue_greent3);
+		registerBlock(sheep_statue_greent4);
+		
+		registerBlock(sheep_statue_red);
+		registerBlock(sheep_statue_redt2);
+		registerBlock(sheep_statue_redt3);
+		registerBlock(sheep_statue_redt4);
+		
+		registerBlock(sheep_statue_black);
+		registerBlock(sheep_statue_blackt2);
+		registerBlock(sheep_statue_blackt3);
+		registerBlock(sheep_statue_blackt4);
 		
 		registerBlock(slime_statue);
 		registerBlock(slime_statuet2);
@@ -211,6 +382,7 @@ public class StatuesBlocks {
 		registerBlock(villager_statuet4);
 		
 		registerBlock(info_statue);
+		registerBlock(player_statue);
 	}
 	
 	public static void registerBlock(Block block) 
@@ -282,10 +454,85 @@ public class StatuesBlocks {
 		registerRender(sheepshaven_statuet3);
 		registerRender(sheepshaven_statuet4);
 		
-		registerRender(sheep_statue);
-		registerRender(sheep_statuet2);
-		registerRender(sheep_statuet3);
-		registerRender(sheep_statuet4);
+		registerRender(sheep_statue_white);
+		registerRender(sheep_statue_whitet2);
+		registerRender(sheep_statue_whitet3);
+		registerRender(sheep_statue_whitet4);
+		
+		registerRender(sheep_statue_orange);
+		registerRender(sheep_statue_oranget2);
+		registerRender(sheep_statue_oranget3);
+		registerRender(sheep_statue_oranget4);
+		
+		registerRender(sheep_statue_magenta);
+		registerRender(sheep_statue_magentat2);
+		registerRender(sheep_statue_magentat3);
+		registerRender(sheep_statue_magentat4);
+		
+		registerRender(sheep_statue_lightblue);
+		registerRender(sheep_statue_lightbluet2);
+		registerRender(sheep_statue_lightbluet3);
+		registerRender(sheep_statue_lightbluet4);
+		
+		registerRender(sheep_statue_yellow);
+		registerRender(sheep_statue_yellowt2);
+		registerRender(sheep_statue_yellowt3);
+		registerRender(sheep_statue_yellowt4);
+		
+		registerRender(sheep_statue_lime);
+		registerRender(sheep_statue_limet2);
+		registerRender(sheep_statue_limet3);
+		registerRender(sheep_statue_limet4);
+		
+		registerRender(sheep_statue_pink);
+		registerRender(sheep_statue_pinkt2);
+		registerRender(sheep_statue_pinkt3);
+		registerRender(sheep_statue_pinkt4);
+		
+		registerRender(sheep_statue_gray);
+		registerRender(sheep_statue_grayt2);
+		registerRender(sheep_statue_grayt3);
+		registerRender(sheep_statue_grayt4);
+		
+		registerRender(sheep_statue_lightgray);
+		registerRender(sheep_statue_lightgrayt2);
+		registerRender(sheep_statue_lightgrayt3);
+		registerRender(sheep_statue_lightgrayt4);
+		
+		registerRender(sheep_statue_cyan);
+		registerRender(sheep_statue_cyant2);
+		registerRender(sheep_statue_cyant3);
+		registerRender(sheep_statue_cyant4);
+		
+		registerRender(sheep_statue_purple);
+		registerRender(sheep_statue_purplet2);
+		registerRender(sheep_statue_purplet3);
+		registerRender(sheep_statue_purplet4);
+		
+		registerRender(sheep_statue_blue);
+		registerRender(sheep_statue_bluet2);
+		registerRender(sheep_statue_bluet3);
+		registerRender(sheep_statue_bluet4);
+		
+		registerRender(sheep_statue_brown);
+		registerRender(sheep_statue_brownt2);
+		registerRender(sheep_statue_brownt3);
+		registerRender(sheep_statue_brownt4);
+		
+		registerRender(sheep_statue_green);
+		registerRender(sheep_statue_greent2);
+		registerRender(sheep_statue_greent3);
+		registerRender(sheep_statue_greent4);
+		
+		registerRender(sheep_statue_red);
+		registerRender(sheep_statue_redt2);
+		registerRender(sheep_statue_redt3);
+		registerRender(sheep_statue_redt4);
+		
+		registerRender(sheep_statue_black);
+		registerRender(sheep_statue_blackt2);
+		registerRender(sheep_statue_blackt3);
+		registerRender(sheep_statue_blackt4);
 		
 		registerRender(slime_statue);
 		registerRender(slime_statuet2);
@@ -308,6 +555,7 @@ public class StatuesBlocks {
 		registerRender(villager_statuet4);
 		
 		registerRender(info_statue);
+		registerRender(player_statue);
 	}
 	
 	public static void registerRender(Block block)

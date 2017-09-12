@@ -3,6 +3,7 @@ package com.svennieke.statues.init;
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.entity.EntityStatueBat;
+import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -15,5 +16,6 @@ public class StatueEntity {
 		System.out.println("Registered Statues Bat");
 		
 		GameRegistry.registerTileEntity(StatueTileEntity.class, Reference.MOD_ID + "_tileentity");
+		GameRegistry.registerTileEntity(PlayerStatueTileEntity.class, Reference.MOD_ID + "_playertileentity");
 	}
 }

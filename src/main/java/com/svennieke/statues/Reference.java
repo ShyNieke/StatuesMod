@@ -3,7 +3,7 @@ package com.svennieke.statues;
 public class Reference {
 	public static final String MOD_ID = "statues";
 	public static final String MOD_NAME = "Statues";
-	public static final String VERSION = "0.7.2.1";
+	public static final String VERSION = "0.7.3";
 	public static final String ACCEPTED_VERSIONS = "[1.10.2]";
 	public static final String DEPENDENCIES = "after:Baubles;";
 			

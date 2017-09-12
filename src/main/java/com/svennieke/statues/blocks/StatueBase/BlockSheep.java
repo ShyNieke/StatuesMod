@@ -3,7 +3,7 @@ package com.svennieke.statues.blocks.StatueBase;
 import java.util.List;
 
 import com.svennieke.statues.Statues;
-import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
+import com.svennieke.statues.blocks.BaseBlock.BaseNormal;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
-public class BlockSheep extends BaseCutout{
+public class BlockSheep extends BaseNormal{
 	
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 5, 0, 0.0625 * 5, 0.0625 * 11, 0.0625 * 8, 0.0625 * 11);
 	

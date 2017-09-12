@@ -2,13 +2,14 @@ package com.svennieke.statues.blocks.Statues;
 
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockPig;
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -53,9 +54,16 @@ public class BlockPig_Statue extends BlockPig implements iStatue, ITileEntityPro
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	        	
-	        	ItemStack pork = new ItemStack(Items.PORKCHOP, 1);
+	        	int meta1 = StatuesConfigGen.statues.pig.item1meta;
+	        	int meta2 = StatuesConfigGen.statues.pig.item2meta;
+	        	int meta3 = StatuesConfigGen.statues.pig.item3meta;
+	        	
+	        	ItemStack stack1 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.pig.item1), 1, meta1);
+        		ItemStack stack2 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.pig.item2), 1, meta2);
+        		ItemStack stack3 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.pig.item3), 1, meta3);
+
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_PIG_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).StatueBehavior(null, null, pork, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
 		}
 		return true;
