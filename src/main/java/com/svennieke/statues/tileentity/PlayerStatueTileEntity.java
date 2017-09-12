@@ -56,8 +56,8 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWo
     	super.onDataPacket(net, pkt);
     	readFromNBT(pkt.getNbtCompound());
     	
-    	 final IBlockState state = getWorld().getBlockState(getPos());
-    	 getWorld().notifyBlockUpdate(getPos(), state, state, 3);
+    	final IBlockState state = getWorld().getBlockState(getPos());
+    	getWorld().notifyBlockUpdate(getPos(), state, state, 3);
     	
     }
     
