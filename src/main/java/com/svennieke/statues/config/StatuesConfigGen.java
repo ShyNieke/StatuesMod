@@ -15,6 +15,9 @@ public class StatuesConfigGen {
 	@Config.Comment({"General settings"})
 	public static General general = new General();
 	
+	@Config.Comment({"Player Statue Settings"})
+	public static Player player = new Player();
+	
 	@Config.Comment({"Other settings"})
 	public static OtherStuff othersettings = new OtherStuff();
 	
@@ -23,6 +26,12 @@ public class StatuesConfigGen {
 	
 	@Config.Comment({"Statue interactive customisation settings, inputting invalid names will make that value null (null = doesn't drop)"})
 	public static Statues statues = new Statues();
+	
+	public enum EnumDeathSource {
+		ALL,
+		PLAYER,
+		PLAYER_FAKEPLAYER
+	}
 	
 	public static class General{
 		
@@ -47,11 +56,20 @@ public class StatuesConfigGen {
 		@Config.Comment("Setting this to false disables the tier 3 and 4 recipes. (Default: true)")
 		public boolean CraftableInteraction = true;
 		
+		@Config.Comment("Source of death that determines how the Statues drop [player statue has it's own config option] (Default: PLAYER)")
+		public EnumDeathSource StatueKillSource = EnumDeathSource.PLAYER;
+	}
+	
+	public static class Player{
+
 		@Config.Comment("Players drop their players Player Statue")
 		public boolean PlayersDropStatue = true;
 		
 		@Config.Comment("Changing this will change the chance a player has of dropping a Player Statue when killed by a player [1 in a x chance] (Default: 1)")
 		public int PlayerDropChance = 1;
+		
+		@Config.Comment("Source of death that determines how the Player Statue drops (Default: PLAYER)")
+		public EnumDeathSource PlayerStatueKillSource = EnumDeathSource.PLAYER;
 	}
 	
 	public static class OtherStuff{
