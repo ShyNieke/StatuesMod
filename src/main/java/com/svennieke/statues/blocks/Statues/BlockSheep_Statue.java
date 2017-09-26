@@ -168,12 +168,16 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 	        	
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, pos, worldIn);
 	        }
+	        return true;
 		}
-		
+
 		if(stack != ItemStack.EMPTY && stack.getItem() instanceof ItemDye)
-		ChangeColor(stack, worldIn, pos, this.TIER, playerIn);
-		
-		return true;
+		{
+			ChangeColor(stack, worldIn, pos, this.TIER, playerIn);
+			return true;
+		}
+		else
+		return false;
 	}
 	
 	public void ChangeColor(ItemStack stack, World worldIn, BlockPos pos, int TIER, EntityLivingBase placer) {

@@ -67,7 +67,9 @@ public class BlockSnowGolem_Statue extends BlockSnowGolem implements iStatue, IT
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 }

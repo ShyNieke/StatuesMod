@@ -85,7 +85,9 @@ public class BlockChicken_Statue extends BlockChicken implements iStatue, ITileE
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 }

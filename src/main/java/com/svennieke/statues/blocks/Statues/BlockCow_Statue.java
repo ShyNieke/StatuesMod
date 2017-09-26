@@ -66,7 +66,9 @@ public class BlockCow_Statue extends BlockCow implements iStatue, ITileEntityPro
 	        	getTE(worldIn, pos).SpecialInteraction(true, false, false, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 }

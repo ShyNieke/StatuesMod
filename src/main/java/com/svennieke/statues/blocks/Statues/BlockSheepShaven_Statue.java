@@ -66,7 +66,9 @@ public class BlockSheepShaven_Statue extends BlockSheep implements iStatue, ITil
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 }

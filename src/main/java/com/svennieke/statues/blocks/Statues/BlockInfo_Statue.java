@@ -52,7 +52,9 @@ public class BlockInfo_Statue extends BlockInfo implements iStatue, ITileEntityP
 	        	
 	        	getTE(worldIn, pos).SendInfoMessage(playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 }

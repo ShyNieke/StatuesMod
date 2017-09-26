@@ -66,7 +66,9 @@ public class BlockMooshroom_Statue extends BlockMooshroom implements iStatue, IT
 	        	getTE(worldIn, pos).SpecialInteraction(false, true, false, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 }

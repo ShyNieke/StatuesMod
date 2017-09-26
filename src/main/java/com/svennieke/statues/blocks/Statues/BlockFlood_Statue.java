@@ -54,7 +54,9 @@ public class BlockFlood_Statue extends BlockFlood implements iStatue, ITileEntit
 	        	getTE(worldIn, pos).SpecialInteraction(false, false, true, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
 	        	getTE(worldIn, pos).StatueBehavior(null, null, null, null, false, false, this, playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 }

@@ -66,7 +66,9 @@ public class BlockRabbit_Statue extends BlockRabbit implements iStatue, ITileEnt
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_RABBIT_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 }

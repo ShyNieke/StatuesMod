@@ -29,6 +29,6 @@
     }
   },
   "conditions": [{
-    "type": "statues:newsystem"
+    "type": "statues:originalplayerrecipe"
 	}]
 }

@@ -65,8 +65,10 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements iStatue, IT
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(nugget, null, gold, null, false, false, this, playerIn, worldIn, pos);
 	        }
+	        return true;
 		}
-		return true;
+		else
+		return false;
 	}
 	
 	@SideOnly(Side.CLIENT)

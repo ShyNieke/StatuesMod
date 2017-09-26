@@ -70,6 +70,9 @@ public class StatuesConfigGen {
 		
 		@Config.Comment("Source of death that determines how the Player Statue drops (Default: PLAYER)")
 		public EnumDeathSource PlayerStatueKillSource = EnumDeathSource.PLAYER;
+		
+		@Config.Comment("Player Statue Crafting (Default: true)")
+		public boolean PlayerCrafting = true;
 	}
 	
 	public static class OtherStuff{
@@ -352,7 +355,7 @@ public class StatuesConfigGen {
 			public int item2meta = 0;
 			
 			@Config.Comment("Changing this changes the item that drops 10% of the time")
-			public String item3 = "snowball:pumpkin";
+			public String item3 = "minecraft:pumpkin";
 			
 			@Config.Comment("Metadata for the item")
 			public int item3meta = 0;
