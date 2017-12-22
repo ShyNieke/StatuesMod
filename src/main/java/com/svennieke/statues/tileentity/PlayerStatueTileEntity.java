@@ -41,8 +41,6 @@ public class PlayerStatueTileEntity extends TileEntity implements ITickable, IWo
 		NBTTagCompound tag = super.getUpdateTag();
 		tag.setString("PlayerName", BlockName);
 		return tag;
-		
-		//return this.writeToNBT(new NBTTagCompound());
 	}
     
     @Override

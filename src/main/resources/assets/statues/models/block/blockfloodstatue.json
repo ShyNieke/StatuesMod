@@ -444,5 +444,42 @@
 				"east": { "uv": [ 0, 10, 6, 11 ], "texture": "#Villager" }
 			}
 		}
-	]
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation":  [ 88, 0, 0 ],
+			"translation":  [ 0, -4.868, 2.7832 ]
+		},
+		"thirdperson_lefthand": {
+			"rotation":  [ 88, 0, 0 ],
+			"translation":  [ 0, -4.868, 2.7832 ]
+		},
+		"firstperson_righthand": {
+			"rotation":  [ 0, -11, 0 ],
+			"translation":  [ 1.3917, 6.2608, 3.4782 ]
+		},
+		"firstperson_lefthand": {
+			"rotation":  [ -6, 169, 0 ],
+			"translation":  [ 1.3917, 5.5651, 3.4782 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"gui": {
+			"rotation":  [ 30, 225, 0 ],
+			"scale":  [ 0.625, 0.625, 0.625 ]
+		},
+		"head": {
+			"rotation":  [ 0, 90, 0 ],
+			"translation":  [ 0, 5.5641, 0 ],
+			"scale":  [ 1.5, 1.5, 1.5 ]
+		},
+		"ground": {
+			"translation":  [ 0, 2, 0 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"fixed": {
+			"rotation":  [ 0, 90, 0 ],
+			"translation":  [ 0, -0.5, 1 ],
+			"scale":  [ 1.2, 1.2, 1.2 ]
+		}
+	}
 }

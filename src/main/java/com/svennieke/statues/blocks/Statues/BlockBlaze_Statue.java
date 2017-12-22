@@ -3,6 +3,7 @@ package com.svennieke.statues.blocks.Statues;
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockBlaze;
 import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.entity.fakeentity.FakeBlaze;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -64,6 +65,8 @@ public class BlockBlaze_Statue extends BlockBlaze implements iStatue, ITileEntit
         		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_BLAZE_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
+	        	
+	        	getTE(worldIn, pos).holidayCheck(new FakeBlaze(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

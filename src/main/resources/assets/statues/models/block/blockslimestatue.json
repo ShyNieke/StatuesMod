@@ -135,5 +135,41 @@
 				"east": { "uv": [ 4, 1.5, 5, 8 ], "texture": "#Slime", "cullface": "east", "rotation": 90 }
 			}
 		}
-	]
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation":  [ -89, 0, 0 ],
+			"translation":  [ 0, -1.9, -3.478 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"thirdperson_lefthand": {
+			"rotation":  [ -89, 0, 0 ],
+			"translation":  [ 0, -1.9, -3.478 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"firstperson_righthand": {
+			"rotation":  [ 0, 0, 30 ],
+			"translation":  [ 2, 3, 0 ]
+		},
+		"firstperson_lefthand": {
+			"rotation":  [ 0, 0, 30 ],
+			"translation":  [ 2, 3, 0 ]
+		},
+		"gui": {
+			"rotation":  [ 19, -150, 0 ],
+			"translation":  [ 0, 2.0869, 0 ]
+		},
+		"head": {
+			"translation":  [ 0, 8, 0 ],
+			"scale":  [ 2, 2, 2 ]
+		},
+		"ground": {
+			"translation":  [ 0, 2, 0 ],
+			"scale":  [ 0.5, 0.5, 0.5 ]
+		},
+		"fixed": {
+			"translation":  [ 0, 9.8695, 1 ],
+			"scale":  [ 2.5042, 2.504, 1 ]
+		}
+	}
 }

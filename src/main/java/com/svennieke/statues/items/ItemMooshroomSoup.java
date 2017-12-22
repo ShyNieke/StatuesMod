@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
@@ -20,13 +21,26 @@ import net.minecraft.world.World;
 public class ItemMooshroomSoup extends ItemFood {
 	public ItemMooshroomSoup(int amount, float saturation, boolean isWolfFood) {
 		super(amount, saturation, isWolfFood);
-		setMaxStackSize(StatuesConfigGen.othersettings.SoupStack);
 		setUnlocalizedName(Reference.StatuesItems.MOOSHROOMSOUP.getUnlocalisedName());
 		setRegistryName(Reference.StatuesItems.MOOSHROOMSOUP.getRegistryName());
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
 	}
-
+	
+	@Override
+	public Item setMaxStackSize(int maxStackSize) {
+		int size = StatuesConfigGen.othersettings.SoupStack;
+		
+		if(size != 0)
+		{
+			return super.setMaxStackSize(size);
+		}
+		else
+		{
+			return super.setMaxStackSize(1);
+		}
+	}
+	
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entity)
     {

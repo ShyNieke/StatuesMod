@@ -3,6 +3,7 @@ package com.svennieke.statues.blocks.Statues;
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockSlime;
 import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.entity.fakeentity.FakeSlime;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -64,6 +65,8 @@ public class BlockSlime_Statue extends BlockSlime implements iStatue, ITileEntit
         		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SLIME_SQUISH, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
+	        	
+	        	getTE(worldIn, pos).holidayCheck(new FakeSlime(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

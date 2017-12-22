@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "statues:blockendermanstatue"
+  },
+  "pattern": [
+    "GMG",
+    "MCM",
+    "GTG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+	"T": {
+      "item": "minecraft:gravel"
+    },
+    "M": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
+}

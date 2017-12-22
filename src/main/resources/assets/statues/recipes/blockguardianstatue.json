@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "statues:blockguardianstatue"
+  },
+  "pattern": [
+    "GTG",
+    "MCM",
+    "GTG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+	"T": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "M": {
+      "item": "minecraft:prismarine_crystals"
+    }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
+}

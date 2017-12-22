@@ -1,5 +1,8 @@
 package com.svennieke.statues;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,7 +11,9 @@ import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesEntity;
+import com.svennieke.statues.init.StatuesHoliday;
 import com.svennieke.statues.init.StatuesItems;
+import com.svennieke.statues.init.StatuesSounds;
 import com.svennieke.statues.proxy.CommonProxy;
 
 import net.minecraft.entity.EnumCreatureType;
@@ -40,17 +45,22 @@ public class Statues {
 	
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 	public static boolean isBaublesEnabled = false;
+	public static boolean isVeinminerInstalled = false;
 		
 	public static StatuesTab tabStatues = new StatuesTab();
 	
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event)
 	{
+		isVeinminerInstalled = Loader.isModLoaded("veinminer");
+		
 		isBaublesEnabled = Loader.isModLoaded("baubles");
 		if(isBaublesEnabled)logger.info("Loading With Baubles Compat");
 		else{logger.info("Loading Without Baubles Compat");}
 		
 		MinecraftForge.EVENT_BUS.register(new StatuesConfigGen());
+		
+		StatuesSounds.registerSounds();
 		
 		StatuesEntity.register();
 		StatuesBlocks.init();
@@ -73,6 +83,7 @@ public class Statues {
 			}
 			System.out.println("Registered Statues Bat Spawn");
 		}
+		StatuesHoliday.registerSpawning();
 		
 		proxy.Init();
 		MinecraftForge.EVENT_BUS.register(new DropHandler());

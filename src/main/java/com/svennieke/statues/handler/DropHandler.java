@@ -7,8 +7,15 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
+import net.minecraft.entity.monster.EntityEnderman;
+import net.minecraft.entity.monster.EntityEndermite;
+import net.minecraft.entity.monster.EntityGuardian;
+import net.minecraft.entity.monster.EntityHusk;
+import net.minecraft.entity.monster.EntityMagmaCube;
+import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.EntitySnowman;
+import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
@@ -38,8 +45,16 @@ public class DropHandler {
 		if(StatuesConfigGen.general.Tier1Crafting == false)
 		{
 			if (entity instanceof EntitySlime) {
-				ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue, 1);
-				DropLootStatues(entity, itemStackToDrop, source, event);
+				if(entity instanceof EntityMagmaCube)
+				{
+					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.magma_statue, 1);
+					DropLootStatues(entity, itemStackToDrop, source, event);
+				}
+				else
+				{
+					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue, 1);
+					DropLootStatues(entity, itemStackToDrop, source, event);
+				}
 			}
 			
 			if (entity instanceof EntityBlaze) {
@@ -172,9 +187,18 @@ public class DropHandler {
 	        }
 	        
 	        if (entity instanceof EntityZombie) {
-	        	if(((EntityZombie) entity).isChild())
+	        	if (entity instanceof EntityHusk) {
+		        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.husk_statue, 1);
+		        	DropLootStatues(entity, itemStackToDrop, source, event);
+		        }
+	        	else if(((EntityZombie) entity).isChild())
 	        	{
 	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.baby_zombie_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	else
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.zombie_statue, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        }
@@ -188,40 +212,81 @@ public class DropHandler {
         		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_statue, 1);
         		DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
+	        
+	        if (entity instanceof EntityWitch) {
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.witch_statue, 1);
+	        	DropLootStatues(entity, itemStackToDrop, source, event);
+	        }
+	        
+	        if (entity instanceof EntityShulker) {
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.shulker_statue, 1);
+	        	DropLootStatues(entity, itemStackToDrop, source, event);
+	        }
+	        
+	        if (entity instanceof EntityEnderman) {
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.enderman_statue, 1);
+	        	DropLootStatues(entity, itemStackToDrop, source, event);
+	        }
+	        
+	        if (entity instanceof EntityEndermite) {
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.endermite_statue, 1);
+	        	DropLootStatues(entity, itemStackToDrop, source, event);
+	        }
+	        
+	        if (entity instanceof EntityGuardian) {
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.guardian_statue, 1);
+	        	DropLootStatues(entity, itemStackToDrop, source, event);
+	        }
         }
 		
 		if(StatuesConfigGen.player.PlayersDropStatue == true)
 		{
 			if (entity instanceof EntityPlayer) {
-				EntityPlayer player = (EntityPlayer) entity;
+				EntityPlayer player = (EntityPlayer)entity;
 				ItemStack playerstatuestack = new ItemStack(StatuesBlocks.player_statue, 1).setStackDisplayName(player.getName());
-				
 				switch (StatuesConfigGen.player.PlayerStatueKillSource)
 				{
 					case PLAYER:
-						if(source instanceof EntityPlayer && !(source instanceof FakePlayer))
+						if(source instanceof EntityPlayer && !(source instanceof FakePlayer) && entity != source)
 						{
-							int random = entity.world.rand.nextInt(StatuesConfigGen.player.PlayerDropChance);
-							if(random < 1)
+							int chance = StatuesConfigGen.player.PlayerDropChance;
+							if(chance != 0)
 							{
-							event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY +0.5, entity.posZ, playerstatuestack));
+								int random = entity.world.rand.nextInt(chance);
+								if(random < 1)
+								{
+									event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY +0.5, entity.posZ, playerstatuestack));
+								}
 							}
 						}
+						break;
 					case PLAYER_FAKEPLAYER:
-						if(source instanceof EntityPlayer)
+						if(source instanceof EntityPlayer && entity != source)
 						{
-							int random = entity.world.rand.nextInt(StatuesConfigGen.player.PlayerDropChance);
-							if(random < 1)
+							int chance = StatuesConfigGen.player.PlayerDropChance;
+							if(chance != 0)
 							{
-							event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY +0.5, entity.posZ, playerstatuestack));
+								int random = entity.world.rand.nextInt(chance);
+								if(random < 1)
+								{
+									event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY +0.5, entity.posZ, playerstatuestack));
+								}
 							}
 						}
+						break;
 					case ALL:
-						int random = entity.world.rand.nextInt(StatuesConfigGen.player.PlayerDropChance);
-						if(random < 1)
+						int chance = StatuesConfigGen.player.PlayerDropChance;
+						if(chance != 0)
 						{
-						event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY +0.5, entity.posZ, playerstatuestack));
+							int random = entity.world.rand.nextInt(chance);
+							if(random < 1)
+							{
+								event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY +0.5, entity.posZ, playerstatuestack));
+							}
 						}
+						break;
+					default:
+						break;
 				}
 			}
 		}
@@ -239,6 +304,7 @@ public class DropHandler {
 		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 		            }
 				}
+				break;
 			case PLAYER_FAKEPLAYER:
 				if(source instanceof EntityPlayer)
 				{
@@ -248,12 +314,16 @@ public class DropHandler {
 		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 		            }
 				}
+				break;
 			case ALL:
 				random_drop = Math.random();
 				if ( random_drop < StatuesConfigGen.general.OldDropChance )
 	            {
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 	            }
+				break;
+			default:
+				break;
 		}
 	}
 }

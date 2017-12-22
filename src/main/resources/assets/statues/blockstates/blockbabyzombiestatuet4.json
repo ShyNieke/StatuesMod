@@ -1,8 +1,17 @@
 {
+    "forge_marker": 1,
+	"defaults": {
+        "model": "statues:blockbabyzombiestatue"
+	},
     "variants": {
-		"facing=east":  { "model": "statues:blockbabyzombiestatue", "y": 90},
-		"facing=north": { "model": "statues:blockbabyzombiestatue"},
-		"facing=west":  { "model": "statues:blockbabyzombiestatue", "y": 270},
-        "facing=south": { "model": "statues:blockbabyzombiestatue", "y": 180}
-    }
+        "facing": {
+			"east": { "y": 90},
+            "north": {},
+			"west": { "y": 270},
+            "south": { "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blockbabyzombiestatue"
+    }]
+  }
 }

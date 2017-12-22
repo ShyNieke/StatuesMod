@@ -1,0 +1,20 @@
+{
+    "wasteland.hello" : {
+    "category" : "hostile",
+        "sounds": [
+            "statues:wasteland/hello"
+        ]
+    },
+   "wasteland.onwards" : {
+   "category" : "hostile",
+        "sounds": [
+            "statues:wasteland/onwards"
+        ]
+   },
+   "wasteland.tea" : {
+    "category" : "neutral",
+        "sounds": [
+            "statues:wasteland/tea"
+        ]
+   }
+}

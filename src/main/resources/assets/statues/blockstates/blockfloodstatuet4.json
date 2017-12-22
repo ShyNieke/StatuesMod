@@ -1,8 +1,14 @@
 {
+    "forge_marker": 1,
     "variants": {
-		"facing=east":  { "model": "statues:blockfloodstatue", "y": 90},
-		"facing=north": { "model": "statues:blockfloodstatue"},
-		"facing=west":  { "model": "statues:blockfloodstatue", "y": 270},
-        "facing=south": { "model": "statues:blockfloodstatue", "y": 180}
-    }
+        "facing": {
+			"east": { "model": "statues:blockfloodstatue", "y": 90},
+            "north": { "model": "statues:blockfloodstatue"},
+			"west": { "model": "statues:blockfloodstatue", "y": 270},
+            "south": { "model": "statues:blockfloodstatue", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blockfloodstatue"
+    }]
+  }
 }

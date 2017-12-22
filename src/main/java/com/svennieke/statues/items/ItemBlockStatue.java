@@ -36,15 +36,15 @@ public class ItemBlockStatue extends ItemBlock implements IBauble, IRenderBauble
 		if (type == RenderType.HEAD) {
 	        {
 	        	GlStateManager.pushMatrix();
-	            Minecraft minecraft = Minecraft.getMinecraft();
-	            //Helper.translateToHeadLevel(player);
+	        	
+				Helper.translateToHeadLevel(player);
+				Helper.translateToFace();
+				GlStateManager.translate(0.0F, 2.975F, 1.275F);
+				GlStateManager.scale(0.625F, 0.625F, 0.625F);
 
-	                GlStateManager.translate(0.0F, -0.25F, 0.0F);
-	                GlStateManager.rotate(90.0F, 0.0F, 1.0F, 0.0F);
-	                GlStateManager.scale(0.625F, -0.625F, -0.625F);
-
-	                minecraft.getItemRenderer().renderItem(player, stack, ItemCameraTransforms.TransformType.HEAD);
-	            GlStateManager.popMatrix();
+				Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.HEAD);
+				
+				GlStateManager.popMatrix();
 	        }
 		}
 	}

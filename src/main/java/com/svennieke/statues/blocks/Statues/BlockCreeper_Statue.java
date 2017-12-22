@@ -3,6 +3,7 @@ package com.svennieke.statues.blocks.Statues;
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockCreeper;
 import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.entity.fakeentity.FakeCreeper;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
@@ -67,6 +68,8 @@ public class BlockCreeper_Statue extends BlockCreeper implements iStatue, ITileE
         		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CREEPER_PRIMED, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, entitycreeper, true, true, this, playerIn, worldIn, pos);
+	        	
+	        	getTE(worldIn, pos).holidayCheck(new FakeCreeper(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

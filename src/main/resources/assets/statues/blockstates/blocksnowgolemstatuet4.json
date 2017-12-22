@@ -1,8 +1,14 @@
 {
+    "forge_marker": 1,
     "variants": {
-		"facing=east":  { "model": "statues:blocksnowgolemstatue", "y": 90},
-		"facing=north": { "model": "statues:blocksnowgolemstatue"},
-		"facing=west":  { "model": "statues:blocksnowgolemstatue", "y": 270},
-        "facing=south": { "model": "statues:blocksnowgolemstatue", "y": 180}
-    }
+        "facing": {
+			"east": { "model": "statues:blocksnowgolemstatue", "y": 90},
+            "north": { "model": "statues:blocksnowgolemstatue"},
+			"west": { "model": "statues:blocksnowgolemstatue", "y": 270},
+            "south": { "model": "statues:blocksnowgolemstatue", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blocksnowgolemstatue"
+    }]
+  }
 }

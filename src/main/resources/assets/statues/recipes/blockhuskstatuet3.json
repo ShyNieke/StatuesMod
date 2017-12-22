@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "statues:blockhuskstatuet3"
+  },
+  "pattern": [
+    "NCN",
+    "CSC",
+    "NCN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:chorus_flower"
+    },
+    "S": {
+      "item": "statues:blockhuskstatuet2"
+    },
+    "N": {
+      "item": "minecraft:quartz_ore"
+    }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
+}

@@ -94,7 +94,11 @@ public class StatuesConfigGen {
 				"Statues is still in beta not all mobs have a statue yet", 
 				"Chickens are not royal, prove me wrong by placing the right statue on a royal looking block",
 				"Undead stop burning in water, would a statue burn on a block that looks like water?",
-				"Fun Fact: I was supposed to be a christmas special item, but plans got changed and now I am here"
+				"Fun Fact: I was supposed to be a christmas special item, but plans got changed and now I am here",
+				"Pigs love mud how will they react on a more sandy block",
+				"Did you know chicken jockeys exist even in statues? go ahead try it out place a baby zombie statue on a chicken statue",
+				"Huge thanks to Xisuma for helping create his statue",
+				"Only decorative statues can be changed to special statues"
 				};
 		
 	}
@@ -114,6 +118,14 @@ public class StatuesConfigGen {
 		public final SnowGolem snowgolem = new SnowGolem();
 		public final Squid squid = new Squid();
 		public final Villager villager = new Villager();
+		public final Witch witch = new Witch();
+		public final Zombie zombie = new Zombie();
+		public final Husk husk = new Husk();
+		public final ChickenJockey chickenjockey = new ChickenJockey();
+		public final MagmaSlime magma = new MagmaSlime();
+		public final Ghast ghast = new Ghast();
+		public final Guardian guardian = new Guardian();
+		public final Enderman enderman = new Enderman();
 		
 		
 		public static class BabyZombie{
@@ -398,6 +410,174 @@ public class StatuesConfigGen {
 			
 			@Config.Comment("Changing this changes the item that drops 10% of the time")
 			public String item3 = "minecraft:emerald";
+			
+			@Config.Comment("Metadata for the item")
+			public int item3meta = 0;
+			
+		}
+		
+		public static class Witch{
+			@Config.Comment("Changing this changes the item that drops 100% of the time")
+			public String item1 = "minecraft:glowstone_dust";
+			
+			@Config.Comment("Metadata for the item")
+			public int item1meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 50% of the time")
+			public String item2 = "minecraft:redstone";
+			
+			@Config.Comment("Metadata for the item")
+			public int item2meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 10% of the time")
+			public String item3 = "minecraft:glass_bottle";
+			
+			@Config.Comment("Metadata for the item")
+			public int item3meta = 0;
+			
+		}
+		
+		public static class Zombie{
+			@Config.Comment("Changing this changes the item that drops 100% of the time")
+			public String item1 = "minecraft:rotten_flesh";
+			
+			@Config.Comment("Metadata for the item")
+			public int item1meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 50% of the time")
+			public String item2 = "";
+			
+			@Config.Comment("Metadata for the item")
+			public int item2meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 10% of the time")
+			public String item3 = "minecraft:iron_ingot";
+			
+			@Config.Comment("Metadata for the item")
+			public int item3meta = 0;
+			
+		}
+		
+		public static class Husk{
+			@Config.Comment("Changing this changes the item that drops 100% of the time")
+			public String item1 = "minecraft:rotten_flesh";
+			
+			@Config.Comment("Metadata for the item")
+			public int item1meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 50% of the time")
+			public String item2 = "";
+			
+			@Config.Comment("Metadata for the item")
+			public int item2meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 10% of the time")
+			public String item3 = "minecraft:iron_ingot";
+			
+			@Config.Comment("Metadata for the item")
+			public int item3meta = 0;
+			
+		}
+		
+		public static class ChickenJockey{
+			@Config.Comment("Changing this changes the item that drops 100% of the time")
+			public String item1 = "minecraft:rotten_flesh";
+			
+			@Config.Comment("Metadata for the item")
+			public int item1meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 50% of the time")
+			public String item2 = "minecraft:feather";
+			
+			@Config.Comment("Metadata for the item")
+			public int item2meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 10% of the time")
+			public String item3 = "";
+			
+			@Config.Comment("Metadata for the item")
+			public int item3meta = 0;
+			
+		}
+		
+		public static class MagmaSlime{
+			@Config.Comment("Changing this changes the item that drops 100% of the time")
+			public String item1 = "minecraft:magma_cream";
+			
+			@Config.Comment("Metadata for the item")
+			public int item1meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 50% of the time")
+			public String item2 = "";
+			
+			@Config.Comment("Metadata for the item")
+			public int item2meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 10% of the time")
+			public String item3 = "";
+			
+			@Config.Comment("Metadata for the item")
+			public int item3meta = 0;
+			
+		}
+		
+		public static class Ghast{
+			@Config.Comment("Changing this changes the item that drops 100% of the time")
+			public String item1 = "minecraft:gunpowder";
+			
+			@Config.Comment("Metadata for the item")
+			public int item1meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 50% of the time")
+			public String item2 = "minecraft:feather";
+			
+			@Config.Comment("Metadata for the item")
+			public int item2meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 10% of the time")
+			public String item3 = "minecraft:ghast_tear";
+			
+			@Config.Comment("Metadata for the item")
+			public int item3meta = 0;
+			
+		}
+		
+		public static class Guardian{
+			@Config.Comment("Changing this changes the item that drops 100% of the time")
+			public String item1 = "minecraft:gunpowder";
+			
+			@Config.Comment("Metadata for the item")
+			public int item1meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 50% of the time")
+			public String item2 = "minecraft:feather";
+			
+			@Config.Comment("Metadata for the item")
+			public int item2meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 10% of the time")
+			public String item3 = "minecraft:ghast_tear";
+			
+			@Config.Comment("Metadata for the item")
+			public int item3meta = 0;
+			
+		}
+		
+		public static class Enderman{
+			@Config.Comment("Changing this changes the item that drops 100% of the time")
+			public String item1 = "statues:blockpebble";
+			
+			@Config.Comment("Metadata for the item")
+			public int item1meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 50% of the time")
+			public String item2 = "minecraft:ender_pearl";
+			
+			@Config.Comment("Metadata for the item")
+			public int item2meta = 0;
+			
+			@Config.Comment("Changing this changes the item that drops 10% of the time")
+			public String item3 = "";
 			
 			@Config.Comment("Metadata for the item")
 			public int item3meta = 0;

@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing": {
+			"east": { "model": "statues:blockwastelandpigstatue", "y": 90},
+            "north": { "model": "statues:blockwastelandpigstatue"},
+			"west": { "model": "statues:blockwastelandpigstatue", "y": 270},
+            "south": { "model": "statues:blockwastelandpigstatue", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blockwastelandpigstatue"
+    }]
+  }
+}

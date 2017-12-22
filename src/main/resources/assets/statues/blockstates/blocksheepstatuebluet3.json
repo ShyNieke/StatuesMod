@@ -1,8 +1,20 @@
 {
+    "forge_marker": 1,
+	"defaults": {
+    "textures": {
+      "particle": "statues:blocks/blue_sheep",
+      "texture": "statues:blocks/blue_sheep"
+	  }
+	},
     "variants": {
-		"facing=east":  { "model": "statues:blocksheepstatueblue", "y": 90},
-		"facing=north": { "model": "statues:blocksheepstatueblue"},
-		"facing=west":  { "model": "statues:blocksheepstatueblue", "y": 270},
-        "facing=south": { "model": "statues:blocksheepstatueblue", "y": 180}
-    }
+        "facing": {
+			"east": { "model": "statues:blocksheepstatue", "y": 90},
+            "north": { "model": "statues:blocksheepstatue"},
+			"west": { "model": "statues:blocksheepstatue", "y": 270},
+            "south": { "model": "statues:blocksheepstatue", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blocksheepstatue"
+    }]
+  }
 }

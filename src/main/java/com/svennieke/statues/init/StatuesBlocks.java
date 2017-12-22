@@ -1,23 +1,35 @@
 package com.svennieke.statues.init;
 
+import com.svennieke.statues.blocks.BlockPebble;
 import com.svennieke.statues.blocks.Statues.BlockBabyZombie_Statue;
 import com.svennieke.statues.blocks.Statues.BlockBlaze_Statue;
+import com.svennieke.statues.blocks.Statues.BlockChickenJockey_Statue;
 import com.svennieke.statues.blocks.Statues.BlockChicken_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCreeper_Statue;
+import com.svennieke.statues.blocks.Statues.BlockEnderman_Statue;
+import com.svennieke.statues.blocks.Statues.BlockEndermite_Statue;
 import com.svennieke.statues.blocks.Statues.BlockFlood_Statue;
+import com.svennieke.statues.blocks.Statues.BlockGhast_Statue;
+import com.svennieke.statues.blocks.Statues.BlockGuardian_Statue;
+import com.svennieke.statues.blocks.Statues.BlockHusk_Statue;
 import com.svennieke.statues.blocks.Statues.BlockInfo_Statue;
 import com.svennieke.statues.blocks.Statues.BlockKingCluck_Statue;
+import com.svennieke.statues.blocks.Statues.BlockMagmaSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPig_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.blocks.Statues.BlockRabbit_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
+import com.svennieke.statues.blocks.Statues.BlockShulker_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSnowGolem_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
 import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
+import com.svennieke.statues.blocks.Statues.BlockWastelandPig_Statue;
+import com.svennieke.statues.blocks.Statues.BlockWitch_Statue;
+import com.svennieke.statues.blocks.Statues.BlockZombie_Statue;
 import com.svennieke.statues.items.ItemBlockStatue;
 
 import net.minecraft.block.Block;
@@ -29,39 +41,185 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 public class StatuesBlocks {
 
-	public static Block baby_zombie_statue, blaze_statue, chicken_statue,cow_statue, creeper_statue, flood_statue,
-						kingcluck_statue, mooshroom_statue, pig_statue, rabbit_statue,
-						sheepshaven_statue, slime_statue, snowgolem_statue, villager_statue, squid_statue;
+	//Regular Statues
+	public static Block baby_zombie_statue;
+	public static Block blaze_statue;
+	public static Block chicken_statue;
+	public static Block cow_statue;
+	public static Block creeper_statue;
+	public static Block flood_statue;
+	public static Block kingcluck_statue;
+	public static Block mooshroom_statue;
+	public static Block pig_statue;
+	public static Block rabbit_statue;
+	public static Block sheepshaven_statue;
+	public static Block slime_statue;
+	public static Block snowgolem_statue;
+	public static Block villager_statue;
+	public static Block squid_statue;
+	public static Block witch_statue;
+	public static Block zombie_statue;
+	public static Block husk_statue;
+	public static Block shulker_statue;
+	public static Block chicken_jockey_statue;
+	public static Block magma_statue;
+	public static Block ghast_statue;
+	public static Block guardian_statue;
+	public static Block wasteland_statue;
+	public static Block enderman_statue;
 	
-	public static Block baby_zombie_statuet2, blaze_statuet2, chicken_statuet2, cow_statuet2, creeper_statuet2, flood_statuet2,
-						kingcluck_statuet2, mooshroom_statuet2, pig_statuet2, rabbit_statuet2, 
-						sheepshaven_statuet2, slime_statuet2, snowgolem_statuet2, villager_statuet2, squid_statuet2;
+	public static Block baby_zombie_statuet2;
+	public static Block blaze_statuet2;
+	public static Block chicken_statuet2;
+	public static Block cow_statuet2;
+	public static Block creeper_statuet2;
+	public static Block flood_statuet2;
+	public static Block kingcluck_statuet2;
+	public static Block mooshroom_statuet2;
+	public static Block pig_statuet2;
+	public static Block rabbit_statuet2;
+	public static Block sheepshaven_statuet2;
+	public static Block slime_statuet2;
+	public static Block snowgolem_statuet2;
+	public static Block villager_statuet2;
+	public static Block squid_statuet2;
+	public static Block witch_statuet2;
+	public static Block zombie_statuet2;
+	public static Block husk_statuet2;
+	public static Block shulker_statuet2;
+	public static Block chicken_jockey_statuet2;
+	public static Block magma_statuet2;
+	public static Block ghast_statuet2;
+	public static Block guardian_statuet2;
+	public static Block wasteland_statuet2;
+	public static Block enderman_statuet2;
 
-	public static Block baby_zombie_statuet3, blaze_statuet3, chicken_statuet3,cow_statuet3, creeper_statuet3, flood_statuet3,
-						kingcluck_statuet3, mooshroom_statuet3, pig_statuet3, rabbit_statuet3, 
-						sheepshaven_statuet3, slime_statuet3, snowgolem_statuet3, villager_statuet3, squid_statuet3;
+	public static Block baby_zombie_statuet3;
+	public static Block blaze_statuet3;
+	public static Block chicken_statuet3;
+	public static Block cow_statuet3;
+	public static Block creeper_statuet3;
+	public static Block flood_statuet3;
+	public static Block kingcluck_statuet3;
+	public static Block mooshroom_statuet3;
+	public static Block pig_statuet3;
+	public static Block rabbit_statuet3;
+	public static Block sheepshaven_statuet3;
+	public static Block slime_statuet3;
+	public static Block snowgolem_statuet3;
+	public static Block villager_statuet3;
+	public static Block squid_statuet3;
+	public static Block witch_statuet3;
+	public static Block zombie_statuet3;
+	public static Block husk_statuet3;
+	public static Block shulker_statuet3;
+	public static Block chicken_jockey_statuet3;
+	public static Block magma_statuet3;
+	public static Block ghast_statuet3;
+	public static Block guardian_statuet3;
+	public static Block wasteland_statuet3;
+	public static Block enderman_statuet3;
 
-	public static Block baby_zombie_statuet4, blaze_statuet4, chicken_statuet4,cow_statuet4, creeper_statuet4, flood_statuet4,
-						kingcluck_statuet4, mooshroom_statuet4, pig_statuet4, rabbit_statuet4, 
-						sheepshaven_statuet4, slime_statuet4, snowgolem_statuet4, villager_statuet4, squid_statuet4;
+	public static Block baby_zombie_statuet4;
+	public static Block blaze_statuet4;
+	public static Block chicken_statuet4;
+	public static Block cow_statuet4;
+	public static Block creeper_statuet4;
+	public static Block flood_statuet4;
+	public static Block kingcluck_statuet4;
+	public static Block mooshroom_statuet4;
+	public static Block pig_statuet4;
+	public static Block rabbit_statuet4;
+	public static Block sheepshaven_statuet4;
+	public static Block slime_statuet4;
+	public static Block snowgolem_statuet4;
+	public static Block villager_statuet4;
+	public static Block squid_statuet4;
+	public static Block witch_statuet4;
+	public static Block zombie_statuet4;
+	public static Block husk_statuet4;
+	public static Block shulker_statuet4;
+	public static Block chicken_jockey_statuet4;
+	public static Block magma_statuet4;
+	public static Block ghast_statuet4;
+	public static Block guardian_statuet4;
+	public static Block wasteland_statuet4;
+	public static Block enderman_statuet4;
+
+	//Sheep Statues
+	public static Block sheep_statue_white;
+	public static Block sheep_statue_orange;
+	public static Block sheep_statue_magenta;
+	public static Block sheep_statue_lightblue;
+	public static Block sheep_statue_yellow;
+	public static Block sheep_statue_lime;
+	public static Block sheep_statue_pink;
+	public static Block sheep_statue_gray;
+	public static Block sheep_statue_lightgray;
+	public static Block sheep_statue_cyan;
+	public static Block sheep_statue_purple;
+	public static Block sheep_statue_blue;
+	public static Block sheep_statue_brown;
+	public static Block sheep_statue_green;
+	public static Block sheep_statue_red;
+	public static Block sheep_statue_black;
 	
-	public static Block sheep_statue_white, sheep_statue_orange, sheep_statue_magenta, sheep_statue_lightblue, sheep_statue_yellow, 
-						sheep_statue_lime, sheep_statue_pink, sheep_statue_gray, sheep_statue_lightgray, sheep_statue_cyan, 
-						sheep_statue_purple, sheep_statue_blue, sheep_statue_brown, sheep_statue_green, sheep_statue_red, sheep_statue_black;
+	public static Block sheep_statue_whitet2;
+	public static Block sheep_statue_oranget2;
+	public static Block sheep_statue_magentat2;
+	public static Block sheep_statue_lightbluet2;
+	public static Block sheep_statue_yellowt2;
+	public static Block sheep_statue_limet2;
+	public static Block sheep_statue_pinkt2;
+	public static Block sheep_statue_grayt2;
+	public static Block sheep_statue_lightgrayt2;
+	public static Block sheep_statue_cyant2;
+	public static Block sheep_statue_purplet2;
+	public static Block sheep_statue_bluet2;
+	public static Block sheep_statue_brownt2;
+	public static Block sheep_statue_greent2;
+	public static Block sheep_statue_redt2;
+	public static Block sheep_statue_blackt2;
 	
-	public static Block sheep_statue_whitet2, sheep_statue_oranget2, sheep_statue_magentat2, sheep_statue_lightbluet2, sheep_statue_yellowt2, 
-						sheep_statue_limet2, sheep_statue_pinkt2, sheep_statue_grayt2, sheep_statue_lightgrayt2, sheep_statue_cyant2, 
-						sheep_statue_purplet2, sheep_statue_bluet2, sheep_statue_brownt2, sheep_statue_greent2, sheep_statue_redt2, sheep_statue_blackt2;
+	public static Block sheep_statue_whitet3;
+	public static Block sheep_statue_oranget3;
+	public static Block sheep_statue_magentat3;
+	public static Block sheep_statue_lightbluet3;
+	public static Block sheep_statue_yellowt3;
+	public static Block sheep_statue_limet3;
+	public static Block sheep_statue_pinkt3;
+	public static Block sheep_statue_grayt3;
+	public static Block sheep_statue_lightgrayt3;
+	public static Block sheep_statue_cyant3;
+	public static Block sheep_statue_purplet3;
+	public static Block sheep_statue_bluet3;
+	public static Block sheep_statue_brownt3;
+	public static Block sheep_statue_greent3;
+	public static Block sheep_statue_redt3;
+	public static Block sheep_statue_blackt3;
 	
-	public static Block sheep_statue_whitet3, sheep_statue_oranget3, sheep_statue_magentat3, sheep_statue_lightbluet3, sheep_statue_yellowt3, 
-						sheep_statue_limet3, sheep_statue_pinkt3, sheep_statue_grayt3, sheep_statue_lightgrayt3, sheep_statue_cyant3, 
-						sheep_statue_purplet3, sheep_statue_bluet3, sheep_statue_brownt3, sheep_statue_greent3, sheep_statue_redt3, sheep_statue_blackt3;
+	public static Block sheep_statue_whitet4;
+	public static Block sheep_statue_oranget4;
+	public static Block sheep_statue_magentat4;
+	public static Block sheep_statue_lightbluet4;
+	public static Block sheep_statue_yellowt4;
+	public static Block sheep_statue_limet4;
+	public static Block sheep_statue_pinkt4;
+	public static Block sheep_statue_grayt4;
+	public static Block sheep_statue_lightgrayt4;
+	public static Block sheep_statue_cyant4;
+	public static Block sheep_statue_purplet4;
+	public static Block sheep_statue_bluet4;
+	public static Block sheep_statue_brownt4;
+	public static Block sheep_statue_greent4;
+	public static Block sheep_statue_redt4;
+	public static Block sheep_statue_blackt4;
 	
-	public static Block sheep_statue_whitet4, sheep_statue_oranget4, sheep_statue_magentat4, sheep_statue_lightbluet4, sheep_statue_yellowt4, 
-						sheep_statue_limet4, sheep_statue_pinkt4, sheep_statue_grayt4, sheep_statue_lightgrayt4, sheep_statue_cyant4, 
-						sheep_statue_purplet4, sheep_statue_bluet4, sheep_statue_brownt4, sheep_statue_greent4, sheep_statue_redt4, sheep_statue_blackt4;
-	
-	public static Block info_statue, player_statue;
+	//Other Statues
+	public static Block info_statue;
+	public static Block player_statue;
+	public static Block endermite_statue;
+	public static Block pebble;
 	
 	public static void init()
 	{
@@ -222,6 +380,61 @@ public class StatuesBlocks {
 		
 		info_statue = new BlockInfo_Statue("infostatue", "blockinfostatue", 1);
 		player_statue = new BlockPlayer_Statue("playerstatue", "blockplayerstatue", "");
+		
+		witch_statue = new BlockWitch_Statue("witchstatue", "blockwitchstatue", 1);
+		witch_statuet2 = new BlockWitch_Statue("witchstatuet2", "blockwitchstatuet2", 2);
+		witch_statuet3 = new BlockWitch_Statue("witchstatuet3", "blockwitchstatuet3", 3);
+		witch_statuet4 = new BlockWitch_Statue("witchstatuet4", "blockwitchstatuet4", 4);
+		
+		zombie_statue = new BlockZombie_Statue("zombiestatue", "blockzombiestatue", 1);
+		zombie_statuet2 = new BlockZombie_Statue("zombiestatuet2", "blockzombiestatuet2", 2);
+		zombie_statuet3 = new BlockZombie_Statue("zombiestatuet3", "blockzombiestatuet3", 3);
+		zombie_statuet4 = new BlockZombie_Statue("zombiestatuet4", "blockzombiestatuet4", 4);
+		
+		husk_statue = new BlockHusk_Statue("huskstatue", "blockhuskstatue", 1);
+		husk_statuet2 = new BlockHusk_Statue("huskstatuet2", "blockhuskstatuet2", 2);
+		husk_statuet3 = new BlockHusk_Statue("huskstatuet3", "blockhuskstatuet3", 3);
+		husk_statuet4 = new BlockHusk_Statue("huskstatuet4", "blockhuskstatuet4", 4);
+		
+		shulker_statue = new BlockShulker_Statue("shulkerstatue", "blockshulkerstatue", 1);
+		shulker_statuet2 = new BlockShulker_Statue("shulkerstatuet2", "blockshulkerstatuet2", 2);
+		shulker_statuet3 = new BlockShulker_Statue("shulkerstatuet3", "blockshulkerstatuet3", 3);
+		shulker_statuet4 = new BlockShulker_Statue("shulkerstatuet4", "blockshulkerstatuet4", 4);
+		
+		chicken_jockey_statue = new BlockChickenJockey_Statue("chickenjockeystatue", "blockchickenjockeystatue", 1);
+		chicken_jockey_statuet2 = new BlockChickenJockey_Statue("chickenjockeystatuet2", "blockchickenjockeystatuet2", 2);
+		chicken_jockey_statuet3 = new BlockChickenJockey_Statue("chickenjockeystatuet3", "blockchickenjockeystatuet3", 3);
+		chicken_jockey_statuet4 = new BlockChickenJockey_Statue("chickenjockeystatuet4", "blockchickenjockeystatuet4", 4);
+		
+		endermite_statue = new BlockEndermite_Statue("endermitestatue", "blockendermitestatue", 1);
+		
+		magma_statue = new BlockMagmaSlime_Statue("magmastatue", "blockmagmastatue", 1);
+		magma_statuet2 = new BlockMagmaSlime_Statue("magmastatuet2", "blockmagmastatuet2", 2);
+		magma_statuet3 = new BlockMagmaSlime_Statue("magmastatuet3", "blockmagmastatuet3", 3);
+		magma_statuet4 = new BlockMagmaSlime_Statue("magmastatuet4", "blockmagmastatuet4", 4);
+		
+		ghast_statue = new BlockGhast_Statue("ghaststatue", "blockghaststatue", 1);
+		ghast_statuet2 = new BlockGhast_Statue("ghaststatuet2", "blockghaststatuet2", 2);
+		ghast_statuet3 = new BlockGhast_Statue("ghaststatuet3", "blockghaststatuet3", 3);
+		ghast_statuet4 = new BlockGhast_Statue("ghaststatuet4", "blockghaststatuet4", 4);
+		
+		guardian_statue = new BlockGuardian_Statue("guardianstatue", "blockguardianstatue", 1);
+		guardian_statuet2 = new BlockGuardian_Statue("guardianstatuet2", "blockguardianstatuet2", 2);
+		guardian_statuet3 = new BlockGuardian_Statue("guardianstatuet3", "blockguardianstatuet3", 3);
+		guardian_statuet4 = new BlockGuardian_Statue("guardianstatuet4", "blockguardianstatuet4", 4);
+		
+		enderman_statue = new BlockEnderman_Statue("endermanstatue", "blockendermanstatue", 1);
+		enderman_statuet2 = new BlockEnderman_Statue("endermanstatuet2", "blockendermanstatuet2", 2);
+		enderman_statuet3 = new BlockEnderman_Statue("endermanstatuet3", "blockendermanstatuet3", 3);
+		enderman_statuet4 = new BlockEnderman_Statue("endermanstatuet4", "blockendermanstatuet4", 4);
+		
+		pebble = new BlockPebble("pebble", "blockpebble");
+		
+		wasteland_statue = new BlockWastelandPig_Statue("wastelandpigstatue", "blockwastelandpigstatue", 1);
+		wasteland_statuet2 = new BlockWastelandPig_Statue("wastelandpigstatuet2", "blockwastelandpigstatuet2", 2);
+		wasteland_statuet3 = new BlockWastelandPig_Statue("wastelandpigstatuet3", "blockwastelandpigstatuet3", 3);
+		wasteland_statuet4 = new BlockWastelandPig_Statue("wastelandpigstatuet4", "blockwastelandpigstatuet4", 4);
+
 	}
 	
 	public static void register()
@@ -383,6 +596,60 @@ public class StatuesBlocks {
 		
 		registerBlock(info_statue);
 		registerBlock(player_statue);
+		
+		registerBlock(witch_statue);
+		registerBlock(witch_statuet2);
+		registerBlock(witch_statuet3);
+		registerBlock(witch_statuet4);
+		
+		registerBlock(zombie_statue);
+		registerBlock(zombie_statuet2);
+		registerBlock(zombie_statuet3);
+		registerBlock(zombie_statuet4);
+		
+		registerBlock(husk_statue);
+		registerBlock(husk_statuet2);
+		registerBlock(husk_statuet3);
+		registerBlock(husk_statuet4);
+		
+		registerBlock(shulker_statue);
+		registerBlock(shulker_statuet2);
+		registerBlock(shulker_statuet3);
+		registerBlock(shulker_statuet4);
+		
+		registerBlock(chicken_jockey_statue);
+		registerBlock(chicken_jockey_statuet2);
+		registerBlock(chicken_jockey_statuet3);
+		registerBlock(chicken_jockey_statuet4);
+		
+		registerBlock(endermite_statue);
+		
+		registerBlock(magma_statue);
+		registerBlock(magma_statuet2);
+		registerBlock(magma_statuet3);
+		registerBlock(magma_statuet4);
+		
+		registerBlock(ghast_statue);
+		registerBlock(ghast_statuet2);
+		registerBlock(ghast_statuet3);
+		registerBlock(ghast_statuet4);
+		
+		registerBlock(guardian_statue);
+		registerBlock(guardian_statuet2);
+		registerBlock(guardian_statuet3);
+		registerBlock(guardian_statuet4);
+		
+		registerBlock(enderman_statue);
+		registerBlock(enderman_statuet2);
+		registerBlock(enderman_statuet3);
+		registerBlock(enderman_statuet4);
+		
+		registerBlock(pebble);
+		
+		registerBlock(wasteland_statue);
+		registerBlock(wasteland_statuet2);
+		registerBlock(wasteland_statuet3);
+		registerBlock(wasteland_statuet4);
 	}
 	
 	public static void registerBlock(Block block) 
@@ -556,6 +823,60 @@ public class StatuesBlocks {
 		
 		registerRender(info_statue);
 		registerRender(player_statue);
+		
+		registerRender(witch_statue);
+		registerRender(witch_statuet2);
+		registerRender(witch_statuet3);
+		registerRender(witch_statuet4);
+		
+		registerRender(zombie_statue);
+		registerRender(zombie_statuet2);
+		registerRender(zombie_statuet3);
+		registerRender(zombie_statuet4);
+		
+		registerRender(husk_statue);
+		registerRender(husk_statuet2);
+		registerRender(husk_statuet3);
+		registerRender(husk_statuet4);
+		
+		registerRender(shulker_statue);
+		registerRender(shulker_statuet2);
+		registerRender(shulker_statuet3);
+		registerRender(shulker_statuet4);
+		
+		registerRender(chicken_jockey_statue);
+		registerRender(chicken_jockey_statuet2);
+		registerRender(chicken_jockey_statuet3);
+		registerRender(chicken_jockey_statuet4);
+		
+		registerRender(endermite_statue);
+		
+		registerRender(magma_statue);
+		registerRender(magma_statuet2);
+		registerRender(magma_statuet3);
+		registerRender(magma_statuet4);
+		
+		registerRender(ghast_statue);
+		registerRender(ghast_statuet2);
+		registerRender(ghast_statuet3);
+		registerRender(ghast_statuet4);
+		
+		registerRender(guardian_statue);
+		registerRender(guardian_statuet2);
+		registerRender(guardian_statuet3);
+		registerRender(guardian_statuet4);
+		
+		registerRender(enderman_statue);
+		registerRender(enderman_statuet2);
+		registerRender(enderman_statuet3);
+		registerRender(enderman_statuet4);
+		
+		registerRender(pebble);
+		
+		registerRender(wasteland_statue);
+		registerRender(wasteland_statuet2);
+		registerRender(wasteland_statuet3);
+		registerRender(wasteland_statuet4);
 	}
 	
 	public static void registerRender(Block block)

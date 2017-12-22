@@ -163,18 +163,93 @@ tile.villagerstatuet4.name=Muted Villager Statue
 tile.infostatue.name=Informative Statue
 tile.playerstatue.name=Player Statue
 
+tile.witchstatue.name=Decorative Witch Statue
+tile.witchstatuet2.name=Sound Witch Statue
+tile.witchstatuet3.name=Functional Witch Statue
+tile.witchstatuet4.name=Muted Witch Statue
+
+tile.zombiestatue.name=Decorative Zombie Statue
+tile.zombiestatuet2.name=Sound Zombie Statue
+tile.zombiestatuet3.name=Functional Zombie Statue
+tile.zombiestatuet4.name=Muted Zombie Statue
+
+tile.huskstatue.name=Decorative Husk Statue
+tile.huskstatuet2.name=Sound Husk Statue
+tile.huskstatuet3.name=Functional Husk Statue
+tile.huskstatuet4.name=Muted Husk Statue
+
+tile.shulkerstatue.name=Decorative Shulker Statue
+tile.shulkerstatuet2.name=Sound Shulker Statue
+tile.shulkerstatuet3.name=Functional Shulker Statue
+tile.shulkerstatuet4.name=Muted Shulker Statue
+
+tile.chickenjockeystatue.name=Decorative Chicken Jockey Statue
+tile.chickenjockeystatuet2.name=Sound Chicken Jockey Statue
+tile.chickenjockeystatuet3.name=Functional Chicken Jockey Statue
+tile.chickenjockeystatuet4.name=Muted Chicken Jockey Statue
+
+tile.endermitestatue.name=Decorative Endermite Statue
+
+tile.magmastatue.name=Decorative Magma Cube Statue
+tile.magmastatuet2.name=Sound Magma Cube Statue
+tile.magmastatuet3.name=Functional Magma Cube Statue
+tile.magmastatuet4.name=Muted Magma Cube Statue
+
+tile.ghaststatue.name=Decorative Ghast Statue
+tile.ghaststatuet2.name=Sound Ghast Statue
+tile.ghaststatuet3.name=Functional Ghast Statue
+tile.ghaststatuet4.name=Muted Ghast Statue
+
+tile.guardianstatue.name=Decorative Guardian Statue
+tile.guardianstatuet2.name=Sound Guardian Statue
+tile.guardianstatuet3.name=Functional Guardian Statue
+tile.guardianstatuet4.name=Muted Guardian Statue
+
+tile.endermanstatue.name=Decorative Enderman Statue
+tile.endermanstatuet2.name=Sound Enderman Statue
+tile.endermanstatuet3.name=Functional Enderman Statue
+tile.endermanstatuet4.name=Muted Enderman Statue
+
+tile.pebble.name=Pebble
+
+tile.wastelandpigstatue.name=Decorative Wasteland Pig Statue
+tile.wastelandpigstatuet2.name=Sound Wasteland Pig Statue
+tile.wastelandpigstatuet3.name=Functional Wasteland Pig Statue
+tile.wastelandpigstatuet4.name=Muted Wasteland Pig Statue
+
 #Item names
 item.royalnugget.name=Royal Nugget
 item.mooshroomsoup.name=Mooshroom Soup
 item.statuecore.name=Statue Core
+item.tea.name=Cup Of Tea
+item.cup.name=Edible Cup
 
 #Special Lore
 cluckington.info=Also known as Cluckington
 royalnugget.info=Made for and from royals
-villager.info=WIP, Trades in the future
+villager.info=WIP, Trades in the future.
+shulker.info=WIP, Inventory in the future.
+tea.info=Now with less milk.
+cup.info=I can't believe its edible.
 
 #Entity
 entity.statues:StatueBat.name=Statue Bat
+
+entity.statues:FakeZombie.name=Zombie
+entity.statues:FakeHusk.name=Husk
+entity.statues:FakeSkeleton.name=Skeleton
+entity.statues:FakeBlaze.name=Blaze
+entity.statues:FakeFireball.name=Fireball
+entity.statues:FakeCreeper.name=Creeper
+entity.statues:FakeEnderman.name=Enderman
+entity.statues:FakeGhast.name=Ghast
+entity.statues:FakeLargeFireball.name=Large Fireball
+entity.statues:FakeGuardian.name=Guardian
+entity.statues:FakeSlime.name=Slime
+entity.statues:FakeMagmaCube.name=Magma Cube
+entity.statues:FakeShulker.name=Shulker
+entity.statues:FakeShulkerBullet.name=Shulker Bullet
+entity.statues:FakeWitch.name=Witch
 
 #tileentity
 statue.player=Player Statue
