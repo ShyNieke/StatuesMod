@@ -43,8 +43,6 @@ public class BlockSquid_Statue extends BlockSquid implements iStatue, ITileEntit
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
-
-	public ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("squid"));
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
@@ -59,6 +57,7 @@ public class BlockSquid_Statue extends BlockSquid implements iStatue, ITileEntit
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	
+	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("squid"));
 	        	ItemStack stack1 = stackList.get(0);
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);

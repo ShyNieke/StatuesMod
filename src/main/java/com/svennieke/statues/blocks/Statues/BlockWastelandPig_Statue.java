@@ -1,12 +1,18 @@
 package com.svennieke.statues.blocks.Statues;
 
+import java.util.ArrayList;
+
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockWastelandPig;
+import com.svennieke.statues.compat.list.StatueLootList;
+import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -49,8 +55,21 @@ public class BlockWastelandPig_Statue extends BlockWastelandPig implements iStat
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
-
-	        	getTE(worldIn, pos).WastelandBehavior(worldIn, pos, playerIn);;
+	        	
+	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("wasteland_pig"));
+	        	ItemStack stack1 = stackList.get(0);
+        		ItemStack stack2 = stackList.get(1);
+        		ItemStack stack3 = stackList.get(2);
+        		
+        		if(stack1.getItem() != StatuesItems.tea)
+        		{
+        			getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_PIG_AMBIENT, pos, worldIn);
+    	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
+        		}
+        		else
+        		{
+    	        	getTE(worldIn, pos).WastelandBehavior(worldIn, pos, playerIn, stack1, stack2, stack3);
+        		}
 	        }
 	        return true;
 		}

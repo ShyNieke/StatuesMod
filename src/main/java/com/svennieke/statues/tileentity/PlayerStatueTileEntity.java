@@ -47,23 +47,9 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
         compound.setString("PlayerName", this.BlockName);
         if (this.playerProfile != null)
         {
-        	if(this.playerProfile.getName() != this.BlockName) 
-        	{
-        		if(!this.BlockName.isEmpty())
-        		{
-        			setPlayerProfile(new GameProfile(SkinUtil.getUUIDFromName(this.BlockName), this.BlockName));
-
-            		NBTTagCompound nbttagcompound = getTileData().getCompoundTag("PlayerProfile");
-                    NBTUtil.writeGameProfile(nbttagcompound, playerProfile);
-                    getTileData().setTag("PlayerProfile", nbttagcompound);
-            	}
-        	}
-        	else
-        	{
-        		NBTTagCompound nbttagcompound = getTileData().getCompoundTag("PlayerProfile");
-                NBTUtil.writeGameProfile(nbttagcompound, getPlayerProfile());
-                getTileData().setTag("PlayerProfile", nbttagcompound);
-        	}
+        	NBTTagCompound nbttagcompound = getTileData().getCompoundTag("PlayerProfile");
+            NBTUtil.writeGameProfile(nbttagcompound, getPlayerProfile());
+            getTileData().setTag("PlayerProfile", nbttagcompound);
         }
         return compound;
     }
@@ -75,13 +61,11 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
 		//NBTUtil.writeGameProfile(tag, this.playerProfile);
 		//return tag;
         return this.writeToNBT(new NBTTagCompound());
-
 	}
     
     @Override
     public void handleUpdateTag(NBTTagCompound tag) {
-    	super.handleUpdateTag(tag);
-    	BlockName = tag.getString("PlayerName");
+        this.readFromNBT(tag);
     }
     
     @Override
@@ -90,7 +74,6 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     	readFromNBT(pkt.getNbtCompound());
     	final IBlockState state = getWorld().getBlockState(getPos());
     	getWorld().notifyBlockUpdate(getPos(), state, state, 3);
-    	
     }
     
     @Override
@@ -112,9 +95,22 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     public void setPlayerProfile(GameProfile playerProfile) {
     	if(playerProfile != null)
     	{
-    		this.playerProfile = playerProfile;
-            this.playerProfile = TileEntitySkull.updateGameprofile(this.playerProfile);
-            this.markDirty();
+    		if(this.playerProfile.getName() != this.BlockName) 
+        	{
+        		if(!this.BlockName.isEmpty())
+        		{
+        			GameProfile newProfile = new GameProfile(SkinUtil.getUUIDFromName(this.BlockName), this.BlockName);
+        			this.playerProfile = newProfile;
+                    this.playerProfile = TileEntitySkull.updateGameprofile(this.playerProfile);
+                    this.markDirty();
+            	}
+        	}
+        	else
+        	{
+        		this.playerProfile = playerProfile;
+                this.playerProfile = TileEntitySkull.updateGameprofile(this.playerProfile);
+                this.markDirty();
+        	}
     	}
     }
 }

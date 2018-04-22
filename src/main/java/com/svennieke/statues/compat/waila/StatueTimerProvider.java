@@ -2,8 +2,7 @@ package com.svennieke.statues.compat.waila;
 
 import java.util.List;
 
-import com.svennieke.statues.blocks.iStatue;
-import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
+import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
@@ -16,7 +15,13 @@ import mcp.mobius.waila.api.IWailaRegistrar;
 import mcp.mobius.waila.api.WailaPlugin;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 @WailaPlugin
 public class StatueTimerProvider implements IWailaDataProvider, IWailaPlugin {
@@ -38,44 +43,48 @@ public class StatueTimerProvider implements IWailaDataProvider, IWailaPlugin {
 	}
 	
 	@Override
+	public NBTTagCompound getNBTData(EntityPlayerMP player, TileEntity te, NBTTagCompound tag, World world,
+			BlockPos pos) {
+		te.writeToNBT(tag);
+		return tag;
+	}
+	
+	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> tooltip, IWailaDataAccessor accessor,
-			IWailaConfigHandler config) {
-		final Block block = Block.getBlockFromItem(accessor.getStack().getItem());
-		boolean playerStatue = block instanceof BlockPlayer_Statue;
+			IWailaConfigHandler config) {		
+		TileEntity te = accessor.getTileEntity();
+		final NBTTagCompound nbt = accessor.getNBTData();
 		
-		if(playerStatue && !accessor.getTileEntity().isInvalid())
+		if(te instanceof PlayerStatueTileEntity && !accessor.getTileEntity().isInvalid())
 		{
-            final PlayerStatueTileEntity tile = (PlayerStatueTileEntity) accessor.getTileEntity();
+            PlayerStatueTileEntity tile = (PlayerStatueTileEntity) te;
             
-            if (config.getConfig(CONFIG_PLAYER_NAME) && (tile.getPlayerProfile() != null) && !accessor.getTileEntity().isInvalid()) {
-            	tooltip.add(I18n.format("tooltip.statues.player.info") + tile.getName());
+            GameProfile profile = NBTUtil.readGameProfileFromNBT(accessor.getNBTData().getCompoundTag("PlayerProfile"));
+            String name = accessor.getNBTData().getString("PlayerName");
+            
+            if (config.getConfig(CONFIG_PLAYER_NAME) && (profile!= null) && !accessor.getTileEntity().isInvalid()) {
+            	tooltip.add(I18n.format("tooltip.statues.player.info") + name);
             }
-            if (config.getConfig(CONFIG_PLAYER_UUID) && (tile.getPlayerProfile() != null) && !accessor.getTileEntity().isInvalid()) {
-            	tooltip.add(I18n.format("tooltip.statues.player.info2") + tile.getPlayerProfile().getId());
+            if (config.getConfig(CONFIG_PLAYER_UUID) && (profile != null) && !accessor.getTileEntity().isInvalid()) {
+            	tooltip.add(I18n.format("tooltip.statues.player.info2") + profile.getId());
             }
 		}
 		
-		if (block instanceof iStatue && !playerStatue && !accessor.getTileEntity().isInvalid()) {
-            final StatueTileEntity tile = (StatueTileEntity) accessor.getTileEntity();
-
+		if (te instanceof StatueTileEntity && !accessor.getTileEntity().isInvalid()) {
+            StatueTileEntity tile = (StatueTileEntity) te;
+            
+            //System.out.println(nbt);
+            int cooldown = nbt.getInteger("StatueCooldown");
+            int maxCooldown = nbt.getInteger("StatueMaxCooldown");
+            int cooldownProgress = (int) ((cooldown * 100.0f) / maxCooldown);
+            
             if (config.getConfig(CONFIG_STATUE_TIMER) && !accessor.getTileEntity().isInvalid()) {
-            	if(tile.getCooldown() > 0)
-                	tooltip.add(I18n.format("tooltip.statues.timer") + tile.getCooldown());
+            	if(nbt.getBoolean("StatueAble"))
+            		tooltip.add(I18n.format("tooldown.statues.timer.finished"));
             	else
-                	tooltip.add(I18n.format("tooldown.statues.timer.finished"));
+            		tooltip.add(I18n.format("tooltip.statues.timer") + cooldownProgress + "%");
             }
         }
 		return tooltip;	
-	}
-	
-	@Override
-	public List<String> getWailaTail(ItemStack itemStack, List<String> tooltip, IWailaDataAccessor accessor,
-			IWailaConfigHandler config) {
-		return tooltip;
-	}
-	
-	@Override
-	public List<String> getWailaHead(ItemStack itemStack, List<String> list, IWailaDataAccessor accessor, IWailaConfigHandler config) {
-		return list;
 	}
 }

@@ -261,7 +261,7 @@ option.statues.statue.timer=Statue Timer Info?
 
 tooltip.statues.player.info=Player Username: 
 tooltip.statues.player.info2=Player UUID: 
-tooltip.statues.timer=Ticks left: 
+tooltip.statues.timer=Cooldown percentage: 
 tooldown.statues.timer.finished=Ready for interaction
 
 #jei

@@ -19,11 +19,11 @@ public class StatueFillingWrapper extends BlankRecipeWrapper {
 
     @Override
     public void getIngredients(IIngredients ingredients) {
-    	ArrayList<ItemStack> outputStacks = new ArrayList<>();
-    	outputStacks.add(input);
-    	outputStacks.add(output);
+    	ArrayList<ItemStack> inputStacks = new ArrayList<>();
+    	inputStacks.add(statue);
+    	inputStacks.add(input);
     	
-    	ingredients.setInput(ItemStack.class, statue);	
-    	ingredients.setOutputs(ItemStack.class, outputStacks);
+    	ingredients.setInputs(ItemStack.class, inputStacks);	
+    	ingredients.setOutput(ItemStack.class, output);
     }
 }

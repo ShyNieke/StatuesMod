@@ -48,8 +48,6 @@ public class Statues {
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event)
 	{
-		StatueLootList.initializeRespawnList();
-
 		isVeinminerInstalled = Loader.isModLoaded("veinminer");
 		
 		isBaublesEnabled = Loader.isModLoaded("baubles");
@@ -78,6 +76,9 @@ public class Statues {
 			System.out.println("Registered Statues Bat Spawn");
 		}
 		StatuesHoliday.registerSpawning();
+		
+		//Initialize loot
+		StatueLootList.initializeStatueLoot();
 		
 		proxy.Init();
 		MinecraftForge.EVENT_BUS.register(new DropHandler());

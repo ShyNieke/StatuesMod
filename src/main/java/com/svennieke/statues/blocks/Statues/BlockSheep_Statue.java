@@ -49,8 +49,6 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
-
-	public ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("sheep"));
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
@@ -66,6 +64,7 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	        	
+	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("sheep"));
 	        	ItemStack stack1 = getWool();
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);

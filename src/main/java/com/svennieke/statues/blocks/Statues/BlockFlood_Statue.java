@@ -1,13 +1,17 @@
 package com.svennieke.statues.blocks.Statues;
 
+import java.util.ArrayList;
+
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockFlood;
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -38,7 +42,7 @@ public class BlockFlood_Statue extends BlockFlood implements iStatue, ITileEntit
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
-	
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
@@ -50,9 +54,15 @@ public class BlockFlood_Statue extends BlockFlood implements iStatue, ITileEntit
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
+	        	
+	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("flood"));
+	        	ItemStack stack1 = stackList.get(0);
+        		ItemStack stack2 = stackList.get(1);
+        		ItemStack stack3 = stackList.get(2);
+        		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).SpecialInteraction(false, false, true, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
-	        	getTE(worldIn, pos).StatueBehavior(null, null, null, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
 	        return true;
 		}

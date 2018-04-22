@@ -3,6 +3,7 @@ package com.svennieke.statues.compat.list;
 import java.util.ArrayList;
 
 import com.svennieke.statues.init.StatuesBlocks;
+import com.svennieke.statues.init.StatuesItems;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -13,14 +14,16 @@ public class StatueLootList {
 	public static ArrayList<LootInfo> lootList = new ArrayList<>();
 	public static LootInfo loot_info;
 	
-	public static void initializeRespawnList() {
+	public static void initializeStatueLoot() {
 		addLoot("baby_zombie", new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.IRON_NUGGET), ItemStack.EMPTY);
 		addLoot("blaze", new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.BLAZE_ROD), ItemStack.EMPTY);
 		addLoot("chicken", new ItemStack(Items.FEATHER), new ItemStack(Items.IRON_NUGGET), ItemStack.EMPTY);
 		addLoot("chicken_jockey", new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.FEATHER), ItemStack.EMPTY);
+		addLoot("king_cluck", new ItemStack(StatuesItems.nugget), ItemStack.EMPTY, new ItemStack(Items.GOLD_NUGGET));
 		addLoot("cow", new ItemStack(Items.BEEF), ItemStack.EMPTY, new ItemStack(Items.LEATHER));
 		addLoot("creeper", new ItemStack(Items.GUNPOWDER), ItemStack.EMPTY, ItemStack.EMPTY);
 		addLoot("enderman", new ItemStack(StatuesBlocks.pebble, 16), new ItemStack(Items.ENDER_PEARL), ItemStack.EMPTY);
+		addLoot("flood", ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY);
 		addLoot("ghast", new ItemStack(Items.GUNPOWDER), ItemStack.EMPTY, new ItemStack(Items.GHAST_TEAR));
 		addLoot("guardian", new ItemStack(Items.FISH, 1, 0), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_CRYSTALS));
 		addLoot("husk", new ItemStack(Items.ROTTEN_FLESH), ItemStack.EMPTY, new ItemStack(Items.IRON_INGOT));
@@ -35,6 +38,7 @@ public class StatueLootList {
 		addLoot("squid", ItemStack.EMPTY, new ItemStack(Items.DYE, 1, 0), ItemStack.EMPTY);
 		addLoot("villager", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.EMERALD));
 		addLoot("witch", new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.REDSTONE), new ItemStack(Items.GLASS_BOTTLE));
+		addLoot("wasteland_pig", new ItemStack(StatuesItems.tea), new ItemStack(Blocks.SAND).setStackDisplayName("Wasteland Block"), ItemStack.EMPTY);
 		addLoot("zombie", new ItemStack(Items.ROTTEN_FLESH), ItemStack.EMPTY, new ItemStack(Items.IRON_INGOT));
 	}
 	

@@ -54,8 +54,12 @@ public class StatueFillingCategory implements IRecipeCategory {
 	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup guiItemStacks = recipeLayout.getItemStacks();
 		
+		int statueSlot = 0;
+		guiItemStacks.init(statueSlot, true, 27, 0);
+        guiItemStacks.set(ingredients);
+		
 		int inputSlot = 1;
-        guiItemStacks.init(inputSlot, false, 0, 22);
+        guiItemStacks.init(inputSlot, true, 0, 22);
         guiItemStacks.set(ingredients);
 
         int outputSlot = 2;

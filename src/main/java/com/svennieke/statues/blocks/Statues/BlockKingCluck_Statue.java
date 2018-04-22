@@ -1,9 +1,11 @@
 package com.svennieke.statues.blocks.Statues;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockKingCluck;
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
@@ -47,7 +49,7 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements iStatue, IT
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
-	
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
@@ -60,10 +62,13 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements iStatue, IT
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	        	
-	        	ItemStack nugget = new ItemStack(StatuesItems.nugget, 1);
-	        	ItemStack gold = new ItemStack(Items.GOLD_NUGGET, 1);
+	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("king_cluck"));
+	        	ItemStack stack1 = stackList.get(0);
+        		ItemStack stack2 = stackList.get(1);
+        		ItemStack stack3 = stackList.get(2);
+        		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).StatueBehavior(nugget, null, gold, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        }
 	        return true;
 		}

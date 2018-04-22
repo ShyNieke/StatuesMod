@@ -29,8 +29,8 @@ public class StatuesItems {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		
 		nugget = registerItem(new ItemRoyalNugget(4, 0.1f, "royalnugget", "itemroyalnugget"));
-		soup = registerItem(new ItemMooshroomSoup(6, 0.3F, "statuecore", "itemstatuecore"));
-		core = registerItem(new ItemStatueCore("mooshroomsoup", "itemmooshroomsoup"));
+		core = registerItem(new ItemStatueCore("statuecore", "itemstatuecore"));
+		soup = registerItem(new ItemMooshroomSoup(6, 0.3F, "mooshroomsoup", "itemmooshroomsoup"));
 		tea = registerItem(new ItemTea("tea", "itemtea"));
 		cup = registerItem(new ItemCup(1, 0.2F, "cup", "itemcup"));
 		

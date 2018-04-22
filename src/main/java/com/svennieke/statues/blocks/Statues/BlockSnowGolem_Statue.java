@@ -42,8 +42,6 @@ public class BlockSnowGolem_Statue extends BlockSnowGolem implements iStatue, IT
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
-
-	public ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("snowgolem"));
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
@@ -57,6 +55,7 @@ public class BlockSnowGolem_Statue extends BlockSnowGolem implements iStatue, IT
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	        	
+	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("snowgolem"));
 	        	ItemStack stack1 = stackList.get(0);
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
