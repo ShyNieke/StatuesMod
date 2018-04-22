@@ -71,6 +71,14 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements iStatue, IT
 		return false;
 	}
 	
+	public static ItemStack getNugget() {
+		return new ItemStack(StatuesItems.nugget, 1);
+	}
+	
+	public static ItemStack getGold() {
+		return new ItemStack(Items.GOLD_NUGGET, 1);
+	}
+	
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {

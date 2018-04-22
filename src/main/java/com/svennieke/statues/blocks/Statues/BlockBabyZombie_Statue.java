@@ -1,8 +1,10 @@
 package com.svennieke.statues.blocks.Statues;
 
+import java.util.ArrayList;
+
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockBabyZombie;
-import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.entity.fakeentity.FakeZombie;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.tileentity.StatueTileEntity;
@@ -14,7 +16,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -65,13 +66,15 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
 		}
 		else
 		{
-		return null;
+			return null;
 		}
 	}
 
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
+
+	public ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("baby_zombie"));
 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
@@ -85,14 +88,10 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	        	
-	        	int meta1 = StatuesConfigGen.statues.babyzombie.item1meta;
-	        	int meta2 = StatuesConfigGen.statues.babyzombie.item2meta;
-	        	int meta3 = StatuesConfigGen.statues.babyzombie.item3meta;
-	        	
-	        	ItemStack stack1 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.babyzombie.item1), 1, meta1);
-        		ItemStack stack2 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.babyzombie.item2), 1, meta2);
-        		ItemStack stack3 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.babyzombie.item3), 1, meta3);
-	        	
+	        	ItemStack stack1 = stackList.get(0);
+        		ItemStack stack2 = stackList.get(1);
+        		ItemStack stack3 = stackList.get(2);
+        		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        	

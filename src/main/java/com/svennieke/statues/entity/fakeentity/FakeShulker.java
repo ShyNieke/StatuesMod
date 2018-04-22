@@ -107,7 +107,7 @@ public class FakeShulker extends EntityShulker{
                 --this.attackTime;
                 EntityLivingBase entitylivingbase = FakeShulker.this.getAttackTarget();
                 FakeShulker.this.getLookHelper().setLookPositionWithEntity(entitylivingbase, 180.0F, 180.0F);
-                double d0 = FakeShulker.this.getDistanceSqToEntity(entitylivingbase);
+                double d0 = FakeShulker.this.getDistanceSq(entitylivingbase);
 
                 if (d0 < 400.0D)
                 {

@@ -17,7 +17,6 @@ import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeFireball;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeLargeFireball;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeShulkerBullet;
 import com.svennieke.statues.init.StatuesBlocks;
-import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.renderer.PlayerStatueRenderer;
 import com.svennieke.statues.renderer.StatueBatRenderer;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
@@ -36,6 +35,8 @@ import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.client.renderer.entity.RenderSlime;
 import net.minecraft.client.renderer.entity.RenderWitch;
 import net.minecraft.client.renderer.entity.RenderZombie;
+import net.minecraft.item.Item;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
@@ -43,9 +44,10 @@ public class ClientProxy extends ServerProxy{
 
 	@Override
 	public void Preinit() {
-		StatuesBlocks.registerRenders();
-		StatuesItems.registerRenders();
 		registerRender();
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(PlayerStatueTileEntity.class, new PlayerStatueRenderer());
+		ForgeHooksClient.registerTESRItemStack(Item.getItemFromBlock(StatuesBlocks.player_statue), 0, PlayerStatueTileEntity.class);
 	}
 	
 	public static void registerRender() {
@@ -66,8 +68,9 @@ public class ClientProxy extends ServerProxy{
 		RenderingRegistry.registerEntityRenderingHandler(FakeShulkerBullet.class, renderManager -> new RenderShulkerBullet(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeWitch.class, renderManager -> new RenderWitch(renderManager));
 	}
+	
 	@Override
 	public void Init() {
-		ClientRegistry.bindTileEntitySpecialRenderer(PlayerStatueTileEntity.class, new PlayerStatueRenderer());
+		
 	}
 }

@@ -1,8 +1,10 @@
 package com.svennieke.statues.blocks.Statues;
 
+import java.util.ArrayList;
+
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockSheep;
-import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
@@ -13,7 +15,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -48,6 +49,8 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
+
+	public ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("sheep"));
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
@@ -63,109 +66,11 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	        	
-	        	int meta2 = StatuesConfigGen.statues.sheep.item2meta;
-        		int meta3 = StatuesConfigGen.statues.sheep.item3meta;
+	        	ItemStack stack1 = getWool();
+        		ItemStack stack2 = stackList.get(1);
+        		ItemStack stack3 = stackList.get(2);
         		
-	        	ItemStack stack2 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.sheep.item2), 1, meta2);
-        		ItemStack stack3 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.sheep.item3), 1, meta3);
-        		
-	        	if(this.COLOR == EnumDyeColor.WHITE)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 0);
-	        		
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.ORANGE)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 1);
-
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.MAGENTA)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 2);
-
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.LIGHT_BLUE)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 3);
-
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.YELLOW)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 4);
-
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.LIME)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 5);
-
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.PINK)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 6);
-
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.GRAY)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 7);
-
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.SILVER)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 8);
-		        	
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.CYAN)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 9);
-		        	
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.PURPLE)
-	        	{
-		        	ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 10);
-		        	
-		        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.BLUE)
-	        	{
-	        		ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 11);
-	        		
-	        		getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.BROWN)
-	        	{
-	        		ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 12);
-	        		
-	        		getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.GREEN)
-	        	{
-	        		ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 13);
-	        		
-	        		getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.RED)
-	        	{
-	        		ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 14);
-	        		
-	        		getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	if(this.COLOR == EnumDyeColor.BLACK)
-	        	{
-	        		ItemStack stack1 = new ItemStack(Blocks.WOOL, 1, 15);
-	        		
-	        		getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
-	        	}
-	        	
+        		getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, pos, worldIn);
 	        }
 	        return true;
@@ -178,6 +83,81 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 		}
 		else
 		return false;
+	}
+	
+	public ItemStack getWool() {
+		ItemStack stack1 = null;
+		
+		if(this.COLOR == EnumDyeColor.WHITE)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 0);
+    	}
+    	if(this.COLOR == EnumDyeColor.ORANGE)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 1);
+    	}
+    	if(this.COLOR == EnumDyeColor.MAGENTA)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 2);
+    	}
+    	if(this.COLOR == EnumDyeColor.LIGHT_BLUE)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 3);
+    	}
+    	if(this.COLOR == EnumDyeColor.YELLOW)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 4);
+    	}
+    	if(this.COLOR == EnumDyeColor.LIME)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 5);
+    	}
+    	if(this.COLOR == EnumDyeColor.PINK)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 6);
+    	}
+    	if(this.COLOR == EnumDyeColor.GRAY)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 7);
+    	}
+    	if(this.COLOR == EnumDyeColor.SILVER)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 8);
+    	}
+    	if(this.COLOR == EnumDyeColor.CYAN)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 9);
+    	}
+    	if(this.COLOR == EnumDyeColor.PURPLE)
+    	{
+        	stack1 = new ItemStack(Blocks.WOOL, 1, 10);
+    	}
+    	if(this.COLOR == EnumDyeColor.BLUE)
+    	{
+    		stack1 = new ItemStack(Blocks.WOOL, 1, 11);
+    	}
+    	if(this.COLOR == EnumDyeColor.BROWN)
+    	{
+    		stack1 = new ItemStack(Blocks.WOOL, 1, 12);
+    	}
+    	if(this.COLOR == EnumDyeColor.GREEN)
+    	{
+    		stack1 = new ItemStack(Blocks.WOOL, 1, 13);
+    	}
+    	if(this.COLOR == EnumDyeColor.RED)
+    	{
+    		stack1 = new ItemStack(Blocks.WOOL, 1, 14);
+    	}
+    	if(this.COLOR == EnumDyeColor.BLACK)
+    	{
+    		stack1 = new ItemStack(Blocks.WOOL, 1, 15);
+    	}
+    	
+    	return stack1;
+	}
+	
+	public EnumDyeColor getCOLOR() {
+		return COLOR;
 	}
 	
 	public void ChangeColor(ItemStack stack, World worldIn, BlockPos pos, int TIER, EntityLivingBase placer) {

@@ -2,7 +2,6 @@ package com.svennieke.statues.items;
 
 import java.util.List;
 
-import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.init.StatuesItems;
 
@@ -21,10 +20,10 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class ItemTea extends ItemFood {
-	public ItemTea() {
+	public ItemTea(String unlocalised, String registry) {
 		super(6, 2F, false);
-		setUnlocalizedName(Reference.StatuesItems.TEA.getUnlocalisedName());
-		setRegistryName(Reference.StatuesItems.TEA.getRegistryName());
+		setUnlocalizedName(unlocalised);
+		setRegistryName(registry);
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
 		setMaxStackSize(1);

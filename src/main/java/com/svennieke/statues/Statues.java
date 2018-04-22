@@ -1,18 +1,14 @@
 package com.svennieke.statues;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DropHandler;
-import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesHoliday;
-import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.init.StatuesSounds;
 import com.svennieke.statues.proxy.CommonProxy;
 
@@ -52,6 +48,8 @@ public class Statues {
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event)
 	{
+		StatueLootList.initializeRespawnList();
+
 		isVeinminerInstalled = Loader.isModLoaded("veinminer");
 		
 		isBaublesEnabled = Loader.isModLoaded("baubles");
@@ -63,11 +61,7 @@ public class Statues {
 		StatuesSounds.registerSounds();
 		
 		StatuesEntity.register();
-		StatuesBlocks.init();
-		StatuesBlocks.register();
-		StatuesItems.init();
-		StatuesItems.register();
-
+		
 		//StatuesCrafting.register();
 		
 		proxy.Preinit();

@@ -2,7 +2,6 @@ package com.svennieke.statues.items;
 
 import java.util.List;
 
-import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -14,10 +13,10 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class ItemCup extends ItemFood {
-	public ItemCup(int amount, float saturation, boolean isWolfFood) {
-		super(amount, saturation, isWolfFood);
-		setUnlocalizedName(Reference.StatuesItems.CUP.getUnlocalisedName());
-		setRegistryName(Reference.StatuesItems.CUP.getRegistryName());
+	public ItemCup(int amount, float saturation, String unlocalised, String registry) {
+		super(amount, saturation, false);
+		setUnlocalizedName(unlocalised);
+		setRegistryName(registry);
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
 		setAlwaysEdible();

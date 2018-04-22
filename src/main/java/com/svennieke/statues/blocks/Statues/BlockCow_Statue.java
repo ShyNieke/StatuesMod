@@ -1,15 +1,16 @@
 package com.svennieke.statues.blocks.Statues;
 
+import java.util.ArrayList;
+
 import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockCow;
-import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -41,6 +42,8 @@ public class BlockCow_Statue extends BlockCow implements iStatue, ITileEntityPro
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
+
+	public ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("cow"));
 	
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
@@ -54,13 +57,9 @@ public class BlockCow_Statue extends BlockCow implements iStatue, ITileEntityPro
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
 	        	
-	        	int meta1 = StatuesConfigGen.statues.cow.item1meta;
-	        	int meta2 = StatuesConfigGen.statues.cow.item2meta;
-	        	int meta3 = StatuesConfigGen.statues.cow.item3meta;
-	        	
-	        	ItemStack stack1 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.cow.item1), 1, meta1);
-        		ItemStack stack2 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.cow.item2), 1, meta2);
-        		ItemStack stack3 = new ItemStack(Item.getByNameOrId(StatuesConfigGen.statues.cow.item3), 1, meta3);
+	        	ItemStack stack1 = stackList.get(0);
+        		ItemStack stack2 = stackList.get(1);
+        		ItemStack stack3 = stackList.get(2);
         		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_COW_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).SpecialInteraction(true, false, false, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);

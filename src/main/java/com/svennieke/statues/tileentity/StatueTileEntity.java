@@ -10,7 +10,6 @@ import javax.annotation.Nullable;
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.config.StatuesConfigGen;
-import com.svennieke.statues.entity.fakeentity.FakeZombie;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.init.StatuesSounds;
 import com.svennieke.statues.items.ItemTea;
@@ -20,6 +19,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityFireworkRocket;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.entity.projectile.EntityShulkerBullet;
@@ -67,19 +67,18 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 		if(tier == 3 || tier == 4)
 		{
 			LocalDateTime now = LocalDateTime.now();
-			if(now.getMonth() == Month.OCTOBER || now.getMonth() == Month.NOVEMBER)
+			if(now.getMonth() == Month.OCTOBER)
 			{
 				int random = world.rand.nextInt(100);
 
 				if (random < 1)
 				{
-					if(isChild == true)
+					if(isChild == true && entity instanceof EntityMob)
 					{
-						FakeZombie zombie = (FakeZombie)entity;
-						zombie.isChild();
-						
-						zombie.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-						worldIn.spawnEntity(zombie);
+						EntityMob mob = (EntityMob)entity;
+						mob.isChild();
+						mob.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+						worldIn.spawnEntity(mob);
 					}
 					else
 					{
@@ -199,7 +198,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 			            EntityPotion entitypotion = new EntityPotion(world);
 			            entitypotion.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 0, 0);
 			            entitypotion.setItem(PotionUtils.addPotionToItemStack(new ItemStack(Items.SPLASH_POTION), RandomLists.getRandomPotionType()));
-			            entitypotion.setThrowableHeading(d1, d2 + (double)(f * 0.2F), d3, 0.25F, 6.0F);
+			            entitypotion.shoot(d1, d2 + (double)(f * 0.2F), d3, 0.25F, 6.0F);
 			            this.world.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_WITCH_THROW, SoundCategory.NEUTRAL, 1.0F, 0.8F + world.rand.nextFloat() * 0.4F);
 			            this.world.spawnEntity(entitypotion);
 					}
@@ -221,17 +220,17 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 			EntityPlayer player = (EntityPlayer)entity;
 			FakePlayer fakePlayer = getFakePlayer();
 			
-			int random = world.rand.nextInt(100);
+			int random = worldIn.rand.nextInt(100);
 			if(tier == 3 || tier == 4)
 			{
 				if(random < 90)
 				{
-					if (!world.isRemote) {
-						EntityShulkerBullet bullet = new EntityShulkerBullet(world, fakePlayer, player, facing);
-						bullet.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ() + 0.5, 0, 0);
-						
-						this.world.spawnEntity(bullet);
-			            this.world.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_SHULKER_SHOOT, SoundCategory.NEUTRAL, 1.0F, 0.8F + world.rand.nextFloat() * 0.4F);
+					if (!worldIn.isRemote) {
+                        EntityShulkerBullet bullet = new EntityShulkerBullet(worldIn, fakePlayer, player, facing);
+                        bullet.setPosition(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ());
+
+                        worldIn.spawnEntity(bullet);
+						worldIn.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_SHULKER_SHOOT, SoundCategory.NEUTRAL, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
 					}
 				}
 			}
@@ -391,12 +390,16 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	    if (!world.isRemote) {
 	    	if (isAble() == false)
 	    	{
-	    		int cooldown = this.Cooldown + 1;
+	    		if(this.Cooldown < 0)
+	                this.Cooldown = (StatuesConfigGen.general.InteractionTimer * 20);
+	    		
             	//Statues.logger.info(cooldown);
-	            this.Cooldown = cooldown;
-	            
-	            if(cooldown == (StatuesConfigGen.general.InteractionTimer * 20)){
-	                this.Cooldown = 0;
+	    		if(this.Cooldown > 0)
+		    		--this.Cooldown;
+	    			            
+	            if(this.Cooldown == 0){
+	            	System.out.println("hey");
+	                this.Cooldown = (StatuesConfigGen.general.InteractionTimer * 20);
 	                setAble(true);
 	                //Statues.logger.info(isAble());
 	            }
@@ -418,4 +421,8 @@ public class StatueTileEntity extends TileEntity implements ITickable{
     {
     	return this.able;
     }
+    
+    public int getCooldown() {
+		return this.Cooldown;
+	}
 }

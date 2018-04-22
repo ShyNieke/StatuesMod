@@ -442,7 +442,7 @@ public class FakeGuardian extends EntityGuardian{
              */
             public boolean shouldContinueExecuting()
             {
-                return super.shouldContinueExecuting() && (this.isElder || this.guardian.getDistanceSqToEntity(this.guardian.getAttackTarget()) > 9.0D);
+                return super.shouldContinueExecuting() && (this.isElder || this.guardian.getDistanceSq(this.guardian.getAttackTarget()) > 9.0D);
             }
 
             /**
@@ -451,7 +451,7 @@ public class FakeGuardian extends EntityGuardian{
             public void startExecuting()
             {
                 this.tickCounter = -10;
-                this.guardian.getNavigator().clearPathEntity();
+                this.guardian.getNavigator().clearPath();
                 this.guardian.getLookHelper().setLookPositionWithEntity(this.guardian.getAttackTarget(), 90.0F, 90.0F);
                 this.guardian.isAirBorne = true;
             }
@@ -472,7 +472,7 @@ public class FakeGuardian extends EntityGuardian{
             public void updateTask()
             {
                 EntityLivingBase entitylivingbase = this.guardian.getAttackTarget();
-                this.guardian.getNavigator().clearPathEntity();
+                this.guardian.getNavigator().clearPath();
                 this.guardian.getLookHelper().setLookPositionWithEntity(entitylivingbase, 90.0F, 90.0F);
 
                 if (!this.guardian.canEntityBeSeen(entitylivingbase))
@@ -579,7 +579,7 @@ public class FakeGuardian extends EntityGuardian{
 
             public boolean apply(@Nullable EntityLivingBase p_apply_1_)
             {
-                return (p_apply_1_ instanceof EntityPlayer || p_apply_1_ instanceof EntitySquid) && p_apply_1_.getDistanceSqToEntity(this.parentEntity) > 9.0D;
+                return (p_apply_1_ instanceof EntityPlayer || p_apply_1_ instanceof EntitySquid) && p_apply_1_.getDistanceSq(this.parentEntity) > 9.0D;
             }
         }
     

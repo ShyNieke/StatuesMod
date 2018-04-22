@@ -1,6 +1,5 @@
 package com.svennieke.statues.items;
 
-import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.config.StatuesConfigGen;
 
@@ -19,10 +18,10 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class ItemMooshroomSoup extends ItemFood {
-	public ItemMooshroomSoup(int amount, float saturation, boolean isWolfFood) {
-		super(amount, saturation, isWolfFood);
-		setUnlocalizedName(Reference.StatuesItems.MOOSHROOMSOUP.getUnlocalisedName());
-		setRegistryName(Reference.StatuesItems.MOOSHROOMSOUP.getRegistryName());
+	public ItemMooshroomSoup(int amount, float saturation, String unlocalised, String registry) {
+		super(amount, saturation, false);
+		setUnlocalizedName(unlocalised);
+		setRegistryName(registry);
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
 	}

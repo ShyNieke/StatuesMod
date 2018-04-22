@@ -1,50 +1,45 @@
 package com.svennieke.statues.init;
 
+import java.util.ArrayList;
+
 import com.svennieke.statues.items.ItemCup;
 import com.svennieke.statues.items.ItemMooshroomSoup;
 import com.svennieke.statues.items.ItemRoyalNugget;
 import com.svennieke.statues.items.ItemStatueCore;
 import com.svennieke.statues.items.ItemTea;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.registries.IForgeRegistry;
 
+@EventBusSubscriber
 public class StatuesItems {
 	
 	public static ItemFood nugget, soup, tea, cup;
 	public static Item core;
 	
-	public static void init(){
-		nugget = new ItemRoyalNugget(4, 0.1f, false);
-		soup = new ItemMooshroomSoup(6, 0.3F, false);
-		core = new ItemStatueCore();
-		tea = new ItemTea();
-		cup = new ItemCup(1, 0.2F, false);
-		}
+	public static ArrayList<Item> ITEMS = new ArrayList<>();
 	
-	public static void register()
-	{
-		ForgeRegistries.ITEMS.register(nugget);
-		ForgeRegistries.ITEMS.register(soup);
-		ForgeRegistries.ITEMS.register(core);
-		ForgeRegistries.ITEMS.register(tea);
-		ForgeRegistries.ITEMS.register(cup);
-	}
+	@SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event)
+    {
+		IForgeRegistry<Item> registry = event.getRegistry();
+		
+		nugget = registerItem(new ItemRoyalNugget(4, 0.1f, "royalnugget", "itemroyalnugget"));
+		soup = registerItem(new ItemMooshroomSoup(6, 0.3F, "statuecore", "itemstatuecore"));
+		core = registerItem(new ItemStatueCore("mooshroomsoup", "itemmooshroomsoup"));
+		tea = registerItem(new ItemTea("tea", "itemtea"));
+		cup = registerItem(new ItemCup(1, 0.2F, "cup", "itemcup"));
+		
+		registry.registerAll(ITEMS.toArray(new Item[0]));
+    }
 	
-	public static void registerRenders()
-	{
-		registerRender(nugget);
-		registerRender(soup);
-		registerRender(core);
-		registerRender(tea);
-		registerRender(cup);
-	}
-	
-	public static void registerRender(Item item)
-	{
-		ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(), "inventory"));
-	}
+	public static <T extends Item> T registerItem(T item)
+    {
+        ITEMS.add(item);
+        return item;
+    }
 }

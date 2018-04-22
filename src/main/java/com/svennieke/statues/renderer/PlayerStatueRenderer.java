@@ -2,6 +2,7 @@ package com.svennieke.statues.renderer;
 
 import javax.annotation.Nullable;
 
+import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.util.SkinUtil;
@@ -30,23 +31,28 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) 
 	{
 		EnumFacing enumfacing = EnumFacing.UP;
-		this.renderPlayer(te, x, y, z, te.getName(), destroyStage, enumfacing);
+		
+		this.renderPlayer(te, x, y, z, te.getPlayerProfile(), destroyStage, enumfacing);
 	}
 	
-	public void renderPlayer(PlayerStatueTileEntity te, double x, double y, double z, String playerName, int destroyStage, EnumFacing enumfacing) 
+	public void renderPlayer(PlayerStatueTileEntity te, double x, double y, double z, @Nullable GameProfile profile, int destroyStage, EnumFacing enumfacing) 
 	{
-		ResourceLocation skinlocation = this.getSkinResourceLocation(playerName);
+		ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
 		
-		if (te.hasWorld())
-        {
-            IBlockState iblockstate = this.getWorld().getBlockState(te.getPos());
-
-            if (iblockstate.getBlock() instanceof BlockPlayer_Statue)
-            {
-                enumfacing = (EnumFacing)iblockstate.getValue(BlockPlayer_Statue.FACING);
-            }
-        }
-        
+		ModelPlayer theModel = this.model;
+		boolean slimModel = false;
+		IBlockState state;
+		 
+		if (te == null) {
+            profile = null;
+            enumfacing = EnumFacing.UP;
+		}
+		else {
+            profile = te.getPlayerProfile();
+            state = te.getWorld().getBlockState(te.getPos());
+            enumfacing = (state.getValue(BlockPlayer_Statue.FACING));
+		}
+		
         if (destroyStage >= 0)
         {
             this.bindTexture(DESTROY_STAGES[destroyStage]);
@@ -60,6 +66,12 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         {
         	if (skinlocation != null)
             {
+        		if (profile != null)
+                {
+        			skinlocation = SkinUtil.getSkin(profile);
+        			slimModel = SkinUtil.isSlimSkin(profile.getId());
+                }
+        		
             	this.bindTexture(skinlocation);
     		}
         }
@@ -79,6 +91,8 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             case DOWN:
             case UP:
             default:
+            	GlStateManager.translate(0F, 0.75F, 0F);
+                GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
                 break;
             case NORTH:
             	GlStateManager.translate(0F, 0.75F, 0F);
@@ -107,21 +121,24 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
         
         float scale = 0.03125F;
-        
-        this.model.bipedBody.render(scale);
-        this.model.bipedHead.render(scale);
-        this.model.bipedLeftArm.render(scale);
-        this.model.bipedRightArm.render(scale);
-        this.model.bipedLeftLeg.render(scale);
-        this.model.bipedRightLeg.render(scale);
 
-        this.model.bipedBodyWear.render(scale);
-        this.model.bipedHeadwear.render(scale);
-        this.model.bipedLeftArmwear.render(scale);
-        this.model.bipedRightArmwear.render(scale);
-        this.model.bipedRightArmwear.offsetZ = -0.3125F;
-        this.model.bipedLeftLegwear.render(scale);
-        this.model.bipedRightLegwear.render(scale);
+        if(slimModel)
+        	theModel = new ModelPlayer(0.03125F, true);
+        
+        theModel.bipedBody.render(scale);
+        theModel.bipedHead.render(scale);
+        theModel.bipedLeftArm.render(scale);
+        theModel.bipedRightArm.render(scale);
+        theModel.bipedLeftLeg.render(scale);
+        theModel.bipedRightLeg.render(scale);
+
+        theModel.bipedBodyWear.render(scale);
+        theModel.bipedHeadwear.render(scale);
+        theModel.bipedLeftArmwear.render(scale);
+        theModel.bipedRightArmwear.offsetZ = -0.3125F;
+        theModel.bipedRightArmwear.render(scale);
+        theModel.bipedLeftLegwear.render(scale);
+        theModel.bipedRightLegwear.render(scale);
         GlStateManager.disableBlend();
         GlStateManager.popMatrix();
         
@@ -132,18 +149,4 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             GlStateManager.matrixMode(5888);
         } 
 	}
-	
-	@Nullable
-    private ResourceLocation getSkinResourceLocation(String name)
-    {			
-		if(name.equals("") || name.contains(" "))
-		{
-			final ResourceLocation Steve = DefaultPlayerSkin.getDefaultSkinLegacy();
-			return Steve;
-		}
-		else
-		{
-			return SkinUtil.getSkinTexture(name);
-		}
-    }
 }
