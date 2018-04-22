@@ -9,10 +9,13 @@ import javax.annotation.Nullable;
 
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.Statues;
+import com.svennieke.statues.compat.waila.StatueTimerProvider;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.init.StatuesSounds;
 import com.svennieke.statues.items.ItemTea;
+import com.svennieke.statues.packets.StatuesPacketHandler;
+import com.svennieke.statues.packets.StatuesProgressMessage;
 import com.svennieke.statues.util.RandomLists;
 
 import net.minecraft.block.Block;
@@ -22,6 +25,7 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.entity.projectile.EntityShulkerBullet;
 import net.minecraft.init.Items;
@@ -41,23 +45,26 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.fml.common.Optional;
 
 public class StatueTileEntity extends TileEntity implements ITickable{
-	private int Cooldown;
-	private int cooldownMax;
-	private boolean statueAble = true;
+	public int cooldown;
+	public int cooldownMax;
+	public boolean statueAble;
 	private int tier;
 	private static FakePlayer fakeStatue = null;
 	
 	public StatueTileEntity() {
 		this.tier = 2;
-		this.Cooldown = 0;
+		this.cooldown = 0;
 		this.cooldownMax = (StatuesConfigGen.general.InteractionTimer * 20);
+		this.statueAble = true;
 	}
 	
 	public int setTier(int theTier) {
@@ -97,7 +104,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	
 	public void WastelandBehavior(World worldIn, BlockPos pos, EntityPlayer playerIn, @Nullable ItemStack stack1, @Nullable ItemStack stack2, @Nullable ItemStack stack3)
 	{		
-		if(this.statueAble) 
+		if(isStatueAble()) 
 		{
 			int random = world.rand.nextInt(100);
 			if(tier == 3 || tier == 4)
@@ -125,7 +132,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 					}
 				}
 			}
-            this.statueAble = false;
+			setStatueAble(false);
 		}
 		else
 		{
@@ -169,7 +176,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	}
 	
 	public void GiveEffect(BlockPos pos, World worldIn, EntityPlayer entity, Potion effect) {
-		if(this.statueAble)
+		if(isStatueAble())
 		{
 			EntityPlayer player = (EntityPlayer)entity;
 			int random = world.rand.nextInt(100);
@@ -188,7 +195,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	}
 	
 	public void ThrowPotion(BlockPos pos, World worldIn, EntityPlayer entity) {
-		if(this.statueAble)
+		if(isStatueAble())
 		{
 			EntityPlayer player = (EntityPlayer)entity;
 			
@@ -224,7 +231,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 	}
 	
 	public void ShootBullet(BlockPos pos, World worldIn, EntityPlayer entity, EnumFacing.Axis facing) {
-		if(this.statueAble)
+		if(isStatueAble())
 		{
 			EntityPlayer player = (EntityPlayer)entity;
 			FakePlayer fakePlayer = getFakePlayer();
@@ -326,7 +333,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 			EntityLiving spawnableentity, boolean spawnEntity, boolean isCreeper,Block statue, EntityPlayer playerIn, 
 			World worldIn, BlockPos pos) {
 		
-		if(this.statueAble) 
+		if(isStatueAble()) 
 		{
 			int random = world.rand.nextInt(100);
 			if(tier == 3 || tier == 4)
@@ -340,24 +347,21 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 				{
 					if (!worldIn.isRemote)
 					{
-					spawnableentity.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
-			        NBTTagCompound tag = new NBTTagCompound();
-			        spawnableentity.writeEntityToNBT(tag);
-			        
+						spawnableentity.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
+				        NBTTagCompound tag = new NBTTagCompound();
+				        spawnableentity.writeEntityToNBT(tag);
+				        
 				        if(isCreeper)
 				        {
-				        tag.setShort("ExplosionRadius", (short)0);
-				        tag.setShort("Fuse", (short)0);
+					        tag.setShort("ExplosionRadius", (short)0);
+					        tag.setShort("Fuse", (short)0);
 				        }
-			        
-			        spawnableentity.readEntityFromNBT(tag);
-			        worldIn.spawnEntity(spawnableentity);
-			        
+				        
+				        spawnableentity.readEntityFromNBT(tag);
+				        worldIn.spawnEntity(spawnableentity);
+				        
 				        if(isCreeper)
-				        {
-				        spawnableentity.spawnExplosionParticle();
-				    	}
-			        
+				        	spawnableentity.spawnExplosionParticle();
 					}
 				}
 				
@@ -375,7 +379,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 					}
 				}
 			}
-            this.statueAble = false;
+            setStatueAble(false);
 		}
 	}
 	
@@ -383,62 +387,67 @@ public class StatueTileEntity extends TileEntity implements ITickable{
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         tier = compound.getInteger("StatueTier");
-        Cooldown = compound.getInteger("StatueCooldown");
-        cooldownMax = compound.getInteger("StatueMaxCooldown");
-        statueAble = compound.getBoolean("statueAble");
+        cooldown = compound.getInteger("StatueCooldown");
+        cooldownMax = compound.getInteger("StatueMaxcooldown");
+        statueAble = compound.getBoolean("StatueAble");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger("StatueTier", tier);
-        compound.setInteger("StatueCooldown", Cooldown);
-        compound.setInteger("StatueMaxCooldown", cooldownMax);
-        compound.setBoolean("statueAble", statueAble);
+        compound.setInteger("StatueCooldown", cooldown);
+        compound.setInteger("StatueMaxcooldown", cooldownMax);
+        compound.setBoolean("StatueAble", statueAble);
         return compound;
     }
-    
+
     @Override
     public void update(){
-    	if (this.world.isRemote)
-    		return;
+    	if (!this.world.isRemote && Statues.instance.isWailaInstalled)
+    	{
+    		sendUpdatePacket();
+    	}
     	
     	if (!this.statueAble)
     	{
-    		++this.Cooldown;
-            
-            if(this.Cooldown == this.cooldownMax){
-                this.Cooldown = 0;
-                this.statueAble = true;
+        	//System.out.println(this.cooldown);
+
+    		++this.cooldown;
+    		markDirty();
+    		
+    		if(this.cooldownMax == 0)
+        		this.cooldownMax = (StatuesConfigGen.general.InteractionTimer * 20);
+    		
+            if(this.cooldown >= this.cooldownMax){
+            	
+                this.cooldown = 0;
+                setStatueAble(true);
             }
     	}
     }
     
     @Override
-    public SPacketUpdateTileEntity getUpdatePacket() {
-		return new SPacketUpdateTileEntity(pos, 0, this.getUpdateTag());
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    	readFromNBT(pkt.getNbtCompound());
+    	
+    	IBlockState state = world.getBlockState(getPos());
+    	world.notifyBlockUpdate(getPos(), state, state, 3);
     }
-    
+        
     @Override
-    public void handleUpdateTag(NBTTagCompound tag) {
-        this.readFromNBT(tag);
-    }
-    
-    @Override
-	public NBTTagCompound getUpdateTag() {
+	public NBTTagCompound getUpdateTag()
+    {
         return this.writeToNBT(new NBTTagCompound());
+    }
+    
+    @Override
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		return new SPacketUpdateTileEntity(pos, 0, this.getUpdateTag());
 	}
     
-    @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    	super.onDataPacket(net, pkt);
-    	readFromNBT(pkt.getNbtCompound());
-    	final IBlockState state = getWorld().getBlockState(getPos());
-    	getWorld().notifyBlockUpdate(getPos(), state, state, 3);
-    }
-    
     public int getCooldown() {
-		return this.Cooldown;
+		return this.cooldown;
 	}
     
     public int getCooldownMax() {
@@ -448,4 +457,42 @@ public class StatueTileEntity extends TileEntity implements ITickable{
     public boolean isStatueAble() {
 		return this.statueAble;
 	}
+    
+    public void setStatueAble(boolean statueAble) {
+		this.statueAble = statueAble;
+		this.markDirty();
+	}
+    
+    @Optional.Method(modid = "waila")
+    public void sendUpdatePacket()
+    {
+    	EntityPlayerMP player = (EntityPlayerMP) world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 5, false);
+		if(player != null)
+		{
+			if(StatueTimerProvider.info == null)
+		    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
+			else
+			{
+				RayTraceResult result = player.rayTrace(5, 1F);
+				int x = result.getBlockPos().getX();
+				int y = result.getBlockPos().getY();
+				int z = result.getBlockPos().getZ();
+				BlockPos lookPos = new BlockPos(x,y,z);
+				
+				if(lookPos.equals(this.pos) || lookPos.equals(this.pos.down()))
+				{
+					if(StatueTimerProvider.info.getPosition() != this.pos)
+					{
+						if(StatueTimerProvider.info.getCooldown() != getCooldown())
+					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
+					}
+					else
+					{
+						if(StatueTimerProvider.info.getCooldown() != getCooldown())
+					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
+					}
+				}
+			}
+		}
+    }
 }

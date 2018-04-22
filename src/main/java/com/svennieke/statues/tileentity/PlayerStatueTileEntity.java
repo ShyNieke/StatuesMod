@@ -3,7 +3,6 @@ package com.svennieke.statues.tileentity;
 import javax.annotation.Nullable;
 
 import com.mojang.authlib.GameProfile;
-import com.svennieke.statues.util.SkinUtil;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,8 +14,8 @@ import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.world.IWorldNameable;
 
 public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable{
-	private String BlockName;
-    private GameProfile playerProfile;
+	public String BlockName;
+    public GameProfile playerProfile;
 
 	public PlayerStatueTileEntity() {
 		this.BlockName = "";
@@ -54,26 +53,18 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
         return compound;
     }
     
-	@Override
-	public NBTTagCompound getUpdateTag() {
-		//NBTTagCompound tag = super.getUpdateTag();
-		//tag.setString("PlayerName", BlockName);
-		//NBTUtil.writeGameProfile(tag, this.playerProfile);
-		//return tag;
-        return this.writeToNBT(new NBTTagCompound());
-	}
-    
     @Override
-    public void handleUpdateTag(NBTTagCompound tag) {
-        this.readFromNBT(tag);
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+    	readFromNBT(pkt.getNbtCompound());
+    	
+    	IBlockState state = world.getBlockState(getPos());
+    	world.notifyBlockUpdate(getPos(), state, state, 3);
     }
     
     @Override
-    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    	super.onDataPacket(net, pkt);
-    	readFromNBT(pkt.getNbtCompound());
-    	final IBlockState state = getWorld().getBlockState(getPos());
-    	getWorld().notifyBlockUpdate(getPos(), state, state, 3);
+	public NBTTagCompound getUpdateTag()
+    {
+        return this.writeToNBT(new NBTTagCompound());
     }
     
     @Override
@@ -95,22 +86,9 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     public void setPlayerProfile(GameProfile playerProfile) {
     	if(playerProfile != null)
     	{
-    		if(this.playerProfile.getName() != this.BlockName) 
-        	{
-        		if(!this.BlockName.isEmpty())
-        		{
-        			GameProfile newProfile = new GameProfile(SkinUtil.getUUIDFromName(this.BlockName), this.BlockName);
-        			this.playerProfile = newProfile;
-                    this.playerProfile = TileEntitySkull.updateGameprofile(this.playerProfile);
-                    this.markDirty();
-            	}
-        	}
-        	else
-        	{
-        		this.playerProfile = playerProfile;
-                this.playerProfile = TileEntitySkull.updateGameprofile(this.playerProfile);
-                this.markDirty();
-        	}
+    		this.playerProfile = playerProfile;
+            this.playerProfile = TileEntitySkull.updateGameprofile(this.playerProfile);
+            this.markDirty();
     	}
     }
 }

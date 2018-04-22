@@ -166,20 +166,20 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
                     	if(gameprofile.getName() != this.playername)
                     	{
                     		System.out.println("Profile name is not the same");
-            				getTE(worldIn, pos).setPlayerProfile(gameprofile);
             				getTE(worldIn, pos).setName(this.playername);
+            				getTE(worldIn, pos).setPlayerProfile(gameprofile);
                     	}
                     	else
                     	{
                     		System.out.println("Already got a profile");
-            				getTE(worldIn, pos).setPlayerProfile(newProfile);
             				getTE(worldIn, pos).setName(this.playername);
+            				getTE(worldIn, pos).setPlayerProfile(newProfile);
                     	}
                     }
                     else
                     {
-        				getTE(worldIn, pos).setPlayerProfile(newProfile);
         				getTE(worldIn, pos).setName(this.playername);
+        				getTE(worldIn, pos).setPlayerProfile(newProfile);
                     }
                 }
                 else
@@ -189,7 +189,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 			}
 			getTE(worldIn, pos).markDirty();
 		}
-	}
+}
 	
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {

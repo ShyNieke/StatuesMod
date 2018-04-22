@@ -10,6 +10,7 @@ import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesHoliday;
 import com.svennieke.statues.init.StatuesSounds;
+import com.svennieke.statues.packets.StatuesPacketHandler;
 import com.svennieke.statues.proxy.CommonProxy;
 
 import net.minecraft.entity.EnumCreatureType;
@@ -42,6 +43,7 @@ public class Statues {
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 	public static boolean isBaublesEnabled = false;
 	public static boolean isVeinminerInstalled = false;
+	public static boolean isWailaInstalled = false;
 		
 	public static StatuesTab tabStatues = new StatuesTab();
 	
@@ -49,6 +51,7 @@ public class Statues {
 	public void PreInit(FMLPreInitializationEvent event)
 	{
 		isVeinminerInstalled = Loader.isModLoaded("veinminer");
+		isWailaInstalled = Loader.isModLoaded("waila");
 		
 		isBaublesEnabled = Loader.isModLoaded("baubles");
 		if(isBaublesEnabled)logger.info("Loading With Baubles Compat");
@@ -59,6 +62,9 @@ public class Statues {
 		StatuesSounds.registerSounds();
 		
 		StatuesEntity.register();
+		
+		//Register Update Packets for waila if installed
+		StatuesPacketHandler.registerWailaUpdatePacket();
 		
 		//StatuesCrafting.register();
 		
