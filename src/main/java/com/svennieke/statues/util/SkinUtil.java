@@ -25,9 +25,8 @@ public class SkinUtil {
     
     public static UUID getUUIDFromUsername(String username)
 	{
-    	if (UUID_CACHE.containsKey(username)) {
+    	if (UUID_CACHE.containsKey(username)) 
             return UUID_CACHE.get(username);
-        }
 
     	UUID uuid = null;
 
@@ -65,35 +64,31 @@ public class SkinUtil {
     
     public static final Map<String, ResourceLocation> SKIN_CACHE = new HashMap<>();
 
-	public static ResourceLocation getSkin(GameProfile profile) {
-		profile = TileEntitySkull.updateGameprofile(profile);
-		ResourceLocation resourcelocation = DefaultPlayerSkin.getDefaultSkinLegacy();
-		
-		if(profile != null)
-		{
-			resourcelocation = SKIN_CACHE.get(profile.getName());;
-			
-			if(resourcelocation == null)
-			{
-				Minecraft minecraft = Minecraft.getMinecraft();
-		        Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+    public static ResourceLocation getSkin(GameProfile profile) {
+    	if(SKIN_CACHE.get(profile.getName()) != null)
+    		return SKIN_CACHE.get(profile.getName()) ;
+    	
+    	ResourceLocation resourcelocation = null;
+    	
+		Minecraft minecraft = Minecraft.getMinecraft();
+        Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
 
-		        if (map.containsKey(Type.SKIN))
-		        {
-		            resourcelocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-					SKIN_CACHE.put(profile.getName(), resourcelocation);
-		        }
-		        else
-		        {
-		            UUID uuid = EntityPlayer.getUUID(profile);
-		            resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
-		        }
-			}
-		}
+        if (map.containsKey(Type.SKIN))
+        {
+            resourcelocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
+			SKIN_CACHE.put(profile.getName(), resourcelocation);
+        }
+        else
+        {
+            UUID uuid = EntityPlayer.getUUID(profile);
+            resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+        }
+        
         return resourcelocation;
-	}
+    }
 	
 	private static final Map<UUID, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
+	
 	public static GameProfile getProfileFromUsername(String username)
 	{
 		UUID uid = getUUIDFromUsername(username);
