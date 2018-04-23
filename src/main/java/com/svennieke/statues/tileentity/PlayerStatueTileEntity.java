@@ -10,7 +10,6 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.world.IWorldNameable;
 
 public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable{
@@ -87,7 +86,6 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     	if(playerProfile != null)
     	{
     		this.playerProfile = playerProfile;
-            this.playerProfile = TileEntitySkull.updateGameprofile(this.playerProfile);
             this.markDirty();
     	}
     }

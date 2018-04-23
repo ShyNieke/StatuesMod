@@ -129,7 +129,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
 				EntityPlayer player = (EntityPlayer) placer;
 				getTE(worldIn, pos).setName(player.getName());
 				
-            	GameProfile profile = new GameProfile(SkinUtil.getUUIDFromName(player.getName()), player.getName());
+            	GameProfile profile = SkinUtil.getProfileFromUsername(player.getName());
 				getTE(worldIn, pos).setPlayerProfile(profile);
 			}
 			else
@@ -139,7 +139,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEnt
             	
             	if(!this.playername.isEmpty() && !this.playername.contains(" "))
         		{
-            		newProfile = new GameProfile(SkinUtil.getUUIDFromName(this.playername), this.playername);
+            		newProfile = SkinUtil.getProfileFromUsername(this.playername);
         		}
 
                 if (stack.hasTagCompound())
