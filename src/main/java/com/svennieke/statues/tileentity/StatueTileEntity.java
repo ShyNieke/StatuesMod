@@ -479,7 +479,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 				int z = result.getBlockPos().getZ();
 				BlockPos lookPos = new BlockPos(x,y,z);
 				
-				if(lookPos.equals(this.pos) || lookPos.equals(this.pos.down()))
+				if(lookPos.equals(this.pos))
 				{
 					if(StatueTimerProvider.info.getPosition() != this.pos)
 					{
