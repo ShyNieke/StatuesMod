@@ -1,0 +1,30 @@
+{
+    "display": {
+        "icon": {
+            "item": "statues:blockbabyzombiestatue"
+        },
+        "title": {
+            "translate": "A compact Baby Zombie"
+        },
+        "description": {
+            "translate": "Making this one even smaller made it harmless"
+        },
+		"frame": "task",
+		"hidden": false,
+		"show_toast": true,
+        "announce_to_chat": false
+		},
+    "parent": "statues:statues/info",
+    "criteria": {
+        "meme": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:blockbabyzombiestatue"
+                    }
+                ]
+            }
+        }
+    }
+}

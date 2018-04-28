@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.Statues;
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.compat.waila.StatueTimerProvider;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesItems;
@@ -309,17 +310,15 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 						worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
 						stack.shrink(1);
 						
-						ItemStack floodbucket = new ItemStack(Items.WATER_BUCKET); 
-						
+						ItemStack floodbucket = StatueLootList.getFloodBucket();
+								
 						if (stack.isEmpty())
 			            {
 			                playerIn.setHeldItem(hand, floodbucket);
-			                floodbucket.setStackDisplayName("The Flood");
 			            }
 			            else if (!playerIn.inventory.addItemStackToInventory(floodbucket))
 			            {
 			            	playerIn.dropItem(floodbucket, false);
-			            	floodbucket.setStackDisplayName("The Flood");
 			            }
 					}
 				

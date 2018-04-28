@@ -1,0 +1,30 @@
+{
+    "display": {
+        "icon": {
+            "item": "statues:blockfloodstatue"
+        },
+        "title": {
+            "translate": "Let's Flood the place"
+        },
+        "description": {
+            "translate": "A small part of Docm77's Rube Goldenberg Machine to flood his base."
+        },
+		"frame": "challenge",
+		"hidden": true,
+		"show_toast": true,
+        "announce_to_chat": true
+		},
+    "parent": "statues:statues/babyzombie",
+    "criteria": {
+        "meme": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:blockfloodstatue"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "display": {
+        "icon": {
+            "item": "statues:itemroyalnugget"
+        },
+        "title": {
+            "translate": "Royal Upgrade"
+        },
+        "description": {
+            "translate": "Upgrade his Majesty Cluck Cluckington and right click him to receive a nugget"
+        },
+		"frame": "goal",
+		"hidden": false,
+		"show_toast": true,
+        "announce_to_chat": false
+		},
+    "parent": "statues:statues/cluck",
+    "criteria": {
+        "meme": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:blockkingcluckstatuet3"
+                    }
+                ]
+            }
+        }
+    }
+}

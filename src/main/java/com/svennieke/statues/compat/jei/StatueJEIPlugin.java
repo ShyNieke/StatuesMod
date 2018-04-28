@@ -218,8 +218,8 @@ public class StatueJEIPlugin implements IModPlugin{
         result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.mooshroom_statuet3), new ItemStack(Items.BOWL), new ItemStack(StatuesItems.soup)));
         result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.mooshroom_statuet4), new ItemStack(Items.BOWL), new ItemStack(StatuesItems.soup)));
         
-        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.flood_statuet3), new ItemStack(Items.BUCKET), new ItemStack(Items.WATER_BUCKET)));
-        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.flood_statuet3), new ItemStack(Items.BUCKET), new ItemStack(Items.WATER_BUCKET)));
+        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.flood_statuet3), new ItemStack(Items.BUCKET), StatueLootList.getFloodBucket()));
+        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.flood_statuet3), new ItemStack(Items.BUCKET), StatueLootList.getFloodBucket()));
         
         return result;
 	}

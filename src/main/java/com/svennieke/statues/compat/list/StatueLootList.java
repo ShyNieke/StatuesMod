@@ -7,8 +7,10 @@ import com.svennieke.statues.init.StatuesItems;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class StatueLootList {
 	public static ArrayList<LootInfo> lootList = new ArrayList<>();
@@ -38,8 +40,26 @@ public class StatueLootList {
 		addLoot("squid", ItemStack.EMPTY, new ItemStack(Items.DYE, 1, 0), ItemStack.EMPTY);
 		addLoot("villager", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.EMERALD));
 		addLoot("witch", new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.REDSTONE), new ItemStack(Items.GLASS_BOTTLE));
-		addLoot("wasteland_pig", new ItemStack(StatuesItems.tea), new ItemStack(Blocks.SAND).setStackDisplayName("Wasteland Block"), ItemStack.EMPTY);
+		addLoot("wasteland_pig", new ItemStack(StatuesItems.tea), getWastelandBlock(), ItemStack.EMPTY);
 		addLoot("zombie", new ItemStack(Items.ROTTEN_FLESH), ItemStack.EMPTY, new ItemStack(Items.IRON_INGOT));
+	}
+	
+	public static ItemStack getWastelandBlock()
+	{
+		ItemStack wasteland = new ItemStack(Blocks.SAND).setStackDisplayName("§dWasteland Block§r");
+		wasteland.addEnchantment(Enchantments.VANISHING_CURSE, 1);
+		NBTTagCompound nbt = wasteland.getTagCompound();
+		nbt.setInteger("HideFlags", 1);
+		wasteland.setTagCompound(nbt);
+		return wasteland;
+	}
+	
+	public static ItemStack getFloodBucket()
+	{
+		ItemStack floodbucket = new ItemStack(Items.WATER_BUCKET); 
+        floodbucket.setStackDisplayName("§9The Flood§r");
+		
+		return floodbucket;
 	}
 	
 	public static void addLoot(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3)

@@ -1,0 +1,30 @@
+{
+    "display": {
+        "icon": {
+            "item": "statues:blockwastelandpigstatue"
+        },
+        "title": {
+            "translate": "Lay waste to sand!"
+        },
+        "description": {
+            "translate": "Huge thanks to Xisuma for helping me with the idea of this statue."
+        },
+		"frame": "challenge",
+		"hidden": true,
+		"show_toast": true,
+        "announce_to_chat": true
+		},
+    "parent": "statues:statues/pig",
+    "criteria": {
+        "meme": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:blockwastelandpigstatue"
+                    }
+                ]
+            }
+        }
+    }
+}
