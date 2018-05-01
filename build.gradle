@@ -39,13 +39,17 @@ repositories {
 	maven { 
 		url "http://tehnut.info/maven" 
 	}
+	maven {
+        name = "thiakil"
+        url = "http://maven.thiakil.com"
+	}
 }
 
 dependencies {
-	compile files("lib/Baubles-1.12-1.5.2-deobf.jar")
+	deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
 	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.5.+"
 	
-	deobfCompile  "mezz.jei:jei_1.12.2:4.9.0.163"
+	deobfCompile "mezz.jei:jei_1.12.2:4.9.0.163"
 	deobfCompile "mcp.mobius.waila:Hwyla:1.8.24-B39_1.12"
 }
 

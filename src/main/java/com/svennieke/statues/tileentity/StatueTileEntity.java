@@ -3,11 +3,9 @@ package com.svennieke.statues.tileentity;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Random;
-import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.compat.waila.StatueTimerProvider;
@@ -28,7 +26,6 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityPotion;
-import net.minecraft.entity.projectile.EntityShulkerBullet;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -39,7 +36,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.SoundCategory;
@@ -49,17 +45,13 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.common.Optional;
 
-public class StatueTileEntity extends TileEntity implements ITickable{
+public class StatueTileEntity extends TileEntity implements ITickable, iStatueBehaviors{
 	public int cooldown;
 	public int cooldownMax;
 	public boolean statueAble;
 	private int tier;
-	private static FakePlayer fakeStatue = null;
 	
 	public StatueTileEntity() {
 		this.tier = 2;
@@ -218,36 +210,6 @@ public class StatueTileEntity extends TileEntity implements ITickable{
 			            entitypotion.shoot(d1, d2 + (double)(f * 0.2F), d3, 0.25F, 6.0F);
 			            this.world.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_WITCH_THROW, SoundCategory.NEUTRAL, 1.0F, 0.8F + world.rand.nextFloat() * 0.4F);
 			            this.world.spawnEntity(entitypotion);
-					}
-				}
-			}
-		}
-	}
-	
-	public static FakePlayer getFakePlayer() {
-        if (fakeStatue == null) {
-        	fakeStatue = FakePlayerFactory.get(DimensionManager.getWorld(0), new GameProfile(new UUID(123, 132), "Shulker Statue"));
-        }
-        return fakeStatue;
-	}
-	
-	public void ShootBullet(BlockPos pos, World worldIn, EntityPlayer entity, EnumFacing.Axis facing) {
-		if(isStatueAble())
-		{
-			EntityPlayer player = (EntityPlayer)entity;
-			FakePlayer fakePlayer = getFakePlayer();
-			
-			int random = worldIn.rand.nextInt(100);
-			if(tier == 3 || tier == 4)
-			{
-				if(random < 90)
-				{
-					if (!worldIn.isRemote) {
-                        EntityShulkerBullet bullet = new EntityShulkerBullet(worldIn, fakePlayer, player, facing);
-                        bullet.setPosition(pos.getX() + 0.5, pos.getY() + 1.1, pos.getZ());
-
-                        worldIn.spawnEntity(bullet);
-						worldIn.playSound((EntityPlayer)null, pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ENTITY_SHULKER_SHOOT, SoundCategory.NEUTRAL, 1.0F, 0.8F + worldIn.rand.nextFloat() * 0.4F);
 					}
 				}
 			}
@@ -466,7 +428,7 @@ public class StatueTileEntity extends TileEntity implements ITickable{
     public void sendUpdatePacket()
     {
     	EntityPlayerMP player = (EntityPlayerMP) world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 5, false);
-		if(player != null)
+		if(player != null && this.tier >= 3)
 		{
 			if(StatueTimerProvider.info == null)
 		    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);

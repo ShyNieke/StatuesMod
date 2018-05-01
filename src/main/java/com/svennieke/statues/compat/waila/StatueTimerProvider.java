@@ -60,34 +60,37 @@ public class StatueTimerProvider implements IWailaDataProvider, IWailaPlugin {
 		
 		if (te instanceof StatueTileEntity && !accessor.getTileEntity().isInvalid()) {
             StatueTileEntity tile = (StatueTileEntity) te;
+            String blockName = accessor.getBlock().getRegistryName().toString();
             
-            if(info != null)
+            if(blockName.contains("t3") || blockName.contains("t4"))
             {
-            	if(tile.getPos().equals(info.getPosition()))
-            	{
-            		int cooldown = info.getCooldown();
-                	int cooldownMax = info.getCooldownMax();
-                	boolean able = info.isAble();
-                	
-                	int cooldownProgress = (int) ((cooldown * 100.0f) / cooldownMax);
-                    
-                    if (config.getConfig(CONFIG_STATUE_TIMER) && !accessor.getTileEntity().isInvalid()) {
-                    	if(able == true)
-                    		tooltip.add(I18n.format("tooldown.statues.timer.finished"));
-                    	if(able == false)
-                    		tooltip.add(I18n.format("tooltip.statues.timer") + cooldownProgress + "%");
-                    }
-            	}
-            	else
-            	{
-            		tooltip = setStatueInfo(tile, tooltip, accessor, config);
-            	}
+            	if(info != null)
+                {
+                	if(tile.getPos().equals(info.getPosition()))
+                	{
+                		int cooldown = info.getCooldown();
+                    	int cooldownMax = info.getCooldownMax();
+                    	boolean able = info.isAble();
+                    	
+                    	int cooldownProgress = (int) ((cooldown * 100.0f) / cooldownMax);
+                        
+                        if (config.getConfig(CONFIG_STATUE_TIMER) && !accessor.getTileEntity().isInvalid()) {
+                        	if(able == true)
+                        		tooltip.add(I18n.format("tooldown.statues.timer.finished"));
+                        	if(able == false)
+                        		tooltip.add(I18n.format("tooltip.statues.timer") + cooldownProgress + "%");
+                        }
+                	}
+                	else
+                	{
+                		tooltip = setStatueInfo(tile, tooltip, accessor, config);
+                	}
+                }
+                else
+                {
+                	tooltip = setStatueInfo(tile, tooltip, accessor, config);
+                }
             }
-            else
-            {
-            	tooltip = setStatueInfo(tile, tooltip, accessor, config);
-            }
-            
         }
 		return tooltip;	
 	}

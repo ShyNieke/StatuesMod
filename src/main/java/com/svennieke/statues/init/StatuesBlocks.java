@@ -32,6 +32,7 @@ import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWastelandPig_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWitch_Statue;
 import com.svennieke.statues.blocks.Statues.BlockZombie_Statue;
+import com.svennieke.statues.items.ItemBlockStatue;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
@@ -448,7 +449,7 @@ public class StatuesBlocks {
 	
 	public static <T extends Block> T registerBlock(T block)
     {
-        return registerBlock(block, new ItemBlock(block));
+        return registerBlock(block, new ItemBlockStatue(block));
     }
     
     public static <T extends Block> T registerBlock(T block, ItemBlock item)

@@ -33,9 +33,6 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DropHandler {
-
-	public static double random_drop;
-    public static int dropped;
 	
 	@SubscribeEvent
 	public void onLivingDrop(LivingDropsEvent event) {
@@ -98,7 +95,6 @@ public class DropHandler {
 	        }
 	        
 	        if (entity instanceof EntitySheep) {
-	        	random_drop = Math.random();
 	        	if (((EntitySheep) entity).getSheared() == true)
 	        	{
 	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheepshaven_statue, 1);
@@ -293,6 +289,8 @@ public class DropHandler {
 	}
 	
 	public void DropLootStatues(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
+		double random_drop;
+		
 		switch (StatuesConfigGen.general.StatueKillSource)
 		{
 			case PLAYER:

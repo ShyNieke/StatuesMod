@@ -8,6 +8,7 @@ import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.init.StatuesEntity;
+import com.svennieke.statues.init.StatuesGuiHandler;
 import com.svennieke.statues.init.StatuesHoliday;
 import com.svennieke.statues.init.StatuesSounds;
 import com.svennieke.statues.packets.StatuesPacketHandler;
@@ -25,6 +26,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = Reference.MOD_ID, 
 	name = Reference.MOD_NAME, 
@@ -81,6 +83,9 @@ public class Statues {
 			}
 			System.out.println("Registered Statues Bat Spawn");
 		}
+		
+		NetworkRegistry.INSTANCE.registerGuiHandler(this, new StatuesGuiHandler());
+		
 		StatuesHoliday.registerSpawning();
 		
 		//Initialize loot

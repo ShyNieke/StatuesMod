@@ -19,6 +19,7 @@ import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeFireball;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeLargeFireball;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeShulkerBullet;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
+import com.svennieke.statues.tileentity.ShulkerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.entity.Entity;
@@ -52,6 +53,7 @@ public class StatuesEntity {
 		
 		registerTileEntity(StatueTileEntity.class, "_tileentity");
 		registerTileEntity(PlayerStatueTileEntity.class, "_playertileentity");
+		registerTileEntity(ShulkerStatueTileEntity.class, "_shulkerstatue");
 	}
 	
 	public static void registerEntity(String registryName, Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary) {
