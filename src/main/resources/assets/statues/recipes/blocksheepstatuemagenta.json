@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "statues:blocksheepstatuemagenta"
+  },
+  "pattern": [
+    "GMG",
+    "MCM",
+    "GMG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "M": {
+      "item": "minecraft:wool",
+      "data": 2
+    }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
+}

@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "statues:blocksheepstatuemagentat4"
+  },
+  "pattern": [
+    "WWW",
+    "WSW",
+    "WWW"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "statues:blocksheepstatuemagentat3"
+    },
+    "W": {
+      "item": "minecraft:wool",
+      "data": 32767
+    }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
+}

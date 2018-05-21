@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "statues:blocksheepstatuelightbluet2"
+  },
+  "pattern": [
+    "NRN",
+    "RSR",
+    "NRN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "S": {
+      "item": "statues:blocksheepstatuelightblue"
+    },
+    "N": {
+      "item": "minecraft:noteblock"
+    }
+  }
+}
