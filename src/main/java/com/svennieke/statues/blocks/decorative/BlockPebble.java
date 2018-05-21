@@ -1,4 +1,4 @@
-package com.svennieke.statues.blocks;
+package com.svennieke.statues.blocks.decorative;
 
 import com.svennieke.statues.Statues;
 

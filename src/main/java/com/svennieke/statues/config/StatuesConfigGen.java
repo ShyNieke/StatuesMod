@@ -42,7 +42,7 @@ public class StatuesConfigGen {
 		public boolean PlayerStatueAlternateRecipe = false;
 		
 		@Config.Comment("The drop chance of statues when statue drops is true (Default: 0.01)" +
-						" [This option only takes effect when NewSystem is false]")
+						" [This option only takes effect when Tier1Crafting is false]")
 		public double OldDropChance = 0.01;
 		
 		@Config.Comment("The amount of time [in seconds] that you have to wait before being able to interact with the statues (tier 2 and higher)"+

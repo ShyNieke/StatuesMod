@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "statues:blockdisplaystand"
+  },
+  "pattern": [
+	"Q"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+	"Q": {
+      "item": "minecraft:quartz_block"
+    }
+  }
+}

@@ -11,7 +11,7 @@
         },
         "background": "statues:textures/blocks/pebble.png",
         "show_toast": true,
-        "announce_to_chat": false
+        "announce_to_chat": true
     },
  "criteria":{  
       "core":{  

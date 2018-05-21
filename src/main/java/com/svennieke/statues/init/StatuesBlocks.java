@@ -2,9 +2,9 @@ package com.svennieke.statues.init;
 
 import java.util.ArrayList;
 
-import com.svennieke.statues.blocks.BlockPebble;
 import com.svennieke.statues.blocks.Statues.BlockBabyZombie_Statue;
 import com.svennieke.statues.blocks.Statues.BlockBlaze_Statue;
+import com.svennieke.statues.blocks.Statues.BlockBumbo_Statue;
 import com.svennieke.statues.blocks.Statues.BlockChickenJockey_Statue;
 import com.svennieke.statues.blocks.Statues.BlockChicken_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
@@ -27,11 +27,14 @@ import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
 import com.svennieke.statues.blocks.Statues.BlockShulker_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSnowGolem_Statue;
+import com.svennieke.statues.blocks.Statues.BlockSombrero_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
 import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWastelandPig_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWitch_Statue;
 import com.svennieke.statues.blocks.Statues.BlockZombie_Statue;
+import com.svennieke.statues.blocks.decorative.BlockDisplayStand;
+import com.svennieke.statues.blocks.decorative.BlockPebble;
 import com.svennieke.statues.items.ItemBlockStatue;
 
 import net.minecraft.block.Block;
@@ -224,6 +227,9 @@ public class StatuesBlocks {
 	public static Block player_statue;
 	public static Block endermite_statue;
 	public static Block pebble;
+	public static Block display_stand;
+	public static Block sombrero;
+	public static Block bumbo_statue;
 	
 	public static ArrayList<Block> BLOCKS = new ArrayList<>();
 	
@@ -443,6 +449,10 @@ public class StatuesBlocks {
 		wasteland_statuet2 = registerBlock(new BlockWastelandPig_Statue("wastelandpigstatuet2", "blockwastelandpigstatuet2", 2));
 		wasteland_statuet3 = registerBlock(new BlockWastelandPig_Statue("wastelandpigstatuet3", "blockwastelandpigstatuet3", 3));
 		wasteland_statuet4 = registerBlock(new BlockWastelandPig_Statue("wastelandpigstatuet4", "blockwastelandpigstatuet4", 4));
+		
+		display_stand = registerBlock(new BlockDisplayStand("displaystand", "blockdisplaystand"));
+		sombrero = registerBlock(new BlockSombrero_Statue("sombrero", "blocksombrero"));
+		bumbo_statue = registerBlock(new BlockBumbo_Statue("bumbostatue", "blockbumbostatue"));
 		
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}

@@ -26,8 +26,11 @@ import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.biome.Biome;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -240,6 +243,7 @@ public class DropHandler {
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer)entity;
 				ItemStack playerstatuestack = new ItemStack(StatuesBlocks.player_statue, 1).setStackDisplayName(player.getName());
+				
 				switch (StatuesConfigGen.player.PlayerStatueKillSource)
 				{
 					case PLAYER:
@@ -301,6 +305,7 @@ public class DropHandler {
 		            {
 		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 		            }
+					addSombrero(entity, event);
 				}
 				break;
 			case PLAYER_FAKEPLAYER:
@@ -311,6 +316,7 @@ public class DropHandler {
 		            {
 		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 		            }
+					addSombrero(entity, event);
 				}
 				break;
 			case ALL:
@@ -319,9 +325,23 @@ public class DropHandler {
 	            {
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 	            }
+				addSombrero(entity, event);
 				break;
 			default:
 				break;
 		}
+	}
+	
+	public void addSombrero(Entity entity, LivingDropsEvent event)
+	{
+		if(Math.random() < StatuesConfigGen.general.OldDropChance)
+    	{
+			Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
+			if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+			{
+				ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
+            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+			}
+    	}
 	}
 }

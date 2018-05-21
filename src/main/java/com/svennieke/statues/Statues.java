@@ -91,8 +91,9 @@ public class Statues {
 		//Initialize loot
 		StatueLootList.initializeStatueLoot();
 		
-		proxy.Init();
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
+		
+		proxy.Init();
     }
 	
 	@EventHandler

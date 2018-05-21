@@ -211,6 +211,9 @@ tile.endermanstatuet3.name=Functional Enderman Statue
 tile.endermanstatuet4.name=Muted Enderman Statue
 
 tile.pebble.name=Pebble
+tile.displaystand.name=Display Stand
+tile.sombrero.name=Sombrero
+tile.bumbostatue.name=Decorative Bumbo Statue
 
 tile.wastelandpigstatue.name=Decorative Wasteland Pig Statue
 tile.wastelandpigstatuet2.name=Sound Wasteland Pig Statue

@@ -45,7 +45,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional;
+import net.minecraftforge.fml.common.Optional.Method;
 
 public class StatueTileEntity extends TileEntity implements ITickable, iStatueBehaviors{
 	public int cooldown;
@@ -57,7 +57,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		this.tier = 2;
 		this.cooldown = 0;
 		this.cooldownMax = (StatuesConfigGen.general.InteractionTimer * 20);
-		this.statueAble = true;
+		this.statueAble = false;
 	}
 	
 	public int setTier(int theTier) {
@@ -424,7 +424,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		this.markDirty();
 	}
     
-    @Optional.Method(modid = "waila")
+    @Method(modid = "waila")
     public void sendUpdatePacket()
     {
     	EntityPlayerMP player = (EntityPlayerMP) world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 5, false);

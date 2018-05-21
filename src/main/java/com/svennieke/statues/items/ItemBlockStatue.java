@@ -1,5 +1,7 @@
 package com.svennieke.statues.items;
 
+import com.svennieke.statues.init.StatuesBlocks;
+
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import baubles.api.render.IRenderBauble;
@@ -7,9 +9,13 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraftforge.fml.common.Optional.Interface;
 import net.minecraftforge.fml.common.Optional.InterfaceList;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,7 +23,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @InterfaceList({
 	@Interface(iface="baubles.api.IBauble", modid="baubles", striprefs=true),
-	@Interface(iface="baubles.api.BaubleType", modid="baubles", striprefs=true)})
+	@Interface(iface="baubles.api.BaubleType", modid="baubles", striprefs=true),
+	@Interface(iface="baubles.api.render.IRenderBauble", modid="baubles", striprefs=true)})
 
 public class ItemBlockStatue extends ItemBlock implements IBauble, IRenderBauble{
 
@@ -47,5 +54,35 @@ public class ItemBlockStatue extends ItemBlock implements IBauble, IRenderBauble
 				GlStateManager.popMatrix();
 	        }
 		}
+	}
+	
+	@Override
+	public EntityEquipmentSlot getEquipmentSlot(ItemStack stack) {
+		return EntityEquipmentSlot.HEAD;
+	}
+	
+	@Override
+	public boolean itemInteractionForEntity(ItemStack stack, EntityPlayer playerIn, EntityLivingBase target,
+			EnumHand hand) {
+		if (target.world.isRemote)
+        {
+            return false;
+        }
+		if (target instanceof EntityMob && this.getBlock() == StatuesBlocks.sombrero)
+        {
+            EntityMob mob = (EntityMob)target;
+            ItemStack singleCopy = stack.copy();
+            singleCopy.setCount(1);
+            
+            if(mob.getItemStackFromSlot(EntityEquipmentSlot.HEAD).isEmpty())
+            {
+            	mob.setItemStackToSlot(EntityEquipmentSlot.HEAD, singleCopy);
+            	mob.setDropChance(EntityEquipmentSlot.HEAD, 1.0F);
+                stack.shrink(1);
+            }
+
+            return true;
+        }
+        return false;
 	}
 }

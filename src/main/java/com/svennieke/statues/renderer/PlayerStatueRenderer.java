@@ -1,30 +1,42 @@
 package com.svennieke.statues.renderer;
 
+import java.util.Map;
+import java.util.UUID;
+
 import javax.annotation.Nullable;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.util.SkinUtil;
 
+import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.resources.DefaultPlayerSkin;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity>{	
     public static PlayerStatueRenderer instance;
 	
 	public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
 	
+	@Override
 	public void setRendererDispatcher(TileEntityRendererDispatcher rendererDispatcherIn)
     {
-        super.setRendererDispatcher(rendererDispatcherIn);
-        instance = this;
+		rendererDispatcher = rendererDispatcherIn;
+		instance = this;
     }
 	
 	@Override
@@ -50,7 +62,10 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		else {
             profile = te.getPlayerProfile();
             state = te.getWorld().getBlockState(te.getPos());
-            enumfacing = (state.getValue(BlockPlayer_Statue.FACING));
+            if(state.getBlock() instanceof BlockHorizontal)
+            	enumfacing = (state.getValue(BlockPlayer_Statue.FACING));
+            else
+                enumfacing = EnumFacing.UP;
 		}
 		
         if (destroyStage >= 0)
@@ -62,18 +77,28 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
             GlStateManager.matrixMode(5888);
         }
-        else
+        
+        if(skinlocation != null)
         {
-        	if (skinlocation != null)
+        	if (profile != null)
             {
-        		if (profile != null)
+                Minecraft minecraft = Minecraft.getMinecraft();
+                Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+
+                if (map.containsKey(Type.SKIN))
                 {
-        			skinlocation = SkinUtil.getSkin(profile);
-        			slimModel = SkinUtil.isSlimSkin(profile.getId());
+                	skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
                 }
-        		
-            	this.bindTexture(skinlocation);
-    		}
+                else
+                {
+                    UUID uuid = EntityPlayer.getUUID(profile);
+                    skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+                }
+                
+    			slimModel = SkinUtil.isSlimSkin(profile.getId());
+            }
+    		
+        	this.bindTexture(skinlocation);
         }
         
         GlStateManager.pushMatrix();
@@ -111,17 +136,11 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
                 GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
         }
         
-        if (skinlocation != null)
-        {
-        	this.bindTexture(skinlocation);
-		}
-        
         GlStateManager.enableRescaleNormal();
         GlStateManager.enableAlpha();
         GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
         
         float scale = 0.03125F;
-
         if(slimModel)
         	theModel = new ModelPlayer(0.03125F, true);
         
@@ -139,7 +158,6 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         theModel.bipedRightArmwear.render(scale);
         theModel.bipedLeftLegwear.render(scale);
         theModel.bipedRightLegwear.render(scale);
-        GlStateManager.disableBlend();
         GlStateManager.popMatrix();
         
         if (destroyStage >= 0)

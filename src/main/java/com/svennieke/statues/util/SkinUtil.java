@@ -10,15 +10,9 @@ import java.util.UUID;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.svennieke.statues.Statues;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntitySkull;
-import net.minecraft.util.ResourceLocation;
 
 public class SkinUtil {
     public static BiMap<String, UUID> UUID_CACHE = HashBiMap.<String, UUID> create();
@@ -62,31 +56,6 @@ public class SkinUtil {
         return (playerUUID.hashCode() & 1) == 1;
     }
     
-    public static final Map<String, ResourceLocation> SKIN_CACHE = new HashMap<>();
-
-    public static ResourceLocation getSkin(GameProfile profile) {
-    	if(SKIN_CACHE.get(profile.getName()) != null)
-    		return SKIN_CACHE.get(profile.getName()) ;
-    	
-    	ResourceLocation resourcelocation = null;
-    	
-		Minecraft minecraft = Minecraft.getMinecraft();
-        Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
-
-        if (map.containsKey(Type.SKIN))
-        {
-            resourcelocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-			SKIN_CACHE.put(profile.getName(), resourcelocation);
-        }
-        else
-        {
-            UUID uuid = EntityPlayer.getUUID(profile);
-            resourcelocation = DefaultPlayerSkin.getDefaultSkin(uuid);
-        }
-        
-        return resourcelocation;
-    }
-	
 	private static final Map<UUID, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
 	
 	public static GameProfile getProfileFromUsername(String username)
