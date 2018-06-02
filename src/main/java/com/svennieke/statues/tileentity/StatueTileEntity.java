@@ -28,8 +28,10 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.potion.Potion;
@@ -218,77 +220,105 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 	
 	public void SpecialInteraction(boolean isCow, boolean isMooshroom, boolean isFlood, Block statue, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, float hitX, float hitY, float hitZ) {
 		ItemStack stack = playerIn.getHeldItem(hand);
-		EntityFireworkRocket firework = new EntityFireworkRocket(worldIn, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), stack);
-			int random = world.rand.nextInt(100);
+		EntityFireworkRocket firework = new EntityFireworkRocket(worldIn, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), getFirework(world.rand));
+		int random = world.rand.nextInt(100);
 			
-			if(isCow)
+		if(isCow)
+		{
+			if(!worldIn.isRemote)
 			{
-				if(!worldIn.isRemote)
-				{
-					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
-			        {
-						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
-			            stack.shrink(1);
-	
-			            if (stack.isEmpty())
-			            {
-			            	playerIn.setHeldItem(hand, new ItemStack(Items.MILK_BUCKET));
-			            }
-			            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MILK_BUCKET)))
-			            {
-			            	playerIn.dropItem(new ItemStack(Items.MILK_BUCKET), false);
-			            }
-			        }
-				}
-			}
-			
-			if(isMooshroom)
-			{
-				if(!worldIn.isRemote)
-				{
-					if (stack.getItem() == Items.BOWL && !playerIn.capabilities.isCreativeMode)
-			        {
-						//System.out.println("NO");
-						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
-			            stack.shrink(1);
-	
-			            if (stack.isEmpty())
-			            {
-			            	playerIn.setHeldItem(hand, new ItemStack(StatuesItems.soup));
-			            }
-			            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(StatuesItems.soup)))
-			            {
-			            	playerIn.dropItem(new ItemStack(StatuesItems.soup), false);
-			            }
-			        }
-				}
-			}
-		
-			if(isFlood)
-			{
-				if(!worldIn.isRemote)
-					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
-					{
-						worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
-						stack.shrink(1);
-						
-						ItemStack floodbucket = StatueLootList.getFloodBucket();
-								
-						if (stack.isEmpty())
-			            {
-			                playerIn.setHeldItem(hand, floodbucket);
-			            }
-			            else if (!playerIn.inventory.addItemStackToInventory(floodbucket))
-			            {
-			            	playerIn.dropItem(floodbucket, false);
-			            }
-					}
-				
-					if (random < 50){
-						 worldIn.spawnEntity(firework);
-					}	
+				if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
+		        {
+					worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
+		            stack.shrink(1);
+
+		            if (stack.isEmpty())
+		            {
+		            	playerIn.setHeldItem(hand, new ItemStack(Items.MILK_BUCKET));
+		            }
+		            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MILK_BUCKET)))
+		            {
+		            	playerIn.dropItem(new ItemStack(Items.MILK_BUCKET), false);
+		            }
+		        }
 			}
 		}
+		
+		if(isMooshroom)
+		{
+			if(!worldIn.isRemote)
+			{
+				if (stack.getItem() == Items.BOWL && !playerIn.capabilities.isCreativeMode)
+		        {
+					//System.out.println("NO");
+					worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
+		            stack.shrink(1);
+
+		            if (stack.isEmpty())
+		            {
+		            	playerIn.setHeldItem(hand, new ItemStack(StatuesItems.soup));
+		            }
+		            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(StatuesItems.soup)))
+		            {
+		            	playerIn.dropItem(new ItemStack(StatuesItems.soup), false);
+		            }
+		        }
+			}
+		}
+	
+		if(isFlood)
+		{
+			if(!worldIn.isRemote)
+				if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
+				{
+					worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
+					stack.shrink(1);
+					
+					ItemStack floodbucket = StatueLootList.getFloodBucket();
+							
+					if (stack.isEmpty())
+		            {
+		                playerIn.setHeldItem(hand, floodbucket);
+		            }
+		            else if (!playerIn.inventory.addItemStackToInventory(floodbucket))
+		            {
+		            	playerIn.dropItem(floodbucket, false);
+		            }
+				}
+			
+				if (random < 50){
+					 worldIn.spawnEntity(firework);
+				}	
+		}
+	}
+	
+	public ItemStack getFirework(Random rand) {
+		ItemStack firework = new ItemStack(Items.FIREWORKS);
+		firework.setTagCompound(new NBTTagCompound());
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setBoolean("Flicker", true);
+		nbt.setBoolean("Trail", true);
+
+		int[] colors = new int[rand.nextInt(8) + 1];
+		for (int i = 0; i < colors.length; i++) 
+		{
+			colors[i] = ItemDye.DYE_COLORS[rand.nextInt(16)];
+		}
+		nbt.setIntArray("Colors", colors);
+		byte type = (byte) (rand.nextInt(3) + 1);
+		type = type == 3 ? 4 : type;
+		nbt.setByte("Type", type);
+
+		NBTTagList explosions = new NBTTagList();
+		explosions.appendTag(nbt);
+
+		NBTTagCompound fireworkTag = new NBTTagCompound();
+		fireworkTag.setTag("Explosions", explosions);
+		fireworkTag.setByte("Flight", (byte) 1);
+		firework.getTagCompound().setTag("Fireworks", fireworkTag); 
+
+        return firework;
+	}
 	
 	public void StatueBehavior(@Nullable ItemStack stack1, @Nullable ItemStack stack2, @Nullable ItemStack stack3, 
 			EntityLiving spawnableentity, boolean spawnEntity, boolean isCreeper,Block statue, EntityPlayer playerIn, 
@@ -444,12 +474,18 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 				{
 					if(StatueTimerProvider.info.getPosition() != this.pos)
 					{
-						if(StatueTimerProvider.info.getCooldown() != getCooldown())
+						if(StatueTimerProvider.info.isAble() != isStatueAble())
+					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
+
+						else if(StatueTimerProvider.info.getCooldown() != getCooldown())
 					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
 					}
 					else
 					{
-						if(StatueTimerProvider.info.getCooldown() != getCooldown())
+						if(StatueTimerProvider.info.isAble() != isStatueAble())
+					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
+						
+						else if(StatueTimerProvider.info.getCooldown() != getCooldown())
 					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
 					}
 				}
