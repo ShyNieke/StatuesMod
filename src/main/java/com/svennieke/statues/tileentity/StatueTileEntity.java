@@ -1,7 +1,5 @@
 package com.svennieke.statues.tileentity;
 
-import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -70,11 +68,10 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		return this.tier;
 	}
 	
-	public void holidayCheck(Entity entity, World worldIn, BlockPos pos, boolean isChild) {
-		if(tier == 3 || tier == 4)
+	public void FakeMobs(Entity entity, World worldIn, BlockPos pos, boolean isChild) {
+		if(StatuesConfigGen.general.FakeHostileMobs)
 		{
-			LocalDateTime now = LocalDateTime.now();
-			if(now.getMonth() == Month.OCTOBER)
+			if(tier == 3 || tier == 4)
 			{
 				int random = world.rand.nextInt(100);
 

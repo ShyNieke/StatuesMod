@@ -94,7 +94,7 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        	
-	        	getTE(worldIn, pos).holidayCheck(new FakeZombie(worldIn), worldIn, pos, true);
+	        	getTE(worldIn, pos).FakeMobs(new FakeZombie(worldIn), worldIn, pos, true);
 	        }
 	        return true;
 		}

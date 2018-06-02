@@ -51,6 +51,8 @@ dependencies {
 	
 	deobfCompile "mezz.jei:jei_1.12.2:4.9.0.163"
 	deobfCompile "mcp.mobius.waila:Hwyla:1.8.24-B39_1.12"
+	
+	compile files("lib/The-Cactus-Mod-1.2.jar")
 }
 
 processResources {

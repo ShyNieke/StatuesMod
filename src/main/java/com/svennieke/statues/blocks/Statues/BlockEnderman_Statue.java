@@ -62,8 +62,9 @@ public class BlockEnderman_Statue extends BlockHusk implements iStatue, ITileEnt
         		ItemStack stack3 = stackList.get(2);
         		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ENDERMEN_AMBIENT, pos, worldIn);
-	        	
-	        	getTE(worldIn, pos).holidayCheck(new FakeEnderman(worldIn), worldIn, pos, false);
+	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, true, true, this, playerIn, worldIn, pos);
+
+	        	getTE(worldIn, pos).FakeMobs(new FakeEnderman(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

@@ -67,7 +67,7 @@ public class BlockCreeper_Statue extends BlockCreeper implements iStatue, ITileE
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CREEPER_PRIMED, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, entitycreeper, true, true, this, playerIn, worldIn, pos);
 	        	
-	        	getTE(worldIn, pos).holidayCheck(new FakeCreeper(worldIn), worldIn, pos, false);
+	        	getTE(worldIn, pos).FakeMobs(new FakeCreeper(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

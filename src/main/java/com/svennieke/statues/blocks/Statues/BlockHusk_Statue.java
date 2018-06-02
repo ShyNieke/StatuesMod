@@ -64,7 +64,7 @@ public class BlockHusk_Statue extends BlockHusk implements iStatue, ITileEntityP
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        	
-	        	getTE(worldIn, pos).holidayCheck(new FakeHusk(worldIn), worldIn, pos, false);
+	        	getTE(worldIn, pos).FakeMobs(new FakeHusk(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

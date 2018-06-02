@@ -55,6 +55,9 @@ public class StatuesConfigGen {
 		
 		@Config.Comment("Source of death that determines how the Statues drop [player statue has it's own config option] (Default: PLAYER)")
 		public EnumDeathSource StatueKillSource = EnumDeathSource.PLAYER;
+		
+		@Config.Comment("Setting this to false disables the fake mobs from having a chance to spawn when activating a interactive or muted statue. (Default: true)")
+		public boolean FakeHostileMobs = true;
 	}
 	
 	public static class Player{

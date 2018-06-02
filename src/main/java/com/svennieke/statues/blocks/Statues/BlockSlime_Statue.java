@@ -64,7 +64,7 @@ public class BlockSlime_Statue extends BlockSlime implements iStatue, ITileEntit
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SLIME_SQUISH, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        	
-	        	getTE(worldIn, pos).holidayCheck(new FakeSlime(worldIn), worldIn, pos, false);
+	        	getTE(worldIn, pos).FakeMobs(new FakeSlime(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

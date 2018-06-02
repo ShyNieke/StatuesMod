@@ -65,7 +65,7 @@ public class BlockWitch_Statue extends BlockWitch implements iStatue, ITileEntit
 	        	getTE(worldIn, pos).ThrowPotion(pos, worldIn, playerIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        	
-	        	getTE(worldIn, pos).holidayCheck(new FakeWitch(worldIn), worldIn, pos, false);
+	        	getTE(worldIn, pos).FakeMobs(new FakeWitch(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

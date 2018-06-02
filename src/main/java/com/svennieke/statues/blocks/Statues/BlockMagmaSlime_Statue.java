@@ -64,7 +64,7 @@ public class BlockMagmaSlime_Statue extends BlockMagmaSlime implements iStatue, 
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_MAGMACUBE_SQUISH, pos, worldIn);
 	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
 	        	
-	        	getTE(worldIn, pos).holidayCheck(new FakeMagmaCube(worldIn), worldIn, pos, false);
+	        	getTE(worldIn, pos).FakeMobs(new FakeMagmaCube(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}
