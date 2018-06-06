@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class BlockVillager extends BaseNormal{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6.5, 0.0625 * 9.5, 0.0625 * 9.5, 0.0625 * 9.5);
+	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 16, 0.0625 * 12);
 	
 	public BlockVillager() {
 		super(Material.TNT);

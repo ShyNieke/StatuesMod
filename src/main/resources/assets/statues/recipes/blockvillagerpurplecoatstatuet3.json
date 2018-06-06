@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "statues:blockvillagerpurplecoatstatuet3"
+  },
+  "pattern": [
+    "NRN",
+    "RSR",
+    "NRN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "S": {
+      "item": "statues:blockvillagerpurplecoatstatuet2"
+    },
+    "N": {
+      "item": "minecraft:noteblock"
+    }
+  }
+}

@@ -7,6 +7,7 @@ import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DropHandler;
+import com.svennieke.statues.handler.LootHandler;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesGuiHandler;
 import com.svennieke.statues.init.StatuesHoliday;
@@ -92,6 +93,7 @@ public class Statues {
 		StatueLootList.initializeStatueLoot();
 		
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
+		MinecraftForge.EVENT_BUS.register(new LootHandler());
 		
 		proxy.Init();
     }

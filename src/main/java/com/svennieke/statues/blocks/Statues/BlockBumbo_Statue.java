@@ -29,19 +29,17 @@ public class BlockBumbo_Statue extends BlockBumbo implements iStatue{
     	{
     		if(StatuesConfigGen.general.FakeHostileMobs)
     		{
-    			System.out.println("hey");
         		int random = worldIn.rand.nextInt(100);
 
     			if (random < 1)
     			{
-    				{
-    					EntityGolem entity = new com.Mrbysco.CactusMod.entities.EntityCactoni(worldIn);
-    					
-    					entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-    					worldIn.spawnEntity(entity);
-    				}
+					EntityGolem entity = new com.Mrbysco.CactusMod.entities.EntityCactoni(worldIn);
+					
+					entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+					worldIn.spawnEntity(entity);
+					
+	    			return true;
     			}
-    			return true;
     		}
     		return false;
     	}

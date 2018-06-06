@@ -9,6 +9,7 @@ import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityEndermite;
+import net.minecraft.entity.monster.EntityEvoker;
 import net.minecraft.entity.monster.EntityGuardian;
 import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityMagmaCube;
@@ -34,6 +35,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
 public class DropHandler {
 	
@@ -44,6 +46,8 @@ public class DropHandler {
 		
 		if(StatuesConfigGen.general.Tier1Crafting == false)
 		{
+			addSombrero(entity, source, event);
+			
 			if (entity instanceof EntitySlime) {
 				if(entity instanceof EntityMagmaCube)
 				{
@@ -93,8 +97,38 @@ public class DropHandler {
 	        }
 	        
 	        if (entity instanceof EntityRabbit) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_statue, 1);
-        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	EntityRabbit rabbit = (EntityRabbit)entity;
+	        	
+	        	if(rabbit.getRabbitType() == 0)
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_br_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	else if(rabbit.getRabbitType() == 1)
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_wh_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	else if(rabbit.getRabbitType() == 2)
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_ws_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	else if(rabbit.getRabbitType() == 3)
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_bs_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	else if(rabbit.getRabbitType() == 4)
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_go_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	else if(rabbit.getRabbitType() == 5)
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_bw_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
 	        }
 	        
 	        if (entity instanceof EntitySheep) {
@@ -208,8 +242,27 @@ public class DropHandler {
 	        }
 	        
 	        if (entity instanceof EntityVillager) {
-        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_statue, 1);
-        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	EntityVillager villager = (EntityVillager)entity;
+	        	if (villager.getProfessionForge() == VillagerRegistry.getById(0))
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_br_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	if (villager.getProfessionForge() == VillagerRegistry.getById(1))
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_wh_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	if (villager.getProfessionForge() == VillagerRegistry.getById(2))
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_pu_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
+	        	if (villager.getProfessionForge() == VillagerRegistry.getById(5))
+	        	{
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_gr_statue, 1);
+	        		DropLootStatues(entity, itemStackToDrop, source, event);
+	        	}
 	        }
 	        
 	        if (entity instanceof EntityWitch) {
@@ -235,6 +288,15 @@ public class DropHandler {
 	        if (entity instanceof EntityGuardian) {
 	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.guardian_statue, 1);
 	        	DropLootStatues(entity, itemStackToDrop, source, event);
+	        }
+	        
+	        if(entity instanceof EntityEvoker)
+	        {
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.evoker_statue, 1);
+	        	DropLootStatues(entity, itemStackToDrop, source, event);
+	        	
+	        	ItemStack itemStackToDrop2 = new ItemStack(StatuesBlocks.totemofundying_statue, 1);
+	        	DropLootStatues(entity, itemStackToDrop2, source, event);
 	        }
         }
 		
@@ -305,7 +367,6 @@ public class DropHandler {
 		            {
 		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 		            }
-					addSombrero(entity, event);
 				}
 				break;
 			case PLAYER_FAKEPLAYER:
@@ -316,7 +377,6 @@ public class DropHandler {
 		            {
 		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 		            }
-					addSombrero(entity, event);
 				}
 				break;
 			case ALL:
@@ -325,23 +385,62 @@ public class DropHandler {
 	            {
 	            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 	            }
-				addSombrero(entity, event);
 				break;
 			default:
 				break;
 		}
 	}
 	
-	public void addSombrero(Entity entity, LivingDropsEvent event)
+	public void addSombrero(Entity entity, Entity source, LivingDropsEvent event)
 	{
-		if(Math.random() < StatuesConfigGen.general.OldDropChance)
-    	{
-			Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
-			if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-			{
-				ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
-            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
-			}
-    	}
+		double random_drop;
+		
+		switch (StatuesConfigGen.general.StatueKillSource)
+		{
+			case PLAYER:
+				if(source instanceof EntityPlayer && !(source instanceof FakePlayer))
+				{
+					random_drop = Math.random();
+					if (random_drop < StatuesConfigGen.general.OldDropChance )
+			    	{
+						Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
+						if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+						{
+							ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
+			            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+						}
+			    	}
+				}
+				break;
+			case PLAYER_FAKEPLAYER:
+				if(source instanceof EntityPlayer)
+				{
+					random_drop = Math.random();
+					if (random_drop < StatuesConfigGen.general.OldDropChance )
+			    	{
+						Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
+						if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+						{
+							ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
+			            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+						}
+			    	}
+				}
+				break;
+			case ALL:
+				random_drop = Math.random();
+				if (random_drop < StatuesConfigGen.general.OldDropChance )
+		    	{
+					Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
+					if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+					{
+						ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
+		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+					}
+		    	}
+				break;
+			default:
+				break;
+		}
 	}
 }

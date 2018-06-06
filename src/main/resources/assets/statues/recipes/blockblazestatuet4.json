@@ -14,7 +14,7 @@
     },
     "W": {
       "item": "minecraft:wool",
-      "data": 0
+      "data": 32767
     }
   },
   "conditions": [{

@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "statues:blockrabbitstatue"
+  },
+  "pattern": [
+	"V"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+	"V": {
+      "item": "statues:blockrabbitbrownstatue"
+    }
+  }
+}

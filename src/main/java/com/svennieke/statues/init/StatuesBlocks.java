@@ -11,6 +11,7 @@ import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCreeper_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEnderman_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEndermite_Statue;
+import com.svennieke.statues.blocks.Statues.BlockEvoker_Statue;
 import com.svennieke.statues.blocks.Statues.BlockFlood_Statue;
 import com.svennieke.statues.blocks.Statues.BlockGhast_Statue;
 import com.svennieke.statues.blocks.Statues.BlockGuardian_Statue;
@@ -21,6 +22,7 @@ import com.svennieke.statues.blocks.Statues.BlockMagmaSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPig_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
+import com.svennieke.statues.blocks.Statues.BlockPufferfish_Statue;
 import com.svennieke.statues.blocks.Statues.BlockRabbit_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
@@ -29,6 +31,7 @@ import com.svennieke.statues.blocks.Statues.BlockSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSnowGolem_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSombrero_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
+import com.svennieke.statues.blocks.Statues.BlockTotemOfUndying_Statue;
 import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWastelandPig_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWitch_Statue;
@@ -58,11 +61,19 @@ public class StatuesBlocks {
 	public static Block kingcluck_statue;
 	public static Block mooshroom_statue;
 	public static Block pig_statue;
-	public static Block rabbit_statue;
+	public static Block rabbit_bs_statue;
+	public static Block rabbit_br_statue;
+	public static Block rabbit_bw_statue;
+	public static Block rabbit_ws_statue;
+	public static Block rabbit_wh_statue;
+	public static Block rabbit_go_statue;
 	public static Block sheepshaven_statue;
 	public static Block slime_statue;
 	public static Block snowgolem_statue;
-	public static Block villager_statue;
+	public static Block villager_br_statue;
+	public static Block villager_gr_statue;
+	public static Block villager_pu_statue;
+	public static Block villager_wh_statue;
 	public static Block squid_statue;
 	public static Block witch_statue;
 	public static Block zombie_statue;
@@ -74,6 +85,7 @@ public class StatuesBlocks {
 	public static Block guardian_statue;
 	public static Block wasteland_statue;
 	public static Block enderman_statue;
+	public static Block pufferfish_statue;
 	
 	public static Block baby_zombie_statuet2;
 	public static Block blaze_statuet2;
@@ -84,11 +96,19 @@ public class StatuesBlocks {
 	public static Block kingcluck_statuet2;
 	public static Block mooshroom_statuet2;
 	public static Block pig_statuet2;
-	public static Block rabbit_statuet2;
+	public static Block rabbit_bs_statuet2;
+	public static Block rabbit_br_statuet2;
+	public static Block rabbit_bw_statuet2;
+	public static Block rabbit_ws_statuet2;
+	public static Block rabbit_wh_statuet2;
+	public static Block rabbit_go_statuet2;
 	public static Block sheepshaven_statuet2;
 	public static Block slime_statuet2;
 	public static Block snowgolem_statuet2;
-	public static Block villager_statuet2;
+	public static Block villager_br_statuet2;
+	public static Block villager_gr_statuet2;
+	public static Block villager_pu_statuet2;
+	public static Block villager_wh_statuet2;
 	public static Block squid_statuet2;
 	public static Block witch_statuet2;
 	public static Block zombie_statuet2;
@@ -100,6 +120,7 @@ public class StatuesBlocks {
 	public static Block guardian_statuet2;
 	public static Block wasteland_statuet2;
 	public static Block enderman_statuet2;
+	public static Block pufferfish_statuet2;
 
 	public static Block baby_zombie_statuet3;
 	public static Block blaze_statuet3;
@@ -110,11 +131,19 @@ public class StatuesBlocks {
 	public static Block kingcluck_statuet3;
 	public static Block mooshroom_statuet3;
 	public static Block pig_statuet3;
-	public static Block rabbit_statuet3;
+	public static Block rabbit_bs_statuet3;
+	public static Block rabbit_br_statuet3;
+	public static Block rabbit_bw_statuet3;
+	public static Block rabbit_ws_statuet3;
+	public static Block rabbit_wh_statuet3;
+	public static Block rabbit_go_statuet3;
 	public static Block sheepshaven_statuet3;
 	public static Block slime_statuet3;
 	public static Block snowgolem_statuet3;
-	public static Block villager_statuet3;
+	public static Block villager_br_statuet3;
+	public static Block villager_gr_statuet3;
+	public static Block villager_pu_statuet3;
+	public static Block villager_wh_statuet3;
 	public static Block squid_statuet3;
 	public static Block witch_statuet3;
 	public static Block zombie_statuet3;
@@ -126,6 +155,7 @@ public class StatuesBlocks {
 	public static Block guardian_statuet3;
 	public static Block wasteland_statuet3;
 	public static Block enderman_statuet3;
+	public static Block pufferfish_statuet3;
 
 	public static Block baby_zombie_statuet4;
 	public static Block blaze_statuet4;
@@ -136,11 +166,19 @@ public class StatuesBlocks {
 	public static Block kingcluck_statuet4;
 	public static Block mooshroom_statuet4;
 	public static Block pig_statuet4;
-	public static Block rabbit_statuet4;
+	public static Block rabbit_bs_statuet4;
+	public static Block rabbit_br_statuet4;
+	public static Block rabbit_bw_statuet4;
+	public static Block rabbit_ws_statuet4;
+	public static Block rabbit_wh_statuet4;
+	public static Block rabbit_go_statuet4;
 	public static Block sheepshaven_statuet4;
 	public static Block slime_statuet4;
 	public static Block snowgolem_statuet4;
-	public static Block villager_statuet4;
+	public static Block villager_br_statuet4;
+	public static Block villager_gr_statuet4;
+	public static Block villager_pu_statuet4;
+	public static Block villager_wh_statuet4;
 	public static Block squid_statuet4;
 	public static Block witch_statuet4;
 	public static Block zombie_statuet4;
@@ -152,6 +190,7 @@ public class StatuesBlocks {
 	public static Block guardian_statuet4;
 	public static Block wasteland_statuet4;
 	public static Block enderman_statuet4;
+	public static Block pufferfish_statuet4;
 
 	//Sheep Statues
 	public static Block sheep_statue_white;
@@ -226,6 +265,8 @@ public class StatuesBlocks {
 	public static Block info_statue;
 	public static Block player_statue;
 	public static Block endermite_statue;
+	public static Block evoker_statue;
+	public static Block totemofundying_statue;
 	public static Block pebble;
 	public static Block display_stand;
 	public static Block sombrero;
@@ -283,10 +324,35 @@ public class StatuesBlocks {
 		pig_statuet3 = registerBlock(new BlockPig_Statue("pigstatuet3", "blockpigstatuet3", 3));
 		pig_statuet4 = registerBlock(new BlockPig_Statue("pigstatuet4", "blockpigstatuet4", 4));
 		
-		rabbit_statue = registerBlock(new BlockRabbit_Statue("rabbitstatue", "blockrabbitstatue", 1));
-		rabbit_statuet2 = registerBlock(new BlockRabbit_Statue("rabbitstatuet2", "blockrabbitstatuet2", 2));
-		rabbit_statuet3 = registerBlock(new BlockRabbit_Statue("rabbitstatuet3", "blockrabbitstatuet3", 3));
-		rabbit_statuet4 = registerBlock(new BlockRabbit_Statue("rabbitstatuet4", "blockrabbitstatuet4", 4));
+		rabbit_bs_statue = registerBlock(new BlockRabbit_Statue("rabbitblackspotstatue", "blockrabbitblackspotstatue", 1));
+		rabbit_bs_statuet2 = registerBlock(new BlockRabbit_Statue("rabbitblackspotstatuet2", "blockrabbitblackspotstatuet2", 2));
+		rabbit_bs_statuet3 = registerBlock(new BlockRabbit_Statue("rabbitblackspotstatuet3", "blockrabbitblackspotstatuet3", 3));
+		rabbit_bs_statuet4 = registerBlock(new BlockRabbit_Statue("rabbitblackspotstatuet4", "blockrabbitblackspotstatuet4", 4));
+		
+		rabbit_br_statue = registerBlock(new BlockRabbit_Statue("rabbitbrownstatue", "blockrabbitbrownstatue", 1));
+		rabbit_br_statuet2 = registerBlock(new BlockRabbit_Statue("rabbitbrownstatuet2", "blockrabbitbrownstatuet2", 2));
+		rabbit_br_statuet3 = registerBlock(new BlockRabbit_Statue("rabbitbrownstatuet3", "blockrabbitbrownstatuet3", 3));
+		rabbit_br_statuet4 = registerBlock(new BlockRabbit_Statue("rabbitbrownstatuet4", "blockrabbitbrownstatuet4", 4));
+		
+		rabbit_bw_statue = registerBlock(new BlockRabbit_Statue("rabbitstatue", "blockrabbitstatue", 1));
+		rabbit_bw_statuet2 = registerBlock(new BlockRabbit_Statue("rabbitstatuet2", "blockrabbitstatuet2", 2));
+		rabbit_bw_statuet3 = registerBlock(new BlockRabbit_Statue("rabbitstatuet3", "blockrabbitstatuet3", 3));
+		rabbit_bw_statuet4 = registerBlock(new BlockRabbit_Statue("rabbitstatuet4", "blockrabbitstatuet4", 4));
+		
+		rabbit_ws_statue = registerBlock(new BlockRabbit_Statue("rabbitwhitespotstatue", "blockrabbitwhitespotstatue", 1));
+		rabbit_ws_statuet2 = registerBlock(new BlockRabbit_Statue("rabbitwhitespotstatuet2", "blockrabbitwhitespotstatuet2", 2));
+		rabbit_ws_statuet3 = registerBlock(new BlockRabbit_Statue("rabbitwhitespotstatuet3", "blockrabbitwhitespotstatuet3", 3));
+		rabbit_ws_statuet4 = registerBlock(new BlockRabbit_Statue("rabbitwhitespotstatuet4", "blockrabbitwhitespotstatuet4", 4));
+		
+		rabbit_wh_statue = registerBlock(new BlockRabbit_Statue("rabbitwhitestatue", "blockrabbitwhitestatue", 1));
+		rabbit_wh_statuet2 = registerBlock(new BlockRabbit_Statue("rabbitwhitestatuet2", "blockrabbitwhitestatuet2", 2));
+		rabbit_wh_statuet3 = registerBlock(new BlockRabbit_Statue("rabbitwhitestatuet3", "blockrabbitwhitestatuet3", 3));
+		rabbit_wh_statuet4 = registerBlock(new BlockRabbit_Statue("rabbitwhitestatuet4", "blockrabbitwhitestatuet4", 4));
+		
+		rabbit_go_statue = registerBlock(new BlockRabbit_Statue("rabbityellowstatue", "blockrabbityellowstatue", 1));
+		rabbit_go_statuet2 = registerBlock(new BlockRabbit_Statue("rabbityellowstatuet2", "blockrabbityellowstatuet2", 2));
+		rabbit_go_statuet3 = registerBlock(new BlockRabbit_Statue("rabbityellowstatuet3", "blockrabbityellowstatuet3", 3));
+		rabbit_go_statuet4 = registerBlock(new BlockRabbit_Statue("rabbityellowstatuet4", "blockrabbityellowstatuet4", 4));
 		
 		sheepshaven_statue = registerBlock(new BlockSheepShaven_Statue("sheepshavenstatue", "blocksheepshavenstatue", 1));
 		sheepshaven_statuet2 = registerBlock(new BlockSheepShaven_Statue("sheepshavenstatuet2", "blocksheepshavenstatuet2", 2));
@@ -388,10 +454,25 @@ public class StatuesBlocks {
 		squid_statuet3 = registerBlock(new BlockSquid_Statue("squidstatuet3", "blocksquidstatuet3", 3));
 		squid_statuet4 = registerBlock(new BlockSquid_Statue("squidstatuet4", "blocksquidstatuet4", 4));
 		
-		villager_statue = registerBlock(new BlockVillager_Statue("villagerstatue", "blockvillagerstatue", 1));
-		villager_statuet2 = registerBlock(new BlockVillager_Statue("villagerstatuet2", "blockvillagerstatuet2", 2));
-		villager_statuet3 = registerBlock(new BlockVillager_Statue("villagerstatuet3", "blockvillagerstatuet3", 3));
-		villager_statuet4 = registerBlock(new BlockVillager_Statue("villagerstatuet4", "blockvillagerstatuet4", 4));
+		villager_br_statue = registerBlock(new BlockVillager_Statue("villagerbrowncoatstatue", "blockvillagerbrowncoatstatue", 1));
+		villager_br_statuet2 = registerBlock(new BlockVillager_Statue("villagerbrowncoatstatuet2", "blockvillagerbrowncoatstatuet2", 2));
+		villager_br_statuet3 = registerBlock(new BlockVillager_Statue("villagerbrowncoatstatuet3", "blockvillagerbrowncoatstatuet3", 3));
+		villager_br_statuet4 = registerBlock(new BlockVillager_Statue("villagerbrowncoatstatuet4", "blockvillagerbrowncoatstatuet4", 4));
+		
+		villager_pu_statue = registerBlock(new BlockVillager_Statue("villagerpurplecoatstatue", "blockvillagerpurplecoatstatue", 1));
+		villager_pu_statuet2 = registerBlock(new BlockVillager_Statue("villagerpurplecoatstatuet2", "blockvillagerpurplecoatstatuet2", 2));
+		villager_pu_statuet3 = registerBlock(new BlockVillager_Statue("villagerpurplecoatstatuet3", "blockvillagerpurplecoatstatuet3", 3));
+		villager_pu_statuet4 = registerBlock(new BlockVillager_Statue("villagerpurplecoatstatuet4", "blockvillagerpurplecoatstatuet4", 4));
+		
+		villager_gr_statue = registerBlock(new BlockVillager_Statue("villagerstatue", "blockvillagerstatue", 1));
+		villager_gr_statuet2 = registerBlock(new BlockVillager_Statue("villagerstatuet2", "blockvillagerstatuet2", 2));
+		villager_gr_statuet3 = registerBlock(new BlockVillager_Statue("villagerstatuet3", "blockvillagerstatuet3", 3));
+		villager_gr_statuet4 = registerBlock(new BlockVillager_Statue("villagerstatuet4", "blockvillagerstatuet4", 4));
+		
+		villager_wh_statue = registerBlock(new BlockVillager_Statue("villagerwhitecoatstatue", "blockvillagerwhitecoatstatue", 1));
+		villager_wh_statuet2 = registerBlock(new BlockVillager_Statue("villagerwhitecoatstatuet2", "blockvillagerwhitecoatstatuet2", 2));
+		villager_wh_statuet3 = registerBlock(new BlockVillager_Statue("villagerwhitecoatstatuet3", "blockvillagerwhitecoatstatuet3", 3));
+		villager_wh_statuet4 = registerBlock(new BlockVillager_Statue("villagerwhitecoatstatuet4", "blockvillagerwhitecoatstatuet4", 4));
 		
 		info_statue = registerBlock(new BlockInfo_Statue("infostatue", "blockinfostatue", 1));
 		player_statue = registerBlock(new BlockPlayer_Statue("playerstatue", "blockplayerstatue", ""));
@@ -443,6 +524,11 @@ public class StatuesBlocks {
 		enderman_statuet3 = registerBlock(new BlockEnderman_Statue("endermanstatuet3", "blockendermanstatuet3", 3));
 		enderman_statuet4 = registerBlock(new BlockEnderman_Statue("endermanstatuet4", "blockendermanstatuet4", 4));
 		
+		pufferfish_statue = registerBlock(new BlockPufferfish_Statue("pufferfishstatue", "blockpufferfishstatue", 1));
+		pufferfish_statuet2 = registerBlock(new BlockPufferfish_Statue("pufferfishstatuet2", "blockpufferfishstatuet2", 2));
+		pufferfish_statuet3 = registerBlock(new BlockPufferfish_Statue("pufferfishstatuet3", "blockpufferfishstatuet3", 3));
+		pufferfish_statuet4 = registerBlock(new BlockPufferfish_Statue("pufferfishstatuet4", "blockpufferfishstatuet4", 4));
+		
 		pebble = registerBlock(new BlockPebble("pebble", "blockpebble"));
 		
 		wasteland_statue = registerBlock(new BlockWastelandPig_Statue("wastelandpigstatue", "blockwastelandpigstatue", 1));
@@ -453,6 +539,8 @@ public class StatuesBlocks {
 		display_stand = registerBlock(new BlockDisplayStand("displaystand", "blockdisplaystand"));
 		sombrero = registerBlock(new BlockSombrero_Statue("sombrero", "blocksombrero"));
 		bumbo_statue = registerBlock(new BlockBumbo_Statue("bumbostatue", "blockbumbostatue"));
+		evoker_statue = registerBlock(new BlockEvoker_Statue("evokerstatue", "blockevokerstatue"));
+		totemofundying_statue = registerBlock(new BlockTotemOfUndying_Statue("totemofundyingstatue", "blocktotemofundyingstatue"));
 		
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}

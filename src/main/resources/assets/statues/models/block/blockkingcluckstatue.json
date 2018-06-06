@@ -4,7 +4,7 @@
 		"particle": "statues:blocks/chicken_statue",
 		"Chicken": "statues:blocks/chicken_statue"
 	},
-	"elements": [
+	"elements": [ 	 
 		{
 			"__comment": "Cube2",
 			"from": [ 7, 0, 7.5 ],
@@ -166,7 +166,7 @@
 			"from": [ 7.25, 3.625, 6.25 ],
 			"to": [ 8.75, 3.876, 7.25 ],
 			"faces": {
-				"down": { "uv": [ 7.25, 8.75, 8.75, 9.75 ], "texture": "#Chicken" },
+				"down": { "uv": [ 10, 0, 11.5, 1 ], "texture": "#Chicken" },
 				"up": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
@@ -184,7 +184,7 @@
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"west": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
-				"east": { "uv": [ 8.75, 11.874, 9, 12.125 ], "texture": "#Chicken" }
+				"east": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" }
 			}
 		},
 		{
@@ -197,7 +197,7 @@
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"west": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
-				"east": { "uv": [ 8.75, 11.874, 9, 12.125 ], "texture": "#Chicken" }
+				"east": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" }
 			}
 		},
 		{
@@ -210,7 +210,7 @@
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"west": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
-				"east": { "uv": [ 8.75, 11.874, 9, 12.125 ], "texture": "#Chicken" }
+				"east": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" }
 			}
 		},
 		{
@@ -223,7 +223,7 @@
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"west": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
-				"east": { "uv": [ 8.75, 11.874, 9, 12.125 ], "texture": "#Chicken" }
+				"east": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" }
 			}
 		},
 		{
@@ -236,7 +236,7 @@
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"west": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
-				"east": { "uv": [ 8.75, 11.874, 9, 12.125 ], "texture": "#Chicken" }
+				"east": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" }
 			}
 		},
 		{
@@ -249,7 +249,7 @@
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"west": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
-				"east": { "uv": [ 8.75, 11.874, 9, 12.125 ], "texture": "#Chicken" }
+				"east": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" }
 			}
 		},
 		{
@@ -262,7 +262,7 @@
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"west": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
-				"east": { "uv": [ 8.75, 11.874, 9, 12.125 ], "texture": "#Chicken" }
+				"east": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" }
 			}
 		},
 		{
@@ -275,7 +275,7 @@
 				"north": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"south": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
 				"west": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" },
-				"east": { "uv": [ 8.75, 11.874, 9, 12.125 ], "texture": "#Chicken" }
+				"east": { "uv": [ 14, 0, 16, 2 ], "texture": "#Chicken" }
 			}
 		}
 	],
@@ -300,7 +300,8 @@
 		},
 		"gui": {
 			"rotation":  [ 19, -150, 0 ],
-			"translation":  [ 0, 2.0869, 0 ]
+			"translation":  [ 0, 11, 0 ],
+			"scale":  [ 2, 2, 2 ]
 		},
 		"head": {
 			"translation":  [ 0, 24.347, 2.0256 ],

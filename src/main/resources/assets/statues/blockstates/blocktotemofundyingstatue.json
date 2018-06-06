@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing": {
+			"east": { "model": "statues:blocktotemofundying", "y": 90},
+            "north": { "model": "statues:blocktotemofundying"},
+			"west": { "model": "statues:blocktotemofundying", "y": 270},
+            "south": { "model": "statues:blocktotemofundying", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blocktotemofundying"
+    }]
+  }
+}

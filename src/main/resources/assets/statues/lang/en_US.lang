@@ -50,10 +50,35 @@ tile.pigstatuet2.name=Sound Pig Statue
 tile.pigstatuet3.name=Functional Pig Statue
 tile.pigstatuet4.name=Muted Pig Statue
 
+tile.rabbitblackspotstatue.name=Decorative Rabbit Statue
+tile.rabbitblackspotstatuet2.name=Sound Rabbit Statue
+tile.rabbitblackspotstatuet3.name=Functional Rabbit Statue
+tile.rabbitblackspotstatuet4.name=Muted Rabbit Statue
+
+tile.rabbitbrownstatue.name=Decorative Rabbit Statue
+tile.rabbitbrownstatuet2.name=Sound Rabbit Statue
+tile.rabbitbrownstatuet3.name=Functional Rabbit Statue
+tile.rabbitbrownstatuet4.name=Muted Rabbit Statue
+
 tile.rabbitstatue.name=Decorative Rabbit Statue
 tile.rabbitstatuet2.name=Sound Rabbit Statue
 tile.rabbitstatuet3.name=Functional Rabbit Statue
 tile.rabbitstatuet4.name=Muted Rabbit Statue
+
+tile.rabbitwhitespotstatue.name=Decorative Rabbit Statue
+tile.rabbitwhitespotstatuet2.name=Sound Rabbit Statue
+tile.rabbitwhitespotstatuet3.name=Functional Rabbit Statue
+tile.rabbitwhitespotstatuet4.name=Muted Rabbit Statue
+
+tile.rabbitwhitestatue.name=Decorative Rabbit Statue
+tile.rabbitwhitestatuet2.name=Sound Rabbit Statue
+tile.rabbitwhitestatuet3.name=Functional Rabbit Statue
+tile.rabbitwhitestatuet4.name=Muted Rabbit Statue
+
+tile.rabbityellowstatue.name=Decorative Rabbit Statue
+tile.rabbityellowstatuet2.name=Sound Rabbit Statue
+tile.rabbityellowstatuet3.name=Functional Rabbit Statue
+tile.rabbityellowstatuet4.name=Muted Rabbit Statue
 
 tile.sheepshavenstatue.name=Decorative Shaven Sheep Statue
 tile.sheepshavenstatuet2.name=Sound Shaven Sheep Statue
@@ -155,10 +180,25 @@ tile.squidstatuet2.name=Sound Squid Statue
 tile.squidstatuet3.name=Functional Squid Statue
 tile.squidstatuet4.name=Muted Squid Statue
 
+tile.villagerbrowncoatstatue.name=Decorative Villager Statue
+tile.villagerbrowncoatstatuet2.name=Sound Villager Statue
+tile.villagerbrowncoatstatuet3.name=Functional Villager Statue
+tile.villagerbrowncoatstatuet4.name=Muted Villager Statue
+
+tile.villagerpurplecoatstatue.name=Decorative Villager Statue
+tile.villagerpurplecoatstatuet2.name=Sound Villager Statue
+tile.villagerpurplecoatstatuet3.name=Functional Villager Statue
+tile.villagerpurplecoatstatuet4.name=Muted Villager Statue
+
 tile.villagerstatue.name=Decorative Villager Statue
 tile.villagerstatuet2.name=Sound Villager Statue
 tile.villagerstatuet3.name=Functional Villager Statue
 tile.villagerstatuet4.name=Muted Villager Statue
+
+tile.villagerwhitecoatstatue.name=Decorative Villager Statue
+tile.villagerwhitecoatstatuet2.name=Sound Villager Statue
+tile.villagerwhitecoatstatuet3.name=Functional Villager Statue
+tile.villagerwhitecoatstatuet4.name=Muted Villager Statue
 
 tile.infostatue.name=Informative Statue
 tile.playerstatue.name=Player Statue
@@ -210,10 +250,17 @@ tile.endermanstatuet2.name=Sound Enderman Statue
 tile.endermanstatuet3.name=Functional Enderman Statue
 tile.endermanstatuet4.name=Muted Enderman Statue
 
+tile.pufferfishstatue.name=Decorative Pufferfish Statue
+tile.pufferfishstatuet2.name=Sound Pufferfish Statue
+tile.pufferfishstatuet3.name=Functional Pufferfish Statue
+tile.pufferfishstatuet4.name=Muted Pufferfish Statue
+
 tile.pebble.name=Pebble
 tile.displaystand.name=Display Stand
 tile.sombrero.name=Sombrero
-tile.bumbostatue.name=Decorative Bumbo Statue
+tile.bumbostatue.name=Bumbo Statue
+tile.totemofundyingstatue.name=Totem Of Undying Statue
+tile.evokerstatue.name=Evoker Statue
 
 tile.wastelandpigstatue.name=Decorative Wasteland Pig Statue
 tile.wastelandpigstatuet2.name=Sound Wasteland Pig Statue
@@ -231,7 +278,7 @@ item.cup.name=Edible Cup
 cluckington.info=Also known as Cluckington
 royalnugget.info=Made for and from royals
 villager.info=WIP, Trades in the future.
-shulker.info=WIP, Inventory in the future.
+evoker.info=WIP, Decorative only for now.
 tea.info=Now with less milk.
 cup.info=I can't believe its edible.
 

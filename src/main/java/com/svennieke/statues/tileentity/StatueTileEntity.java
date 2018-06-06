@@ -21,6 +21,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityPotion;
@@ -68,6 +69,21 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		return this.tier;
 	}
 	
+	public void WhySoEvilSvennieke(World worldIn, BlockPos pos)
+	{
+		if(tier == 3 || tier == 4)
+		{
+			int random = world.rand.nextInt(50);
+
+			if (random < 1)
+			{
+				EntityRabbit rabbit = new EntityRabbit(worldIn);
+				rabbit.setRabbitType(99);
+				rabbit.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+				worldIn.spawnEntity(rabbit);
+			}
+		}
+	}
 	public void FakeMobs(Entity entity, World worldIn, BlockPos pos, boolean isChild) {
 		if(StatuesConfigGen.general.FakeHostileMobs)
 		{

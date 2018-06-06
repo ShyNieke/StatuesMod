@@ -17,7 +17,7 @@
     },
 	"T": {
       "item": "minecraft:sand",
-	  "data": 0
+	  "data": 32767
     },
     "M": {
       "item": "minecraft:rotten_flesh"

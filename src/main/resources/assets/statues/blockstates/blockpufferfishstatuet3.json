@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing": {
+			"east": { "model": "statues:blockpufferfishstatue", "y": 90},
+            "north": { "model": "statues:blockpufferfishstatue"},
+			"west": { "model": "statues:blockpufferfishstatue", "y": 270},
+            "south": { "model": "statues:blockpufferfishstatue", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blockpufferfishstatue"
+    }]
+  }
+}

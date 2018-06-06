@@ -2,7 +2,7 @@
 	"__comment": "Designed by Svennieke with Cubik Studio - https://cubik.studio",
 	"textures": {
 		"particle": "blocks/quartz_block_side",
-		"texture": "rabbit statue white"
+		"texture": "statues:blocks/rabbit_statue_white"
 	},
 	"elements": [
 		{
