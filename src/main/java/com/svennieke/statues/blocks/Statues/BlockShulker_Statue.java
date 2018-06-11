@@ -5,13 +5,14 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.svennieke.statues.Statues;
-import com.svennieke.statues.blocks.iStatue;
+import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockShulker;
 import com.svennieke.statues.entity.fakeentity.FakeShulker;
 import com.svennieke.statues.init.StatuesGuiHandler;
 import com.svennieke.statues.tileentity.ShulkerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -41,15 +42,28 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockShulker_Statue extends BlockShulker implements iStatue, ITileEntityProvider{
+public class BlockShulker_Statue extends BlockShulker implements IStatue, ITileEntityProvider{
 	
 	private int TIER;
 	
-	public BlockShulker_Statue(String unlocalised, String registry, int tier) {
+	public BlockShulker_Statue(String unlocalised) {
 		super();
-		this.TIER = tier;
 		setUnlocalizedName(unlocalised);
-		setRegistryName(registry);
+	}
+	
+	@Override
+	public Block setTier(int tier)
+	{
+		this.TIER = tier;
+		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+		return this;
+	}
+	
+	@Override
+	public int getTier()
+	{
+		return this.TIER;
 	}
 	
 	@Override
@@ -73,7 +87,7 @@ public class BlockShulker_Statue extends BlockShulker implements iStatue, ITileE
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if(this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
 	        	if(this.TIER == 2)
@@ -155,7 +169,6 @@ public class BlockShulker_Statue extends BlockShulker implements iStatue, ITileE
                     tileentityshulkerstatue.setCustomName("");
                 }
 
-                System.out.println(itemstack.toString());
                 spawnAsEntity(worldIn, pos, itemstack);
             }
 

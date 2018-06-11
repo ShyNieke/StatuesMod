@@ -10,6 +10,7 @@ import com.svennieke.statues.blocks.Statues.BlockChicken_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCreeper_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEnderman_Statue;
+import com.svennieke.statues.blocks.Statues.BlockEvoker_Statue;
 import com.svennieke.statues.blocks.Statues.BlockFlood_Statue;
 import com.svennieke.statues.blocks.Statues.BlockGhast_Statue;
 import com.svennieke.statues.blocks.Statues.BlockGuardian_Statue;
@@ -18,6 +19,7 @@ import com.svennieke.statues.blocks.Statues.BlockKingCluck_Statue;
 import com.svennieke.statues.blocks.Statues.BlockMagmaSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPig_Statue;
+import com.svennieke.statues.blocks.Statues.BlockPufferfish_Statue;
 import com.svennieke.statues.blocks.Statues.BlockRabbit_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
@@ -75,7 +77,7 @@ public class StatueJEIPlugin implements IModPlugin{
         for(Block block : StatuesBlocks.BLOCKS)
         {	
         	String blockName = block.getUnlocalizedName();
-        	boolean tierFlag = (blockName.contains("t3") || blockName.contains("t4"));
+        	boolean tierFlag = (blockName.contains("t3") || blockName.contains("t4") || blockName.contains("t5"));
         	if(blockName.contains("statue") && tierFlag)
         	{
         		if(block instanceof BlockBabyZombie_Statue)
@@ -204,6 +206,16 @@ public class StatueJEIPlugin implements IModPlugin{
         			ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("zombie"));
         			result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
         		}
+        		if(block instanceof BlockPufferfish_Statue)
+        		{
+        			ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("pufferfish"));
+        			result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
+        		}
+        		if(block instanceof BlockEvoker_Statue)
+        		{
+        			ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("evoker"));
+        			result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
+        		}
         	}
         }
         return result;
@@ -212,14 +224,14 @@ public class StatueJEIPlugin implements IModPlugin{
 	private List<StatueFillingWrapper> getFillingRecipes() {
         List<StatueFillingWrapper> result = new ArrayList<StatueFillingWrapper>();
         
-        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.cow_statuet3), new ItemStack(Items.BUCKET), new ItemStack(Items.MILK_BUCKET)));
-        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.cow_statuet4), new ItemStack(Items.BUCKET), new ItemStack(Items.MILK_BUCKET)));
+        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.cow_statue[2]), new ItemStack(Items.BUCKET), new ItemStack(Items.MILK_BUCKET)));
+        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.cow_statue[3]), new ItemStack(Items.BUCKET), new ItemStack(Items.MILK_BUCKET)));
         
-        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.mooshroom_statuet3), new ItemStack(Items.BOWL), new ItemStack(StatuesItems.soup)));
-        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.mooshroom_statuet4), new ItemStack(Items.BOWL), new ItemStack(StatuesItems.soup)));
+        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.mooshroom_statue[2]), new ItemStack(Items.BOWL), new ItemStack(StatuesItems.soup)));
+        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.mooshroom_statue[3]), new ItemStack(Items.BOWL), new ItemStack(StatuesItems.soup)));
         
-        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.flood_statuet3), new ItemStack(Items.BUCKET), StatueLootList.getFloodBucket()));
-        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.flood_statuet3), new ItemStack(Items.BUCKET), StatueLootList.getFloodBucket()));
+        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.flood_statue[2]), new ItemStack(Items.BUCKET), StatueLootList.getFloodBucket()));
+        result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.flood_statue[3]), new ItemStack(Items.BUCKET), StatueLootList.getFloodBucket()));
         
         return result;
 	}

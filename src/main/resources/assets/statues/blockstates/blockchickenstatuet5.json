@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing": {
+			"east": { "model": "statues:blockchickenstatue", "y": 90},
+            "north": { "model": "statues:blockchickenstatue"},
+			"west": { "model": "statues:blockchickenstatue", "y": 270},
+            "south": { "model": "statues:blockchickenstatue", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blockchickenstatue"
+    }]
+  }
+}

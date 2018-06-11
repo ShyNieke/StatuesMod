@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 
 import com.mojang.authlib.GameProfile;
-import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockPlayer;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.util.SkinUtil;
@@ -29,7 +28,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
 
-public class BlockPlayer_Statue extends BlockPlayer implements iStatue, ITileEntityProvider{
+public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvider{
 	
 	private String playername;
 	

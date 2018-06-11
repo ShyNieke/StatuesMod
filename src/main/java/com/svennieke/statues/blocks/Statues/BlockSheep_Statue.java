@@ -2,15 +2,17 @@ package com.svennieke.statues.blocks.Statues;
 
 import java.util.ArrayList;
 
-import com.svennieke.statues.blocks.iStatue;
+import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockSheep;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
@@ -23,22 +25,40 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntityProvider{
+public class BlockSheep_Statue extends BlockSheep implements IStatue, ITileEntityProvider{
 	
 	private int TIER;
 	private EnumDyeColor COLOR;
 	
-	public BlockSheep_Statue(String unlocalised, String registry, int tier, EnumDyeColor COLOR) {
+	public BlockSheep_Statue(String unlocalised) {
 		super();
-		this.TIER = tier;
-		this.COLOR = COLOR;
 		setUnlocalizedName(unlocalised);
-		setRegistryName(registry);
+	}
+	
+	@Override
+	public Block setTier(int tier)
+	{
+		this.TIER = tier;
+		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+		return this;
+	}
+	
+	@Override
+	public int getTier()
+	{
+		return this.TIER;
+	}
+
+	@Override
+	public Block setColor(EnumDyeColor color) {
+		this.COLOR = color;
+		return this;
 	}
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		if (this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if (this.TIER >= 2)
 		{
 			return new StatueTileEntity();
 		}
@@ -55,7 +75,7 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 	{
 		ItemStack stack = playerIn.getHeldItem(hand);
 		
-		if(this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
 	        	int statuetier = getTE(worldIn, pos).getTier();
@@ -69,8 +89,9 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-        		getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, pos, worldIn);
+	        	getTE(worldIn, pos).SpawnMob(new EntitySheep(worldIn), worldIn);
 	        }
 	        return true;
 		}
@@ -167,100 +188,100 @@ public class BlockSheep_Statue extends BlockSheep implements iStatue, ITileEntit
 		{
 			stack.shrink(1);
 			if(enumdyecolor == EnumDyeColor.WHITE) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_white.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_whitet2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_whitet3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_whitet4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_white[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_white[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_white[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_white[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.ORANGE) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_orange.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_oranget2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_oranget3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_oranget4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_orange[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_orange[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_orange[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_orange[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.MAGENTA) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_magenta.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_magentat2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_magentat3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_magentat4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_magenta[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_magenta[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_magenta[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_magenta[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.LIGHT_BLUE) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightblue.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightbluet2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightbluet3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightbluet4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightblue[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightblue[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightblue[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightblue[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.YELLOW) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_yellow.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_yellowt2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_yellowt3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_yellowt4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_yellow[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_yellow[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_yellow[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_yellow[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.LIME) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lime.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_limet2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_limet3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_limet4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lime[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lime[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lime[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lime[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.PINK) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_pink.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_pinkt2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_pinkt3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_pinkt4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_pink[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_pink[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_pink[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_pink[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.GRAY) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_gray.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_grayt2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_grayt3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_grayt4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_gray[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_gray[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_gray[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_gray[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.SILVER) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightgray.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightgrayt2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightgrayt3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightgrayt4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightgray[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightgray[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightgray[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_lightgray[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.CYAN) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_cyan.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_cyant2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_cyant3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_cyant4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_cyan[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_cyan[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_cyan[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_cyan[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.PURPLE) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_purple.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_purplet2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_purplet3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_purplet4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_purple[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_purple[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_purple[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_purple[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.BLUE) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_blue.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_bluet2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_bluet3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_bluet4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_blue[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_blue[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_blue[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_blue[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.BROWN) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_brown.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_brownt2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_brownt3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_brownt4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_brown[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_brown[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_brown[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_brown[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.GREEN) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_green.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_greent2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_greent3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_greent4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_green[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_green[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_green[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_green[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.RED) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_red.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_redt2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_redt3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_redt4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_red[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_red[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_red[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_red[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 			if(enumdyecolor == EnumDyeColor.BLACK) {
-				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_black.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_blackt2.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_blackt3.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
-				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_blackt4.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 1) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_black[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 2) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_black[1].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 3) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_black[2].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
+				if(TIER == 4) {worldIn.setBlockState(pos, StatuesBlocks.sheep_statue_black[3].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));}
 			}
 		}
 	}

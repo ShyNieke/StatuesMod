@@ -18,8 +18,8 @@ import com.svennieke.statues.util.RandomLists;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityFireworkRocket;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,43 +68,25 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 	public int getTier() {
 		return this.tier;
 	}
-	
-	public void WhySoEvilSvennieke(World worldIn, BlockPos pos)
-	{
-		if(tier == 3 || tier == 4)
+
+	public void FakeMobs(Entity entity, World worldIn, BlockPos pos, boolean isChild) {
+		if(tier == 3)
 		{
-			int random = world.rand.nextInt(50);
+			int random = world.rand.nextInt(100);
 
 			if (random < 1)
 			{
-				EntityRabbit rabbit = new EntityRabbit(worldIn);
-				rabbit.setRabbitType(99);
-				rabbit.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-				worldIn.spawnEntity(rabbit);
-			}
-		}
-	}
-	public void FakeMobs(Entity entity, World worldIn, BlockPos pos, boolean isChild) {
-		if(StatuesConfigGen.general.FakeHostileMobs)
-		{
-			if(tier == 3 || tier == 4)
-			{
-				int random = world.rand.nextInt(100);
-
-				if (random < 1)
+				if(isChild == true && entity instanceof EntityMob)
 				{
-					if(isChild == true && entity instanceof EntityMob)
-					{
-						EntityMob mob = (EntityMob)entity;
-						mob.isChild();
-						mob.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-						worldIn.spawnEntity(mob);
-					}
-					else
-					{
-						entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-						worldIn.spawnEntity(entity);
-					}
+					EntityMob mob = (EntityMob)entity;
+					mob.isChild();
+					mob.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+					worldIn.spawnEntity(mob);
+				}
+				else
+				{
+					entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+					worldIn.spawnEntity(entity);
 				}
 			}
 		}
@@ -115,7 +97,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		if(isStatueAble()) 
 		{
 			int random = world.rand.nextInt(100);
-			if(tier == 3 || tier == 4)
+			if(tier >= 3)
 			{
 				if (random < 100 && stack1 != null && stack1 != ItemStack.EMPTY)
 				{
@@ -139,12 +121,12 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 						playerIn.dropItem(stack3, true);
 					}
 				}
+				setStatueAble(false);
 			}
-			setStatueAble(false);
 		}
 		else
 		{
-			if((tier == 2 || tier == 3))
+			if((tier >= 2 && tier != 5))
 			{
 				worldIn.playSound(null, pos, RandomLists.GetRandomWasteland(), SoundCategory.NEUTRAL, 1F, 1F);
 			}
@@ -152,7 +134,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 	}
 	
 	public void PlaySound(SoundEvent Mobsound, BlockPos pos, World worldIn) {
-		if(tier == 2 || tier == 3)
+		if((tier >= 2 && tier != 5))
 		{
 			worldIn.playSound(null, pos, Mobsound, SoundCategory.NEUTRAL, 1F, 1F);
 		}
@@ -165,6 +147,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 				int random = world.rand.nextInt(100);
 				
 				String[] messages = StatuesConfigGen.messages.info_messages;
+				String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
 				
 				int idx = new Random().nextInt(messages.length);
 				String randommessage = (messages[idx]);
@@ -173,11 +156,16 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 				{
 					randommessage = ("Did you know we have veinminer");
 				}
+				else if(LuckyPlayers.length != 0 && random < 20)
+				{
+					for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
+						randommessage = ("Luck is not on your side today");
+					}
+				}
 				else
 				{
 					randommessage = (messages[idx]);
 				}
-
 				player.sendMessage(new TextComponentTranslation(randommessage));;
 				
 			}
@@ -188,7 +176,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		{
 			EntityPlayer player = (EntityPlayer)entity;
 			int random = world.rand.nextInt(100);
-			if(tier == 3 || tier == 4)
+			if(tier >= 3)
 			{
 				if(random < 10)
 				{
@@ -208,7 +196,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			EntityPlayer player = (EntityPlayer)entity;
 			
 			int random = world.rand.nextInt(100);
-			if(tier == 3 || tier == 4)
+			if(tier >= 3)
 			{
 				if(random < 10)
 				{
@@ -235,73 +223,76 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		ItemStack stack = playerIn.getHeldItem(hand);
 		EntityFireworkRocket firework = new EntityFireworkRocket(worldIn, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), getFirework(world.rand));
 		int random = world.rand.nextInt(100);
-			
-		if(isCow)
-		{
-			if(!worldIn.isRemote)
-			{
-				if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
-		        {
-					worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
-		            stack.shrink(1);
-
-		            if (stack.isEmpty())
-		            {
-		            	playerIn.setHeldItem(hand, new ItemStack(Items.MILK_BUCKET));
-		            }
-		            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MILK_BUCKET)))
-		            {
-		            	playerIn.dropItem(new ItemStack(Items.MILK_BUCKET), false);
-		            }
-		        }
-			}
-		}
 		
-		if(isMooshroom)
+		if(tier >= 3)
 		{
-			if(!worldIn.isRemote)
+			if(isCow)
 			{
-				if (stack.getItem() == Items.BOWL && !playerIn.capabilities.isCreativeMode)
-		        {
-					//System.out.println("NO");
-					worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
-		            stack.shrink(1);
-
-		            if (stack.isEmpty())
-		            {
-		            	playerIn.setHeldItem(hand, new ItemStack(StatuesItems.soup));
-		            }
-		            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(StatuesItems.soup)))
-		            {
-		            	playerIn.dropItem(new ItemStack(StatuesItems.soup), false);
-		            }
-		        }
-			}
-		}
-	
-		if(isFlood)
-		{
-			if(!worldIn.isRemote)
-				if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
+				if(!worldIn.isRemote)
 				{
-					worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
-					stack.shrink(1);
-					
-					ItemStack floodbucket = StatueLootList.getFloodBucket();
-							
-					if (stack.isEmpty())
-		            {
-		                playerIn.setHeldItem(hand, floodbucket);
-		            }
-		            else if (!playerIn.inventory.addItemStackToInventory(floodbucket))
-		            {
-		            	playerIn.dropItem(floodbucket, false);
-		            }
+					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
+			        {
+						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
+			            stack.shrink(1);
+
+			            if (stack.isEmpty())
+			            {
+			            	playerIn.setHeldItem(hand, new ItemStack(Items.MILK_BUCKET));
+			            }
+			            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MILK_BUCKET)))
+			            {
+			            	playerIn.dropItem(new ItemStack(Items.MILK_BUCKET), false);
+			            }
+			        }
 				}
+			}
 			
-				if (random < 50){
-					 worldIn.spawnEntity(firework);
-				}	
+			if(isMooshroom)
+			{
+				if(!worldIn.isRemote)
+				{
+					if (stack.getItem() == Items.BOWL && !playerIn.capabilities.isCreativeMode)
+			        {
+						//System.out.println("NO");
+						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
+			            stack.shrink(1);
+
+			            if (stack.isEmpty())
+			            {
+			            	playerIn.setHeldItem(hand, new ItemStack(StatuesItems.soup));
+			            }
+			            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(StatuesItems.soup)))
+			            {
+			            	playerIn.dropItem(new ItemStack(StatuesItems.soup), false);
+			            }
+			        }
+				}
+			}
+		
+			if(isFlood)
+			{
+				if(!worldIn.isRemote)
+					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
+					{
+						worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
+						stack.shrink(1);
+						
+						ItemStack floodbucket = StatueLootList.getFloodBucket();
+								
+						if (stack.isEmpty())
+			            {
+			                playerIn.setHeldItem(hand, floodbucket);
+			            }
+			            else if (!playerIn.inventory.addItemStackToInventory(floodbucket))
+			            {
+			            	playerIn.dropItem(floodbucket, false);
+			            }
+					}
+				
+					if (random < 50){
+						 worldIn.spawnEntity(firework);
+					}	
+			}
 		}
 	}
 	
@@ -333,40 +324,56 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
         return firework;
 	}
 	
-	public void StatueBehavior(@Nullable ItemStack stack1, @Nullable ItemStack stack2, @Nullable ItemStack stack3, 
-			EntityLiving spawnableentity, boolean spawnEntity, boolean isCreeper,Block statue, EntityPlayer playerIn, 
-			World worldIn, BlockPos pos) {
+	public void SpawnMob(Entity entity, World worldIn)
+	{
+		if(tier == 3)
+		{
+			int random = world.rand.nextInt(100);
+
+			if (random < 1)
+			{
+				if(entity instanceof EntityRabbit)
+				{
+					EntityRabbit rabbit = new EntityRabbit(worldIn);
+					rabbit.setRabbitType(99);
+					rabbit.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+					
+					worldIn.spawnEntity(rabbit);
+				}
+				else if(entity instanceof EntityCreeper)
+				{
+					EntityCreeper creeper = new EntityCreeper(worldIn);
+					creeper.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
+					NBTTagCompound tag = new NBTTagCompound();
+					creeper.writeEntityToNBT(tag);
+			        
+					tag.setShort("ExplosionRadius", (short)0);
+			        tag.setShort("Fuse", (short)0);
+			        
+			        creeper.readEntityFromNBT(tag);
+			        worldIn.spawnEntity(creeper);
+			        creeper.spawnExplosionParticle();
+				}
+				else
+				{
+					entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+			        worldIn.spawnEntity(entity);
+				}
+			}
+			setStatueAble(false);
+		}
+	}
+	
+	public void GiveItem(@Nullable ItemStack stack1, @Nullable ItemStack stack2, @Nullable ItemStack stack3, EntityPlayer playerIn) {
 		
 		if(isStatueAble()) 
 		{
 			int random = world.rand.nextInt(100);
-			if(tier == 3 || tier == 4)
+			if(tier >= 3)
 			{
 				if (random < 100 && stack1 != null && stack1 != ItemStack.EMPTY)
 				{
 					playerIn.dropItem(stack1, true);
-				}
-				
-				if (random < 10 && spawnEntity)
-				{
-					if (!worldIn.isRemote)
-					{
-						spawnableentity.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
-				        NBTTagCompound tag = new NBTTagCompound();
-				        spawnableentity.writeEntityToNBT(tag);
-				        
-				        if(isCreeper)
-				        {
-					        tag.setShort("ExplosionRadius", (short)0);
-					        tag.setShort("Fuse", (short)0);
-				        }
-				        
-				        spawnableentity.readEntityFromNBT(tag);
-				        worldIn.spawnEntity(spawnableentity);
-				        
-				        if(isCreeper)
-				        	spawnableentity.spawnExplosionParticle();
-					}
 				}
 				
 				if(stack2 != null && stack2 != ItemStack.EMPTY){
@@ -382,8 +389,8 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 						playerIn.dropItem(stack3, true);
 					}
 				}
+				setStatueAble(false);
 			}
-            setStatueAble(false);
 		}
 	}
 	
@@ -485,19 +492,11 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 				
 				if(lookPos.equals(this.pos))
 				{
-					if(StatueTimerProvider.info.getPosition() != this.pos)
+					if(StatueTimerProvider.info.getPosition() != this.pos || StatueTimerProvider.info.isAble() != this.isStatueAble())
 					{
 						if(StatueTimerProvider.info.isAble() != isStatueAble())
 					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
 
-						else if(StatueTimerProvider.info.getCooldown() != getCooldown())
-					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
-					}
-					else
-					{
-						if(StatueTimerProvider.info.isAble() != isStatueAble())
-					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
-						
 						else if(StatueTimerProvider.info.getCooldown() != getCooldown())
 					    	StatuesPacketHandler.INSTANCE.sendTo(new StatuesProgressMessage(getCooldown(), getCooldownMax(), isStatueAble(), this.pos), player);
 					}

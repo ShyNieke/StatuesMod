@@ -3,9 +3,12 @@ package com.svennieke.statues.handler;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesBlocks;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
@@ -18,30 +21,47 @@ public class LootHandler {
 		World world = player.world;
 		if(!world.isRemote)
 		{
-			if(!(event.getEntityPlayer() instanceof FakePlayer))
+			double default_drop_chance = StatuesConfigGen.general.OldDropChance;
+
+			if(!(player instanceof FakePlayer))
 			{
-				if(event.getDrops().size() >= 1)
+				EntityPlayerMP realPlayer = (EntityPlayerMP)event.getEntityPlayer();
+				String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
+				
+				if(LuckyPlayers.length != 0)
 				{
-					for(int i = 0; i < event.getDrops().size(); i++)
-					{
-						if(event.getDrops().get(i) != null)
-							event.getDrops().remove(i);
+					for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
+						if(realPlayer.getName().equals(LuckyPlayers[i]));
+						{
+							default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
+						}
 					}
 				}
+				else
+				{
+					default_drop_chance = StatuesConfigGen.general.OldDropChance;
+				}
 				
-				ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.pufferfish_statue, 1);
-				DropLootStatues(player, itemStackToDrop, event);
+				if ( Math.random() <= default_drop_chance )
+		        {
+					EntityFishHook hook = event.getHookEntity();
+					if(hook != null)
+					{
+						EntityItem entityitem = new EntityItem(hook.world, hook.posX, hook.posY, hook.posZ, new ItemStack(StatuesBlocks.pufferfish_statue[0]));
+	                    double d0 = hook.getAngler().posX - hook.posX;
+	                    double d1 = hook.getAngler().posY - hook.posY;
+	                    double d2 = hook.getAngler().posZ - hook.posZ;
+	                    double d3 = (double)MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+	                    double d4 = 0.1D;
+	                    entityitem.motionX = d0 * 0.1D;
+	                    entityitem.motionY = d1 * 0.1D + (double)MathHelper.sqrt(d3) * 0.08D;
+	                    entityitem.motionZ = d2 * 0.1D;
+	                    hook.world.spawnEntity(entityitem);
+					}
+					
+					event.setCanceled(true);
+		        }
 			}
 		}
-	}
-	
-	public void DropLootStatues(Entity entity, ItemStack itemStackToDrop, ItemFishedEvent event) {
-		double random_drop;
-		
-		random_drop = Math.random();
-		if ( random_drop < StatuesConfigGen.general.OldDropChance )
-        {
-        	event.getDrops().add(itemStackToDrop);
-        }
 	}
 }

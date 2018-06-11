@@ -1,0 +1,23 @@
+{
+  "result": {
+    "item": "statues:blockrabbitblackspotstatuet5"
+  },
+  "pattern": [
+    "WWW",
+    "WSW",
+    "WWW"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "statues:blockrabbitblackspotstatuet4"
+    },
+    "W": {
+      "item": "minecraft:wool",
+      "data": 32767
+    }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
+}

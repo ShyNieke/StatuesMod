@@ -1,6 +1,5 @@
 package com.svennieke.statues.blocks.Statues;
 
-import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockInfo;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
@@ -13,7 +12,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockInfo_Statue extends BlockInfo implements iStatue, ITileEntityProvider{
+public class BlockInfo_Statue extends BlockInfo implements ITileEntityProvider{
 	
 	private int TIER;
 	

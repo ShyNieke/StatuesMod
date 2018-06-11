@@ -1,8 +1,6 @@
 package com.svennieke.statues.blocks.Statues;
 
-import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockBumbo;
-import com.svennieke.statues.config.StatuesConfigGen;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.monster.EntityGolem;
@@ -13,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional.Method;
 
-public class BlockBumbo_Statue extends BlockBumbo implements iStatue{
+public class BlockBumbo_Statue extends BlockBumbo{
 		
 	public BlockBumbo_Statue(String unlocalised, String registry) {
 		super();
@@ -27,20 +25,17 @@ public class BlockBumbo_Statue extends BlockBumbo implements iStatue{
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
     	if(!worldIn.isRemote)
     	{
-    		if(StatuesConfigGen.general.FakeHostileMobs)
-    		{
-        		int random = worldIn.rand.nextInt(100);
+    		int random = worldIn.rand.nextInt(100);
 
-    			if (random < 1)
-    			{
-					EntityGolem entity = new com.Mrbysco.CactusMod.entities.EntityCactoni(worldIn);
-					
-					entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-					worldIn.spawnEntity(entity);
-					
-	    			return true;
-    			}
-    		}
+			if (random < 1)
+			{
+				EntityGolem entity = new com.Mrbysco.CactusMod.entities.EntityCactoni(worldIn);
+				
+				entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+				worldIn.spawnEntity(entity);
+				
+    			return true;
+			}
     		return false;
     	}
     	else

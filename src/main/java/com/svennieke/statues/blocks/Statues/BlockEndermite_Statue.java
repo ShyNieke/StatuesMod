@@ -1,6 +1,5 @@
 package com.svennieke.statues.blocks.Statues;
 
-import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockEndermite;
 
 import net.minecraft.block.state.IBlockState;
@@ -12,9 +11,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockEndermite_Statue extends BlockEndermite implements iStatue{
+public class BlockEndermite_Statue extends BlockEndermite{
 		
-	public BlockEndermite_Statue(String unlocalised, String registry, int tier) {
+	public BlockEndermite_Statue(String unlocalised, String registry) {
 		super();
 		setUnlocalizedName(unlocalised);
 		setRegistryName(registry);

@@ -1,6 +1,5 @@
 package com.svennieke.statues.blocks.Statues;
 
-import com.svennieke.statues.blocks.iStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockSombrero;
 import com.svennieke.statues.init.StatuesBlocks;
 
@@ -13,7 +12,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockSombrero_Statue extends BlockSombrero implements iStatue{
+public class BlockSombrero_Statue extends BlockSombrero{
 		
 	public BlockSombrero_Statue(String unlocalised, String registry) {
 		super();

@@ -60,10 +60,13 @@ public class Statues {
 		if(isBaublesEnabled)logger.info("Loading With Baubles Compat");
 		else{logger.info("Loading Without Baubles Compat");}
 		
+		logger.info("Registering Statues Config");
 		MinecraftForge.EVENT_BUS.register(new StatuesConfigGen());
-		
+
+		logger.info("Registering Statues Sounds");
 		StatuesSounds.registerSounds();
 		
+		logger.info("Registering Statues Entities");
 		StatuesEntity.register();
 		
 		//Register Update Packets for waila if installed
@@ -77,21 +80,21 @@ public class Statues {
 	@EventHandler
     public void init(FMLInitializationEvent event)
 	{
-		if(StatuesConfigGen.general.Tier1Crafting == true)
-		{
-			for (Biome biome : Biome.REGISTRY) {
-			    biome.getSpawnableList(EnumCreatureType.AMBIENT).add(new SpawnListEntry(EntityStatueBat.class, 4, 1, 2));
-			}
-			System.out.println("Registered Statues Bat Spawn");
+		for (Biome biome : Biome.REGISTRY) {
+		    biome.getSpawnableList(EnumCreatureType.AMBIENT).add(new SpawnListEntry(EntityStatueBat.class, 4, 1, 2));
 		}
+		logger.info("Registered Statues Bat Spawn");
 		
+		logger.info("Registering Statues Gui Handler");
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new StatuesGuiHandler());
 		
 		StatuesHoliday.registerSpawning();
 		
 		//Initialize loot
+		logger.info("Initialize Statues Loot");
 		StatueLootList.initializeStatueLoot();
 		
+		logger.info("Registering Statues Event Handlers");
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new LootHandler());
 		

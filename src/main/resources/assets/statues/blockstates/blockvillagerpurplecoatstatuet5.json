@@ -1,0 +1,14 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "facing": {
+			"east": { "model": "statues:blockvillagerpurplecoatstatue", "y": 90},
+            "north": { "model": "statues:blockvillagerpurplecoatstatue"},
+			"west": { "model": "statues:blockvillagerpurplecoatstatue", "y": 270},
+            "south": { "model": "statues:blockvillagerpurplecoatstatue", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blockvillagerpurplecoatstatue"
+    }]
+  }
+}

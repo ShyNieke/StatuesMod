@@ -3,21 +3,20 @@
     "item": "statues:blockcreeperstatuet4"
   },
   "pattern": [
-    "WWW",
-    "WSW",
-    "WWW"
+    "NRN",
+    "RSR",
+    "NRN"
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
+    "R": {
+      "item": "minecraft:nether_star"
+    },
     "S": {
       "item": "statues:blockcreeperstatuet3"
     },
-    "W": {
-      "item": "minecraft:wool",
-      "data": 32767
+    "N": {
+      "item": "statues:itemstatuecore"
     }
-  },
-  "conditions": [{
-    "type": "statues:interaction"
-	}]
+  }
 }

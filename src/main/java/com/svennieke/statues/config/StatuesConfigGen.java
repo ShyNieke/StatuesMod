@@ -24,6 +24,9 @@ public class StatuesConfigGen {
 	@Config.Comment({"Other settings"})
 	public static TextMessages messages = new TextMessages();
 	
+	@Config.Comment({"Lucky Players"})
+	public static LuckyPlayers luckyplayers = new LuckyPlayers();
+		
 	public enum EnumDeathSource {
 		ALL,
 		PLAYER,
@@ -55,9 +58,6 @@ public class StatuesConfigGen {
 		
 		@Config.Comment("Source of death that determines how the Statues drop [player statue has it's own config option] (Default: PLAYER)")
 		public EnumDeathSource StatueKillSource = EnumDeathSource.PLAYER;
-		
-		@Config.Comment("Setting this to false disables the fake mobs from having a chance to spawn when activating a interactive or muted statue. (Default: true)")
-		public boolean FakeHostileMobs = true;
 	}
 	
 	public static class Player{
@@ -98,7 +98,20 @@ public class StatuesConfigGen {
 				"Pigs love mud how will they react on a more sandy block",
 				"Did you know chicken jockeys exist even in statues? go ahead try it out place a baby zombie statue on a chicken statue",
 				"Huge thanks to Xisuma for helping create his statue",
-				"Only decorative statues can be changed to special statues"
+				"Only decorative statues can be changed to special statues",
+				"Gone Fishing",
+				"A hat to protect you from the heat, get it in a hot biome near you",
+				"1-3 tall they seem, prickly is a bit mean, Give them a hat and see their true means",
+				"A statue of undying can be found in the pockets of the Woodland residents"
+				};
+		
+	}
+	
+	public static class LuckyPlayers{
+		@Config.Comment("Adding usernames will make these users have less luck with getting statues")
+		public String[] lucky_players = new String[]
+				{
+				"iskall85"
 				};
 		
 	}

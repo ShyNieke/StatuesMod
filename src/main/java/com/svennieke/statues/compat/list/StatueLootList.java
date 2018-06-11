@@ -43,6 +43,7 @@ public class StatueLootList {
 		addLoot("wasteland_pig", new ItemStack(StatuesItems.tea), getWastelandBlock(), ItemStack.EMPTY);
 		addLoot("zombie", new ItemStack(Items.ROTTEN_FLESH), ItemStack.EMPTY, new ItemStack(Items.IRON_INGOT));
 		addLoot("pufferfish", ItemStack.EMPTY, new ItemStack(Items.FISH, 1, 3), ItemStack.EMPTY);
+		addLoot("evoker", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.TOTEM_OF_UNDYING));
 	}
 	
 	public static ItemStack getWastelandBlock()

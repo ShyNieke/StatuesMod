@@ -2,12 +2,13 @@ package com.svennieke.statues.blocks.Statues;
 
 import java.util.ArrayList;
 
-import com.svennieke.statues.blocks.iStatue;
+import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockCreeper;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.entity.fakeentity.FakeCreeper;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.monster.EntityCreeper;
@@ -20,20 +21,33 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockCreeper_Statue extends BlockCreeper implements iStatue, ITileEntityProvider{
+public class BlockCreeper_Statue extends BlockCreeper implements IStatue, ITileEntityProvider{
 	
 	private int TIER;
 	
-	public BlockCreeper_Statue(String unlocalised, String registry, int tier) {
+	public BlockCreeper_Statue(String unlocalised) {
 		super();
-		this.TIER = tier;
 		setUnlocalizedName(unlocalised);
-		setRegistryName(registry);
+	}
+	
+	@Override
+	public Block setTier(int tier)
+	{
+		this.TIER = tier;
+		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+		return this;
+	}
+	
+	@Override
+	public int getTier()
+	{
+		return this.TIER;
 	}
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		if (this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if (this.TIER >= 2)
 		{
 			return new StatueTileEntity();
 		}
@@ -48,7 +62,7 @@ public class BlockCreeper_Statue extends BlockCreeper implements iStatue, ITileE
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if(this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
 	        	int statuetier = getTE(worldIn, pos).getTier();
@@ -56,16 +70,15 @@ public class BlockCreeper_Statue extends BlockCreeper implements iStatue, ITileE
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
-	        	
-	        	EntityCreeper entitycreeper = new EntityCreeper(worldIn);
-	        	
+	        		        	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("creeper"));
 	        	ItemStack stack1 = stackList.get(0);
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CREEPER_PRIMED, pos, worldIn);
-	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, entitycreeper, true, true, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+	        	getTE(worldIn, pos).SpawnMob(new EntityCreeper(worldIn), worldIn);
 	        	
 	        	getTE(worldIn, pos).FakeMobs(new FakeCreeper(worldIn), worldIn, pos, false);
 	        }

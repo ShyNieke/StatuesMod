@@ -2,12 +2,13 @@ package com.svennieke.statues.blocks.Statues;
 
 import java.util.ArrayList;
 
-import com.svennieke.statues.blocks.iStatue;
+import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockGuardian;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.entity.fakeentity.FakeGuardian;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,20 +20,33 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockGuardian_Statue extends BlockGuardian implements iStatue, ITileEntityProvider{
+public class BlockGuardian_Statue extends BlockGuardian implements IStatue, ITileEntityProvider{
 	
 	private int TIER;
 	
-	public BlockGuardian_Statue(String unlocalised, String registry, int tier) {
+	public BlockGuardian_Statue(String unlocalised) {
 		super();
-		this.TIER = tier;
 		setUnlocalizedName(unlocalised);
-		setRegistryName(registry);
+	}
+	
+	@Override
+	public Block setTier(int tier)
+	{
+		this.TIER = tier;
+		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+		return this;
+	}
+	
+	@Override
+	public int getTier()
+	{
+		return this.TIER;
 	}
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		if (this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if (this.TIER >= 2)
 		{
 			return new StatueTileEntity();
 		}
@@ -47,7 +61,7 @@ public class BlockGuardian_Statue extends BlockGuardian implements iStatue, ITil
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if(this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
 	        	int statuetier = getTE(worldIn, pos).getTier();
@@ -62,7 +76,7 @@ public class BlockGuardian_Statue extends BlockGuardian implements iStatue, ITil
         		ItemStack stack3 = stackList.get(2);
         		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_GUARDIAN_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
 	        	
 	        	getTE(worldIn, pos).FakeMobs(new FakeGuardian(worldIn), worldIn, pos, false);
 	        }

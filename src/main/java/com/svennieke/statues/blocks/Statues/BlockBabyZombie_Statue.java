@@ -2,7 +2,7 @@ package com.svennieke.statues.blocks.Statues;
 
 import java.util.ArrayList;
 
-import com.svennieke.statues.blocks.iStatue;
+import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockBabyZombie;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.entity.fakeentity.FakeZombie;
@@ -25,15 +25,28 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, ITileEntityProvider{
+public class BlockBabyZombie_Statue extends BlockBabyZombie implements IStatue, ITileEntityProvider{
 	
 	private int TIER;
 	
-	public BlockBabyZombie_Statue(String unlocalised, String registry, int tier) {
+	public BlockBabyZombie_Statue(String unlocalised) {
 		super();
-		this.TIER = tier;
 		setUnlocalizedName(unlocalised);
-		setRegistryName(registry);
+	}
+	
+	@Override
+	public Block setTier(int tier)
+	{
+		this.TIER = tier;
+		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+		return this;
+	}
+	
+	@Override
+	public int getTier()
+	{
+		return this.TIER;
 	}
 	
 	@Override
@@ -44,13 +57,13 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
 			Block block = worldIn.getBlockState(pos.down()).getBlock();
 	    	if (block == Blocks.LAPIS_BLOCK) {
 	    		worldIn.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, pos.down().getX(), pos.down().getY(), pos.down().getZ(), 0.0D, 0.0D, 0.0D, new int[0]);
-	    		worldIn.setBlockState(pos.down(), StatuesBlocks.flood_statue.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));
+	    		worldIn.setBlockState(pos.down(), StatuesBlocks.flood_statue[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));
 	    		worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
 	   		 	worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.ENTITY_VILLAGER_YES, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 	    	}
-	    	if (block == StatuesBlocks.chicken_statue) {
+	    	if (block == StatuesBlocks.chicken_statue[0]) {
 	    		worldIn.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, pos.down().getX(), pos.down().getY(), pos.down().getZ(), 0.0D, 0.0D, 0.0D, new int[0]);
-	    		worldIn.setBlockState(pos.down(), StatuesBlocks.chicken_jockey_statue.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));
+	    		worldIn.setBlockState(pos.down(), StatuesBlocks.chicken_jockey_statue[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));
 	    		worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
 	   		 	worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.ENTITY_VILLAGER_YES, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 	    	}
@@ -60,7 +73,7 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		if (this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if (this.TIER >= 2)
 		{
 			return new StatueTileEntity();
 		}
@@ -77,7 +90,7 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-		if(this.TIER == 2 || this.TIER == 3 || this.TIER == 4)
+		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
 	        	int statuetier = getTE(worldIn, pos).getTier();
@@ -92,7 +105,7 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements iStatue, 
         		ItemStack stack3 = stackList.get(2);
         		
 	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).StatueBehavior(stack1, stack2, stack3, null, false, false, this, playerIn, worldIn, pos);
+	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
 	        	
 	        	getTE(worldIn, pos).FakeMobs(new FakeZombie(worldIn), worldIn, pos, true);
 	        }

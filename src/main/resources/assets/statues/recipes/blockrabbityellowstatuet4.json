@@ -1,25 +1,22 @@
 {
   "result": {
-    "item": "blockrabbityellowstatuet4"
+    "item": "statues:blockrabbityellowstatuet4"
   },
   "pattern": [
-    "NCN",
-    "CSC",
-    "NCN"
+    "NRN",
+    "RSR",
+    "NRN"
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
-    "C": {
-      "item": "minecraft:chorus_flower"
+    "R": {
+      "item": "minecraft:nether_star"
     },
     "S": {
-      "item": "blockrabbityellowstatuet3"
+      "item": "statues:blockrabbityellowstatuet3"
     },
     "N": {
-      "item": "minecraft:quartz_ore"
+      "item": "statues:itemstatuecore"
     }
-  },
-  "conditions": [{
-    "type": "statues:interaction"
-	}]
+  }
 }
