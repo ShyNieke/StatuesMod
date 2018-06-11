@@ -1,23 +1,14 @@
 {
-  "result": {
-    "item": "statues:blockwitchstatuet4"
-  },
-  "pattern": [
-    "WWW",
-    "WSW",
-    "WWW"
-  ],
-  "type": "minecraft:crafting_shaped",
-  "key": {
-    "S": {
-      "item": "statues:blockwitchstatuet3"
-    },
-    "W": {
-      "item": "minecraft:wool",
-      "data": 32767
-    }
-  },
-  "conditions": [{
-    "type": "statues:interaction"
-	}]
+    "forge_marker": 1,
+    "variants": {
+        "facing": {
+			"east": { "model": "statues:blockwitchstatue", "y": 90},
+            "north": { "model": "statues:blockwitchstatue"},
+			"west": { "model": "statues:blockwitchstatue", "y": 270},
+            "south": { "model": "statues:blockwitchstatue", "y": 180}
+        },
+    "inventory": [{
+        "model": "statues:blockwitchstatue"
+    }]
+  }
 }
