@@ -38,7 +38,7 @@ import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class FakeGuardian extends EntityGuardian{
+public class FakeGuardian extends EntityGuardian implements IFakeEntity{
 
 	private static final DataParameter<Boolean> MOVING = EntityDataManager.<Boolean>createKey(FakeGuardian.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> TARGET_ENTITY = EntityDataManager.<Integer>createKey(FakeGuardian.class, DataSerializers.VARINT);

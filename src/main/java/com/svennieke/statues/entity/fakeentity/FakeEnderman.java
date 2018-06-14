@@ -11,7 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class FakeEnderman extends EntityEnderman{
+public class FakeEnderman extends EntityEnderman implements IFakeEntity{
 
 	private int lifetime;
 

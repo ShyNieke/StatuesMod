@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class FakeHusk extends EntityHusk{
+public class FakeHusk extends EntityHusk implements IFakeEntity{
 
 	private int lifetime;
 

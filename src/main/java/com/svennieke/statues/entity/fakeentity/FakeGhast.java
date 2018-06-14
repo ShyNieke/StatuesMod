@@ -22,7 +22,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class FakeGhast extends EntityGhast{
+public class FakeGhast extends EntityGhast implements IFakeEntity{
 
     private static final DataParameter<Boolean> ATTACKING = EntityDataManager.<Boolean>createKey(FakeGhast.class, DataSerializers.BOOLEAN);
 	private int lifetime;

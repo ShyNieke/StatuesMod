@@ -22,7 +22,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
-public class FakeShulker extends EntityShulker{
+public class FakeShulker extends EntityShulker implements IFakeEntity {
 
 	private int lifetime;
 	

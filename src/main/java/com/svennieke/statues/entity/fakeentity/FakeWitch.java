@@ -21,7 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class FakeWitch extends EntityWitch{
+public class FakeWitch extends EntityWitch implements IFakeEntity{
 	
     private static final DataParameter<Boolean> IS_AGGRESSIVE = EntityDataManager.<Boolean>createKey(FakeWitch.class, DataSerializers.BOOLEAN);
     private int witchAttackTimer;

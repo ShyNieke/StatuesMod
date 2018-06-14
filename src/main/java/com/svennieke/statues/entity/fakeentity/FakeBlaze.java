@@ -22,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class FakeBlaze extends EntityBlaze{
+public class FakeBlaze extends EntityBlaze implements IFakeEntity{
 
 	private int lifetime;
 

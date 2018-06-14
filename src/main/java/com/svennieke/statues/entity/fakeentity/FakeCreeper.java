@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class FakeCreeper extends EntityCreeper{
+public class FakeCreeper extends EntityCreeper implements IFakeEntity{
 
     private static final DataParameter<Integer> STATE = EntityDataManager.<Integer>createKey(FakeCreeper.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> POWERED = EntityDataManager.<Boolean>createKey(FakeCreeper.class, DataSerializers.BOOLEAN);

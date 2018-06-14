@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class FakeSkeleton extends EntitySkeleton{
+public class FakeSkeleton extends EntitySkeleton implements IFakeEntity{
 
 	private int lifetime;
 

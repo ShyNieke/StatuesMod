@@ -23,7 +23,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 
-public class FakeSlime extends EntitySlime{
+public class FakeSlime extends EntitySlime implements IFakeEntity{
 	
     private static final DataParameter<Integer> SLIME_SIZE = EntityDataManager.<Integer>createKey(FakeSlime.class, DataSerializers.VARINT);
 	private int lifetime;

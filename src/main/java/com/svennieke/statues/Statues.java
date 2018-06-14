@@ -6,8 +6,9 @@ import org.apache.logging.log4j.Logger;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.EntityStatueBat;
+import com.svennieke.statues.handler.DespawnHandler;
 import com.svennieke.statues.handler.DropHandler;
-import com.svennieke.statues.handler.LootHandler;
+import com.svennieke.statues.handler.FishHandler;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesGuiHandler;
 import com.svennieke.statues.init.StatuesHoliday;
@@ -72,6 +73,9 @@ public class Statues {
 		//Register Update Packets for waila if installed
 		StatuesPacketHandler.registerWailaUpdatePacket();
 		
+		logger.info("Registering Statues Packets");
+		StatuesPacketHandler.registerPackets();
+		
 		//StatuesCrafting.register();
 		
 		proxy.Preinit();
@@ -96,7 +100,8 @@ public class Statues {
 		
 		logger.info("Registering Statues Event Handlers");
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
-		MinecraftForge.EVENT_BUS.register(new LootHandler());
+		MinecraftForge.EVENT_BUS.register(new FishHandler());
+		MinecraftForge.EVENT_BUS.register(new DespawnHandler());
 		
 		proxy.Init();
     }
