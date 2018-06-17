@@ -19,7 +19,7 @@ public class StatueLootList {
 	public static void initializeStatueLoot() {
 		addLoot("baby_zombie", new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.IRON_NUGGET), ItemStack.EMPTY);
 		addLoot("blaze", new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.BLAZE_ROD), ItemStack.EMPTY);
-		addLoot("chicken", new ItemStack(Items.FEATHER), new ItemStack(Items.IRON_NUGGET), ItemStack.EMPTY);
+		addLoot("chicken", new ItemStack(Items.FEATHER), new ItemStack(Items.CHICKEN), ItemStack.EMPTY);
 		addLoot("chicken_jockey", new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.FEATHER), ItemStack.EMPTY);
 		addLoot("king_cluck", new ItemStack(StatuesItems.nugget), ItemStack.EMPTY, new ItemStack(Items.GOLD_NUGGET));
 		addLoot("cow", new ItemStack(Items.BEEF), ItemStack.EMPTY, new ItemStack(Items.LEATHER));

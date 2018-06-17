@@ -3,21 +3,20 @@
     "item": "statues:blockrabbitwhitespotstatuet2"
   },
   "pattern": [
-    "WWW",
-    "WSW",
-    "WWW"
+    "NRN",
+    "RSR",
+    "NRN"
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
     "S": {
       "item": "statues:blockrabbitwhitespotstatue"
     },
-    "W": {
-      "item": "minecraft:wool",
-      "data": 32767
+    "N": {
+      "item": "minecraft:noteblock"
     }
-  },
-  "conditions": [{
-    "type": "statues:interaction"
-	}]
+  }
 }
