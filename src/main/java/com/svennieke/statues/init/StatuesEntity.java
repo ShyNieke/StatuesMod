@@ -13,6 +13,7 @@ import com.svennieke.statues.entity.fakeentity.FakeMagmaCube;
 import com.svennieke.statues.entity.fakeentity.FakeShulker;
 import com.svennieke.statues.entity.fakeentity.FakeSkeleton;
 import com.svennieke.statues.entity.fakeentity.FakeSlime;
+import com.svennieke.statues.entity.fakeentity.FakeSpider;
 import com.svennieke.statues.entity.fakeentity.FakeWitch;
 import com.svennieke.statues.entity.fakeentity.FakeZombie;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeFireball;
@@ -50,6 +51,7 @@ public class StatuesEntity {
 		registerEntity("fake_shulker", FakeShulker.class, "FakeShulker", 80, 3, true);
 		registerEntity("fake_shulker_bullet", FakeShulkerBullet.class, "FakeShulkerBullet", 80, 3, true);
 		registerEntity("fake_witch", FakeWitch.class, "FakeWitch", 80, 3, true);
+		registerEntity("fake_spider", FakeSpider.class, "FakeSpider", 80, 3, true);
 		
 		registerTileEntity(StatueTileEntity.class, "_tileentity");
 		registerTileEntity(PlayerStatueTileEntity.class, "_playertileentity");

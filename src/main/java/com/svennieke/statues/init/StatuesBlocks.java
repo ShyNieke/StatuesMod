@@ -32,6 +32,7 @@ import com.svennieke.statues.blocks.Statues.BlockShulker_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSnowGolem_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSombrero_Statue;
+import com.svennieke.statues.blocks.Statues.BlockSpider_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
 import com.svennieke.statues.blocks.Statues.BlockTotemOfUndying_Statue;
 import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
@@ -90,6 +91,7 @@ public class StatuesBlocks {
 	public static Block[] enderman_statue;
 	public static Block[] pufferfish_statue;
 	public static Block[] evoker_statue;
+	public static Block[] spider_statue;
 
 	//Sheep Statues
 	public static Block[] sheep_statue_white;
@@ -182,6 +184,7 @@ public class StatuesBlocks {
 		pufferfish_statue = registerStatue(new BlockPufferfish_Statue("pufferfishstatue"), MAX_TIERS);
 		wasteland_statue = registerStatue(new BlockWastelandPig_Statue("wastelandpigstatue"), MAX_TIERS);
 		evoker_statue = registerStatue(new BlockEvoker_Statue("evokerstatue"), MAX_TIERS);
+		spider_statue = registerStatue(new BlockSpider_Statue("spiderstatue"), MAX_TIERS);
 
 		info_statue = registerBlock(new BlockInfo_Statue("infostatue", "blockinfostatue", 1));
 		player_statue = registerBlock(new BlockPlayer_Statue("playerstatue", "blockplayerstatue", ""));

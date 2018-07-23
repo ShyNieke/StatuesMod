@@ -322,6 +322,12 @@ tile.wastelandpigstatuet3.name=Functional Wasteland Pig Statue
 tile.wastelandpigstatuet4.name=Peaceful Wasteland Pig Statue
 tile.wastelandpigstatuet5.name=Muted Wasteland Pig Statue
 
+tile.spiderstatue.name=Decorative Spider Statue
+tile.spiderstatuet2.name=Sound Spider Statue
+tile.spiderstatuet3.name=Functional Spider Statue
+tile.spiderstatuet4.name=Peaceful Spider Statue
+tile.spiderstatuet5.name=Muted Spider Statue
+
 #Item names
 item.royalnugget.name=Royal Nugget
 item.mooshroomsoup.name=Mooshroom Soup
@@ -354,6 +360,7 @@ entity.statues:FakeMagmaCube.name=Magma Cube
 entity.statues:FakeShulker.name=Shulker
 entity.statues:FakeShulkerBullet.name=Shulker Bullet
 entity.statues:FakeWitch.name=Witch
+entity.statues:FakeSpider.name=Spider
 
 #tileentity
 statue.player=Player Statue

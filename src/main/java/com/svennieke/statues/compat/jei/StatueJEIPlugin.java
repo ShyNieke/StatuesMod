@@ -25,6 +25,7 @@ import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSnowGolem_Statue;
+import com.svennieke.statues.blocks.Statues.BlockSpider_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
 import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWastelandPig_Statue;
@@ -214,6 +215,11 @@ public class StatueJEIPlugin implements IModPlugin{
         		if(block instanceof BlockEvoker_Statue)
         		{
         			ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("evoker"));
+        			result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
+        		}
+        		if(block instanceof BlockSpider_Statue)
+        		{
+        			ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("spider"));
         			result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
         		}
         	}

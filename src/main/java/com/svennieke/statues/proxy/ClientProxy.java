@@ -11,6 +11,7 @@ import com.svennieke.statues.entity.fakeentity.FakeMagmaCube;
 import com.svennieke.statues.entity.fakeentity.FakeShulker;
 import com.svennieke.statues.entity.fakeentity.FakeSkeleton;
 import com.svennieke.statues.entity.fakeentity.FakeSlime;
+import com.svennieke.statues.entity.fakeentity.FakeSpider;
 import com.svennieke.statues.entity.fakeentity.FakeWitch;
 import com.svennieke.statues.entity.fakeentity.FakeZombie;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeFireball;
@@ -33,6 +34,7 @@ import net.minecraft.client.renderer.entity.RenderShulker;
 import net.minecraft.client.renderer.entity.RenderShulkerBullet;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.client.renderer.entity.RenderSlime;
+import net.minecraft.client.renderer.entity.RenderSpider;
 import net.minecraft.client.renderer.entity.RenderWitch;
 import net.minecraft.client.renderer.entity.RenderZombie;
 import net.minecraft.item.Item;
@@ -67,6 +69,7 @@ public class ClientProxy extends ServerProxy{
 		RenderingRegistry.registerEntityRenderingHandler(FakeShulker.class, renderManager -> new RenderShulker(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeShulkerBullet.class, renderManager -> new RenderShulkerBullet(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeWitch.class, renderManager -> new RenderWitch(renderManager));
+		RenderingRegistry.registerEntityRenderingHandler(FakeSpider.class, renderManager -> new RenderSpider(renderManager));
 	}
 	
 	@Override

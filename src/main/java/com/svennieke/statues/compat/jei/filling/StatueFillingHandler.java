@@ -29,5 +29,4 @@ public class StatueFillingHandler implements IRecipeHandler<StatueFillingWrapper
         recipe.getIngredients(ingredients);
         return ingredients.getInputs(ItemStack.class).size() > 0 && ingredients.getOutputs(ItemStack.class).size() > 0;
 	}
-
 }

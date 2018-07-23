@@ -59,7 +59,7 @@ public class FishHandler {
 						default_drop_chance = StatuesConfigGen.general.OldDropChance;
 					}
 					
-					if ( Math.random() <= default_drop_chance )
+					if ( Math.random() < default_drop_chance )
 			        {
 						EntityFishHook hook = event.getHookEntity();
 						if(hook != null)

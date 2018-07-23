@@ -1,6 +1,7 @@
 package com.svennieke.statues.handler;
 
 import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.entity.fakeentity.IFakeEntity;
 import com.svennieke.statues.init.StatuesBlocks;
 
 import net.minecraft.entity.Entity;
@@ -364,6 +365,11 @@ public class DropHandler {
 				}
 			}
 		}
+		
+		if(entity instanceof IFakeEntity)
+		{
+			event.setCanceled(true);
+		}
 	}
 	
 	public void DropLootStatues(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
@@ -378,12 +384,20 @@ public class DropHandler {
 					EntityPlayerMP player = (EntityPlayerMP)source;
 					String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
 					
-					if(LuckyPlayers.length != 0)
+					if(LuckyPlayers.length > 0)
 					{
-						for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
-							if(player.getName().equals(LuckyPlayers[i]));
+						for (int i = 0; i < LuckyPlayers.length; i++) 
+						{
+							String luckyName = LuckyPlayers[i];
+							String user = player.getName();
+							
+							if(!luckyName.isEmpty() && user.equals(luckyName) == true)
 							{
 								default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
+							}
+							else
+							{
+								default_drop_chance = StatuesConfigGen.general.OldDropChance;
 							}
 						}
 					}
