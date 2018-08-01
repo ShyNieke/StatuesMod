@@ -73,6 +73,9 @@ public class StatuesConfigGen {
 		
 		@Config.Comment("Player Statue Crafting (Default: true)")
 		public boolean PlayerCrafting = true;
+		
+		@Config.Comment("When true statues will add a player compass (Default: true)")
+		public boolean PlayerCompass = true;
 	}
 	
 	public static class OtherStuff{
@@ -102,7 +105,10 @@ public class StatuesConfigGen {
 				"Gone Fishing",
 				"A hat to protect you from the heat, get it in a hot biome near you",
 				"1-3 tall they seem, prickly is a bit mean, Give them a hat and see their true means",
-				"A statue of undying can be found in the pockets of the Woodland residents"
+				"A statue of undying can be found in the pockets of the Woodland residents",
+				"Right click a fake mob with a statue core to prevent them from despawning",
+				"Right click a player statue with a comparator to emit redstone when that player is online",
+				"Right click a player statue with a compass to bound the compass to the last known location of the player"
 				};
 		
 	}

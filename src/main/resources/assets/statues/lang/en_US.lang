@@ -329,11 +329,12 @@ tile.spiderstatuet4.name=Peaceful Spider Statue
 tile.spiderstatuet5.name=Muted Spider Statue
 
 #Item names
-item.royalnugget.name=Royal Nugget
-item.mooshroomsoup.name=Mooshroom Soup
-item.statuecore.name=Statue Core
-item.tea.name=Cup Of Tea
-item.cup.name=Edible Cup
+item.statues:royalnugget.name=Royal Nugget
+item.statues:mooshroomsoup.name=Mooshroom Soup
+item.statues:statuecore.name=Statue Core
+item.statues:tea.name=Cup Of Tea
+item.statues:cup.name=Edible Cup
+item.statues:playercompass.name=Player Compass
 
 #Special Lore
 cluckington.info=Also known as Cluckington
@@ -341,6 +342,7 @@ royalnugget.info=Made for and from royals
 villager.info=WIP, Trades in the future.
 tea.info=Now with less milk.
 cup.info=I can't believe its edible.
+last.known.location=Tracking last known location of: %s
 
 #Entity
 entity.statues:StatueBat.name=Statue Bat

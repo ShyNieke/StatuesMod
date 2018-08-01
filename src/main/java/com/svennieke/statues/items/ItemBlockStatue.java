@@ -31,7 +31,7 @@ public class ItemBlockStatue extends ItemBlock implements IBauble, IRenderBauble
     public ItemBlockStatue(Block block) {
 		super(block);
 	}
-
+    
 	@Override
 	public BaubleType getBaubleType(ItemStack itemstack) {
 		return BaubleType.HEAD;

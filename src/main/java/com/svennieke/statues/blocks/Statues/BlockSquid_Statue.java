@@ -62,7 +62,6 @@ public class BlockSquid_Statue extends BlockSquid implements IStatue, ITileEntit
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
-
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {

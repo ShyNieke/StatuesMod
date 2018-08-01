@@ -47,6 +47,74 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		this.renderPlayer(te, x, y, z, te.getPlayerProfile(), destroyStage, enumfacing);
 	}
 	
+	public void renderPlayerItem(@Nullable GameProfile profile)
+	{
+		ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
+		
+		ModelPlayer theModel = this.model;
+		boolean slimModel = false;
+		IBlockState state;
+		
+        if(skinlocation != null)
+        {
+        	if (profile != null)
+            {
+                Minecraft minecraft = Minecraft.getMinecraft();
+                Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+
+                if (map.containsKey(Type.SKIN))
+                {
+                	skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
+                }
+                else
+                {
+                    UUID uuid = EntityPlayer.getUUID(profile);
+                    skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+                }
+                
+    			slimModel = SkinUtil.isSlimSkin(profile.getId());
+            }
+    		
+        	Minecraft.getMinecraft().getTextureManager().bindTexture(skinlocation);
+        }
+        
+        GlStateManager.pushMatrix();
+        GlStateManager.disableCull();
+        
+        GlStateManager.translate((float)0 + 0.5F, (float)0 + 1.5F, (float)0 + 0.5F);
+        GlStateManager.scale(1.0F, -1.0F, -1.0F);
+        GlStateManager.translate(0.0F, 1.0F, 0.0F);
+        float f = 0.9995F;
+        GlStateManager.scale(0.9995F, 0.9995F, 0.9995F);
+        GlStateManager.translate(0.0F, -1.0F, 0.0F);
+        
+        GlStateManager.translate(0F, 0.75F, 0F);
+        GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
+        
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.enableAlpha();
+        GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+        float scale = 0.03125F;
+        if(slimModel)
+        	theModel = new ModelPlayer(scale, true);
+        
+        theModel.bipedBody.render(scale);
+        theModel.bipedHead.render(scale);
+        theModel.bipedLeftArm.render(scale);
+        theModel.bipedRightArm.render(scale);
+        theModel.bipedLeftLeg.render(scale);
+        theModel.bipedRightLeg.render(scale);
+
+        theModel.bipedBodyWear.render(scale);
+        theModel.bipedHeadwear.render(scale);
+        theModel.bipedLeftArmwear.render(scale);
+        theModel.bipedRightArmwear.offsetZ = -0.3125F;
+        theModel.bipedRightArmwear.render(scale);
+        theModel.bipedLeftLegwear.render(scale);
+        theModel.bipedRightLegwear.render(scale);
+        GlStateManager.popMatrix();
+	}
+	
 	public void renderPlayer(PlayerStatueTileEntity te, double x, double y, double z, @Nullable GameProfile profile, int destroyStage, EnumFacing enumfacing) 
 	{
 		ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
@@ -54,6 +122,12 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		ModelPlayer theModel = this.model;
 		boolean slimModel = false;
 		IBlockState state;
+		boolean renderHeadWear = true;
+		boolean renderChestWear = true;
+		boolean renderLeftArmWear = true;
+		boolean renderRightArmWear = true;
+		boolean renderLeftLegWear = true;
+		boolean renderRightLegWear = true;
 		 
 		if (te == null) {
             profile = null;

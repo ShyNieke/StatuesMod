@@ -53,6 +53,7 @@ public class BlockSheep_Statue extends BlockSheep implements IStatue, ITileEntit
 	@Override
 	public Block setColor(EnumDyeColor color) {
 		this.COLOR = color;
+
 		return this;
 	}
 	

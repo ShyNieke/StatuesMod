@@ -2,8 +2,10 @@ package com.svennieke.statues.init;
 
 import java.util.ArrayList;
 
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.items.ItemCup;
 import com.svennieke.statues.items.ItemMooshroomSoup;
+import com.svennieke.statues.items.ItemPlayerCompass;
 import com.svennieke.statues.items.ItemRoyalNugget;
 import com.svennieke.statues.items.ItemStatueCore;
 import com.svennieke.statues.items.ItemTea;
@@ -19,7 +21,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class StatuesItems {
 	
 	public static ItemFood nugget, soup, tea, cup;
-	public static Item core;
+	public static Item core, player_compass;
 	
 	public static ArrayList<Item> ITEMS = new ArrayList<>();
 	
@@ -28,11 +30,15 @@ public class StatuesItems {
     {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		
-		nugget = registerItem(new ItemRoyalNugget(4, 0.1f, "royalnugget", "itemroyalnugget"));
-		core = registerItem(new ItemStatueCore("statuecore", "itemstatuecore"));
-		soup = registerItem(new ItemMooshroomSoup(6, 0.3F, "mooshroomsoup", "itemmooshroomsoup"));
-		tea = registerItem(new ItemTea("tea", "itemtea"));
-		cup = registerItem(new ItemCup(1, 0.2F, "cup", "itemcup"));
+		nugget = registerItem(new ItemRoyalNugget(4, 0.1f, "royalnugget"));
+		core = registerItem(new ItemStatueCore("statuecore"));
+		soup = registerItem(new ItemMooshroomSoup(6, 0.3F, "mooshroomsoup"));
+		tea = registerItem(new ItemTea("tea"));
+		cup = registerItem(new ItemCup(1, 0.2F, "cup"));
+		if(StatuesConfigGen.player.PlayerCompass)
+		{
+			player_compass = registerItem(new ItemPlayerCompass("playercompass"));
+		}
 		
 		registry.registerAll(ITEMS.toArray(new Item[0]));
     }

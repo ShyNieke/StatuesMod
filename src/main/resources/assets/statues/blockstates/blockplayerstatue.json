@@ -7,6 +7,10 @@
 			"west": { "model": "statues:blockplayertemp", "y": 270},
             "south": { "model": "statues:blockplayertemp", "y": 180}
         },
+		"online": {
+			"true": {},
+			"false": {}
+		},
     "inventory": [{
         "model": "statues:blockplayertemp"
     }]
