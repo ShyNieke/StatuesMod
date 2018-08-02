@@ -383,7 +383,6 @@ public class DropHandler {
 				{
 					EntityPlayerMP player = (EntityPlayerMP)source;
 					String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
-					
 					if(LuckyPlayers.length > 0)
 					{
 						for (int i = 0; i < LuckyPlayers.length; i++) 
@@ -406,11 +405,25 @@ public class DropHandler {
 						default_drop_chance = StatuesConfigGen.general.OldDropChance;
 					}
 					
-					random_drop = Math.random();
-					if ( random_drop < default_drop_chance )
-		            {
-		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
-		            }
+					if(StatuesConfigGen.othersettings.antiAfk)
+					{
+						if(!player.getEntityData().getBoolean(FishHandler.afkKey))
+						{
+							random_drop = Math.random();
+							if ( random_drop < default_drop_chance )
+				            {
+				            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+				            }
+						}
+					}
+					else
+					{
+						random_drop = Math.random();
+						if ( random_drop < default_drop_chance )
+			            {
+			            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+			            }
+					}
 				}
 				break;
 			case PLAYER_FAKEPLAYER:
@@ -461,17 +474,35 @@ public class DropHandler {
 					{
 						default_drop_chance = StatuesConfigGen.general.OldDropChance;
 					}
-					
-					random_drop = Math.random();
-					if (random_drop < default_drop_chance )
-			    	{
-						Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
-						if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+					if(StatuesConfigGen.othersettings.antiAfk)
+					{
+						if(!player.getEntityData().getBoolean(FishHandler.afkKey))
 						{
-							ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
-			            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+							random_drop = Math.random();
+							if (random_drop < default_drop_chance )
+					    	{
+								Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
+								if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+								{
+									ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
+					            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+								}
+					    	}
 						}
-			    	}
+					}
+					else
+					{
+						random_drop = Math.random();
+						if (random_drop < default_drop_chance )
+				    	{
+							Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
+							if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+							{
+								ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
+				            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+							}
+				    	}
+					}
 				}
 				break;
 			case PLAYER_FAKEPLAYER:

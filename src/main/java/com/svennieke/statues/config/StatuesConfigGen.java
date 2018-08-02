@@ -88,6 +88,9 @@ public class StatuesConfigGen {
 		@Config.RequiresMcRestart
 		@Config.Comment("Changing this changes the stacksize of the mushroom soup (Default: 8)")
 		public int SoupStack = 8;
+		
+		@Config.Comment("This either disables or enables the anti-afk system that's in place (Default: true)")
+		public boolean antiAfk = true;
 	}
 	
 	public static class TextMessages{

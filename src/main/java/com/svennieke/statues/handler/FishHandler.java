@@ -37,13 +37,50 @@ public class FishHandler {
 		if(!world.isRemote)
 		{
 			double default_drop_chance = StatuesConfigGen.general.OldDropChance;
-
 			if(!(player instanceof FakePlayer))
 			{
 				EntityPlayerMP realPlayer = (EntityPlayerMP)event.getEntityPlayer();
 				String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
-				System.out.println(realPlayer.getEntityData().getBoolean(afkKey));
-				if(!realPlayer.getEntityData().getBoolean(afkKey))
+				if(StatuesConfigGen.othersettings.antiAfk)
+				{
+					if(!realPlayer.getEntityData().getBoolean(afkKey))
+					{
+						if(LuckyPlayers.length != 0)
+						{
+							for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
+								if(realPlayer.getName().equals(LuckyPlayers[i]));
+								{
+									default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
+								}
+							}
+						}
+						else
+						{
+							default_drop_chance = StatuesConfigGen.general.OldDropChance;
+						}
+						
+						if ( Math.random() < default_drop_chance )
+				        {
+							EntityFishHook hook = event.getHookEntity();
+							if(hook != null)
+							{
+								EntityItem entityitem = new EntityItem(hook.world, hook.posX, hook.posY, hook.posZ, new ItemStack(StatuesBlocks.pufferfish_statue[0]));
+			                    double d0 = hook.getAngler().posX - hook.posX;
+			                    double d1 = hook.getAngler().posY - hook.posY;
+			                    double d2 = hook.getAngler().posZ - hook.posZ;
+			                    double d3 = (double)MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+			                    double d4 = 0.1D;
+			                    entityitem.motionX = d0 * 0.1D;
+			                    entityitem.motionY = d1 * 0.1D + (double)MathHelper.sqrt(d3) * 0.08D;
+			                    entityitem.motionZ = d2 * 0.1D;
+			                    hook.world.spawnEntity(entityitem);
+							}
+							
+							event.setCanceled(true);
+				        }
+					}
+				}
+				else
 				{
 					if(LuckyPlayers.length != 0)
 					{
@@ -83,10 +120,10 @@ public class FishHandler {
 		}
 	}
 	
-	public static int tick;
+	public static final int maxTime = 2400;
 	private int timeSinceKeyPressed;
 	public static String afkKey = Reference.MOD_PREFIX + "afk";
-	
+
 	public static void updateAfk(EntityPlayer player, boolean afk) {
 		if(player.world.playerEntities.size() != 1) {
 			if(afk)
@@ -112,7 +149,7 @@ public class FishHandler {
 	public void onClientTick(ClientTickEvent event) {
 		if(event.phase == Phase.END) {
 			timeSinceKeyPressed++;
-			if(timeSinceKeyPressed >= 2400)
+			if(timeSinceKeyPressed >= maxTime)
 				StatuesPacketHandler.INSTANCE.sendToServer(new StatuesAFKPacket(true));
 		}
 	}
@@ -144,7 +181,7 @@ public class FishHandler {
 	}
 
 	private void onPress() {
-		if(timeSinceKeyPressed >= 2400)
+		if(timeSinceKeyPressed >= maxTime)
 			StatuesPacketHandler.INSTANCE.sendToServer(new StatuesAFKPacket(false));
 		
 		timeSinceKeyPressed = 0;
