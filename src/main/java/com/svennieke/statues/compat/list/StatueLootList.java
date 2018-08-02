@@ -123,7 +123,6 @@ public class StatueLootList {
 			{
 				if (!blockList.contains(blocks))
 				{
-					System.out.println(blocks);
 					blockList.add(blocks);
 				}
 			}
