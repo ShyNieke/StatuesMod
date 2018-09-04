@@ -44,13 +44,15 @@ public class FakeSkeleton extends EntitySkeleton implements IFakeEntity{
 	protected boolean canDropLoot() {
 		return false;
 	}
-	
+
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
         compound.setInteger("Lifetime", this.lifetime);
     }
 	
+	@Override
 	public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
@@ -60,8 +62,6 @@ public class FakeSkeleton extends EntitySkeleton implements IFakeEntity{
 	@Override
 	public void onLivingUpdate()
     {
-        super.onLivingUpdate();
-
         if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
@@ -74,5 +74,7 @@ public class FakeSkeleton extends EntitySkeleton implements IFakeEntity{
                 this.setDead();
             }
         }
+        
+        super.onLivingUpdate();
     }
 }

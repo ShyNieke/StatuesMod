@@ -82,13 +82,15 @@ public class FakeWitch extends EntityWitch implements IFakeEntity{
         
         super.onLivingUpdate();
     }
-	
+
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
         compound.setInteger("Lifetime", this.lifetime);
     }
-	
+
+	@Override
 	public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);

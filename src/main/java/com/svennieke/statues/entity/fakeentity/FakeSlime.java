@@ -114,7 +114,8 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
 	protected boolean canDamagePlayer() {
 		return false;
 	}
-	
+
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
@@ -129,7 +130,8 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
         this.wasOnGround = compound.getBoolean("wasOnGround");
         compound.setInteger("Lifetime", this.lifetime);
     }
-	
+
+	@Override
 	public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
@@ -182,8 +184,6 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
 	@Override
 	public void onLivingUpdate()
     {
-        super.onLivingUpdate();
-
         if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
@@ -196,6 +196,8 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
                 this.setDead();
             }
         }
+        
+        super.onLivingUpdate();
     }
 	
 	@Override

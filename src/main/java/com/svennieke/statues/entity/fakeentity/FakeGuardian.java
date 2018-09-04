@@ -34,7 +34,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -192,9 +191,9 @@ public class FakeGuardian extends EntityGuardian implements IFakeEntity{
     @Override
     public void onLivingUpdate()
     {
-        if (this.world.isRemote)
-        {
-        	if (!this.isNoDespawnRequired())
+    	if (!this.world.isRemote)
+    	{
+    		if (!this.isNoDespawnRequired())
             {
                 ++this.lifetime;
             }
@@ -203,7 +202,10 @@ public class FakeGuardian extends EntityGuardian implements IFakeEntity{
             {
                 this.setDead();
             }
-            
+    	}
+    	
+        if (this.world.isRemote)
+        {
             this.clientSideTailAnimationO = this.clientSideTailAnimation;
 
             if (!this.isInWater())
@@ -290,7 +292,7 @@ public class FakeGuardian extends EntityGuardian implements IFakeEntity{
                 }
             }
         }
-
+        
         if (this.inWater)
         {
             this.setAir(300);
@@ -582,13 +584,15 @@ public class FakeGuardian extends EntityGuardian implements IFakeEntity{
                 return (p_apply_1_ instanceof EntityPlayer || p_apply_1_ instanceof EntitySquid) && p_apply_1_.getDistanceSq(this.parentEntity) > 9.0D;
             }
         }
-    
+
+	@Override
     public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
         compound.setInteger("Lifetime", this.lifetime);
     }
-	
+
+	@Override
 	public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);

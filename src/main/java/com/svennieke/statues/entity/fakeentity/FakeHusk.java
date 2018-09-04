@@ -44,8 +44,6 @@ public class FakeHusk extends EntityHusk implements IFakeEntity{
 	@Override
 	public void onLivingUpdate()
     {
-        super.onLivingUpdate();
-
         if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
@@ -58,5 +56,7 @@ public class FakeHusk extends EntityHusk implements IFakeEntity{
                 this.setDead();
             }
         }
+        
+        super.onLivingUpdate();
     }
 }

@@ -254,16 +254,14 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 		return false;
 	}
 	
-	@Override
-	public IBlockState getStateFromMeta(int meta)
-    {
-		return getDefaultState().withProperty(FACING,EnumFacing.getFront(meta % 6)).withProperty(ONLINE, meta > 5);
-	}
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(3 & meta)).withProperty(ONLINE, (meta & 4) == 4);
+    }
 
-	@Override
-    public int getMetaFromState(IBlockState state)
-    {
-    	return state.getValue(FACING).getIndex() + (state.getValue(ONLINE) ? 6 : 0);
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(FACING).getHorizontalIndex() + (state.getValue(ONLINE) ? 4 : 0);
     }
 	
 	@Override

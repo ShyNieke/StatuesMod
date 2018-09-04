@@ -247,13 +247,15 @@ public class FakeShulker extends EntityShulker implements IFakeEntity {
             --this.peekTime;
         }
     }
-    
+
+	@Override
     public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
         compound.setInteger("Lifetime", this.lifetime);
     }
-	
+
+	@Override
 	public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
@@ -263,8 +265,6 @@ public class FakeShulker extends EntityShulker implements IFakeEntity {
 	@Override
 	public void onLivingUpdate()
     {
-        super.onLivingUpdate();
-
         if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
@@ -277,7 +277,7 @@ public class FakeShulker extends EntityShulker implements IFakeEntity {
                 this.setDead();
             }
         }
+        
+        super.onLivingUpdate();
     }
-	
-	
 }

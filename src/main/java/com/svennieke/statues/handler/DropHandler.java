@@ -18,6 +18,7 @@ import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.EntitySnowman;
+import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityVex;
 import net.minecraft.entity.monster.EntityVindicator;
 import net.minecraft.entity.monster.EntityWitch;
@@ -310,6 +311,11 @@ public class DropHandler {
 	        	
 	        	ItemStack itemStackToDrop2 = new ItemStack(StatuesBlocks.totemofundying_statue, 1);
 	        	DropLootStatues(entity, itemStackToDrop2, source, event);
+	        }
+	        
+	        if (entity instanceof EntitySpider) {
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.spider_statue[0], 1);
+	        	DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
         }
 		

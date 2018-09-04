@@ -169,13 +169,15 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
             return iattributeinstance == null ? 16.0D : iattributeinstance.getAttributeValue();
         }
     }
-	
+
+	@Override
 	public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
         compound.setInteger("Lifetime", this.lifetime);
     }
-	
+
+	@Override
 	public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
@@ -185,8 +187,6 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
 	@Override
 	public void onLivingUpdate()
     {
-        super.onLivingUpdate();
-
         if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
@@ -199,5 +199,7 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
                 this.setDead();
             }
         }
+        
+        super.onLivingUpdate();
     }
 }

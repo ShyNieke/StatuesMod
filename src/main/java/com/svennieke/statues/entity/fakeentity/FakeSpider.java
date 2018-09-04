@@ -23,6 +23,7 @@ import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -42,6 +43,7 @@ import net.minecraft.world.storage.loot.LootTableList;
 
 public class FakeSpider extends EntitySpider implements IFakeEntity{
 	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(FakeSpider.class, DataSerializers.BYTE);
+	private int lifetime;
 
     public FakeSpider(World worldIn)
     {
@@ -239,46 +241,79 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
     }
 
     static class AISpiderTarget<T extends EntityLivingBase> extends EntityAINearestAttackableTarget<T>
+    {
+        public AISpiderTarget(FakeSpider spider, Class<T> classTarget)
         {
-            public AISpiderTarget(FakeSpider spider, Class<T> classTarget)
-            {
-                super(spider, classTarget, true);
-            }
-
-            /**
-             * Returns whether the EntityAIBase should begin execution.
-             */
-            public boolean shouldExecute()
-            {
-                float f = this.taskOwner.getBrightness();
-                return f >= 0.5F ? false : super.shouldExecute();
-            }
+            super(spider, classTarget, true);
         }
+
+        /**
+         * Returns whether the EntityAIBase should begin execution.
+         */
+        public boolean shouldExecute()
+        {
+            float f = this.taskOwner.getBrightness();
+            return f >= 0.5F ? false : super.shouldExecute();
+        }
+    }
 
     public static class GroupData implements IEntityLivingData
+    {
+        public Potion effect;
+
+        public void setRandomEffect(Random rand)
         {
-            public Potion effect;
+            int i = rand.nextInt(5);
 
-            public void setRandomEffect(Random rand)
+            if (i <= 1)
             {
-                int i = rand.nextInt(5);
-
-                if (i <= 1)
-                {
-                    this.effect = MobEffects.SPEED;
-                }
-                else if (i <= 2)
-                {
-                    this.effect = MobEffects.STRENGTH;
-                }
-                else if (i <= 3)
-                {
-                    this.effect = MobEffects.REGENERATION;
-                }
-                else if (i <= 4)
-                {
-                    this.effect = MobEffects.INVISIBILITY;
-                }
+                this.effect = MobEffects.SPEED;
+            }
+            else if (i <= 2)
+            {
+                this.effect = MobEffects.STRENGTH;
+            }
+            else if (i <= 3)
+            {
+                this.effect = MobEffects.REGENERATION;
+            }
+            else if (i <= 4)
+            {
+                this.effect = MobEffects.INVISIBILITY;
             }
         }
+    }
+    
+    @Override
+	public void onLivingUpdate()
+    {
+		if (!this.world.isRemote)
+        {
+            if (!this.isNoDespawnRequired())
+            {
+                ++this.lifetime;
+            }
+
+            if (this.lifetime >= 2400)
+            {
+                this.setDead();
+            }
+        }
+        
+        super.onLivingUpdate();
+    }
+    
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound)
+    {
+        super.writeEntityToNBT(compound);
+        compound.setInteger("Lifetime", this.lifetime);
+    }
+    
+    @Override
+	public void readEntityFromNBT(NBTTagCompound compound)
+    {
+        super.readEntityFromNBT(compound);
+        this.lifetime = compound.getInteger("Lifetime");
+    }
 }

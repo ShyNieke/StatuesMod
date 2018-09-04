@@ -34,7 +34,7 @@ public class StatueTimerProvider implements IWailaDataProvider, IWailaPlugin {
 		}
 		
 		registrar.addConfig("Statues", CONFIG_PLAYER_NAME);
-		registrar.addConfig("Statues", CONFIG_PLAYER_UUID);
+		registrar.addConfig("Statues", CONFIG_PLAYER_UUID, false);
 		registrar.addConfig("Statues", CONFIG_STATUE_TIMER);
 	}
 

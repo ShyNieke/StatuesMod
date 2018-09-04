@@ -141,13 +141,15 @@ public class FakeMagmaCube extends EntityMagmaCube implements IFakeEntity{
     {
         return super.getAttackStrength() + 2;
     }
-    
+
+	@Override
     public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
         compound.setInteger("Lifetime", this.lifetime);
     }
-	
+
+	@Override
 	public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);

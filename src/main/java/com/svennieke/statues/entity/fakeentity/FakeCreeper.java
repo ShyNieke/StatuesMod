@@ -66,6 +66,7 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
+    @Override
     public void writeEntityToNBT(NBTTagCompound compound)
     {
         super.writeEntityToNBT(compound);
@@ -85,6 +86,7 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
     /**
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
+    @Override
     public void readEntityFromNBT(NBTTagCompound compound)
     {
         super.readEntityFromNBT(compound);
@@ -262,8 +264,6 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
 	@Override
 	public void onLivingUpdate()
     {
-        super.onLivingUpdate();
-
         if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
@@ -275,6 +275,8 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
             {
                 this.setDead();
             }
+
+            super.onLivingUpdate();
         }
     }
 }
