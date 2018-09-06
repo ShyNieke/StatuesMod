@@ -3,20 +3,23 @@
     "item": "statues:blockrabbityellowstatuet3"
   },
   "pattern": [
-    "NRN",
-    "RSR",
-    "NRN"
+    "NCN",
+    "CSC",
+    "NCN"
   ],
   "type": "minecraft:crafting_shaped",
   "key": {
-    "R": {
-      "item": "minecraft:redstone_block"
+    "C": {
+      "item": "minecraft:chorus_flower"
     },
     "S": {
       "item": "statues:blockrabbityellowstatuet2"
     },
     "N": {
-      "item": "minecraft:noteblock"
+      "item": "minecraft:quartz_ore"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
 }

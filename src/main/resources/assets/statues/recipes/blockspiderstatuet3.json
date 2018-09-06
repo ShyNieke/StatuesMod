@@ -1,6 +1,6 @@
 {
   "result": {
-    "item": "statues:blockrabbitblackspotstatuet3"
+    "item": "statues:blockspiderstatuet3"
   },
   "pattern": [
     "NCN",
@@ -13,7 +13,7 @@
       "item": "minecraft:chorus_flower"
     },
     "S": {
-      "item": "statues:blockrabbitblackspotstatuet2"
+      "item": "statues:blockspiderstatuet2"
     },
     "N": {
       "item": "minecraft:quartz_ore"

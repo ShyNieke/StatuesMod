@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "statues:blockspiderstatuet2"
+  },
+  "pattern": [
+    "NRN",
+    "RSR",
+    "NRN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "S": {
+      "item": "statues:blockspiderstatue"
+    },
+    "N": {
+      "item": "minecraft:noteblock"
+    }
+  }
+}
