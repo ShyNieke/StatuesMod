@@ -1,0 +1,30 @@
+{
+    "display": {
+        "icon": {
+            "item": "statues:blockcampfirestatue"
+        },
+        "title": {
+            "translate": "Thank you Etho"
+        },
+        "description": {
+            "translate": "Thank you for the amazing 10 years <3"
+        },
+		"frame": "challenge",
+		"hidden": true,
+		"show_toast": true,
+        "announce_to_chat": true
+		},
+    "parent": "statues:statues/pig",
+    "criteria": {
+        "meme": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:blockcampfirestatue"
+                    }
+                ]
+            }
+        }
+    }
+}

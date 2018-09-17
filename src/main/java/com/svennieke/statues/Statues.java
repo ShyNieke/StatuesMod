@@ -9,6 +9,7 @@ import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DespawnHandler;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.handler.FishHandler;
+import com.svennieke.statues.handler.TemporaryHandler;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesGuiHandler;
 import com.svennieke.statues.init.StatuesHoliday;
@@ -102,6 +103,7 @@ public class Statues {
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new FishHandler());
 		MinecraftForge.EVENT_BUS.register(new DespawnHandler());
+		MinecraftForge.EVENT_BUS.register(new TemporaryHandler());
 		
 		proxy.Init();
     }

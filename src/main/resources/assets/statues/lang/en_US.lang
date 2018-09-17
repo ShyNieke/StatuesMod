@@ -328,6 +328,12 @@ tile.spiderstatuet3.name=Functional Spider Statue
 tile.spiderstatuet4.name=Peaceful Spider Statue
 tile.spiderstatuet5.name=Muted Spider Statue
 
+tile.campfirestatue.name=Decorative Campfire Statue
+tile.campfirestatuet2.name=Sound Campfire Statue
+tile.campfirestatuet3.name=Functional Campfire Statue
+tile.campfirestatuet4.name=Peaceful Campfire Statue
+tile.campfirestatuet5.name=Muted Campfire Statue
+
 #Item names
 item.statues:royalnugget.name=Royal Nugget
 item.statues:mooshroomsoup.name=Mooshroom Soup

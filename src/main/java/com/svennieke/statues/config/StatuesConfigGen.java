@@ -111,7 +111,9 @@ public class StatuesConfigGen {
 				"A statue of undying can be found in the pockets of the Woodland residents",
 				"Right click a fake mob with a statue core to prevent them from despawning",
 				"Right click a player statue with a comparator to emit redstone when that player is online",
-				"Right click a player statue with a compass to bound the compass to the last known location of the player"
+				"Right click a player statue with a compass to bound the compass to the last known location of the player",
+				"A player and a creeper with blue fire in the middle",
+				"How to make blue fire, if fire itself does not work"
 				};
 		
 	}

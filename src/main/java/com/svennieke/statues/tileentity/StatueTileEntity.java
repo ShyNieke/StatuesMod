@@ -69,6 +69,50 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		return this.tier;
 	}
 
+	public void CampfireBehavior(World worldIn, BlockPos pos, EntityPlayer playerIn, @Nullable ItemStack stack1, @Nullable ItemStack stack2, @Nullable ItemStack stack3)
+	{	
+		if(tier > 1)
+		{
+			if(isStatueAble()) 
+			{
+				int random = world.rand.nextInt(100);
+				if(tier >= 3)
+				{
+					if (random < 100 && stack1 != null && stack1 != ItemStack.EMPTY)
+					{
+						if(stack1.getItem() instanceof ItemTea && tier == 3)
+						{
+							worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.NEUTRAL, 1F, 1F); //TODO: REMOVE PLACEHOLDER AND ACTUALLY IMPLEMENT PROPER STUFF
+						}
+						playerIn.dropItem(stack1, true);
+					}
+					
+					if(stack2 != null && stack2 != ItemStack.EMPTY){
+						if(random < 50)
+						{
+							playerIn.dropItem(stack2, true);
+						}
+					}
+					
+					if(stack3 != null && stack3 != ItemStack.EMPTY){
+						if(random < 10)
+						{
+							playerIn.dropItem(stack3, true);
+						}
+					}
+					setStatueAble(false);
+				}
+			}
+			else
+			{
+				if((tier >= 2 && tier != 5))
+				{
+					worldIn.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1F, 1F); //TODO: REMOVE PLACEHOLDER AND ACTUALLY IMPLEMENT PROPER STUFF
+				}
+			}
+		}
+	}
+	
 	public void FakeMobs(Entity entity, World worldIn, BlockPos pos, boolean isChild) {
 		if(tier == 3)
 		{

@@ -13,6 +13,7 @@ import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCreeper_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEnderman_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEndermite_Statue;
+import com.svennieke.statues.blocks.Statues.BlockEtho_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEvoker_Statue;
 import com.svennieke.statues.blocks.Statues.BlockFlood_Statue;
 import com.svennieke.statues.blocks.Statues.BlockGhast_Statue;
@@ -92,6 +93,7 @@ public class StatuesBlocks {
 	public static Block[] pufferfish_statue;
 	public static Block[] evoker_statue;
 	public static Block[] spider_statue;
+	public static Block[] campfire_statue;
 
 	//Sheep Statues
 	public static Block[] sheep_statue_white;
@@ -110,7 +112,7 @@ public class StatuesBlocks {
 	public static Block[] sheep_statue_green;
 	public static Block[] sheep_statue_red;
 	public static Block[] sheep_statue_black;
-	
+
 	//Other Statues
 	public static Block info_statue;
 	public static Block player_statue;
@@ -185,7 +187,7 @@ public class StatuesBlocks {
 		wasteland_statue = registerStatue(new BlockWastelandPig_Statue("wastelandpigstatue"), MAX_TIERS);
 		evoker_statue = registerStatue(new BlockEvoker_Statue("evokerstatue"), MAX_TIERS);
 		spider_statue = registerStatue(new BlockSpider_Statue("spiderstatue"), MAX_TIERS);
-
+		
 		info_statue = registerBlock(new BlockInfo_Statue("infostatue", "blockinfostatue", 1));
 		player_statue = registerBlock(new BlockPlayer_Statue("playerstatue", "blockplayerstatue", ""));
 		
@@ -198,6 +200,8 @@ public class StatuesBlocks {
 		bumbo_statue = registerBlock(new BlockBumbo_Statue("bumbostatue", "blockbumbostatue"));
 		totemofundying_statue = registerBlock(new BlockTotemOfUndying_Statue("totemofundyingstatue", "blocktotemofundyingstatue"));
 		
+		campfire_statue = registerStatue(new BlockEtho_Statue("campfirestatue"), 1);
+
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}
     

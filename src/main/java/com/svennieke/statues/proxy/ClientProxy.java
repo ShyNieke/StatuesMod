@@ -95,8 +95,7 @@ public class ClientProxy extends ServerProxy{
         {
         	if(item == Item.getItemFromBlock(StatuesBlocks.player_statue))
         	{
-        		PlayerInventoryRender renderer = new PlayerInventoryRender();
-        		item.setTileEntityItemStackRenderer(renderer);
+        		item.setTileEntityItemStackRenderer(new PlayerInventoryRender());
         	}
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(item.getRegistryName().getResourcePath()), "inventory"));
         }
