@@ -5,6 +5,7 @@ import java.time.Month;
 import java.util.ArrayList;
 
 import com.svennieke.statues.Statues;
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.fakeentity.FakeBlaze;
 import com.svennieke.statues.entity.fakeentity.FakeCreeper;
 import com.svennieke.statues.entity.fakeentity.FakeEnderman;
@@ -60,7 +61,7 @@ public class StatuesHoliday {
 	{
 		if(entry.entityClass == oldEntity)
 		{
-			EntityRegistry.addSpawn(newEntity, entry.itemWeight / 2, entry.minGroupCount / 2, entry.maxGroupCount / 2, EnumCreatureType.MONSTER, biome);
+			EntityRegistry.addSpawn(newEntity, entry.itemWeight / StatuesConfigGen.events.halloweenWeigth, entry.minGroupCount, entry.maxGroupCount, EnumCreatureType.MONSTER, biome);
 		}
 	}
 }
