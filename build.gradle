@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "0.8.6.14"
+version = "0.8.6.15"
 group= "com.svennieke.statues" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "statues-1.12.X"
 
@@ -28,9 +28,13 @@ minecraft {
 
 repositories {
 	maven {
+		// location of the maven that hosts JEI files
+		name = "Progwml6 maven"
 		url = "http://dvs1.progwml6.com/files/maven"
 	}
 	maven {
+		// location of a maven mirror for JEI files, as a fallback
+		name = "ModMaven"
 		url = "modmaven.k-4u.nl"
 	}
 	maven {

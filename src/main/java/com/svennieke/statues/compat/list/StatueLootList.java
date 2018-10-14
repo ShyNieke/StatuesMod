@@ -45,7 +45,7 @@ public class StatueLootList {
 		addLoot("pufferfish", ItemStack.EMPTY, new ItemStack(Items.FISH, 1, 3), ItemStack.EMPTY);
 		addLoot("spider", new ItemStack(Items.STRING), new ItemStack(Items.SPIDER_EYE), ItemStack.EMPTY);
 		addLoot("evoker", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.TOTEM_OF_UNDYING));
-		//addLoot("etho", new ItemStack(StatuesItems.marshmallow), ItemStack.EMPTY, ItemStack.EMPTY); TODO: Re-Enable
+		//addLoot("etho", new ItemStack(StatuesItems.marshmallow), ItemStack.EMPTY, ItemStack.EMPTY);
 	}
 	
 	public static ItemStack getWastelandBlock()

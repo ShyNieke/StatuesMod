@@ -21,7 +21,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class StatuesItems {
 	
 	public static ItemFood nugget, soup, tea, cup;
-	public static Item core, player_compass, marshmallow;
+	public static Item core, player_compass;//, marshmallow;
 	
 	public static ArrayList<Item> ITEMS = new ArrayList<>();
 	
@@ -41,7 +41,7 @@ public class StatuesItems {
 			player_compass = registerItem(new ItemPlayerCompass("playercompass"));
 		}
 		
-		//marshmallow = registerItem(new ItemRoyalNugget(6, 0.2f, "marshmallow")); TODO:Re-Enable
+		//marshmallow = registerItem(new ItemRoyalNugget(6, 0.2f, "marshmallow"));
 
 		registry.registerAll(ITEMS.toArray(new Item[0]));
     }

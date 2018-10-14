@@ -26,6 +26,9 @@ public class StatuesConfigGen {
 	
 	@Config.Comment({"Lucky Players"})
 	public static LuckyPlayers luckyplayers = new LuckyPlayers();
+	
+	@Config.Comment({"Seasonal Events"})
+	public static Events events = new Events();
 		
 	public enum EnumDeathSource {
 		ALL,
@@ -125,6 +128,11 @@ public class StatuesConfigGen {
 				"iskall85"
 				};
 		
+	}
+	
+	public static class Events{
+		@Config.Comment("When enabled makes the fake mobs spawn during the month of October as a halloween event (Default: true)")
+		public boolean halloweenSpawning = true;
 	}
 	
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)

@@ -9,7 +9,7 @@ import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DespawnHandler;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.handler.FishHandler;
-import com.svennieke.statues.handler.TemporaryHandler;
+import com.svennieke.statues.handler.MagicHandler;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesGuiHandler;
 import com.svennieke.statues.init.StatuesHoliday;
@@ -93,7 +93,10 @@ public class Statues {
 		logger.info("Registering Statues Gui Handler");
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new StatuesGuiHandler());
 		
-		StatuesHoliday.registerSpawning();
+		if(StatuesConfigGen.events.halloweenSpawning)
+		{
+			StatuesHoliday.registerSpawning();
+		}
 		
 		//Initialize loot
 		logger.info("Initialize Statues Loot");
@@ -103,7 +106,7 @@ public class Statues {
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new FishHandler());
 		MinecraftForge.EVENT_BUS.register(new DespawnHandler());
-		MinecraftForge.EVENT_BUS.register(new TemporaryHandler());
+		MinecraftForge.EVENT_BUS.register(new MagicHandler());
 		
 		proxy.Init();
     }

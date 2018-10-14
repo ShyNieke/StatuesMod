@@ -221,7 +221,12 @@ public class StatueJEIPlugin implements IModPlugin{
         		{
         			ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("spider"));
         			result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
-        		}
+        		}/*
+        		if(block instanceof BlockEtho_Statue)
+            	{
+            		ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("etho"));
+            		result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
+            	}*/
         	}
         }
         return result;

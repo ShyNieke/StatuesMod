@@ -1,7 +1,6 @@
 package com.svennieke.statues.entity.fakeentity.fakeprojectiles;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.EnumParticleTypes;
