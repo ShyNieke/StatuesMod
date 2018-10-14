@@ -73,10 +73,12 @@ public class StatuesConfigGen {
 		
 		@Config.Comment("Source of death that determines how the Player Statue drops (Default: PLAYER)")
 		public EnumDeathSource PlayerStatueKillSource = EnumDeathSource.PLAYER;
-		
+
+		@Config.RequiresMcRestart
 		@Config.Comment("Player Statue Crafting (Default: true)")
 		public boolean PlayerCrafting = true;
-		
+
+		@Config.RequiresMcRestart
 		@Config.Comment("When true statues will add a player compass (Default: true)")
 		public boolean PlayerCompass = true;
 	}
@@ -131,9 +133,11 @@ public class StatuesConfigGen {
 	}
 	
 	public static class Events{
+		@Config.RequiresMcRestart
 		@Config.Comment("When enabled makes the fake mobs spawn during the month of October as a halloween event (Default: true)")
 		public boolean halloweenSpawning = true;
-		
+
+		@Config.RequiresMcRestart
 		@Config.Comment("The weigth of the fake mobs is divided by this number. (Default: 4)")
 		@Config.RangeInt(min = 1)
 		public int fakeSpawningWeigth = 4;
