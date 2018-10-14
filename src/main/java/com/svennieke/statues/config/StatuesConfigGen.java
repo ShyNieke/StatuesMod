@@ -134,9 +134,9 @@ public class StatuesConfigGen {
 		@Config.Comment("When enabled makes the fake mobs spawn during the month of October as a halloween event (Default: true)")
 		public boolean halloweenSpawning = true;
 		
-		@Config.Comment("The halloween weigth of the fake mobs is divided by this number. (Default: 4)")
+		@Config.Comment("The weigth of the fake mobs is divided by this number. (Default: 4)")
 		@Config.RangeDouble(min = 1)
-		public int halloweenWeigth = 4;
+		public int fakeSpawningWeigth = 4;
 	}
 	
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)

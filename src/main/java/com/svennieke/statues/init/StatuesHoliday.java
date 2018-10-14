@@ -61,7 +61,7 @@ public class StatuesHoliday {
 	{
 		if(entry.entityClass == oldEntity)
 		{
-			EntityRegistry.addSpawn(newEntity, entry.itemWeight / StatuesConfigGen.events.halloweenWeigth, entry.minGroupCount, entry.maxGroupCount, EnumCreatureType.MONSTER, biome);
+			EntityRegistry.addSpawn(newEntity, entry.itemWeight / StatuesConfigGen.events.fakeSpawningWeigth, entry.minGroupCount, entry.maxGroupCount, EnumCreatureType.MONSTER, biome);
 		}
 	}
 }
