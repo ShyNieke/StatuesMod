@@ -13,8 +13,11 @@ import com.svennieke.statues.entity.fakeentity.FakeShulker;
 import com.svennieke.statues.entity.fakeentity.FakeSkeleton;
 import com.svennieke.statues.entity.fakeentity.FakeSlime;
 import com.svennieke.statues.entity.fakeentity.FakeSpider;
+import com.svennieke.statues.entity.fakeentity.FakeStray;
 import com.svennieke.statues.entity.fakeentity.FakeWitch;
+import com.svennieke.statues.entity.fakeentity.FakeWitherSkeleton;
 import com.svennieke.statues.entity.fakeentity.FakeZombie;
+import com.svennieke.statues.entity.fakeentity.FakeZombiePigman;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeFireball;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeLargeFireball;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeShulkerBullet;
@@ -36,12 +39,15 @@ import net.minecraft.client.renderer.entity.RenderGhast;
 import net.minecraft.client.renderer.entity.RenderGuardian;
 import net.minecraft.client.renderer.entity.RenderHusk;
 import net.minecraft.client.renderer.entity.RenderMagmaCube;
+import net.minecraft.client.renderer.entity.RenderPigZombie;
 import net.minecraft.client.renderer.entity.RenderShulker;
 import net.minecraft.client.renderer.entity.RenderShulkerBullet;
 import net.minecraft.client.renderer.entity.RenderSkeleton;
 import net.minecraft.client.renderer.entity.RenderSlime;
 import net.minecraft.client.renderer.entity.RenderSpider;
+import net.minecraft.client.renderer.entity.RenderStray;
 import net.minecraft.client.renderer.entity.RenderWitch;
+import net.minecraft.client.renderer.entity.RenderWitherSkeleton;
 import net.minecraft.client.renderer.entity.RenderZombie;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -81,6 +87,9 @@ public class ClientProxy extends ServerProxy{
 		RenderingRegistry.registerEntityRenderingHandler(FakeShulkerBullet.class, renderManager -> new RenderShulkerBullet(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeWitch.class, renderManager -> new RenderWitch(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeSpider.class, renderManager -> new RenderSpider(renderManager));
+		RenderingRegistry.registerEntityRenderingHandler(FakeStray.class, renderManager -> new RenderStray(renderManager));
+		RenderingRegistry.registerEntityRenderingHandler(FakeZombiePigman.class, renderManager -> new RenderPigZombie(renderManager));
+		RenderingRegistry.registerEntityRenderingHandler(FakeWitherSkeleton.class, renderManager -> new RenderWitherSkeleton(renderManager));
 	}
 	
 	@Override
