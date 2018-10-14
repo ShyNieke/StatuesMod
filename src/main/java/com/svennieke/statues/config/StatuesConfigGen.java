@@ -135,7 +135,7 @@ public class StatuesConfigGen {
 		public boolean halloweenSpawning = true;
 		
 		@Config.Comment("The weigth of the fake mobs is divided by this number. (Default: 4)")
-		@Config.RangeDouble(min = 1)
+		@Config.RangeInt(min = 1)
 		public int fakeSpawningWeigth = 4;
 	}
 	
