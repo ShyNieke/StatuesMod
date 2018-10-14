@@ -1,13 +1,10 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockEtho;
-import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.entity.fakeentity.FakeCreeper;
-import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.Block;
@@ -15,7 +12,6 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
