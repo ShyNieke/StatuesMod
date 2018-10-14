@@ -10,8 +10,10 @@ import com.svennieke.statues.entity.fakeentity.FakeBlaze;
 import com.svennieke.statues.entity.fakeentity.FakeCreeper;
 import com.svennieke.statues.entity.fakeentity.FakeEnderman;
 import com.svennieke.statues.entity.fakeentity.FakeGuardian;
+import com.svennieke.statues.entity.fakeentity.FakeHusk;
 import com.svennieke.statues.entity.fakeentity.FakeMagmaCube;
 import com.svennieke.statues.entity.fakeentity.FakeShulker;
+import com.svennieke.statues.entity.fakeentity.FakeSkeleton;
 import com.svennieke.statues.entity.fakeentity.FakeSlime;
 import com.svennieke.statues.entity.fakeentity.FakeSpider;
 import com.svennieke.statues.entity.fakeentity.FakeWitch;
@@ -24,8 +26,10 @@ import net.minecraft.entity.monster.EntityBlaze;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.monster.EntityGuardian;
+import net.minecraft.entity.monster.EntityHusk;
 import net.minecraft.entity.monster.EntityMagmaCube;
 import net.minecraft.entity.monster.EntityShulker;
+import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.monster.EntityWitch;
@@ -42,16 +46,19 @@ public class StatuesHoliday {
 		{
 			for (Biome biome : Biome.REGISTRY) {
 				for (Biome.SpawnListEntry entry : new ArrayList<>(biome.getSpawnableList(EnumCreatureType.MONSTER))) {
+					registerSpawn(entry, biome, EntityBlaze.class, FakeBlaze.class);
 					registerSpawn(entry, biome, EntityCreeper.class, FakeCreeper.class);
 					registerSpawn(entry, biome, EntityEnderman.class, FakeEnderman.class);
-					registerSpawn(entry, biome, EntityZombie.class, FakeZombie.class);
-					registerSpawn(entry, biome, EntityWitch.class, FakeWitch.class);
+					registerSpawn(entry, biome, EntityGuardian.class, FakeGuardian.class);
+					registerSpawn(entry, biome, EntityHusk.class, FakeHusk.class);
+					registerSpawn(entry, biome, EntityMagmaCube.class, FakeMagmaCube.class);
+					registerSpawn(entry, biome, EntityShulker.class, FakeShulker.class);
+					registerSpawn(entry, biome, EntitySkeleton.class, FakeSkeleton.class);
 					registerSpawn(entry, biome, EntitySlime.class, FakeSlime.class);
 					registerSpawn(entry, biome, EntitySpider.class, FakeSpider.class);
-					registerSpawn(entry, biome, EntityMagmaCube.class, FakeMagmaCube.class);
-					registerSpawn(entry, biome, EntityBlaze.class, FakeBlaze.class);
-					registerSpawn(entry, biome, EntityGuardian.class, FakeGuardian.class);
-					registerSpawn(entry, biome, EntityShulker.class, FakeShulker.class);
+					registerSpawn(entry, biome, EntityWitch.class, FakeWitch.class);
+					registerSpawn(entry, biome, EntityZombie.class, FakeZombie.class);
+
 	            }
 			}
 			Statues.logger.debug("Registered Holiday Mobs");
