@@ -33,6 +33,7 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
@@ -279,29 +280,36 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 			if(!playerIn.isSneaking() && stack.getItem() == Items.COMPASS && StatuesConfigGen.player.PlayerCompass)
 			{
 				if(getTE(worldIn, pos).getPlayerProfile() != null && 
-					worldIn.getPlayerEntityByUUID(getTE(worldIn, pos).getPlayerProfile().getId()) != null && 
-					getTE(worldIn, pos).getPlayerProfile().getName() != null)
+					worldIn.getPlayerEntityByUUID(getTE(worldIn, pos).getPlayerProfile().getId()) != null)
 				{
-					stack.shrink(1);
 
 					ItemStack playerCompass = new ItemStack(StatuesItems.player_compass);
 					NBTTagCompound locationTag = new NBTTagCompound();
 					
 					EntityPlayer player = worldIn.getPlayerEntityByUUID(getTE(worldIn, pos).getPlayerProfile().getId());
-					BlockPos playerPos = player.getPosition();
-					locationTag.setString("lastPlayerLocation", playerPos.getX() + "," + playerPos.getY() + "," + playerPos.getZ());
-					locationTag.setString("playerTracking", getTE(worldIn, pos).getPlayerProfile().getName());
+					if(player.dimension == playerIn.dimension)
+					{
+						BlockPos playerPos = player.getPosition();
+						locationTag.setLong("lastPlayerLocation", playerPos.toLong());
+						locationTag.setString("playerTracking", getTE(worldIn, pos).getPlayerProfile().getName());
+						
+						playerCompass.setTagCompound(locationTag);
+
+						stack.shrink(1);
+						if (stack.isEmpty())
+			            {
+							playerIn.setHeldItem(hand, playerCompass);
+			            }
+			            else if (!playerIn.inventory.addItemStackToInventory(playerCompass))
+			            {
+			            	playerIn.dropItem(playerCompass, false);
+			            }
+					}
+					else
+					{
+						playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.dimension.failure"));
+					}
 					
-					playerCompass.setTagCompound(locationTag);
-					
-					if (stack.isEmpty())
-		            {
-						playerIn.setHeldItem(hand, playerCompass);
-		            }
-		            else if (!playerIn.inventory.addItemStackToInventory(playerCompass))
-		            {
-		            	playerIn.dropItem(playerCompass, false);
-		            }
 					return true;
 				}
 			}
@@ -314,12 +322,27 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 					NBTTagCompound locationTag = new NBTTagCompound();
 					
 					EntityPlayer player = worldIn.getPlayerEntityByUUID(getTE(worldIn, pos).getPlayerProfile().getId());
-					BlockPos playerPos = player.getPosition();
-					locationTag.setString("lastPlayerLocation", playerPos.getX() + "," + playerPos.getY() + "," + playerPos.getZ());
-					locationTag.setString("playerTracking", getTE(worldIn, pos).getPlayerProfile().getName());
-					
-					stack.setTagCompound(locationTag);
-
+					if(player.dimension == playerIn.dimension)
+					{
+						BlockPos playerPos = player.getPosition();
+						locationTag.setLong("lastPlayerLocation", playerPos.toLong());
+						locationTag.setString("playerTracking", getTE(worldIn, pos).getPlayerProfile().getName());
+						
+						stack.setTagCompound(locationTag);
+					}
+					else
+					{
+						playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.dimension.failure"));
+						stack.shrink(1);
+						if (stack.isEmpty())
+			            {
+							playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
+			            }
+			            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS)))
+			            {
+			            	playerIn.dropItem(new ItemStack(Items.COMPASS), false);
+			            }
+					}
 					return true;
 				}
 			}

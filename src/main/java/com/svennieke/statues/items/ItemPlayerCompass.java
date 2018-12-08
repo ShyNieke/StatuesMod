@@ -59,19 +59,10 @@ public class ItemPlayerCompass extends Item {
                         worldIn = entity.world;
                     }
 
-                    double d0;
-
-                    if (worldIn.provider.isSurfaceWorld())
-                    {
-                        double d1 = flag ? (double)entity.rotationYaw : this.getFrameRotation((EntityItemFrame)entity);
-                        d1 = MathHelper.positiveModulo(d1 / 360.0D, 1.0D);
-                        double d2 = this.getLastLocationToAngle(worldIn, entity, stack) / (Math.PI * 2D);
-                        d0 = 0.5D - (d1 - 0.25D - d2);
-                    }
-                    else
-                    {
-                        d0 = Math.random();
-                    }
+                    double d1 = flag ? (double)entity.rotationYaw : this.getFrameRotation((EntityItemFrame)entity);
+                    d1 = MathHelper.positiveModulo(d1 / 360.0D, 1.0D);
+                    double d2 = this.getLastLocationToAngle(worldIn, entity, stack) / (Math.PI * 2D);
+                    double d0 = 0.5D - (d1 - 0.25D - d2);
 
                     if (flag)
                     {
@@ -110,11 +101,10 @@ public class ItemPlayerCompass extends Item {
                     NBTTagCompound tag = stack.getTagCompound();
                     if (tag.hasKey("lastPlayerLocation"))
                     {
-                    	String location = tag.getString("lastPlayerLocation");
-                    	if(!location.isEmpty() && hasThreeCommas(location))
+                    	Long location = tag.getLong("lastPlayerLocation");
+                    	if(location != 0L)
                     	{
-                    		String[] playerPos = location.split(",");
-                        	lastLocation = new BlockPos(Integer.valueOf(playerPos[0]), Integer.valueOf(playerPos[1]), Integer.valueOf(playerPos[2]));
+                        	lastLocation = BlockPos.fromLong(location);
                     	}
                     	
                     }

@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.svennieke.statues.compat.list.StatueLootList;
+import com.svennieke.statues.compat.top.TOPCompat;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.EntityStatueBat;
 import com.svennieke.statues.handler.DespawnHandler;
@@ -97,6 +98,8 @@ public class Statues {
 		{
 			StatuesHoliday.registerSpawning();
 		}
+		
+		TOPCompat.register();
 		
 		//Initialize loot
 		logger.info("Initialize Statues Loot");

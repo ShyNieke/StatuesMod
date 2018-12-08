@@ -1,5 +1,7 @@
 package com.svennieke.statues.handler;
 
+import java.util.ArrayList;
+
 import com.svennieke.statues.init.StatuesBlocks;
 
 import net.minecraft.block.Block;
@@ -23,7 +25,8 @@ public class MagicHandler {
 		World world = event.world;
 		if(world != null && !world.isRemote)
 		{
-			for(Entity entity : world.loadedEntityList)
+			ArrayList<Entity> entityList = new ArrayList<>(world.loadedEntityList);
+			for(Entity entity : entityList)
 			{
 				if(entity instanceof EntityItem)
 				{
@@ -72,7 +75,15 @@ public class MagicHandler {
 							world.spawnParticle(EnumParticleTypes.FLAME, lavaPos.down().getX(), lavaPos.down().getY(), lavaPos.down().getZ(), 0.0D, 0.0D, 0.0D, new int[0]);
 							itemE.setDead();
 						}
+						else
+						{
+							break;
+						}
 					}
+				}
+				else
+				{
+					break;
 				}
 			}
 		}

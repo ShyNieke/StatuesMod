@@ -210,8 +210,8 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 				{
 					randommessage = (messages[idx]);
 				}
-				player.sendMessage(new TextComponentTranslation(randommessage));;
 				
+				player.sendMessage(new TextComponentTranslation(randommessage));
 			}
 	}
 	

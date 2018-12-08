@@ -380,6 +380,9 @@ statue.player=Player Statue
 statues:container.shulkerStatue=Shulker Statue
 statues:container.shulkerStatue.more=and %s more...
 
+#messages
+statues:player.compass.dimension.failure=Player is in another dimension.
+
 #waila
 option.statues.player.name=Player Statue Username?
 option.statues.player.data=Player Statue UUID?

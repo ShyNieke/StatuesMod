@@ -21,7 +21,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.4.2705"
+    version = "1.12.2-14.23.5.2768"
     runDir = "run"
     mappings = "snapshot_20171003"
 }
@@ -47,14 +47,19 @@ repositories {
         name = "thiakil"
         url = "http://maven.thiakil.com"
 	}
+    maven {
+        name = "TOP Maven"
+        url = "http://maven.tterrag.com"
+    }
 }
 
 dependencies {
 	deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
 	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.5.+"
 	
-	deobfCompile "mezz.jei:jei_1.12.2:4.9.0.163"
+	deobfCompile "mezz.jei:jei_1.12.2:4.11.0.+"
 	deobfCompile "mcp.mobius.waila:Hwyla:1.8.24-B39_1.12"
+    deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
 	
 	compile files("lib/The-Cactus-Mod-1.2.jar")
 }

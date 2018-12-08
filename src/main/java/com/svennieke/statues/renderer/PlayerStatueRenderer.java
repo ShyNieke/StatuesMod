@@ -55,28 +55,25 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		boolean slimModel = false;
 		IBlockState state;
 		
-        if(skinlocation != null)
+		if (profile != null)
         {
-        	if (profile != null)
-            {
-                Minecraft minecraft = Minecraft.getMinecraft();
-                Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+            Minecraft minecraft = Minecraft.getMinecraft();
+            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
 
-                if (map.containsKey(Type.SKIN))
-                {
-                	skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-                }
-                else
-                {
-                    UUID uuid = EntityPlayer.getUUID(profile);
-                    skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
-                }
-                
-    			slimModel = SkinUtil.isSlimSkin(profile.getId());
+            if (map.containsKey(Type.SKIN))
+            {
+            	skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
             }
-    		
-        	Minecraft.getMinecraft().getTextureManager().bindTexture(skinlocation);
+            else
+            {
+                UUID uuid = EntityPlayer.getUUID(profile);
+                skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+            }
+            
+			slimModel = SkinUtil.isSlimSkin(profile.getId());
         }
+		
+    	Minecraft.getMinecraft().getTextureManager().bindTexture(skinlocation);
         
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
@@ -152,28 +149,25 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             GlStateManager.matrixMode(5888);
         }
         
-        if(skinlocation != null)
+        if (profile != null)
         {
-        	if (profile != null)
-            {
-                Minecraft minecraft = Minecraft.getMinecraft();
-                Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+            Minecraft minecraft = Minecraft.getMinecraft();
+            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
 
-                if (map.containsKey(Type.SKIN))
-                {
-                	skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-                }
-                else
-                {
-                    UUID uuid = EntityPlayer.getUUID(profile);
-                    skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
-                }
-                
-    			slimModel = SkinUtil.isSlimSkin(profile.getId());
+            if (map.containsKey(Type.SKIN))
+            {
+            	skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
             }
-    		
-        	this.bindTexture(skinlocation);
+            else
+            {
+                UUID uuid = EntityPlayer.getUUID(profile);
+                skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
+            }
+            
+			slimModel = SkinUtil.isSlimSkin(profile.getId());
         }
+		
+    	this.bindTexture(skinlocation);
         
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
