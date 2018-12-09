@@ -8,4 +8,9 @@ public class ServerProxy extends CommonProxy{
 	public void Init() {
 		
 	}
+	
+	@Override
+	public void PostInit() {
+		
+	}
 }

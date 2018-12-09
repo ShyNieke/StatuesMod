@@ -117,6 +117,6 @@ public class Statues {
 	@EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-		
+		proxy.PostInit();
     }
 }

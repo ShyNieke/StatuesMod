@@ -1,9 +1,12 @@
 package com.svennieke.statues.renderer;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
@@ -21,6 +24,10 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTUtil;
+import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -46,19 +53,48 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		
 		this.renderPlayer(te, x, y, z, te.getPlayerProfile(), destroyStage, enumfacing);
 	}
-	
-	public void renderPlayerItem(@Nullable GameProfile profile)
+
+	private static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
+	public void renderPlayerItem(ItemStack stack)
 	{
+		GameProfile gameprofile = null;
+		
+		if (GAMEPROFILE_CACHE.containsKey(stack.getDisplayName())) 
+			gameprofile = GAMEPROFILE_CACHE.get(stack.getDisplayName());
+		
+		if (stack.hasTagCompound() && gameprofile == null)
+        {
+            NBTTagCompound nbttagcompound = stack.getTagCompound();
+
+            if (nbttagcompound.hasKey("PlayerProfile", 10))
+            {
+                gameprofile = NBTUtil.readGameProfileFromNBT(nbttagcompound.getCompoundTag("PlayerProfile"));
+            }
+            else if (nbttagcompound.hasKey("PlayerProfile", 8) && !StringUtils.isBlank(nbttagcompound.getString("PlayerProfile")))
+            {
+                GameProfile gameprofile1 = new GameProfile((UUID)null, nbttagcompound.getString("PlayerProfile"));
+                gameprofile = TileEntitySkull.updateGameprofile(gameprofile1);
+                nbttagcompound.removeTag("PlayerProfile");
+                nbttagcompound.setTag("PlayerProfile", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
+                GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
+            }
+        }
+		if(gameprofile == null && !StringUtils.isBlank(stack.getDisplayName()) && !stack.getDisplayName().equals("Player Statue") && !stack.getDisplayName().equals(" "))
+		{
+			GameProfile gameprofile1 = new GameProfile((UUID)null, stack.getDisplayName());
+            gameprofile = TileEntitySkull.updateGameprofile(gameprofile1);
+            GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
+		}
+		
 		ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
 		
 		ModelPlayer theModel = this.model;
 		boolean slimModel = false;
 		IBlockState state;
-		
-		if (profile != null)
+		if (gameprofile != null)
         {
             Minecraft minecraft = Minecraft.getMinecraft();
-            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(gameprofile);
 
             if (map.containsKey(Type.SKIN))
             {
@@ -66,11 +102,11 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             }
             else
             {
-                UUID uuid = EntityPlayer.getUUID(profile);
+                UUID uuid = EntityPlayer.getUUID(gameprofile);
                 skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
             }
             
-			slimModel = SkinUtil.isSlimSkin(profile.getId());
+			slimModel = SkinUtil.isSlimSkin(gameprofile.getId());
         }
 		
     	Minecraft.getMinecraft().getTextureManager().bindTexture(skinlocation);

@@ -381,7 +381,8 @@ statues:container.shulkerStatue=Shulker Statue
 statues:container.shulkerStatue.more=and %s more...
 
 #messages
-statues:player.compass.dimension.failure=Player is in another dimension.
+statues:player.compass.dimension.failure=%s is in another dimension.
+statues:player.compass.offline=%s can not be found, perhaps the player isn't online.
 
 #waila
 option.statues.player.name=Player Statue Username?

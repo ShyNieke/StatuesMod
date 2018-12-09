@@ -75,8 +75,8 @@ public class TOPCompat {
 					PlayerStatueTileEntity tile = (PlayerStatueTileEntity) te;
 		            
 		            GameProfile profile = tile.playerProfile;
-		            String name = tile.BlockName;
-		            probeInfo.text(TextFormatting.GRAY + I18n.format("tooltip.statues.player.info", new Object[] {name}));
+		            String name = tile.getName();
+		            probeInfo.text(TextFormatting.GRAY + I18n.format("tooltip.statues.player.info") + TextFormatting.GOLD + name);
 				}
 			}
 		}

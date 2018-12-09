@@ -1,18 +1,21 @@
 {
     "forge_marker": 1,
+	"defaults": {
+		"model": "statues:blockplayer"
+	},
     "variants": {
         "facing": {
-			"east": { "model": "statues:blockplayertemp", "y": 90},
-            "north": { "model": "statues:blockplayertemp"},
-			"west": { "model": "statues:blockplayertemp", "y": 270},
-            "south": { "model": "statues:blockplayertemp", "y": 180}
+			"east": { "y": 90},
+            "north": { },
+			"west": { "y": 270},
+            "south": { "y": 180}
         },
 		"online": {
 			"true": {},
 			"false": {}
 		},
     "inventory": [{
-        "model": "statues:blockplayertemp"
+        "model": "statues:blockplayer"
     }]
   }
 }

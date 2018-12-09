@@ -34,6 +34,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
@@ -140,7 +141,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 		if (tilename != stackname)
 		{
 			this.playername = stackname;
-			if((this.playername.contains(" ") || this.playername.equals("")) && placer instanceof EntityPlayer)
+			if((this.playername.contains(" ") || this.playername.isEmpty()) && placer instanceof EntityPlayer)
 			{
 				EntityPlayer player = (EntityPlayer) placer;
 				getTE(worldIn, pos).setName(player.getName());
@@ -162,7 +163,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
                     NBTTagCompound tag = stack.getTagCompound();
                     String playerName = null;
                     
-                    if (tag.hasKey("PlayerProfile", 10))
+                    if (tag.hasKey("PlayerProfile"))
                     {
                     	newProfile = NBTUtil.readGameProfileFromNBT(tag.getCompoundTag("PlayerProfile"));
                     }
@@ -176,23 +177,32 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
                     	playerName = tag.getString("PlayerName");
                     }
                     
-                    if(gameprofile != null && playerName != null)
+                    if(!newProfile.getName().equals(this.playername))
                     {
-                    	if(gameprofile.getName() != this.playername)
-                    	{
-            				getTE(worldIn, pos).setName(this.playername);
-            				getTE(worldIn, pos).setPlayerProfile(gameprofile);
-                    	}
-                    	else
-                    	{
-            				getTE(worldIn, pos).setName(this.playername);
-            				getTE(worldIn, pos).setPlayerProfile(newProfile);
-                    	}
+                    	newProfile = new GameProfile((UUID)null, this.playername);
+                    	getTE(worldIn, pos).setName(this.playername);
+        				getTE(worldIn, pos).setPlayerProfile(newProfile);
                     }
                     else
                     {
-        				getTE(worldIn, pos).setName(this.playername);
-        				getTE(worldIn, pos).setPlayerProfile(newProfile);
+                    	if(gameprofile != null && playerName != null)
+                        {
+                        	if(gameprofile.getName() != this.playername)
+                        	{
+                				getTE(worldIn, pos).setName(this.playername);
+                				getTE(worldIn, pos).setPlayerProfile(gameprofile);
+                        	}
+                        	else
+                        	{
+                				getTE(worldIn, pos).setName(this.playername);
+                				getTE(worldIn, pos).setPlayerProfile(newProfile);
+                        	}
+                        }
+                        else
+                        {
+            				getTE(worldIn, pos).setName(this.playername);
+            				getTE(worldIn, pos).setPlayerProfile(newProfile);
+                        }
                     }
                 }
                 else
@@ -216,11 +226,11 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
     	    	{
     	    		GameProfile gameprofile = null;
     				
-    				if (tag.hasKey("PlayerProfile", 10))
+    				if (tag.hasKey("PlayerProfile"))
                     {
                         gameprofile = NBTUtil.readGameProfileFromNBT(tag.getCompoundTag("PlayerProfile"));
                     }
-                    else if (tag.hasKey("PlayerProfile", 8) && !StringUtils.isBlank(tag.getString("PlayerProfile")))
+                    else if (tag.hasKey("PlayerProfile") && !StringUtils.isBlank(tag.getString("PlayerProfile")))
                     {
                         gameprofile = new GameProfile((UUID)null, tag.getString("PlayerProfile"));
                     }
@@ -277,6 +287,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 		ItemStack stack = playerIn.getHeldItem(hand);
 		if(!worldIn.isRemote)
 		{
+			String playerName = getTE(worldIn, pos).getPlayerProfile().getName();
 			if(!playerIn.isSneaking() && stack.getItem() == Items.COMPASS && StatuesConfigGen.player.PlayerCompass)
 			{
 				if(getTE(worldIn, pos).getPlayerProfile() != null && 
@@ -307,8 +318,32 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 					}
 					else
 					{
-						playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.dimension.failure"));
+						playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.dimension.failure", new Object[] {TextFormatting.GOLD + playerName}));
+						stack.shrink(1);
+						if (stack.isEmpty())
+			            {
+							playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
+			            }
+			            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS)))
+			            {
+			            	playerIn.dropItem(new ItemStack(Items.COMPASS), false);
+			            }
 					}
+					
+					return true;
+				}
+				else
+				{
+					playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.offline", new Object[] {TextFormatting.GOLD + playerName}));
+					stack.shrink(1);
+					if (stack.isEmpty())
+		            {
+						playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
+		            }
+		            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS)))
+		            {
+		            	playerIn.dropItem(new ItemStack(Items.COMPASS), false);
+		            }
 					
 					return true;
 				}
@@ -332,7 +367,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 					}
 					else
 					{
-						playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.dimension.failure"));
+						playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.dimension.failure", new Object[] {TextFormatting.GOLD + playerName}));
 						stack.shrink(1);
 						if (stack.isEmpty())
 			            {
@@ -343,6 +378,22 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 			            	playerIn.dropItem(new ItemStack(Items.COMPASS), false);
 			            }
 					}
+					
+					return true;
+				}
+				else
+				{
+					playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.offline", new Object[] {TextFormatting.GOLD + playerName}));
+					stack.shrink(1);
+					if (stack.isEmpty())
+		            {
+						playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
+		            }
+		            else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS)))
+		            {
+		            	playerIn.dropItem(new ItemStack(Items.COMPASS), false);
+		            }
+					
 					return true;
 				}
 			}

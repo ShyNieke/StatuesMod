@@ -97,15 +97,22 @@ public class ClientProxy extends ServerProxy{
 		
 	}
 	
-	@SubscribeEvent
-    public static void registerRenders(ModelRegistryEvent event)
-    {
-        for(Item item : StatuesItems.ITEMS)
+	@Override
+	public void PostInit() {
+		for(Item item : StatuesItems.ITEMS)
         {
         	if(item == Item.getItemFromBlock(StatuesBlocks.player_statue))
         	{
         		item.setTileEntityItemStackRenderer(new PlayerInventoryRender());
         	}
+        }
+	}
+	
+	@SubscribeEvent
+    public static void registerRenders(ModelRegistryEvent event)
+    {
+        for(Item item : StatuesItems.ITEMS)
+        {
             ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(item.getRegistryName().getResourcePath()), "inventory"));
         }
         
