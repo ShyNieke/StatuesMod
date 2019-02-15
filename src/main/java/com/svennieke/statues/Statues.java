@@ -109,7 +109,7 @@ public class Statues {
 			MinecraftForge.EVENT_BUS.addListener(ClientHandler::registerRenders);
 		});
 		
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, StatuesConfig.commonSpec);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec);
         FMLJavaModLoadingContext.get().getModEventBus().register(StatuesConfig.class);
 	}
 	
