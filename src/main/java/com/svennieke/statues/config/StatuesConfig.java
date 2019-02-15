@@ -39,8 +39,8 @@ public class StatuesConfig {
         public final BooleanValue playerCompass;  
         
         //Other
-        //public final DoubleValue statueHardness; 
-        //public final IntValue soupStack;
+        public final DoubleValue statueHardness; 
+        public final IntValue soupStack;
         //public final BooleanValue antiAfk;
         
         //Messages
@@ -115,14 +115,14 @@ public class StatuesConfig {
         	builder.comment("Other settings")
     		.push("othersettings");
     	
-//	    	statueHardness = builder
-//	                .comment("Changing this changes the amount of time needed to harvest a statue, Higher = more time needed. Lower = faster harvested " +
-//							"[0.6 is the same as vanilla grass]")
-//	                .defineInRange("statueHardness", 0.6D, 0.1D, 3.0D);
+	    	statueHardness = builder
+	                .comment("Changing this changes the amount of time needed to harvest a statue, Higher = more time needed. Lower = faster harvested " +
+							"[0.6 is the same as vanilla grass]")
+	                .defineInRange("statueHardness", 0.6D, 0.1D, 3.0D);
 	
-//	    	soupStack = builder
-//	    			.comment("Changing this changes the stacksize of the mushroom soup")
-//	    			.defineInRange("soupStack", 8, 1, 64);
+	    	soupStack = builder
+	    			.comment("Changing this changes the stacksize of the mushroom soup")
+	    			.defineInRange("soupStack", 8, 1, 64);
 	    	
 	//    	antiAfk = builder
 	//    			.comment("This either disables or enables the anti-afk system that's in place")
