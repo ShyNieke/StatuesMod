@@ -5,7 +5,6 @@ import static net.minecraftforge.fml.Logging.CORE;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 
 import com.svennieke.statues.Statues;
@@ -19,8 +18,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.config.ModConfig;
 
 public class StatuesConfig {
-//	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-//	public static final Common COMMON = new Common(BUILDER);
+	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+	public static final Common COMMON = new Common(BUILDER);
 	 
     public static class Common {
 		//General
@@ -183,15 +182,15 @@ public class StatuesConfig {
         }
     }
     
-//    public static final ForgeConfigSpec commonSpec = BUILDER.build();
+    public static final ForgeConfigSpec commonSpec = BUILDER.build();
     
-    public static final ForgeConfigSpec commonSpec;
-    public static final Common COMMON;
-    static {
-        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
-        commonSpec = specPair.getRight();
-        COMMON = specPair.getLeft();
-    }
+//    public static final ForgeConfigSpec commonSpec;
+//    public static final Common COMMON;
+//    static {
+//        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+//        commonSpec = specPair.getRight();
+//        COMMON = specPair.getLeft();
+//    }
       
     @SubscribeEvent
     public static void onLoad(final ModConfig.Loading configEvent) {
