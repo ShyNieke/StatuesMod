@@ -3,11 +3,13 @@ package com.svennieke.statues.tileentity;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.UUID;
+import java.util.stream.IntStream;
 
 import javax.annotation.Nullable;
 
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.blocks.Statues.BlockShulker_Statue;
+import com.svennieke.statues.init.StatuesTileTypes;
 import com.svennieke.statues.tileentity.container.ContainerShulkerStatue;
 
 import net.minecraft.block.Block;
@@ -20,7 +22,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -32,26 +33,29 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.DimensionManager;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements ITickable, ISidedInventory, iStatueBehaviors{
 
-	private static final int[] SLOTS = new int[18];
+	private static final int[] SLOTS = IntStream.range(0, 18).toArray();
     private NonNullList<ItemStack> items;
     private boolean hasBeenCleared;
     private int openCount;
     private TileEntityShulkerBox.AnimationStatus animationStatus;
     private float progress;
-    private float progressOld;
-    private EnumDyeColor color;
+    @SuppressWarnings("unused")
+	private float progressOld;
     private boolean destroyedByCreativePlayer;
 	private int tier;
 	private static FakePlayer fakeStatue = null;
 
     public ShulkerStatueTileEntity() {
+    	super(StatuesTileTypes.SHULKER_STATUE);
         this.items = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
         this.tier = 3;
 	}
@@ -64,21 +68,46 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 		return this.tier;
 	}
     
+    protected void updateAnimation() {
+		this.progressOld = this.progress;
+		switch(this.animationStatus) {
+			case CLOSED:
+			    this.progress = 0.0F;
+			    break;
+			case OPENING:
+			    this.progress += 0.1F;
+			    if (this.progress >= 1.0F) {
+			        this.animationStatus = TileEntityShulkerBox.AnimationStatus.OPENED;
+			        this.progress = 1.0F;
+			    }
+			    break;
+			case CLOSING:
+			    this.progress -= 0.1F;
+			    if (this.progress <= 0.0F) {
+			        this.animationStatus = TileEntityShulkerBox.AnimationStatus.CLOSED;
+			        this.progress = 0.0F;
+			    }
+			    break;
+			case OPENED:
+				this.progress = 1.0F;
+		}
+    }
+		
+	public TileEntityShulkerBox.AnimationStatus getAnimationStatus() {
+		return this.animationStatus;
+	}
+	
     @Override
     public void openInventory(EntityPlayer player)
     {
-        if (!player.isSpectator())
-        {
-            if (this.openCount < 0)
-            {
+        if (!player.isSpectator()){
+            if (this.openCount < 0){
                 this.openCount = 0;
             }
 
             ++this.openCount;
-            this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.openCount);
-
-            if (this.openCount == 1 && this.tier == 3)
-            {
+            this.world.addBlockEvent(this.pos, this.getBlockState().getBlock(), 1, this.openCount);
+            if (this.openCount == 1 && this.tier == 3){
                 this.world.playSound((EntityPlayer)null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
             }
         }
@@ -86,13 +115,11 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
     
     @Override
     public void closeInventory(EntityPlayer player) {
-    	if (!player.isSpectator())
-        {
+    	if (!player.isSpectator()){
             --this.openCount;
-            this.world.addBlockEvent(this.pos, this.getBlockType(), 1, this.openCount);
+            this.world.addBlockEvent(this.pos, this.getBlockState().getBlock(), 1, this.openCount);
 
-            if (this.openCount <= 0 && this.tier == 3)
-            {
+            if (this.openCount <= 0 && this.tier == 3){
                 this.world.playSound((EntityPlayer)null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
             }
         }
@@ -105,10 +132,8 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 
 	@Override
 	public boolean isEmpty() {
-		for (ItemStack itemstack : this.items)
-        {
-            if (!itemstack.isEmpty())
-            {
+		for (ItemStack itemstack : this.items){
+            if (!itemstack.isEmpty()){
                 return false;
             }
         }
@@ -122,8 +147,9 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 	}
 
 	@Override
-	public String getName() {
-        return this.hasCustomName() ? this.customName : "statues:container.shulkerStatue";
+	public ITextComponent getName() {
+		ITextComponent itextcomponent = this.getCustomName();
+		return (ITextComponent)(itextcomponent != null ? itextcomponent : new TextComponentTranslation("statues:container.shulkerStatue", new Object[0]));
 	}
 
 	@Override
@@ -152,8 +178,8 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 	}
 
 	@Override
-	public void update() {
-		
+	public void tick() {
+		this.updateAnimation();
 	}
 
 	@Override
@@ -163,45 +189,43 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
+	public void read(NBTTagCompound compound) {
+		super.read(compound);
         this.loadFromNbt(compound);
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		super.writeToNBT(compound);
+	public NBTTagCompound write(NBTTagCompound compound) {
+		super.write(compound);
         return this.saveToNbt(compound);
 	}
 	
 	public void loadFromNbt(NBTTagCompound compound)
     {
         this.items = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-        tier = compound.getInteger("StatueTier");
+        tier = compound.getInt("StatueTier");
 
-        if (!this.checkLootAndRead(compound) && compound.hasKey("Items", 9))
+        if (!this.checkLootAndRead(compound) && compound.hasKey("Items"))
         {
             ItemStackHelper.loadAllItems(compound, this.items);
         }
 
-        if (compound.hasKey("CustomName", 8))
-        {
-            this.customName = compound.getString("CustomName");
+        if (compound.contains("CustomName", 8)) {
+            this.customName = ITextComponent.Serializer.fromJson(compound.getString("CustomName"));
         }
     }
 
     public NBTTagCompound saveToNbt(NBTTagCompound compound)
     {
-        if (!this.checkLootAndWrite(compound))
-        {
+    	if (!this.checkLootAndWrite(compound)) {
             ItemStackHelper.saveAllItems(compound, this.items, false);
         }
         
-        compound.setInteger("StatueTier", tier);
+        compound.setInt("StatueTier", tier);
 
-        if (this.hasCustomName())
-        {
-            compound.setString("CustomName", this.customName);
+        ITextComponent itextcomponent = this.getCustomName();
+        if (itextcomponent != null) {
+           compound.setString("CustomName", ITextComponent.Serializer.toJson(itextcomponent));
         }
 
         if (!compound.hasKey("Lock") && this.isLocked())
@@ -292,16 +316,16 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 		}
 	}
     
-    public static FakePlayer getFakePlayer() {
+    public static FakePlayer getFakePlayer(World worldIn) {
         if (fakeStatue == null) {
-        	fakeStatue = FakePlayerFactory.get(DimensionManager.getWorld(0), new GameProfile(new UUID(123, 132), "Shulker Statue"));
+        	fakeStatue = FakePlayerFactory.get(worldIn.getServer().getWorld(DimensionType.OVERWORLD), new GameProfile(new UUID(123, 132), "Shulker Statue"));
         }
         return fakeStatue;
 	}
     
     public void ShootBullet(BlockPos pos, World worldIn, EntityPlayer entity, EnumFacing.Axis facing) {
     	EntityPlayer player = (EntityPlayer)entity;
-		FakePlayer fakePlayer = getFakePlayer();
+		FakePlayer fakePlayer = getFakePlayer(worldIn);
 		
 		int random = worldIn.rand.nextInt(100);
 		if(tier == 3 || tier == 4)
@@ -317,5 +341,28 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void setItems(NonNullList<ItemStack> itemsIn) {
+		this.items = itemsIn;
+	}
+	
+	@Override
+	public boolean receiveClientEvent(int id, int type) {
+		if (id == 1) {
+	         this.openCount = type;
+	         if (type == 0) {
+	            this.animationStatus = TileEntityShulkerBox.AnimationStatus.CLOSING;
+	         }
+
+	         if (type == 1) {
+	            this.animationStatus = TileEntityShulkerBox.AnimationStatus.OPENING;
+	         }
+
+	         return true;
+	      } else {
+	         return super.receiveClientEvent(id, type);
+	    }
 	}
 }

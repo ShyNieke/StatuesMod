@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "statues:display_stand"
+  },
+  "pattern": [
+	"Q"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+	"Q": {
+      "tag": "forge:storage_blocks/quartz"
+    }
+  }
+}

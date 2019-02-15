@@ -1,9 +1,0 @@
-{    
-	"forge_marker": 1,
-	"variants": {
-		"normal": { "model": "statues:blockdisplaystand" },
-		"inventory": [{
-			"model": "statues:blockdisplaystand"
-		}]
-	}
-}

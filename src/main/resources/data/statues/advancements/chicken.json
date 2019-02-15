@@ -1,0 +1,30 @@
+{
+    "display": {
+        "icon": {
+            "item": "statues:chicken_statue_t1"
+        },
+        "title": {
+            "translate": "Feathery Friend"
+        },
+        "description": {
+            "translate": "A miniature Chicken can better than this is impossible!"
+        },
+		"frame": "task",
+		"hidden": false,
+		"show_toast": true,
+        "announce_to_chat": false
+		},
+    "parent": "statues:info",
+    "criteria": {
+        "inventory": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:chicken_statue_t1"
+                    }
+                ]
+            }
+        }
+    }
+}

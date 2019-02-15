@@ -2,6 +2,8 @@ package com.svennieke.statues.entity.fakeentity;
 
 import javax.annotation.Nullable;
 
+import com.svennieke.statues.init.StatuesEntity;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
@@ -16,8 +18,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.pathfinding.PathNavigateGround;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
@@ -30,15 +32,15 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
     private boolean wasOnGround;
 
 	public FakeSlime(World worldIn) {
-		super(worldIn);
+		super(StatuesEntity.FAKE_SLIME, worldIn);
         this.moveHelper = new FakeSlime.SlimeMoveHelper(this);
 	}
 	
 	@Override
-	protected void entityInit()
+	protected void registerData()
     {
-        super.entityInit();
-        this.dataManager.register(SLIME_SIZE, Integer.valueOf(1));
+        super.registerData();
+        this.dataManager.register(SLIME_SIZE, 1);
     }
 
 	@Override
@@ -72,13 +74,13 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
     }
 	
 	@Override
-    protected void setSlimeSize(int size, boolean resetHealth)
+    public void setSlimeSize(int size, boolean resetHealth)
     {
         this.dataManager.set(SLIME_SIZE, Integer.valueOf(size));
         this.setSize(0.51000005F * (float)size, 0.51000005F * (float)size);
         this.setPosition(this.posX, this.posY, this.posZ);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)(size * size));
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)(0.2F + 0.1F * (float)size));
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)(size * size));
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)(0.2F + 0.1F * (float)size));
 
         if (resetHealth)
         {
@@ -116,41 +118,39 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
+	public void writeAdditional(NBTTagCompound compound)
     {
-        super.writeEntityToNBT(compound);
-        int i = compound.getInteger("Size");
+        super.writeAdditional(compound);
+        compound.setInt("Size", this.getSlimeSize() - 1);
+        this.wasOnGround = compound.getBoolean("wasOnGround");
+        compound.setInt("Lifetime", this.lifetime);
+    }
 
-        if (i < 0)
-        {
-            i = 0;
+	@Override
+	public void readAdditional(NBTTagCompound compound)
+    {
+        super.readAdditional(compound);
+        int i = compound.getInt("Size");
+        if (i < 0) {
+           i = 0;
         }
 
         this.setSlimeSize(i + 1, false);
         this.wasOnGround = compound.getBoolean("wasOnGround");
-        compound.setInteger("Lifetime", this.lifetime);
-    }
-
-	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
-    {
-        super.readEntityFromNBT(compound);
-        compound.setInteger("Size", this.getSlimeSize() - 1);
-        compound.setBoolean("wasOnGround", this.wasOnGround);
-        this.lifetime = compound.getInteger("Lifetime");
+        this.lifetime = compound.getInt("Lifetime");
     }
 	
 	@Override
-	public void onUpdate()
+	public void tick()
     {
         if (!this.world.isRemote && this.world.getDifficulty() == EnumDifficulty.PEACEFUL && this.getSlimeSize() > 0)
         {
-            this.isDead = true;
+            this.removed = true;
         }
 
         this.squishFactor += (this.squishAmount - this.squishFactor) * 0.5F;
         this.prevSquishFactor = this.squishFactor;
-        super.onUpdate();
+        super.tick();
 
         if (this.onGround && !this.wasOnGround)
         {
@@ -163,10 +163,10 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
                 float f2 = MathHelper.sin(f) * (float)i * 0.5F * f1;
                 float f3 = MathHelper.cos(f) * (float)i * 0.5F * f1;
                 World world = this.world;
-                EnumParticleTypes enumparticletypes = this.getParticleType();
+                IParticleData iparticledata = this.func_195404_m();
                 double d0 = this.posX + (double)f2;
                 double d1 = this.posZ + (double)f3;
-                world.spawnParticle(enumparticletypes, d0, this.getEntityBoundingBox().minY, d1, 0.0D, 0.0D, 0.0D);
+                world.spawnParticle(iparticledata, d0, this.getBoundingBox().minY, d1, 0.0D, 0.0D, 0.0D);
             }
 
             this.playSound(this.getSquishSound(), this.getSoundVolume(), ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) / 0.8F);
@@ -182,7 +182,7 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
     }
 	
 	@Override
-	public void onLivingUpdate()
+	public void livingTick()
     {
         if (!this.world.isRemote)
         {
@@ -193,51 +193,39 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
         }
         
-        super.onLivingUpdate();
+        super.livingTick();
     }
 	
 	@Override
-	protected FakeSlime createInstance()
+	public void remove()
     {
-        return new FakeSlime(this.world);
-    }
-	
-	@Override
-	public void setDead()
-    {
-        int i = this.getSlimeSize();
+		int i = this.getSlimeSize();
+	    if (!this.world.isRemote && i > 1 && this.getHealth() <= 0.0F) {
+	         int j = 2 + this.rand.nextInt(3);
 
-        if (!this.world.isRemote && i > 1 && this.getHealth() <= 0.0F)
-        {
-            int j = 2 + this.rand.nextInt(3);
+	         for(int k = 0; k < j; ++k) {
+	            float f = ((float)(k % 2) - 0.5F) * (float)i / 4.0F;
+	            float f1 = ((float)(k / 2) - 0.5F) * (float)i / 4.0F;
+	            FakeSlime entityslime = (FakeSlime)this.getType().create(this.world);
+	            if (this.hasCustomName()) {
+	               entityslime.setCustomName(this.getCustomName());
+	            }
 
-            for (int k = 0; k < j; ++k)
-            {
-                float f = ((float)(k % 2) - 0.5F) * (float)i / 4.0F;
-                float f1 = ((float)(k / 2) - 0.5F) * (float)i / 4.0F;
-                FakeSlime FakeSlime = this.createInstance();
+	            if (this.isNoDespawnRequired()) {
+	               entityslime.enablePersistence();
+	            }
 
-                if (this.hasCustomName())
-                {
-                    FakeSlime.setCustomNameTag(this.getCustomNameTag());
-                }
+	            entityslime.setSlimeSize(i / 2, true);
+	            entityslime.setLocationAndAngles(this.posX + (double)f, this.posY + 0.5D, this.posZ + (double)f1, this.rand.nextFloat() * 360.0F, 0.0F);
+	            this.world.spawnEntity(entityslime);
+	         }
+	    }
 
-                if (this.isNoDespawnRequired())
-                {
-                    FakeSlime.enablePersistence();
-                }
-
-                this.setSlimeSize(i / 2, true);
-                this.setLocationAndAngles(this.posX + (double)f, this.posY + 0.5D, this.posZ + (double)f1, this.rand.nextFloat() * 360.0F, 0.0F);
-                this.world.spawnEntity(FakeSlime);
-            }
-        }
-
-        super.setDead();
+        super.remove();
     }
 	
     static class AISlimeAttack extends EntityAIBase
@@ -262,13 +250,13 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
             {
                 return false;
             }
-            else if (!entitylivingbase.isEntityAlive())
+            else if (!entitylivingbase.isAlive())
             {
                 return false;
             }
             else
             {
-                return !(entitylivingbase instanceof EntityPlayer) || !((EntityPlayer)entitylivingbase).capabilities.disableDamage;
+                return !(entitylivingbase instanceof EntityPlayer) || !((EntityPlayer)entitylivingbase).abilities.disableDamage;
             }
         }
 
@@ -292,11 +280,11 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
             {
                 return false;
             }
-            else if (!entitylivingbase.isEntityAlive())
+            else if (!entitylivingbase.isAlive())
             {
                 return false;
             }
-            else if (entitylivingbase instanceof EntityPlayer && ((EntityPlayer)entitylivingbase).capabilities.disableDamage)
+            else if (entitylivingbase instanceof EntityPlayer && ((EntityPlayer)entitylivingbase).abilities.disableDamage)
             {
                 return false;
             }
@@ -453,7 +441,7 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
 
                 if (this.entity.onGround)
                 {
-                    this.entity.setAIMoveSpeed((float)(this.speed * this.entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
+                    this.entity.setAIMoveSpeed((float)(this.speed * this.entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue()));
 
                     if (this.jumpDelay-- <= 0)
                     {
@@ -480,7 +468,7 @@ public class FakeSlime extends EntitySlime implements IFakeEntity{
                 }
                 else
                 {
-                    this.entity.setAIMoveSpeed((float)(this.speed * this.entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));
+                    this.entity.setAIMoveSpeed((float)(this.speed * this.entity.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue()));
                 }
             }
         }

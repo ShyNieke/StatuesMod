@@ -1,59 +1,15 @@
 package com.svennieke.statues.init;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-
-import com.svennieke.statues.Statues;
-import com.svennieke.statues.config.StatuesConfigGen;
-import com.svennieke.statues.entity.fakeentity.FakeBlaze;
-import com.svennieke.statues.entity.fakeentity.FakeCreeper;
-import com.svennieke.statues.entity.fakeentity.FakeEnderman;
-import com.svennieke.statues.entity.fakeentity.FakeGhast;
-import com.svennieke.statues.entity.fakeentity.FakeGuardian;
-import com.svennieke.statues.entity.fakeentity.FakeHusk;
-import com.svennieke.statues.entity.fakeentity.FakeMagmaCube;
-import com.svennieke.statues.entity.fakeentity.FakeShulker;
-import com.svennieke.statues.entity.fakeentity.FakeSkeleton;
-import com.svennieke.statues.entity.fakeentity.FakeSlime;
-import com.svennieke.statues.entity.fakeentity.FakeSpider;
-import com.svennieke.statues.entity.fakeentity.FakeStray;
-import com.svennieke.statues.entity.fakeentity.FakeWitch;
-import com.svennieke.statues.entity.fakeentity.FakeWitherSkeleton;
-import com.svennieke.statues.entity.fakeentity.FakeZombie;
-import com.svennieke.statues.entity.fakeentity.FakeZombiePigman;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityBlaze;
-import net.minecraft.entity.monster.EntityCreeper;
-import net.minecraft.entity.monster.EntityEnderman;
-import net.minecraft.entity.monster.EntityGhast;
-import net.minecraft.entity.monster.EntityGuardian;
-import net.minecraft.entity.monster.EntityHusk;
-import net.minecraft.entity.monster.EntityMagmaCube;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntityShulker;
-import net.minecraft.entity.monster.EntitySkeleton;
-import net.minecraft.entity.monster.EntitySlime;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.entity.monster.EntityStray;
-import net.minecraft.entity.monster.EntityWitch;
-import net.minecraft.entity.monster.EntityWitherSkeleton;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.common.registry.EntityRegistry;
-
 public class StatuesHoliday {
-	
+
+	/*
 	public static void registerSpawning() 
 	{
 		LocalDateTime now = LocalDateTime.now();
 		if(now.getMonth() == Month.OCTOBER)
 		{
 			for (Biome biome : Biome.REGISTRY) {
-				for (Biome.SpawnListEntry entry : new ArrayList<>(biome.getSpawnableList(EnumCreatureType.MONSTER))) {
+				for (Biome.SpawnListEntry entry : new ArrayList<>(biome.getSpawns(EnumCreatureType.MONSTER))) {
 					registerSpawn(entry, biome, EntityBlaze.class, FakeBlaze.class);
 					registerSpawn(entry, biome, EntityCreeper.class, FakeCreeper.class);
 					registerSpawn(entry, biome, EntityEnderman.class, FakeEnderman.class);
@@ -82,5 +38,5 @@ public class StatuesHoliday {
 		{
 			EntityRegistry.addSpawn(newEntity, entry.itemWeight / StatuesConfigGen.events.fakeSpawningWeigth, entry.minGroupCount, entry.maxGroupCount, EnumCreatureType.MONSTER, biome);
 		}
-	}
+	}*/
 }

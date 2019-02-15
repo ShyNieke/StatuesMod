@@ -1,0 +1,30 @@
+{
+    "display": {
+        "icon": {
+            "item": "statues:pig_statue_t1"
+        },
+        "title": {
+            "translate": "Oink!"
+        },
+        "description": {
+            "translate": "Just a little pig"
+        },
+		"frame": "task",
+		"hidden": false,
+		"show_toast": true,
+        "announce_to_chat": false
+		},
+    "parent": "statues:info",
+    "criteria": {
+        "inventory": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:pig_statue_t1"
+                    }
+                ]
+            }
+        }
+    }
+}

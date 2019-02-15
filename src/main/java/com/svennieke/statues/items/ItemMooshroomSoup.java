@@ -1,11 +1,9 @@
 package com.svennieke.statues.items;
 
-import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
-import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.config.StatuesConfig;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,37 +12,22 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class ItemMooshroomSoup extends ItemFood {
-	public ItemMooshroomSoup(int amount, float saturation, String unlocalised) {
-		super(amount, saturation, false);
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
-		setRegistryName("item" + unlocalised);
-		setCreativeTab(CreativeTabs.FOOD);
-		setCreativeTab(Statues.tabStatues);
-	}
-	
-	@Override
-	public Item setMaxStackSize(int maxStackSize) {
-		int size = StatuesConfigGen.othersettings.SoupStack;
-		
-		if(size != 0)
-		{
-			return super.setMaxStackSize(size);
-		}
-		else
-		{
-			return super.setMaxStackSize(1);
-		}
+	public ItemMooshroomSoup(Item.Properties builder, int amount, float saturation) {
+		super(amount, saturation, false, builder.group(ItemGroup.FOOD).group(Statues.tabStatues).maxStackSize(StatuesConfig.COMMON.soupStack.get()));
+//		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+//		setCreativeTab(Statues.tabStatues);
 	}
 	
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entity)
     {
-		if (entity instanceof EntityPlayer && !((EntityPlayer) entity).capabilities.isCreativeMode) {
+		if (entity instanceof EntityPlayer && !((EntityPlayer) entity).abilities.isCreativeMode) {
 			ItemStack bowlstack = new ItemStack(Items.BOWL);
 			EntityPlayer entityplayer = (EntityPlayer)entity;
 			InventoryPlayer playerInv = entityplayer.inventory;

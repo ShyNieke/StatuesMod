@@ -7,9 +7,9 @@ import com.svennieke.statues.blocks.StatueBase.BlockPig;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.tileentity.StatueTileEntity;
+import com.svennieke.statues.util.ParticleUtil;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityPig;
@@ -20,25 +20,27 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class BlockPig_Statue extends BlockPig implements IStatue, ITileEntityProvider{
+public class BlockPig_Statue extends BlockPig implements IStatue{
 	
 	private int TIER;
 	
-	public BlockPig_Statue(String unlocalised) {
-		super();
-		setUnlocalizedName(unlocalised);
+	public BlockPig_Statue(Block.Properties builder) {
+		super(builder);
+		//setRegistryName(registry);
+		//setUnlocalizedName(unlocalised);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+//		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		//setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	
@@ -55,8 +57,8 @@ public class BlockPig_Statue extends BlockPig implements IStatue, ITileEntityPro
 		{
 	    	Block block = worldIn.getBlockState(pos.down()).getBlock();
 			if (block == Blocks.SAND) {
-	    		worldIn.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, pos.down().getX(), pos.down().getY(), pos.down().getZ(), 0.0D, 0.0D, 0.0D, new int[0]);
-	    		worldIn.setBlockState(pos.down(), StatuesBlocks.wasteland_statue[0].getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()));
+				ParticleUtil.emitExplosionParticles(worldIn, pos);
+	    		worldIn.setBlockState(pos.down(), StatuesBlocks.wasteland_statue_t1.getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
 	    		worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
 	    	}
 		}
@@ -64,13 +66,27 @@ public class BlockPig_Statue extends BlockPig implements IStatue, ITileEntityPro
 	}
 	
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
+	public boolean hasTileEntity(IBlockState state) {
+		if (this.TIER >= 2)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	@Override
+	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		if (this.TIER >= 2)
 		{
 			return new StatueTileEntity();
 		}
 		else
-		return null;
+		{
+			return null;
+		}
 	}
 	
 	private StatueTileEntity getTE(World world, BlockPos pos) {
@@ -78,7 +94,7 @@ public class BlockPig_Statue extends BlockPig implements IStatue, ITileEntityPro
     }
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		if(this.TIER >= 2)
 		{

@@ -4,10 +4,12 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.svennieke.statues.init.StatuesEntity;
+
 import net.minecraft.block.Block;
-import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -34,7 +36,6 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
@@ -51,11 +52,11 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
         this.setSize(1.4F, 0.9F);
     }
 
-    public static void registerFixesSpider(DataFixer fixer)
-    {
-        EntityLiving.registerFixesMob(fixer, FakeSpider.class);
-    }
-
+    @Override
+	public EntityType<?> getType() {
+		return StatuesEntity.FAKE_SPIDER;
+	}
+    
     protected void initEntityAI()
     {
         this.tasks.addTask(1, new EntityAISwimming(this));
@@ -64,8 +65,8 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-        this.targetTasks.addTask(2, new FakeSpider.AISpiderTarget(this, EntityPlayer.class));
-        this.targetTasks.addTask(3, new FakeSpider.AISpiderTarget(this, EntityIronGolem.class));
+        this.targetTasks.addTask(2, new AISpiderTarget<EntityPlayer>(this, EntityPlayer.class));
+        this.targetTasks.addTask(3, new AISpiderTarget<EntityIronGolem>(this, EntityIronGolem.class));
     }
 
     /**
@@ -84,30 +85,29 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
         return new PathNavigateClimber(this, worldIn);
     }
 
-    protected void entityInit()
+    protected void registerData()
     {
-        super.entityInit();
-        this.dataManager.register(CLIMBING, Byte.valueOf((byte)0));
+        super.registerData();
+        this.dataManager.register(CLIMBING, (byte)0);
     }
 
     /**
      * Called to update the entity's position/logic.
      */
-    public void onUpdate()
+    public void tick()
     {
-        super.onUpdate();
+        super.tick();
 
-        if (!this.world.isRemote)
-        {
+        if (!this.world.isRemote){
             this.setBesideClimbableBlock(this.collidedHorizontally);
         }
     }
 
-    protected void applyEntityAttributes()
+    protected void registerAttributes()
     {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.30000001192092896D);
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16.0D);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.30000001192092896D);
     }
 
     protected SoundEvent getAmbientSound()
@@ -155,9 +155,8 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
     /**
      * Get this Entity's EnumCreatureAttribute
      */
-    public EnumCreatureAttribute getCreatureAttribute()
-    {
-        return EnumCreatureAttribute.ARTHROPOD;
+    public CreatureAttribute getCreatureAttribute() {
+        return CreatureAttribute.ARTHROPOD;
     }
 
     public boolean isPotionApplicable(PotionEffect potioneffectIn)
@@ -171,7 +170,7 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
      */
     public boolean isBesideClimbableBlock()
     {
-        return (((Byte)this.dataManager.get(CLIMBING)).byteValue() & 1) != 0;
+        return (this.dataManager.get(CLIMBING) & 1) != 0;
     }
 
     /**
@@ -180,18 +179,14 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
      */
     public void setBesideClimbableBlock(boolean climbing)
     {
-        byte b0 = ((Byte)this.dataManager.get(CLIMBING)).byteValue();
-
-        if (climbing)
-        {
-            b0 = (byte)(b0 | 1);
-        }
-        else
-        {
-            b0 = (byte)(b0 & -2);
+    	byte b0 = this.dataManager.get(CLIMBING);
+        if (climbing) {
+        	b0 = (byte)(b0 | 1);
+        } else {
+        	b0 = (byte)(b0 & -2);
         }
 
-        this.dataManager.set(CLIMBING, Byte.valueOf(b0));
+        this.dataManager.set(CLIMBING, b0);
     }
 
     /**
@@ -199,37 +194,29 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
      * when entity is reloaded from nbt. Mainly used for initializing attributes and inventory
      */
     @Nullable
-    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata)
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata, @Nullable NBTTagCompound itemNbt)
     {
-        livingdata = super.onInitialSpawn(difficulty, livingdata);
-
-        if (this.world.rand.nextInt(100) == 0)
-        {
-            EntitySkeleton entityskeleton = new EntitySkeleton(this.world);
-            entityskeleton.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
-            entityskeleton.onInitialSpawn(difficulty, (IEntityLivingData)null);
-            this.world.spawnEntity(entityskeleton);
-            entityskeleton.startRiding(this);
+    	livingdata = super.onInitialSpawn(difficulty, livingdata, itemNbt);
+        if (this.world.rand.nextInt(100) == 0) {
+           EntitySkeleton entityskeleton = new EntitySkeleton(this.world);
+           entityskeleton.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
+           entityskeleton.onInitialSpawn(difficulty, (IEntityLivingData)null, (NBTTagCompound)null);
+           this.world.spawnEntity(entityskeleton);
+           entityskeleton.startRiding(this);
         }
 
-        if (livingdata == null)
-        {
-            livingdata = new FakeSpider.GroupData();
-
-            if (this.world.getDifficulty() == EnumDifficulty.HARD && this.world.rand.nextFloat() < 0.1F * difficulty.getClampedAdditionalDifficulty())
-            {
-                ((FakeSpider.GroupData)livingdata).setRandomEffect(this.world.rand);
-            }
+        if (livingdata == null) {
+        	livingdata = new EntitySpider.GroupData();
+           if (this.world.getDifficulty() == EnumDifficulty.HARD && this.world.rand.nextFloat() < 0.1F * difficulty.getClampedAdditionalDifficulty()) {
+              ((EntitySpider.GroupData)livingdata).setRandomEffect(this.world.rand);
+           }
         }
 
-        if (livingdata instanceof FakeSpider.GroupData)
-        {
-            Potion potion = ((FakeSpider.GroupData)livingdata).effect;
-
-            if (potion != null)
-            {
-                this.addPotionEffect(new PotionEffect(potion, Integer.MAX_VALUE));
-            }
+        if (livingdata instanceof EntitySpider.GroupData) {
+           Potion potion = ((EntitySpider.GroupData)livingdata).effect;
+           if (potion != null) {
+              this.addPotionEffect(new PotionEffect(potion, Integer.MAX_VALUE));
+           }
         }
 
         return livingdata;
@@ -285,7 +272,7 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
     }
     
     @Override
-	public void onLivingUpdate()
+	public void livingTick()
     {
 		if (!this.world.isRemote)
         {
@@ -296,24 +283,24 @@ public class FakeSpider extends EntitySpider implements IFakeEntity{
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
         }
         
-        super.onLivingUpdate();
+        super.livingTick();
     }
-    
-    @Override
-    public void writeEntityToNBT(NBTTagCompound compound)
+
+	@Override
+	public void writeAdditional(NBTTagCompound compound)
     {
-        super.writeEntityToNBT(compound);
-        compound.setInteger("Lifetime", this.lifetime);
+        super.writeAdditional(compound);
+        compound.setInt("Lifetime", this.lifetime);
     }
-    
-    @Override
-	public void readEntityFromNBT(NBTTagCompound compound)
+
+	@Override
+	public void readAdditional(NBTTagCompound compound)
     {
-        super.readEntityFromNBT(compound);
-        this.lifetime = compound.getInteger("Lifetime");
+        super.readAdditional(compound);
+        this.lifetime = compound.getInt("Lifetime");
     }
 }

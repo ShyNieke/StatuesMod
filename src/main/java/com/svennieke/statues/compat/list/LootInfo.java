@@ -8,7 +8,7 @@ public class LootInfo {
 	private ItemStack stack3;
 	private String statue;
 	
-	public LootInfo(ItemStack stack1, ItemStack stack2, ItemStack stack3, String statue) {
+	public LootInfo(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3) {
 		this.stack1 = stack1;
 		this.stack2 = stack2;
 		this.stack3 = stack3;

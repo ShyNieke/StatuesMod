@@ -2,29 +2,28 @@ package com.svennieke.statues.items;
 
 import java.util.List;
 
-import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class ItemRoyalNugget extends ItemFood {
-	public ItemRoyalNugget(int amount, float saturation, String unlocalised) {
-		super(amount, saturation, false);
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
-		setRegistryName("item" + unlocalised);
-		setCreativeTab(CreativeTabs.FOOD);
-		setCreativeTab(Statues.tabStatues);
+	public ItemRoyalNugget(Item.Properties builder, int amount, float saturation) {
+		super(amount, saturation, false, builder.group(ItemGroup.FOOD).group(Statues.tabStatues));
+//		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+//		setCreativeTab(Statues.tabStatues);
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
-    {
-        	tooltip.add(TextFormatting.GOLD + I18n.translateToLocal("royalnugget.info"));
-    }
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new TextComponentTranslation("statues.royalnugget.info").applyTextStyle(TextFormatting.GOLD));
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
 }

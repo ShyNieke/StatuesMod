@@ -3,8 +3,10 @@ package com.svennieke.statues.entity.fakeentity;
 import javax.annotation.Nullable;
 
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeFireball;
+import com.svennieke.statues.init.StatuesEntity;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -28,7 +30,12 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
 
 	public FakeBlaze(World worldIn) {
 		super(worldIn);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
+        this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
+	}
+	
+	@Override
+	public EntityType<?> getType() {
+		return StatuesEntity.FAKE_BLAZE;
 	}
 
 	@Override
@@ -52,7 +59,7 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, true, new Class[0]));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget<EntityPlayer>(this, EntityPlayer.class, true));
     }
 
 	static class AIFireballAttack extends EntityAIBase
@@ -73,7 +80,7 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
         public boolean shouldExecute()
         {
             EntityLivingBase entitylivingbase = this.blaze.getAttackTarget();
-            return entitylivingbase != null && entitylivingbase.isEntityAlive();
+            return entitylivingbase != null && entitylivingbase.isAlive();
         }
 
         /**
@@ -96,7 +103,7 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
          * Keep ticking a continuous task that has already been started
          */
         @Override
-        public void updateTask()
+        public void tick()
         {
             --this.attackTime;
             EntityLivingBase entitylivingbase = this.blaze.getAttackTarget();
@@ -115,7 +122,7 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
             else if (d0 < this.getFollowDistance() * this.getFollowDistance())
             {
                 double d1 = entitylivingbase.posX - this.blaze.posX;
-                double d2 = entitylivingbase.getEntityBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (this.blaze.posY + (double)(this.blaze.height / 2.0F));
+                double d2 = entitylivingbase.getBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (this.blaze.posY + (double)(this.blaze.height / 2.0F));
                 double d3 = entitylivingbase.posZ - this.blaze.posZ;
 
                 if (this.attackTime <= 0)
@@ -160,34 +167,20 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
                 this.blaze.getMoveHelper().setMoveTo(entitylivingbase.posX, entitylivingbase.posY, entitylivingbase.posZ, 1.0D);
             }
 
-            super.updateTask();
+            super.tick();
         }
 
         private double getFollowDistance()
         {
-            IAttributeInstance iattributeinstance = this.blaze.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
-            return iattributeinstance == null ? 16.0D : iattributeinstance.getAttributeValue();
+            IAttributeInstance iattributeinstance = this.blaze.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE);
+            return iattributeinstance == null ? 16.0D : iattributeinstance.getValue();
         }
     }
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
+	public void livingTick()
     {
-        super.writeEntityToNBT(compound);
-        compound.setInteger("Lifetime", this.lifetime);
-    }
-
-	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
-    {
-        super.readEntityFromNBT(compound);
-        this.lifetime = compound.getInteger("Lifetime");
-    }
-	
-	@Override
-	public void onLivingUpdate()
-    {
-        if (!this.world.isRemote)
+		if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
             {
@@ -196,10 +189,24 @@ public class FakeBlaze extends EntityBlaze implements IFakeEntity{
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
         }
         
-        super.onLivingUpdate();
+        super.livingTick();
+    }
+
+	@Override
+	public void writeAdditional(NBTTagCompound compound)
+    {
+        super.writeAdditional(compound);
+        compound.setInt("Lifetime", this.lifetime);
+    }
+
+	@Override
+	public void readAdditional(NBTTagCompound compound)
+    {
+        super.readAdditional(compound);
+        this.lifetime = compound.getInt("Lifetime");
     }
 }

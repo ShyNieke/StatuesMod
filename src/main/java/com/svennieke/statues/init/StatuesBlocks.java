@@ -1,8 +1,8 @@
 package com.svennieke.statues.init;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import com.svennieke.statues.Reference;
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.Statues.BlockBabyZombie_Statue;
 import com.svennieke.statues.blocks.Statues.BlockBlaze_Statue;
@@ -43,75 +43,342 @@ import com.svennieke.statues.blocks.Statues.BlockZombie_Statue;
 import com.svennieke.statues.blocks.decorative.BlockDisplayStand;
 import com.svennieke.statues.blocks.decorative.BlockPebble;
 import com.svennieke.statues.items.ItemBlockStatue;
+import com.svennieke.statues.renderer.PlayerInventoryRender;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.EnumDyeColor;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 
-@EventBusSubscriber
+@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@ObjectHolder(Reference.MOD_ID)
 public class StatuesBlocks {
 
-	private static final int MAX_TIERS = 5;
 	//Regular Statues
-	public static Block[] baby_zombie_statue;
-	public static Block[] blaze_statue;
-	public static Block[] chicken_statue;
-	public static Block[] cow_statue;
-	public static Block[] creeper_statue;
-	public static Block[] flood_statue;
-	public static Block[] kingcluck_statue;
-	public static Block[] mooshroom_statue;
-	public static Block[] pig_statue;
-	public static Block[] rabbit_bs_statue;
-	public static Block[] rabbit_br_statue;
-	public static Block[] rabbit_bw_statue;
-	public static Block[] rabbit_ws_statue;
-	public static Block[] rabbit_wh_statue;
-	public static Block[] rabbit_go_statue;
-	public static Block[] sheepshaven_statue;
-	public static Block[] slime_statue;
-	public static Block[] snowgolem_statue;
-	public static Block[] villager_br_statue;
-	public static Block[] villager_gr_statue;
-	public static Block[] villager_pu_statue;
-	public static Block[] villager_wh_statue;
-	public static Block[] squid_statue;
-	public static Block[] witch_statue;
-	public static Block[] zombie_statue;
-	public static Block[] husk_statue;
-	public static Block[] shulker_statue;
-	public static Block[] chicken_jockey_statue;
-	public static Block[] magma_statue;
-	public static Block[] ghast_statue;
-	public static Block[] guardian_statue;
-	public static Block[] wasteland_statue;
-	public static Block[] enderman_statue;
-	public static Block[] pufferfish_statue;
-	public static Block[] evoker_statue;
-	public static Block[] spider_statue;
-	public static Block[] campfire_statue;
+	public static Block baby_zombie_statue_t1;
+	public static Block baby_zombie_statue_t2;
+	public static Block baby_zombie_statue_t3;
+	public static Block baby_zombie_statue_t4;
+	public static Block baby_zombie_statue_t5;
 
+	public static Block blaze_statue_t1;
+	public static Block blaze_statue_t2;
+	public static Block blaze_statue_t3;
+	public static Block blaze_statue_t4;
+	public static Block blaze_statue_t5;
+
+	public static Block chicken_statue_t1;
+	public static Block chicken_statue_t2;
+	public static Block chicken_statue_t3;
+	public static Block chicken_statue_t4;
+	public static Block chicken_statue_t5;
+
+	public static Block cow_statue_t1;
+	public static Block cow_statue_t2;
+	public static Block cow_statue_t3;
+	public static Block cow_statue_t4;
+	public static Block cow_statue_t5;
+
+	public static Block creeper_statue_t1;
+	public static Block creeper_statue_t2;
+	public static Block creeper_statue_t3;
+	public static Block creeper_statue_t4;
+	public static Block creeper_statue_t5;
+
+	public static Block flood_statue_t1;
+	public static Block flood_statue_t2;
+	public static Block flood_statue_t3;
+	public static Block flood_statue_t4;
+	public static Block flood_statue_t5;
+
+	public static Block kingcluck_statue_t1;
+	public static Block kingcluck_statue_t2;
+	public static Block kingcluck_statue_t3;
+	public static Block kingcluck_statue_t4;
+	public static Block kingcluck_statue_t5;
+
+	public static Block mooshroom_statue_t1;
+	public static Block mooshroom_statue_t2;
+	public static Block mooshroom_statue_t3;
+	public static Block mooshroom_statue_t4;
+	public static Block mooshroom_statue_t5;
+
+	public static Block pig_statue_t1;
+	public static Block pig_statue_t2;
+	public static Block pig_statue_t3;
+	public static Block pig_statue_t4;
+	public static Block pig_statue_t5;
+
+	public static Block rabbit_bs_statue_t1;
+	public static Block rabbit_bs_statue_t2;
+	public static Block rabbit_bs_statue_t3;
+	public static Block rabbit_bs_statue_t4;
+	public static Block rabbit_bs_statue_t5;
+
+	public static Block rabbit_br_statue_t1;
+	public static Block rabbit_br_statue_t2;
+	public static Block rabbit_br_statue_t3;
+	public static Block rabbit_br_statue_t4;
+	public static Block rabbit_br_statue_t5;
+
+	public static Block rabbit_bw_statue_t1;
+	public static Block rabbit_bw_statue_t2;
+	public static Block rabbit_bw_statue_t3;
+	public static Block rabbit_bw_statue_t4;
+	public static Block rabbit_bw_statue_t5;
+
+	public static Block rabbit_ws_statue_t1;
+	public static Block rabbit_ws_statue_t2;
+	public static Block rabbit_ws_statue_t3;
+	public static Block rabbit_ws_statue_t4;
+	public static Block rabbit_ws_statue_t5;
+
+	public static Block rabbit_wh_statue_t1;
+	public static Block rabbit_wh_statue_t2;
+	public static Block rabbit_wh_statue_t3;
+	public static Block rabbit_wh_statue_t4;
+	public static Block rabbit_wh_statue_t5;
+
+	public static Block rabbit_go_statue_t1;
+	public static Block rabbit_go_statue_t2;
+	public static Block rabbit_go_statue_t3;
+	public static Block rabbit_go_statue_t4;
+	public static Block rabbit_go_statue_t5;
+
+	public static Block sheep_shaven_statue_t1;
+	public static Block sheep_shaven_statue_t2;
+	public static Block sheep_shaven_statue_t3;
+	public static Block sheep_shaven_statue_t4;
+	public static Block sheep_shaven_statue_t5;
+
+	public static Block slime_statue_t1;
+	public static Block slime_statue_t2;
+	public static Block slime_statue_t3;
+	public static Block slime_statue_t4;
+	public static Block slime_statue_t5;
+
+	public static Block snowgolem_statue_t1;
+	public static Block snowgolem_statue_t2;
+	public static Block snowgolem_statue_t3;
+	public static Block snowgolem_statue_t4;
+	public static Block snowgolem_statue_t5;
+
+	public static Block villager_br_statue_t1;
+	public static Block villager_br_statue_t2;
+	public static Block villager_br_statue_t3;
+	public static Block villager_br_statue_t4;
+	public static Block villager_br_statue_t5;
+
+	public static Block villager_gr_statue_t1;
+	public static Block villager_gr_statue_t2;
+	public static Block villager_gr_statue_t3;
+	public static Block villager_gr_statue_t4;
+	public static Block villager_gr_statue_t5;
+
+	public static Block villager_pu_statue_t1;
+	public static Block villager_pu_statue_t2;
+	public static Block villager_pu_statue_t3;
+	public static Block villager_pu_statue_t4;
+	public static Block villager_pu_statue_t5;
+
+	public static Block villager_wh_statue_t1;
+	public static Block villager_wh_statue_t2;
+	public static Block villager_wh_statue_t3;
+	public static Block villager_wh_statue_t4;
+	public static Block villager_wh_statue_t5;
+
+	public static Block squid_statue_t1;
+	public static Block squid_statue_t2;
+	public static Block squid_statue_t3;
+	public static Block squid_statue_t4;
+	public static Block squid_statue_t5;
+
+	public static Block witch_statue_t1;
+	public static Block witch_statue_t2;
+	public static Block witch_statue_t3;
+	public static Block witch_statue_t4;
+	public static Block witch_statue_t5;
+
+	public static Block zombie_statue_t1;
+	public static Block zombie_statue_t2;
+	public static Block zombie_statue_t3;
+	public static Block zombie_statue_t4;
+	public static Block zombie_statue_t5;
+
+	public static Block husk_statue_t1;
+	public static Block husk_statue_t2;
+	public static Block husk_statue_t3;
+	public static Block husk_statue_t4;
+	public static Block husk_statue_t5;
+
+	public static Block shulker_statue_t1;
+	public static Block shulker_statue_t2;
+	public static Block shulker_statue_t3;
+	public static Block shulker_statue_t4;
+	public static Block shulker_statue_t5;
+
+	public static Block chicken_jockey_statue_t1;
+	public static Block chicken_jockey_statue_t2;
+	public static Block chicken_jockey_statue_t3;
+	public static Block chicken_jockey_statue_t4;
+	public static Block chicken_jockey_statue_t5;
+
+	public static Block magma_statue_t1;
+	public static Block magma_statue_t2;
+	public static Block magma_statue_t3;
+	public static Block magma_statue_t4;
+	public static Block magma_statue_t5;
+
+	public static Block ghast_statue_t1;
+	public static Block ghast_statue_t2;
+	public static Block ghast_statue_t3;
+	public static Block ghast_statue_t4;
+	public static Block ghast_statue_t5;
+
+	public static Block guardian_statue_t1;
+	public static Block guardian_statue_t2;
+	public static Block guardian_statue_t3;
+	public static Block guardian_statue_t4;
+	public static Block guardian_statue_t5;
+
+	public static Block wasteland_statue_t1;
+	public static Block wasteland_statue_t2;
+	public static Block wasteland_statue_t3;
+	public static Block wasteland_statue_t4;
+	public static Block wasteland_statue_t5;
+
+	public static Block enderman_statue_t1;
+	public static Block enderman_statue_t2;
+	public static Block enderman_statue_t3;
+	public static Block enderman_statue_t4;
+	public static Block enderman_statue_t5;
+
+	public static Block pufferfish_statue_t1;
+	public static Block pufferfish_statue_t2;
+	public static Block pufferfish_statue_t3;
+	public static Block pufferfish_statue_t4;
+	public static Block pufferfish_statue_t5;
+
+	public static Block evoker_statue_t1;
+	public static Block evoker_statue_t2;
+	public static Block evoker_statue_t3;
+	public static Block evoker_statue_t4;
+	public static Block evoker_statue_t5;
+
+	public static Block spider_statue_t1;
+	public static Block spider_statue_t2;
+	public static Block spider_statue_t3;
+	public static Block spider_statue_t4;
+	public static Block spider_statue_t5;
+
+	public static Block campfire_statue_t1;
+	//public static Block campfire_statue_t2;
+	//public static Block campfire_statue_t3;
+	//public static Block campfire_statue_t4;
+	//public static Block campfire_statue_t5;
+	
 	//Sheep Statues
-	public static Block[] sheep_statue_white;
-	public static Block[] sheep_statue_orange;
-	public static Block[] sheep_statue_magenta;
-	public static Block[] sheep_statue_lightblue;
-	public static Block[] sheep_statue_yellow;
-	public static Block[] sheep_statue_lime;
-	public static Block[] sheep_statue_pink;
-	public static Block[] sheep_statue_gray;
-	public static Block[] sheep_statue_lightgray;
-	public static Block[] sheep_statue_cyan;
-	public static Block[] sheep_statue_purple;
-	public static Block[] sheep_statue_blue;
-	public static Block[] sheep_statue_brown;
-	public static Block[] sheep_statue_green;
-	public static Block[] sheep_statue_red;
-	public static Block[] sheep_statue_black;
+	public static Block sheep_statue_white_t1;
+	public static Block sheep_statue_white_t2;
+	public static Block sheep_statue_white_t3;
+	public static Block sheep_statue_white_t4;
+	public static Block sheep_statue_white_t5;
+
+	public static Block sheep_statue_orange_t1;
+	public static Block sheep_statue_orange_t2;
+	public static Block sheep_statue_orange_t3;
+	public static Block sheep_statue_orange_t4;
+	public static Block sheep_statue_orange_t5;
+
+	public static Block sheep_statue_magenta_t1;
+	public static Block sheep_statue_magenta_t2;
+	public static Block sheep_statue_magenta_t3;
+	public static Block sheep_statue_magenta_t4;
+	public static Block sheep_statue_magenta_t5;
+
+	public static Block sheep_statue_lightblue_t1;
+	public static Block sheep_statue_lightblue_t2;
+	public static Block sheep_statue_lightblue_t3;
+	public static Block sheep_statue_lightblue_t4;
+	public static Block sheep_statue_lightblue_t5;
+
+	public static Block sheep_statue_yellow_t1;
+	public static Block sheep_statue_yellow_t2;
+	public static Block sheep_statue_yellow_t3;
+	public static Block sheep_statue_yellow_t4;
+	public static Block sheep_statue_yellow_t5;
+
+	public static Block sheep_statue_lime_t1;
+	public static Block sheep_statue_lime_t2;
+	public static Block sheep_statue_lime_t3;
+	public static Block sheep_statue_lime_t4;
+	public static Block sheep_statue_lime_t5;
+
+	public static Block sheep_statue_pink_t1;
+	public static Block sheep_statue_pink_t2;
+	public static Block sheep_statue_pink_t3;
+	public static Block sheep_statue_pink_t4;
+	public static Block sheep_statue_pink_t5;
+
+	public static Block sheep_statue_gray_t1;
+	public static Block sheep_statue_gray_t2;
+	public static Block sheep_statue_gray_t3;
+	public static Block sheep_statue_gray_t4;
+	public static Block sheep_statue_gray_t5;
+
+	public static Block sheep_statue_lightgray_t1;
+	public static Block sheep_statue_lightgray_t2;
+	public static Block sheep_statue_lightgray_t3;
+	public static Block sheep_statue_lightgray_t4;
+	public static Block sheep_statue_lightgray_t5;
+
+	public static Block sheep_statue_cyan_t1;
+	public static Block sheep_statue_cyan_t2;
+	public static Block sheep_statue_cyan_t3;
+	public static Block sheep_statue_cyan_t4;
+	public static Block sheep_statue_cyan_t5;
+
+	public static Block sheep_statue_purple_t1;
+	public static Block sheep_statue_purple_t2;
+	public static Block sheep_statue_purple_t3;
+	public static Block sheep_statue_purple_t4;
+	public static Block sheep_statue_purple_t5;
+
+	public static Block sheep_statue_blue_t1;
+	public static Block sheep_statue_blue_t2;
+	public static Block sheep_statue_blue_t3;
+	public static Block sheep_statue_blue_t4;
+	public static Block sheep_statue_blue_t5;
+
+	public static Block sheep_statue_brown_t1;
+	public static Block sheep_statue_brown_t2;
+	public static Block sheep_statue_brown_t3;
+	public static Block sheep_statue_brown_t4;
+	public static Block sheep_statue_brown_t5;
+
+	public static Block sheep_statue_green_t1;
+	public static Block sheep_statue_green_t2;
+	public static Block sheep_statue_green_t3;
+	public static Block sheep_statue_green_t4;
+	public static Block sheep_statue_green_t5;
+
+	public static Block sheep_statue_red_t1;
+	public static Block sheep_statue_red_t2;
+	public static Block sheep_statue_red_t3;
+	public static Block sheep_statue_red_t4;
+	public static Block sheep_statue_red_t5;
+
+	public static Block sheep_statue_black_t1;
+	public static Block sheep_statue_black_t2;
+	public static Block sheep_statue_black_t3;
+	public static Block sheep_statue_black_t4;
+	public static Block sheep_statue_black_t5;
 
 	//Other Statues
 	public static Block info_statue;
@@ -126,114 +393,379 @@ public class StatuesBlocks {
 	public static ArrayList<Block> BLOCKS = new ArrayList<>();
 	
 	@SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event)
+    public static void registerBlocks(final RegistryEvent.Register<Block> event)
 	{
 		IForgeRegistry<Block> registry = event.getRegistry();
+
+		baby_zombie_statue_t1 = registerStatue(new BlockBabyZombie_Statue(Block.Properties.create(Material.TNT)), "baby_zombie_statue_t1", 1);
+		baby_zombie_statue_t2 = registerStatue(new BlockBabyZombie_Statue(Block.Properties.create(Material.TNT)), "baby_zombie_statue_t2", 2);
+		baby_zombie_statue_t3 = registerStatue(new BlockBabyZombie_Statue(Block.Properties.create(Material.TNT)), "baby_zombie_statue_t3", 3);
+		baby_zombie_statue_t4 = registerStatue(new BlockBabyZombie_Statue(Block.Properties.create(Material.TNT)), "baby_zombie_statue_t4", 4);
+		baby_zombie_statue_t5 = registerStatue(new BlockBabyZombie_Statue(Block.Properties.create(Material.TNT)), "baby_zombie_statue_t5", 5);
+
+		blaze_statue_t1 = registerStatue(new BlockBlaze_Statue(Block.Properties.create(Material.TNT)), "blaze_statue_t1", 1);
+		blaze_statue_t2 = registerStatue(new BlockBlaze_Statue(Block.Properties.create(Material.TNT)), "blaze_statue_t2", 2);
+		blaze_statue_t3 = registerStatue(new BlockBlaze_Statue(Block.Properties.create(Material.TNT)), "blaze_statue_t3", 3);
+		blaze_statue_t4 = registerStatue(new BlockBlaze_Statue(Block.Properties.create(Material.TNT)), "blaze_statue_t4", 4);
+		blaze_statue_t5 = registerStatue(new BlockBlaze_Statue(Block.Properties.create(Material.TNT)), "blaze_statue_t5", 5);
+
+		chicken_statue_t1 = registerStatue(new BlockChicken_Statue(Block.Properties.create(Material.TNT)), "chicken_statue_t1", 1);
+		chicken_statue_t2 = registerStatue(new BlockChicken_Statue(Block.Properties.create(Material.TNT)), "chicken_statue_t2", 2);
+		chicken_statue_t3 = registerStatue(new BlockChicken_Statue(Block.Properties.create(Material.TNT)), "chicken_statue_t3", 3);
+		chicken_statue_t4 = registerStatue(new BlockChicken_Statue(Block.Properties.create(Material.TNT)), "chicken_statue_t4", 4);
+		chicken_statue_t5 = registerStatue(new BlockChicken_Statue(Block.Properties.create(Material.TNT)), "chicken_statue_t5", 5);
+
+		cow_statue_t1 = registerStatue(new BlockCow_Statue(Block.Properties.create(Material.TNT)), "cow_statue_t1", 1);
+		cow_statue_t2 = registerStatue(new BlockCow_Statue(Block.Properties.create(Material.TNT)), "cow_statue_t2", 2);
+		cow_statue_t3 = registerStatue(new BlockCow_Statue(Block.Properties.create(Material.TNT)), "cow_statue_t3", 3);
+		cow_statue_t4 = registerStatue(new BlockCow_Statue(Block.Properties.create(Material.TNT)), "cow_statue_t4", 4);
+		cow_statue_t5 = registerStatue(new BlockCow_Statue(Block.Properties.create(Material.TNT)), "cow_statue_t5", 5);
+
+		creeper_statue_t1 = registerStatue(new BlockCreeper_Statue(Block.Properties.create(Material.TNT)), "creeper_statue_t1", 1);
+		creeper_statue_t2 = registerStatue(new BlockCreeper_Statue(Block.Properties.create(Material.TNT)), "creeper_statue_t2", 2);
+		creeper_statue_t3 = registerStatue(new BlockCreeper_Statue(Block.Properties.create(Material.TNT)), "creeper_statue_t3", 3);
+		creeper_statue_t4 = registerStatue(new BlockCreeper_Statue(Block.Properties.create(Material.TNT)), "creeper_statue_t4", 4);
+		creeper_statue_t5 = registerStatue(new BlockCreeper_Statue(Block.Properties.create(Material.TNT)), "creeper_statue_t5", 5);
+
+		flood_statue_t1 = registerStatue(new BlockFlood_Statue(Block.Properties.create(Material.TNT)), "flood_statue_t1", 1);
+		flood_statue_t2 = registerStatue(new BlockFlood_Statue(Block.Properties.create(Material.TNT)), "flood_statue_t2", 2);
+		flood_statue_t3 = registerStatue(new BlockFlood_Statue(Block.Properties.create(Material.TNT)), "flood_statue_t3", 3);
+		flood_statue_t4 = registerStatue(new BlockFlood_Statue(Block.Properties.create(Material.TNT)), "flood_statue_t4", 4);
+		flood_statue_t5 = registerStatue(new BlockFlood_Statue(Block.Properties.create(Material.TNT)), "flood_statue_t5", 5);
+
+		kingcluck_statue_t1 = registerStatue(new BlockKingCluck_Statue(Block.Properties.create(Material.TNT)), "kingcluck_statue_t1", 1);
+		kingcluck_statue_t2 = registerStatue(new BlockKingCluck_Statue(Block.Properties.create(Material.TNT)), "kingcluck_statue_t2", 2);
+		kingcluck_statue_t3 = registerStatue(new BlockKingCluck_Statue(Block.Properties.create(Material.TNT)), "kingcluck_statue_t3", 3);
+		kingcluck_statue_t4 = registerStatue(new BlockKingCluck_Statue(Block.Properties.create(Material.TNT)), "kingcluck_statue_t4", 4);
+		kingcluck_statue_t5 = registerStatue(new BlockKingCluck_Statue(Block.Properties.create(Material.TNT)), "kingcluck_statue_t5", 5);
+
+		mooshroom_statue_t1 = registerStatue(new BlockMooshroom_Statue(Block.Properties.create(Material.TNT)), "mooshroom_statue_t1", 1);
+		mooshroom_statue_t2 = registerStatue(new BlockMooshroom_Statue(Block.Properties.create(Material.TNT)), "mooshroom_statue_t2", 2);
+		mooshroom_statue_t3 = registerStatue(new BlockMooshroom_Statue(Block.Properties.create(Material.TNT)), "mooshroom_statue_t3", 3);
+		mooshroom_statue_t4 = registerStatue(new BlockMooshroom_Statue(Block.Properties.create(Material.TNT)), "mooshroom_statue_t4", 4);
+		mooshroom_statue_t5 = registerStatue(new BlockMooshroom_Statue(Block.Properties.create(Material.TNT)), "mooshroom_statue_t5", 5);
+
+		pig_statue_t1 = registerStatue(new BlockPig_Statue(Block.Properties.create(Material.TNT)), "pig_statue_t1", 1);
+		pig_statue_t2 = registerStatue(new BlockPig_Statue(Block.Properties.create(Material.TNT)), "pig_statue_t2", 2);
+		pig_statue_t3 = registerStatue(new BlockPig_Statue(Block.Properties.create(Material.TNT)), "pig_statue_t3", 3);
+		pig_statue_t4 = registerStatue(new BlockPig_Statue(Block.Properties.create(Material.TNT)), "pig_statue_t4", 4);
+		pig_statue_t5 = registerStatue(new BlockPig_Statue(Block.Properties.create(Material.TNT)), "pig_statue_t5", 5);
+
+		rabbit_bs_statue_t1 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bs_statue_t1", 1);
+		rabbit_bs_statue_t2 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bs_statue_t2", 2);
+		rabbit_bs_statue_t3 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bs_statue_t3", 3);
+		rabbit_bs_statue_t4 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bs_statue_t4", 4);
+		rabbit_bs_statue_t5 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bs_statue_t5", 5);
+
+		rabbit_br_statue_t1 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_br_statue_t1", 1);
+		rabbit_br_statue_t2 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_br_statue_t2", 2);
+		rabbit_br_statue_t3 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_br_statue_t3", 3);
+		rabbit_br_statue_t4 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_br_statue_t4", 4);
+		rabbit_br_statue_t5 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_br_statue_t5", 5);
+
+		rabbit_bw_statue_t1 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bw_statue_t1", 1);
+		rabbit_bw_statue_t2 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bw_statue_t2", 2);
+		rabbit_bw_statue_t3 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bw_statue_t3", 3);
+		rabbit_bw_statue_t4 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bw_statue_t4", 4);
+		rabbit_bw_statue_t5 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_bw_statue_t5", 5);
+
+		rabbit_ws_statue_t1 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_ws_statue_t1", 1);
+		rabbit_ws_statue_t2 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_ws_statue_t2", 2);
+		rabbit_ws_statue_t3 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_ws_statue_t3", 3);
+		rabbit_ws_statue_t4 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_ws_statue_t4", 4);
+		rabbit_ws_statue_t5 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_ws_statue_t5", 5);
+
+		rabbit_wh_statue_t1 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_wh_statue_t1", 1);
+		rabbit_wh_statue_t2 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_wh_statue_t2", 2);
+		rabbit_wh_statue_t3 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_wh_statue_t3", 3);
+		rabbit_wh_statue_t4 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_wh_statue_t4", 4);
+		rabbit_wh_statue_t5 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_wh_statue_t5", 5);
+
+		rabbit_go_statue_t1 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_go_statue_t1", 1);
+		rabbit_go_statue_t2 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_go_statue_t2", 2);
+		rabbit_go_statue_t3 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_go_statue_t3", 3);
+		rabbit_go_statue_t4 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_go_statue_t4", 4);
+		rabbit_go_statue_t5 = registerStatue(new BlockRabbit_Statue(Block.Properties.create(Material.TNT)), "rabbit_go_statue_t5", 5);
+
+		sheep_shaven_statue_t1 = registerStatue(new BlockSheepShaven_Statue(Block.Properties.create(Material.TNT)), "sheep_shaven_statue_t1", 1);
+		sheep_shaven_statue_t2 = registerStatue(new BlockSheepShaven_Statue(Block.Properties.create(Material.TNT)), "sheep_shaven_statue_t2", 2);
+		sheep_shaven_statue_t3 = registerStatue(new BlockSheepShaven_Statue(Block.Properties.create(Material.TNT)), "sheep_shaven_statue_t3", 3);
+		sheep_shaven_statue_t4 = registerStatue(new BlockSheepShaven_Statue(Block.Properties.create(Material.TNT)), "sheep_shaven_statue_t4", 4);
+		sheep_shaven_statue_t5 = registerStatue(new BlockSheepShaven_Statue(Block.Properties.create(Material.TNT)), "sheep_shaven_statue_t5", 5);
+
+		slime_statue_t1 = registerStatue(new BlockSlime_Statue(Block.Properties.create(Material.TNT)), "slime_statue_t1", 1);
+		slime_statue_t2 = registerStatue(new BlockSlime_Statue(Block.Properties.create(Material.TNT)), "slime_statue_t2", 2);
+		slime_statue_t3 = registerStatue(new BlockSlime_Statue(Block.Properties.create(Material.TNT)), "slime_statue_t3", 3);
+		slime_statue_t4 = registerStatue(new BlockSlime_Statue(Block.Properties.create(Material.TNT)), "slime_statue_t4", 4);
+		slime_statue_t5 = registerStatue(new BlockSlime_Statue(Block.Properties.create(Material.TNT)), "slime_statue_t5", 5);
+
+		snowgolem_statue_t1 = registerStatue(new BlockSnowGolem_Statue(Block.Properties.create(Material.TNT)), "snowgolem_statue_t1", 1);
+		snowgolem_statue_t2 = registerStatue(new BlockSnowGolem_Statue(Block.Properties.create(Material.TNT)), "snowgolem_statue_t2", 2);
+		snowgolem_statue_t3 = registerStatue(new BlockSnowGolem_Statue(Block.Properties.create(Material.TNT)), "snowgolem_statue_t3", 3);
+		snowgolem_statue_t4 = registerStatue(new BlockSnowGolem_Statue(Block.Properties.create(Material.TNT)), "snowgolem_statue_t4", 4);
+		snowgolem_statue_t5 = registerStatue(new BlockSnowGolem_Statue(Block.Properties.create(Material.TNT)), "snowgolem_statue_t5", 5);
+
+		villager_br_statue_t1 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_br_statue_t1", 1);
+		villager_br_statue_t2 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_br_statue_t2", 2);
+		villager_br_statue_t3 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_br_statue_t3", 3);
+		villager_br_statue_t4 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_br_statue_t4", 4);
+		villager_br_statue_t5 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_br_statue_t5", 5);
+
+		villager_gr_statue_t1 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_gr_statue_t1", 1);
+		villager_gr_statue_t2 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_gr_statue_t2", 2);
+		villager_gr_statue_t3 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_gr_statue_t3", 3);
+		villager_gr_statue_t4 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_gr_statue_t4", 4);
+		villager_gr_statue_t5 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_gr_statue_t5", 5);
+
+		villager_pu_statue_t1 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_pu_statue_t1", 1);
+		villager_pu_statue_t2 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_pu_statue_t2", 2);
+		villager_pu_statue_t3 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_pu_statue_t3", 3);
+		villager_pu_statue_t4 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_pu_statue_t4", 4);
+		villager_pu_statue_t5 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_pu_statue_t5", 5);
+
+		villager_wh_statue_t1 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_wh_statue_t1", 1);
+		villager_wh_statue_t2 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_wh_statue_t2", 2);
+		villager_wh_statue_t3 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_wh_statue_t3", 3);
+		villager_wh_statue_t4 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_wh_statue_t4", 4);
+		villager_wh_statue_t5 = registerStatue(new BlockVillager_Statue(Block.Properties.create(Material.TNT)), "villager_wh_statue_t5", 5);
+
+		squid_statue_t1 = registerStatue(new BlockSquid_Statue(Block.Properties.create(Material.TNT)), "squid_statue_t1", 1);
+		squid_statue_t2 = registerStatue(new BlockSquid_Statue(Block.Properties.create(Material.TNT)), "squid_statue_t2", 2);
+		squid_statue_t3 = registerStatue(new BlockSquid_Statue(Block.Properties.create(Material.TNT)), "squid_statue_t3", 3);
+		squid_statue_t4 = registerStatue(new BlockSquid_Statue(Block.Properties.create(Material.TNT)), "squid_statue_t4", 4);
+		squid_statue_t5 = registerStatue(new BlockSquid_Statue(Block.Properties.create(Material.TNT)), "squid_statue_t5", 5);
+
+		witch_statue_t1 = registerStatue(new BlockWitch_Statue(Block.Properties.create(Material.TNT)), "witch_statue_t1", 1);
+		witch_statue_t2 = registerStatue(new BlockWitch_Statue(Block.Properties.create(Material.TNT)), "witch_statue_t2", 2);
+		witch_statue_t3 = registerStatue(new BlockWitch_Statue(Block.Properties.create(Material.TNT)), "witch_statue_t3", 3);
+		witch_statue_t4 = registerStatue(new BlockWitch_Statue(Block.Properties.create(Material.TNT)), "witch_statue_t4", 4);
+		witch_statue_t5 = registerStatue(new BlockWitch_Statue(Block.Properties.create(Material.TNT)), "witch_statue_t5", 5);
+
+		zombie_statue_t1 = registerStatue(new BlockZombie_Statue(Block.Properties.create(Material.TNT)), "zombie_statue_t1", 1);
+		zombie_statue_t2 = registerStatue(new BlockZombie_Statue(Block.Properties.create(Material.TNT)), "zombie_statue_t2", 2);
+		zombie_statue_t3 = registerStatue(new BlockZombie_Statue(Block.Properties.create(Material.TNT)), "zombie_statue_t3", 3);
+		zombie_statue_t4 = registerStatue(new BlockZombie_Statue(Block.Properties.create(Material.TNT)), "zombie_statue_t4", 4);
+		zombie_statue_t5 = registerStatue(new BlockZombie_Statue(Block.Properties.create(Material.TNT)), "zombie_statue_t5", 5);
+
+		husk_statue_t1 = registerStatue(new BlockHusk_Statue(Block.Properties.create(Material.TNT)), "husk_statue_t1", 1);
+		husk_statue_t2 = registerStatue(new BlockHusk_Statue(Block.Properties.create(Material.TNT)), "husk_statue_t2", 2);
+		husk_statue_t3 = registerStatue(new BlockHusk_Statue(Block.Properties.create(Material.TNT)), "husk_statue_t3", 3);
+		husk_statue_t4 = registerStatue(new BlockHusk_Statue(Block.Properties.create(Material.TNT)), "husk_statue_t4", 4);
+		husk_statue_t5 = registerStatue(new BlockHusk_Statue(Block.Properties.create(Material.TNT)), "husk_statue_t5", 5);
+
+		shulker_statue_t1 = registerStatue(new BlockShulker_Statue(Block.Properties.create(Material.TNT)), "shulker_statue_t1", 1);
+		shulker_statue_t2 = registerStatue(new BlockShulker_Statue(Block.Properties.create(Material.TNT)), "shulker_statue_t2", 2);
+		shulker_statue_t3 = registerStatue(new BlockShulker_Statue(Block.Properties.create(Material.TNT)), "shulker_statue_t3", 3);
+		shulker_statue_t4 = registerStatue(new BlockShulker_Statue(Block.Properties.create(Material.TNT)), "shulker_statue_t4", 4);
+		shulker_statue_t5 = registerStatue(new BlockShulker_Statue(Block.Properties.create(Material.TNT)), "shulker_statue_t5", 5);
+
+		chicken_jockey_statue_t1 = registerStatue(new BlockChickenJockey_Statue(Block.Properties.create(Material.TNT)), "chicken_jockey_statue_t1", 1);
+		chicken_jockey_statue_t2 = registerStatue(new BlockChickenJockey_Statue(Block.Properties.create(Material.TNT)), "chicken_jockey_statue_t2", 2);
+		chicken_jockey_statue_t3 = registerStatue(new BlockChickenJockey_Statue(Block.Properties.create(Material.TNT)), "chicken_jockey_statue_t3", 3);
+		chicken_jockey_statue_t4 = registerStatue(new BlockChickenJockey_Statue(Block.Properties.create(Material.TNT)), "chicken_jockey_statue_t4", 4);
+		chicken_jockey_statue_t5 = registerStatue(new BlockChickenJockey_Statue(Block.Properties.create(Material.TNT)), "chicken_jockey_statue_t5", 5);
+
+		magma_statue_t1 = registerStatue(new BlockMagmaSlime_Statue(Block.Properties.create(Material.TNT)), "magma_statue_t1", 1);
+		magma_statue_t2 = registerStatue(new BlockMagmaSlime_Statue(Block.Properties.create(Material.TNT)), "magma_statue_t2", 2);
+		magma_statue_t3 = registerStatue(new BlockMagmaSlime_Statue(Block.Properties.create(Material.TNT)), "magma_statue_t3", 3);
+		magma_statue_t4 = registerStatue(new BlockMagmaSlime_Statue(Block.Properties.create(Material.TNT)), "magma_statue_t4", 4);
+		magma_statue_t5 = registerStatue(new BlockMagmaSlime_Statue(Block.Properties.create(Material.TNT)), "magma_statue_t5", 5);
+
+		ghast_statue_t1 = registerStatue(new BlockGhast_Statue(Block.Properties.create(Material.TNT)), "ghast_statue_t1", 1);
+		ghast_statue_t2 = registerStatue(new BlockGhast_Statue(Block.Properties.create(Material.TNT)), "ghast_statue_t2", 2);
+		ghast_statue_t3 = registerStatue(new BlockGhast_Statue(Block.Properties.create(Material.TNT)), "ghast_statue_t3", 3);
+		ghast_statue_t4 = registerStatue(new BlockGhast_Statue(Block.Properties.create(Material.TNT)), "ghast_statue_t4", 4);
+		ghast_statue_t5 = registerStatue(new BlockGhast_Statue(Block.Properties.create(Material.TNT)), "ghast_statue_t5", 5);
+
+		guardian_statue_t1 = registerStatue(new BlockGuardian_Statue(Block.Properties.create(Material.TNT)), "guardian_statue_t1", 1);
+		guardian_statue_t2 = registerStatue(new BlockGuardian_Statue(Block.Properties.create(Material.TNT)), "guardian_statue_t2", 2);
+		guardian_statue_t3 = registerStatue(new BlockGuardian_Statue(Block.Properties.create(Material.TNT)), "guardian_statue_t3", 3);
+		guardian_statue_t4 = registerStatue(new BlockGuardian_Statue(Block.Properties.create(Material.TNT)), "guardian_statue_t4", 4);
+		guardian_statue_t5 = registerStatue(new BlockGuardian_Statue(Block.Properties.create(Material.TNT)), "guardian_statue_t5", 5);
+
+		wasteland_statue_t1 = registerStatue(new BlockWastelandPig_Statue(Block.Properties.create(Material.TNT)), "wasteland_statue_t1", 1);
+		wasteland_statue_t2 = registerStatue(new BlockWastelandPig_Statue(Block.Properties.create(Material.TNT)), "wasteland_statue_t2", 2);
+		wasteland_statue_t3 = registerStatue(new BlockWastelandPig_Statue(Block.Properties.create(Material.TNT)), "wasteland_statue_t3", 3);
+		wasteland_statue_t4 = registerStatue(new BlockWastelandPig_Statue(Block.Properties.create(Material.TNT)), "wasteland_statue_t4", 4);
+		wasteland_statue_t5 = registerStatue(new BlockWastelandPig_Statue(Block.Properties.create(Material.TNT)), "wasteland_statue_t5", 5);
+
+		enderman_statue_t1 = registerStatue(new BlockEnderman_Statue(Block.Properties.create(Material.TNT)), "enderman_statue_t1", 1);
+		enderman_statue_t2 = registerStatue(new BlockEnderman_Statue(Block.Properties.create(Material.TNT)), "enderman_statue_t2", 2);
+		enderman_statue_t3 = registerStatue(new BlockEnderman_Statue(Block.Properties.create(Material.TNT)), "enderman_statue_t3", 3);
+		enderman_statue_t4 = registerStatue(new BlockEnderman_Statue(Block.Properties.create(Material.TNT)), "enderman_statue_t4", 4);
+		enderman_statue_t5 = registerStatue(new BlockEnderman_Statue(Block.Properties.create(Material.TNT)), "enderman_statue_t5", 5);
+
+		pufferfish_statue_t1 = registerStatue(new BlockPufferfish_Statue(Block.Properties.create(Material.TNT)), "pufferfish_statue_t1", 1);
+		pufferfish_statue_t2 = registerStatue(new BlockPufferfish_Statue(Block.Properties.create(Material.TNT)), "pufferfish_statue_t2", 2);
+		pufferfish_statue_t3 = registerStatue(new BlockPufferfish_Statue(Block.Properties.create(Material.TNT)), "pufferfish_statue_t3", 3);
+		pufferfish_statue_t4 = registerStatue(new BlockPufferfish_Statue(Block.Properties.create(Material.TNT)), "pufferfish_statue_t4", 4);
+		pufferfish_statue_t5 = registerStatue(new BlockPufferfish_Statue(Block.Properties.create(Material.TNT)), "pufferfish_statue_t5", 5);
+
+		evoker_statue_t1 = registerStatue(new BlockEvoker_Statue(Block.Properties.create(Material.TNT)), "evoker_statue_t1", 1);
+		evoker_statue_t2 = registerStatue(new BlockEvoker_Statue(Block.Properties.create(Material.TNT)), "evoker_statue_t2", 2);
+		evoker_statue_t3 = registerStatue(new BlockEvoker_Statue(Block.Properties.create(Material.TNT)), "evoker_statue_t3", 3);
+		evoker_statue_t4 = registerStatue(new BlockEvoker_Statue(Block.Properties.create(Material.TNT)), "evoker_statue_t4", 4);
+		evoker_statue_t5 = registerStatue(new BlockEvoker_Statue(Block.Properties.create(Material.TNT)), "evoker_statue_t5", 5);
+
+		spider_statue_t1 = registerStatue(new BlockSpider_Statue(Block.Properties.create(Material.TNT)), "spider_statue_t1", 1);
+		spider_statue_t2 = registerStatue(new BlockSpider_Statue(Block.Properties.create(Material.TNT)), "spider_statue_t2", 2);
+		spider_statue_t3 = registerStatue(new BlockSpider_Statue(Block.Properties.create(Material.TNT)), "spider_statue_t3", 3);
+		spider_statue_t4 = registerStatue(new BlockSpider_Statue(Block.Properties.create(Material.TNT)), "spider_statue_t4", 4);
+		spider_statue_t5 = registerStatue(new BlockSpider_Statue(Block.Properties.create(Material.TNT)), "spider_statue_t5", 5);
+
+		campfire_statue_t1 = registerStatue(new BlockEtho_Statue(Block.Properties.create(Material.TNT)), "campfire_statue_t1", 1);
+		//campfire_statue_t2 = registerStatue(new BlockEtho_Statue(Block.Properties.create(Material.TNT)), "campfire_statue_t2", 2);
+		//campfire_statue_t3 = registerStatue(new BlockEtho_Statue(Block.Properties.create(Material.TNT)), "campfire_statue_t3", 3);
+		//campfire_statue_t4 = registerStatue(new BlockEtho_Statue(Block.Properties.create(Material.TNT)), "campfire_statue_t4", 4);
+		//campfire_statue_t5 = registerStatue(new BlockEtho_Statue(Block.Properties.create(Material.TNT)), "campfire_statue_t5", 5);
+
+		sheep_statue_white_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_white_t1", 1);
+		sheep_statue_white_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_white_t2", 2);
+		sheep_statue_white_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_white_t3", 3);
+		sheep_statue_white_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_white_t4", 4);
+		sheep_statue_white_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_white_t5", 5);
+
+		sheep_statue_orange_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_orange_t1", 1);
+		sheep_statue_orange_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_orange_t2", 2);
+		sheep_statue_orange_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_orange_t3", 3);
+		sheep_statue_orange_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_orange_t4", 4);
+		sheep_statue_orange_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_orange_t5", 5);
+
+		sheep_statue_magenta_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_magenta_t1", 1);
+		sheep_statue_magenta_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_magenta_t2", 2);
+		sheep_statue_magenta_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_magenta_t3", 3);
+		sheep_statue_magenta_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_magenta_t4", 4);
+		sheep_statue_magenta_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_magenta_t5", 5);
+
+		sheep_statue_lightblue_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightblue_t1", 1);
+		sheep_statue_lightblue_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightblue_t2", 2);
+		sheep_statue_lightblue_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightblue_t3", 3);
+		sheep_statue_lightblue_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightblue_t4", 4);
+		sheep_statue_lightblue_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightblue_t5", 5);
+
+		sheep_statue_yellow_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_yellow_t1", 1);
+		sheep_statue_yellow_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_yellow_t2", 2);
+		sheep_statue_yellow_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_yellow_t3", 3);
+		sheep_statue_yellow_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_yellow_t4", 4);
+		sheep_statue_yellow_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_yellow_t5", 5);
+
+		sheep_statue_lime_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lime_t1", 1);
+		sheep_statue_lime_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lime_t2", 2);
+		sheep_statue_lime_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lime_t3", 3);
+		sheep_statue_lime_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lime_t4", 4);
+		sheep_statue_lime_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lime_t5", 5);
+
+		sheep_statue_pink_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_pink_t1", 1);
+		sheep_statue_pink_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_pink_t2", 2);
+		sheep_statue_pink_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_pink_t3", 3);
+		sheep_statue_pink_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_pink_t4", 4);
+		sheep_statue_pink_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_pink_t5", 5);
+
+		sheep_statue_gray_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_gray_t1", 1);
+		sheep_statue_gray_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_gray_t2", 2);
+		sheep_statue_gray_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_gray_t3", 3);
+		sheep_statue_gray_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_gray_t4", 4);
+		sheep_statue_gray_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_gray_t5", 5);
+
+		sheep_statue_lightgray_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightgray_t1", 1);
+		sheep_statue_lightgray_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightgray_t2", 2);
+		sheep_statue_lightgray_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightgray_t3", 3);
+		sheep_statue_lightgray_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightgray_t4", 4);
+		sheep_statue_lightgray_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_lightgray_t5", 5);
+
+		sheep_statue_cyan_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_cyan_t1", 1);
+		sheep_statue_cyan_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_cyan_t2", 2);
+		sheep_statue_cyan_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_cyan_t3", 3);
+		sheep_statue_cyan_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_cyan_t4", 4);
+		sheep_statue_cyan_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_cyan_t5", 5);
+
+		sheep_statue_purple_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_purple_t1", 1);
+		sheep_statue_purple_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_purple_t2", 2);
+		sheep_statue_purple_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_purple_t3", 3);
+		sheep_statue_purple_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_purple_t4", 4);
+		sheep_statue_purple_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_purple_t5", 5);
+
+		sheep_statue_blue_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_blue_t1", 1);
+		sheep_statue_blue_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_blue_t2", 2);
+		sheep_statue_blue_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_blue_t3", 3);
+		sheep_statue_blue_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_blue_t4", 4);
+		sheep_statue_blue_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_blue_t5", 5);
+
+		sheep_statue_brown_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_brown_t1", 1);
+		sheep_statue_brown_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_brown_t2", 2);
+		sheep_statue_brown_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_brown_t3", 3);
+		sheep_statue_brown_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_brown_t4", 4);
+		sheep_statue_brown_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_brown_t5", 5);
+
+		sheep_statue_green_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_green_t1", 1);
+		sheep_statue_green_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_green_t2", 2);
+		sheep_statue_green_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_green_t3", 3);
+		sheep_statue_green_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_green_t4", 4);
+		sheep_statue_green_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_green_t5", 5);
+
+		sheep_statue_red_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_red_t1", 1);
+		sheep_statue_red_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_red_t2", 2);
+		sheep_statue_red_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_red_t3", 3);
+		sheep_statue_red_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_red_t4", 4);
+		sheep_statue_red_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_red_t5", 5);
+
+		sheep_statue_black_t1 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_black_t1", 1);
+		sheep_statue_black_t2 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_black_t2", 2);
+		sheep_statue_black_t3 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_black_t3", 3);
+		sheep_statue_black_t4 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_black_t4", 4);
+		sheep_statue_black_t5 = registerStatue(new BlockSheep_Statue(Block.Properties.create(Material.TNT)), "sheep_statue_black_t5", 5);
+
+		info_statue = registerBlock(new BlockInfo_Statue(Block.Properties.create(Material.TNT)), "info_statue");
+		player_statue = registerPlayer(new BlockPlayer_Statue(Block.Properties.create(Material.TNT)), "player_statue");
 		
-		baby_zombie_statue = registerStatue(new BlockBabyZombie_Statue("babyzombiestatue"), MAX_TIERS);
-		blaze_statue = registerStatue(new BlockBlaze_Statue("blazestatue"), MAX_TIERS);
-		chicken_statue = registerStatue(new BlockChicken_Statue("chickenstatue"), MAX_TIERS);
-		cow_statue = registerStatue(new BlockCow_Statue("cowstatue"), MAX_TIERS);
-		creeper_statue = registerStatue(new BlockCreeper_Statue("creeperstatue"), MAX_TIERS);
-		flood_statue = registerStatue(new BlockFlood_Statue("floodstatue"), MAX_TIERS);
-		kingcluck_statue = registerStatue(new BlockKingCluck_Statue("kingcluckstatue"), MAX_TIERS);
-		mooshroom_statue = registerStatue(new BlockMooshroom_Statue("mooshroomstatue"), MAX_TIERS);
-		pig_statue = registerStatue(new BlockPig_Statue("pigstatue"), MAX_TIERS);
+		endermite_statue = registerBlock(new BlockEndermite_Statue(Block.Properties.create(Material.TNT)), "endermite_statue");
 
-		rabbit_bs_statue = registerStatue(new BlockRabbit_Statue("rabbitblackspotstatue"), MAX_TIERS);
-		rabbit_br_statue = registerStatue(new BlockRabbit_Statue("rabbitbrownstatue"), MAX_TIERS);
-		rabbit_bw_statue = registerStatue(new BlockRabbit_Statue("rabbitstatue"), MAX_TIERS);
-		rabbit_ws_statue = registerStatue(new BlockRabbit_Statue("rabbitwhitespotstatue"), MAX_TIERS);
-		rabbit_wh_statue = registerStatue(new BlockRabbit_Statue("rabbitwhitestatue"), MAX_TIERS);
-		rabbit_go_statue = registerStatue(new BlockRabbit_Statue("rabbityellowstatue"), MAX_TIERS);
+		pebble = registerBlock(new BlockPebble(Block.Properties.create(Material.SAND)), "pebble");
+
+		display_stand = registerBlock(new BlockDisplayStand(Block.Properties.create(Material.ROCK)), "display_stand");
+		sombrero = registerBlock(new BlockSombrero_Statue(Block.Properties.create(Material.TNT)), "sombrero");
+		bumbo_statue = registerBlock(new BlockBumbo_Statue(Block.Properties.create(Material.TNT)), "bumbo_statue");
+		totemofundying_statue = registerBlock(new BlockTotemOfUndying_Statue(Block.Properties.create(Material.TNT)), "totem_of_undying_statue");
 		
-		sheepshaven_statue = registerStatue(new BlockSheepShaven_Statue("sheepshavenstatue"), MAX_TIERS);
-		sheep_statue_white = registerStatue(new BlockSheep_Statue("sheepstatue").setColor(EnumDyeColor.WHITE), MAX_TIERS);
-		sheep_statue_orange = registerStatue(new BlockSheep_Statue("sheepstatueorange").setColor(EnumDyeColor.ORANGE), MAX_TIERS);
-		sheep_statue_magenta = registerStatue(new BlockSheep_Statue("sheepstatuemagenta").setColor(EnumDyeColor.MAGENTA), MAX_TIERS);
-		sheep_statue_lightblue = registerStatue(new BlockSheep_Statue("sheepstatuelightblue").setColor(EnumDyeColor.LIGHT_BLUE), MAX_TIERS);
-		sheep_statue_yellow = registerStatue(new BlockSheep_Statue("sheepstatueyellow").setColor(EnumDyeColor.YELLOW), MAX_TIERS);
-		sheep_statue_lime = registerStatue(new BlockSheep_Statue("sheepstatuelime").setColor(EnumDyeColor.LIME), MAX_TIERS);
-		sheep_statue_pink = registerStatue(new BlockSheep_Statue("sheepstatuepink").setColor(EnumDyeColor.PINK), MAX_TIERS);
-		sheep_statue_gray = registerStatue(new BlockSheep_Statue("sheepstatuegray").setColor(EnumDyeColor.GRAY), MAX_TIERS);
-		sheep_statue_lightgray = registerStatue(new BlockSheep_Statue("sheepstatuelightgray").setColor(EnumDyeColor.SILVER), MAX_TIERS);
-		sheep_statue_cyan = registerStatue(new BlockSheep_Statue("sheepstatuecyan").setColor(EnumDyeColor.CYAN), MAX_TIERS);
-		sheep_statue_purple = registerStatue(new BlockSheep_Statue("sheepstatuepurple").setColor(EnumDyeColor.PURPLE), MAX_TIERS);
-		sheep_statue_blue = registerStatue(new BlockSheep_Statue("sheepstatueblue").setColor(EnumDyeColor.BLUE), MAX_TIERS);
-		sheep_statue_brown = registerStatue(new BlockSheep_Statue("sheepstatuebrown").setColor(EnumDyeColor.BROWN), MAX_TIERS);
-		sheep_statue_green = registerStatue(new BlockSheep_Statue("sheepstatuegreen").setColor(EnumDyeColor.GREEN), MAX_TIERS);
-		sheep_statue_red = registerStatue(new BlockSheep_Statue("sheepstatuered").setColor(EnumDyeColor.RED), MAX_TIERS);
-		sheep_statue_black = registerStatue(new BlockSheep_Statue("sheepstatueblack").setColor(EnumDyeColor.BLACK), MAX_TIERS);
-
-		slime_statue = registerStatue(new BlockSlime_Statue("slimestatue"), MAX_TIERS);
-		snowgolem_statue = registerStatue(new BlockSnowGolem_Statue("snowgolemstatue"), MAX_TIERS);
-		squid_statue = registerStatue(new BlockSquid_Statue("squidstatue"), MAX_TIERS);
-
-		villager_br_statue = registerStatue(new BlockVillager_Statue("villagerbrowncoatstatue"), MAX_TIERS);
-		villager_pu_statue = registerStatue(new BlockVillager_Statue("villagerpurplecoatstatue"), MAX_TIERS);
-		villager_gr_statue = registerStatue(new BlockVillager_Statue("villagerstatue"), MAX_TIERS);
-		villager_wh_statue = registerStatue(new BlockVillager_Statue("villagerwhitecoatstatue"), MAX_TIERS);
-
-		witch_statue = registerStatue(new BlockWitch_Statue("witchstatue"), MAX_TIERS);
-		zombie_statue = registerStatue(new BlockZombie_Statue("zombiestatue"), MAX_TIERS);
-		husk_statue = registerStatue(new BlockHusk_Statue("huskstatue"), MAX_TIERS);
-		shulker_statue = registerStatue(new BlockShulker_Statue("shulkerstatue"), MAX_TIERS);
-		chicken_jockey_statue = registerStatue(new BlockChickenJockey_Statue("chickenjockeystatue"), MAX_TIERS);
-		magma_statue = registerStatue(new BlockMagmaSlime_Statue("magmastatue"), MAX_TIERS);
-		ghast_statue = registerStatue(new BlockGhast_Statue("ghaststatue"), MAX_TIERS);
-		guardian_statue = registerStatue(new BlockGuardian_Statue("guardianstatue"), MAX_TIERS);
-		enderman_statue = registerStatue(new BlockEnderman_Statue("endermanstatue"), MAX_TIERS);
-		pufferfish_statue = registerStatue(new BlockPufferfish_Statue("pufferfishstatue"), MAX_TIERS);
-		wasteland_statue = registerStatue(new BlockWastelandPig_Statue("wastelandpigstatue"), MAX_TIERS);
-		evoker_statue = registerStatue(new BlockEvoker_Statue("evokerstatue"), MAX_TIERS);
-		spider_statue = registerStatue(new BlockSpider_Statue("spiderstatue"), MAX_TIERS);
-		
-		info_statue = registerBlock(new BlockInfo_Statue("infostatue", "blockinfostatue", 1));
-		player_statue = registerBlock(new BlockPlayer_Statue("playerstatue", "blockplayerstatue", ""));
-		
-		endermite_statue = registerBlock(new BlockEndermite_Statue("endermitestatue", "blockendermitestatue"));
-
-		pebble = registerBlock(new BlockPebble("pebble", "blockpebble"));
-
-		display_stand = registerBlock(new BlockDisplayStand("displaystand", "blockdisplaystand"));
-		sombrero = registerBlock(new BlockSombrero_Statue("sombrero", "blocksombrero"));
-		bumbo_statue = registerBlock(new BlockBumbo_Statue("bumbostatue", "blockbumbostatue"));
-		totemofundying_statue = registerBlock(new BlockTotemOfUndying_Statue("totemofundyingstatue", "blocktotemofundyingstatue"));
-		
-		campfire_statue = registerStatue(new BlockEtho_Statue("campfirestatue"), 1);
-
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}
     
-	public static <T extends Block> Block[] registerStatue(T block, int maxTiers)
+	public static <T extends Block> Block registerStatue(T block, String registry, int tier)
 	{
-	    Block[] allBlocks = new Block[maxTiers];
-
-	    for(int i = 0; i < maxTiers; i++)
-	    {
-	        IStatue statue;
-	        try {
-	            statue = ((IStatue)block.getClass().getConstructor(String.class).newInstance(block.getUnlocalizedName().replace("tile.", "")));
-	            statue.setTier(i+1);
-	            statue.setColor(statue.getColor());
-	            allBlocks[i] = registerBlock((Block)statue, new ItemBlockStatue((Block)statue));
-	        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-	                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-	            e.printStackTrace();
-	        }
-	    }
-
-	    return allBlocks;
+        IStatue statue;
+        block.setRegistryName(new ResourceLocation(Reference.MOD_ID, registry));
+        if(block instanceof IStatue)
+        {
+            statue = (IStatue)block;
+            statue.setTier(tier);
+            
+            statue.setColor(statue.getColor());
+    	    return registerBlock((Block)statue, new ItemBlockStatue((Block)statue, itemBuilder()));
+        }
+        else
+        return registerBlock(block, new ItemBlockStatue(block, itemBuilder()));
 	}
 	
-	public static <T extends Block> T registerBlock(T block)
+	public static <T extends Block> T registerBlock(T block, String registry)
     {
-        return registerBlock(block, new ItemBlockStatue(block));
+    	block.setRegistryName(new ResourceLocation(Reference.MOD_ID, registry));
+        return registerBlock(block, new ItemBlockStatue(block, itemBuilder()));
     }
+	
+	public static <T extends Block> T registerPlayer(T block, String registry)
+    {
+    	block.setRegistryName(new ResourceLocation(Reference.MOD_ID, registry));
+        return registerBlock(block, new ItemBlockStatue(block, itemBuilder().setTEISR(() -> PlayerInventoryRender::new)));
+    }
+	
+	private static Item.Properties itemBuilder()
+	{
+		return new Item.Properties();
+	}
     
     public static <T extends Block> T registerBlock(T block, ItemBlock item)
     {
-    	item.setRegistryName(block.getRegistryName());
+        item.setRegistryName(((ItemBlock) item).getBlock().getRegistryName());
     	StatuesItems.ITEMS.add(item);
         BLOCKS.add(block);
         return block;

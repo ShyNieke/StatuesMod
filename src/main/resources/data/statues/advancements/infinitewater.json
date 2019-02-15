@@ -1,0 +1,30 @@
+{
+    "display": {
+        "icon": {
+            "item": "minecraft:water_bucket"
+        },
+        "title": {
+            "translate": "Infinte water!"
+        },
+        "description": {
+            "translate": "Upgrade the flood, right click it with a empty bucket and you have a water bucket fresh from the swamp."
+        },
+		"frame": "goal",
+		"hidden": false,
+		"show_toast": true,
+        "announce_to_chat": false
+		},
+    "parent": "statues:flood",
+    "criteria": {
+        "inventory": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:flood_statue_t3"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"facing=east": { "model": "statues:block/creeper_statue", "y": 90},
+		"facing=north": { "model": "statues:block/creeper_statue"},
+		"facing=west": { "model": "statues:block/creeper_statue", "y": 270},
+		"facing=south": { "model": "statues:block/creeper_statue", "y": 180}
+	}
+}

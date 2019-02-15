@@ -1,21 +1,18 @@
 package com.svennieke.statues.blocks.decorative;
 
-import com.svennieke.statues.Statues;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 
 public class BlockDisplayStand extends Block{
 
-	public BlockDisplayStand(String unlocalised, String registry) {
-		super(Material.ROCK);
-		setUnlocalizedName(unlocalised);
-		setRegistryName(registry);
-		setHardness(0.6F);
-		setSoundType(SoundType.STONE);
-		this.setCreativeTab(Statues.instance.tabStatues);
+	public BlockDisplayStand(Block.Properties properties) {
+		super(properties); //
+//		setUnlocalizedName(unlocalised);
+//		setHardness(0.6F);
+//		setSoundType(SoundType.STONE);
+//		this.setCreativeTab(Statues.instance.tabStatues);
 	}
 	
 	@Override
@@ -24,8 +21,7 @@ public class BlockDisplayStand extends Block{
 	}
 	
 	@Override
-	public boolean isOpaqueCube(IBlockState state)
-    {
+	public boolean propagatesSkylightDown(IBlockState state, IBlockReader reader, BlockPos pos) {
         return false;
     }
 }

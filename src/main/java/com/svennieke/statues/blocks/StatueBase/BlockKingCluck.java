@@ -2,49 +2,45 @@ package com.svennieke.statues.blocks.StatueBase;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-import com.svennieke.statues.Statues;
 import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.IBlockReader;
 
 public class BlockKingCluck extends BaseCutout{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6, 0.0625 * 9.5, 0.0625 * 4.5, 0.0625 * 9);
+	private static final VoxelShape BOUNDING_BOX = Block.makeCuboidShape(6.5, 0, 6, 9.5, 4.5, 9);
 	
-	public BlockKingCluck() {
-		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
-		this.setSoundType(SoundType.CLOTH);
+	public BlockKingCluck(Block.Properties builder) {
+		super(builder.sound(SoundType.CLOTH));
+//		this.setCreativeTab(Statues.instance.tabStatues);
 	}
 
 	@Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
+	public VoxelShape getShape(IBlockState state, IBlockReader worldIn, BlockPos pos) {
         return BOUNDING_BOX;
     }
     
+//    @Override
+//    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, VoxelShape entityBox, List<VoxelShape> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
+//    {
+//    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
+//    }
+	
     @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-    {
-    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-    }
-    
-    @Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
-    {
-        	tooltip.add(TextFormatting.GOLD + I18n.translateToLocal("cluckington.info"));
+    public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip,
+    		ITooltipFlag flagIn) {
+    	tooltip.add(new TextComponentString(TextFormatting.GOLD + I18n.format("cluckington.info")));
+    	super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "statues:sheep_statue_magenta_t1"
+  },
+  "pattern": [
+    "GMG",
+    "MCM",
+    "GMG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:statue_core"
+    },
+    "G": {
+      "tag": "forge:ingots/iron"
+    },
+    "M": {
+      "item": "minecraft:magenta_wool"
+    }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
+}

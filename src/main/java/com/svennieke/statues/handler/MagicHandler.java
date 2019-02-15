@@ -2,6 +2,7 @@ package com.svennieke.statues.handler;
 
 import java.util.ArrayList;
 
+import com.svennieke.statues.Reference;
 import com.svennieke.statues.init.StatuesBlocks;
 
 import net.minecraft.block.Block;
@@ -9,18 +10,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.Particles;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
+@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MagicHandler {
 	
 	@SubscribeEvent
-	public void worldTick(WorldTickEvent event)
+	public static void worldTick(WorldTickEvent event)
 	{
 		World world = event.world;
 		if(world != null && !world.isRemote)
@@ -34,7 +36,7 @@ public class MagicHandler {
 					
 					if(itemE.getItem().getItem().equals(Items.DIAMOND))
 					{
-						AxisAlignedBB bb = itemE.getEntityBoundingBox().contract(0.1, 0.1, 0.1);
+						//AxisAlignedBB bb = itemE.getBoundingBox().contract(0.1, 0.1, 0.1);
 						BlockPos lavaPos = itemE.getPosition();
 						
 						Boolean lavaFound = false;
@@ -55,7 +57,7 @@ public class MagicHandler {
 							lavaFound = false;
 						}
 						
-						CampfireData data = properStatuesFound(world, lavaPos.up(), StatuesBlocks.player_statue, StatuesBlocks.creeper_statue[0]);
+						CampfireData data = properStatuesFound(world, lavaPos.up(), StatuesBlocks.player_statue, StatuesBlocks.creeper_statue_t1);
 						if(data.getBool() && lavaFound)
 						{
 							requirementsFound = true;
@@ -71,9 +73,9 @@ public class MagicHandler {
 							world.setBlockState(data.getPos1(), Blocks.AIR.getDefaultState());
 							world.setBlockState(data.getPos2(), Blocks.AIR.getDefaultState());
 							
-							world.setBlockState(lavaPos, StatuesBlocks.campfire_statue[0].getDefaultState());
-							world.spawnParticle(EnumParticleTypes.FLAME, lavaPos.down().getX(), lavaPos.down().getY(), lavaPos.down().getZ(), 0.0D, 0.0D, 0.0D, new int[0]);
-							itemE.setDead();
+							world.setBlockState(lavaPos, StatuesBlocks.campfire_statue_t1.getDefaultState());
+							world.spawnParticle(Particles.FLAME, lavaPos.down().getX(), lavaPos.down().getY(), lavaPos.down().getZ(), 0.0D, 0.0D, 0.0D);
+							itemE.remove();
 						}
 						else
 						{
@@ -89,7 +91,7 @@ public class MagicHandler {
 		}
 	}
 	
-	public CampfireData properStatuesFound(World worldIn, BlockPos pos, Block block, Block block1)
+	public static CampfireData properStatuesFound(World worldIn, BlockPos pos, Block block, Block block1)
 	{
 		CampfireData data = new CampfireData(false, pos, pos);
 		
@@ -113,7 +115,7 @@ public class MagicHandler {
 		return data;
 	}
 	
-	public class CampfireData
+	public static class CampfireData
 	{
 		private final Boolean bool;
 		private final BlockPos pos1;

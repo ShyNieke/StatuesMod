@@ -9,7 +9,6 @@ import com.svennieke.statues.entity.fakeentity.FakeMagmaCube;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -18,23 +17,26 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
-public class BlockMagmaSlime_Statue extends BlockMagmaSlime implements IStatue, ITileEntityProvider{
+public class BlockMagmaSlime_Statue extends BlockMagmaSlime implements IStatue{
 	
 	private int TIER;
 	
-	public BlockMagmaSlime_Statue(String unlocalised) {
-		super();
-		setUnlocalizedName(unlocalised);
+	public BlockMagmaSlime_Statue(Block.Properties builder) {
+		super(builder);
+		//setRegistryName(registry);
+		//setUnlocalizedName(unlocalised);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+//		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		//setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	
@@ -45,13 +47,27 @@ public class BlockMagmaSlime_Statue extends BlockMagmaSlime implements IStatue, 
 	}
 	
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
+	public boolean hasTileEntity(IBlockState state) {
+		if (this.TIER >= 2)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	@Override
+	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		if (this.TIER >= 2)
 		{
 			return new StatueTileEntity();
 		}
 		else
-		return null;
+		{
+			return null;
+		}
 	}
 	
 	private StatueTileEntity getTE(World world, BlockPos pos) {
@@ -59,7 +75,7 @@ public class BlockMagmaSlime_Statue extends BlockMagmaSlime implements IStatue, 
     }
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		if(this.TIER >= 2)
 		{
@@ -75,7 +91,7 @@ public class BlockMagmaSlime_Statue extends BlockMagmaSlime implements IStatue, 
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_MAGMACUBE_SQUISH, pos, worldIn);
+	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_MAGMA_CUBE_SQUISH, pos, worldIn);
 	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
 	        	
 	        	getTE(worldIn, pos).FakeMobs(new FakeMagmaCube(worldIn), worldIn, pos, false);

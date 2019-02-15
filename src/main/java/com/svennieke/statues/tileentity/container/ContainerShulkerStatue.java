@@ -17,19 +17,19 @@ public class ContainerShulkerStatue extends Container
     {
         this.inventory = inventory;
         inventory.openInventory(player);
-        int i = 3;
-        int j = 9;
+//        int i = 3;
+//        int j = 9;
 
         for (int k = 0; k < 3; ++k)
         {
             for (int l = 0; l < 3; ++l)
             {
-                this.addSlotToContainer(new SlotShulkerStatue(inventory, l + k * 9, 8 + l * 18, 18 + k * 18));
+                this.addSlot(new SlotShulkerStatue(inventory, l + k * 9, 8 + l * 18, 18 + k * 18));
             }
             
             for (int l = 6; l < 9; ++l)
             {
-                this.addSlotToContainer(new SlotShulkerStatue(inventory, (l - 3) + k * 9, 8 + l * 18, 18 + k * 18));
+                this.addSlot(new SlotShulkerStatue(inventory, (l - 3) + k * 9, 8 + l * 18, 18 + k * 18));
             }
         }
 
@@ -37,13 +37,13 @@ public class ContainerShulkerStatue extends Container
         {
             for (int k1 = 0; k1 < 9; ++k1)
             {
-                this.addSlotToContainer(new Slot(invPlayer, k1 + i1 * 9 + 9, 8 + k1 * 18, 84 + i1 * 18));
+                this.addSlot(new Slot(invPlayer, k1 + i1 * 9 + 9, 8 + k1 * 18, 84 + i1 * 18));
             }
         }
 
         for (int j1 = 0; j1 < 9; ++j1)
         {
-            this.addSlotToContainer(new Slot(invPlayer, j1, 8 + j1 * 18, 142));
+            this.addSlot(new Slot(invPlayer, j1, 8 + j1 * 18, 142));
         }
     }
 

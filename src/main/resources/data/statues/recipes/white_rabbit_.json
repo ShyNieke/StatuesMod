@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "statues:rabbit_wh_statue_t1"
+  },
+  "pattern": [
+	"V"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+	"V": {
+      "item": "statues:rabbit_ws_statue_t1"
+    }
+  }
+}

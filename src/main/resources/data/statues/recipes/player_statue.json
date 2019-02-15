@@ -1,0 +1,34 @@
+{
+  "result": {
+    "item": "statues:player_statue"
+  },
+  "pattern": [
+    "GSG",
+    "PCA",
+    "GHG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:statue_core"
+    },
+    "G": {
+      "tag": "forge:ingots/iron"
+    },
+    "S": {
+      "item": "minecraft:wooden_sword"
+    },
+	"P": {
+      "item": "minecraft:wooden_pickaxe"
+    },
+	"A": {
+      "item": "minecraft:wooden_axe"
+    },
+	"H": {
+      "item": "minecraft:wooden_shovel"
+    }
+  },
+  "conditions": [{
+    "type": "statues:originalplayerrecipe"
+	}]
+}

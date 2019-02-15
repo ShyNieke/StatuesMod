@@ -2,7 +2,10 @@ package com.svennieke.statues.entity.fakeentity;
 
 import javax.annotation.Nullable;
 
+import com.svennieke.statues.init.StatuesEntity;
+
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,9 +15,6 @@ import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionType;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
@@ -23,15 +23,18 @@ import net.minecraft.world.World;
 
 public class FakeWitch extends EntityWitch implements IFakeEntity{
 	
-    private static final DataParameter<Boolean> IS_AGGRESSIVE = EntityDataManager.<Boolean>createKey(FakeWitch.class, DataSerializers.BOOLEAN);
-    private int witchAttackTimer;
 	private int lifetime;
 
 	public FakeWitch(World worldIn) {
 		super(worldIn);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
+        this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
 	}
 
+	@Override
+	public EntityType<?> getType() {
+		return StatuesEntity.FAKE_WITCH;
+	}
+	
 	@Override
 	@Nullable
     protected ResourceLocation getLootTable()
@@ -65,35 +68,35 @@ public class FakeWitch extends EntityWitch implements IFakeEntity{
     }
 	
 	@Override
-	public void onLivingUpdate()
+	public void livingTick()
     {
-        if (!this.world.isRemote)
+		if (!this.world.isRemote)
         {
-        	if (!this.isNoDespawnRequired())
+            if (!this.isNoDespawnRequired())
             {
                 ++this.lifetime;
             }
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
         }
         
-        super.onLivingUpdate();
+        super.livingTick();
     }
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
+	public void writeAdditional(NBTTagCompound compound)
     {
-        super.writeEntityToNBT(compound);
-        compound.setInteger("Lifetime", this.lifetime);
+        super.writeAdditional(compound);
+        compound.setInt("Lifetime", this.lifetime);
     }
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
+	public void readAdditional(NBTTagCompound compound)
     {
-        super.readEntityFromNBT(compound);
-        this.lifetime = compound.getInteger("Lifetime");
+        super.readAdditional(compound);
+        this.lifetime = compound.getInt("Lifetime");
     }
 }

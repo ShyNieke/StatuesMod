@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="[25,)"
+issueTrackerURL="https://github.com/svennieke/StatuesMod/issues"
+[[mods]]
+    modId="statues"
+	version="1.0.0" #mandatory ${file.jarVersion}
+    displayName="Statues Mod"
+	displayURL="https://minecraft.curseforge.com/projects/statues"
+    authors="svennieke"
+    description='''
+	Just a little functional decoration.
+    '''

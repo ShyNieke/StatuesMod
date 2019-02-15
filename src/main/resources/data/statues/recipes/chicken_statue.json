@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "statues:chicken_statue_t1"
+  },
+  "pattern": [
+    "GMG",
+    "MCM",
+    "GMG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:statue_core"
+    },
+    "G": {
+      "tag": "forge:ingots/iron"
+    },
+    "M": {
+      "item": "minecraft:egg"
+    }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
+}

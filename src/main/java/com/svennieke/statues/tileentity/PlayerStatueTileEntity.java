@@ -5,6 +5,7 @@ import javax.annotation.Nullable;
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.init.StatuesBlocks;
+import com.svennieke.statues.init.StatuesTileTypes;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,13 +14,23 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
+import net.minecraft.util.INameable;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldNameable;
-import net.minecraft.world.World;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 
-public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable, ITickable{
+public class PlayerStatueTileEntity extends TileEntity implements INameable, ITickable{
 	
+	public PlayerStatueTileEntity() {
+		super(StatuesTileTypes.PLAYER_STATUE);
+		this.BlockName = "";
+		this.comparatorApplied = false;
+		this.checkerCooldown = 0;
+		this.OnlineChecking = false;
+	}
+
 	public String BlockName;
     public GameProfile playerProfile;
     public Boolean comparatorApplied;
@@ -27,54 +38,44 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     public int checkerCooldown;
     public BlockPos playerPos;
 
-	public PlayerStatueTileEntity() {
-		this.BlockName = "";
-		this.comparatorApplied = false;
-		this.checkerCooldown = 0;
-		this.OnlineChecking = false;
-	}
+	
 	
 	public String setName(String name) {
 		return this.BlockName = name;
 	}
 	
-	@Override
-	public String getName() {
-		return this.hasCustomName() ? this.BlockName : "statue.player";
-	}
-	
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
+    public void read(NBTTagCompound compound) {
+        super.read(compound);
         this.BlockName = compound.getString("PlayerName");
         if(getTileData().hasKey("PlayerProfile"))
         {
-        	 playerProfile = NBTUtil.readGameProfileFromNBT(getTileData().getCompoundTag("PlayerProfile"));
+        	 playerProfile = NBTUtil.readGameProfile(getTileData().getCompound("PlayerProfile"));
         }
         comparatorApplied = compound.getBoolean("comparatorApplied");
         OnlineChecking = compound.getBoolean("OnlineChecking");
-        checkerCooldown = compound.getInteger("checkerCooldown");
+        checkerCooldown = compound.getInt("checkerCooldown");
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
+    public NBTTagCompound write(NBTTagCompound compound) {
+        super.write(compound);
         compound.setString("PlayerName", this.BlockName);
         if (this.playerProfile != null)
         {
-        	NBTTagCompound nbttagcompound = getTileData().getCompoundTag("PlayerProfile");
+        	NBTTagCompound nbttagcompound = getTileData().getCompound("PlayerProfile");
             NBTUtil.writeGameProfile(nbttagcompound, getPlayerProfile());
             getTileData().setTag("PlayerProfile", nbttagcompound);
         }
         compound.setBoolean("comparatorApplied", comparatorApplied);
         compound.setBoolean("OnlineChecking", OnlineChecking);
-        compound.setInteger("checkerCooldown", checkerCooldown);
+        compound.setInt("checkerCooldown", checkerCooldown);
         return compound;
     }
     
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    	readFromNBT(pkt.getNbtCompound());
+    	read(pkt.getNbtCompound());
     	
     	IBlockState state = world.getBlockState(getPos());
     	world.notifyBlockUpdate(getPos(), state, state, 3);
@@ -83,7 +84,7 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     @Override
 	public NBTTagCompound getUpdateTag()
     {
-        return this.writeToNBT(new NBTTagCompound());
+        return this.write(new NBTTagCompound());
     }
     
     @Override
@@ -106,13 +107,13 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     	if(playerProfile != null)
     	{
     		this.playerProfile = playerProfile;
-    		this.playerProfile = TileEntitySkull.updateGameprofile(playerProfile);
+    		this.playerProfile = TileEntitySkull.updateGameProfile(playerProfile);
             this.markDirty();
     	}
     }
 
 	@Override
-	public void update() {
+	public void tick() {
 		if (this.world.isRemote)
     		return;
 		
@@ -120,7 +121,7 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
 		IBlockState state = world.getBlockState(getPos());
 		if(state.getBlock() == StatuesBlocks.player_statue && comparatorApplied)
 		{
-			boolean isStateOnline = state.getValue(BlockPlayer_Statue.ONLINE);
+			boolean isStateOnline = state.get(BlockPlayer_Statue.ONLINE);
 
 			if(!OnlineChecking)
 			{
@@ -142,22 +143,24 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
 				else
 					checkAnswer = false;
 				
-				IBlockState newState = state.withProperty(BlockPlayer_Statue.ONLINE, checkAnswer);
+				IBlockState newState = state.with(BlockPlayer_Statue.ONLINE, checkAnswer);
 
 				if(isStateOnline != checkAnswer)
 				{
-					world.setBlockState(getPos(), state.withProperty(BlockPlayer_Statue.ONLINE, checkAnswer), 5);
+					world.setBlockState(getPos(), state.with(BlockPlayer_Statue.ONLINE, checkAnswer), 5);
 			    	world.notifyBlockUpdate(getPos(), state, newState, 5);
 				}
 				setOnlineChecking(false);
 			}
 		}
 	}
-	
+
+	/*
 	@Override
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newSate) {
 		return newSate.getBlock() != StatuesBlocks.player_statue;
 	}
+	*/
 	
 	public void setComparatorApplied(Boolean comparatorApplied) {
 		this.comparatorApplied = comparatorApplied;
@@ -175,5 +178,15 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
 	public void setOnlineChecking(boolean onlineChecking) {
 		this.OnlineChecking = onlineChecking;
 		this.markDirty();
+	}
+
+	@Override
+	public ITextComponent getName() {
+		return this.hasCustomName() ? new TextComponentString(this.BlockName) : new TextComponentTranslation("statue.player");
+	}
+
+	@Override
+	public ITextComponent getCustomName() {
+		return null;
 	}
 }

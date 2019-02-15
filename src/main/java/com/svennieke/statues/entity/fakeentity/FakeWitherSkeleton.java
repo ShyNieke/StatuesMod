@@ -2,6 +2,9 @@ package com.svennieke.statues.entity.fakeentity;
 
 import javax.annotation.Nullable;
 
+import com.svennieke.statues.init.StatuesEntity;
+
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityWitherSkeleton;
@@ -16,7 +19,12 @@ public class FakeWitherSkeleton extends EntityWitherSkeleton implements IFakeEnt
 
 	public FakeWitherSkeleton(World worldIn) {
 		super(worldIn);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
+        this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
+	}
+	
+	@Override
+	public EntityType<?> getType() {
+		return StatuesEntity.FAKE_WITHER_SKELETON;
 	}
 	
 	@Override
@@ -32,23 +40,9 @@ public class FakeWitherSkeleton extends EntityWitherSkeleton implements IFakeEnt
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
+	public void livingTick()
     {
-        super.writeEntityToNBT(compound);
-        compound.setInteger("Lifetime", this.lifetime);
-    }
-	
-	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
-    {
-        super.readEntityFromNBT(compound);
-        this.lifetime = compound.getInteger("Lifetime");
-    }
-	
-	@Override
-	public void onLivingUpdate()
-    {
-        if (!this.world.isRemote)
+		if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
             {
@@ -57,16 +51,31 @@ public class FakeWitherSkeleton extends EntityWitherSkeleton implements IFakeEnt
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
         }
         
-        super.onLivingUpdate();
+        super.livingTick();
+    }
+
+	@Override
+	public void writeAdditional(NBTTagCompound compound)
+    {
+        super.writeAdditional(compound);
+        compound.setInt("Lifetime", this.lifetime);
+    }
+
+	@Override
+	public void readAdditional(NBTTagCompound compound)
+    {
+        super.readAdditional(compound);
+        this.lifetime = compound.getInt("Lifetime");
     }
 	
 	@Override
-	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
-		IEntityLivingData ientitylivingdata = super.onInitialSpawn(difficulty, livingdata);
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData entityLivingData,
+			NBTTagCompound itemNbt) {
+		IEntityLivingData ientitylivingdata = super.onInitialSpawn(difficulty, entityLivingData, itemNbt);
         this.setCombatTask();
         return ientitylivingdata;
 	}

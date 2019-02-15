@@ -2,7 +2,11 @@ package com.svennieke.statues.entity.fakeentity;
 
 import javax.annotation.Nullable;
 
+import com.svennieke.statues.init.StatuesEntity;
+import com.svennieke.statues.util.ParticleUtil;
+
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,11 +19,10 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FakeCreeper extends EntityCreeper implements IFakeEntity{
 
@@ -36,13 +39,17 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
     private int fuseTime = 30;
     /** Explosion radius for this creeper. */
     private int explosionRadius = 3;
-    private int droppedSkulls;
 	private int lifetime;
 
     public FakeCreeper(World worldIn)
     {
         super(worldIn);
     }
+    
+    @Override
+	public EntityType<?> getType() {
+		return StatuesEntity.FAKE_CREEPER;
+	}
 
     public void fall(float distance, float damageMultiplier)
     {
@@ -55,21 +62,21 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
         }
     }
 
-    protected void entityInit()
+    protected void registerData()
     {
-        super.entityInit();
+        super.registerData();
         this.dataManager.register(STATE, Integer.valueOf(-1));
         this.dataManager.register(POWERED, Boolean.valueOf(false));
         this.dataManager.register(IGNITED, Boolean.valueOf(false));
     }
-    
+
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
     @Override
-    public void writeEntityToNBT(NBTTagCompound compound)
+    public void writeAdditional(NBTTagCompound compound)
     {
-        super.writeEntityToNBT(compound);
+        super.writeAdditional(compound);
 
         if (((Boolean)this.dataManager.get(POWERED)).booleanValue())
         {
@@ -79,7 +86,7 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
         compound.setShort("Fuse", (short)this.fuseTime);
         compound.setByte("ExplosionRadius", (byte)this.explosionRadius);
         compound.setBoolean("ignited", this.hasIgnited());
-        compound.setInteger("Lifetime", this.lifetime);
+        compound.setInt("Lifetime", this.lifetime);
 
     }
 
@@ -87,18 +94,18 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
      * (abstract) Protected helper method to read subclass entity data from NBT.
      */
     @Override
-    public void readEntityFromNBT(NBTTagCompound compound)
+    public void readAdditional(NBTTagCompound compound)
     {
-        super.readEntityFromNBT(compound);
+        super.readAdditional(compound);
         this.dataManager.set(POWERED, Boolean.valueOf(compound.getBoolean("powered")));
-        this.lifetime = compound.getInteger("Lifetime");
+        this.lifetime = compound.getInt("Lifetime");
 
-        if (compound.hasKey("Fuse", 99))
+        if (compound.contains("Fuse", 99))
         {
             this.fuseTime = compound.getShort("Fuse");
         }
 
-        if (compound.hasKey("ExplosionRadius", 99))
+        if (compound.contains("ExplosionRadius", 99))
         {
             this.explosionRadius = compound.getByte("ExplosionRadius");
         }
@@ -112,9 +119,9 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
     /**
      * Called to update the entity's position/logic.
      */
-    public void onUpdate()
+    public void tick()
     {
-        if (this.isEntityAlive())
+        if (this.isAlive())
         {
             this.lastActiveTime = this.timeSinceIgnited;
 
@@ -144,7 +151,7 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
             }
         }
 
-        super.onUpdate();
+        super.tick();
     }
 
     /**
@@ -171,7 +178,7 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
     /**
      * Params: (Float)Render tick. Returns the intensity of the creeper's flash when it is ignited.
      */
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public float getCreeperFlashIntensity(float p_70831_1_)
     {
         return ((float)this.lastActiveTime + (float)(this.timeSinceIgnited - this.lastActiveTime) * p_70831_1_) / (float)(this.fuseTime - 2);
@@ -241,14 +248,12 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
     {
         if (!this.world.isRemote)
         {
-            boolean flag = this.world.getGameRules().getBoolean("mobGriefing");
-            float f = this.getPowered() ? 2.0F : 1.0F;
             this.dead = true;
             
             this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_GENERIC_EXPLODE, this.getSoundCategory(), 1.0F, this.world.rand.nextFloat() * 0.1F + 0.9F);
-            this.setDead();
+            this.remove();
         }
-        this.world.spawnParticle(EnumParticleTypes.EXPLOSION_HUGE, this.posX, this.posY, this.posZ, 1.0D, 0.0D, 0.0D);
+        ParticleUtil.emitExplosionParticles(this.world, this.getPosition());
     }
 
     public boolean hasIgnited()
@@ -262,7 +267,7 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
     }
 
 	@Override
-	public void onLivingUpdate()
+	public void livingTick()
     {
         if (!this.world.isRemote)
         {
@@ -273,10 +278,10 @@ public class FakeCreeper extends EntityCreeper implements IFakeEntity{
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
 
-            super.onLivingUpdate();
+            super.livingTick();
         }
     }
 }

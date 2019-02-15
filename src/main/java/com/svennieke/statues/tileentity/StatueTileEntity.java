@@ -1,18 +1,16 @@
 package com.svennieke.statues.tileentity;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import com.svennieke.statues.Statues;
 import com.svennieke.statues.compat.list.StatueLootList;
-import com.svennieke.statues.compat.waila.StatueTimerProvider;
-import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.config.StatuesConfig;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.init.StatuesSounds;
+import com.svennieke.statues.init.StatuesTileTypes;
 import com.svennieke.statues.items.ItemTea;
-import com.svennieke.statues.packets.StatuesPacketHandler;
-import com.svennieke.statues.packets.StatuesProgressMessage;
 import com.svennieke.statues.util.RandomLists;
 
 import net.minecraft.block.Block;
@@ -23,11 +21,9 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityPotion;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -43,10 +39,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional.Method;
 
 public class StatueTileEntity extends TileEntity implements ITickable, iStatueBehaviors{
 	public int cooldown;
@@ -55,9 +49,10 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 	private int tier;
 	
 	public StatueTileEntity() {
+		super(StatuesTileTypes.STATUE);
 		this.tier = 2;
 		this.cooldown = 0;
-		this.cooldownMax = (StatuesConfigGen.general.InteractionTimer * 20);
+		this.cooldownMax = (StatuesConfig.COMMON.interactionTimer.get() * 20);
 		this.statueAble = false;
 	}
 	
@@ -190,27 +185,28 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			if (!world.isRemote) {
 				int random = world.rand.nextInt(100);
 				
-				String[] messages = StatuesConfigGen.messages.info_messages;
-				String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
+				List<String> messages = StatuesConfig.COMMON.info_messages.get();
+				List<String> LuckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 				
-				int idx = new Random().nextInt(messages.length);
-				String randommessage = (messages[idx]);
+				int idx = new Random().nextInt(messages.size());
+				String randommessage = (messages.get(idx));
 				
-				if(Statues.isVeinminerInstalled == true && random < 20)
+				/*if(Statues.isVeinminerInstalled == true && random < 20)
 				{
 					randommessage = ("Did you know we have veinminer");
 				}
-				else if(LuckyPlayers.length != 0 && random < 20)
+				else */if(LuckyPlayers.size() != 0 && random < 20)
 				{
-					for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
+					for (int i = 0; (i < LuckyPlayers.size()) && (LuckyPlayers.get(i) != null); i++) {
 						randommessage = ("Luck is not on your side today");
 					}
 				}
 				else
 				{
-					randommessage = (messages[idx]);
+					randommessage = (messages.get(idx));
 				}
-				
+				randommessage = (messages.get(idx));
+
 				player.sendMessage(new TextComponentTranslation(randommessage));
 			}
 	}
@@ -236,9 +232,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 	
 	public void ThrowPotion(BlockPos pos, World worldIn, EntityPlayer entity) {
 		if(isStatueAble())
-		{
-			EntityPlayer player = (EntityPlayer)entity;
-			
+		{			
 			int random = world.rand.nextInt(100);
 			if(tier >= 3)
 			{
@@ -274,7 +268,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			{
 				if(!worldIn.isRemote)
 				{
-					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
+					if (stack.getItem() == Items.BUCKET && !playerIn.abilities.isCreativeMode)
 			        {
 						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
 			            stack.shrink(1);
@@ -295,7 +289,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			{
 				if(!worldIn.isRemote)
 				{
-					if (stack.getItem() == Items.BOWL && !playerIn.capabilities.isCreativeMode)
+					if (stack.getItem() == Items.BOWL && !playerIn.abilities.isCreativeMode)
 			        {
 						//System.out.println("NO");
 						worldIn.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
@@ -316,7 +310,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			if(isFlood)
 			{
 				if(!worldIn.isRemote)
-					if (stack.getItem() == Items.BUCKET && !playerIn.capabilities.isCreativeMode)
+					if (stack.getItem() == Items.BUCKET && !playerIn.abilities.isCreativeMode)
 					{
 						worldIn.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
 						stack.shrink(1);
@@ -339,10 +333,11 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			}
 		}
 	}
-	
+    public static final int[] DYE_COLORS = new int[] {1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
+
 	public ItemStack getFirework(Random rand) {
-		ItemStack firework = new ItemStack(Items.FIREWORKS);
-		firework.setTagCompound(new NBTTagCompound());
+		ItemStack firework = new ItemStack(Items.FIREWORK_STAR);
+		firework.setTag(new NBTTagCompound());
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setBoolean("Flicker", true);
 		nbt.setBoolean("Trail", true);
@@ -350,7 +345,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		int[] colors = new int[rand.nextInt(8) + 1];
 		for (int i = 0; i < colors.length; i++) 
 		{
-			colors[i] = ItemDye.DYE_COLORS[rand.nextInt(16)];
+			colors[i] = DYE_COLORS[rand.nextInt(16)];
 		}
 		nbt.setIntArray("Colors", colors);
 		byte type = (byte) (rand.nextInt(3) + 1);
@@ -358,12 +353,12 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		nbt.setByte("Type", type);
 
 		NBTTagList explosions = new NBTTagList();
-		explosions.appendTag(nbt);
+		explosions.add(nbt);
 
 		NBTTagCompound fireworkTag = new NBTTagCompound();
 		fireworkTag.setTag("Explosions", explosions);
 		fireworkTag.setByte("Flight", (byte) 1);
-		firework.getTagCompound().setTag("Fireworks", fireworkTag); 
+		firework.getTag().setTag("Fireworks", fireworkTag); 
 
         return firework;
 	}
@@ -389,12 +384,12 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 					EntityCreeper creeper = new EntityCreeper(worldIn);
 					creeper.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
 					NBTTagCompound tag = new NBTTagCompound();
-					creeper.writeEntityToNBT(tag);
+					creeper.writeAdditional(tag);
 			        
 					tag.setShort("ExplosionRadius", (short)0);
 			        tag.setShort("Fuse", (short)0);
 			        
-			        creeper.readEntityFromNBT(tag);
+			        creeper.readAdditional(tag);
 			        worldIn.spawnEntity(creeper);
 			        creeper.spawnExplosionParticle();
 				}
@@ -439,30 +434,32 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 	}
 	
     @Override
-    public void readFromNBT(NBTTagCompound compound) {
-        super.readFromNBT(compound);
-        tier = compound.getInteger("StatueTier");
-        cooldown = compound.getInteger("StatueCooldown");
-        cooldownMax = compound.getInteger("StatueMaxcooldown");
+    public void read(NBTTagCompound compound) {
+        super.read(compound);
+        tier = compound.getInt("StatueTier");
+        cooldown = compound.getInt("StatueCooldown");
+        cooldownMax = compound.getInt("StatueMaxcooldown");
         statueAble = compound.getBoolean("StatueAble");
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-        super.writeToNBT(compound);
-        compound.setInteger("StatueTier", tier);
-        compound.setInteger("StatueCooldown", cooldown);
-        compound.setInteger("StatueMaxcooldown", cooldownMax);
+    public NBTTagCompound write(NBTTagCompound compound) {
+        super.write(compound);
+        compound.setInt("StatueTier", tier);
+        compound.setInt("StatueCooldown", cooldown);
+        compound.setInt("StatueMaxcooldown", cooldownMax);
         compound.setBoolean("StatueAble", statueAble);
         return compound;
     }
 
     @Override
-    public void update(){
+    public void tick(){
+    	/*
     	if (!this.world.isRemote && Statues.instance.isWailaInstalled)
     	{
     		sendUpdatePacket();
     	}
+    	*/
     	
     	if (!this.statueAble)
     	{
@@ -472,7 +469,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
     		markDirty();
     		
     		if(this.cooldownMax == 0)
-        		this.cooldownMax = (StatuesConfigGen.general.InteractionTimer * 20);
+        		this.cooldownMax = (StatuesConfig.COMMON.interactionTimer.get() * 20);
     		
             if(this.cooldown >= this.cooldownMax){
             	
@@ -484,7 +481,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
     
     @Override
     public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-    	readFromNBT(pkt.getNbtCompound());
+    	read(pkt.getNbtCompound());
     	
     	IBlockState state = world.getBlockState(getPos());
     	world.notifyBlockUpdate(getPos(), state, state, 3);
@@ -493,7 +490,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
     @Override
 	public NBTTagCompound getUpdateTag()
     {
-        return this.writeToNBT(new NBTTagCompound());
+        return this.write(new NBTTagCompound());
     }
     
     @Override
@@ -518,6 +515,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		this.markDirty();
 	}
     
+    /*
     @Method(modid = "waila")
     public void sendUpdatePacket()
     {
@@ -548,4 +546,5 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			}
 		}
     }
+    */
 }

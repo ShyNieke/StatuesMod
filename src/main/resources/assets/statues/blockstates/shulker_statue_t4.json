@@ -1,0 +1,8 @@
+{
+	"variants": {
+		"facing=east": { "model": "statues:block/shulker_statue", "y": 90},
+		"facing=north": { "model": "statues:block/shulker_statue"},
+		"facing=west": { "model": "statues:block/shulker_statue", "y": 270},
+		"facing=south": { "model": "statues:block/shulker_statue", "y": 180}
+	}
+}

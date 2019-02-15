@@ -18,10 +18,10 @@ import com.svennieke.statues.util.SkinUtil;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.model.ModelPlayer;
+import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -30,11 +30,11 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-@SideOnly(Side.CLIENT)
-public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity>{	
+@OnlyIn(Dist.CLIENT)
+public class PlayerStatueRenderer extends TileEntityRenderer<PlayerStatueTileEntity>{	
     public static PlayerStatueRenderer instance;
 	
 	public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
@@ -45,10 +45,9 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 		rendererDispatcher = rendererDispatcherIn;
 		instance = this;
     }
-	
 	@Override
-	public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) 
-	{
+	public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks,
+			int destroyStage) {
 		EnumFacing enumfacing = EnumFacing.UP;
 		
 		this.renderPlayer(te, x, y, z, te.getPlayerProfile(), destroyStage, enumfacing);
@@ -59,41 +58,39 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	{
 		GameProfile gameprofile = null;
 		
-		if (GAMEPROFILE_CACHE.containsKey(stack.getDisplayName())) 
-			gameprofile = GAMEPROFILE_CACHE.get(stack.getDisplayName());
+		if (GAMEPROFILE_CACHE.containsKey(stack.getDisplayName().getString())) 
+			gameprofile = GAMEPROFILE_CACHE.get(stack.getDisplayName().getString());
 		
-		if (stack.hasTagCompound() && gameprofile == null)
+		if (stack.hasTag() && gameprofile == null)
         {
-            NBTTagCompound nbttagcompound = stack.getTagCompound();
-
-            if (nbttagcompound.hasKey("PlayerProfile", 10))
+            NBTTagCompound nbttagcompound = stack.getTag();
+            if (nbttagcompound.contains("PlayerProfile", 10))
             {
-                gameprofile = NBTUtil.readGameProfileFromNBT(nbttagcompound.getCompoundTag("PlayerProfile"));
+                gameprofile = NBTUtil.readGameProfile(nbttagcompound.getCompound("PlayerProfile"));
             }
-            else if (nbttagcompound.hasKey("PlayerProfile", 8) && !StringUtils.isBlank(nbttagcompound.getString("PlayerProfile")))
+            else if (nbttagcompound.contains("PlayerProfile", 8) && !StringUtils.isBlank(nbttagcompound.getString("PlayerProfile")))
             {
                 GameProfile gameprofile1 = new GameProfile((UUID)null, nbttagcompound.getString("PlayerProfile"));
-                gameprofile = TileEntitySkull.updateGameprofile(gameprofile1);
+                gameprofile = TileEntitySkull.updateGameProfile(gameprofile1);
                 nbttagcompound.removeTag("PlayerProfile");
                 nbttagcompound.setTag("PlayerProfile", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
                 GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
             }
         }
-		if(gameprofile == null && !StringUtils.isBlank(stack.getDisplayName()) && !stack.getDisplayName().equals("Player Statue") && !stack.getDisplayName().equals(" "))
+		if(gameprofile == null && !StringUtils.isBlank(stack.getDisplayName().getString()) && !stack.getDisplayName().getString().equals("Player Statue") && !stack.getDisplayName().getString().equals(" "))
 		{
-			GameProfile gameprofile1 = new GameProfile((UUID)null, stack.getDisplayName());
-            gameprofile = TileEntitySkull.updateGameprofile(gameprofile1);
+			GameProfile gameprofile1 = new GameProfile((UUID)null, stack.getDisplayName().getString());
+            gameprofile = TileEntitySkull.updateGameProfile(gameprofile1);
             GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
 		}
 		
 		ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
 		
-		ModelPlayer theModel = this.model;
+		ModelPlayer theModel = PlayerStatueRenderer.model;
 		boolean slimModel = false;
-		IBlockState state;
 		if (gameprofile != null)
         {
-            Minecraft minecraft = Minecraft.getMinecraft();
+            Minecraft minecraft = Minecraft.getInstance();
             Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(gameprofile);
 
             if (map.containsKey(Type.SKIN))
@@ -109,23 +106,23 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 			slimModel = SkinUtil.isSlimSkin(gameprofile.getId());
         }
 		
-    	Minecraft.getMinecraft().getTextureManager().bindTexture(skinlocation);
+    	Minecraft.getInstance().getTextureManager().bindTexture(skinlocation);
         
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
         
-        GlStateManager.translate((float)0 + 0.5F, (float)0 + 1.5F, (float)0 + 0.5F);
-        GlStateManager.scale(1.0F, -1.0F, -1.0F);
-        GlStateManager.translate(0.0F, 1.0F, 0.0F);
-        float f = 0.9995F;
-        GlStateManager.scale(0.9995F, 0.9995F, 0.9995F);
-        GlStateManager.translate(0.0F, -1.0F, 0.0F);
+        GlStateManager.translatef((float)0 + 0.5F, (float)0 + 1.5F, (float)0 + 0.5F);
+        GlStateManager.scalef(1.0F, -1.0F, -1.0F);
+        GlStateManager.translatef(0.0F, 1.0F, 0.0F);
+//        float f = 0.9995F;
+        GlStateManager.scalef(0.9995F, 0.9995F, 0.9995F);
+        GlStateManager.translatef(0.0F, -1.0F, 0.0F);
         
-        GlStateManager.translate(0F, 0.75F, 0F);
-        GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
+        GlStateManager.translatef(0F, 0.75F, 0F);
+        GlStateManager.rotatef(-180.0F, 0.0F, 180.0F, 0.0F);
         
         GlStateManager.enableRescaleNormal();
-        GlStateManager.enableAlpha();
+        GlStateManager.enableAlphaTest();
         GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
         float scale = 0.03125F;
         if(slimModel)
@@ -150,17 +147,17 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 	
 	public void renderPlayer(PlayerStatueTileEntity te, double x, double y, double z, @Nullable GameProfile profile, int destroyStage, EnumFacing enumfacing) 
 	{
-		ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
+//		ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
 		
-		ModelPlayer theModel = this.model;
+		ModelPlayer theModel = PlayerStatueRenderer.model;
 		boolean slimModel = false;
 		IBlockState state;
-		boolean renderHeadWear = true;
-		boolean renderChestWear = true;
-		boolean renderLeftArmWear = true;
-		boolean renderRightArmWear = true;
-		boolean renderLeftLegWear = true;
-		boolean renderRightLegWear = true;
+//		boolean renderHeadWear = true;
+//		boolean renderChestWear = true;
+//		boolean renderLeftArmWear = true;
+//		boolean renderRightArmWear = true;
+//		boolean renderLeftLegWear = true;
+//		boolean renderRightLegWear = true;
 		 
 		if (te == null) {
             profile = null;
@@ -170,7 +167,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             profile = te.getPlayerProfile();
             state = te.getWorld().getBlockState(te.getPos());
             if(state.getBlock() instanceof BlockHorizontal)
-            	enumfacing = (state.getValue(BlockPlayer_Statue.FACING));
+            	enumfacing = (state.get(BlockPlayer_Statue.HORIZONTAL_FACING));
             else
                 enumfacing = EnumFacing.UP;
 		}
@@ -180,68 +177,51 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             this.bindTexture(DESTROY_STAGES[destroyStage]);
             GlStateManager.matrixMode(5890);
             GlStateManager.pushMatrix();
-            GlStateManager.scale(4.0F, 4.0F, 1.0F);
-            GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
+            GlStateManager.scalef(4.0F, 4.0F, 1.0F);
+            GlStateManager.translatef(0.0625F, 0.0625F, 0.0625F);
             GlStateManager.matrixMode(5888);
         }
-        
-        if (profile != null)
-        {
-            Minecraft minecraft = Minecraft.getMinecraft();
-            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
-
-            if (map.containsKey(Type.SKIN))
-            {
-            	skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-            }
-            else
-            {
-                UUID uuid = EntityPlayer.getUUID(profile);
-                skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
-            }
-            
-			slimModel = SkinUtil.isSlimSkin(profile.getId());
+        else {
+        	this.bindTexture(this.bindPlayerSkin(profile));
         }
-		
-    	this.bindTexture(skinlocation);
         
         GlStateManager.pushMatrix();
         GlStateManager.disableCull();
         
-        GlStateManager.translate((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
-        GlStateManager.scale(1.0F, -1.0F, -1.0F);
-        GlStateManager.translate(0.0F, 1.0F, 0.0F);
-        float f = 0.9995F;
-        GlStateManager.scale(0.9995F, 0.9995F, 0.9995F);
-        GlStateManager.translate(0.0F, -1.0F, 0.0F);
+        GlStateManager.translatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
+        GlStateManager.scalef(1.0F, -1.0F, -1.0F);
+        GlStateManager.translatef(0.0F, 1.0F, 0.0F);
+//        float f = 0.9995F;
+        GlStateManager.scalef(0.9995F, 0.9995F, 0.9995F);
+        GlStateManager.translatef(0.0F, -1.0F, 0.0F);
         
         switch (enumfacing)
         {
             case DOWN:
             case UP:
             default:
-            	GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
+            	GlStateManager.translatef(0F, 0.75F, 0F);
+                GlStateManager.rotatef(-180.0F, 0.0F, 180.0F, 0.0F);
                 break;
             case NORTH:
-            	GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
+            	GlStateManager.translatef(0F, 0.75F, 0F);
+                GlStateManager.rotatef(-180.0F, 0.0F, 180.0F, 0.0F);
                 break;
             case SOUTH:
-            	GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(0.0F, 0.0F, 90.0F, 0.0F);
+            	GlStateManager.translatef(0F, 0.75F, 0F);
+                GlStateManager.rotatef(0.0F, 0.0F, 90.0F, 0.0F);
                 break;
             case WEST:
-            	GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-90.0F, 0.0F, -90.0F, 0.0F);
+            	GlStateManager.translatef(0F, 0.75F, 0F);
+                GlStateManager.rotatef(-90.0F, 0.0F, -90.0F, 0.0F);
                 break;
             case EAST:
-            	GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
+            	GlStateManager.translatef(0F, 0.75F, 0F);
+                GlStateManager.rotatef(-90.0F, 0.0F, 90.0F, 0.0F);
         }
         
         GlStateManager.enableRescaleNormal();
-        GlStateManager.enableAlpha();
+        GlStateManager.enableAlphaTest();
         GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
         
         float scale = 0.03125F;
@@ -271,4 +251,19 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
             GlStateManager.matrixMode(5888);
         } 
 	}
+	
+	private ResourceLocation bindPlayerSkin(@Nullable GameProfile profile) {
+	      ResourceLocation resourcelocation = DefaultPlayerSkin.getDefaultSkinLegacy();
+	      if (profile != null) {
+	         Minecraft minecraft = Minecraft.getInstance();
+	         Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+	         if (map.containsKey(Type.SKIN)) {
+	            resourcelocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
+	         } else {
+	            resourcelocation = DefaultPlayerSkin.getDefaultSkin(EntityPlayer.getUUID(profile));
+	         }
+	      }
+
+	      return resourcelocation;
+	   }
 }

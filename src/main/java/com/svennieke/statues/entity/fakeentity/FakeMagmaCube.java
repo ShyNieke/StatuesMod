@@ -2,15 +2,20 @@ package com.svennieke.statues.entity.fakeentity;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityMagmaCube;
+import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.init.Particles;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReaderBase;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FakeMagmaCube extends EntityMagmaCube implements IFakeEntity{
 
@@ -19,6 +24,12 @@ public class FakeMagmaCube extends EntityMagmaCube implements IFakeEntity{
 	public FakeMagmaCube(World worldIn) {
 		super(worldIn);
         this.isImmuneToFire = true;
+	}
+	
+	@Override
+	public EntityType<? extends EntitySlime> getType() {
+		return super.getType();
+		//return StatuesEntity.FAKE_MAGMA_CUBE;
 	}
 	
 	@Override
@@ -33,35 +44,34 @@ public class FakeMagmaCube extends EntityMagmaCube implements IFakeEntity{
 		return false;
 	}
 	
-    protected void applyEntityAttributes()
+    protected void registerAttributes()
     {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20000000298023224D);
+        super.registerAttributes();
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.20000000298023224D);
     }
 
     /**
      * Checks if the entity's current position is a valid location to spawn this entity.
      */
-    public boolean getCanSpawnHere()
-    {
+    @Override
+    public boolean canSpawn(IWorld worldIn, boolean value) {
         return this.world.getDifficulty() != EnumDifficulty.PEACEFUL;
     }
 
     /**
      * Checks that the entity is not colliding with any blocks / liquids
      */
-    public boolean isNotColliding()
-    {
-        return this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this) && this.world.getCollisionBoxes(this, this.getEntityBoundingBox()).isEmpty() && !this.world.containsAnyLiquid(this.getEntityBoundingBox());
+    public boolean isNotColliding(IWorldReaderBase worldIn) {
+        return worldIn.checkNoEntityCollision(this, this.getBoundingBox()) && worldIn.isCollisionBoxesEmpty(this, this.getBoundingBox()) && !worldIn.containsAnyLiquid(this.getBoundingBox());
     }
 
     protected void setSlimeSize(int size, boolean resetHealth)
     {
         super.setSlimeSize(size, resetHealth);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue((double)(size * 3));
+        this.getAttribute(SharedMonsterAttributes.ARMOR).setBaseValue((double)(size * 3));
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getBrightnessForRender()
     {
         return 15728880;
@@ -75,14 +85,8 @@ public class FakeMagmaCube extends EntityMagmaCube implements IFakeEntity{
         return 1.0F;
     }
 
-    protected EnumParticleTypes getParticleType()
-    {
-        return EnumParticleTypes.FLAME;
-    }
-
-    protected FakeMagmaCube createInstance()
-    {
-        return new FakeMagmaCube(this.world);
+    protected IParticleData func_195404_m() {
+        return Particles.FLAME;
     }
     
     /**
@@ -143,23 +147,23 @@ public class FakeMagmaCube extends EntityMagmaCube implements IFakeEntity{
     }
 
 	@Override
-    public void writeEntityToNBT(NBTTagCompound compound)
+    public void writeAdditional(NBTTagCompound compound)
     {
-        super.writeEntityToNBT(compound);
-        compound.setInteger("Lifetime", this.lifetime);
+        super.writeAdditional(compound);
+        compound.setInt("Lifetime", this.lifetime);
     }
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
+	public void readAdditional(NBTTagCompound compound)
     {
-        super.readEntityFromNBT(compound);
-        this.lifetime = compound.getInteger("Lifetime");
+        super.readAdditional(compound);
+        this.lifetime = compound.getInt("Lifetime");
     }
 	
 	@Override
-	public void onLivingUpdate()
+	public void livingTick()
     {
-        super.onLivingUpdate();
+        super.livingTick();
 
         if (!this.world.isRemote)
         {
@@ -170,7 +174,7 @@ public class FakeMagmaCube extends EntityMagmaCube implements IFakeEntity{
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
         }
     }

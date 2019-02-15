@@ -2,32 +2,30 @@ package com.svennieke.statues.items;
 
 import java.util.List;
 
-import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.init.StatuesItems;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class ItemTea extends ItemFood {
-	public ItemTea(String unlocalised) {
-		super(6, 2F, false);
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
-		setRegistryName("item" + unlocalised);
-		setCreativeTab(CreativeTabs.FOOD);
-		setCreativeTab(Statues.tabStatues);
-		setMaxStackSize(1);
+	public ItemTea(Item.Properties builder) {
+		super(6, 2F, false, builder.maxStackSize(1).group(ItemGroup.FOOD).group(Statues.tabStatues));
+//		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+//		setCreativeTab(Statues.tabStatues);
 	}
 	
 	@Override
@@ -40,7 +38,7 @@ public class ItemTea extends ItemFood {
 			
 			entityplayer.getFoodStats().addStats(this, stack);
 			this.onFoodEaten(stack, worldIn, entityplayer);
-	        if (entityplayer == null || !entityplayer.capabilities.isCreativeMode)
+	        if (entityplayer == null || !entityplayer.abilities.isCreativeMode)
 	        {
 	            stack.shrink(1);
 	        }
@@ -52,10 +50,10 @@ public class ItemTea extends ItemFood {
 		    
 	        if (entityplayer != null)
 	        {
-	            entityplayer.addStat(StatList.getObjectUseStats(this));
+	            entityplayer.addStat(StatList.ITEM_USED.get(this));
 	        }
 	        
-	        if (entityplayer == null || !entityplayer.capabilities.isCreativeMode)
+	        if (entityplayer == null || !entityplayer.abilities.isCreativeMode)
 	        {
 	            if (stack.isEmpty())
 	            {
@@ -73,20 +71,20 @@ public class ItemTea extends ItemFood {
     }
 	
 	@Override
-	public int getMaxItemUseDuration(ItemStack stack)
+	public int getUseDuration(ItemStack stack)
     {
         return 32;
     }
 	
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack)
+	public EnumAction getUseAction(ItemStack stack)
     {
         return EnumAction.DRINK;
     }
 	
 	@Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
-    {
-        tooltip.add(TextFormatting.GOLD + I18n.translateToLocal("tea.info"));
-    }
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new TextComponentTranslation("statues.tea.info").applyTextStyle(TextFormatting.GOLD));
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+	}
 }

@@ -1,6 +1,9 @@
 package com.svennieke.statues.handler;
 
-import com.svennieke.statues.config.StatuesConfigGen;
+import java.util.List;
+
+import com.svennieke.statues.Reference;
+import com.svennieke.statues.config.StatuesConfig;
 import com.svennieke.statues.entity.fakeentity.IFakeEntity;
 import com.svennieke.statues.init.StatuesBlocks;
 
@@ -27,6 +30,7 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.passive.EntityPig;
+import net.minecraft.entity.passive.EntityPufferFish;
 import net.minecraft.entity.passive.EntityRabbit;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.passive.EntitySquid;
@@ -40,65 +44,68 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 
+@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DropHandler {
 	
+	@SuppressWarnings("deprecation")
 	@SubscribeEvent
-	public void onLivingDrop(LivingDropsEvent event) {
+	public static void onLivingDrop(LivingDropsEvent event) {
 		Entity entity = event.getEntity();
 		Entity source = event.getSource().getTrueSource();
 		
-		if(StatuesConfigGen.general.Tier1Crafting == false)
+		if(!StatuesConfig.COMMON.tier1Crafting.get())
 		{
 			addSombrero(entity, source, event);
 			
 			if (entity instanceof EntitySlime) {
 				if(entity instanceof EntityMagmaCube)
 				{
-					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.magma_statue[0], 1);
+					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.magma_statue_t1, 1);
 					DropLootStatues(entity, itemStackToDrop, source, event);
 				}
 				else
 				{
-					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue[0], 1);
+					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue_t1, 1);
 					DropLootStatues(entity, itemStackToDrop, source, event);
 				}
 			}
 			
 			if (entity instanceof EntityBlaze) {
-            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.blaze_statue[0], 1);
+            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.blaze_statue_t1, 1);
             	DropLootStatues(entity, itemStackToDrop, source, event);
 			}
 			
 			if (entity instanceof EntitySnowman) {
-            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.snowgolem_statue[0], 1);
+            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.snowgolem_statue_t1, 1);
             	DropLootStatues(entity, itemStackToDrop, source, event);
 			}
 			
 			if (entity instanceof EntityCow) {
-            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.cow_statue[0], 1);
+            	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.cow_statue_t1, 1);
             	DropLootStatues(entity, itemStackToDrop, source, event);
 			}
 			
 	        if (entity instanceof EntityMooshroom) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.mooshroom_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.mooshroom_statue_t1, 1);
             	DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
 	        if (entity instanceof EntityChicken) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.chicken_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.chicken_statue_t1, 1);
             	DropLootStatues(entity, itemStackToDrop, source, event);
 			}
 	        
 	        if (entity instanceof EntityCreeper) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.creeper_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.creeper_statue_t1, 1);
         		DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
 	        if (entity instanceof EntityPig) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.pig_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.pig_statue_t1, 1);
         		DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
@@ -107,32 +114,32 @@ public class DropHandler {
 	        	
 	        	if(rabbit.getRabbitType() == 0)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_br_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_br_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	else if(rabbit.getRabbitType() == 1)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_wh_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_wh_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	else if(rabbit.getRabbitType() == 2)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_ws_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_ws_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	else if(rabbit.getRabbitType() == 3)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_bs_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_bs_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	else if(rabbit.getRabbitType() == 4)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_go_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_go_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	else if(rabbit.getRabbitType() == 5)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_bw_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.rabbit_bw_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        }
@@ -140,110 +147,110 @@ public class DropHandler {
 	        if (entity instanceof EntitySheep) {
 	        	if (((EntitySheep) entity).getSheared() == true)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheepshaven_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_shaven_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.WHITE)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_white[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_white_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.ORANGE)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_orange[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_orange_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.MAGENTA)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_magenta[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_magenta_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.LIGHT_BLUE)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lightblue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lightblue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.YELLOW)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_yellow[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_yellow_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.LIME)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lime[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lime_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.PINK)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_pink[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_pink_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.GRAY)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_gray[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_gray_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
-	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.SILVER)
+	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.LIGHT_GRAY)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lightgray[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_lightgray_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.CYAN)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_cyan[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_cyan_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.PURPLE)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_purple[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_purple_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.BLUE)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_blue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_blue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.BROWN)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_brown[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_brown_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.GREEN)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_green[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_green_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.RED)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_red[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_red_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (((EntitySheep) entity).getFleeceColor() == EnumDyeColor.BLACK)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_black[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheep_statue_black_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}   	
 	        }
 	        
 	        if (entity instanceof EntityZombie) {
 	        	if (entity instanceof EntityHusk) {
-		        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.husk_statue[0], 1);
+		        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.husk_statue_t1, 1);
 		        	DropLootStatues(entity, itemStackToDrop, source, event);
 		        }
 	        	else if(((EntityZombie) entity).isChild())
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.baby_zombie_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.baby_zombie_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	else
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.zombie_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.zombie_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        }
 	        
 	        if (entity instanceof EntitySquid) {
-        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.squid_statue[0], 1);
+        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.squid_statue_t1, 1);
         		DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
@@ -251,38 +258,38 @@ public class DropHandler {
 	        	EntityVillager villager = (EntityVillager)entity;
 	        	if (villager.getProfessionForge() == VillagerRegistry.getById(0))
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_br_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_br_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (villager.getProfessionForge() == VillagerRegistry.getById(1))
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_wh_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_wh_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (villager.getProfessionForge() == VillagerRegistry.getById(2))
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_pu_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_pu_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	if (villager.getProfessionForge() == VillagerRegistry.getById(5))
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_gr_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.villager_gr_statue_t1, 1);
 	        		DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        }
 	        
 	        if (entity instanceof EntityWitch) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.witch_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.witch_statue_t1, 1);
 	        	DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
 	        if (entity instanceof EntityShulker) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.shulker_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.shulker_statue_t1, 1);
 	        	DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
 	        if (entity instanceof EntityEnderman) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.enderman_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.enderman_statue_t1, 1);
 	        	DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
@@ -292,12 +299,12 @@ public class DropHandler {
 	        }
 	        
 	        if (entity instanceof EntityGuardian) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.guardian_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.guardian_statue_t1, 1);
 	        	DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
 	        if (entity instanceof EntityGhast) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.ghast_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.ghast_statue_t1, 1);
 	        	DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
 	        
@@ -305,7 +312,7 @@ public class DropHandler {
 	        {
 	        	if(entity instanceof EntityEvoker)
 	        	{
-	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.evoker_statue[0], 1);
+	        		ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.evoker_statue_t1, 1);
 		        	DropLootStatues(entity, itemStackToDrop, source, event);
 	        	}
 	        	
@@ -314,23 +321,28 @@ public class DropHandler {
 	        }
 	        
 	        if (entity instanceof EntitySpider) {
-	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.spider_statue[0], 1);
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.spider_statue_t1, 1);
+	        	DropLootStatues(entity, itemStackToDrop, source, event);
+	        }
+	        
+	        if (entity instanceof EntityPufferFish) {
+	        	ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.pufferfish_statue_t1, 1);
 	        	DropLootStatues(entity, itemStackToDrop, source, event);
 	        }
         }
 		
-		if(StatuesConfigGen.player.PlayersDropStatue == true)
+		if(StatuesConfig.COMMON.playersDropStatue.get())
 		{
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer)entity;
-				ItemStack playerstatuestack = new ItemStack(StatuesBlocks.player_statue, 1).setStackDisplayName(player.getName());
+				ItemStack playerstatuestack = new ItemStack(StatuesBlocks.player_statue, 1).setDisplayName(player.getName());
 				
-				switch (StatuesConfigGen.player.PlayerStatueKillSource)
+				switch (StatuesConfig.COMMON.playerStatueKillSource.get())
 				{
-					case PLAYER:
+					case 1:
 						if(source instanceof EntityPlayer && !(source instanceof FakePlayer) && entity != source)
 						{
-							int chance = StatuesConfigGen.player.PlayerDropChance;
+							int chance = StatuesConfig.COMMON.playerDropChance.get();
 							if(chance != 0)
 							{
 								int random = entity.world.rand.nextInt(chance);
@@ -341,10 +353,10 @@ public class DropHandler {
 							}
 						}
 						break;
-					case PLAYER_FAKEPLAYER:
+					case 2:
 						if(source instanceof EntityPlayer && entity != source)
 						{
-							int chance = StatuesConfigGen.player.PlayerDropChance;
+							int chance = StatuesConfig.COMMON.playerDropChance.get();
 							if(chance != 0)
 							{
 								int random = entity.world.rand.nextInt(chance);
@@ -355,8 +367,8 @@ public class DropHandler {
 							}
 						}
 						break;
-					case ALL:
-						int chance = StatuesConfigGen.player.PlayerDropChance;
+					case 0:
+						int chance = StatuesConfig.COMMON.playerDropChance.get();
 						if(chance != 0)
 						{
 							int random = entity.world.rand.nextInt(chance);
@@ -378,61 +390,61 @@ public class DropHandler {
 		}
 	}
 	
-	public void DropLootStatues(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
+	public static void DropLootStatues(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
 		double random_drop;
-		double default_drop_chance = StatuesConfigGen.general.OldDropChance;
+		double default_drop_chance = StatuesConfig.COMMON.oldDropChance.get();
 
-		switch (StatuesConfigGen.general.StatueKillSource)
+		switch (StatuesConfig.COMMON.statueKillSource.get())
 		{
-			case PLAYER:
+			case 1:
 				if(source instanceof EntityPlayer && !(source instanceof FakePlayer))
 				{
 					EntityPlayerMP player = (EntityPlayerMP)source;
-					String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
-					if(LuckyPlayers.length > 0)
+					List<String> LuckyPlayers = StatuesConfig.COMMON.lucky_players.get();
+					if(!LuckyPlayers.isEmpty())
 					{
-						for (int i = 0; i < LuckyPlayers.length; i++) 
+						for (int i = 0; i < LuckyPlayers.size(); i++) 
 						{
-							String luckyName = LuckyPlayers[i];
-							String user = player.getName();
+							String luckyName = LuckyPlayers.get(i);
+							String user = player.getName().getString();
 							
 							if(!luckyName.isEmpty() && user.equals(luckyName) == true)
 							{
-								default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
+								default_drop_chance = StatuesConfig.COMMON.oldDropChance.get() / 4;
 							}
 							else
 							{
-								default_drop_chance = StatuesConfigGen.general.OldDropChance;
+								default_drop_chance = StatuesConfig.COMMON.oldDropChance.get();
 							}
 						}
 					}
 					else
 					{
-						default_drop_chance = StatuesConfigGen.general.OldDropChance;
+						default_drop_chance = StatuesConfig.COMMON.oldDropChance.get();
 					}
 					
-					if(StatuesConfigGen.othersettings.antiAfk)
-					{
-						if(!player.getEntityData().getBoolean(FishHandler.afkKey))
-						{
-							random_drop = Math.random();
-							if ( random_drop < default_drop_chance )
-				            {
-				            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
-				            }
-						}
-					}
-					else
-					{
+//					if(StatuesConfigGen.othersettings.antiAfk)
+//					{
+//						if(!player.getEntityData().getBoolean(FishHandler.afkKey))
+//						{
+//							random_drop = Math.random();
+//							if ( random_drop < default_drop_chance )
+//				            {
+//				            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+//				            }
+//						}
+//					}
+//					else
+//					{
 						random_drop = Math.random();
 						if ( random_drop < default_drop_chance )
 			            {
 			            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 			            }
-					}
+//					}
 				}
 				break;
-			case PLAYER_FAKEPLAYER:
+			case 2:
 				if(source instanceof EntityPlayer)
 				{
 					random_drop = Math.random();
@@ -442,7 +454,7 @@ public class DropHandler {
 		            }
 				}
 				break;
-			case ALL:
+			case 0:
 				random_drop = Math.random();
 				if ( random_drop < default_drop_chance )
 	            {
@@ -454,71 +466,71 @@ public class DropHandler {
 		}
 	}
 	
-	public void addSombrero(Entity entity, Entity source, LivingDropsEvent event)
+	public static void addSombrero(Entity entity, Entity source, LivingDropsEvent event)
 	{
 		double random_drop;
-		double default_drop_chance = StatuesConfigGen.general.OldDropChance;
+		double default_drop_chance = StatuesConfig.COMMON.oldDropChance.get();
 		
-		switch (StatuesConfigGen.general.StatueKillSource)
+		switch (StatuesConfig.COMMON.statueKillSource.get())
 		{
-			case PLAYER:
+			case 1:
 				if(source instanceof EntityPlayer && !(source instanceof FakePlayer))
 				{
 					EntityPlayerMP player = (EntityPlayerMP)source;
-					String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
+					List<String> LuckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 					
-					if(LuckyPlayers.length != 0)
+					if(!LuckyPlayers.isEmpty())
 					{
-						for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
-							if(player.getName().equals(LuckyPlayers[i]));
+						for (int i = 0; (i < LuckyPlayers.size()) && (!LuckyPlayers.get(i).isEmpty()); i++) {
+							if(player.getName().getString().equals(LuckyPlayers.get(i)));
 							{
-								default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
+								default_drop_chance = StatuesConfig.COMMON.oldDropChance.get() / 4;
 							}
 						}
 					}
 					else
 					{
-						default_drop_chance = StatuesConfigGen.general.OldDropChance;
+						default_drop_chance = StatuesConfig.COMMON.oldDropChance.get();
 					}
-					if(StatuesConfigGen.othersettings.antiAfk)
-					{
-						if(!player.getEntityData().getBoolean(FishHandler.afkKey))
-						{
-							random_drop = Math.random();
-							if (random_drop < default_drop_chance )
-					    	{
-								Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
-								if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-								{
-									ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
-					            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
-								}
-					    	}
-						}
-					}
-					else
-					{
+//					if(StatuesConfigGen.othersettings.antiAfk)
+//					{
+//						if(!player.getEntityData().getBoolean(FishHandler.afkKey))
+//						{
+//							random_drop = Math.random();
+//							if (random_drop < default_drop_chance )
+//					    	{
+//								Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
+//								if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+//								{
+//									ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
+//					            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+//								}
+//					    	}
+//						}
+//					}
+//					else
+//					{
 						random_drop = Math.random();
 						if (random_drop < default_drop_chance )
 				    	{
-							Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
-							if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+							Biome biome = entity.world.getBiomeBody(entity.getPosition());
+							if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.DESERT_LAKES || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
 							{
 								ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
 				            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
 							}
 				    	}
-					}
+//					}
 				}
 				break;
-			case PLAYER_FAKEPLAYER:
+			case 2:
 				if(source instanceof EntityPlayer)
 				{
 					random_drop = Math.random();
 					if (random_drop < default_drop_chance )
 			    	{
-						Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
-						if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+						Biome biome = entity.world.getBiomeBody(entity.getPosition());
+						if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.DESERT_LAKES || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
 						{
 							ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
 			            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
@@ -526,12 +538,12 @@ public class DropHandler {
 			    	}
 				}
 				break;
-			case ALL:
+			case 0:
 				random_drop = Math.random();
 				if (random_drop < default_drop_chance )
 		    	{
-					Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
-					if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
+					Biome biome = entity.world.getBiomeBody(entity.getPosition());
+					if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.DESERT_LAKES || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
 					{
 						ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
 		            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));

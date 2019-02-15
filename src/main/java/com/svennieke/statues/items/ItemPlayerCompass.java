@@ -4,46 +4,45 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItemFrame;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemPlayerCompass extends Item {
 	
-	public ItemPlayerCompass(String unlocalised) {
-		super();
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
-		setRegistryName("item" + unlocalised);
-		setCreativeTab(CreativeTabs.TOOLS);
-		setCreativeTab(Statues.tabStatues);
+	public ItemPlayerCompass(Item.Properties builder) {
+		super(builder.group(ItemGroup.TOOLS).group(Statues.tabStatues));
+//		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+//		setCreativeTab(CreativeTabs.TOOLS);
+//		setCreativeTab(Statues.tabStatues);
 		
-		addPropertyOverride(new ResourceLocation("angle"), new IItemPropertyGetter()
+	    this.addPropertyOverride(new ResourceLocation("angle"), new IItemPropertyGetter()
         {
-            @SideOnly(Side.CLIENT)
+            @OnlyIn(Dist.CLIENT)
             double rotation;
-            @SideOnly(Side.CLIENT)
+            @OnlyIn(Dist.CLIENT)
             double rota;
-            @SideOnly(Side.CLIENT)
+            @OnlyIn(Dist.CLIENT)
             long lastUpdateTick;
-            @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
+            @OnlyIn(Dist.CLIENT)
+            public float call(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn)
             {
                 if (entityIn == null && !stack.isOnItemFrame())
                 {
@@ -72,12 +71,12 @@ public class ItemPlayerCompass extends Item {
                     return MathHelper.positiveModulo((float)d0, 1.0F);
                 }
             }
-            @SideOnly(Side.CLIENT)
+            @OnlyIn(Dist.CLIENT)
             private double wobble(World worldIn, double p_185093_2_)
             {
-                if (worldIn.getTotalWorldTime() != this.lastUpdateTick)
+                if (worldIn.getGameTime() != this.lastUpdateTick)
                 {
-                    this.lastUpdateTick = worldIn.getTotalWorldTime();
+                    this.lastUpdateTick = worldIn.getGameTime();
                     double d0 = p_185093_2_ - this.rotation;
                     d0 = MathHelper.positiveModulo(d0 + 0.5D, 1.0D) - 0.5D;
                     this.rota += d0 * 0.1D;
@@ -87,18 +86,18 @@ public class ItemPlayerCompass extends Item {
 
                 return this.rotation;
             }
-            @SideOnly(Side.CLIENT)
+            @OnlyIn(Dist.CLIENT)
             private double getFrameRotation(EntityItemFrame itemFrameIn)
             {
                 return (double)MathHelper.wrapDegrees(180 + itemFrameIn.facingDirection.getHorizontalIndex() * 90);
             }
-            @SideOnly(Side.CLIENT)
+            @OnlyIn(Dist.CLIENT)
             private double getLastLocationToAngle(World worldIn, Entity entityIn, ItemStack stack)
             {
-                if(stack.hasTagCompound())
+                if(stack.hasTag())
                 {
                 	BlockPos lastLocation = worldIn.getSpawnPoint();
-                    NBTTagCompound tag = stack.getTagCompound();
+                    NBTTagCompound tag = stack.getTag();
                     if (tag.hasKey("lastPlayerLocation"))
                     {
                     	Long location = tag.getLong("lastPlayerLocation");
@@ -119,17 +118,16 @@ public class ItemPlayerCompass extends Item {
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
-    {
-		if(stack.hasTagCompound())
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		if(stack.hasTag())
         {
-            NBTTagCompound tag = stack.getTagCompound();
+            NBTTagCompound tag = stack.getTag();
             if (!tag.getString("playerTracking").isEmpty())
             {
-                tooltip.add(TextFormatting.GOLD + I18n.format("last.known.location", new Object[] {tag.getString("playerTracking")}));
+                tooltip.add(new TextComponentTranslation("statues.last.known.location", new Object[] {tag.getString("playerTracking")}).applyTextStyle(TextFormatting.GOLD));
             }
         }
-    }
+	}
 	
 	public boolean hasThreeCommas(String theString)
 	{

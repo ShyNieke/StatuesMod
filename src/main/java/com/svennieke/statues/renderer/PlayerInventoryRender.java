@@ -1,17 +1,15 @@
 package com.svennieke.statues.renderer;
 
-import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySkullRenderer;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 	
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class PlayerInventoryRender extends TileEntityItemStackRenderer{
-	public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
     protected TileEntityRendererDispatcher rendererDispatcher;
 	
 	@Override

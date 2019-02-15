@@ -2,6 +2,9 @@ package com.svennieke.statues.entity.fakeentity;
 
 import javax.annotation.Nullable;
 
+import com.svennieke.statues.init.StatuesEntity;
+
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,7 +17,12 @@ public class FakeZombie extends EntityZombie implements IFakeEntity{
 
 	public FakeZombie(World worldIn) {
 		super(worldIn);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
+        this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
+	}
+	
+	@Override
+	public EntityType<?> getType() {
+		return StatuesEntity.FAKE_ZOMBIE;
 	}
 	
 	@Override
@@ -30,7 +38,7 @@ public class FakeZombie extends EntityZombie implements IFakeEntity{
 	}
 	
 	@Override
-	public void onLivingUpdate()
+	public void livingTick()
     {
 		if (!this.world.isRemote)
         {
@@ -41,24 +49,24 @@ public class FakeZombie extends EntityZombie implements IFakeEntity{
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
         }
         
-        super.onLivingUpdate();
-    }
-	
-	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
-    {
-        super.writeEntityToNBT(compound);
-        compound.setInteger("Lifetime", this.lifetime);
+        super.livingTick();
     }
 
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
+	public void writeAdditional(NBTTagCompound compound)
     {
-        super.readEntityFromNBT(compound);
-        this.lifetime = compound.getInteger("Lifetime");
+        super.writeAdditional(compound);
+        compound.setInt("Lifetime", this.lifetime);
+    }
+
+	@Override
+	public void readAdditional(NBTTagCompound compound)
+    {
+        super.readAdditional(compound);
+        this.lifetime = compound.getInt("Lifetime");
     }
 }

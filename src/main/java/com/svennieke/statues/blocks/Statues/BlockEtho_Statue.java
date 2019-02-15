@@ -8,7 +8,6 @@ import com.svennieke.statues.entity.fakeentity.FakeCreeper;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -17,25 +16,29 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityProvider{
+public class BlockEtho_Statue extends BlockEtho implements IStatue{
 	
 	private int TIER;
 
-	public BlockEtho_Statue(String unlocalised) {
-		super();
-		setUnlocalizedName(unlocalised);
+	public BlockEtho_Statue(Block.Properties builder) {
+		super(builder);
+		//setRegistryName(registry);
+		//setUnlocalizedName(unlocalised);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+//		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		//setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	
@@ -46,7 +49,12 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
 	}
 	
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
+	public boolean hasTileEntity(IBlockState state) {
+		return true;
+	}
+	
+	@Override
+	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		return new StatueTileEntity();
 	}
 	
@@ -54,10 +62,10 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
         return (StatueTileEntity) world.getTileEntity(pos);
     }
 	
-    @SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-		super.randomDisplayTick(stateIn, worldIn, pos, rand);
+	public void animateTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+		super.animateTick(stateIn, worldIn, pos, rand);
 		if (rand.nextInt(24) == 0)
         {
             worldIn.playSound((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 0.3F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.3F, false);
@@ -65,7 +73,7 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
 	}
     
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+	public boolean onBlockActivated(IBlockState state, World worldIn, BlockPos pos, EntityPlayer playerIn, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
 	{
 		if(this.TIER >= 2)
 		{
@@ -103,7 +111,7 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
 	public FakeCreeper getGeneral(World worldIn)
 	{
 		FakeCreeper general = new FakeCreeper(worldIn);
-		general.setCustomNameTag("General Spazz");
+		general.setCustomName(new TextComponentString("General Spazz"));
         
         return general;
 	}

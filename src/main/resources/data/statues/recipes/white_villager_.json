@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "statues:villager_wh_statue_t1"
+  },
+  "pattern": [
+	"V"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+	"V": {
+      "item": "statues:villager_gr_statue_t1"
+    }
+  }
+}

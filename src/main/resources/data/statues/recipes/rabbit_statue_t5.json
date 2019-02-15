@@ -1,0 +1,22 @@
+{
+  "result": {
+    "item": "statues:rabbit_bw_statue_t5"
+  },
+  "pattern": [
+    "WWW",
+    "WSW",
+    "WWW"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "statues:rabbit_bw_statue_t4"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
+}

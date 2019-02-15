@@ -5,17 +5,16 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeLargeFireball;
+import com.svennieke.statues.init.StatuesEntity;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -24,11 +23,16 @@ import net.minecraft.world.World;
 
 public class FakeGhast extends EntityGhast implements IFakeEntity{
 
-    private static final DataParameter<Boolean> ATTACKING = EntityDataManager.<Boolean>createKey(FakeGhast.class, DataSerializers.BOOLEAN);
+//    private static final DataParameter<Boolean> ATTACKING = EntityDataManager.<Boolean>createKey(FakeGhast.class, DataSerializers.BOOLEAN);
 	private int lifetime;
 	
 	public FakeGhast(World worldIn) {
 		super(worldIn);
+	}
+	
+	@Override
+	public EntityType<?> getType() {
+		return StatuesEntity.FAKE_GHAST;
 	}
 
 	@Override
@@ -92,7 +96,7 @@ public class FakeGhast extends EntityGhast implements IFakeEntity{
         public void updateTask()
         {
             EntityLivingBase entitylivingbase = this.parentEntity.getAttackTarget();
-            double d0 = 64.0D;
+//            double d0 = 64.0D;
 
             if (entitylivingbase.getDistanceSq(this.parentEntity) < 4096.0D && this.parentEntity.canEntityBeSeen(entitylivingbase))
             {
@@ -106,10 +110,10 @@ public class FakeGhast extends EntityGhast implements IFakeEntity{
 
                 if (this.attackTimer == 20)
                 {
-                    double d1 = 4.0D;
+//                    double d1 = 4.0D;
                     Vec3d vec3d = this.parentEntity.getLook(1.0F);
                     double d2 = entitylivingbase.posX - (this.parentEntity.posX + vec3d.x * 4.0D);
-                    double d3 = entitylivingbase.getEntityBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (0.5D + this.parentEntity.posY + (double)(this.parentEntity.height / 2.0F));
+                    double d3 = entitylivingbase.getBoundingBox().minY + (double)(entitylivingbase.height / 2.0F) - (0.5D + this.parentEntity.posY + (double)(this.parentEntity.height / 2.0F));
                     double d4 = entitylivingbase.posZ - (this.parentEntity.posZ + vec3d.z * 4.0D);
                     world.playEvent((EntityPlayer)null, 1016, new BlockPos(this.parentEntity), 0);
                     FakeLargeFireball entitylargefireball = new FakeLargeFireball(world, this.parentEntity, d2, d3, d4);
@@ -161,7 +165,7 @@ public class FakeGhast extends EntityGhast implements IFakeEntity{
             else
             {
                 EntityLivingBase entitylivingbase = this.parentEntity.getAttackTarget();
-                double d0 = 64.0D;
+//                double d0 = 64.0D;
 
                 if (entitylivingbase.getDistanceSq(this.parentEntity) < 4096.0D)
                 {
@@ -227,23 +231,9 @@ public class FakeGhast extends EntityGhast implements IFakeEntity{
     }
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound)
+	public void livingTick()
     {
-        super.writeEntityToNBT(compound);
-        compound.setInteger("Lifetime", this.lifetime);
-    }
-
-	@Override
-	public void readEntityFromNBT(NBTTagCompound compound)
-    {
-        super.readEntityFromNBT(compound);
-        this.lifetime = compound.getInteger("Lifetime");
-    }
-	
-	@Override
-	public void onLivingUpdate()
-    {
-        if (!this.world.isRemote)
+		if (!this.world.isRemote)
         {
             if (!this.isNoDespawnRequired())
             {
@@ -252,10 +242,24 @@ public class FakeGhast extends EntityGhast implements IFakeEntity{
 
             if (this.lifetime >= 2400)
             {
-                this.setDead();
+                this.remove();
             }
         }
         
-        super.onLivingUpdate();
+        super.livingTick();
+    }
+
+	@Override
+	public void writeAdditional(NBTTagCompound compound)
+    {
+        super.writeAdditional(compound);
+        compound.setInt("Lifetime", this.lifetime);
+    }
+
+	@Override
+	public void readAdditional(NBTTagCompound compound)
+    {
+        super.readAdditional(compound);
+        this.lifetime = compound.getInt("Lifetime");
     }
 }

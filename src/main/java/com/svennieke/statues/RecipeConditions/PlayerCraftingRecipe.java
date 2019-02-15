@@ -3,15 +3,14 @@ package com.svennieke.statues.RecipeConditions;
 import java.util.function.BooleanSupplier;
 
 import com.google.gson.JsonObject;
-import com.svennieke.statues.config.StatuesConfigGen;
+import com.svennieke.statues.config.StatuesConfig;
 
-import net.minecraftforge.common.crafting.IConditionFactory;
-import net.minecraftforge.common.crafting.JsonContext;
+import net.minecraftforge.common.crafting.IConditionSerializer;
 
-public class PlayerCraftingRecipe implements IConditionFactory{
+public class PlayerCraftingRecipe implements IConditionSerializer{
 
 	@Override
-	public BooleanSupplier parse(JsonContext context, JsonObject json) {
-		return () -> StatuesConfigGen.player.PlayerCrafting;
+	public BooleanSupplier parse(JsonObject json) {
+		return () -> StatuesConfig.COMMON.playerCrafting.get();
 	}
 }

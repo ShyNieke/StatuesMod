@@ -6,18 +6,20 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Lists;
+import com.svennieke.statues.init.StatuesEntity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityShulkerBullet;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.Particles;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -25,8 +27,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class FakeShulkerBullet extends EntityShulkerBullet{
 	private EntityLivingBase owner;
@@ -50,8 +52,13 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
         this.setSize(0.3125F, 0.3125F);
         this.noClip = true;
     }
+    
+    @Override
+    public EntityType<?> getType() {
+    	return StatuesEntity.FAKE_SHULKER_BULLET;
+    }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public FakeShulkerBullet(World worldIn, double x, double y, double z, double motionXIn, double motionYIn, double motionZIn)
     {
         this(worldIn);
@@ -155,9 +162,9 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
                 enumfacing = list.get(this.rand.nextInt(list.size()));
             }
 
-            d1 = this.posX + (double)enumfacing.getFrontOffsetX();
-            d2 = this.posY + (double)enumfacing.getFrontOffsetY();
-            d3 = this.posZ + (double)enumfacing.getFrontOffsetZ();
+            d1 = this.posX + (double)enumfacing.getXOffset();
+            d2 = this.posY + (double)enumfacing.getYOffset();
+            d3 = this.posZ + (double)enumfacing.getZOffset();
         }
 
         this.setDirection(enumfacing);
@@ -186,15 +193,15 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
     /**
      * Called to update the entity's position/logic.
      */
-    public void onUpdate()
+    public void tick()
     {
         if (!this.world.isRemote && this.world.getDifficulty() == EnumDifficulty.PEACEFUL)
         {
-            this.setDead();
+            this.remove();
         }
         else
         {
-            super.onUpdate();
+            super.tick();
 
             if (!this.world.isRemote)
             {
@@ -226,7 +233,7 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
                     this.ownerUniqueId = null;
                 }
 
-                if (this.target == null || !this.target.isEntityAlive() || this.target instanceof EntityPlayer && ((EntityPlayer)this.target).isSpectator())
+                if (this.target == null || !this.target.isAlive() || this.target instanceof EntityPlayer && ((EntityPlayer)this.target).isSpectator())
                 {
                     if (!this.hasNoGravity())
                     {
@@ -256,9 +263,9 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
 
             if (this.world.isRemote)
             {
-                this.world.spawnParticle(EnumParticleTypes.END_ROD, this.posX - this.motionX, this.posY - this.motionY + 0.15D, this.posZ - this.motionZ, 0.0D, 0.0D, 0.0D);
+                this.world.spawnParticle(Particles.END_ROD, this.posX - this.motionX, this.posY - this.motionY + 0.15D, this.posZ - this.motionZ, 0.0D, 0.0D, 0.0D);
             }
-            else if (this.target != null && !this.target.isDead)
+            else if (this.target != null && !this.target.removed)
             {
                 if (this.steps > 0)
                 {
@@ -270,23 +277,16 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
                     }
                 }
 
-                if (this.direction != null)
-                {
+                if (this.direction != null) {
                     BlockPos blockpos = new BlockPos(this);
                     EnumFacing.Axis enumfacing$axis = this.direction.getAxis();
-
-                    if (this.world.isBlockNormalCube(blockpos.offset(this.direction), false))
-                    {
-                        this.selectNextMoveDirection(enumfacing$axis);
-                    }
-                    else
-                    {
-                        BlockPos blockpos1 = new BlockPos(this.target);
-
-                        if (enumfacing$axis == EnumFacing.Axis.X && blockpos.getX() == blockpos1.getX() || enumfacing$axis == EnumFacing.Axis.Z && blockpos.getZ() == blockpos1.getZ() || enumfacing$axis == EnumFacing.Axis.Y && blockpos.getY() == blockpos1.getY())
-                        {
-                            this.selectNextMoveDirection(enumfacing$axis);
-                        }
+                    if (this.world.isTopSolid(blockpos.offset(this.direction))) {
+                       this.selectNextMoveDirection(enumfacing$axis);
+                    } else {
+                       BlockPos blockpos1 = new BlockPos(this.target);
+                       if (enumfacing$axis == EnumFacing.Axis.X && blockpos.getX() == blockpos1.getX() || enumfacing$axis == EnumFacing.Axis.Z && blockpos.getZ() == blockpos1.getZ() || enumfacing$axis == EnumFacing.Axis.Y && blockpos.getY() == blockpos1.getY()) {
+                          this.selectNextMoveDirection(enumfacing$axis);
+                       }
                     }
                 }
             }
@@ -304,7 +304,7 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
     /**
      * Checks if the entity is in range to render.
      */
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public boolean isInRangeToRenderDist(double distance)
     {
         return distance < 16384.0D;
@@ -318,7 +318,7 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
         return 1.0F;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public int getBrightnessForRender()
     {
         return 15728880;
@@ -326,27 +326,20 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
 
     protected void bulletHit(RayTraceResult result)
     {
-        if (result.entityHit == null)
-        {
-            ((WorldServer)this.world).spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, this.posX, this.posY, this.posZ, 2, 0.2D, 0.2D, 0.2D, 0.0D);
+    	if (result.entity == null) {
+            ((WorldServer)this.world).spawnParticle(Particles.EXPLOSION, this.posX, this.posY, this.posZ, 2, 0.2D, 0.2D, 0.2D, 0.0D);
             this.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HIT, 1.0F, 1.0F);
-        }
-        else
-        {
-            boolean flag = result.entityHit.attackEntityFrom(DamageSource.causeIndirectDamage(this, this.owner).setProjectile(), 0F);
-
-            if (flag)
-            {
-                this.applyEnchantments(this.owner, result.entityHit);
-
-                if (result.entityHit instanceof EntityLivingBase)
-                {
-                    ((EntityLivingBase)result.entityHit).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200));
-                }
+         } else {
+            boolean flag = result.entity.attackEntityFrom(DamageSource.causeIndirectDamage(this, this.owner).setProjectile(), 0.0F);
+            if (flag) {
+               this.applyEnchantments(this.owner, result.entity);
+               if (result.entity instanceof EntityLivingBase) {
+                  ((EntityLivingBase)result.entity).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 200));
+               }
             }
-        }
+         }
 
-        this.setDead();
+         this.remove();
     }
 
     /**
@@ -365,8 +358,8 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
         if (!this.world.isRemote)
         {
             this.playSound(SoundEvents.ENTITY_SHULKER_BULLET_HURT, 1.0F, 1.0F);
-            ((WorldServer)this.world).spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY, this.posZ, 15, 0.2D, 0.2D, 0.2D, 0.0D);
-            this.setDead();
+            ((WorldServer)this.world).spawnParticle(Particles.CRIT, this.posX, this.posY, this.posZ, 15, 0.2D, 0.2D, 0.2D, 0.0D);
+            this.remove();
         }
 
         return true;
