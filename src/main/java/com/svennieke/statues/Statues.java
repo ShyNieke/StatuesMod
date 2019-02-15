@@ -98,8 +98,8 @@ public class Statues {
     
 	public Statues() {
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, StatuesConfig.commonSpec); //TODO: Change to COMMON once that works.
-        //FMLJavaModLoadingContext.get().getModEventBus().register(StatuesConfig.class);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, StatuesConfig.commonSpec); //TODO: Change to COMMON once that works.
+        FMLJavaModLoadingContext.get().getModEventBus().register(StatuesConfig.class);
         
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 //        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
