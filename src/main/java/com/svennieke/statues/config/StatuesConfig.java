@@ -5,6 +5,7 @@ import static net.minecraftforge.fml.Logging.CORE;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 
 import com.svennieke.statues.Statues;
@@ -18,9 +19,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.config.ModConfig;
 
 public class StatuesConfig {
-	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
-	public static final Common COMMON = new Common(BUILDER);
-	 
+//	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
+//	public static final Common COMMON = new Common(BUILDER);
+//	 
     public static class Common {
 		//General
     	public final BooleanValue tier1Crafting;
@@ -38,8 +39,8 @@ public class StatuesConfig {
         public final BooleanValue playerCompass;  
         
         //Other
-        public final DoubleValue statueHardness; 
-        public final IntValue soupStack;
+        //public final DoubleValue statueHardness; 
+        //public final IntValue soupStack;
         //public final BooleanValue antiAfk;
         
         //Messages
@@ -114,14 +115,14 @@ public class StatuesConfig {
         	builder.comment("Other settings")
     		.push("othersettings");
     	
-	    	statueHardness = builder
-	                .comment("Changing this changes the amount of time needed to harvest a statue, Higher = more time needed. Lower = faster harvested " +
-							"[0.6 is the same as vanilla grass]")
-	                .defineInRange("statueHardness", 0.6D, 0.1D, 3.0D);
+//	    	statueHardness = builder
+//	                .comment("Changing this changes the amount of time needed to harvest a statue, Higher = more time needed. Lower = faster harvested " +
+//							"[0.6 is the same as vanilla grass]")
+//	                .defineInRange("statueHardness", 0.6D, 0.1D, 3.0D);
 	
-	    	soupStack = builder
-	    			.comment("Changing this changes the stacksize of the mushroom soup")
-	    			.defineInRange("soupStack", 8, 1, 64);
+//	    	soupStack = builder
+//	    			.comment("Changing this changes the stacksize of the mushroom soup")
+//	    			.defineInRange("soupStack", 8, 1, 64);
 	    	
 	//    	antiAfk = builder
 	//    			.comment("This either disables or enables the anti-afk system that's in place")
@@ -182,15 +183,15 @@ public class StatuesConfig {
         }
     }
     
-    public static final ForgeConfigSpec commonSpec = BUILDER.build();
+//    public static final ForgeConfigSpec commonSpec = BUILDER.build();
     
-//    public static final ForgeConfigSpec commonSpec;
-//    public static final Common COMMON;
-//    static {
-//        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
-//        commonSpec = specPair.getRight();
-//        COMMON = specPair.getLeft();
-//    }
+    public static final ForgeConfigSpec commonSpec;
+    public static final Common COMMON;
+    static {
+        final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+        commonSpec = specPair.getRight();
+        COMMON = specPair.getLeft();
+    }
       
     @SubscribeEvent
     public static void onLoad(final ModConfig.Loading configEvent) {

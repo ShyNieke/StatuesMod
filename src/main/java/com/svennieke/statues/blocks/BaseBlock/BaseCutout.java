@@ -1,7 +1,5 @@
 package com.svennieke.statues.blocks.BaseBlock;
 
-import com.svennieke.statues.config.StatuesConfig;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.IBucketPickupHandler;
@@ -30,7 +28,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BaseCutout extends BlockHorizontal implements IBucketPickupHandler, ILiquidContainer{
 	
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static float hardness = (float) StatuesConfig.COMMON.statueHardness.get().doubleValue();
+	public static float hardness = 0.6F; //(float) StatuesConfig.COMMON.statueHardness.get().doubleValue();
 
 	protected BaseCutout(Block.Properties builder) {
 		super(builder.hardnessAndResistance(hardness));

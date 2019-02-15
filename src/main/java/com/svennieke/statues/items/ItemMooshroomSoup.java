@@ -1,7 +1,6 @@
 package com.svennieke.statues.items;
 
 import com.svennieke.statues.Statues;
-import com.svennieke.statues.config.StatuesConfig;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;
@@ -19,7 +18,7 @@ import net.minecraft.world.World;
 
 public class ItemMooshroomSoup extends ItemFood {
 	public ItemMooshroomSoup(Item.Properties builder, int amount, float saturation) {
-		super(amount, saturation, false, builder.group(ItemGroup.FOOD).group(Statues.tabStatues).maxStackSize(StatuesConfig.COMMON.soupStack.get()));
+		super(amount, saturation, false, builder.group(ItemGroup.FOOD).group(Statues.tabStatues).maxStackSize(8)); //StatuesConfig.COMMON.soupStack.get()
 //		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
 //		setCreativeTab(Statues.tabStatues);
 	}
