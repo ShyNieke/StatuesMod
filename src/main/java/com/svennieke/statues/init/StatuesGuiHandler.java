@@ -2,7 +2,6 @@ package com.svennieke.statues.init;
 
 import com.svennieke.statues.renderer.gui.GuiShulkerStatue;
 import com.svennieke.statues.tileentity.ShulkerStatueTileEntity;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;

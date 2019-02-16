@@ -1,16 +1,10 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.blocks.StatueBase.BlockPlayer;
 import com.svennieke.statues.config.StatuesConfig;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
@@ -25,12 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.INameable;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.ITextComponent;
@@ -40,6 +29,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
+import java.util.UUID;
 
 public class BlockPlayer_Statue extends BlockPlayer{
 	

@@ -1,12 +1,9 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockCow;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.passive.EntityCow;
@@ -19,6 +16,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+
+import java.util.ArrayList;
 
 public class BlockCow_Statue extends BlockCow implements IStatue{
 	

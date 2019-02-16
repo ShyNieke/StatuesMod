@@ -2,7 +2,6 @@ package com.svennieke.statues.blocks.Statues;
 
 import com.svennieke.statues.blocks.StatueBase.BlockInfo;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;

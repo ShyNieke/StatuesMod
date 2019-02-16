@@ -1,7 +1,6 @@
 package com.svennieke.statues.items;
 
 import com.svennieke.statues.Statues;
-
 import net.minecraft.item.Item;
 
 public class ItemStatueCore extends Item{

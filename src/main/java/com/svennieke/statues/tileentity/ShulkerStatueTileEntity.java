@@ -1,17 +1,9 @@
 package com.svennieke.statues.tileentity;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.UUID;
-import java.util.stream.IntStream;
-
-import javax.annotation.Nullable;
-
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.blocks.Statues.BlockShulker_Statue;
 import com.svennieke.statues.init.StatuesTileTypes;
 import com.svennieke.statues.tileentity.container.ContainerShulkerStatue;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
@@ -27,11 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
 import net.minecraft.tileentity.TileEntityShulkerBox;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -39,6 +27,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+
+import javax.annotation.Nullable;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.UUID;
+import java.util.stream.IntStream;
 
 public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements ITickable, ISidedInventory, iStatueBehaviors{
 

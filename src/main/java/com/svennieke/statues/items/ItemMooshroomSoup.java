@@ -1,7 +1,6 @@
 package com.svennieke.statues.items;
 
 import com.svennieke.statues.Statues;
-
 import com.svennieke.statues.config.StatuesConfig;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;

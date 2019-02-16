@@ -1,9 +1,6 @@
 package com.svennieke.statues.items;
 
-import java.util.List;
-
 import com.svennieke.statues.Statues;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
@@ -13,6 +10,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemRoyalNugget extends ItemFood {
 	public ItemRoyalNugget(Item.Properties builder, int amount, float saturation) {

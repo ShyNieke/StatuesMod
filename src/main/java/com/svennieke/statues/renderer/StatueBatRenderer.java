@@ -1,7 +1,6 @@
 package com.svennieke.statues.renderer;
 
 import com.svennieke.statues.entity.EntityStatueBat;
-
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderBat;
 import net.minecraft.client.renderer.entity.RenderManager;

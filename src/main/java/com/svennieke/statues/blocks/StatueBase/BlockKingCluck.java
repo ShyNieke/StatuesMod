@@ -1,9 +1,6 @@
 package com.svennieke.statues.blocks.StatueBase;
 
-import java.util.List;
-
 import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
@@ -16,6 +13,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
+
+import java.util.List;
 
 public class BlockKingCluck extends BaseCutout{
 	

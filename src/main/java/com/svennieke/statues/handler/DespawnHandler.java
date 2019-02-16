@@ -3,7 +3,6 @@ package com.svennieke.statues.handler;
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.entity.fakeentity.IFakeEntity;
 import com.svennieke.statues.init.StatuesItems;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.item.ItemStack;

@@ -1,14 +1,10 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockKingCluck;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -29,6 +25,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue{
 	

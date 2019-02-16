@@ -1,16 +1,11 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockShulker;
 import com.svennieke.statues.entity.fakeentity.FakeShulker;
 import com.svennieke.statues.tileentity.ShulkerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 import com.svennieke.statues.tileentity.container.ContainerShulkerStatue;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -44,6 +39,9 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class BlockShulker_Statue extends BlockShulker implements IStatue{
 	

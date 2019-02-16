@@ -1,50 +1,12 @@
 package com.svennieke.statues.init;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.blocks.IStatue;
-import com.svennieke.statues.blocks.Statues.BlockBabyZombie_Statue;
-import com.svennieke.statues.blocks.Statues.BlockBlaze_Statue;
-import com.svennieke.statues.blocks.Statues.BlockBumbo_Statue;
-import com.svennieke.statues.blocks.Statues.BlockChickenJockey_Statue;
-import com.svennieke.statues.blocks.Statues.BlockChicken_Statue;
-import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
-import com.svennieke.statues.blocks.Statues.BlockCreeper_Statue;
-import com.svennieke.statues.blocks.Statues.BlockEnderman_Statue;
-import com.svennieke.statues.blocks.Statues.BlockEndermite_Statue;
-import com.svennieke.statues.blocks.Statues.BlockEtho_Statue;
-import com.svennieke.statues.blocks.Statues.BlockEvoker_Statue;
-import com.svennieke.statues.blocks.Statues.BlockFlood_Statue;
-import com.svennieke.statues.blocks.Statues.BlockGhast_Statue;
-import com.svennieke.statues.blocks.Statues.BlockGuardian_Statue;
-import com.svennieke.statues.blocks.Statues.BlockHusk_Statue;
-import com.svennieke.statues.blocks.Statues.BlockInfo_Statue;
-import com.svennieke.statues.blocks.Statues.BlockKingCluck_Statue;
-import com.svennieke.statues.blocks.Statues.BlockMagmaSlime_Statue;
-import com.svennieke.statues.blocks.Statues.BlockMooshroom_Statue;
-import com.svennieke.statues.blocks.Statues.BlockPig_Statue;
-import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
-import com.svennieke.statues.blocks.Statues.BlockPufferfish_Statue;
-import com.svennieke.statues.blocks.Statues.BlockRabbit_Statue;
-import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
-import com.svennieke.statues.blocks.Statues.BlockSheep_Statue;
-import com.svennieke.statues.blocks.Statues.BlockShulker_Statue;
-import com.svennieke.statues.blocks.Statues.BlockSlime_Statue;
-import com.svennieke.statues.blocks.Statues.BlockSnowGolem_Statue;
-import com.svennieke.statues.blocks.Statues.BlockSombrero_Statue;
-import com.svennieke.statues.blocks.Statues.BlockSpider_Statue;
-import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
-import com.svennieke.statues.blocks.Statues.BlockTotemOfUndying_Statue;
-import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
-import com.svennieke.statues.blocks.Statues.BlockWastelandPig_Statue;
-import com.svennieke.statues.blocks.Statues.BlockWitch_Statue;
-import com.svennieke.statues.blocks.Statues.BlockZombie_Statue;
+import com.svennieke.statues.blocks.Statues.*;
 import com.svennieke.statues.blocks.decorative.BlockDisplayStand;
 import com.svennieke.statues.blocks.decorative.BlockPebble;
 import com.svennieke.statues.items.ItemBlockStatue;
 import com.svennieke.statues.renderer.PlayerInventoryRender;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
@@ -55,6 +17,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
+
+import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(Reference.MOD_ID)

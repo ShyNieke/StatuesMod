@@ -1,15 +1,14 @@
 package com.svennieke.statues.util;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.svennieke.statues.init.StatuesSounds;
-
 import net.minecraft.init.PotionTypes;
 import net.minecraft.potion.PotionType;
 import net.minecraft.util.SoundEvent;
+
+import java.util.List;
+import java.util.Random;
 
 public class RandomLists {
 

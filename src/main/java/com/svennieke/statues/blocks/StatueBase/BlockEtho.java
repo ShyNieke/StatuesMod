@@ -1,7 +1,6 @@
 package com.svennieke.statues.blocks.StatueBase;
 
 import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;

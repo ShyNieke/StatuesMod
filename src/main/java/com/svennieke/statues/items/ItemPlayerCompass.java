@@ -1,11 +1,6 @@
 package com.svennieke.statues.items;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.svennieke.statues.Statues;
-
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,6 +19,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemPlayerCompass extends Item {
 	

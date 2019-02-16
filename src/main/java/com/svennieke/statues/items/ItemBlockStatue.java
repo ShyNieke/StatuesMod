@@ -2,7 +2,6 @@ package com.svennieke.statues.items;
 
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.init.StatuesBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;

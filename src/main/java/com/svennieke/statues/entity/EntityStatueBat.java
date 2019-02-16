@@ -1,11 +1,6 @@
 package com.svennieke.statues.entity;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoField;
-import java.util.Random;
-
 import com.svennieke.statues.init.StatuesEntity;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IEntityLivingData;
@@ -21,6 +16,10 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.util.Random;
 
 public class EntityStatueBat extends EntityBat{
 	

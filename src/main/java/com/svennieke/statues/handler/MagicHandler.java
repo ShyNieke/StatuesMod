@@ -1,10 +1,7 @@
 package com.svennieke.statues.handler;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.init.StatuesBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -17,6 +14,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
+
+import java.util.ArrayList;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class MagicHandler {

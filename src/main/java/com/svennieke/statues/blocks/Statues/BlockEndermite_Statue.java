@@ -1,7 +1,6 @@
 package com.svennieke.statues.blocks.Statues;
 
 import com.svennieke.statues.blocks.StatueBase.BlockEndermite;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
