@@ -96,7 +96,7 @@ public class Statues {
     
 	public Statues() {
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec); //TODO: Change to COMMON once that works.
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec);
         FMLJavaModLoadingContext.get().getModEventBus().register(StatuesConfig.class);
         
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);

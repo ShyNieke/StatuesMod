@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
-import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -41,13 +40,9 @@ import java.util.stream.IntStream;
 public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements ITickable, ISidedInventory, iStatueBehaviors{
 
 	private static final int[] SLOTS = IntStream.range(0, 18).toArray();
-    private NonNullList<ItemStack> items;
+	private NonNullList<ItemStack> items = NonNullList.withSize(18, ItemStack.EMPTY);
     private boolean hasBeenCleared;
     private int openCount;
-    private TileEntityShulkerBox.AnimationStatus animationStatus;
-    private float progress;
-    @SuppressWarnings("unused")
-	private float progressOld;
     private boolean destroyedByCreativePlayer;
 	private int tier;
 	private static FakePlayer fakeStatue = null;
@@ -65,62 +60,32 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
     public int getTier() {
 		return this.tier;
 	}
-    
-    protected void updateAnimation() {
-		this.progressOld = this.progress;
-		switch(this.animationStatus) {
-			case CLOSED:
-			    this.progress = 0.0F;
-			    break;
-			case OPENING:
-			    this.progress += 0.1F;
-			    if (this.progress >= 1.0F) {
-			        this.animationStatus = TileEntityShulkerBox.AnimationStatus.OPENED;
-			        this.progress = 1.0F;
-			    }
-			    break;
-			case CLOSING:
-			    this.progress -= 0.1F;
-			    if (this.progress <= 0.0F) {
-			        this.animationStatus = TileEntityShulkerBox.AnimationStatus.CLOSED;
-			        this.progress = 0.0F;
-			    }
-			    break;
-			case OPENED:
-				this.progress = 1.0F;
-		}
-    }
-		
-	public TileEntityShulkerBox.AnimationStatus getAnimationStatus() {
-		return this.animationStatus;
-	}
-	
+
     @Override
     public void openInventory(EntityPlayer player)
     {
-        if (!player.isSpectator()){
-            if (this.openCount < 0){
-                this.openCount = 0;
-            }
+		if (!player.isSpectator()) {
+			if (this.openCount < 0) {
+				this.openCount = 0;
+			}
 
-            ++this.openCount;
-            this.world.addBlockEvent(this.pos, this.getBlockState().getBlock(), 1, this.openCount);
-            if (this.openCount == 1 && this.tier == 3){
-                this.world.playSound((EntityPlayer)null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
-            }
-        }
+			++this.openCount;
+			this.world.addBlockEvent(this.pos, this.getBlockState().getBlock(), 1, this.openCount);
+			if (this.openCount == 1) {
+				this.world.playSound((EntityPlayer)null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_OPEN, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+			}
+		}
     }
     
     @Override
     public void closeInventory(EntityPlayer player) {
-    	if (!player.isSpectator()){
-            --this.openCount;
-            this.world.addBlockEvent(this.pos, this.getBlockState().getBlock(), 1, this.openCount);
-
-            if (this.openCount <= 0 && this.tier == 3){
-                this.world.playSound((EntityPlayer)null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
-            }
-        }
+		if (!player.isSpectator()) {
+			--this.openCount;
+			this.world.addBlockEvent(this.pos, this.getBlockState().getBlock(), 1, this.openCount);
+			if (this.openCount <= 0) {
+				this.world.playSound((EntityPlayer)null, this.pos, SoundEvents.BLOCK_SHULKER_BOX_CLOSE, SoundCategory.BLOCKS, 0.5F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+			}
+		}
     }
     
 	@Override
@@ -176,9 +141,7 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 	}
 
 	@Override
-	public void tick() {
-		this.updateAnimation();
-	}
+	public void tick() { }
 
 	@Override
 	protected NonNullList<ItemStack> getItems() {
@@ -344,23 +307,5 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 	@Override
 	protected void setItems(NonNullList<ItemStack> itemsIn) {
 		this.items = itemsIn;
-	}
-	
-	@Override
-	public boolean receiveClientEvent(int id, int type) {
-		if (id == 1) {
-	         this.openCount = type;
-	         if (type == 0) {
-	            this.animationStatus = TileEntityShulkerBox.AnimationStatus.CLOSING;
-	         }
-
-	         if (type == 1) {
-	            this.animationStatus = TileEntityShulkerBox.AnimationStatus.OPENING;
-	         }
-
-	         return true;
-	      } else {
-	         return super.receiveClientEvent(id, type);
-	    }
 	}
 }
