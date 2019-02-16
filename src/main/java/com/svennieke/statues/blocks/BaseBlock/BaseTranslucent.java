@@ -1,17 +1,16 @@
 package com.svennieke.statues.blocks.BaseBlock;
 
+import com.svennieke.statues.config.StatuesConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.block.ILiquidContainer;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.init.Fluids;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.BlockRenderLayer;
@@ -28,7 +27,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class BaseTranslucent extends BlockHorizontal implements IBucketPickupHandler, ILiquidContainer{
 	
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	public static float hardness = 0.6F; //(float) StatuesConfig.COMMON.statueHardness.get().doubleValue();
+	public static float hardness = 0.6F;
 
 	protected BaseTranslucent(Block.Properties builder) {
 		super(builder.hardnessAndResistance(hardness));
@@ -47,6 +46,17 @@ public class BaseTranslucent extends BlockHorizontal implements IBucketPickupHan
 			worldIn.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
 		}
 		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+	}
+
+
+	@Override
+	public float getBlockHardness(IBlockState blockState, IBlockReader worldIn, BlockPos pos) {
+		if(StatuesConfig.COMMON.statueHardness.get() != null) {
+			return (float) StatuesConfig.COMMON.statueHardness.get().doubleValue();
+		}
+		else {
+			return 0.6F;
+		}
 	}
 
 	@Override
@@ -90,7 +100,8 @@ public class BaseTranslucent extends BlockHorizontal implements IBucketPickupHan
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(IBlockState state, IBlockReader reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(IBlockState state, IBlockReader reader, BlockPos pos)
+	{
 		return true;
 	}
 	/*
@@ -102,13 +113,6 @@ public class BaseTranslucent extends BlockHorizontal implements IBucketPickupHan
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 
-	/**
-	 * Returns the blockstate with the given rotation from the passed blockstate. If
-	 * inapplicable, returns the passed blockstate.
-	 * 
-	 * @deprecated call via {@link IBlockState#withRotation(Rotation)} whenever
-	 *             possible. Implementing/overriding is fine.
-	 */
 	@Override
 	public IBlockState rotate(IBlockState state, Rotation rot) {
 		return (IBlockState) state.with(HORIZONTAL_FACING, rot.rotate((EnumFacing) state.get(HORIZONTAL_FACING)));
@@ -120,33 +124,6 @@ public class BaseTranslucent extends BlockHorizontal implements IBucketPickupHan
 		return state.rotate(mirrorIn.toRotation((EnumFacing) state.get(HORIZONTAL_FACING)));
 	}
 
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
-		// this.getDefaultState().withProperty(FACING,
-		// placer.getHorizontalFacing().getOpposite());
-	}
-
-	/*
-	 * @Override public IBlockState getStateForPlacement(World worldIn, BlockPos
-	 * pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta,
-	 * EntityLivingBase placer) { return this.getDefaultState().withProperty(FACING,
-	 * placer.getHorizontalFacing().getOpposite()); }
-	 * 
-	 * @Override public IBlockState getStateFromMeta(int meta) { return
-	 * this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(meta));
-	 * }
-	 * 
-	 * @Override public int getMetaFromState(IBlockState state) { return
-	 * ((EnumFacing)state.getValue(FACING)).getHorizontalIndex(); }
-	 * 
-	 * 
-	 * 
-	 * @Override protected BlockStateContainer createBlockState() { return new
-	 * BlockStateContainer(this, new IProperty[] {FACING}); }
-	 */
-
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onReplaced(IBlockState state, World worldIn, BlockPos pos, IBlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {

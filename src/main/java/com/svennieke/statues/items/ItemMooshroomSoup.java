@@ -2,6 +2,7 @@ package com.svennieke.statues.items;
 
 import com.svennieke.statues.Statues;
 
+import com.svennieke.statues.config.StatuesConfig;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +18,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 public class ItemMooshroomSoup extends ItemFood {
-	public static int stackSize = 8; //StatuesConfig.COMMON.soupStack.get();
+	public static int stackSize = 8;
 	
 	public ItemMooshroomSoup(Item.Properties builder, int amount, float saturation) {
 		super(amount, saturation, false, builder.group(ItemGroup.FOOD).group(Statues.tabStatues).maxStackSize(stackSize));
@@ -36,19 +37,15 @@ public class ItemMooshroomSoup extends ItemFood {
 		    worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
 		    this.onFoodEaten(stack, worldIn, entityplayer);
 			
-		    if (entityplayer instanceof EntityPlayerMP)
-		    {
+		    if (entityplayer instanceof EntityPlayerMP) {
 		        CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
 		    }
 		    
-			if(!worldIn.isRemote)
-			{
-				if(playerInv.getFirstEmptyStack() == -1)
-				{
+			if(!worldIn.isRemote){
+				if(playerInv.getFirstEmptyStack() == -1){
 					entityplayer.entityDropItem(bowlstack, 0F);
 				}
-				else
-				{
+				else {
 					playerInv.addItemStackToInventory(bowlstack);
 				}
 			}
@@ -56,4 +53,14 @@ public class ItemMooshroomSoup extends ItemFood {
 		}
 		return stack;
     }
+
+	@Override
+	public int getItemStackLimit(ItemStack stack) {
+		if(StatuesConfig.COMMON.statueHardness.get() != null) {
+			return StatuesConfig.COMMON.soupStack.get();
+		}
+		else {
+			return 8;
+		}
+	}
 }
