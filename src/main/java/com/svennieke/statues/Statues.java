@@ -7,7 +7,22 @@ import com.svennieke.statues.RecipeConditions.PlayerCraftingRecipe;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.config.StatuesConfig;
 import com.svennieke.statues.entity.EntityStatueBat;
-import com.svennieke.statues.entity.fakeentity.*;
+import com.svennieke.statues.entity.fakeentity.FakeBlaze;
+import com.svennieke.statues.entity.fakeentity.FakeCreeper;
+import com.svennieke.statues.entity.fakeentity.FakeEnderman;
+import com.svennieke.statues.entity.fakeentity.FakeGhast;
+import com.svennieke.statues.entity.fakeentity.FakeGuardian;
+import com.svennieke.statues.entity.fakeentity.FakeHusk;
+import com.svennieke.statues.entity.fakeentity.FakeMagmaCube;
+import com.svennieke.statues.entity.fakeentity.FakeShulker;
+import com.svennieke.statues.entity.fakeentity.FakeSkeleton;
+import com.svennieke.statues.entity.fakeentity.FakeSlime;
+import com.svennieke.statues.entity.fakeentity.FakeSpider;
+import com.svennieke.statues.entity.fakeentity.FakeStray;
+import com.svennieke.statues.entity.fakeentity.FakeWitch;
+import com.svennieke.statues.entity.fakeentity.FakeWitherSkeleton;
+import com.svennieke.statues.entity.fakeentity.FakeZombie;
+import com.svennieke.statues.entity.fakeentity.FakeZombiePigman;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeFireball;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeLargeFireball;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeShulkerBullet;
@@ -17,7 +32,24 @@ import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.renderer.PlayerStatueRenderer;
 import com.svennieke.statues.renderer.StatueBatRenderer;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
-import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.RenderBlaze;
+import net.minecraft.client.renderer.entity.RenderCreeper;
+import net.minecraft.client.renderer.entity.RenderEnderman;
+import net.minecraft.client.renderer.entity.RenderFireball;
+import net.minecraft.client.renderer.entity.RenderGhast;
+import net.minecraft.client.renderer.entity.RenderGuardian;
+import net.minecraft.client.renderer.entity.RenderHusk;
+import net.minecraft.client.renderer.entity.RenderMagmaCube;
+import net.minecraft.client.renderer.entity.RenderPigZombie;
+import net.minecraft.client.renderer.entity.RenderShulker;
+import net.minecraft.client.renderer.entity.RenderShulkerBullet;
+import net.minecraft.client.renderer.entity.RenderSkeleton;
+import net.minecraft.client.renderer.entity.RenderSlime;
+import net.minecraft.client.renderer.entity.RenderSpider;
+import net.minecraft.client.renderer.entity.RenderStray;
+import net.minecraft.client.renderer.entity.RenderWitch;
+import net.minecraft.client.renderer.entity.RenderWitherSkeleton;
+import net.minecraft.client.renderer.entity.RenderZombie;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.item.ItemGroup;
@@ -64,7 +96,7 @@ public class Statues {
     
 	public Statues() {
 
-        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, StatuesConfig.commonSpec); //TODO: Change to COMMON once that works.
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec); //TODO: Change to COMMON once that works.
         FMLJavaModLoadingContext.get().getModEventBus().register(StatuesConfig.class);
         
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
@@ -78,7 +110,7 @@ public class Statues {
 			MinecraftForge.EVENT_BUS.addListener(ClientHandler::registerRenders);
 		});
 	}
-	
+
 	private void setup(final FMLCommonSetupEvent event)
     {
 //		isVeinminerInstalled = Loader.isModLoaded("veinminer");

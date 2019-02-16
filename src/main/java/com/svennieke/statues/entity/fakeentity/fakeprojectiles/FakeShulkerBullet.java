@@ -1,13 +1,7 @@
 package com.svennieke.statues.entity.fakeentity.fakeprojectiles;
 
-import java.util.List;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import com.google.common.collect.Lists;
 import com.svennieke.statues.init.StatuesEntity;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
@@ -29,6 +23,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.UUID;
 
 public class FakeShulkerBullet extends EntityShulkerBullet{
 	private EntityLivingBase owner;

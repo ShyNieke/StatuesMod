@@ -1,10 +1,7 @@
 package com.svennieke.statues.entity.fakeentity;
 
-import javax.annotation.Nullable;
-
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesEntity;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -12,6 +9,8 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class FakeEnderman extends EntityEnderman implements IFakeEntity{
 

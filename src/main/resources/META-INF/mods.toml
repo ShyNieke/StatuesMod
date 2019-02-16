@@ -10,3 +10,9 @@ issueTrackerURL="https://github.com/svennieke/StatuesMod/issues"
     description='''
 	Just a little functional decoration.
     '''
+[[dependencies.statues]]
+modId="forge"
+mandatory=true
+versionRange="[25,)"
+ordering="NONE"
+side="BOTH"

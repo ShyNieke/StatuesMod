@@ -1,10 +1,7 @@
 package com.svennieke.statues.entity.fakeentity;
 
-import javax.annotation.Nullable;
-
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.util.ParticleUtil;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.effect.EntityLightningBolt;
@@ -23,6 +20,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 public class FakeCreeper extends EntityCreeper implements IFakeEntity{
 

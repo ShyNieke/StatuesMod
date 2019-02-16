@@ -2,7 +2,6 @@ package com.svennieke.statues.entity.fakeentity.fakeprojectiles;
 
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.util.ParticleUtil;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.EntitySmallFireball;
