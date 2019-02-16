@@ -58,10 +58,12 @@ public class StatuesConfig {
         	tier1Crafting = builder
                     .comment("Tier 1 needs to be crafted with Statue Core,",
     						"disabling this makes tier 1 statues drop from mobs.")
+					.worldRestart()
                     .define("tier1Crafting", true);
         	
         	playerStatueAlternateRecipe = builder
         			.comment("Setting this to true enables a recipe where the core is replaced by a diamond [ideal for singleplayer when tier 1 crafting is turned off]")
+					.worldRestart()
         			.define("playerStatueAlternateRecipe", false);
         	
         	oldDropChance = builder
@@ -75,6 +77,7 @@ public class StatuesConfig {
         	
         	craftableInteraction = builder
         			.comment("Setting this to false disables the tier 3, 4 and 5 recipes.")
+					.worldRestart()
         			.define("craftableInteraction", true);
         	
         	statueKillSource = builder
@@ -105,6 +108,7 @@ public class StatuesConfig {
         	
         	playerCrafting = builder
         			.comment("Setting this to true enables Player Statue Crafting")
+					.worldRestart()
         			.define("playerCrafting", true);
         	
         	playerCompass = builder
@@ -156,7 +160,8 @@ public class StatuesConfig {
     		info_messages = builder
             .comment("Adding lines / removing lines specifies what the informative statue can say")
             .define("info_messages", Arrays.asList(messages));
-    		    		
+
+			builder.pop();
     		builder.comment("Lucky Players")
             .push("luckyplayers");
         	
@@ -175,10 +180,12 @@ public class StatuesConfig {
         	
     		halloweenSpawning = builder
                     .comment("When enabled makes the fake mobs spawn during the month of October as a halloween event")
+					.worldRestart()
                     .define("halloweenSpawning", true);
 
 			fakeSpawningWeight = builder
     				.comment("The weigth of the fake mobs is divided by this number.")
+					.worldRestart()
     				.defineInRange("fakeSpawningWeigth", 4, 1, 50);
     		
         	builder.pop();
