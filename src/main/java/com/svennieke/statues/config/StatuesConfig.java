@@ -1,15 +1,6 @@
 package com.svennieke.statues.config;
 
-import static net.minecraftforge.fml.Logging.CORE;
-
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.lang3.tuple.Pair;
-import org.apache.logging.log4j.LogManager;
-
 import com.svennieke.statues.Statues;
-
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -17,6 +8,13 @@ import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.config.ModConfig;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.logging.log4j.LogManager;
+
+import java.util.Arrays;
+import java.util.List;
+
+import static net.minecraftforge.fml.Logging.CORE;
 
 public class StatuesConfig {
 //	private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -51,7 +49,7 @@ public class StatuesConfig {
 
     	//Events
     	public final BooleanValue halloweenSpawning; 
-        public final IntValue fakeSpawningWeigth;
+        public final IntValue fakeSpawningWeight;
         
         Common(ForgeConfigSpec.Builder builder) {
         	builder.comment("General server-side settings")
@@ -85,7 +83,8 @@ public class StatuesConfig {
         					"PLAYER = Player only",
         					"PLAYER_FAKEPLAYER = Players / Fake players only")
         			.defineInRange("statueKillSource", 1, 0, 2);
-        	        	
+
+			builder.pop();
         	builder.comment("Player Statue Settings")
         			.push("player");
         	
@@ -111,7 +110,8 @@ public class StatuesConfig {
         	playerCompass = builder
         			.comment("When true Statues will add a player compass")
         			.define("playerCompass", true);
-        	        	
+
+			builder.pop();
         	builder.comment("Other settings")
     		.push("othersettings");
     	
@@ -128,6 +128,7 @@ public class StatuesConfig {
 	//    			.comment("This either disables or enables the anti-afk system that's in place")
 	//    			.define("antiAfk", true);
 
+			builder.pop();
 	    	builder.comment("Messages")
     		.push("messages");
 	
@@ -168,14 +169,15 @@ public class StatuesConfig {
                     .comment("Adding usernames will make these users have less luck with getting statues")
                     .define("lucky_players", Arrays.asList(luckyplayers));
 
+			builder.pop();
     		builder.comment("Seasonal Events")
             .push("events");
         	
     		halloweenSpawning = builder
                     .comment("When enabled makes the fake mobs spawn during the month of October as a halloween event")
                     .define("halloweenSpawning", true);
-    		
-    		fakeSpawningWeigth = builder
+
+			fakeSpawningWeight = builder
     				.comment("The weigth of the fake mobs is divided by this number.")
     				.defineInRange("fakeSpawningWeigth", 4, 1, 50);
     		
