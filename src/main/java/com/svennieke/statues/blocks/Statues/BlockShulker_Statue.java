@@ -6,12 +6,15 @@ import com.svennieke.statues.entity.fakeentity.FakeShulker;
 import com.svennieke.statues.tileentity.ShulkerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 import com.svennieke.statues.tileentity.container.ContainerShulkerStatue;
+import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
@@ -22,6 +25,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -39,6 +43,7 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
@@ -82,8 +87,8 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		if (this.TIER == 2)
 			return new StatueTileEntity();
-		else if(this.TIER == 3 || this.TIER == 4)
-	        return new ShulkerStatueTileEntity();
+		else if(this.TIER >= 3)
+	        return new ShulkerStatueTileEntity(this.TIER);
 		else
 			return null;
 	}
@@ -93,13 +98,11 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 		if(this.TIER >= 2) {
 			if (!worldIn.isRemote) {
 				TileEntity tile = worldIn.getTileEntity(pos);
-				System.out.println("test");
 
 				if(this.TIER == 2) {
 					if(tile instanceof StatueTileEntity)
 					{
 						StatueTileEntity statueTile = (StatueTileEntity)tile;
-						System.out.println("test");
 
 						int statueTier = statueTile.getTier();
 						if(statueTier != this.TIER){
@@ -114,7 +117,6 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 					if(tile instanceof ShulkerStatueTileEntity)
 					{
 						ShulkerStatueTileEntity shulkerTile = (ShulkerStatueTileEntity)tile;
-						System.out.println("test");
 
 						int statueTier = shulkerTile.getTier();
 						if(statueTier != this.TIER){
@@ -126,7 +128,10 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 
 						shulkerTile.holidayCheck(new FakeShulker(worldIn), worldIn, pos, false);
 
-						playerIn.displayGui(new BlockShulker_Statue.ShulkerInterface(worldIn, pos, this));
+						System.out.println("hey");
+						PacketBuffer extraData = new PacketBuffer(Unpooled.buffer());
+						extraData.writeVarInt(0);
+						NetworkHooks.openGui((EntityPlayerMP) playerIn, new ShulkerInterface(worldIn, pos, this), extraData);
 					}
 				}
 				return true;
@@ -252,18 +257,30 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, IBlockReader world, BlockPos pos,
 			EntityPlayer player) {
-		ItemStack stack = super.getPickBlock(state, target, world, pos, player);
-		TileEntity tile = world.getTileEntity(pos);
-		if(tile instanceof ShulkerStatueTileEntity)
-		{
-			ShulkerStatueTileEntity tileShulker = (ShulkerStatueTileEntity)world.getTileEntity(pos);
-			NBTTagCompound tagCompound = tileShulker.saveToNbt(new NBTTagCompound());
-			if (!tagCompound.isEmpty()) {
-				stack.setTagInfo("BlockEntityTag", tagCompound);
+
+		if (player.abilities.isCreativeMode && GuiScreen.isCtrlKeyDown()) {
+			ItemStack stack = new ItemStack(asItem(), 1);
+			TileEntity tile = world.getTileEntity(pos);
+			if(tile instanceof ShulkerStatueTileEntity)
+			{
+				System.out.println("hey");
+				System.out.println(stack);
+				ShulkerStatueTileEntity tileShulker = (ShulkerStatueTileEntity)world.getTileEntity(pos);
+				NBTTagCompound tagCompound = tileShulker.saveToNbt(new NBTTagCompound());
+				if (!tagCompound.isEmpty()) {
+					stack.setTagInfo("BlockEntityTag", tagCompound);
+				}
+
+				System.out.println(stack);
+				return stack;
+			}
+			else {
+				return new ItemStack(asItem(), 1);
 			}
 		}
-
-		return stack;
+		else {
+			return new ItemStack(asItem(), 1);
+		}
 	}
 
 	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state, @Nullable TileEntity te, ItemStack stack)

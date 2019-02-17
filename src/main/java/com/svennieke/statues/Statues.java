@@ -104,7 +104,7 @@ public class Statues {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
         
         //FMLJavaModLoadingContext.get().getModEventBus().register(new StatuesGuiHandler());
-        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> StatuesGuiHandler::openShulkerGui);
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> StatuesGuiHandler::openGui);
 
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 			MinecraftForge.EVENT_BUS.addListener(ClientHandler::registerRenders);

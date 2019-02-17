@@ -6,6 +6,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.SlotShulkerBox;
 import net.minecraft.item.ItemStack;
 
 public class ContainerShulkerStatue extends Container
@@ -16,32 +17,26 @@ public class ContainerShulkerStatue extends Container
     {
         this.inventory = inventory;
         inventory.openInventory(player);
-//        int i = 3;
-//        int j = 9;
+        int i = 3;
+        int j = 9;
 
-        for (int k = 0; k < 3; ++k)
-        {
-            for (int l = 0; l < 3; ++l)
-            {
+        for(int k = 0; k < 3; ++k) {
+            for(int l = 0; l < 3; ++l) {
                 this.addSlot(new SlotShulkerStatue(inventory, l + k * 9, 8 + l * 18, 18 + k * 18));
             }
-            
-            for (int l = 6; l < 9; ++l)
-            {
+
+            for (int l = 3; l < 6; ++l){
                 this.addSlot(new SlotShulkerStatue(inventory, (l - 3) + k * 9, 8 + l * 18, 18 + k * 18));
             }
         }
 
-        for (int i1 = 0; i1 < 3; ++i1)
-        {
-            for (int k1 = 0; k1 < 9; ++k1)
-            {
+        for(int i1 = 0; i1 < 3; ++i1) {
+            for(int k1 = 0; k1 < 9; ++k1) {
                 this.addSlot(new Slot(invPlayer, k1 + i1 * 9 + 9, 8 + k1 * 18, 84 + i1 * 18));
             }
         }
 
-        for (int j1 = 0; j1 < 9; ++j1)
-        {
+        for(int j1 = 0; j1 < 9; ++j1) {
             this.addSlot(new Slot(invPlayer, j1, 8 + j1 * 18, 142));
         }
     }
@@ -62,30 +57,20 @@ public class ContainerShulkerStatue extends Container
     {
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = this.inventorySlots.get(index);
-
-        if (slot != null && slot.getHasStack())
-        {
+        if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-
-            if (index < this.inventory.getSizeInventory())
-            {
-                if (!this.mergeItemStack(itemstack1, this.inventory.getSizeInventory(), this.inventorySlots.size(), true))
-                {
+            if (index < this.inventory.getSizeInventory()) {
+                if (!this.mergeItemStack(itemstack1, this.inventory.getSizeInventory(), this.inventorySlots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            }
-            else if (!this.mergeItemStack(itemstack1, 0, this.inventory.getSizeInventory(), false))
-            {
+            } else if (!this.mergeItemStack(itemstack1, 0, this.inventory.getSizeInventory(), false)) {
                 return ItemStack.EMPTY;
             }
 
-            if (itemstack1.isEmpty())
-            {
+            if (itemstack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
-            }
-            else
-            {
+            } else {
                 slot.onSlotChanged();
             }
         }

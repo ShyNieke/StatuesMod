@@ -10,10 +10,11 @@ import net.minecraftforge.fml.network.FMLPlayMessages;
 
 public class StatuesGuiHandler{
 
-	public static GuiScreen openShulkerGui(FMLPlayMessages.OpenContainer packetData){
+	public static GuiScreen openGui(FMLPlayMessages.OpenContainer packetData){
         EntityPlayer player = Minecraft.getInstance().player;
 		TileEntity tile = player.world.getTileEntity(player.getPosition());
-
+		System.out.println("Opening Gui");
         return new GuiShulkerStatue(player.inventory, (ShulkerStatueTileEntity) tile);
+
     }
 }
