@@ -26,9 +26,7 @@ public class ContainerShulkerStatue extends Container
                 if(middle >= -1 && middle <= 1)
                     continue;
 
-                index++;
-
-                this.addSlot(new SlotShulkerStatue(inventory, index, 8 + x * 18, 18 + y * 18));
+                this.addSlot(new SlotShulkerStatue(inventory, index++, 8 + x * 18, 18 + y * 18));
             }
         }
 

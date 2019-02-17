@@ -380,7 +380,7 @@
 	"statues.statue_tileentity": "Player Statue",
 
 	"_comment": "container",
-	"statues:container.shulker_statue": "Shulker Statue",
+	"statues:container.shulkerStatue": "Shulker Statue",
 	"statues:container.shulker_statue.more": "and %s more...",
 
 	"_comment": "messages",

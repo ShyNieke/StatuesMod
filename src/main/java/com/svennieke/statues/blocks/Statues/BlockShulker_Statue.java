@@ -126,9 +126,8 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 
 						shulkerTile.holidayCheck(new FakeShulker(worldIn), worldIn, pos, false);
 
-						System.out.println("hey");
 						PacketBuffer extraData = new PacketBuffer(Unpooled.buffer());
-						extraData.writeVarInt(0);
+						extraData.writeBlockPos(shulkerTile.getPos());
 						NetworkHooks.openGui((EntityPlayerMP) playerIn, new ShulkerInterface(worldIn, pos, this), extraData);
 					}
 				}
