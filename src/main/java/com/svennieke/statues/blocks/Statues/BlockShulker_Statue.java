@@ -104,8 +104,7 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 					{
 						StatueTileEntity statueTile = (StatueTileEntity)tile;
 
-						int statueTier = statueTile.getTier();
-						if(statueTier != this.TIER){
+						if(statueTile.getTier() != this.TIER){
 							statueTile.setTier(this.TIER);
 						}
 
@@ -118,8 +117,7 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 					{
 						ShulkerStatueTileEntity shulkerTile = (ShulkerStatueTileEntity)tile;
 
-						int statueTier = shulkerTile.getTier();
-						if(statueTier != this.TIER){
+						if(shulkerTile.getTier() != this.TIER){
 							shulkerTile.setTier(this.TIER);
 						}
 
@@ -263,15 +261,12 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 			TileEntity tile = world.getTileEntity(pos);
 			if(tile instanceof ShulkerStatueTileEntity)
 			{
-				System.out.println("hey");
-				System.out.println(stack);
 				ShulkerStatueTileEntity tileShulker = (ShulkerStatueTileEntity)world.getTileEntity(pos);
 				NBTTagCompound tagCompound = tileShulker.saveToNbt(new NBTTagCompound());
 				if (!tagCompound.isEmpty()) {
 					stack.setTagInfo("BlockEntityTag", tagCompound);
 				}
 
-				System.out.println(stack);
 				return stack;
 			}
 			else {
@@ -352,8 +347,7 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 
 		@Override
 		public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
-			TileEntity tile = world.getTileEntity(position);
-            return new ContainerShulkerStatue(playerInventory, (ShulkerStatueTileEntity) tile, playerIn);
+            return new ContainerShulkerStatue(playerInventory, (ShulkerStatueTileEntity) world.getTileEntity(position), playerIn);
 		}
 
 		@Override

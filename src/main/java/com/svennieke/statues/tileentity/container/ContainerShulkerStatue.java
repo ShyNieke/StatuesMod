@@ -6,7 +6,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
-import net.minecraft.inventory.SlotShulkerBox;
 import net.minecraft.item.ItemStack;
 
 public class ContainerShulkerStatue extends Container
@@ -21,12 +20,8 @@ public class ContainerShulkerStatue extends Container
         int j = 9;
 
         for(int k = 0; k < 3; ++k) {
-            for(int l = 0; l < 3; ++l) {
+            for(int l = 0; l < 9; ++l) {
                 this.addSlot(new SlotShulkerStatue(inventory, l + k * 9, 8 + l * 18, 18 + k * 18));
-            }
-
-            for (int l = 3; l < 6; ++l){
-                this.addSlot(new SlotShulkerStatue(inventory, (l - 3) + k * 9, 8 + l * 18, 18 + k * 18));
             }
         }
 
