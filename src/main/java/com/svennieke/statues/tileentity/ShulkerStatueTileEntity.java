@@ -39,8 +39,8 @@ import java.util.stream.IntStream;
 
 public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements ITickable, ISidedInventory, iStatueBehaviors{
 
-	private static final int[] SLOTS = IntStream.range(0, 27).toArray();
-	private NonNullList<ItemStack> items = NonNullList.withSize(27, ItemStack.EMPTY);
+	private static final int[] SLOTS = IntStream.range(0, 18).toArray();
+	private NonNullList<ItemStack> items = NonNullList.withSize(18, ItemStack.EMPTY);
     private boolean hasBeenCleared;
     private int openCount;
     private boolean destroyedByCreativePlayer;

@@ -19,9 +19,16 @@ public class ContainerShulkerStatue extends Container
         int i = 3;
         int j = 9;
 
-        for(int k = 0; k < 3; ++k) {
-            for(int l = 0; l < 9; ++l) {
-                this.addSlot(new SlotShulkerStatue(inventory, l + k * 9, 8 + l * 18, 18 + k * 18));
+        int index = 0;
+        for(int y = 0; y < 3; y++) {
+            for(int x = 0; x < 9; x++) {
+                int middle = x - 4;
+                if(middle >= -1 && middle <= 1)
+                    continue;
+
+                index++;
+
+                this.addSlot(new SlotShulkerStatue(inventory, index, 8 + x * 18, 18 + y * 18));
             }
         }
 
