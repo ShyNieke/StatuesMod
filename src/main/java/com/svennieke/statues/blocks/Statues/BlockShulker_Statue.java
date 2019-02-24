@@ -6,7 +6,6 @@ import com.svennieke.statues.entity.fakeentity.FakeShulker;
 import com.svennieke.statues.tileentity.ShulkerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 import com.svennieke.statues.tileentity.container.ContainerShulkerStatue;
-import io.netty.buffer.Unpooled;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.GuiScreen;
@@ -25,7 +24,6 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -126,9 +124,7 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 
 						shulkerTile.holidayCheck(new FakeShulker(worldIn), worldIn, pos, false);
 
-						PacketBuffer extraData = new PacketBuffer(Unpooled.buffer());
-						extraData.writeBlockPos(shulkerTile.getPos());
-						NetworkHooks.openGui((EntityPlayerMP) playerIn, new ShulkerInterface(worldIn, pos, this), extraData);
+						NetworkHooks.openGui((EntityPlayerMP) playerIn, new ShulkerInterface(worldIn, pos, this), (buf) -> buf.writeBlockPos(shulkerTile.getPos()));
 					}
 				}
 				return true;
