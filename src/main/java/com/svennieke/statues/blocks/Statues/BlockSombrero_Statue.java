@@ -15,7 +15,6 @@ public class BlockSombrero_Statue extends BlockSombrero{
 		
 	public BlockSombrero_Statue(Block.Properties builder) {
 		super(builder);
-		//setUnlocalizedName(unlocalised);
 	}
 	
 	@Override

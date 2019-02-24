@@ -18,7 +18,6 @@ public class BlockInfo_Statue extends BlockInfo{
 	public BlockInfo_Statue(Block.Properties builder) {
 		super(builder);
 		this.TIER = 1;
-		//setUnlocalizedName(unlocalised);
 	}
 	
 	@Override
@@ -28,7 +27,7 @@ public class BlockInfo_Statue extends BlockInfo{
 	
 	@Override
 	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
-		return new StatueTileEntity();
+		return new StatueTileEntity(this.TIER);
 	}
 	
 	private StatueTileEntity getTE(World world, BlockPos pos) {
@@ -41,8 +40,8 @@ public class BlockInfo_Statue extends BlockInfo{
 		if(this.TIER == 1)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
-	        	if(statuetier != this.TIER)
+	        	int statueTier = getTE(worldIn, pos).getTier();
+	        	if(statueTier != this.TIER)
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}

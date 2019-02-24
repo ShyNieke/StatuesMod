@@ -16,8 +16,6 @@ import java.util.List;
 public class ItemRoyalNugget extends ItemFood {
 	public ItemRoyalNugget(Item.Properties builder, int amount, float saturation) {
 		super(amount, saturation, false, builder.group(ItemGroup.FOOD).group(Statues.tabStatues));
-//		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
-//		setCreativeTab(Statues.tabStatues);
 	}
 	
 	@Override

@@ -22,7 +22,6 @@ public class BlockKingCluck extends BaseCutout{
 	
 	public BlockKingCluck(Block.Properties builder) {
 		super(builder.sound(SoundType.CLOTH));
-//		this.setCreativeTab(Statues.instance.tabStatues);
 	}
 
 	@Override
@@ -30,11 +29,6 @@ public class BlockKingCluck extends BaseCutout{
         return BOUNDING_BOX;
     }
     
-//    @Override
-//    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, VoxelShape entityBox, List<VoxelShape> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-//    {
-//    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-//    }
 	
     @Override
     public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip,

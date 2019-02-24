@@ -53,7 +53,15 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		this.cooldownMax = (StatuesConfig.COMMON.interactionTimer.get() * 20);
 		this.statueAble = false;
 	}
-	
+
+	public StatueTileEntity(int tier) {
+		super(StatuesTileTypes.STATUE);
+		this.tier = tier;
+		this.cooldown = 0;
+		this.cooldownMax = (StatuesConfig.COMMON.interactionTimer.get() * 20);
+		this.statueAble = false;
+	}
+
 	public int setTier(int theTier) {
 		return this.tier = theTier;
 	}

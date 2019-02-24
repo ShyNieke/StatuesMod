@@ -14,7 +14,6 @@ public class BlockFlood extends BaseNormal{
 	
 	public BlockFlood(Block.Properties builder) {
 		super(builder.sound(SoundType.GLASS));
-//		this.setCreativeTab(Statues.instance.tabStatues);
 	}
 	
 	@Override
@@ -22,9 +21,4 @@ public class BlockFlood extends BaseNormal{
         return BOUNDING_BOX;
     }
     
-//    @Override
-//    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, VoxelShape entityBox, List<VoxelShape> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-//    {
-//    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-//    }
 }

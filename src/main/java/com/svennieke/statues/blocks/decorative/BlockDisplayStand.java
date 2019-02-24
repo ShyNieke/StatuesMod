@@ -8,11 +8,7 @@ import net.minecraft.world.IBlockReader;
 public class BlockDisplayStand extends Block{
 
 	public BlockDisplayStand(Block.Properties properties) {
-		super(properties); //
-//		setUnlocalizedName(unlocalised);
-//		setHardness(0.6F);
-//		setSoundType(SoundType.STONE);
-//		this.setCreativeTab(Statues.instance.tabStatues);
+		super(properties);
 	}
 	
 	@Override

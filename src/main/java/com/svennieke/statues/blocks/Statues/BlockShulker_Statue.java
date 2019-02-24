@@ -86,7 +86,7 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue{
 	@Override
 	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		if (this.TIER == 2)
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		else if(this.TIER >= 3)
 	        return new ShulkerStatueTileEntity(this.TIER);
 		else

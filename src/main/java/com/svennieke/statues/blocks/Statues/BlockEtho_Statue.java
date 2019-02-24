@@ -27,8 +27,6 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue{
 
 	public BlockEtho_Statue(Block.Properties builder) {
 		super(builder);
-		//setRegistryName(registry);
-		//setUnlocalizedName(unlocalised);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -36,8 +34,6 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue{
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-//		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		//setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	
@@ -54,7 +50,7 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue{
 	
 	@Override
 	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
-		return new StatueTileEntity();
+		return new StatueTileEntity(this.TIER);
 	}
 	
 	private StatueTileEntity getTE(World world, BlockPos pos) {

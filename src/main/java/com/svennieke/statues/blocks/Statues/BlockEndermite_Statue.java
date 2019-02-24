@@ -15,7 +15,6 @@ public class BlockEndermite_Statue extends BlockEndermite{
 		
 	public BlockEndermite_Statue(Block.Properties builder) {
 		super(builder);
-		//setUnlocalizedName(unlocalised);
 	}
 	
 	@Override

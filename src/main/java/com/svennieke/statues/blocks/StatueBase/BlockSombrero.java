@@ -14,7 +14,6 @@ public class BlockSombrero extends BaseNormal{
 	
 	public BlockSombrero(Block.Properties builder) {
 		super(builder.sound(SoundType.CLOTH));
-//		this.setCreativeTab(Statues.instance.tabStatues);
 	}
 
 	@Override
@@ -22,9 +21,4 @@ public class BlockSombrero extends BaseNormal{
         return BOUNDING_BOX;
     }
     
-//    @Override
-//    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, VoxelShape entityBox, List<VoxelShape> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-//    {
-//    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-//    }
 }

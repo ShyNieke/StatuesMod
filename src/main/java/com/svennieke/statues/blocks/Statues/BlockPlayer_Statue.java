@@ -46,8 +46,6 @@ public class BlockPlayer_Statue extends BlockPlayer{
 	
 	public BlockPlayer_Statue(Block.Properties builder) {
 		super(builder);
-//		setUnlocalizedName(unlocalised);
-//		//setRegistryName(registry);
 	    this.setDefaultState((IBlockState)((IBlockState)this.getDefaultState().with(HORIZONTAL_FACING, EnumFacing.NORTH)).with(WATERLOGGED, Boolean.valueOf(false)).with(ONLINE, false));
 
 	}
@@ -273,15 +271,6 @@ public class BlockPlayer_Statue extends BlockPlayer{
 		return false;
 	}
 	
-//    @Override
-//    public IBlockState getStateFromMeta(int meta) {
-//        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(3 & meta)).withProperty(ONLINE, (meta & 4) == 4);
-//    }
-//
-//    @Override
-//    public int getMetaFromState(IBlockState state) {
-//        return state.getValue(FACING).getHorizontalIndex() + (state.getValue(ONLINE) ? 4 : 0);
-//    }
 	
 	@Override
 	protected void fillStateContainer(net.minecraft.state.StateContainer.Builder<Block, IBlockState> builder) {
@@ -449,21 +438,4 @@ public class BlockPlayer_Statue extends BlockPlayer{
 		return state.rotate(mirrorIn.toRotation((EnumFacing) state.get(HORIZONTAL_FACING))).with(ONLINE, false);
 	}
 	
-//	@Override
-//	public IBlockState withRotation(IBlockState state, Rotation rot)
-//    {
-//		return state.withProperty(FACING, rot.rotatef((EnumFacing)state.getValue(FACING))).withProperty(ONLINE, false);
-//    }
-//
-//	@Override
-//    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-//    {
-//        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING))).withProperty(ONLINE, false);
-//    }
-//
-//	@Override
-//    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-//    {
-//        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite()).withProperty(ONLINE, false);
-//    }
 }

@@ -26,10 +26,7 @@ import java.util.List;
 public class ItemPlayerCompass extends Item {
 	
 	public ItemPlayerCompass(Item.Properties builder) {
-		super(builder.group(ItemGroup.TOOLS).group(Statues.tabStatues));
-//		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
-//		setCreativeTab(CreativeTabs.TOOLS);
-//		setCreativeTab(Statues.tabStatues);
+		super(builder.group(ItemGroup.TOOLS).group(Statues.tabStatues).group(ItemGroup.TOOLS));
 		
 	    this.addPropertyOverride(new ResourceLocation("angle"), new IItemPropertyGetter()
         {

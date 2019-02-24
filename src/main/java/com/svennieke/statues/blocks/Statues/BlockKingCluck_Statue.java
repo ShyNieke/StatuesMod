@@ -35,8 +35,6 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue{
 	
 	public BlockKingCluck_Statue(Block.Properties builder) {
 		super(builder);
-		//setRegistryName(registry);
-		//setUnlocalizedName(unlocalised);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -44,8 +42,6 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue{
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-//		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		//setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	
@@ -71,7 +67,7 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue{
 	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		{

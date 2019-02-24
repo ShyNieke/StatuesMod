@@ -21,8 +21,6 @@ public class ItemMooshroomSoup extends ItemFood {
 	
 	public ItemMooshroomSoup(Item.Properties builder, int amount, float saturation) {
 		super(amount, saturation, false, builder.group(ItemGroup.FOOD).group(Statues.tabStatues).maxStackSize(stackSize));
-//		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
-//		setCreativeTab(Statues.tabStatues);
 	}
 	
 	@Override

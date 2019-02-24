@@ -21,7 +21,6 @@ public class GuiShulkerStatue extends GuiContainer
     public GuiShulkerStatue(InventoryPlayer invPlayer, IInventory inv)
     {
         super(new ContainerShulkerStatue(invPlayer, inv, Minecraft.getInstance().player));
-        System.out.println("Hey");
         this.playerInventory = invPlayer;
         this.inventory = inv;
         ++this.ySize;

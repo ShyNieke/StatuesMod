@@ -23,8 +23,6 @@ import java.util.List;
 public class ItemTea extends ItemFood {
 	public ItemTea(Item.Properties builder) {
 		super(6, 2F, false, builder.maxStackSize(1).group(ItemGroup.FOOD).group(Statues.tabStatues));
-//		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
-//		setCreativeTab(Statues.tabStatues);
 	}
 	
 	@Override

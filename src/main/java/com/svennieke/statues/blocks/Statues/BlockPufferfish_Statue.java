@@ -24,8 +24,6 @@ public class BlockPufferfish_Statue extends BlockPufferfish implements IStatue{
 	
 	public BlockPufferfish_Statue(Block.Properties builder) {
 		super(builder);
-		//setRegistryName(registry);
-		//setUnlocalizedName(unlocalised);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -33,8 +31,6 @@ public class BlockPufferfish_Statue extends BlockPufferfish implements IStatue{
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-//		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		//setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	
@@ -60,7 +56,7 @@ public class BlockPufferfish_Statue extends BlockPufferfish implements IStatue{
 	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		{
@@ -89,7 +85,6 @@ public class BlockPufferfish_Statue extends BlockPufferfish implements IStatue{
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-	        	//getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
 	        	getTE(worldIn, pos).GiveEffect(pos, worldIn, playerIn, MobEffects.POISON);
 	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
 	        }

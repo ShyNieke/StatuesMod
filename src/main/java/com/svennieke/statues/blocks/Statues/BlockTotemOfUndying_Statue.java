@@ -7,6 +7,5 @@ public class BlockTotemOfUndying_Statue extends BlockTotemOfUndying{
 		
 	public BlockTotemOfUndying_Statue(Block.Properties builder) {
 		super(builder);
-		//setUnlocalizedName(unlocalised);
 	}
 }

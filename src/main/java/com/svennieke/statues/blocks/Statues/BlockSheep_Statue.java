@@ -31,8 +31,6 @@ public class BlockSheep_Statue extends BlockSheep implements IStatue{
 	
 	public BlockSheep_Statue(Block.Properties builder) {
 		super(builder);
-		//setRegistryName(registry);
-		//setUnlocalizedName(unlocalised);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -40,8 +38,6 @@ public class BlockSheep_Statue extends BlockSheep implements IStatue{
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-//		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		//setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	
@@ -74,7 +70,7 @@ public class BlockSheep_Statue extends BlockSheep implements IStatue{
 	public TileEntity createTileEntity(IBlockState state, IBlockReader world) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		{
