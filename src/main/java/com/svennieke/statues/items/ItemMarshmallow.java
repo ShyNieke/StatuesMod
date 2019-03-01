@@ -1,17 +1,10 @@
 package com.svennieke.statues.items;
 
-import java.util.List;
-
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 
 public class ItemMarshmallow extends ItemFood {
 	public ItemMarshmallow(int amount, float saturation, String unlocalised) {
