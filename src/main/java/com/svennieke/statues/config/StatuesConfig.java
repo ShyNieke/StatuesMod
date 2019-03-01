@@ -52,7 +52,7 @@ public class StatuesConfig {
         public final IntValue fakeSpawningWeight;
         
         Common(ForgeConfigSpec.Builder builder) {
-        	builder.comment("General server-side settings")
+        	builder.comment("General settings")
             		.push("general");
         	
         	tier1Crafting = builder
