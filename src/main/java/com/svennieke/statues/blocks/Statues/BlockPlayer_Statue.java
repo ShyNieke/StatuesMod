@@ -10,6 +10,7 @@ import com.svennieke.statues.blocks.StatueBase.BlockPlayer;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
+import com.svennieke.statues.tileentity.StatueTileEntity;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.IProperty;
@@ -134,9 +135,11 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
+    	PlayerStatueTileEntity tile = getTE(worldIn, pos);
+    	
 		super.onBlockPlacedBy(worldIn, pos, state.withProperty(ONLINE, false), placer, stack);
 		String stackname = stack.getDisplayName();
-		String tilename = getTE(worldIn, pos).getName();
+		String tilename = tile.getName();
 		
 		if (tilename != stackname)
 		{
@@ -144,9 +147,9 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 			if((this.playername.contains(" ") || this.playername.isEmpty()) && placer instanceof EntityPlayer)
 			{
 				EntityPlayer player = (EntityPlayer) placer;
-				getTE(worldIn, pos).setName(player.getName());
+				tile.setName(player.getName());
 				
-				getTE(worldIn, pos).setPlayerProfile(new GameProfile((UUID)null, player.getName()));
+				tile.setPlayerProfile(new GameProfile((UUID)null, player.getName()));
 			}
 			else
 			{
@@ -180,8 +183,8 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
                     if(!newProfile.getName().equals(this.playername))
                     {
                     	newProfile = new GameProfile((UUID)null, this.playername);
-                    	getTE(worldIn, pos).setName(this.playername);
-        				getTE(worldIn, pos).setPlayerProfile(newProfile);
+                    	tile.setName(this.playername);
+        				tile.setPlayerProfile(newProfile);
                     }
                     else
                     {
@@ -189,28 +192,28 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
                         {
                         	if(gameprofile.getName() != this.playername)
                         	{
-                				getTE(worldIn, pos).setName(this.playername);
-                				getTE(worldIn, pos).setPlayerProfile(gameprofile);
+                				tile.setName(this.playername);
+                				tile.setPlayerProfile(gameprofile);
                         	}
                         	else
                         	{
-                				getTE(worldIn, pos).setName(this.playername);
-                				getTE(worldIn, pos).setPlayerProfile(newProfile);
+                				tile.setName(this.playername);
+                				tile.setPlayerProfile(newProfile);
                         	}
                         }
                         else
                         {
-            				getTE(worldIn, pos).setName(this.playername);
-            				getTE(worldIn, pos).setPlayerProfile(newProfile);
+            				tile.setName(this.playername);
+            				tile.setPlayerProfile(newProfile);
                         }
                     }
                 }
                 else
                 {
-    				getTE(worldIn, pos).setPlayerProfile(newProfile);
+    				tile.setPlayerProfile(newProfile);
                 }
 			}
-			getTE(worldIn, pos).markDirty();
+			tile.markDirty();
 		}
 	}
 	
@@ -287,22 +290,24 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 		ItemStack stack = playerIn.getHeldItem(hand);
 		if(!worldIn.isRemote)
 		{
-			String playerName = getTE(worldIn, pos).getPlayerProfile().getName();
+        	PlayerStatueTileEntity tile = getTE(worldIn, pos);
+        	
+			String playerName = tile.getPlayerProfile().getName();
 			if(!playerIn.isSneaking() && stack.getItem() == Items.COMPASS && StatuesConfigGen.player.PlayerCompass)
 			{
-				if(getTE(worldIn, pos).getPlayerProfile() != null && 
-					worldIn.getPlayerEntityByUUID(getTE(worldIn, pos).getPlayerProfile().getId()) != null)
+				if(tile.getPlayerProfile() != null && 
+					worldIn.getPlayerEntityByUUID(tile.getPlayerProfile().getId()) != null)
 				{
 
 					ItemStack playerCompass = new ItemStack(StatuesItems.player_compass);
 					NBTTagCompound locationTag = new NBTTagCompound();
 					
-					EntityPlayer player = worldIn.getPlayerEntityByUUID(getTE(worldIn, pos).getPlayerProfile().getId());
+					EntityPlayer player = worldIn.getPlayerEntityByUUID(tile.getPlayerProfile().getId());
 					if(player.dimension == playerIn.dimension)
 					{
 						BlockPos playerPos = player.getPosition();
 						locationTag.setLong("lastPlayerLocation", playerPos.toLong());
-						locationTag.setString("playerTracking", getTE(worldIn, pos).getPlayerProfile().getName());
+						locationTag.setString("playerTracking", tile.getPlayerProfile().getName());
 						
 						playerCompass.setTagCompound(locationTag);
 
@@ -350,18 +355,18 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 			}
 			else if(!playerIn.isSneaking() && stack.getItem() == StatuesItems.player_compass && StatuesConfigGen.player.PlayerCompass)
 			{
-				if(getTE(worldIn, pos).getPlayerProfile() != null && 
-						worldIn.getPlayerEntityByUUID(getTE(worldIn, pos).getPlayerProfile().getId()) != null && 
-						getTE(worldIn, pos).getPlayerProfile().getName() != null)
+				if(tile.getPlayerProfile() != null && 
+						worldIn.getPlayerEntityByUUID(tile.getPlayerProfile().getId()) != null && 
+						tile.getPlayerProfile().getName() != null)
 				{
 					NBTTagCompound locationTag = new NBTTagCompound();
 					
-					EntityPlayer player = worldIn.getPlayerEntityByUUID(getTE(worldIn, pos).getPlayerProfile().getId());
+					EntityPlayer player = worldIn.getPlayerEntityByUUID(tile.getPlayerProfile().getId());
 					if(player.dimension == playerIn.dimension)
 					{
 						BlockPos playerPos = player.getPosition();
 						locationTag.setLong("lastPlayerLocation", playerPos.toLong());
-						locationTag.setString("playerTracking", getTE(worldIn, pos).getPlayerProfile().getName());
+						locationTag.setString("playerTracking", tile.getPlayerProfile().getName());
 						
 						stack.setTagCompound(locationTag);
 					}
@@ -399,16 +404,16 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 			}
 			else if(!playerIn.isSneaking() && stack.getItem() == Items.COMPARATOR)
 			{
-				if(!getTE(worldIn, pos).getComparatorApplied())
+				if(!tile.getComparatorApplied())
 				{
 					stack.shrink(1);
-					getTE(worldIn, pos).setComparatorApplied(true);
+					tile.setComparatorApplied(true);
 					return true;
 				}
 			}
-			else if(playerIn.isSneaking() && stack.isEmpty() && getTE(worldIn, pos).getComparatorApplied())
+			else if(playerIn.isSneaking() && stack.isEmpty() && tile.getComparatorApplied())
 			{
-				getTE(worldIn, pos).setComparatorApplied(false);
+				tile.setComparatorApplied(false);
 				playerIn.setHeldItem(hand, new ItemStack(Items.COMPARATOR));
 				return true;
 			}

@@ -1,17 +1,22 @@
 package com.svennieke.statues.blocks.Statues;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockEtho;
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.entity.fakeentity.FakeCreeper;
+import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.StatueTileEntity;
+import com.svennieke.statues.util.RandomLists;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -47,7 +52,7 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new StatueTileEntity();
+		return new StatueTileEntity(this.TIER);
 	}
 	
 	private StatueTileEntity getTE(World world, BlockPos pos) {
@@ -70,12 +75,14 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
-	        	/*
+	        	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("etho"));
 	        	ItemStack stack1 = stackList.get(0);
         		ItemStack stack2 = stackList.get(1);
@@ -83,16 +90,15 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
         		
         		if(stack1.getItem() != StatuesItems.marshmallow)
         		{
-        			getTE(worldIn, pos).PlaySound(SoundEvents.BLOCK_FIRE_AMBIENT, pos, worldIn);
-    	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+        			tile.PlaySound(RandomLists.getRandomCampfire(), pos, worldIn);
+    	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
         		}
         		else
         		{
-    	        	getTE(worldIn, pos).CampfireBehavior(worldIn, pos, playerIn, stack1, stack2, stack3);
+    	        	tile.CampfireBehavior(worldIn, pos, playerIn, stack1, stack2, stack3);
         		}
         		
-	        	getTE(worldIn, pos).FakeMobs(getGeneral(worldIn), worldIn, pos, false);
-	        	*/
+	        	tile.FakeMobs(getGeneral(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

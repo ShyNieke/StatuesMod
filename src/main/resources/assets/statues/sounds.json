@@ -1,20 +1,299 @@
 {
     "wasteland.hello" : {
     "category" : "hostile",
+	"subtitle": "statues:wasteland.hello",
         "sounds": [
             "statues:wasteland/hello"
         ]
     },
    "wasteland.onwards" : {
    "category" : "hostile",
+   "subtitle": "statues:wasteland.onwards",
         "sounds": [
             "statues:wasteland/onwards"
         ]
    },
    "wasteland.tea" : {
     "category" : "neutral",
+    "subtitle": "statues:wasteland.tea",
         "sounds": [
             "statues:wasteland/tea"
+        ]
+   },
+   "campfire.hello" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello"
+        ]
+   },
+   "campfire.hello2" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello2"
+        ]
+   },
+   "campfire.hello3" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello3"
+        ]
+   },
+   "campfire.hello4" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello4"
+        ]
+   },
+   "campfire.hello5" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello5"
+        ]
+   },
+   "campfire.hello6" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello6"
+        ]
+   },
+   "campfire.hello7" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello7"
+        ]
+   },
+   "campfire.hello8" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello8"
+        ]
+   },
+   "campfire.hello9" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello9"
+        ]
+   },
+   "campfire.hello.random" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.hello",
+        "sounds": [
+            "statues:campfire/hello",
+            "statues:campfire/hello2",
+            "statues:campfire/hello3",
+            "statues:campfire/hello4",
+            "statues:campfire/hello5",
+            "statues:campfire/hello6",
+            "statues:campfire/hello7",
+            "statues:campfire/hello8",
+            "statues:campfire/hello9"
+        ]
+   },
+   "campfire.greetings" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.greetings",
+        "sounds": [
+            "statues:campfire/greetings"
+        ]
+   },
+   "campfire.greetings2" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.greetings",
+        "sounds": [
+            "statues:campfire/greetings2"
+        ]
+   },
+   "campfire.greetings3" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.greetings",
+        "sounds": [
+            "statues:campfire/greetings3"
+        ]
+   },
+   "campfire.greetings.random" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.greetings",
+        "sounds": [
+            "statues:campfire/greetings",
+            "statues:campfire/greetings2",
+            "statues:campfire/greetings3"
+        ]
+   },
+   "campfire.bye" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.bye",
+        "sounds": [
+            "statues:campfire/bye"
+        ]
+   },
+   "campfire.bye2" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.bye",
+        "sounds": [
+            "statues:campfire/bye2"
+        ]
+   },
+   "campfire.bye.random" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.bye",
+        "sounds": [
+            "statues:campfire/bye",
+            "statues:campfire/bye2"
+        ]
+   },
+   "campfire.cold" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.cold",
+        "sounds": [
+            "statues:campfire/cold"
+        ]
+   },
+   "campfire.cold2" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.cold",
+        "sounds": [
+            "statues:campfire/cold2"
+        ]
+   },
+   "campfire.cold3" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.cold",
+        "sounds": [
+            "statues:campfire/cold3"
+        ]
+   },
+   "campfire.cold.random" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.cold",
+        "sounds": [
+            "statues:campfire/cold",
+            "statues:campfire/cold2",
+            "statues:campfire/cold3"
+        ]
+   },
+   "campfire.snacks" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.snacks",
+        "sounds": [
+            "statues:campfire/snacks"
+        ]
+   },
+   "campfire.snacks2" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.snacks",
+        "sounds": [
+            "statues:campfire/snacks2"
+        ]
+   },
+   "campfire.snacks3" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.snacks",
+        "sounds": [
+            "statues:campfire/snacks3"
+        ]
+   },
+   "campfire.snacks4" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.snacks",
+        "sounds": [
+            "statues:campfire/snacks4"
+        ]
+   },
+   "campfire.snacks.random" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.snacks",
+        "sounds": [
+            "statues:campfire/snacks",
+            "statues:campfire/snacks2",
+            "statues:campfire/snacks3",
+            "statues:campfire/snacks4"
+        ]
+   },
+   "campfire.marshmallow" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow"
+        ]
+   },
+   "campfire.marshmallow2" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow2"
+        ]
+   },
+   "campfire.marshmallow3" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow3"
+        ]
+   },
+   "campfire.marshmallow4" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow4"
+        ]
+   },
+   "campfire.marshmallow5" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow5"
+        ]
+   },
+   "campfire.marshmallow6" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow6"
+        ]
+   },
+   "campfire.marshmallow7" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow7"
+        ]
+   },
+   "campfire.marshmallow8" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow8"
+        ]
+   },
+   "campfire.marshmallow9" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow9"
+        ]
+   },
+   "campfire.marshmallow.random" : {
+    "category" : "neutral",
+    "subtitle": "statues:campfire.marshmallow",
+        "sounds": [
+            "statues:campfire/marshmallow",
+            "statues:campfire/marshmallow2",
+            "statues:campfire/marshmallow3",
+            "statues:campfire/marshmallow4",
+            "statues:campfire/marshmallow5",
+            "statues:campfire/marshmallow6",
+            "statues:campfire/marshmallow7",
+            "statues:campfire/marshmallow8",
+            "statues:campfire/marshmallow9"
         ]
    }
 }

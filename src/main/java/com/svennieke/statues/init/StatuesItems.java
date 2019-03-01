@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.items.ItemCup;
+import com.svennieke.statues.items.ItemMarshmallow;
 import com.svennieke.statues.items.ItemMooshroomSoup;
 import com.svennieke.statues.items.ItemPlayerCompass;
 import com.svennieke.statues.items.ItemRoyalNugget;
@@ -21,7 +22,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class StatuesItems {
 	
 	public static ItemFood nugget, soup, tea, cup;
-	public static Item core, player_compass;//, marshmallow;
+	public static Item core, player_compass, marshmallow;
 	
 	public static ArrayList<Item> ITEMS = new ArrayList<>();
 	
@@ -41,7 +42,7 @@ public class StatuesItems {
 			player_compass = registerItem(new ItemPlayerCompass("playercompass"));
 		}
 		
-		//marshmallow = registerItem(new ItemRoyalNugget(6, 0.2f, "marshmallow"));
+		marshmallow = registerItem(new ItemMarshmallow(6, 0.2f, "marshmallow"));
 
 		registry.registerAll(ITEMS.toArray(new Item[0]));
     }

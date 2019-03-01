@@ -47,7 +47,7 @@ public class BlockFlood_Statue extends BlockFlood implements IStatue, ITileEntit
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		return null;
@@ -63,10 +63,12 @@ public class BlockFlood_Statue extends BlockFlood implements IStatue, ITileEntit
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
 	        	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("flood"));
@@ -74,9 +76,9 @@ public class BlockFlood_Statue extends BlockFlood implements IStatue, ITileEntit
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).SpecialInteraction(false, false, true, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
-	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+	        	tile.PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
+	        	tile.SpecialInteraction(false, false, true, this, playerIn, worldIn, pos, hand, hitX, hitY, hitZ);
+	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
 	        }
 	        return true;
 		}

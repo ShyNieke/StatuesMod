@@ -48,7 +48,7 @@ public class BlockWitch_Statue extends BlockWitch implements IStatue, ITileEntit
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		return null;
@@ -64,10 +64,12 @@ public class BlockWitch_Statue extends BlockWitch implements IStatue, ITileEntit
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
 	        	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("witch"));
@@ -75,11 +77,11 @@ public class BlockWitch_Statue extends BlockWitch implements IStatue, ITileEntit
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_WITCH_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).ThrowPotion(pos, worldIn, playerIn);
-	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+	        	tile.PlaySound(SoundEvents.ENTITY_WITCH_AMBIENT, pos, worldIn);
+	        	tile.ThrowPotion(pos, worldIn, playerIn);
+	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
 	        	
-	        	getTE(worldIn, pos).FakeMobs(new FakeWitch(worldIn), worldIn, pos, false);
+	        	tile.FakeMobs(new FakeWitch(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

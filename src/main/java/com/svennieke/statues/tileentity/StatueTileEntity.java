@@ -61,6 +61,13 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		this.statueAble = false;
 	}
 	
+	public StatueTileEntity(int tier) {
+		this.tier = tier;
+		this.cooldown = 0;
+		this.cooldownMax = (StatuesConfigGen.general.InteractionTimer * 20);
+		this.statueAble = false;
+	}
+	
 	public int setTier(int theTier) {
 		return this.tier = theTier;
 	}
@@ -107,7 +114,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			{
 				if((tier >= 2 && tier != 5))
 				{
-					worldIn.playSound(null, pos, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 1F, 1F); //TODO: REMOVE PLACEHOLDER AND ACTUALLY IMPLEMENT PROPER STUFF
+        			PlaySound(RandomLists.getRandomCampfire(), pos, worldIn);
 				}
 			}
 		}
@@ -172,7 +179,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		{
 			if((tier >= 2 && tier != 5))
 			{
-				worldIn.playSound(null, pos, RandomLists.GetRandomWasteland(), SoundCategory.NEUTRAL, 1F, 1F);
+				worldIn.playSound(null, pos, RandomLists.getRandomWasteland(), SoundCategory.NEUTRAL, 1F, 1F);
 			}
 		}
 	}

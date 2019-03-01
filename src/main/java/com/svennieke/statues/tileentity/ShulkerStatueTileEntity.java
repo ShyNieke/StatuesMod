@@ -20,12 +20,10 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntityLockableLoot;
-import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
@@ -43,16 +41,14 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
     private NonNullList<ItemStack> items;
     private boolean hasBeenCleared;
     private int openCount;
-    private TileEntityShulkerBox.AnimationStatus animationStatus;
     private float progress;
     private float progressOld;
-    private EnumDyeColor color;
     private boolean destroyedByCreativePlayer;
 	private int tier;
 	private static FakePlayer fakeStatue = null;
 
     public ShulkerStatueTileEntity() {
-        this.items = NonNullList.<ItemStack>withSize(27, ItemStack.EMPTY);
+        this.items = NonNullList.<ItemStack>withSize(18, ItemStack.EMPTY);
         this.tier = 3;
 	}
     

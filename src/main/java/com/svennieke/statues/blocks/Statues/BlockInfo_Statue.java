@@ -27,7 +27,7 @@ public class BlockInfo_Statue extends BlockInfo implements ITileEntityProvider{
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER == 1)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		return null;
@@ -43,13 +43,15 @@ public class BlockInfo_Statue extends BlockInfo implements ITileEntityProvider{
 		if(this.TIER == 1)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
 	        	
-	        	getTE(worldIn, pos).SendInfoMessage(playerIn, worldIn, pos);
+	        	tile.SendInfoMessage(playerIn, worldIn, pos);
 	        }
 	        return true;
 		}

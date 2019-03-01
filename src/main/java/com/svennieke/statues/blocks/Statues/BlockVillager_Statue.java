@@ -11,6 +11,7 @@ import com.svennieke.statues.tileentity.StatueTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,7 +22,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class BlockVillager_Statue extends BlockVillager implements IStatue, ITileEntityProvider{
@@ -52,7 +52,7 @@ public class BlockVillager_Statue extends BlockVillager implements IStatue, ITil
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		return null;
@@ -68,10 +68,12 @@ public class BlockVillager_Statue extends BlockVillager implements IStatue, ITil
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
 	        	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("villager"));
@@ -79,10 +81,10 @@ public class BlockVillager_Statue extends BlockVillager implements IStatue, ITil
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_VILLAGER_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+	        	tile.PlaySound(SoundEvents.ENTITY_VILLAGER_AMBIENT, pos, worldIn);
+	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
 	        	
-	        	getTE(worldIn, pos).SpawnMob(new EntityVillager(worldIn, 5), worldIn);
+	        	tile.SpawnMob(new EntityVillager(worldIn, 5), worldIn);
 	        }
 	        return true;
 		}
@@ -92,6 +94,6 @@ public class BlockVillager_Statue extends BlockVillager implements IStatue, ITil
 	
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
-		tooltip.add(TextFormatting.RED + I18n.translateToLocal("villager.info"));
+		tooltip.add(TextFormatting.RED + I18n.format("villager.info"));
 	}
 }

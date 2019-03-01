@@ -49,7 +49,7 @@ public class BlockWastelandPig_Statue extends BlockWastelandPig implements IStat
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		return null;
@@ -65,10 +65,12 @@ public class BlockWastelandPig_Statue extends BlockWastelandPig implements IStat
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
 	        	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("wasteland_pig"));
@@ -78,17 +80,17 @@ public class BlockWastelandPig_Statue extends BlockWastelandPig implements IStat
         		
         		if(stack1.getItem() != StatuesItems.tea)
         		{
-        			getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_PIG_AMBIENT, pos, worldIn);
-    	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+        			tile.PlaySound(SoundEvents.ENTITY_PIG_AMBIENT, pos, worldIn);
+    	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
         		}
         		else
         		{
-    	        	getTE(worldIn, pos).WastelandBehavior(worldIn, pos, playerIn, stack1, stack2, stack3);
+    	        	tile.WastelandBehavior(worldIn, pos, playerIn, stack1, stack2, stack3);
         		}
         		
         		EntityPig pig = new EntityPig(worldIn);
         		pig.setCustomNameTag("Wasteland Pig");
-	        	getTE(worldIn, pos).SpawnMob(pig, worldIn);
+	        	tile.SpawnMob(pig, worldIn);
 	        }
 	        return true;
 		}

@@ -12,6 +12,7 @@ import com.svennieke.statues.tileentity.StatueTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -22,7 +23,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -55,7 +55,7 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue, IT
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		return null;
@@ -71,10 +71,12 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue, IT
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
 	        	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("king_cluck"));
@@ -82,12 +84,12 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue, IT
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+	        	tile.PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
+	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
 	        	
 	        	EntityChicken chicken = new EntityChicken(worldIn);
 	        	chicken.setCustomNameTag("King Cluck");
-	        	getTE(worldIn, pos).SpawnMob(chicken, worldIn);
+	        	tile.SpawnMob(chicken, worldIn);
 	        }
 	        return true;
 		}
@@ -106,6 +108,6 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue, IT
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-        	tooltip.add(TextFormatting.GOLD + I18n.translateToLocal("cluckington.info"));
+        	tooltip.add(TextFormatting.GOLD + I18n.format("cluckington.info"));
     }
 }

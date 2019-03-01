@@ -7,6 +7,7 @@ import com.svennieke.statues.Statues;
 import com.svennieke.statues.init.StatuesItems;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +18,6 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class ItemTea extends ItemFood {
@@ -87,6 +87,6 @@ public class ItemTea extends ItemFood {
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
     {
-        tooltip.add(TextFormatting.GOLD + I18n.translateToLocal("tea.info"));
+        tooltip.add(TextFormatting.GOLD + I18n.format("tea.info"));
     }
 }

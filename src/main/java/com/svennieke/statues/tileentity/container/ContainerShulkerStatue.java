@@ -15,34 +15,29 @@ public class ContainerShulkerStatue extends Container
 
     public ContainerShulkerStatue(InventoryPlayer invPlayer, IInventory inventory, EntityPlayer player)
     {
-        this.inventory = inventory;
+    	this.inventory = inventory;
         inventory.openInventory(player);
         int i = 3;
         int j = 9;
 
-        for (int k = 0; k < 3; ++k)
-        {
-            for (int l = 0; l < 3; ++l)
-            {
-                this.addSlotToContainer(new SlotShulkerStatue(inventory, l + k * 9, 8 + l * 18, 18 + k * 18));
-            }
-            
-            for (int l = 6; l < 9; ++l)
-            {
-                this.addSlotToContainer(new SlotShulkerStatue(inventory, (l - 3) + k * 9, 8 + l * 18, 18 + k * 18));
+        int index = 0;
+        for(int y = 0; y < 3; y++) {
+            for(int x = 0; x < 9; x++) {
+                int middle = x - 4;
+                if(middle >= -1 && middle <= 1)
+                    continue;
+
+                this.addSlotToContainer(new SlotShulkerStatue(inventory, index++, 8 + x * 18, 18 + y * 18));
             }
         }
 
-        for (int i1 = 0; i1 < 3; ++i1)
-        {
-            for (int k1 = 0; k1 < 9; ++k1)
-            {
+        for(int i1 = 0; i1 < 3; ++i1) {
+            for(int k1 = 0; k1 < 9; ++k1) {
                 this.addSlotToContainer(new Slot(invPlayer, k1 + i1 * 9 + 9, 8 + k1 * 18, 84 + i1 * 18));
             }
         }
 
-        for (int j1 = 0; j1 < 9; ++j1)
-        {
+        for(int j1 = 0; j1 < 9; ++j1) {
             this.addSlotToContainer(new Slot(invPlayer, j1, 8 + j1 * 18, 142));
         }
     }

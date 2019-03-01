@@ -48,7 +48,7 @@ public class BlockSheepShaven_Statue extends BlockSheep implements IStatue, ITil
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		return null;
@@ -64,10 +64,12 @@ public class BlockSheepShaven_Statue extends BlockSheep implements IStatue, ITil
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
 	        	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("sheep_shaven"));
@@ -75,12 +77,12 @@ public class BlockSheepShaven_Statue extends BlockSheep implements IStatue, ITil
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
 	        	
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+	        	tile.PlaySound(SoundEvents.ENTITY_SHEEP_AMBIENT, pos, worldIn);
+	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
 	        	
 	        	EntitySheep sheep = new EntitySheep(worldIn);
 	        	sheep.setSheared(true);
-	        	getTE(worldIn, pos).SpawnMob(sheep, worldIn);
+	        	tile.SpawnMob(sheep, worldIn);
 	        }
 	        return true;
 		}

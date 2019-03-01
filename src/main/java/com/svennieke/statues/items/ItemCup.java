@@ -5,12 +5,12 @@ import java.util.List;
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class ItemCup extends ItemFood {
@@ -26,6 +26,6 @@ public class ItemCup extends ItemFood {
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
     {
-        tooltip.add(TextFormatting.GOLD + I18n.translateToLocal("cup.info"));
+        tooltip.add(TextFormatting.GOLD + I18n.format("cup.info"));
     }
 }

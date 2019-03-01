@@ -200,7 +200,7 @@ public class StatuesBlocks {
 		bumbo_statue = registerBlock(new BlockBumbo_Statue("bumbostatue", "blockbumbostatue"));
 		totemofundying_statue = registerBlock(new BlockTotemOfUndying_Statue("totemofundyingstatue", "blocktotemofundyingstatue"));
 		
-		campfire_statue = registerStatue(new BlockEtho_Statue("campfirestatue"), 1);
+		campfire_statue = registerStatue(new BlockEtho_Statue("campfirestatue"), MAX_TIERS);
 
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}

@@ -18,5 +18,8 @@
     "N": {
       "item": "statues:itemstatuecore"
     }
-  }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
 }

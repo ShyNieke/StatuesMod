@@ -15,6 +15,7 @@ import com.svennieke.statues.tileentity.StatueTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,7 +37,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -69,8 +69,8 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue, ITileE
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER == 2)
-			return new StatueTileEntity();
-		else if(this.TIER == 3 || this.TIER == 4)
+			return new StatueTileEntity(this.TIER);
+		else if(this.TIER >= 3)
 	        return new ShulkerStatueTileEntity();
 		else
 			return null;
@@ -92,27 +92,31 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue, ITileE
 	        if (!worldIn.isRemote) {
 	        	if(this.TIER == 2)
 	        	{
-	        		int statuetier = getTE(worldIn, pos).getTier();
+		        	StatueTileEntity tile = getTE(worldIn, pos);
+		        	
+	        		int statuetier = tile.getTier();
 		        	if(statuetier != this.TIER)
 		        	{
-		        		getTE(worldIn, pos).setTier(this.TIER);
+		        		tile.setTier(this.TIER);
 		        	}
 		        	
-		        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHULKER_AMBIENT, pos, worldIn);
+		        	tile.PlaySound(SoundEvents.ENTITY_SHULKER_AMBIENT, pos, worldIn);
 	        	}
 	        	
 	        	if(this.TIER >= 3)
 	        	{
-	        		int statuetier = getShulkerTE(worldIn, pos).getTier();
+		        	ShulkerStatueTileEntity tile = getShulkerTE(worldIn, pos);
+		        	
+	        		int statuetier = tile.getTier();
 		        	if(statuetier != this.TIER)
 		        	{
-		        		getShulkerTE(worldIn, pos).setTier(this.TIER);
+		        		tile.setTier(this.TIER);
 		        	}
 		        	
-	        		getShulkerTE(worldIn, pos).ShootBullet(pos, worldIn, playerIn, facing.getAxis());
-	        		getShulkerTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_SHULKER_AMBIENT, pos, worldIn);
+		        	tile.ShootBullet(pos, worldIn, playerIn, facing.getAxis());
+		        	tile.PlaySound(SoundEvents.ENTITY_SHULKER_AMBIENT, pos, worldIn);
 		        	
-		        	getShulkerTE(worldIn, pos).holidayCheck(new FakeShulker(worldIn), worldIn, pos, false);
+		        	tile.holidayCheck(new FakeShulker(worldIn), worldIn, pos, false);
 			        playerIn.openGui(Statues.instance, StatuesGuiHandler.SHULKER_BOX, worldIn, pos.getX(), pos.getY(), pos.getZ());
 		        }
 	        }
@@ -219,7 +223,7 @@ public class BlockShulker_Statue extends BlockShulker implements IStatue, ITileE
 
                     if (j - i > 0)
                     {
-                        tooltip.add(String.format(TextFormatting.ITALIC + I18n.translateToLocal("statues:container.shulkerStatue.more"), j - i));
+                        tooltip.add(String.format(TextFormatting.ITALIC + I18n.format("statues:container.shulkerStatue.more"), j - i));
                     }
                 }
             }

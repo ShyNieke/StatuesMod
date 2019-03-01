@@ -48,7 +48,7 @@ public class BlockGuardian_Statue extends BlockGuardian implements IStatue, ITil
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		if (this.TIER >= 2)
 		{
-			return new StatueTileEntity();
+			return new StatueTileEntity(this.TIER);
 		}
 		else
 		return null;
@@ -64,10 +64,12 @@ public class BlockGuardian_Statue extends BlockGuardian implements IStatue, ITil
 		if(this.TIER >= 2)
 		{
 	        if (!worldIn.isRemote) {
-	        	int statuetier = getTE(worldIn, pos).getTier();
+	        	StatueTileEntity tile = getTE(worldIn, pos);
+	        	
+	        	int statuetier = tile.getTier();
 	        	if(statuetier != this.TIER)
 	        	{
-	        		getTE(worldIn, pos).setTier(this.TIER);
+	        		tile.setTier(this.TIER);
 	        	}
 	
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("guardian"));
@@ -75,10 +77,10 @@ public class BlockGuardian_Statue extends BlockGuardian implements IStatue, ITil
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-	        	getTE(worldIn, pos).PlaySound(SoundEvents.ENTITY_GUARDIAN_AMBIENT, pos, worldIn);
-	        	getTE(worldIn, pos).GiveItem(stack1, stack2, stack3, playerIn);
+	        	tile.PlaySound(SoundEvents.ENTITY_GUARDIAN_AMBIENT, pos, worldIn);
+	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
 	        	
-	        	getTE(worldIn, pos).FakeMobs(new FakeGuardian(worldIn), worldIn, pos, false);
+	        	tile.FakeMobs(new FakeGuardian(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}

@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "statues:blockcampfirestatuet4"
+  },
+  "pattern": [
+    "NRN",
+    "RSR",
+    "NRN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:nether_star"
+    },
+    "S": {
+      "item": "statues:blockcampfirestatuet3"
+    },
+    "N": {
+      "item": "statues:itemstatuecore"
+    }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
+}
