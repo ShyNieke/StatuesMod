@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "statues:items/marshmallow"
+        "layer0": "statues:items/marshmallow_cooked"
     }
 }

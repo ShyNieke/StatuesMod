@@ -11,6 +11,7 @@ import com.svennieke.statues.handler.DespawnHandler;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.handler.FishHandler;
 import com.svennieke.statues.handler.MagicHandler;
+import com.svennieke.statues.init.StatuesCrafting;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesGuiHandler;
 import com.svennieke.statues.init.StatuesHoliday;
@@ -77,8 +78,6 @@ public class Statues {
 		
 		logger.info("Registering Statues Packets");
 		StatuesPacketHandler.registerPackets();
-		
-		//StatuesCrafting.register();
 		
 		proxy.Preinit();
 	}

@@ -10,6 +10,7 @@ import com.svennieke.statues.blocks.Statues.BlockChicken_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCreeper_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEnderman_Statue;
+import com.svennieke.statues.blocks.Statues.BlockEtho_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEvoker_Statue;
 import com.svennieke.statues.blocks.Statues.BlockFlood_Statue;
 import com.svennieke.statues.blocks.Statues.BlockGhast_Statue;
@@ -221,12 +222,12 @@ public class StatueJEIPlugin implements IModPlugin{
         		{
         			ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("spider"));
         			result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
-        		}/*
+        		}
         		if(block instanceof BlockEtho_Statue)
             	{
             		ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("etho"));
             		result.add(new StatueLootWrapper(new ItemStack(block), stackList.get(0), stackList.get(1), stackList.get(2)));
-            	}*/
+            	}
         	}
         }
         return result;
