@@ -1,0 +1,19 @@
+{
+  "result": {
+    "item": "statues:marshmallow_golden"
+  },
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "#": {
+      "tag": "forge:nuggets/gold"
+    },
+    "X": {
+      "item": "statues:marshmallow"
+    }
+  }
+}

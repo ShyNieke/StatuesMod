@@ -4,7 +4,6 @@ import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -13,6 +12,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.fml.ForgeI18n;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class BlockKingCluck extends BaseCutout{
     @Override
     public void addInformation(ItemStack stack, IBlockReader worldIn, List<ITextComponent> tooltip,
     		ITooltipFlag flagIn) {
-    	tooltip.add(new TextComponentString(TextFormatting.GOLD + I18n.format("cluckington.info")));
+    	tooltip.add(new TextComponentString(TextFormatting.GOLD + ForgeI18n.parseFormat("cluckington.info")));
     	super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 }

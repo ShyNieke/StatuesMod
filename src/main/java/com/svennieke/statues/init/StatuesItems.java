@@ -3,7 +3,9 @@ package com.svennieke.statues.init;
 import com.google.common.base.Preconditions;
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
+import com.svennieke.statues.items.ItemCharredMarshmallow;
 import com.svennieke.statues.items.ItemCup;
+import com.svennieke.statues.items.ItemMarshmallow;
 import com.svennieke.statues.items.ItemMooshroomSoup;
 import com.svennieke.statues.items.ItemPlayerCompass;
 import com.svennieke.statues.items.ItemRoyalNugget;
@@ -25,8 +27,9 @@ import java.util.ArrayList;
 public class StatuesItems {
 	
 	public static ItemFood nugget, soup, tea, cup;
-	public static Item core, player_compass;//, marshmallow;
-	
+	public static Item core, player_compass, marshmallow_charred;
+	public static ItemFood marshmallow, marshmallow_cooked, marshmallow_golden;
+
 	public static ArrayList<Item> ITEMS = new ArrayList<>();
 	
 	@SubscribeEvent
@@ -42,8 +45,11 @@ public class StatuesItems {
 
 		player_compass = registerItem(new ItemPlayerCompass(itemBuilder()), "player_compass");
 		
-		//marshmallow = registerItem(new ItemRoyalNugget(6, 0.2f, "marshmallow"));
-		
+		marshmallow = registerItem(new ItemMarshmallow(itemBuilder(),6, 0.2f), "marshmallow");
+		marshmallow_cooked = registerItem(new ItemMarshmallow(itemBuilder(),6, 0.2f), "marshmallow_cooked");
+		marshmallow_golden = registerItem(new ItemMarshmallow(itemBuilder(),6, 0.2f), "marshmallow_golden");
+		marshmallow_charred = registerItem(new ItemCharredMarshmallow(itemBuilder()), "marshmallow_charred");
+
 		registry.registerAll(ITEMS.toArray(new Item[0]));
     }
 	

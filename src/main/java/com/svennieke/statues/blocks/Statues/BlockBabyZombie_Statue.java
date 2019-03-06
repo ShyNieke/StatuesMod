@@ -32,7 +32,6 @@ public class BlockBabyZombie_Statue extends BlockBabyZombie implements IStatue {
         super(builder);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Block setTier(int tier) {
         this.TIER = tier;

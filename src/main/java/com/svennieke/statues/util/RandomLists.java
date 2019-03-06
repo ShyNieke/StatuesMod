@@ -28,7 +28,14 @@ public static final Random rand = new Random();
 			StatuesSounds.wasteland_hello,
 			StatuesSounds.wasteland_onwards
 			);
-	
+
+	public static List<SoundEvent> campfire_sounds = ImmutableList.of(
+			StatuesSounds.campfire_bye_random,
+			StatuesSounds.campfire_cold_random,
+			StatuesSounds.campfire_greetings_random,
+			StatuesSounds.campfire_hello_random,
+			StatuesSounds.campfire_snacks_random);
+
 	public static PotionType getRandomPotionType()
 	{
 		PotionType type = getRandomFromList(throwablePotions);
@@ -39,6 +46,12 @@ public static final Random rand = new Random();
 	{
 		SoundEvent type = getRandomFromList(wasteland_sounds);
 		return type;
+	}
+
+	public static SoundEvent getRandomCampfire()
+	{
+		SoundEvent sound = getRandomFromList(campfire_sounds);
+		return sound;
 	}
 	
 	public static <T> T getRandomFromList(List<T> list) {

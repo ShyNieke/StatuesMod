@@ -45,7 +45,7 @@ public class StatueLootList {
 		lootList.add(new LootInfo("pufferfish", ItemStack.EMPTY, new ItemStack(Items.PUFFERFISH), ItemStack.EMPTY));
 		lootList.add(new LootInfo("spider", new ItemStack(Items.STRING), new ItemStack(Items.SPIDER_EYE), ItemStack.EMPTY));
 		lootList.add(new LootInfo("evoker", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.TOTEM_OF_UNDYING)));
-		//lootList.add(new LootInfo("etho", new ItemStack(StatuesItems.marshmallow), ItemStack.EMPTY, ItemStack.EMPTY));
+		lootList.add(new LootInfo("etho", new ItemStack(StatuesItems.marshmallow), ItemStack.EMPTY, ItemStack.EMPTY));
 	}
 	
 	public static ItemStack getWastelandBlock()

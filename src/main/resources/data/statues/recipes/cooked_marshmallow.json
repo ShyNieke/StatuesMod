@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "statues:marshmallow"
+  },
+  "result": "statues:marshmallow_cooked",
+  "experience": 0.1,
+  "cookingtime": 200
+}

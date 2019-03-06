@@ -5,6 +5,7 @@ import com.svennieke.statues.config.StatuesConfig;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.init.StatuesSounds;
 import com.svennieke.statues.init.StatuesTileTypes;
+import com.svennieke.statues.items.ItemMarshmallow;
 import com.svennieke.statues.items.ItemTea;
 import com.svennieke.statues.util.RandomLists;
 import net.minecraft.block.Block;
@@ -81,7 +82,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 				{
 					if (random < 100 && stack1 != null && stack1 != ItemStack.EMPTY)
 					{
-						if(stack1.getItem() instanceof ItemTea && tier == 3)
+						if(stack1.getItem() instanceof ItemMarshmallow && (tier == 3 || tier == 4))
 						{
 							worldIn.playSound(null, pos, SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.NEUTRAL, 1F, 1F); //TODO: REMOVE PLACEHOLDER AND ACTUALLY IMPLEMENT PROPER STUFF
 						}
@@ -146,7 +147,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			{
 				if (random < 100 && stack1 != null && stack1 != ItemStack.EMPTY)
 				{
-					if(stack1.getItem() instanceof ItemTea && tier == 3)
+					if(stack1.getItem() instanceof ItemTea && (tier == 3 || tier == 4))
 					{
 						worldIn.playSound(null, pos, StatuesSounds.wasteland_tea, SoundCategory.NEUTRAL, 1F, 1F);
 					}

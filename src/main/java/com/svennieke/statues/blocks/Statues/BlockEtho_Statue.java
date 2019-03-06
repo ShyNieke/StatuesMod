@@ -2,12 +2,15 @@ package com.svennieke.statues.blocks.Statues;
 
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockEtho;
+import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.entity.fakeentity.FakeCreeper;
+import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -19,6 +22,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class BlockEtho_Statue extends BlockEtho implements IStatue{
@@ -78,7 +82,7 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue{
 	        	{
 	        		getTE(worldIn, pos).setTier(this.TIER);
 	        	}
-	        	/*
+
 	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("etho"));
 	        	ItemStack stack1 = stackList.get(0);
         		ItemStack stack2 = stackList.get(1);
@@ -95,7 +99,7 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue{
         		}
         		
 	        	getTE(worldIn, pos).FakeMobs(getGeneral(worldIn), worldIn, pos, false);
-	        	*/
+
 	        }
 	        return true;
 		}
