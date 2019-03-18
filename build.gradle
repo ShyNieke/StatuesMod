@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "0.8.7.1"
+version = "0.8.7.2"
 group= "com.svennieke.statues" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "statues-1.12.X"
 
@@ -51,6 +51,10 @@ repositories {
         name = "TOP Maven"
         url = "http://maven.tterrag.com"
     }
+    maven {
+        name = "CurseForge"
+        url = "https://minecraft.curseforge.com/api/maven/"
+    }
 }
 
 dependencies {
@@ -62,6 +66,7 @@ dependencies {
     deobfCompile "mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.+"
 	
 	compile files("lib/The-Cactus-Mod-1.2.jar")
+	// compile "the-cactus-mod:The%20Cactus%20Mod:1.2.1"
 }
 
 processResources {
