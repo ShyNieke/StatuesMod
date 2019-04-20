@@ -30,7 +30,6 @@ public class BlockBumbo_Statue extends BlockBumbo{
 
 			if (random < 1)
 			{
-
 				Entity entity = EntityList.createEntityByIDFromName(new ResourceLocation("cactusmod", "cactoni"), worldIn);
 				entity.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
 				worldIn.spawnEntity(entity);
