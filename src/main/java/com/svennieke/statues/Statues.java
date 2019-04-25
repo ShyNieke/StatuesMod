@@ -101,7 +101,7 @@ public class Statues {
 		MinecraftForge.EVENT_BUS.register(new FishHandler());
 		MinecraftForge.EVENT_BUS.register(new DespawnHandler());
 		MinecraftForge.EVENT_BUS.register(new MagicHandler());
-		
+
 		proxy.Init();
     }
 	
