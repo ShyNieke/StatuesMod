@@ -1,8 +1,6 @@
 package com.svennieke.statues;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.compat.top.TOPCompat;
 import com.svennieke.statues.config.StatuesConfigGen;
@@ -11,19 +9,16 @@ import com.svennieke.statues.handler.DespawnHandler;
 import com.svennieke.statues.handler.DropHandler;
 import com.svennieke.statues.handler.FishHandler;
 import com.svennieke.statues.handler.MagicHandler;
-import com.svennieke.statues.init.StatuesCrafting;
 import com.svennieke.statues.init.StatuesEntity;
 import com.svennieke.statues.init.StatuesGuiHandler;
 import com.svennieke.statues.init.StatuesHoliday;
 import com.svennieke.statues.init.StatuesSounds;
 import com.svennieke.statues.packets.StatuesPacketHandler;
 import com.svennieke.statues.proxy.CommonProxy;
-
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.SpawnListEntry;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -32,6 +27,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Mod(modid = Reference.MOD_ID, 
 	name = Reference.MOD_NAME, 
@@ -48,22 +48,14 @@ public class Statues {
 	public static CommonProxy proxy;
 	
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
-	public static boolean isBaublesEnabled = false;
-	public static boolean isVeinminerInstalled = false;
-	public static boolean isWailaInstalled = false;
-		
+
 	public static StatuesTab tabStatues = new StatuesTab();
-	
+
+	public static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
+
 	@EventHandler
 	public void PreInit(FMLPreInitializationEvent event)
 	{
-		isVeinminerInstalled = Loader.isModLoaded("veinminer");
-		isWailaInstalled = Loader.isModLoaded("waila");
-		
-		isBaublesEnabled = Loader.isModLoaded("baubles");
-		if(isBaublesEnabled)logger.info("Loading With Baubles Compat");
-		else{logger.info("Loading Without Baubles Compat");}
-		
 		logger.info("Registering Statues Config");
 		MinecraftForge.EVENT_BUS.register(new StatuesConfigGen());
 

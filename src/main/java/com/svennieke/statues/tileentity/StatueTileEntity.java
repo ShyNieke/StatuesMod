@@ -47,6 +47,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional.Method;
 
 public class StatueTileEntity extends TileEntity implements ITickable, iStatueBehaviors{
@@ -204,7 +205,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 				int idx = new Random().nextInt(messages.length);
 				String randommessage = (messages[idx]);
 				
-				if(Statues.isVeinminerInstalled == true && random < 20)
+				if(Loader.isModLoaded("veinminer") == true && random < 20)
 				{
 					randommessage = ("Did you know we have veinminer");
 				}
@@ -467,7 +468,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 
     @Override
     public void update(){
-    	if (!this.world.isRemote && Statues.instance.isWailaInstalled)
+    	if (!this.world.isRemote && Loader.isModLoaded("waila"))
     	{
     		sendUpdatePacket();
     	}
