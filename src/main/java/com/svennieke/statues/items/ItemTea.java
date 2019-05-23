@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 public class ItemTea extends ItemFood {
 	public ItemTea(String unlocalised) {
 		super(6, 2F, false);
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+		setTranslationKey(Reference.MOD_PREFIX + unlocalised);
 		setRegistryName("item" + unlocalised);
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
@@ -87,6 +87,6 @@ public class ItemTea extends ItemFood {
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
     {
-        tooltip.add(TextFormatting.GOLD + I18n.format("tea.info"));
+        tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "tea.info"));
     }
 }

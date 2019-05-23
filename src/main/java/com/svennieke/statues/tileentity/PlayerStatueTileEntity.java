@@ -106,7 +106,7 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     	if(playerProfile != null)
     	{
     		this.playerProfile = playerProfile;
-    		this.playerProfile = TileEntitySkull.updateGameprofile(playerProfile);
+    		this.playerProfile = TileEntitySkull.updateGameProfile(playerProfile);
             this.markDirty();
     	}
     }

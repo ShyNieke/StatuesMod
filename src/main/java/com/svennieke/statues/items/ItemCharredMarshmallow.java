@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemCharredMarshmallow extends Item {
 	public ItemCharredMarshmallow(String unlocalised) {
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+		setTranslationKey(Reference.MOD_PREFIX + unlocalised);
 		setRegistryName("item" + unlocalised);
 		setCreativeTab(Statues.tabStatues);
 	}

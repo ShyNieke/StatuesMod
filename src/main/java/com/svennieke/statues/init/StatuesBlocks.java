@@ -1,8 +1,5 @@
 package com.svennieke.statues.init;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.Statues.BlockBabyZombie_Statue;
 import com.svennieke.statues.blocks.Statues.BlockBlaze_Statue;
@@ -43,7 +40,6 @@ import com.svennieke.statues.blocks.Statues.BlockZombie_Statue;
 import com.svennieke.statues.blocks.decorative.BlockDisplayStand;
 import com.svennieke.statues.blocks.decorative.BlockPebble;
 import com.svennieke.statues.items.ItemBlockStatue;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
@@ -51,6 +47,9 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 @EventBusSubscriber
 public class StatuesBlocks {
@@ -94,6 +93,8 @@ public class StatuesBlocks {
 	public static Block[] evoker_statue;
 	public static Block[] spider_statue;
 	public static Block[] campfire_statue;
+	public static Block[] drowned_statue;
+	public static Block[] turtle_statue;
 
 	//Sheep Statues
 	public static Block[] sheep_statue_white;
@@ -201,6 +202,8 @@ public class StatuesBlocks {
 		totemofundying_statue = registerBlock(new BlockTotemOfUndying_Statue("totemofundyingstatue", "blocktotemofundyingstatue"));
 		
 		campfire_statue = registerStatue(new BlockEtho_Statue("campfirestatue"), MAX_TIERS);
+		drowned_statue = registerStatue(new BlockEtho_Statue("drownedstatue"), MAX_TIERS);
+		turtle_statue = registerStatue(new BlockEtho_Statue("turtlestatue"), 1);
 
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}
@@ -213,7 +216,7 @@ public class StatuesBlocks {
 	    {
 	        IStatue statue;
 	        try {
-	            statue = ((IStatue)block.getClass().getConstructor(String.class).newInstance(block.getUnlocalizedName().replace("tile.", "")));
+	            statue = ((IStatue)block.getClass().getConstructor(String.class).newInstance(block.getTranslationKey().replace("tile.", "")));
 	            statue.setTier(i+1);
 	            statue.setColor(statue.getColor());
 	            allBlocks[i] = registerBlock((Block)statue, new ItemBlockStatue((Block)statue));

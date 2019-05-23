@@ -29,7 +29,7 @@ public class ItemPlayerCompass extends Item {
 	
 	public ItemPlayerCompass(String unlocalised) {
 		super();
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+        setTranslationKey(Reference.MOD_PREFIX + unlocalised);
 		setRegistryName("item" + unlocalised);
 		setCreativeTab(CreativeTabs.TOOLS);
 		setCreativeTab(Statues.tabStatues);
@@ -126,7 +126,7 @@ public class ItemPlayerCompass extends Item {
             NBTTagCompound tag = stack.getTagCompound();
             if (!tag.getString("playerTracking").isEmpty())
             {
-                tooltip.add(TextFormatting.GOLD + I18n.format("last.known.location", new Object[] {tag.getString("playerTracking")}));
+                tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "last.known.location", new Object[] {tag.getString("playerTracking")}));
             }
         }
     }

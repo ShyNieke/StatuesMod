@@ -78,7 +78,7 @@ public class StatueJEIPlugin implements IModPlugin{
         
         for(Block block : StatuesBlocks.BLOCKS)
         {	
-        	String blockName = block.getUnlocalizedName();
+        	String blockName = block.getTranslationKey();
         	boolean tierFlag = (blockName.contains("t3") || blockName.contains("t4") || blockName.contains("t5"));
         	if(blockName.contains("statue") && tierFlag)
         	{

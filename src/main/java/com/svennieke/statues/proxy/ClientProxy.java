@@ -113,19 +113,19 @@ public class ClientProxy extends ServerProxy{
     {
         for(Item item : StatuesItems.ITEMS)
         {
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(item.getRegistryName().getResourcePath()), "inventory"));
+            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(item.getRegistryName().getPath()), "inventory"));
         }
         
         for(Block block : StatuesBlocks.BLOCKS)
         {
         	Item item = Item.getItemFromBlock(block);
-        	if(isTiered(block.getRegistryName().getResourcePath()))
+        	if(isTiered(block.getRegistryName().getPath()))
         	{
-        		ModelLoader.setCustomStateMapper(block, new StatuesState(ResourceTiersAreCool(block.getRegistryName().getResourcePath())));
+        		ModelLoader.setCustomStateMapper(block, new StatuesState(ResourceTiersAreCool(block.getRegistryName().getPath())));
         	}
         	else
         	{
-                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(block.getRegistryName().getResourcePath()), "inventory"));
+                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(block.getRegistryName().getPath()), "inventory"));
         	}
         }
     }

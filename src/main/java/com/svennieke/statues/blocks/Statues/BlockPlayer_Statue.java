@@ -48,7 +48,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 	public BlockPlayer_Statue(String unlocalised, String registry, String name) {
 		super();
 		this.playername = name;
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 		setRegistryName(registry);
 		this.getDefaultState().withProperty(ONLINE, false);
 	}
@@ -270,7 +270,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 	
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return this.getDefaultState().withProperty(FACING, EnumFacing.getHorizontal(3 & meta)).withProperty(ONLINE, (meta & 4) == 4);
+        return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(3 & meta)).withProperty(ONLINE, (meta & 4) == 4);
     }
 
     @Override

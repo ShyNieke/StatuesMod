@@ -16,7 +16,7 @@ public class BlockSombrero_Statue extends BlockSombrero{
 		
 	public BlockSombrero_Statue(String unlocalised, String registry) {
 		super();
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 		setRegistryName(registry);
 	}
 	

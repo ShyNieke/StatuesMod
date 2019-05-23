@@ -29,6 +29,7 @@ public class StatueLootList {
 		addLoot("ghast", new ItemStack(Items.GUNPOWDER), ItemStack.EMPTY, new ItemStack(Items.GHAST_TEAR));
 		addLoot("guardian", new ItemStack(Items.FISH, 1, 0), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_CRYSTALS));
 		addLoot("husk", new ItemStack(Items.ROTTEN_FLESH), ItemStack.EMPTY, new ItemStack(Items.IRON_INGOT));
+		addLoot("drowned", new ItemStack(Items.ROTTEN_FLESH), ItemStack.EMPTY, new ItemStack(Items.GOLD_INGOT));
 		addLoot("magma_slime", new ItemStack(Items.MAGMA_CREAM), ItemStack.EMPTY, ItemStack.EMPTY);
 		addLoot("mooshroom", ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY);
 		addLoot("pig", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.PORKCHOP));
@@ -119,7 +120,7 @@ public class StatueLootList {
 		
 		for(Block blocks : StatuesBlocks.BLOCKS)
 		{
-			String blockName = blocks.getUnlocalizedName();
+			String blockName = blocks.getTranslationKey();
 			if(blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4")))
 			{
 				if (!blockList.contains(blocks))

@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class ItemMooshroomSoup extends ItemFood {
 	public ItemMooshroomSoup(int amount, float saturation, String unlocalised) {
 		super(amount, saturation, false);
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+		setTranslationKey(Reference.MOD_PREFIX + unlocalised);
 		setRegistryName("item" + unlocalised);
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);

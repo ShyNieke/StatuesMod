@@ -3,6 +3,7 @@ package com.svennieke.statues.blocks.Statues;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.svennieke.statues.Reference;
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockKingCluck;
 import com.svennieke.statues.compat.list.StatueLootList;
@@ -33,15 +34,15 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue, IT
 	
 	public BlockKingCluck_Statue(String unlocalised) {
 		super();
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 	}
 	
 	@Override
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+		setTranslationKey(super.getTranslationKey().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	
@@ -108,6 +109,6 @@ public class BlockKingCluck_Statue extends BlockKingCluck implements IStatue, IT
 	@SideOnly(Side.CLIENT)
     public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced)
     {
-        	tooltip.add(TextFormatting.GOLD + I18n.format("cluckington.info"));
+        	tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "cluckington.info"));
     }
 }

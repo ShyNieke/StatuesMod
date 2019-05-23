@@ -155,9 +155,9 @@ public class FakeShulkerBullet extends EntityShulkerBullet{
                 enumfacing = list.get(this.rand.nextInt(list.size()));
             }
 
-            d1 = this.posX + (double)enumfacing.getFrontOffsetX();
-            d2 = this.posY + (double)enumfacing.getFrontOffsetY();
-            d3 = this.posZ + (double)enumfacing.getFrontOffsetZ();
+            d1 = this.posX + (double)enumfacing.getXOffset();
+            d2 = this.posY + (double)enumfacing.getYOffset();
+            d3 = this.posZ + (double)enumfacing.getZOffset();
         }
 
         this.setDirection(enumfacing);

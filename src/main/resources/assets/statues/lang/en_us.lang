@@ -334,6 +334,18 @@ tile.campfirestatuet3.name=Functional Campfire Statue
 tile.campfirestatuet4.name=Peaceful Campfire Statue
 tile.campfirestatuet5.name=Muted Campfire Statue
 
+tile.drownedstatue.name=Decorative Drowned Statue
+tile.drownedstatuet2.name=Sound Drowned Statue
+tile.drownedstatuet3.name=Functional Drowned Statue
+tile.drownedstatuet4.name=Peaceful Drowned Statue
+tile.drownedstatuet5.name=Muted Drowned Statue
+
+tile.turtlestatue.name=Decorative Turtle Statue
+tile.turtlestatuet2.name=Sound Turtle Statue
+tile.turtlestatuet3.name=Functional Turtle Statue
+tile.turtlestatuet4.name=Peaceful Turtle Statue
+tile.turtlestatuet5.name=Muted Turtle Statue
+
 #Item names
 item.statues:royalnugget.name=Royal Nugget
 item.statues:mooshroomsoup.name=Mooshroom Soup
@@ -347,12 +359,13 @@ item.statues:marshmallowgolden.name=Golden Marshmallow
 item.statues:marshmallowcharred.name=Charred Marshmallow
 
 #Special Lore
-cluckington.info=Also known as Cluckington
-royalnugget.info=Made for and from royals
-villager.info=WIP, Trades in the future.
-tea.info=Now with less milk.
-cup.info=I can't believe its edible.
-last.known.location=Tracking last known location of: %s
+statues:cluckington.info=Also known as Cluckington
+statues:royalnugget.info=Made for and from royals
+statues:villager.info=WIP, Trades in the future.
+statues:tea.info=Now with less milk.
+statues:cup.info=I can't believe its edible.
+statues:last.known.location=Tracking last known location of: %s
+statues:one.thirteen.info=Will have more in 1.13+
 
 #Entity
 entity.statues:StatueBat.name=Statue Bat

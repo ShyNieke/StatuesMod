@@ -19,7 +19,7 @@ public class BlockInfo_Statue extends BlockInfo implements ITileEntityProvider{
 	public BlockInfo_Statue(String unlocalised, String registry, int tier) {
 		super();
 		this.TIER = tier;
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 		setRegistryName(registry);
 	}
 	

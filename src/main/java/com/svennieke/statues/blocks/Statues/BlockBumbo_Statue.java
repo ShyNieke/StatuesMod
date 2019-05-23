@@ -16,7 +16,7 @@ public class BlockBumbo_Statue extends BlockBumbo{
 		
 	public BlockBumbo_Statue(String unlocalised, String registry) {
 		super();
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 		setRegistryName(registry);
 	}
 	

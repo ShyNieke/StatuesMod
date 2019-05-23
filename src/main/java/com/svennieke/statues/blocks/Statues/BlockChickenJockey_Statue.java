@@ -1,12 +1,9 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockChickenJockey;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -21,21 +18,23 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 public class BlockChickenJockey_Statue extends BlockChickenJockey implements IStatue, ITileEntityProvider{
 	
 	private int TIER;
 	
 	public BlockChickenJockey_Statue(String unlocalised) {
 		super();
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 	}
 	
 	@Override
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+		setTranslationKey(super.getTranslationKey().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	

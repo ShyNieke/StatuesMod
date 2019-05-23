@@ -11,7 +11,7 @@ public class BlockDisplayStand extends Block{
 
 	public BlockDisplayStand(String unlocalised, String registry) {
 		super(Material.ROCK);
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 		setRegistryName(registry);
 		setHardness(0.6F);
 		setSoundType(SoundType.STONE);

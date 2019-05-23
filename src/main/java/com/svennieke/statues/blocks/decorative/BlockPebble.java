@@ -16,7 +16,7 @@ public class BlockPebble extends BlockFalling{
 
 	public BlockPebble(String unlocalised, String registry) {
 		super(Material.SAND);
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 		setRegistryName(registry);
 		setHardness(0.6F);
 		setSoundType(SoundType.GROUND);

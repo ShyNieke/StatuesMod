@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class ItemCup extends ItemFood {
 	public ItemCup(int amount, float saturation, String unlocalised) {
 		super(amount, saturation, false);
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+		setTranslationKey(Reference.MOD_PREFIX + unlocalised);
 		setRegistryName("item" + unlocalised);
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
@@ -26,6 +26,6 @@ public class ItemCup extends ItemFood {
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
     {
-        tooltip.add(TextFormatting.GOLD + I18n.format("cup.info"));
+        tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "cup.info"));
     }
 }

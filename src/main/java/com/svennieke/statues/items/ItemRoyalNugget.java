@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class ItemRoyalNugget extends ItemFood {
 	public ItemRoyalNugget(int amount, float saturation, String unlocalised) {
 		super(amount, saturation, false);
-		setUnlocalizedName(Reference.MOD_PREFIX + unlocalised);
+		setTranslationKey(Reference.MOD_PREFIX + unlocalised);
 		setRegistryName("item" + unlocalised);
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
@@ -25,6 +25,6 @@ public class ItemRoyalNugget extends ItemFood {
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
     {
-        tooltip.add(TextFormatting.GOLD + I18n.format("royalnugget.info"));
+        tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "royalnugget.info"));
     }
 }

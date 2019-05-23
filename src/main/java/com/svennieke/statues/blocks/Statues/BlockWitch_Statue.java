@@ -26,15 +26,15 @@ public class BlockWitch_Statue extends BlockWitch implements IStatue, ITileEntit
 	
 	public BlockWitch_Statue(String unlocalised) {
 		super();
-		setUnlocalizedName(unlocalised);
+		setTranslationKey(unlocalised);
 	}
 	
 	@Override
 	public Block setTier(int tier)
 	{
 		this.TIER = tier;
-		setUnlocalizedName(super.getUnlocalizedName().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
-		setRegistryName("block" + super.getUnlocalizedName().replace("tile.", ""));
+		setTranslationKey(super.getTranslationKey().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
+		setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
 	

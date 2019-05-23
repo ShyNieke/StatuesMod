@@ -1,36 +1,34 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.ArrayList;
-import java.util.Random;
-
+import com.mrbysco.cactusmod.Reference;
 import com.svennieke.statues.blocks.IStatue;
-import com.svennieke.statues.blocks.StatueBase.BlockEtho;
+import com.svennieke.statues.blocks.StatueBase.BlockDrowned;
 import com.svennieke.statues.compat.list.StatueLootList;
-import com.svennieke.statues.entity.fakeentity.FakeCreeper;
-import com.svennieke.statues.init.StatuesItems;
+import com.svennieke.statues.entity.fakeentity.FakeHusk;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-import com.svennieke.statues.util.RandomLists;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityProvider{
-	
+import java.util.ArrayList;
+import java.util.List;
+
+public class BlockDrowned_Statue extends BlockDrowned implements IStatue, ITileEntityProvider{
+
 	private int TIER;
 
-	public BlockEtho_Statue(String unlocalised) {
+	public BlockDrowned_Statue(String unlocalised) {
 		super();
 		setTranslationKey(unlocalised);
 	}
@@ -52,23 +50,18 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new StatueTileEntity(this.TIER);
+		if (this.TIER >= 2)
+		{
+			return new StatueTileEntity(this.TIER);
+		}
+		else
+		return null;
 	}
 	
 	private StatueTileEntity getTE(World world, BlockPos pos) {
         return (StatueTileEntity) world.getTileEntity(pos);
     }
 	
-    @SideOnly(Side.CLIENT)
-	@Override
-	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-		super.randomDisplayTick(stateIn, worldIn, pos, rand);
-		if (rand.nextInt(24) == 0)
-        {
-            worldIn.playSound((double)((float)pos.getX() + 0.5F), (double)((float)pos.getY() + 0.5F), (double)((float)pos.getZ() + 0.5F), SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 0.3F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.3F, false);
-        }
-	}
-    
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	{
@@ -83,34 +76,24 @@ public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityP
 	        		tile.setTier(this.TIER);
 	        	}
 	        	
-	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("etho"));
+	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("drowned"));
 	        	ItemStack stack1 = stackList.get(0);
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-        		if(stack1.getItem() != StatuesItems.marshmallow)
-        		{
-        			tile.PlaySound(RandomLists.getRandomCampfire(), pos, worldIn);
-    	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
-        		}
-        		else
-        		{
-    	        	tile.CampfireBehavior(worldIn, pos, playerIn, stack1, stack2, stack3);
-        		}
-        		
-	        	tile.FakeMobs(getGeneral(worldIn), worldIn, pos, false);
+	        	tile.PlaySound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, worldIn);
+	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
+	        	
+	        	tile.FakeMobs(new FakeHusk(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}
 		else
 		return false;
 	}
-	
-	public FakeCreeper getGeneral(World worldIn)
-	{
-		FakeCreeper general = new FakeCreeper(worldIn);
-		general.setCustomNameTag("General Spazz");
-        
-        return general;
+
+	@Override
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
+		tooltip.add(TextFormatting.RED + I18n.format(Reference.PREFIX + "one.thirteen"));
 	}
 }

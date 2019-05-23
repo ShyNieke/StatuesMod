@@ -41,7 +41,7 @@ public class PlayerInventoryRender extends TileEntityItemStackRenderer{
             else if (nbttagcompound.hasKey("PlayerProfile", 8) && !StringUtils.isBlank(nbttagcompound.getString("PlayerProfile")))
             {
                 GameProfile gameprofile1 = new GameProfile((UUID)null, nbttagcompound.getString("PlayerProfile"));
-                gameprofile = TileEntitySkull.updateGameprofile(gameprofile1);
+                gameprofile = TileEntitySkull.updateGameProfile(gameprofile1);
                 nbttagcompound.removeTag("PlayerProfile");
                 nbttagcompound.setTag("PlayerProfile", NBTUtil.writeGameProfile(new NBTTagCompound(), gameprofile));
                 Statues.GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
@@ -50,7 +50,7 @@ public class PlayerInventoryRender extends TileEntityItemStackRenderer{
         if(gameprofile == null && !StringUtils.isBlank(stack.getDisplayName()) && !stack.getDisplayName().equals("Player Statue") && !stack.getDisplayName().equals(" "))
         {
             GameProfile gameprofile1 = new GameProfile((UUID)null, stack.getDisplayName());
-            gameprofile = TileEntitySkull.updateGameprofile(gameprofile1);
+            gameprofile = TileEntitySkull.updateGameProfile(gameprofile1);
             Statues.GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
         }
 
