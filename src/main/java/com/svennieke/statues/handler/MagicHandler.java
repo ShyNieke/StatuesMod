@@ -1,14 +1,9 @@
 package com.svennieke.statues.handler;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
-import com.svennieke.statues.Statues;
 import com.svennieke.statues.init.StatuesBlocks;
-
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.util.EnumFacing;
@@ -18,64 +13,54 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 
 public class MagicHandler {
 
 	@SubscribeEvent
-	public void worldTick(WorldTickEvent event)
+	public void playerTick(PlayerTickEvent event)
 	{
 		if(event.phase == TickEvent.Phase.START)
 			return;
 
-		if(!event.world.isRemote)
+		if(!event.player.world.isRemote)
 		{
-			World world = event.world;
-			ArrayList<Entity> entityList = new ArrayList<>(world.loadedEntityList);
-			for(int i = 0; i < entityList.size(); i++)
-			{
-				Entity entity = entityList.get(i);
-				if(entity instanceof EntityItem)
-				{
-					Statues.logger.info(entity.getClass() + " " + entity.getName());
-					EntityItem itemE = (EntityItem)entity;
+			final EntityPlayer player = event.player;
+			World world = player.world;
+			BlockPos pos = player.getPosition();
+			AxisAlignedBB hitbox = new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
+					.expand(-5, -5, -5).expand(5, 5, 5);
 
-					if(itemE.getItem().getItem().equals(Items.DIAMOND))
-					{
+			for(EntityItem entity : player.world.getEntitiesWithinAABB(EntityItem.class, hitbox)) {
+				if(entity instanceof EntityItem) {
+					EntityItem itemE = (EntityItem) entity;
+
+					if (itemE.getItem().getItem().equals(Items.DIAMOND)) {
 						AxisAlignedBB bb = itemE.getEntityBoundingBox().contract(0.1, 0.1, 0.1);
 						BlockPos lavaPos = itemE.getPosition();
 
 						Boolean lavaFound = false;
 						Boolean requirementsFound = false;
 
-						if(world.getBlockState(itemE.getPosition()).getBlock() == Blocks.LAVA)
-						{
+						if (world.getBlockState(itemE.getPosition()).getBlock() == Blocks.LAVA) {
 							lavaFound = true;
 							lavaPos = itemE.getPosition();
-						}
-						else if(world.getBlockState(itemE.getPosition().down()).getBlock() == Blocks.LAVA)
-						{
+						} else if (world.getBlockState(itemE.getPosition().down()).getBlock() == Blocks.LAVA) {
 							lavaFound = true;
 							lavaPos = itemE.getPosition().down();
-						}
-						else
-						{
+						} else {
 							lavaFound = false;
 						}
 
 						CampfireData data = properStatuesFound(world, lavaPos.up(), StatuesBlocks.player_statue, StatuesBlocks.creeper_statue[0]);
 
-						if(data.getBool() && lavaFound)
-						{
+						if (data.getBool() && lavaFound) {
 							requirementsFound = true;
-						}
-						else
-						{
+						} else {
 							requirementsFound = false;
 						}
 
-						if(requirementsFound)
-						{
+						if (requirementsFound) {
 							world.setBlockState(lavaPos, Blocks.AIR.getDefaultState());
 							world.setBlockState(data.getPos1(), Blocks.AIR.getDefaultState());
 							world.setBlockState(data.getPos2(), Blocks.AIR.getDefaultState());
@@ -85,10 +70,6 @@ public class MagicHandler {
 							itemE.setDead();
 						}
 					}
-				}
-				else
-				{
-					break;
 				}
 			}
 		}

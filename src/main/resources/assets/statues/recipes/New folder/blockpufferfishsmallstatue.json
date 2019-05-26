@@ -1,0 +1,26 @@
+{
+  "result": {
+    "item": "statues:blockpufferfishmediumstatue"
+  },
+  "pattern": [
+    "GMG",
+    "MCM",
+    "GMG"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "M": {
+      "item": "minecraft:fish",
+      "data": 3
+    }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
+}

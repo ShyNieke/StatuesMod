@@ -40,25 +40,28 @@ public class StatuesConfigGen {
 		
 		@Config.RequiresMcRestart
 		@Config.Comment("Tier 1 needs to be crafted with Statue Core (Default: true)" +
-						"Disabling this makes tier1 statues drop from mobs.")
+						" Disabling this makes tier1 statues drop from mobs.")
 		public boolean Tier1Crafting = true;
-		
+
 		@Config.RequiresMcRestart
 		@Config.Comment("Setting this to true enables a recipe where the core is replaced by a diamond [ideal for singleplayer when tier 1 crafting is turned off] (Default: false)")
 		public boolean PlayerStatueAlternateRecipe = false;
+
+		@Config.Comment("Setting this to true allows for aquatic statues to be fished up (Default: false)")
+		public boolean AquaticFishing = false;
 		
 		@Config.Comment("The drop chance of statues when statue drops is true (Default: 0.01)" +
 						" [This option only takes effect when Tier1Crafting is false]")
 		public double OldDropChance = 0.01;
-		
+
 		@Config.Comment("The amount of time [in seconds] that you have to wait before being able to interact with the statues (tier 2 and higher)"+
-						"(Default: 60)")
+				"(Default: 60)")
 		public int InteractionTimer = 60;
 		
 		@Config.RequiresMcRestart
-		@Config.Comment("Setting this to false disables the tier 3 and 4 recipes. (Default: true)")
+		@Config.Comment("Setting this to false disables the tier 3,4 and 5 recipes. (Default: true)")
 		public boolean CraftableInteraction = true;
-		
+
 		@Config.Comment("Source of death that determines how the Statues drop [player statue has it's own config option] (Default: PLAYER)")
 		public EnumDeathSource StatueKillSource = EnumDeathSource.PLAYER;
 	}

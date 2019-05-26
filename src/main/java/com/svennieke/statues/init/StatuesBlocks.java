@@ -2,16 +2,20 @@ package com.svennieke.statues.init;
 
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.Statues.BlockBabyZombie_Statue;
+import com.svennieke.statues.blocks.Statues.BlockBigFish_Statue;
 import com.svennieke.statues.blocks.Statues.BlockBlaze_Statue;
 import com.svennieke.statues.blocks.Statues.BlockBumbo_Statue;
 import com.svennieke.statues.blocks.Statues.BlockChickenJockey_Statue;
 import com.svennieke.statues.blocks.Statues.BlockChicken_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCow_Statue;
 import com.svennieke.statues.blocks.Statues.BlockCreeper_Statue;
+import com.svennieke.statues.blocks.Statues.BlockDolphin_Statue;
+import com.svennieke.statues.blocks.Statues.BlockDrowned_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEnderman_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEndermite_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEtho_Statue;
 import com.svennieke.statues.blocks.Statues.BlockEvoker_Statue;
+import com.svennieke.statues.blocks.Statues.BlockFish_Statue;
 import com.svennieke.statues.blocks.Statues.BlockFlood_Statue;
 import com.svennieke.statues.blocks.Statues.BlockGhast_Statue;
 import com.svennieke.statues.blocks.Statues.BlockGuardian_Statue;
@@ -22,6 +26,8 @@ import com.svennieke.statues.blocks.Statues.BlockMagmaSlime_Statue;
 import com.svennieke.statues.blocks.Statues.BlockMooshroom_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPig_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
+import com.svennieke.statues.blocks.Statues.BlockPufferfish_Large_Statue;
+import com.svennieke.statues.blocks.Statues.BlockPufferfish_Medium_Statue;
 import com.svennieke.statues.blocks.Statues.BlockPufferfish_Statue;
 import com.svennieke.statues.blocks.Statues.BlockRabbit_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSheepShaven_Statue;
@@ -33,6 +39,7 @@ import com.svennieke.statues.blocks.Statues.BlockSombrero_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSpider_Statue;
 import com.svennieke.statues.blocks.Statues.BlockSquid_Statue;
 import com.svennieke.statues.blocks.Statues.BlockTotemOfUndying_Statue;
+import com.svennieke.statues.blocks.Statues.BlockTurtle_Statue;
 import com.svennieke.statues.blocks.Statues.BlockVillager_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWastelandPig_Statue;
 import com.svennieke.statues.blocks.Statues.BlockWitch_Statue;
@@ -89,12 +96,30 @@ public class StatuesBlocks {
 	public static Block[] guardian_statue;
 	public static Block[] wasteland_statue;
 	public static Block[] enderman_statue;
-	public static Block[] pufferfish_statue;
 	public static Block[] evoker_statue;
 	public static Block[] spider_statue;
 	public static Block[] campfire_statue;
+	public static Block[] pufferfish_statue;
+	public static Block[] pufferfish_medium_statue;
+	public static Block[] pufferfish_small_statue;
 	public static Block[] drowned_statue;
 	public static Block[] turtle_statue;
+	public static Block[] cod_statue;
+	public static Block[] salmon_statue;
+	public static Block[] dolphin_statue;
+
+	public static Block[] tropical_fish_bb;
+	public static Block[] tropical_fish_be;
+	public static Block[] tropical_fish_bm;
+	public static Block[] tropical_fish_bmb;
+	public static Block[] tropical_fish_bms;
+	public static Block[] tropical_fish_b;
+	public static Block[] tropical_fish_es;
+	public static Block[] tropical_fish_e;
+	public static Block[] tropical_fish_hb;
+	public static Block[] tropical_fish_sd;
+	public static Block[] tropical_fish_sb;
+	public static Block[] tropical_fish_ss;
 
 	//Sheep Statues
 	public static Block[] sheep_statue_white;
@@ -185,6 +210,8 @@ public class StatuesBlocks {
 		guardian_statue = registerStatue(new BlockGuardian_Statue("guardianstatue"), MAX_TIERS);
 		enderman_statue = registerStatue(new BlockEnderman_Statue("endermanstatue"), MAX_TIERS);
 		pufferfish_statue = registerStatue(new BlockPufferfish_Statue("pufferfishstatue"), MAX_TIERS);
+		pufferfish_medium_statue = registerStatue(new BlockPufferfish_Medium_Statue("pufferfishmediumstatue"), MAX_TIERS);
+		pufferfish_small_statue = registerStatue(new BlockPufferfish_Large_Statue("pufferfishsmallstatue"), MAX_TIERS);
 		wasteland_statue = registerStatue(new BlockWastelandPig_Statue("wastelandpigstatue"), MAX_TIERS);
 		evoker_statue = registerStatue(new BlockEvoker_Statue("evokerstatue"), MAX_TIERS);
 		spider_statue = registerStatue(new BlockSpider_Statue("spiderstatue"), MAX_TIERS);
@@ -202,12 +229,28 @@ public class StatuesBlocks {
 		totemofundying_statue = registerBlock(new BlockTotemOfUndying_Statue("totemofundyingstatue", "blocktotemofundyingstatue"));
 		
 		campfire_statue = registerStatue(new BlockEtho_Statue("campfirestatue"), MAX_TIERS);
-		drowned_statue = registerStatue(new BlockEtho_Statue("drownedstatue"), MAX_TIERS);
-		turtle_statue = registerStatue(new BlockEtho_Statue("turtlestatue"), 1);
+		drowned_statue = registerStatue(new BlockDrowned_Statue("drownedstatue"), 1);
+		turtle_statue = registerStatue(new BlockTurtle_Statue("turtlestatue"), 1);
+		cod_statue = registerStatue(new BlockFish_Statue("codstatue"), 1);
+		salmon_statue = registerStatue(new BlockFish_Statue("salmonstatue"), 1);
+		dolphin_statue = registerStatue(new BlockDolphin_Statue("dolphinstatue"), 1);
+
+		tropical_fish_bb = registerStatue(new BlockBigFish_Statue("tropicalfishbigbellystatue"), 1);
+		tropical_fish_be = registerStatue(new BlockFish_Statue("tropicalfishbigeyestatue"), 1);
+		tropical_fish_bm = registerStatue(new BlockBigFish_Statue("tropicalfishbigmouthbigstatue"), 1);
+		tropical_fish_bmb = registerStatue(new BlockFish_Statue("tropicalfishbigmouthsmallstatue"), 1);
+		tropical_fish_bms = registerStatue(new BlockBigFish_Statue("tropicalfishbigstatue"), 1);
+		tropical_fish_b = registerStatue(new BlockFish_Statue("tropicalfishexoticsmallstatue"), 1);
+		tropical_fish_es = registerStatue(new BlockBigFish_Statue("tropicalfishexoticstatue"), 1);
+		tropical_fish_e = registerStatue(new BlockBigFish_Statue("tropicalfishhorizontalbigstatue"), 1);
+		tropical_fish_hb = registerStatue(new BlockFish_Statue("tropicalfishsmalldotstatue"), 1);
+		tropical_fish_sd = registerStatue(new BlockFish_Statue("tropicalfishsmallstatue"), 1);
+		tropical_fish_sb = registerStatue(new BlockBigFish_Statue("tropicalfishstripedbigstatue"), 1);
+		tropical_fish_ss = registerStatue(new BlockFish_Statue("tropicalfishstripedsmallstatue"), 1);
 
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}
-    
+
 	public static <T extends Block> Block[] registerStatue(T block, int maxTiers)
 	{
 	    Block[] allBlocks = new Block[maxTiers];

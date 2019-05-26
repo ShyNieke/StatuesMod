@@ -1,6 +1,6 @@
 package com.svennieke.statues.blocks.Statues;
 
-import com.mrbysco.cactusmod.Reference;
+import com.svennieke.statues.Reference;
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockDrowned;
 import com.svennieke.statues.compat.list.StatueLootList;
@@ -94,6 +94,6 @@ public class BlockDrowned_Statue extends BlockDrowned implements IStatue, ITileE
 
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
-		tooltip.add(TextFormatting.RED + I18n.format(Reference.PREFIX + "one.thirteen"));
+		tooltip.add(TextFormatting.RED + I18n.format(Reference.MOD_PREFIX + "one.thirteen"));
 	}
 }

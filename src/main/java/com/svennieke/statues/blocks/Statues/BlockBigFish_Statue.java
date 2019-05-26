@@ -1,35 +1,29 @@
 package com.svennieke.statues.blocks.Statues;
 
-import com.svennieke.statues.Reference;
 import com.svennieke.statues.blocks.IStatue;
-import com.svennieke.statues.blocks.StatueBase.BlockTurtleStatue;
+import com.svennieke.statues.blocks.StatueBase.BlockFish;
 import com.svennieke.statues.compat.list.StatueLootList;
-import com.svennieke.statues.entity.fakeentity.FakeSlime;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class BlockTurtle_Statue extends BlockTurtleStatue implements IStatue, ITileEntityProvider{
+public class BlockBigFish_Statue extends BlockFish implements IStatue, ITileEntityProvider{
 
 	private int TIER;
 
-	public BlockTurtle_Statue(String unlocalised) {
-		super();
+	public BlockBigFish_Statue(String unlocalised) {
+		super(0);
 		setTranslationKey(unlocalised);
 	}
 	
@@ -47,6 +41,7 @@ public class BlockTurtle_Statue extends BlockTurtleStatue implements IStatue, IT
 	{
 		return this.TIER;
 	}
+	
 	
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
@@ -81,19 +76,13 @@ public class BlockTurtle_Statue extends BlockTurtleStatue implements IStatue, IT
         		ItemStack stack2 = stackList.get(1);
         		ItemStack stack3 = stackList.get(2);
         		
-	        	tile.PlaySound(SoundEvents.ENTITY_SLIME_SQUISH, pos, worldIn);
+	        	//tile.PlaySound(SoundEvents.ENTITY_CHICKEN_AMBIENT, pos, worldIn);
+	        	tile.GiveEffect(pos, worldIn, playerIn, MobEffects.POISON);
 	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
-	        	
-	        	tile.FakeMobs(new FakeSlime(worldIn), worldIn, pos, false);
 	        }
 	        return true;
 		}
 		else
 		return false;
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
-		tooltip.add(TextFormatting.RED + I18n.format(Reference.MOD_PREFIX + "one.thirteen"));
 	}
 }

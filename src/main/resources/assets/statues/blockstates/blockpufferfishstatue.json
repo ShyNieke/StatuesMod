@@ -2,13 +2,13 @@
     "forge_marker": 1,
     "variants": {
         "facing": {
-			"east": { "model": "statues:blockpufferfishstatue", "y": 90},
-            "north": { "model": "statues:blockpufferfishstatue"},
-			"west": { "model": "statues:blockpufferfishstatue", "y": 270},
-            "south": { "model": "statues:blockpufferfishstatue", "y": 180}
+			"east": { "model": "statues:blockpufferfishstatue_big", "y": 90},
+            "north": { "model": "statues:blockpufferfishstatue_big"},
+			"west": { "model": "statues:blockpufferfishstatue_big", "y": 270},
+            "south": { "model": "statues:blockpufferfishstatue_big", "y": 180}
         },
     "inventory": [{
-        "model": "statues:blockpufferfishstatue"
+        "model": "statues:blockpufferfishstatue_big"
     }]
   }
 }

@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "statues:blockpufferfishmediumstatuet4"
+  },
+  "pattern": [
+    "NRN",
+    "RSR",
+    "NRN"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "R": {
+      "item": "minecraft:nether_star"
+    },
+    "S": {
+      "item": "statues:blockpufferfishmediumstatuet3"
+    },
+    "N": {
+      "item": "statues:itemstatuecore"
+    }
+  },
+  "conditions": [{
+    "type": "statues:interaction"
+	}]
+}
