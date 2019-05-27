@@ -1,11 +1,8 @@
 package com.svennieke.statues.tileentity;
 
-import javax.annotation.Nullable;
-
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.svennieke.statues.init.StatuesBlocks;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTUtil;
@@ -18,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+
 public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable, ITickable{
 	
 	public String BlockName;
@@ -25,7 +24,6 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
     public Boolean comparatorApplied;
     public Boolean OnlineChecking;
     public int checkerCooldown;
-    public BlockPos playerPos;
 
 	public PlayerStatueTileEntity() {
 		this.BlockName = "";

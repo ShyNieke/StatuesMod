@@ -1,5 +1,6 @@
 package com.svennieke.statues.blocks.Statues;
 
+import com.svennieke.statues.Reference;
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockFish;
 import com.svennieke.statues.compat.list.StatueLootList;
@@ -7,6 +8,8 @@ import com.svennieke.statues.tileentity.StatueTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -14,9 +17,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlockBigFish_Statue extends BlockFish implements IStatue, ITileEntityProvider{
 
@@ -84,5 +89,10 @@ public class BlockBigFish_Statue extends BlockFish implements IStatue, ITileEnti
 		}
 		else
 		return false;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
+		tooltip.add(TextFormatting.RED + I18n.format(Reference.MOD_PREFIX + "one.thirteen.info"));
 	}
 }

@@ -370,6 +370,12 @@ tile.codstatuet3.name=Functional Cod Statue
 tile.codstatuet4.name=Peaceful Cod Statue
 tile.codstatuet5.name=Muted Cod Statue
 
+tile.dolphinstatue.name=Decorative Dolphin Statue
+tile.dolphinstatuet2.name=Sound Dolphin Statue
+tile.dolphinstatuet3.name=Functional Dolphin Statue
+tile.dolphinstatuet4.name=Peaceful Dolphin Statue
+tile.dolphinstatuet5.name=Muted Dolphin Statue
+
 tile.tropicalfishbigbellystatue.name=Decorative Tropical Fish Statue
 tile.tropicalfishbigbellystatuet2.name=Sound Tropical Fish Statue
 tile.tropicalfishbigbellystatuet3.name=Functional Tropical Fish Statue

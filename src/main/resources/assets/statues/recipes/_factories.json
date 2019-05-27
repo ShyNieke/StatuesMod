@@ -1,8 +1,8 @@
 {
     "conditions" : {
-        "newsystem": "com.svennieke.statues.RecipeConditions.NewSystemCondition",
-        "playerrecipe": "com.svennieke.statues.RecipeConditions.AlternatePlayerRecipe",
-        "originalplayerrecipe": "com.svennieke.statues.RecipeConditions.PlayerCraftingRecipe",
-        "interaction": "com.svennieke.statues.RecipeConditions.InteractionCondition"
+        "newsystem": "com.svennieke.statues.recipeconditions.NewSystemCondition",
+        "playerrecipe": "com.svennieke.statues.recipeconditions.AlternatePlayerRecipe",
+        "originalplayerrecipe": "com.svennieke.statues.recipeconditions.PlayerCraftingRecipe",
+        "interaction": "com.svennieke.statues.recipeconditions.InteractionCondition"
     }
 }

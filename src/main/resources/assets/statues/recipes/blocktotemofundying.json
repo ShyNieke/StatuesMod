@@ -1,0 +1,17 @@
+{
+  "result": {
+    "item": "statues:blocktotemofundyingstatue"
+  },
+  "pattern": [
+	"TC"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "T": {
+      "item": "minecraft:totem_of_undying"
+    },
+    "C": {
+      "item": "statues:itemstatuecore"
+    }
+  }
+}

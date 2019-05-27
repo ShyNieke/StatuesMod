@@ -93,6 +93,6 @@ public class BlockDolphin_Statue extends BlockDolphin implements IStatue, ITileE
 
 	@Override
 	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
-		tooltip.add(TextFormatting.RED + I18n.format(Reference.MOD_PREFIX + "one.thirteen"));
+		tooltip.add(TextFormatting.RED + I18n.format(Reference.MOD_PREFIX + "one.thirteen.info"));
 	}
 }

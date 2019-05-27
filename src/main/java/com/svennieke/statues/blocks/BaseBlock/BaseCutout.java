@@ -1,7 +1,6 @@
 package com.svennieke.statues.blocks.BaseBlock;
 
 import com.svennieke.statues.config.StatuesConfigGen;
-
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -41,11 +40,11 @@ public class BaseCutout extends BlockHorizontal{
     }
 	
 	@SideOnly(Side.CLIENT)
-    public BlockRenderLayer getBlockLayer()
+    public BlockRenderLayer getRenderLayer()
     {
         return BlockRenderLayer.CUTOUT;
     }
-	
+
 	@Override
 	public IBlockState withRotation(IBlockState state, Rotation rot)
     {

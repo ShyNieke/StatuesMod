@@ -83,11 +83,10 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
         GlStateManager.disableCull();
 
         GlStateManager.translate((float)x + 0.5F, (float)y, (float)z + 0.5F);
+        GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
 
         switch (enumfacing)
         {
-            case DOWN:
-            case UP:
             default:
                 GlStateManager.translate(0F, 0.75F, 0F);
                 GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
@@ -98,11 +97,12 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
                 break;
             case WEST:
                 GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-90.0F, 0.0F, -90.0F, 0.0F);
+                GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
                 break;
             case EAST:
                 GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
+                GlStateManager.rotate(-90.0F, 0.0F, -90.0F, 0.0F);
+                break;
         }
 
         GlStateManager.enableRescaleNormal();

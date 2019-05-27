@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "statues:blocksombrero"
+  },
+  "pattern": [
+    "SHS",
+    "HSH",
+    "WCW"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "statues:itemstatuecore"
+    },
+    "W": {
+      "item": "minecraft:wheat"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "H": {
+      "item": "minecraft:hay_block"
+    }
+  },
+  "conditions": [{
+    "type": "statues:newsystem"
+	}]
+}
