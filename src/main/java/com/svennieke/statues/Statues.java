@@ -77,10 +77,12 @@ public class Statues {
 	@EventHandler
     public void init(FMLInitializationEvent event)
 	{
-		for (Biome biome : Biome.REGISTRY) {
-		    biome.getSpawnableList(EnumCreatureType.AMBIENT).add(new SpawnListEntry(EntityStatueBat.class, 4, 1, 2));
+		if(StatuesConfigGen.general.StatueBatSpawning) {
+			for (Biome biome : Biome.REGISTRY) {
+				biome.getSpawnableList(EnumCreatureType.AMBIENT).add(new SpawnListEntry(EntityStatueBat.class, 4, 1, 2));
+			}
+			logger.info("Registered Statues Bat Spawn");
 		}
-		logger.info("Registered Statues Bat Spawn");
 		
 		logger.info("Registering Statues Gui Handler");
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new StatuesGuiHandler());

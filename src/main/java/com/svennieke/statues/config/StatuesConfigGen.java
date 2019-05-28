@@ -64,6 +64,11 @@ public class StatuesConfigGen {
 
 		@Config.Comment("Source of death that determines how the Statues drop [player statue has it's own config option] (Default: PLAYER)")
 		public EnumDeathSource StatueKillSource = EnumDeathSource.PLAYER;
+
+
+		@Config.RequiresMcRestart
+		@Config.Comment("Setting this to false disables the statue bat from spawning naturally. (Default: true)")
+		public boolean StatueBatSpawning = true;
 	}
 	
 	public static class Player{
