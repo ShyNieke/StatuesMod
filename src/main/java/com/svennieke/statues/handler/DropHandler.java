@@ -3,7 +3,6 @@ package com.svennieke.statues.handler;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.fakeentity.IFakeEntity;
 import com.svennieke.statues.init.StatuesBlocks;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityBlaze;

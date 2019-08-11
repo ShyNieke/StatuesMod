@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockDolphin_Statue extends BlockDolphin implements IStatue, ITileEntityProvider{
+public class BlockDolphin_Statue extends BlockDolphin implements ITileEntityProvider, IStatue {
 
 	private int TIER;
 

@@ -1,7 +1,6 @@
 package com.svennieke.statues.config;
 
 import com.svennieke.statues.Reference;
-
 import net.minecraftforge.common.config.Config;
 import net.minecraftforge.common.config.ConfigManager;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -37,7 +36,11 @@ public class StatuesConfigGen {
 	}
 	
 	public static class General{
-		
+
+		@Config.RequiresMcRestart
+		@Config.Comment("Disables all functional statue tiers (tiers that usually drop items) [Default: false]")
+		public boolean nonFunctional = false;
+
 		@Config.RequiresMcRestart
 		@Config.Comment("Tier 1 needs to be crafted with Statue Core (Default: true)" +
 						" Disabling this makes tier1 statues drop from mobs.")

@@ -1,9 +1,5 @@
 package com.svennieke.statues.init;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.ArrayList;
-
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.entity.fakeentity.FakeBlaze;
@@ -22,7 +18,6 @@ import com.svennieke.statues.entity.fakeentity.FakeWitch;
 import com.svennieke.statues.entity.fakeentity.FakeWitherSkeleton;
 import com.svennieke.statues.entity.fakeentity.FakeZombie;
 import com.svennieke.statues.entity.fakeentity.FakeZombiePigman;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
@@ -44,6 +39,10 @@ import net.minecraft.entity.monster.EntityWitherSkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.ArrayList;
 
 public class StatuesHoliday {
 	

@@ -1,7 +1,5 @@
 package com.svennieke.statues.init;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.items.ItemCharredMarshmallow;
 import com.svennieke.statues.items.ItemCup;
@@ -11,13 +9,14 @@ import com.svennieke.statues.items.ItemPlayerCompass;
 import com.svennieke.statues.items.ItemRoyalNugget;
 import com.svennieke.statues.items.ItemStatueCore;
 import com.svennieke.statues.items.ItemTea;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.ArrayList;
 
 @EventBusSubscriber
 public class StatuesItems {

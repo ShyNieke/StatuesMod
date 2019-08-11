@@ -1,8 +1,5 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.ArrayList;
-import java.util.Random;
-
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockEtho;
 import com.svennieke.statues.compat.list.StatueLootList;
@@ -10,7 +7,6 @@ import com.svennieke.statues.entity.fakeentity.FakeCreeper;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.StatueTileEntity;
 import com.svennieke.statues.util.RandomLists;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -26,7 +22,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockEtho_Statue extends BlockEtho implements IStatue, ITileEntityProvider{
+import java.util.ArrayList;
+import java.util.Random;
+
+public class BlockEtho_Statue extends BlockEtho implements ITileEntityProvider, IStatue {
 	
 	private int TIER;
 

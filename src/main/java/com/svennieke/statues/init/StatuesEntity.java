@@ -25,7 +25,6 @@ import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeShulkerBullet
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.tileentity.ShulkerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;

@@ -1,7 +1,6 @@
 package com.svennieke.statues.init;
 
 import com.svennieke.statues.Reference;
-
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;

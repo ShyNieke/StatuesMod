@@ -3,7 +3,6 @@ package com.svennieke.statues.init;
 import com.svennieke.statues.renderer.gui.GuiShulkerStatue;
 import com.svennieke.statues.tileentity.ShulkerStatueTileEntity;
 import com.svennieke.statues.tileentity.container.ContainerShulkerStatue;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;

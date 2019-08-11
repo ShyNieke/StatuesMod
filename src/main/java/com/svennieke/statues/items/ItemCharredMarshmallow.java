@@ -2,7 +2,6 @@ package com.svennieke.statues.items;
 
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
-
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 

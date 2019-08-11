@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class BlockChickenJockey_Statue extends BlockChickenJockey implements IStatue, ITileEntityProvider{
+public class BlockChickenJockey_Statue extends BlockChickenJockey implements ITileEntityProvider, IStatue {
 	
 	private int TIER;
 	

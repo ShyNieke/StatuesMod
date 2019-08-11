@@ -46,6 +46,7 @@ import com.svennieke.statues.blocks.Statues.BlockWitch_Statue;
 import com.svennieke.statues.blocks.Statues.BlockZombie_Statue;
 import com.svennieke.statues.blocks.decorative.BlockDisplayStand;
 import com.svennieke.statues.blocks.decorative.BlockPebble;
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.items.ItemBlockStatue;
 import net.minecraft.block.Block;
 import net.minecraft.item.EnumDyeColor;
@@ -251,8 +252,9 @@ public class StatuesBlocks {
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}
 
-	public static <T extends Block> Block[] registerStatue(T block, int maxTiers)
+	public static <T extends Block> Block[] registerStatue(T block, int tiers)
 	{
+		int maxTiers = (tiers >= 2 && StatuesConfigGen.general.nonFunctional) ? 2 : tiers;
 	    Block[] allBlocks = new Block[maxTiers];
 
 	    for(int i = 0; i < maxTiers; i++)

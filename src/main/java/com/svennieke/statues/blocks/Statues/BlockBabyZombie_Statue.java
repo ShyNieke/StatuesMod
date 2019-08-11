@@ -1,14 +1,11 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockBabyZombie;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.entity.fakeentity.FakeZombie;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +22,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockBabyZombie_Statue extends BlockBabyZombie implements IStatue, ITileEntityProvider{
+import java.util.ArrayList;
+
+public class BlockBabyZombie_Statue extends BlockBabyZombie implements ITileEntityProvider, IStatue {
 	
 	private int TIER;
 	

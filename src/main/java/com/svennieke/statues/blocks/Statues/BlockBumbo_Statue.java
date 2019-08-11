@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Optional.Method;
 
-public class BlockBumbo_Statue extends BlockBumbo{
+public class BlockBumbo_Statue extends BlockBumbo {
 		
 	public BlockBumbo_Statue(String unlocalised, String registry) {
 		super();

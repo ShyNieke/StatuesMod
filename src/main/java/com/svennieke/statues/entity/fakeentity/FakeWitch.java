@@ -1,7 +1,5 @@
 package com.svennieke.statues.entity.fakeentity;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityWitch;
@@ -20,6 +18,8 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class FakeWitch extends EntityWitch implements IFakeEntity{
 	

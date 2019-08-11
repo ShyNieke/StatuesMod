@@ -1,8 +1,5 @@
 package com.svennieke.statues.packets;
 
-import com.svennieke.statues.Statues;
-
-import net.minecraftforge.event.world.ChunkEvent.Load;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;

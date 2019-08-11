@@ -28,7 +28,6 @@ import com.svennieke.statues.renderer.PlayerStatueRenderer;
 import com.svennieke.statues.renderer.StatueBatRenderer;
 import com.svennieke.statues.renderer.StatuesState;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderBlaze;

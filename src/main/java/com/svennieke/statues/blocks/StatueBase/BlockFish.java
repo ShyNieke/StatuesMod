@@ -2,7 +2,6 @@ package com.svennieke.statues.blocks.StatueBase;
 
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.blocks.BaseBlock.BaseCutout;
-import com.svennieke.statues.blocks.BaseBlock.BaseTranslucent;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

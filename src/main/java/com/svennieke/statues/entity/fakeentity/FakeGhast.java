@@ -1,11 +1,6 @@
 package com.svennieke.statues.entity.fakeentity;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeLargeFireball;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIFindEntityNearestPlayer;
@@ -21,6 +16,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public class FakeGhast extends EntityGhast implements IFakeEntity{
 

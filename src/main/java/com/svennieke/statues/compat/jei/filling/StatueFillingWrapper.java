@@ -1,10 +1,10 @@
 package com.svennieke.statues.compat.jei.filling;
 
-import java.util.ArrayList;
-
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
 
 public class StatueFillingWrapper extends BlankRecipeWrapper {
 	private final ItemStack statue;

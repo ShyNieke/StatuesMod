@@ -1,17 +1,10 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.List;
-import java.util.UUID;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.blocks.StatueBase.BlockPlayer;
 import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesItems;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
-import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -39,6 +32,10 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.List;
+import java.util.UUID;
 
 public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvider{
 	

@@ -1,10 +1,7 @@
 package com.svennieke.statues.entity.fakeentity;
 
-import javax.annotation.Nullable;
-
 import com.google.common.base.Predicate;
 import com.svennieke.statues.entity.fakeentity.fakeprojectiles.FakeShulkerBullet;
-
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -21,6 +18,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class FakeShulker extends EntityShulker implements IFakeEntity {
 

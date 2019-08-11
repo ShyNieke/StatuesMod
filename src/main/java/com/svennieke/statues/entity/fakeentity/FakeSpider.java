@@ -1,9 +1,5 @@
 package com.svennieke.statues.entity.fakeentity;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -40,6 +36,9 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public class FakeSpider extends EntitySpider implements IFakeEntity{
 	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>createKey(FakeSpider.class, DataSerializers.BYTE);

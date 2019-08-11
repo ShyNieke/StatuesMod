@@ -1,8 +1,5 @@
 package com.svennieke.statues.compat.jei;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.svennieke.statues.blocks.Statues.BlockBabyZombie_Statue;
 import com.svennieke.statues.blocks.Statues.BlockBlaze_Statue;
 import com.svennieke.statues.blocks.Statues.BlockChickenJockey_Statue;
@@ -39,9 +36,9 @@ import com.svennieke.statues.compat.jei.statueloot.StatueLootCategory;
 import com.svennieke.statues.compat.jei.statueloot.StatueLootHandler;
 import com.svennieke.statues.compat.jei.statueloot.StatueLootWrapper;
 import com.svennieke.statues.compat.list.StatueLootList;
+import com.svennieke.statues.config.StatuesConfigGen;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesItems;
-
 import mezz.jei.api.IJeiHelpers;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
@@ -51,26 +48,33 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @JEIPlugin
 public class StatueJEIPlugin implements IModPlugin{
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registry) {
 		IJeiHelpers jeiHelpers = registry.getJeiHelpers();
-        registry.addRecipeCategories(new StatueLootCategory(jeiHelpers.getGuiHelper()));
-        registry.addRecipeCategories(new StatueFillingCategory(jeiHelpers.getGuiHelper()));
+
+		if(!StatuesConfigGen.general.nonFunctional) {
+	        registry.addRecipeCategories(new StatueLootCategory(jeiHelpers.getGuiHelper()));
+	        registry.addRecipeCategories(new StatueFillingCategory(jeiHelpers.getGuiHelper()));
+		}
 	}
 	
 	@Override
 	public void register(IModRegistry registry) {
-		registry.addRecipeHandlers(new StatueLootHandler());
-		registry.addRecipeHandlers(new StatueFillingHandler());
-		
-		registry.addRecipes(getStatueRecipes(), StatueLootCategory.UID);
-		registry.addRecipeCatalyst(new ItemStack(StatuesItems.core), StatueLootCategory.UID);
-		
-		registry.addRecipes(getFillingRecipes(), StatueFillingCategory.UID);
-		registry.addRecipeCatalyst(new ItemStack(StatuesItems.core), StatueFillingCategory.UID);
-
+		if(!StatuesConfigGen.general.nonFunctional) {
+			registry.addRecipeHandlers(new StatueLootHandler());
+			registry.addRecipeHandlers(new StatueFillingHandler());
+			
+			registry.addRecipes(getStatueRecipes(), StatueLootCategory.UID);
+			registry.addRecipeCatalyst(new ItemStack(StatuesItems.core), StatueLootCategory.UID);
+			
+			registry.addRecipes(getFillingRecipes(), StatueFillingCategory.UID);
+			registry.addRecipeCatalyst(new ItemStack(StatuesItems.core), StatueFillingCategory.UID);
+		}
 	}
 	
 	private List<StatueLootWrapper> getStatueRecipes() {

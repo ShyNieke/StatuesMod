@@ -1,6 +1,7 @@
 package com.svennieke.statues.compat.ct;
 
 import com.svennieke.statues.compat.list.StatueLootList;
+import com.svennieke.statues.config.StatuesConfigGen;
 
 import crafttweaker.IAction;
 import crafttweaker.api.item.IItemStack;
@@ -24,7 +25,9 @@ public class ChangeStatueLoot implements IAction{
 	@Override
 	public void apply()
 	{
-		StatueLootList.changeLoot(statue, stack1, stack2, stack3);
+		if(!StatuesConfigGen.general.nonFunctional) {
+			StatueLootList.changeLoot(statue, stack1, stack2, stack3);
+		}
 	}
 
 	@Override

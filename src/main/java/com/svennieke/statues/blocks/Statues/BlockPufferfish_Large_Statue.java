@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class BlockPufferfish_Large_Statue extends BlockPufferfish implements IStatue, ITileEntityProvider{
+public class BlockPufferfish_Large_Statue extends BlockPufferfish implements ITileEntityProvider, IStatue {
 
 	private int TIER;
 

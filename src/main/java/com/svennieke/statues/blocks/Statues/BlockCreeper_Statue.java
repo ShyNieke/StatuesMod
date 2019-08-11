@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.ArrayList;
 
-public class BlockCreeper_Statue extends BlockCreeper implements IStatue, ITileEntityProvider{
+public class BlockCreeper_Statue extends BlockCreeper implements ITileEntityProvider, IStatue {
 	
 	private int TIER;
 	

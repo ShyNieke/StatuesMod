@@ -1,12 +1,9 @@
 package com.svennieke.statues.blocks.Statues;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.blocks.IStatue;
 import com.svennieke.statues.blocks.StatueBase.BlockSnowGolem;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +17,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BlockSnowGolem_Statue extends BlockSnowGolem implements IStatue, ITileEntityProvider{
+import java.util.ArrayList;
+
+public class BlockSnowGolem_Statue extends BlockSnowGolem implements ITileEntityProvider, IStatue {
 	
 	private int TIER;
 	

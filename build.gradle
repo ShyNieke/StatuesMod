@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "0.8.8.1"
+version = "0.8.9"
 group= "com.svennieke.statues" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "statues-1.12.X"
 
@@ -67,7 +67,7 @@ dependencies {
         transitive = false
     }
 	
-	compile files("lib/The-Cactus-Mod-1.3.jar")
+	compile files("lib/The-Cactus-Mod-1.3.2.jar")
 }
 
 processResources {

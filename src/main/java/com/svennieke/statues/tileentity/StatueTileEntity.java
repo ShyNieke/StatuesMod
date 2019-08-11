@@ -1,10 +1,5 @@
 package com.svennieke.statues.tileentity;
 
-import java.util.Random;
-
-import javax.annotation.Nullable;
-
-import com.svennieke.statues.Statues;
 import com.svennieke.statues.compat.list.StatueLootList;
 import com.svennieke.statues.compat.waila.StatueTimerProvider;
 import com.svennieke.statues.config.StatuesConfigGen;
@@ -15,7 +10,6 @@ import com.svennieke.statues.items.ItemTea;
 import com.svennieke.statues.packets.StatuesPacketHandler;
 import com.svennieke.statues.packets.StatuesProgressMessage;
 import com.svennieke.statues.util.RandomLists;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -49,6 +43,9 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Optional.Method;
+
+import javax.annotation.Nullable;
+import java.util.Random;
 
 public class StatueTileEntity extends TileEntity implements ITickable, iStatueBehaviors{
 	public int cooldown;

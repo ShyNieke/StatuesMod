@@ -1,8 +1,5 @@
 package com.svennieke.statues.entity;
 
-import java.util.Calendar;
-import java.util.Random;
-
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
@@ -17,6 +14,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+
+import java.util.Calendar;
+import java.util.Random;
 
 public class EntityStatueBat extends EntityBat{
 

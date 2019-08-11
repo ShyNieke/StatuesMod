@@ -1,10 +1,9 @@
 package com.svennieke.statues.items;
 
-import com.svennieke.statues.init.StatuesBlocks;
-
 import baubles.api.BaubleType;
 import baubles.api.IBauble;
 import baubles.api.render.IRenderBauble;
+import com.svennieke.statues.init.StatuesBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;

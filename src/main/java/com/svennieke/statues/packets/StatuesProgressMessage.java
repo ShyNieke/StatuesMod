@@ -2,7 +2,6 @@ package com.svennieke.statues.packets;
 
 import com.svennieke.statues.compat.waila.StatueProgressInfo;
 import com.svennieke.statues.compat.waila.StatueTimerProvider;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;

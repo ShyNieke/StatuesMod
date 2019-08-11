@@ -1,12 +1,7 @@
 package com.svennieke.statues.blocks.StatueBase;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.blocks.BaseBlock.BaseNormal;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -15,6 +10,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class BlockSpider extends BaseNormal{
 	

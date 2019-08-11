@@ -1,9 +1,6 @@
 package com.svennieke.statues.entity.fakeentity;
 
-import javax.annotation.Nullable;
-
 import com.google.common.base.Predicate;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,6 +33,8 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nullable;
 
 public class FakeGuardian extends EntityGuardian implements IFakeEntity{
 

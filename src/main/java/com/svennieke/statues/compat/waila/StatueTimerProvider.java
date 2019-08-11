@@ -1,12 +1,9 @@
 package com.svennieke.statues.compat.waila;
 
-import java.util.List;
-
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -17,6 +14,8 @@ import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+
+import java.util.List;
 
 @WailaPlugin
 public class StatueTimerProvider implements IWailaDataProvider, IWailaPlugin {

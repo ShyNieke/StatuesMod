@@ -1,11 +1,8 @@
 package com.svennieke.statues.items;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.init.StatuesItems;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -15,6 +12,8 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
+
+import java.util.ArrayList;
 
 public class ItemMarshmallow extends ItemFood {
 	public ItemMarshmallow(int amount, float saturation, String unlocalised) {

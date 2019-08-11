@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockTurtle_Statue extends BlockTurtleStatue implements IStatue, ITileEntityProvider{
+public class BlockTurtle_Statue extends BlockTurtleStatue implements ITileEntityProvider, IStatue {
 
 	private int TIER;
 

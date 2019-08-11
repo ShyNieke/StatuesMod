@@ -1,16 +1,15 @@
 package com.svennieke.statues.compat.list;
 
-import java.util.ArrayList;
-
 import com.svennieke.statues.init.StatuesBlocks;
 import com.svennieke.statues.init.StatuesItems;
-
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+
+import java.util.ArrayList;
 
 public class StatueLootList {
 	public static ArrayList<LootInfo> lootList = new ArrayList<>();

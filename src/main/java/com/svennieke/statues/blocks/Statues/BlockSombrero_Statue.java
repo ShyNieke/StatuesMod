@@ -2,7 +2,6 @@ package com.svennieke.statues.blocks.Statues;
 
 import com.svennieke.statues.blocks.StatueBase.BlockSombrero;
 import com.svennieke.statues.init.StatuesBlocks;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;

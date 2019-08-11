@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockDrowned_Statue extends BlockDrowned implements IStatue, ITileEntityProvider{
+public class BlockDrowned_Statue extends BlockDrowned implements ITileEntityProvider, IStatue {
 
 	private int TIER;
 

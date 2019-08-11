@@ -1,7 +1,6 @@
 package com.svennieke.statues.tileentity.container.slots;
 
 import com.svennieke.statues.blocks.Statues.BlockShulker_Statue;
-
 import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;

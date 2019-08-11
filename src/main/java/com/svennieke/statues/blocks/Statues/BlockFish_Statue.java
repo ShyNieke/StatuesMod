@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlockFish_Statue extends BlockFish implements IStatue, ITileEntityProvider{
+public class BlockFish_Statue extends BlockFish implements ITileEntityProvider, IStatue {
 
 	private int TIER;
 

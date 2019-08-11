@@ -1,7 +1,6 @@
 package com.svennieke.statues.compat.jei.statueloot;
 
 import com.svennieke.statues.Reference;
-
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IDrawableStatic;

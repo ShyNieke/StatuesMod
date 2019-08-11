@@ -5,7 +5,6 @@ import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.tileentity.PlayerStatueTileEntity;
 import com.svennieke.statues.tileentity.StatueTileEntity;
-
 import mcjty.theoneprobe.api.IProbeHitData;
 import mcjty.theoneprobe.api.IProbeInfo;
 import mcjty.theoneprobe.api.IProbeInfoProvider;

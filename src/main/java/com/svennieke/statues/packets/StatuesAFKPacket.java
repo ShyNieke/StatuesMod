@@ -1,7 +1,6 @@
 package com.svennieke.statues.packets;
 
 import com.svennieke.statues.handler.FishHandler;
-
 import io.netty.buffer.ByteBuf;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;

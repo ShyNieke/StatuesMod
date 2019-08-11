@@ -1,15 +1,8 @@
 package com.svennieke.statues.tileentity;
 
-import java.time.LocalDateTime;
-import java.time.Month;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import com.mojang.authlib.GameProfile;
 import com.svennieke.statues.blocks.Statues.BlockShulker_Statue;
 import com.svennieke.statues.tileentity.container.ContainerShulkerStatue;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityMob;
@@ -34,6 +27,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.common.util.FakePlayerFactory;
+
+import javax.annotation.Nullable;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.util.UUID;
 
 public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements ITickable, ISidedInventory, iStatueBehaviors{
 

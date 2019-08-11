@@ -3,7 +3,6 @@ package com.svennieke.statues.items;
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.config.StatuesConfigGen;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;

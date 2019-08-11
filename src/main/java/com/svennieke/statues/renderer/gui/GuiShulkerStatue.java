@@ -2,7 +2,6 @@ package com.svennieke.statues.renderer.gui;
 
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.tileentity.container.ContainerShulkerStatue;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;

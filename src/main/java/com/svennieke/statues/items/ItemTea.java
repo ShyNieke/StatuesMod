@@ -1,11 +1,8 @@
 package com.svennieke.statues.items;
 
-import java.util.List;
-
 import com.svennieke.statues.Reference;
 import com.svennieke.statues.Statues;
 import com.svennieke.statues.init.StatuesItems;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -19,6 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class ItemTea extends ItemFood {
 	public ItemTea(String unlocalised) {
