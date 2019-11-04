@@ -37,8 +37,6 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     public int checkerCooldown;
     public BlockPos playerPos;
 
-
-
     public String setName(String name) {
         return this.BlockName = name;
     }

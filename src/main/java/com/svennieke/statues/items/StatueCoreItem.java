@@ -1,6 +1,5 @@
 package com.svennieke.statues.items;
 
-import com.svennieke.statues.Statues;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -41,11 +40,9 @@ public class StatueCoreItem extends Item {
 
 	@Override
 	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entityIn, Hand handIn) {
-		Statues.LOGGER.info("test");
 		if (!(entityIn instanceof PlayerEntity) && !isLocked) {
 			if(stack.hasTag()) {
 				CompoundNBT nbt = stack.getTag();
-				Statues.LOGGER.info(nbt);
 				if(!nbt.getString(entityTag).isEmpty()) {
 					this.isLocked = true;
 					return false;

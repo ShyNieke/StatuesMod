@@ -199,7 +199,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					{
 						newProfile = new GameProfile((UUID)null, this.playerName);
 						getTE(worldIn, pos).setName(this.playerName);
-						getTE(worldIn, pos).setPlayerProfile(newProfile);
+						if(newProfile != null) {
+							getTE(worldIn, pos).setPlayerProfile(newProfile);
+						}
 					}
 					else
 					{
