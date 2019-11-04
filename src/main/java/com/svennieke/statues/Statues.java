@@ -3,6 +3,7 @@ package com.svennieke.statues;
 import com.svennieke.statues.config.StatuesConfig;
 import com.svennieke.statues.handlers.ClientHandler;
 import com.svennieke.statues.handlers.DropHandler;
+import com.svennieke.statues.handlers.SpecialHandler;
 import com.svennieke.statues.recipes.StatueLootList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -31,6 +32,7 @@ public class Statues {
 
 //		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
+		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::registerRenders);
