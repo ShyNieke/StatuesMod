@@ -1,8 +1,0 @@
-{
-	"variants": {
-		"facing=east": { "model": "statues:block/sheep_statue_lightblue", "y": 90},
-		"facing=north": { "model": "statues:block/sheep_statue_lightblue"},
-		"facing=west": { "model": "statues:block/sheep_statue_lightblue", "y": 270},
-		"facing=south": { "model": "statues:block/sheep_statue_lightblue", "y": 180}
-	}
-}

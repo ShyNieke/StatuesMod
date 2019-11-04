@@ -10,35 +10,68 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'eclipse'
+//apply plugin: 'eclipse'
+//apply plugin: 'maven-publish'
 
-version = '0.8.7'
+version = '0.1.1'
 group = 'com.svennieke.statues' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'statues-1.13'
+archivesBaseName = 'Statues-1.14.4'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20180921-1.13'
-		runs {
+    mappings channel: 'snapshot', version: '20190719-1.14.3'
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    
+    // accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
         client {
             workingDirectory project.file('run')
+
             // Recommended logging data for a userdev environment
             // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
             mods {
                 statues {
                     source sourceSets.main
                 }
             }
         }
+
         server {
             workingDirectory project.file('run')
+
             // Recommended logging data for a userdev environment
-            //  property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+            mods {
+                statues {
+                    source sourceSets.main
+                }
+            }
+        }
+		
+		
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+
             mods {
                 statues {
                     source sourceSets.main
@@ -48,17 +81,38 @@ minecraft {
     }
 }
 
+repositories {
+	maven {
+		// location of the maven that hosts JEI files
+		name = "Progwml6 maven"
+		url = "https://dvs1.progwml6.com/files/maven/"
+	}
+	maven {
+        url "http://maven.blamejared.com"
+	}
+    maven {
+        // location of a maven mirror for JEI files, as a fallback
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
+	maven { 
+		url "http://tehnut.info/maven" 
+	}
+}
+
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.13.2-25.0.70'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.69'
+    compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18")
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.0.91")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
-		attributes([
+        attributes([
             "Specification-Title": "statues",
             "Specification-Vendor": "svennieke",
-            "Specification-Version": "1", // We are version 1 of ourselves
+            "Specification-Version": "1",
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"svennieke",

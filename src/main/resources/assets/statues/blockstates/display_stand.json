@@ -1,5 +1,5 @@
 {
 	"variants": {
-        "": { "model": "statues:block/display_stand" }
+		"": { "model": "statues:block/display_stand"}
 	}
 }

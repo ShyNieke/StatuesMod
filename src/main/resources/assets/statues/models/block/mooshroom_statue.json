@@ -9,7 +9,7 @@
 		"Detail1": "block/quartz_block_side",
 		"Horn": "block/iron_bars",
 		"Udder": "block/pink_tulip",
-		"Spots": "block/stone_slab_top",
+		"Spots": "block/smooth_stone",
 		"Base": "block/quartz_block_bottom",
 		"ShroomStem": "block/mushroom_block_inside",
 		"ShroomTop": "block/red_mushroom_block",

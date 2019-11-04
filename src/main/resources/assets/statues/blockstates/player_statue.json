@@ -1,8 +1,12 @@
 {
 	"variants": {
-		"facing=east": { "model": "statues:block/player_statue", "y": 90},
-		"facing=north": { "model": "statues:block/player_statue"},
-		"facing=west": { "model": "statues:block/player_statue", "y": 270},
-		"facing=south": { "model": "statues:block/player_statue", "y": 180}
+		"online=false,facing=east": { "model": "statues:block/player_statue", "y": 90},
+		"online=false,facing=north": { "model": "statues:block/player_statue"},
+		"online=false,facing=west": { "model": "statues:block/player_statue", "y": 270},
+		"online=false,facing=south": { "model": "statues:block/player_statue", "y": 180},
+		"online=true,facing=east": { "model": "statues:block/player_statue", "y": 90},
+		"online=true,facing=north": { "model": "statues:block/player_statue"},
+		"online=true,facing=west": { "model": "statues:block/player_statue", "y": 270},
+		"online=true,facing=south": { "model": "statues:block/player_statue", "y": 180}
 	}
 }

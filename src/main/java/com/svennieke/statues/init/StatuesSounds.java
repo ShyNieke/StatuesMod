@@ -1,80 +1,71 @@
 package com.svennieke.statues.init;
 
+import com.google.common.collect.Lists;
 import com.svennieke.statues.Reference;
-import com.svennieke.statues.Statues;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-@ObjectHolder(Reference.MOD_ID)
 public class StatuesSounds {
+    private static List<SoundEvent> sounds = Lists.newArrayList();
 
-	public static SoundEvent wasteland_hello;
-	public static SoundEvent wasteland_onwards;
-	public static SoundEvent wasteland_tea;
-    public static SoundEvent campfire_hello, campfire_hello2, campfire_hello3, campfire_hello4, campfire_hello5, campfire_hello6, campfire_hello7, campfire_hello8, campfire_hello9, campfire_hello_random;
-    public static SoundEvent campfire_greetings, campfire_greetings2, campfire_greetings3, campfire_greetings_random;
-    public static SoundEvent campfire_bye, campfire_bye2, campfire_bye_random;
-    public static SoundEvent campfire_cold, campfire_cold2, campfire_cold3, campfire_cold_random;
-    public static SoundEvent campfire_snacks, campfire_snacks2, campfire_snacks3, campfire_snacks4, campfire_snacks_random;
-    public static SoundEvent campfire_marshmallow, campfire_marshmallow2, campfire_marshmallow3, campfire_marshmallow4, campfire_marshmallow5, campfire_marshmallow6, campfire_marshmallow7, campfire_marshmallow8, campfire_marshmallow9, campfire_marshmallow_random;
+    public static final SoundEvent wasteland_hello = createSound("wasteland.hello");
+    public static final SoundEvent wasteland_onwards = createSound("wasteland.onwards");
+    public static final SoundEvent wasteland_tea = createSound("wasteland.tea");
 
-	@SubscribeEvent
-    public static void registerSounds(RegistryEvent.Register<SoundEvent> evt)
+    public static final SoundEvent campfire_hello = createSound("campfire.hello");
+    public static final SoundEvent campfire_hello2 = createSound("campfire.hello2");
+    public static final SoundEvent campfire_hello3 = createSound("campfire.hello3");
+    public static final SoundEvent campfire_hello4 = createSound("campfire.hello4");
+    public static final SoundEvent campfire_hello5 = createSound("campfire.hello5");
+    public static final SoundEvent campfire_hello6 = createSound("campfire.hello6");
+    public static final SoundEvent campfire_hello7 = createSound("campfire.hello7");
+    public static final SoundEvent campfire_hello8 = createSound("campfire.hello8");
+    public static final SoundEvent campfire_hello9 = createSound("campfire.hello9");
+    public static final SoundEvent campfire_hello_random = createSound("campfire.hello.random");
+    public static final SoundEvent campfire_greetings = createSound("campfire.greetings");
+    public static final SoundEvent campfire_greetings2 = createSound("campfire.greetings2");
+    public static final SoundEvent campfire_greetings3 = createSound("campfire.greetings3");
+    public static final SoundEvent campfire_greetings_random = createSound("campfire.greetings.random");
+    public static final SoundEvent campfire_bye = createSound("campfire.bye");
+    public static final SoundEvent campfire_bye2 = createSound("campfire.bye2");
+    public static final SoundEvent campfire_bye_random = createSound("campfire.bye.random");
+    public static final SoundEvent campfire_cold = createSound("campfire.cold");
+    public static final SoundEvent campfire_cold2 = createSound("campfire.cold2");
+    public static final SoundEvent campfire_cold3 = createSound("campfire.cold3");
+    public static final SoundEvent campfire_cold_random = createSound("campfire.cold.random");
+    public static final SoundEvent campfire_snacks = createSound("campfire.snacks");
+    public static final SoundEvent campfire_snacks2 = createSound("campfire.snacks2");
+    public static final SoundEvent campfire_snacks3 = createSound("campfire.snacks3");
+    public static final SoundEvent campfire_snacks4 = createSound("campfire.snacks4");
+    public static final SoundEvent campfire_snacks_random = createSound("campfire.snacks.random");
+    public static final SoundEvent campfire_marshmallow = createSound("campfire.marshmallow");
+    public static final SoundEvent campfire_marshmallow2 = createSound("campfire.marshmallow2");
+    public static final SoundEvent campfire_marshmallow3 = createSound("campfire.marshmallow3");
+    public static final SoundEvent campfire_marshmallow4 = createSound("campfire.marshmallow4");
+    public static final SoundEvent campfire_marshmallow5 = createSound("campfire.marshmallow5");
+    public static final SoundEvent campfire_marshmallow6 = createSound("campfire.marshmallow6");
+    public static final SoundEvent campfire_marshmallow7 = createSound("campfire.marshmallow7");
+    public static final SoundEvent campfire_marshmallow8 = createSound("campfire.marshmallow8");
+    public static final SoundEvent campfire_marshmallow9 = createSound("campfire.marshmallow9");
+    public static final SoundEvent campfire_marshmallow_random = createSound("campfire.marshmallow.random");
+
+    private static SoundEvent createSound(String soundName)
     {
-		Statues.LOGGER.debug("Registering Statues Sounds");
-        wasteland_hello = registerSound(evt.getRegistry(), "wasteland.hello");
-        wasteland_onwards = registerSound(evt.getRegistry(), "wasteland.onwards");
-        wasteland_tea = registerSound(evt.getRegistry(), "wasteland.tea");
-
-        campfire_hello = registerSound(evt.getRegistry(), "campfire.hello");
-        campfire_hello2 = registerSound(evt.getRegistry(), "campfire.hello2");
-        campfire_hello3 = registerSound(evt.getRegistry(), "campfire.hello3");
-        campfire_hello4 = registerSound(evt.getRegistry(), "campfire.hello4");
-        campfire_hello5 = registerSound(evt.getRegistry(), "campfire.hello5");
-        campfire_hello6 = registerSound(evt.getRegistry(), "campfire.hello6");
-        campfire_hello7 = registerSound(evt.getRegistry(), "campfire.hello7");
-        campfire_hello8 = registerSound(evt.getRegistry(), "campfire.hello8");
-        campfire_hello9 = registerSound(evt.getRegistry(), "campfire.hello9");
-        campfire_hello_random = registerSound(evt.getRegistry(), "campfire.hello.random");
-        campfire_greetings = registerSound(evt.getRegistry(), "campfire.greetings");
-        campfire_greetings2 = registerSound(evt.getRegistry(), "campfire.greetings2");
-        campfire_greetings3 = registerSound(evt.getRegistry(), "campfire.greetings3");
-        campfire_greetings_random = registerSound(evt.getRegistry(), "campfire.greetings.random");
-        campfire_bye = registerSound(evt.getRegistry(), "campfire.bye");
-        campfire_bye2 = registerSound(evt.getRegistry(), "campfire.bye2");
-        campfire_bye_random = registerSound(evt.getRegistry(), "campfire.bye.random");
-        campfire_cold = registerSound(evt.getRegistry(), "campfire.cold");
-        campfire_cold2 = registerSound(evt.getRegistry(), "campfire.cold2");
-        campfire_cold3 = registerSound(evt.getRegistry(), "campfire.cold3");
-        campfire_cold_random = registerSound(evt.getRegistry(), "campfire.cold.random");
-        campfire_snacks = registerSound(evt.getRegistry(), "campfire.snacks");
-        campfire_snacks2 = registerSound(evt.getRegistry(), "campfire.snacks2");
-        campfire_snacks3 = registerSound(evt.getRegistry(), "campfire.snacks3");
-        campfire_snacks4 = registerSound(evt.getRegistry(), "campfire.snacks4");
-        campfire_snacks_random = registerSound(evt.getRegistry(), "campfire.snacks.random");
-        campfire_marshmallow = registerSound(evt.getRegistry(), "campfire.marshmallow");
-        campfire_marshmallow2 = registerSound(evt.getRegistry(), "campfire.marshmallow2");
-        campfire_marshmallow3 = registerSound(evt.getRegistry(), "campfire.marshmallow3");
-        campfire_marshmallow4 = registerSound(evt.getRegistry(), "campfire.marshmallow4");
-        campfire_marshmallow5 = registerSound(evt.getRegistry(), "campfire.marshmallow5");
-        campfire_marshmallow6 = registerSound(evt.getRegistry(), "campfire.marshmallow6");
-        campfire_marshmallow7 = registerSound(evt.getRegistry(), "campfire.marshmallow7");
-        campfire_marshmallow8 = registerSound(evt.getRegistry(), "campfire.marshmallow8");
-        campfire_marshmallow9 = registerSound(evt.getRegistry(), "campfire.marshmallow9");
-        campfire_marshmallow_random = registerSound(evt.getRegistry(), "campfire.marshmallow.random");
+        ResourceLocation location = new ResourceLocation(Reference.MOD_ID, soundName);
+        SoundEvent event = new SoundEvent(location);
+        event.setRegistryName(location);
+        sounds.add(event);
+        return event;
     }
 
-    private static SoundEvent registerSound(IForgeRegistry<SoundEvent> registry, String soundName)
-    {
-        ResourceLocation name = new ResourceLocation(Reference.MOD_ID, soundName);
-        SoundEvent sound = new SoundEvent(name).setRegistryName(name);
-        registry.register(sound);
-        return sound;
+    @SubscribeEvent
+    public static void createSound(RegistryEvent.Register<SoundEvent> event) {
+        event.getRegistry().registerAll(sounds.toArray(new SoundEvent[0]));
     }
 }

@@ -1,8 +1,0 @@
-{
-	"variants": {
-		"facing=east": { "model": "statues:block/villager_br_statue", "y": 90},
-		"facing=north": { "model": "statues:block/villager_br_statue"},
-		"facing=west": { "model": "statues:block/villager_br_statue", "y": 270},
-		"facing=south": { "model": "statues:block/villager_br_statue", "y": 180}
-	}
-}

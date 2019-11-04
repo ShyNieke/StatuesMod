@@ -1,0 +1,12 @@
+{
+	"variants": {
+		"interactive=false,facing=east": { "model": "statues:block/campfire_statue", "y": 90},
+		"interactive=false,facing=north": { "model": "statues:block/campfire_statue"},
+		"interactive=false,facing=west": { "model": "statues:block/campfire_statue", "y": 270},
+		"interactive=false,facing=south": { "model": "statues:block/campfire_statue", "y": 180},
+		"interactive=true,facing=east": { "model": "statues:block/campfire_statue", "y": 90},
+		"interactive=true,facing=north": { "model": "statues:block/campfire_statue"},
+		"interactive=true,facing=west": { "model": "statues:block/campfire_statue", "y": 270},
+		"interactive=true,facing=south": { "model": "statues:block/campfire_statue", "y": 180}
+	}
+}
