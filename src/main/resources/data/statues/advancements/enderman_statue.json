@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Enderman Statue"
+	},
+	"description": {
+	  "text": "Obtain a Enderman Statue"
+	},
+	"icon": {
+	  "item": "statues:enderman_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:enderman_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:root"
+}

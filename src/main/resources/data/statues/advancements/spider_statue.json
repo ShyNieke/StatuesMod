@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Spider Statue"
+	},
+	"description": {
+	  "text": "Obtain a Spider Statue. Did you know it is spooky in your offhand?"
+	},
+	"icon": {
+	  "item": "statues:spider_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:spider_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:evoker_statue"
+}

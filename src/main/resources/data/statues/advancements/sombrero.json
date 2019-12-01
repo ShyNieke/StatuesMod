@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Sombrero!"
+	},
+	"description": {
+	  "text": "Obtain a Sombrero, look in hot biomes"
+	},
+	"icon": {
+	  "item": "statues:sombrero"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": false,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:sombrero"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:totem_of_undying_statue"
+}

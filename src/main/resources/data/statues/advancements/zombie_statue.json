@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Zombie Statue"
+	},
+	"description": {
+	  "text": "Obtain a Zombie Statue"
+	},
+	"icon": {
+	  "item": "statues:zombie_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:zombie_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:root"
+}

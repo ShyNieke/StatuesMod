@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Endermite statue"
+	},
+	"description": {
+	  "text": "Obtain a Endermite Statue"
+	},
+	"icon": {
+	  "item": "statues:endermite_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:endermite_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:enderman_statue"
+}

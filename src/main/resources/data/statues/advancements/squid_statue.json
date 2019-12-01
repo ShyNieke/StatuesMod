@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Squid Statue"
+	},
+	"description": {
+	  "text": "Obtain a Squid Statue"
+	},
+	"icon": {
+	  "item": "statues:squid_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:squid_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:salmon_statue"
+}

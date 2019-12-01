@@ -1,13 +1,13 @@
 modLoader="javafml"
 loaderVersion="[28,)"
-issueTrackerURL="https://github.com/svennieke/StatuesMod/issues"
+issueTrackerURL="https://github.com/ShyNieke/StatuesMod/issues"
 
 [[mods]]
 modId="statues"
 version="${file.jarVersion}"
 displayName="Statues Mod"
 displayURL="https://minecraft.curseforge.com/projects/statues"
-authors="svennieke, Mrbysco"
+authors="ShyNieke, Mrbysco"
 description='''
 Just a little functional decoration.
 '''

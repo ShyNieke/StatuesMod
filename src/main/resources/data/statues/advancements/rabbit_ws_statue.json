@@ -1,0 +1,33 @@
+{
+  "display": {
+	"title": {
+	  "text": "Rabbit statue yet again..."
+	},
+	"description": {
+	  "text": "It is too late now!"
+	},
+	"icon": {
+	  "item": "statues:rabbit_ws_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"rabbit_statue_ws": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:rabbit_ws_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "rewards": {
+	"function": "statues:killer_rabbit"
+  },
+  "parent": "statues:rabbit_wh_statue"
+}

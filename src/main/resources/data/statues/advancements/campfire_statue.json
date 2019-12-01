@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Campfire Statue"
+	},
+	"description": {
+	  "text": "You found Etho's secret statue"
+	},
+	"icon": {
+	  "item": "statues:campfire_statue"
+	},
+	"frame": "challenge",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": true
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:campfire_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:creeper_statue"
+}

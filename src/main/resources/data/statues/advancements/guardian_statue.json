@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Guardian Statue"
+	},
+	"description": {
+	  "text": "Obtain a Guardian Statue"
+	},
+	"icon": {
+	  "item": "statues:guardian_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:guardian_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:root"
+}

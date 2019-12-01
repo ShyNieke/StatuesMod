@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Red Sheep Statue"
+	},
+	"description": {
+	  "text": "Obtain a Red Sheep Statue"
+	},
+	"icon": {
+	  "item": "statues:sheep_statue_red"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:sheep_statue_red"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:sheep_statue_purple"
+}

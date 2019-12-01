@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Villager Statue"
+	},
+	"description": {
+	  "text": "Obtain a Villager statue"
+	},
+	"icon": {
+	  "item": "statues:villager_br_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:villager_br_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:snow_golem_statue"
+}

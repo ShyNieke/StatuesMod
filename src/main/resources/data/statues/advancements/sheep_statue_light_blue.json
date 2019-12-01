@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Light Blue Sheep Statue"
+	},
+	"description": {
+	  "text": "Obtain a Light Blue Sheep Statue"
+	},
+	"icon": {
+	  "item": "statues:sheep_statue_light_blue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:sheep_statue_light_blue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:sheep_statue_green"
+}

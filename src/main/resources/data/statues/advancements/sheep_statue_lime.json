@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Lime Sheep Statue"
+	},
+	"description": {
+	  "text": "Obtain a Lime Sheep Statue"
+	},
+	"icon": {
+	  "item": "statues:sheep_statue_lime"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:sheep_statue_lime"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:sheep_statue_light_gray"
+}

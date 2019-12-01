@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Magma Cube Statue"
+	},
+	"description": {
+	  "text": "Obtain a Magma Cube Statue"
+	},
+	"icon": {
+	  "item": "statues:magma_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:magma_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:ghast_statue"
+}

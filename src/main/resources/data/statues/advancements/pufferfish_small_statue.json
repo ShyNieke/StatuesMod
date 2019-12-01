@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Tiny Pufferfish"
+	},
+	"description": {
+	  "text": "Obtain the smallest Pufferfish Statue"
+	},
+	"icon": {
+	  "item": "statues:pufferfish_small_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:pufferfish_small_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:dolphin_statue"
+}

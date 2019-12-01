@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Let it flood"
+	},
+	"description": {
+	  "text": "You found the easter egg for Docm77"
+	},
+	"icon": {
+	  "item": "statues:flood_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:flood_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:villager_br_statue"
+}

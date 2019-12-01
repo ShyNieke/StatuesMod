@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Odd Statues! Time to display them"
+	},
+	"description": {
+	  "text": "Craft a Display Stand"
+	},
+	"icon": {
+	  "item": "statues:display_stand"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": false,
+	"hidden": false
+  },
+  "criteria": {
+	"display_stand": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:display_stand"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:root"
+}

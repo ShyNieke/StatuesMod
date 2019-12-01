@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Wasteland Pig"
+	},
+	"description": {
+	  "text": "You found Xisuma's secret statue"
+	},
+	"icon": {
+	  "item": "statues:wasteland_statue"
+	},
+	"frame": "challenge",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": true
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:wasteland_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:pig_statue"
+}

@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Tropical Fish statue"
+	},
+	"description": {
+	  "text": "Obtain a tropical fish statue"
+	},
+	"icon": {
+	  "item": "statues:tropical_fish_b"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:tropical_fish_b"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:squid_statue"
+}

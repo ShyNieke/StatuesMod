@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Player statue"
+	},
+	"description": {
+	  "text": "Die by the hands of a player"
+	},
+	"icon": {
+	  "item": "statues:player_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:player_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:root"
+}

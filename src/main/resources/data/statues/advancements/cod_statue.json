@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Cod Statue"
+	},
+	"description": {
+	  "text": "Obtain a Cod statue"
+	},
+	"icon": {
+	  "item": "statues:cod_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:cod_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:root"
+}

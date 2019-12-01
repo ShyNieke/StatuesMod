@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Rabbit Statue"
+	},
+	"description": {
+	  "text": "You obtained a Rabbit statue"
+	},
+	"icon": {
+	  "item": "statues:rabbit_br_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:rabbit_br_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:pig_statue"
+}

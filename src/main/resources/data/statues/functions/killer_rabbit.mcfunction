@@ -1,0 +1,1 @@
+summon minecraft:rabbit ~ ~ ~ {RabbitType:99}

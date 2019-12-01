@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Pig Statue"
+	},
+	"description": {
+	  "text": "Obtain a Pig statue"
+	},
+	"icon": {
+	  "item": "statues:pig_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:pig_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:mooshroom_statue"
+}

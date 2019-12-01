@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Be informed!"
+	},
+	"description": {
+	  "text": "Craft or obtain a informative statue"
+	},
+	"icon": {
+	  "item": "statues:info_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": false,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:info_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:display_stand"
+}

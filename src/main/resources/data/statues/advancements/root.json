@@ -1,0 +1,26 @@
+{
+  "display": {
+	"title": {
+	  "text": "Statues"
+	},
+	"description": {
+	  "text": "The start of something bigger"
+	},
+	"icon": {
+	  "item": "statues:statue_core"
+	},
+	"frame": "task",
+	"show_toast": false,
+	"announce_to_chat": false,
+	"hidden": false,
+	"background": "statues:textures/block/pebble.png"
+  },
+  "criteria": {
+	"core": {
+	  "trigger": "minecraft:enter_block",
+	  "conditions": {
+		"block": "minecraft:air"
+	  }
+	}
+  }
+}

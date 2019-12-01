@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Out of control"
+	},
+	"description": {
+	  "text": "Just another Rabbit, stop before it it to late!"
+	},
+	"icon": {
+	  "item": "statues:rabbit_wh_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:rabbit_wh_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:rabbit_go_statue"
+}

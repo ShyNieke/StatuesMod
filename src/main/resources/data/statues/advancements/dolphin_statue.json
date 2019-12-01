@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "Dolphin Statue"
+	},
+	"description": {
+	  "text": "Obtain a Dolphin Statue"
+	},
+	"icon": {
+	  "item": "statues:dolphin_statue"
+	},
+	"frame": "task",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": false
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:dolphin_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:cod_statue"
+}

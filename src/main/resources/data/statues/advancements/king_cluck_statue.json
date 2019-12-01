@@ -1,0 +1,30 @@
+{
+  "display": {
+	"title": {
+	  "text": "King Cluck"
+	},
+	"description": {
+	  "text": "You found the secret to royal chickens"
+	},
+	"icon": {
+	  "item": "statues:king_cluck_statue"
+	},
+	"frame": "challenge",
+	"show_toast": true,
+	"announce_to_chat": true,
+	"hidden": true
+  },
+  "criteria": {
+	"statue": {
+	  "trigger": "minecraft:inventory_changed",
+	  "conditions": {
+		"items": [
+		  {
+			"item": "statues:king_cluck_statue"
+		  }
+		]
+	  }
+	}
+  },
+  "parent": "statues:chicken_statue"
+}
