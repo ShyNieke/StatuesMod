@@ -36,6 +36,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
     public static PlayerTileRenderer instance;
 
     public static final PlayerModel model = new PlayerModel(0.03125F, false);
+    public static final PlayerModel slimModel = new PlayerModel(0.03125F, true);
 
     @Override
     public void setRendererDispatcher(TileEntityRendererDispatcher rendererDispatcherIn)
@@ -124,9 +125,8 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             GlStateManager.enableRescaleNormal();
             GlStateManager.enableAlphaTest();
             GlStateManager.setProfile(Profile.PLAYER_SKIN);
-            float scale = 0.03125F;
             if(slimModel)
-                theModel = new PlayerModel(scale, true);
+                theModel = this.slimModel;
 
             theModel.bipedBody.render(scale);
             theModel.bipedHead.render(scale);
@@ -225,9 +225,8 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         GlStateManager.enableAlphaTest();
         GlStateManager.setProfile(Profile.PLAYER_SKIN);
 
-        float scale = 0.03125F;
         if(slimModel)
-            theModel = new PlayerModel(0.03125F, true);
+            theModel = this.slimModel;
 
         theModel.bipedBody.render(scale);
         theModel.bipedHead.render(scale);
