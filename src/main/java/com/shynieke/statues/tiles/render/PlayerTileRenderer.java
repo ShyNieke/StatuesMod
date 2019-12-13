@@ -128,20 +128,20 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             if(slimModel)
                 theModel = this.slimModel;
 
-            theModel.bipedBody.render(scale);
-            theModel.bipedHead.render(scale);
-            theModel.bipedLeftArm.render(scale);
-            theModel.bipedRightArm.render(scale);
-            theModel.bipedLeftLeg.render(scale);
-            theModel.bipedRightLeg.render(scale);
+            theModel.bipedBody.render(0.03125F);
+            theModel.bipedHead.render(0.03125F);
+            theModel.bipedLeftArm.render(0.03125F);
+            theModel.bipedRightArm.render(0.03125F);
+            theModel.bipedLeftLeg.render(0.03125F);
+            theModel.bipedRightLeg.render(0.03125F);
 
-            theModel.bipedBodyWear.render(scale);
-            theModel.bipedHeadwear.render(scale);
-            theModel.bipedLeftArmwear.render(scale);
+            theModel.bipedBodyWear.render(0.03125F);
+            theModel.bipedHeadwear.render(0.03125F);
+            theModel.bipedLeftArmwear.render(0.03125F);
             theModel.bipedRightArmwear.offsetZ = -0.3125F;
-            theModel.bipedRightArmwear.render(scale);
-            theModel.bipedLeftLegwear.render(scale);
-            theModel.bipedRightLegwear.render(scale);
+            theModel.bipedRightArmwear.render(0.03125F);
+            theModel.bipedLeftLegwear.render(0.03125F);
+            theModel.bipedRightLegwear.render(0.03125F);
             GlStateManager.popMatrix();
         }
     }
@@ -228,20 +228,20 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         if(slimModel)
             theModel = this.slimModel;
 
-        theModel.bipedBody.render(scale);
-        theModel.bipedHead.render(scale);
-        theModel.bipedLeftArm.render(scale);
-        theModel.bipedRightArm.render(scale);
-        theModel.bipedLeftLeg.render(scale);
-        theModel.bipedRightLeg.render(scale);
+        theModel.bipedBody.render(0.03125F);
+        theModel.bipedHead.render(0.03125F);
+        theModel.bipedLeftArm.render(0.03125F);
+        theModel.bipedRightArm.render(0.03125F);
+        theModel.bipedLeftLeg.render(0.03125F);
+        theModel.bipedRightLeg.render(0.03125F);
 
-        theModel.bipedBodyWear.render(scale);
-        theModel.bipedHeadwear.render(scale);
-        theModel.bipedLeftArmwear.render(scale);
+        theModel.bipedBodyWear.render(0.03125F);
+        theModel.bipedHeadwear.render(0.03125F);
+        theModel.bipedLeftArmwear.render(0.03125F);
         theModel.bipedRightArmwear.offsetZ = -0.3125F;
-        theModel.bipedRightArmwear.render(scale);
-        theModel.bipedLeftLegwear.render(scale);
-        theModel.bipedRightLegwear.render(scale);
+        theModel.bipedRightArmwear.render(0.03125F);
+        theModel.bipedLeftLegwear.render(0.03125F);
+        theModel.bipedRightLegwear.render(0.03125F);
         GlStateManager.popMatrix();
 
         if (destroyStage >= 0)
