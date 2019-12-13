@@ -11,8 +11,8 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "0.8.9"
-group= "com.svennieke.statues" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+version = "0.8.9.1"
+group= "com.shynieke.statues" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "statues-1.12.X"
 
 sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -24,6 +24,9 @@ minecraft {
     version = "1.12.2-14.23.5.2768"
     runDir = "run"
     mappings = "stable_39"
+    
+    replace '@VERSION@', project.version
+    replaceIn 'Reference.java'
 }
 
 repositories {
