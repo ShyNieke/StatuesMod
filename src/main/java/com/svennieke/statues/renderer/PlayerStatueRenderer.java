@@ -27,6 +27,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
     public static PlayerStatueRenderer instance;
 
     public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
+    public static final ModelPlayer slimModel = new ModelPlayer(0.03125F, true);
 
     @Override
     public void setRendererDispatcher(TileEntityRendererDispatcher rendererDispatcherIn)
@@ -73,7 +74,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
                 }
 
                 if (SkinUtil.isSlimSkin(profile.getId())) {
-                    theModel = new ModelPlayer(0.03125F, true);
+                    theModel = this.slimModel;
                 }
             }
 
