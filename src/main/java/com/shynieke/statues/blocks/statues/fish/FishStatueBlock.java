@@ -1,14 +1,12 @@
 package com.shynieke.statues.blocks.statues.fish;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.StatueTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -25,11 +23,6 @@ public class FishStatueBlock extends AbstractStatueBase {
     public FishStatueBlock(Properties builder, int size) {
         super(builder.sound(SoundType.STONE));
         this.size = size;
-    }
-
-    @Override
-    public BlockRenderLayer getRenderLayer() {
-        return BlockRenderLayer.CUTOUT;
     }
 
     @Override

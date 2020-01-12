@@ -6,7 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -34,9 +34,9 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+	public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
 		sendInfoMessage(playerIn, worldIn, pos);
-		return true;
+		return ActionResultType.SUCCESS;
 	}
 
 	public void sendInfoMessage(PlayerEntity player, World worldIn, BlockPos pos) {

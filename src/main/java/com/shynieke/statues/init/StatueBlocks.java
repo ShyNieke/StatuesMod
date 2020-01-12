@@ -151,8 +151,8 @@ public class StatueBlocks {
 	public static Block sombrero;
 	public static Block bumbo_statue;
 
-	public static ArrayList<Block> BLOCKS = new ArrayList<Block>();
-	public static ArrayList<Block> STATUES = new ArrayList<Block>();
+	public static ArrayList<Block> BLOCKS = new ArrayList<>();
+	public static ArrayList<Block> STATUES = new ArrayList<>();
 
 	@SubscribeEvent
 	public static void registerBlocks(final RegistryEvent.Register<Block> event)
@@ -272,7 +272,7 @@ public class StatueBlocks {
 
 	public static <T extends Block> T registerBlock(T block, BlockItem item)
 	{
-		item.setRegistryName(((BlockItem) item).getBlock().getRegistryName());
+		item.setRegistryName((item).getBlock().getRegistryName());
 		StatueItems.ITEMS.add(item);
 		BLOCKS.add(block);
 		return block;

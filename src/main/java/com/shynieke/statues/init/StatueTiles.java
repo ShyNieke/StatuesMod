@@ -17,10 +17,10 @@ import net.minecraftforge.registries.ObjectHolder;
 public class StatueTiles {
 
 	@ObjectHolder(Reference.MOD_ID + "statue_tile")
-	public static TileEntityType<?> STATUE;
+	public static TileEntityType<StatueTile> STATUE;
 
 	@ObjectHolder(Reference.MOD_ID + "player_tile")
-	public static TileEntityType<?> PLAYER;
+	public static TileEntityType<PlayerTile> PLAYER;
 
 	@SubscribeEvent
 	public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event)

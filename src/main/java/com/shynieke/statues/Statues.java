@@ -35,7 +35,8 @@ public class Statues {
 		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::registerRenders);
+//			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::registerRenders);
+			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::doClientStuff);
 		});
 
 	}

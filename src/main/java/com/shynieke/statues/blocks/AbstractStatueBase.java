@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -31,14 +32,14 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+	public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
 		if (state.get(INTERACTIVE).booleanValue()) {
 			if (!worldIn.isRemote && (getTE(worldIn, pos) != null)) {
 				executeStatueBehavior(getTE(worldIn, pos), state, worldIn, pos, playerIn, handIn, result);
 			}
-			return true;
+			return ActionResultType.SUCCESS;
 		} else
-			return false;
+			return ActionResultType.FAIL;
 	}
 
 	public StatueTile getTE(World world, BlockPos pos) {

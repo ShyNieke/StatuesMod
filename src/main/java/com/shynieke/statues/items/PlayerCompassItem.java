@@ -102,7 +102,7 @@ public class PlayerCompassItem extends Item {
                         }
 
                     }
-                    return Math.atan2((double)lastLocation.getZ() - entityIn.posZ, (double)lastLocation.getX() - entityIn.posX);
+                    return Math.atan2((double)lastLocation.getZ() - entityIn.getZ(), (double)lastLocation.getX() - entityIn.getX());
                 }
                 else
                 {
@@ -113,7 +113,7 @@ public class PlayerCompassItem extends Item {
             @OnlyIn(Dist.CLIENT)
             private double getSpawnToAngle(IWorld worldIn, Entity entityIn) {
                 BlockPos spawnPos = worldIn.getSpawnPoint();
-                return Math.atan2((double)spawnPos.getZ() - entityIn.posZ, (double)spawnPos.getX() - entityIn.posX);
+                return Math.atan2((double)spawnPos.getZ() - entityIn.getZ(), (double)spawnPos.getX() - entityIn.getX());
             }
         });
     }

@@ -3,14 +3,15 @@ package com.shynieke.statues.tiles.render;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.GlStateManager.Profile;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.tiles.PlayerTile;
 import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -29,33 +30,71 @@ import org.apache.commons.lang3.StringUtils;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
-    public static PlayerTileRenderer instance;
-
     public static final PlayerModel model = new PlayerModel(0.03125F, false);
     public static final PlayerModel slimModel = new PlayerModel(0.03125F, true);
 
-    @Override
-    public void setRendererDispatcher(TileEntityRendererDispatcher rendererDispatcherIn)
-    {
-        rendererDispatcher = rendererDispatcherIn;
-        instance = this;
+    public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkinLegacy();
+
+    public PlayerTileRenderer(TileEntityRendererDispatcher p_i226006_1_) {
+        super(p_i226006_1_);
     }
 
     @Override
-    public void render(PlayerTile te, double x, double y, double z, float partialTicks,
-                       int destroyStage) {
-        Direction direction = Direction.UP;
-        this.renderPlayer(te, x, y, z, te.getPlayerProfile(), destroyStage, direction);
+    public void render(PlayerTile te, float partialTicks, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int p_225616_5_, int p_225616_6_) {
+        BlockState blockstate = te.getBlockState();
+        boolean flag = blockstate.getBlock() instanceof PlayerStatueBlock;
+        Direction direction = flag ? blockstate.get(PlayerStatueBlock.HORIZONTAL_FACING) : Direction.UP;
+
+        this.render(direction, te.getPlayerProfile(), matrix, typeBuffer, p_225616_6_);
+    }
+
+    public static void render(@Nullable Direction direction, @Nullable GameProfile profile, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int p_228879_7_) {
+        PlayerModel playerModel = model;
+
+        matrix.push();
+        if (direction == null) {
+            matrix.translate(0.5D, 0.0D, 0.5D);
+        } else {
+            switch(direction) {
+                case NORTH:
+                    matrix.translate(0.5D, 0.25D, (double)0.74F);
+                    break;
+                case SOUTH:
+                    matrix.translate(0.5D, 0.25D, (double)0.26F);
+                    break;
+                case WEST:
+                    matrix.translate((double)0.74F, 0.25D, 0.5D);
+                    break;
+                case EAST:
+                default:
+                    matrix.translate((double)0.26F, 0.25D, 0.5D);
+            }
+        }
+        matrix.scale(-1.0F, -1.0F, 1.0F);
+        IVertexBuilder ivertexbuilder;
+        if(profile != null) {
+            ivertexbuilder = typeBuffer.getBuffer(getSkinFromProfile(profile));
+        } else {
+            ivertexbuilder = typeBuffer.getBuffer(RenderType.getEntityTranslucent(defaultTexture));
+        }
+
+        if(profile != null && SkinUtil.isSlimSkin(profile.getId())) {
+            playerModel = slimModel;
+        }
+
+        playerModel.render(matrix, ivertexbuilder, p_228879_7_, 0, 1.0F, 1.0F, 1.0F, 1.0F);
+
+        matrix.pop();
     }
 
     private static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
 
-    public void renderPlayerItem(ItemStack stack)
-    {
+    public static void renderPlayerItem(ItemStack stack, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int p_228364_4_, int p_228364_5_) {
+        matrix.push();
+
         if(stack != null) {
             GameProfile gameprofile = null;
 
@@ -85,185 +124,33 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                 GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
             }
 
-            ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
-
-            PlayerModel theModel = PlayerTileRenderer.model;
-            boolean slimModel = false;
-            if (gameprofile != null)
-            {
-                Minecraft minecraft = Minecraft.getInstance();
-                Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(gameprofile);
-
-                if (map.containsKey(Type.SKIN))
-                {
-                    skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-                }
-                else
-                {
-                    UUID uuid = PlayerEntity.getUUID(gameprofile);
-                    skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
-                }
-
-                slimModel = gameprofile.getId() != null ? SkinUtil.isSlimSkin(gameprofile.getId()) : false;
+            PlayerModel playerModel = model;
+            if(gameprofile != null && SkinUtil.isSlimSkin(gameprofile.getId())) {
+                playerModel = slimModel;
             }
 
-            Minecraft.getInstance().getTextureManager().bindTexture(skinlocation);
+            matrix.translate(0.5D, 1.25D, 0.5D);
+            matrix.scale(-1.0F, -1.0F, 1.0F);
 
-            GlStateManager.pushMatrix();
-            GlStateManager.disableCull();
+            IVertexBuilder ivertexbuilder;
+            if(gameprofile != null) {
+                ivertexbuilder = typeBuffer.getBuffer(getSkinFromProfile(gameprofile));
+            } else {
+                ivertexbuilder = typeBuffer.getBuffer(RenderType.getEntityTranslucent(defaultTexture));
+            }
 
-            GlStateManager.translatef((float)0 + 0.5F, (float)0 + 1.5F, (float)0 + 0.5F);
-            GlStateManager.scalef(1.0F, -1.0F, -1.0F);
-            GlStateManager.translatef(0.0F, 1.0F, 0.0F);
-//        float f = 0.9995F;
-            GlStateManager.scalef(0.9995F, 0.9995F, 0.9995F);
-            GlStateManager.translatef(0.0F, -1.0F, 0.0F);
+            if(gameprofile != null && SkinUtil.isSlimSkin(gameprofile.getId())) {
+                playerModel = slimModel;
+            }
 
-            GlStateManager.translatef(0F, 0.75F, 0F);
-            GlStateManager.rotatef(-180.0F, 0.0F, 180.0F, 0.0F);
-
-            GlStateManager.enableRescaleNormal();
-            GlStateManager.enableAlphaTest();
-            GlStateManager.setProfile(Profile.PLAYER_SKIN);
-            if(slimModel)
-                theModel = this.slimModel;
-
-            theModel.bipedBody.render(0.03125F);
-            theModel.bipedHead.render(0.03125F);
-            theModel.bipedLeftArm.render(0.03125F);
-            theModel.bipedRightArm.render(0.03125F);
-            theModel.bipedLeftLeg.render(0.03125F);
-            theModel.bipedRightLeg.render(0.03125F);
-
-            theModel.bipedBodyWear.render(0.03125F);
-            theModel.bipedHeadwear.render(0.03125F);
-            theModel.bipedLeftArmwear.render(0.03125F);
-            theModel.bipedRightArmwear.offsetZ = -0.3125F;
-            theModel.bipedRightArmwear.render(0.03125F);
-            theModel.bipedLeftLegwear.render(0.03125F);
-            theModel.bipedRightLegwear.render(0.03125F);
-            GlStateManager.popMatrix();
+            playerModel.render(matrix, ivertexbuilder, p_228364_5_, 0, 1.0F, 1.0F, 1.0F, 1.0F);
         }
+        matrix.pop();
     }
 
-    private void renderPlayer(PlayerTile te, double x, double y, double z, @Nullable GameProfile profile, int destroyStage, Direction enumfacing)
-    {
-//		ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
-
-        PlayerModel theModel = PlayerTileRenderer.model;
-        boolean slimModel = false;
-        BlockState state;
-//		boolean renderHeadWear = true;
-//		boolean renderChestWear = true;
-//		boolean renderLeftArmWear = true;
-//		boolean renderRightArmWear = true;
-//		boolean renderLeftLegWear = true;
-//		boolean renderRightLegWear = true;
-
-        if (te == null) {
-            profile = null;
-            enumfacing = Direction.UP;
-        }
-        else {
-            profile = te.getPlayerProfile();
-            if(te.getWorld().getBlockState(te.getPos()) != null) {
-                state = te.getWorld().getBlockState(te.getPos());
-                if(state.getBlock() instanceof HorizontalBlock)
-                    enumfacing = (state.get(PlayerStatueBlock.HORIZONTAL_FACING));
-                else
-                    enumfacing = Direction.UP;
-            } else {
-                enumfacing = Direction.UP;
-            }
-        }
-
-        if (destroyStage >= 0)
-        {
-            this.bindTexture(DESTROY_STAGES[destroyStage]);
-            GlStateManager.matrixMode(5890);
-            GlStateManager.pushMatrix();
-            GlStateManager.scalef(4.0F, 4.0F, 1.0F);
-            GlStateManager.translatef(0.0625F, 0.0625F, 0.0625F);
-            GlStateManager.matrixMode(5888);
-        }
-        else {
-            this.bindTexture(this.bindPlayerSkin(profile));
-        }
-
-        GlStateManager.pushMatrix();
-        GlStateManager.disableCull();
-
-        GlStateManager.translatef((float)x + 0.5F, (float)y + 1.5F, (float)z + 0.5F);
-        GlStateManager.scalef(1.0F, -1.0F, -1.0F);
-        GlStateManager.translatef(0.0F, 1.0F, 0.0F);
-//        float f = 0.9995F;
-        GlStateManager.scalef(0.9995F, 0.9995F, 0.9995F);
-        GlStateManager.translatef(0.0F, -1.0F, 0.0F);
-
-        switch (enumfacing)
-        {
-            case DOWN:
-            case UP:
-            default:
-                GlStateManager.translatef(0F, 0.75F, 0F);
-                GlStateManager.rotatef(-180.0F, 0.0F, 180.0F, 0.0F);
-                break;
-            case SOUTH:
-                GlStateManager.translatef(0F, 0.75F, 0F);
-                GlStateManager.rotatef(0.0F, 0.0F, 90.0F, 0.0F);
-                break;
-            case WEST:
-                GlStateManager.translatef(0F, 0.75F, 0F);
-                GlStateManager.rotatef(-90.0F, 0.0F, -90.0F, 0.0F);
-                break;
-            case EAST:
-                GlStateManager.translatef(0F, 0.75F, 0F);
-                GlStateManager.rotatef(-90.0F, 0.0F, 90.0F, 0.0F);
-        }
-
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.enableAlphaTest();
-        GlStateManager.setProfile(Profile.PLAYER_SKIN);
-
-        if(slimModel)
-            theModel = this.slimModel;
-
-        theModel.bipedBody.render(0.03125F);
-        theModel.bipedHead.render(0.03125F);
-        theModel.bipedLeftArm.render(0.03125F);
-        theModel.bipedRightArm.render(0.03125F);
-        theModel.bipedLeftLeg.render(0.03125F);
-        theModel.bipedRightLeg.render(0.03125F);
-
-        theModel.bipedBodyWear.render(0.03125F);
-        theModel.bipedHeadwear.render(0.03125F);
-        theModel.bipedLeftArmwear.render(0.03125F);
-        theModel.bipedRightArmwear.offsetZ = -0.3125F;
-        theModel.bipedRightArmwear.render(0.03125F);
-        theModel.bipedLeftLegwear.render(0.03125F);
-        theModel.bipedRightLegwear.render(0.03125F);
-        GlStateManager.popMatrix();
-
-        if (destroyStage >= 0)
-        {
-            GlStateManager.matrixMode(5890);
-            GlStateManager.popMatrix();
-            GlStateManager.matrixMode(5888);
-        }
-    }
-
-    private ResourceLocation bindPlayerSkin(@Nullable GameProfile profile) {
-        ResourceLocation resourcelocation = DefaultPlayerSkin.getDefaultSkinLegacy();
-        if (profile != null) {
-            Minecraft minecraft = Minecraft.getInstance();
-            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
-            if (map.containsKey(Type.SKIN)) {
-                resourcelocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-            } else {
-                resourcelocation = DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(profile));
-            }
-        }
-
-        return resourcelocation;
+    private static RenderType getSkinFromProfile(@Nullable GameProfile p_228878_1_) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(p_228878_1_);
+        return map.containsKey(Type.SKIN) ? RenderType.getEntityTranslucent(minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN)) : RenderType.getEntityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(p_228878_1_)));
     }
 }

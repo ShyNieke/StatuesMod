@@ -22,6 +22,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.INameable;
@@ -291,7 +292,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult result) {
+	public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult result) {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		if(!worldIn.isRemote)
 		{
@@ -332,7 +333,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						}
 					}
 
-					return true;
+					return ActionResultType.SUCCESS;
 				} else {
 					playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", new Object[] {TextFormatting.GOLD + playerName}));
 					stack.shrink(1);
@@ -345,7 +346,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						playerIn.dropItem(new ItemStack(Items.COMPASS), false);
 					}
 
-					return true;
+					return ActionResultType.SUCCESS;
 				}
 			} else if(!playerIn.isSneaking() && stack.getItem() == StatueItems.player_compass && StatuesConfig.COMMON.playerCompass.get()) {
 				if(getTE(worldIn, pos).getPlayerProfile() != null && worldIn.getPlayerByUuid(getTE(worldIn, pos).getPlayerProfile().getId()) != null && getTE(worldIn, pos).getPlayerProfile().getName() != null) {
@@ -374,7 +375,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						}
 					}
 
-					return true;
+					return ActionResultType.SUCCESS;
 				}
 				else
 				{
@@ -389,7 +390,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						playerIn.dropItem(new ItemStack(Items.COMPASS), false);
 					}
 
-					return true;
+					return ActionResultType.SUCCESS;
 				}
 			}
 			else if(!playerIn.isSneaking() && stack.getItem() == Blocks.COMPARATOR.asItem())
@@ -398,14 +399,14 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				{
 					stack.shrink(1);
 					getTE(worldIn, pos).setComparatorApplied(true);
-					return true;
+					return ActionResultType.SUCCESS;
 				}
 			}
 			else if(playerIn.isSneaking() && stack.isEmpty() && getTE(worldIn, pos).getComparatorApplied())
 			{
 				getTE(worldIn, pos).setComparatorApplied(false);
 				playerIn.setHeldItem(hand, new ItemStack(Blocks.COMPARATOR.asItem()));
-				return true;
+				return ActionResultType.SUCCESS;
 			}
 			else if(playerIn.isSneaking() && stack.getItem() == StatueItems.player_compass)
 			{
@@ -418,12 +419,10 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				{
 					playerIn.dropItem(new ItemStack(Items.COMPASS), false);
 				}
-				return true;
+				return ActionResultType.SUCCESS;
 			}
-			return false;
 		}
-		else
-			return false;
+		return ActionResultType.FAIL;
 	}
 
 	@Override

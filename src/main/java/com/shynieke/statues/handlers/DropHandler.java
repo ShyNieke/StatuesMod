@@ -16,6 +16,7 @@ import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.util.FakePlayer;
@@ -61,12 +62,10 @@ public class DropHandler {
         } else if(entity instanceof SheepEntity) {
             SheepEntity sheep = (SheepEntity) entity;
             ItemStack itemStackToDrop = new ItemStack(StatueBlocks.sheep_shaven_statue);
-            if(sheep.getSheared()) {
-                DropLootStatues(entity, itemStackToDrop, source, event);
-            } else {
+            if (!sheep.getSheared()) {
                 itemStackToDrop = new ItemStack(SheepStatueBlock.getStatue(sheep.getFleeceColor()));
-                DropLootStatues(entity, itemStackToDrop, source, event);
             }
+            DropLootStatues(entity, itemStackToDrop, source, event);
         } else {
             for (Block block : StatueBlocks.BLOCKS) {
                 if (block instanceof AbstractStatueBase) {
@@ -90,6 +89,7 @@ public class DropHandler {
             ItemStack playerStatueStack = new ItemStack(StatueBlocks.player_statue).setDisplayName(player.getName());
             double random_drop = Math.random();
             double playerDropChance = StatuesConfig.COMMON.playerStatueDropChance.get();
+            BlockPos entityPos = entity.getPosition();
             switch (StatuesConfig.COMMON.playerStatueKillSource.get())
             {
                 default:
@@ -97,8 +97,7 @@ public class DropHandler {
                         ServerPlayerEntity sourcePlayer = (ServerPlayerEntity) source;
                         List<String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                         if (!luckyPlayers.isEmpty()) {
-                            for (int i = 0; i < luckyPlayers.size(); i++) {
-                                String luckyName = luckyPlayers.get(i);
+                            for (String luckyName : luckyPlayers) {
                                 String user = sourcePlayer.getName().getFormattedText();
 
                                 if (!luckyName.isEmpty() && user.equals(luckyName)) {
@@ -121,7 +120,7 @@ public class DropHandler {
 //                    else
 //                    {
                         if (random_drop < playerDropChance) {
-                            event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, playerStatueStack));
+                            event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
                         }
 //                    }
                     }
@@ -129,13 +128,13 @@ public class DropHandler {
                 case PLAYER_FAKEPLAYER:
                     if (source instanceof PlayerEntity) {
                         if (random_drop < playerDropChance) {
-                            event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, playerStatueStack));
+                            event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
                         }
                     }
                     break;
                 case ALL:
                     if (random_drop < playerDropChance) {
-                        event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, playerStatueStack));
+                        event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
                     }
                     break;
             }
@@ -145,6 +144,7 @@ public class DropHandler {
     public void DropLootStatues(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
         double random_drop = Math.random();
         double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
+        BlockPos entityPos = entity.getPosition();
 
         switch (StatuesConfig.COMMON.statueKillSource.get()) {
             default:
@@ -152,8 +152,7 @@ public class DropHandler {
                     ServerPlayerEntity player = (ServerPlayerEntity) source;
                     List<String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
-                        for (int i = 0; i < luckyPlayers.size(); i++) {
-                            String luckyName = luckyPlayers.get(i);
+                        for (String luckyName : luckyPlayers) {
                             String user = player.getName().getFormattedText();
 
                             if (!luckyName.isEmpty() && user.equals(luckyName)) {
@@ -176,7 +175,7 @@ public class DropHandler {
 //                    else
 //                    {
                     if (random_drop < default_drop_chance) {
-                        event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+                        event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                     }
 //                    }
                 }
@@ -184,13 +183,13 @@ public class DropHandler {
             case PLAYER_FAKEPLAYER:
                 if (source instanceof PlayerEntity) {
                     if (random_drop < default_drop_chance) {
-                        event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+                        event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                     }
                 }
                 break;
             case ALL:
                 if (random_drop < default_drop_chance) {
-                    event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+                    event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                 }
                 break;
         }
@@ -200,6 +199,8 @@ public class DropHandler {
     {
         double random_drop;
         double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
+        BlockPos entityPos = entity.getPosition();
+        Biome biome = entity.world.getBiome(entity.getPosition());
 
         switch (StatuesConfig.COMMON.statueKillSource.get())
         {
@@ -209,8 +210,7 @@ public class DropHandler {
                     ServerPlayerEntity player = (ServerPlayerEntity)source;
                     List<String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
-                        for (int i = 0; i < luckyPlayers.size(); i++) {
-                            String luckyName = luckyPlayers.get(i);
+                        for (String luckyName : luckyPlayers) {
                             String user = player.getName().getFormattedText();
 
                             if (!luckyName.isEmpty() && user.equals(luckyName)) {
@@ -239,11 +239,10 @@ public class DropHandler {
                     random_drop = Math.random();
                     if (random_drop < default_drop_chance)
                     {
-                        Biome biome = entity.world.getBiomeBody(entity.getPosition());
                         if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
                         {
                             ItemStack sombreroStack = new ItemStack(StatueBlocks.sombrero);
-                            event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+                            event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                         }
                     }
 //					}
@@ -255,12 +254,10 @@ public class DropHandler {
                     random_drop = Math.random();
                     if (random_drop < default_drop_chance)
                     {
-                        Biome biome = entity.world.getBiomeBody(entity.getPosition());
-
                         if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
                         {
                             ItemStack sombreroStack = new ItemStack(StatueBlocks.sombrero);
-                            event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+                            event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                         }
                     }
                 }
@@ -269,11 +266,10 @@ public class DropHandler {
                 random_drop = Math.random();
                 if (random_drop < default_drop_chance)
                 {
-                    Biome biome = entity.world.getBiomeBody(entity.getPosition());
                     if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
                     {
                         ItemStack sombreroStack = new ItemStack(StatueBlocks.sombrero);
-                        event.getDrops().add(new ItemEntity(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
+                        event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                     }
                 }
                 break;

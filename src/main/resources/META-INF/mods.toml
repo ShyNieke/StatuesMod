@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[28,)"
+loaderVersion="[30,)"
 issueTrackerURL="https://github.com/ShyNieke/StatuesMod/issues"
 
 [[mods]]
@@ -11,17 +11,3 @@ authors="ShyNieke, Mrbysco"
 description='''
 Just a little functional decoration.
 '''
-
-[[dependencies.statues]]
-modId="forge"
-mandatory=true
-versionRange="[28,)"
-ordering="NONE"
-side="BOTH"
-
-[[dependencies.statues]]
-modId="minecraft"
-mandatory=true
-versionRange="[1.14.4]"
-ordering="NONE"
-side="BOTH"

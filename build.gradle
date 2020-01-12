@@ -15,12 +15,12 @@ apply plugin: 'net.minecraftforge.gradle'
 
 version = '0.1.3.1'
 group = 'com.svennieke.statues' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'Statues-1.14.4'
+archivesBaseName = 'Statues-1.15.1'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20191201-1.14.3'
+    mappings channel: 'snapshot', version: '20200111-mixed-1.15.1'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
     // accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
@@ -82,6 +82,9 @@ minecraft {
 }
 
 repositories {
+    maven {
+        url "https://maven.tterrag.com/"
+    }
 	maven {
 		// location of the maven that hosts JEI files
 		name = "Progwml6 maven"
@@ -101,9 +104,9 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.69'
-    compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18")
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.0.91")
+    minecraft 'net.minecraftforge:forge:1.15.1-30.0.36'
+    //compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18")
+    //compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.0.91")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
