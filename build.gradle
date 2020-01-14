@@ -13,14 +13,14 @@ apply plugin: 'net.minecraftforge.gradle'
 //apply plugin: 'eclipse'
 //apply plugin: 'maven-publish'
 
-version = '0.1.3.1'
+version = '0.1.3.2'
 group = 'com.svennieke.statues' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Statues-1.14.4'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20191201-1.14.3'
+    mappings channel: 'snapshot', version: '20191230-1.14.3'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
     // accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
@@ -101,9 +101,10 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.69'
-    compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18")
-    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.0.91")
+    minecraft 'net.minecraftforge:forge:1.14.4-28.1.111'
+
+    compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.27")
+    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.1.160")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -111,11 +112,11 @@ jar {
     manifest {
         attributes([
             "Specification-Title": "statues",
-            "Specification-Vendor": "svennieke",
+            "Specification-Vendor": "shynieke",
             "Specification-Version": "1",
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"svennieke",
+            "Implementation-Vendor" :"shynieke",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }

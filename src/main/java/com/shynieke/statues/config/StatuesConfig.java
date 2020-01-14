@@ -35,10 +35,10 @@ public class StatuesConfig {
 		public final BooleanValue playerCompass;
 
 		//Lucky Players
-		public final ConfigValue<List<String>> lucky_players;
+		public final ConfigValue<List<? extends String>> lucky_players;
 
 		//Messages
-		public final ConfigValue<List<String>> info_messages;
+		public final ConfigValue<List<? extends String>> info_messages;
 
 		Common(ForgeConfigSpec.Builder builder) {
 			//General settings
@@ -116,7 +116,7 @@ public class StatuesConfig {
 
 			info_messages = builder
 					.comment("Adding lines / removing lines specifies what the informative statue can say")
-					.define("info_messages", Arrays.asList(messages));
+					.defineList("info_messages", Arrays.asList(messages), o -> (o instanceof String));
 
 			builder.pop();
 
@@ -124,14 +124,14 @@ public class StatuesConfig {
 			builder.comment("Lucky players")
 					.push("lucky_players");
 
-			String[] luckyplayers = new String[]
+			String[] luckyPlayers = new String[]
 					{
 							"iskall85"
 					};
 
 			lucky_players = builder
 					.comment("Adding usernames will make these users have less luck with getting statues")
-					.define("lucky_players", Arrays.asList(luckyplayers));
+					.defineList("lucky_players", Arrays.asList(luckyPlayers), o -> (o instanceof String));
 
 			builder.pop();
 		}
