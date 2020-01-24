@@ -34,7 +34,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
 		sendInfoMessage(playerIn, worldIn, pos);
 		return ActionResultType.SUCCESS;
 	}

@@ -15,15 +15,15 @@ public class ClientHandler {
     public static void doClientStuff(final FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntityRenderer(StatueTiles.PLAYER, PlayerTileRenderer::new);
 
-        RenderTypeLookup.setRenderLayer(StatueBlocks.campfire_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.drowned_statue, RenderType.getCutout());;
-        RenderTypeLookup.setRenderLayer(StatueBlocks.husk_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.zombie_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.enderman_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.info_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.wasteland_statue, RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(StatueBlocks.campfire_statue, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueBlocks.drowned_statue, RenderType.cutout());;
+        RenderTypeLookup.setRenderLayer(StatueBlocks.husk_statue, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueBlocks.zombie_statue, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueBlocks.enderman_statue, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueBlocks.info_statue, RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueBlocks.wasteland_statue, RenderType.cutout());
 
-        RenderTypeLookup.setRenderLayer(StatueBlocks.endermite_statue, RenderType.getTranslucent());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.slime_statue, RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(StatueBlocks.endermite_statue, RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(StatueBlocks.slime_statue, RenderType.translucent());
     }
 }

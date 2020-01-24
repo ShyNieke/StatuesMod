@@ -32,7 +32,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType onUse(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
 		if (state.get(INTERACTIVE).booleanValue()) {
 			if (!worldIn.isRemote && (getTE(worldIn, pos) != null)) {
 				executeStatueBehavior(getTE(worldIn, pos), state, worldIn, pos, playerIn, handIn, result);

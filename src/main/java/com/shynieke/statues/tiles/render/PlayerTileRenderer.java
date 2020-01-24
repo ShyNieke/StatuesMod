@@ -78,7 +78,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         if(profile != null) {
             ivertexbuilder = typeBuffer.getBuffer(getSkinFromProfile(profile));
         } else {
-            ivertexbuilder = typeBuffer.getBuffer(RenderType.getEntityTranslucent(defaultTexture));
+            ivertexbuilder = typeBuffer.getBuffer(RenderType.entityTranslucent(defaultTexture));
         }
 
         if(profile != null && SkinUtil.isSlimSkin(profile.getId())) {
@@ -136,7 +136,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             if(gameprofile != null) {
                 ivertexbuilder = typeBuffer.getBuffer(getSkinFromProfile(gameprofile));
             } else {
-                ivertexbuilder = typeBuffer.getBuffer(RenderType.getEntityTranslucent(defaultTexture));
+                ivertexbuilder = typeBuffer.getBuffer(RenderType.entityTranslucent(defaultTexture));
             }
 
             if(gameprofile != null && SkinUtil.isSlimSkin(gameprofile.getId())) {
@@ -151,6 +151,6 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
     private static RenderType getSkinFromProfile(@Nullable GameProfile p_228878_1_) {
         Minecraft minecraft = Minecraft.getInstance();
         Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(p_228878_1_);
-        return map.containsKey(Type.SKIN) ? RenderType.getEntityTranslucent(minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN)) : RenderType.getEntityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(p_228878_1_)));
+        return map.containsKey(Type.SKIN) ? RenderType.entityTranslucent(minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN)) : RenderType.entityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(p_228878_1_)));
     }
 }

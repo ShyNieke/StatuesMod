@@ -259,7 +259,7 @@ public class StatueBlocks {
 	public static <T extends Block> Block registerPlayerStatue(T block, String registry)
 	{
 		block.setRegistryName(new ResourceLocation(Reference.MOD_ID, registry));
-		return registerBlock( block, new StatueBlockItem(block, itemBuilder().setTEISR(() -> PlayerTileInventoryRenderer::new)));
+		return registerBlock( block, new StatueBlockItem(block, itemBuilder().setISTER(() -> PlayerTileInventoryRenderer::new)));
 	}
 
 	private static Item.Properties itemBuilder()
