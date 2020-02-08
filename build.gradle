@@ -20,7 +20,7 @@ archivesBaseName = 'Statues-1.15.1'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20200124-1.15.1'
+    mappings channel: 'snapshot', version: '20200208-1.15.1'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
     // accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
@@ -104,7 +104,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.15.2-31.0.1'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.1.1'
     //compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.18")
     //compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.0.91")
 }

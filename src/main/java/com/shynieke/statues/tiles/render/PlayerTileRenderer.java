@@ -13,6 +13,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.DefaultPlayerSkin;
@@ -20,7 +21,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.tileentity.SkullTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -74,19 +74,13 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             }
         }
         matrix.scale(-1.0F, -1.0F, 1.0F);
-        IVertexBuilder ivertexbuilder;
-        if(profile != null) {
-            ivertexbuilder = typeBuffer.getBuffer(getSkinFromProfile(profile));
-        } else {
-            ivertexbuilder = typeBuffer.getBuffer(RenderType.entityTranslucent(defaultTexture));
-        }
-
-        if(profile != null && SkinUtil.isSlimSkin(profile.getId())) {
+        matrix.translate(0.0D, -1.0D, 0.0D);
+        IVertexBuilder ivertexbuilder = profile != null ? typeBuffer.getBuffer(getSkinFromProfile(profile)) : typeBuffer.getBuffer(RenderType.entityTranslucent(defaultTexture));
+        if(profile != null && SkinUtil.isSlimSkin(profile.getId()) && playerModel != slimModel) {
             playerModel = slimModel;
         }
 
-        playerModel.render(matrix, ivertexbuilder, p_228879_7_, 0, 1.0F, 1.0F, 1.0F, 1.0F);
-
+        playerModel.render(matrix, ivertexbuilder, p_228879_7_, OverlayTexture.DEFAULT_LIGHT, 1.0F, 1.0F, 1.0F, 1.0F);
         matrix.pop();
     }
 
@@ -111,7 +105,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                 else if (nbttagcompound.contains("PlayerProfile", 8) && !StringUtils.isBlank(nbttagcompound.getString("PlayerProfile")))
                 {
                     GameProfile gameprofile1 = new GameProfile(null, nbttagcompound.getString("PlayerProfile"));
-                    gameprofile = SkullTileEntity.updateGameProfile(gameprofile1);
+                    gameprofile = PlayerTile.updateGameProfile(gameprofile1);
                     nbttagcompound.remove("PlayerProfile");
                     nbttagcompound.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
                     GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
@@ -120,7 +114,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             if(gameprofile == null && !StringUtils.isBlank(stack.getDisplayName().getString()) && !stack.getDisplayName().getString().equals("Player Statue") && !stack.getDisplayName().getString().equals(" "))
             {
                 GameProfile gameprofile1 = new GameProfile(null, stack.getDisplayName().getString());
-                gameprofile = SkullTileEntity.updateGameProfile(gameprofile1);
+                gameprofile = PlayerTile.updateGameProfile(gameprofile1);
                 GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
             }
 

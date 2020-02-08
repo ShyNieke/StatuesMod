@@ -1,6 +1,9 @@
 package com.shynieke.statues.tiles;
 
+import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.MinecraftSessionService;
+import com.mojang.authlib.properties.Property;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.init.StatueBlocks;
 import com.shynieke.statues.init.StatueTiles;
@@ -9,10 +12,11 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.SkullTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.INameable;
+import net.minecraft.util.StringUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -21,6 +25,8 @@ import net.minecraft.util.text.TranslationTextComponent;
 import javax.annotation.Nullable;
 
 public class PlayerTile extends TileEntity implements INameable, ITickableTileEntity {
+    private static PlayerProfileCache profileCache;
+    private static MinecraftSessionService sessionService;
 
     public PlayerTile() {
         super(StatueTiles.PLAYER);
@@ -28,6 +34,14 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         this.comparatorApplied = false;
         this.checkerCooldown = 0;
         this.OnlineChecking = false;
+    }
+
+    public static void setProfileCache(PlayerProfileCache profileCacheIn) {
+        profileCache = profileCacheIn;
+    }
+
+    public static void setSessionService(MinecraftSessionService sessionServiceIn) {
+        sessionService = sessionServiceIn;
     }
 
     public String BlockName;
@@ -86,7 +100,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 0, this.getUpdateTag());
+        return new SUpdateTileEntityPacket(pos, 4, this.getUpdateTag());
     }
 
     @Override
@@ -100,12 +114,37 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         return this.playerProfile;
     }
 
-    public void setPlayerProfile(GameProfile playerProfile) {
-        if(playerProfile != null)
-        {
-            this.playerProfile = playerProfile;
-            this.playerProfile = SkullTileEntity.updateGameProfile(playerProfile);
-            this.markDirty();
+    public void setPlayerProfile(@Nullable GameProfile p_195485_1_) {
+        this.playerProfile = p_195485_1_;
+        this.updatePlayerProfile();
+    }
+
+    private void updatePlayerProfile() {
+        this.playerProfile = updateGameProfile(this.playerProfile);
+        this.markDirty();
+    }
+
+    public static GameProfile updateGameProfile(GameProfile input) {
+        if (input != null && !StringUtils.isNullOrEmpty(input.getName())) {
+            if (input.isComplete() && input.getProperties().containsKey("textures")) {
+                return input;
+            } else if (profileCache != null && sessionService != null) {
+                GameProfile gameprofile = profileCache.getGameProfileForUsername(input.getName());
+                if (gameprofile == null) {
+                    return input;
+                } else {
+                    Property property = Iterables.getFirst(gameprofile.getProperties().get("textures"), (Property)null);
+                    if (property == null) {
+                        gameprofile = sessionService.fillProfileProperties(gameprofile, true);
+                    }
+
+                    return gameprofile;
+                }
+            } else {
+                return input;
+            }
+        } else {
+            return input;
         }
     }
 

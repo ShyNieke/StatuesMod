@@ -155,9 +155,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state.with(ONLINE, false), placer, stack);
 		String stackname = stack.getDisplayName().getString();
-		String tilename = getTE(worldIn, pos).getName().getString();
+		String tileName = getTE(worldIn, pos).getName().getString();
 
-		if (tilename != stackname)
+		if (tileName != stackname)
 		{
 			this.playerName = stackname;
 			if((this.playerName.contains(" ") || this.playerName.isEmpty()) && placer instanceof PlayerEntity)
@@ -165,7 +165,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				PlayerEntity player = (PlayerEntity) placer;
 				getTE(worldIn, pos).setName(player.getName().getString());
 
-				getTE(worldIn, pos).setPlayerProfile(new GameProfile((UUID) null, player.getName().getString()));
+				getTE(worldIn, pos).setPlayerProfile(player.getGameProfile() != null ? player.getGameProfile() : new GameProfile((UUID) null, player.getName().getString()));
 			}
 			else
 			{

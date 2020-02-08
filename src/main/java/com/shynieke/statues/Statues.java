@@ -37,6 +37,7 @@ public class Statues {
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 //			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::registerRenders);
 			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::doClientStuff);
+			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::onClientSetup);
 		});
 
 	}
