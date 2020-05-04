@@ -46,7 +46,7 @@ import com.shynieke.statues.blocks.statues.fish.SalmonStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.SquidStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.TurtleStatueBlock;
 import com.shynieke.statues.items.StatueBlockItem;
-import com.shynieke.statues.tiles.render.PlayerTileInventoryRenderer;
+import com.shynieke.statues.client.render.PlayerTileInventoryRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;

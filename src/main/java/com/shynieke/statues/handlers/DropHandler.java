@@ -95,7 +95,7 @@ public class DropHandler {
                 default:
                     if (source instanceof PlayerEntity && !(source instanceof FakePlayer)) {
                         ServerPlayerEntity sourcePlayer = (ServerPlayerEntity) source;
-                        List<String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
+                        List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                         if (!luckyPlayers.isEmpty()) {
                             for (String luckyName : luckyPlayers) {
                                 String user = sourcePlayer.getName().getFormattedText();
@@ -150,7 +150,7 @@ public class DropHandler {
             default:
                 if (source instanceof PlayerEntity && !(source instanceof FakePlayer)) {
                     ServerPlayerEntity player = (ServerPlayerEntity) source;
-                    List<String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
+                    List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
                         for (String luckyName : luckyPlayers) {
                             String user = player.getName().getFormattedText();
@@ -208,7 +208,7 @@ public class DropHandler {
                 if(source instanceof PlayerEntity && !(source instanceof FakePlayer))
                 {
                     ServerPlayerEntity player = (ServerPlayerEntity)source;
-                    List<String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
+                    List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
                         for (String luckyName : luckyPlayers) {
                             String user = player.getName().getFormattedText();

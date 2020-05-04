@@ -297,7 +297,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		if(!worldIn.isRemote)
 		{
 			String playerName = getTE(worldIn, pos).getPlayerProfile().getName();
-			if(!playerIn.isShiftKeyDown() && stack.getItem() == Items.COMPASS && StatuesConfig.COMMON.playerCompass.get()) {
+			if(!playerIn.isSneaking() && stack.getItem() == Items.COMPASS && StatuesConfig.COMMON.playerCompass.get()) {
 				if(getTE(worldIn, pos).getPlayerProfile() != null && worldIn.getPlayerByUuid(getTE(worldIn, pos).getPlayerProfile().getId()) != null) {
 					ItemStack playerCompass = new ItemStack(StatueItems.player_compass);
 					CompoundNBT locationTag = new CompoundNBT();
@@ -346,7 +346,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 				}
 				return ActionResultType.SUCCESS;
-			} else if(!playerIn.isShiftKeyDown() && stack.getItem() == StatueItems.player_compass && StatuesConfig.COMMON.playerCompass.get()) {
+			} else if(!playerIn.isSneaking() && stack.getItem() == StatueItems.player_compass && StatuesConfig.COMMON.playerCompass.get()) {
 				if(getTE(worldIn, pos).getPlayerProfile() != null && worldIn.getPlayerByUuid(getTE(worldIn, pos).getPlayerProfile().getId()) != null && getTE(worldIn, pos).getPlayerProfile().getName() != null) {
 					CompoundNBT locationTag = new CompoundNBT();
 
@@ -390,7 +390,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				}
 				return ActionResultType.SUCCESS;
 			}
-			else if(!playerIn.isShiftKeyDown() && stack.getItem() == Blocks.COMPARATOR.asItem())
+			else if(!playerIn.isSneaking() && stack.getItem() == Blocks.COMPARATOR.asItem())
 			{
 				if(!getTE(worldIn, pos).getComparatorApplied())
 				{
@@ -399,13 +399,13 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					return ActionResultType.SUCCESS;
 				}
 			}
-			else if(playerIn.isShiftKeyDown() && stack.isEmpty() && getTE(worldIn, pos).getComparatorApplied())
+			else if(playerIn.isSneaking() && stack.isEmpty() && getTE(worldIn, pos).getComparatorApplied())
 			{
 				getTE(worldIn, pos).setComparatorApplied(false);
 				playerIn.setHeldItem(hand, new ItemStack(Blocks.COMPARATOR.asItem()));
 				return ActionResultType.SUCCESS;
 			}
-			else if(playerIn.isShiftKeyDown() && stack.getItem() == StatueItems.player_compass)
+			else if(playerIn.isSneaking() && stack.getItem() == StatueItems.player_compass)
 			{
 				stack.shrink(1);
 				if (stack.isEmpty())

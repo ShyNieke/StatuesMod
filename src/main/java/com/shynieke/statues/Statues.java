@@ -1,12 +1,13 @@
 package com.shynieke.statues;
 
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.handlers.ClientHandler;
+import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
 import com.shynieke.statues.recipes.StatueLootList;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
@@ -23,21 +24,20 @@ public class Statues {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	public Statues() {
+		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec);
-		FMLJavaModLoadingContext.get().getModEventBus().register(StatuesConfig.class);
+		eventBus.register(StatuesConfig.class);
 
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+		eventBus.addListener(this::setup);
+		eventBus.addListener(this::enqueueIMC);
+		eventBus.addListener(this::processIMC);
 
 //		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-//			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::registerRenders);
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::doClientStuff);
-			FMLJavaModLoadingContext.get().getModEventBus().addListener(ClientHandler::onClientSetup);
+			eventBus.addListener(ClientHandler::doClientStuff);
 		});
 
 	}

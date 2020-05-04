@@ -43,8 +43,8 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 		if (!worldIn.isRemote) {
 			int random = worldIn.rand.nextInt(100);
 
-			List<String> messages = StatuesConfig.COMMON.info_messages.get();
-			List<String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
+			List<? extends String> messages = StatuesConfig.COMMON.info_messages.get();
+			List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 
 			int idx = new Random().nextInt(messages.size());
 			String randomMessage = messages.get(idx);
