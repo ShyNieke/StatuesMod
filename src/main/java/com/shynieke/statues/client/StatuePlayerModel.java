@@ -10,7 +10,7 @@ public class StatuePlayerModel<T extends LivingEntity> extends PlayerModel<T> {
         super(modelSize, smallArmsIn);
         this.bipedRightArmwear.setRotationPoint(-5.0F, 2.0F,0.0F);
         this.bipedHeadwear.cubeList.remove(0);
-        this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, modelSize + 2.25F);
+        this.bipedHeadwear.addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, modelSize + 2.5F);
         this.bipedHeadwear.setRotationPoint(0.0F, -1.75F, 0.0F);
     }
 
