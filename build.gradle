@@ -11,7 +11,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 //Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 
 
-version = "0.8.9.1"
+version = "0.8.9.2"
 group= "com.shynieke.statues" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "statues-1.12.X"
 
@@ -65,7 +65,7 @@ dependencies {
 	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.5.+"
 	
 	deobfCompile "mezz.jei:jei_1.12.2:4.11.0.+"
-	deobfCompile "mcp.mobius.waila:Hwyla:1.8.24-B39_1.12"
+	deobfCompile "mcp.mobius.waila:Hwyla:1.8.26-B41_1.12.2"
     deobfCompile("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.12-6") {
         transitive = false
     }

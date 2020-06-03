@@ -6,6 +6,7 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.shynieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.shynieke.statues.tileentity.PlayerStatueTileEntity;
 import com.shynieke.statues.util.SkinUtil;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -39,7 +40,8 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
     @Override
     public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
     {
-        EnumFacing facing = te == null ? EnumFacing.UP : te.getWorld().getBlockState(te.getPos()).getValue(BlockPlayer_Statue.FACING);
+        IBlockState state = te.getWorld().getBlockState(te.getPos());
+        EnumFacing facing = (te == null || !(state.getBlock() instanceof BlockPlayer_Statue)) ? EnumFacing.UP : state.getValue(BlockPlayer_Statue.FACING);
         this.renderPlayer(x, y, z, te.getPlayerProfile(), destroyStage, facing);
     }
 
