@@ -22,6 +22,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class PlayerTile extends TileEntity implements INameable, ITickableTileEntity {
     private static PlayerProfileCache profileCache;
@@ -35,6 +36,11 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         this.OnlineChecking = false;
     }
 
+    public PlayerTile(String name) {
+        this();
+        this.BlockName = name;
+    }
+
     public static void setProfileCache(PlayerProfileCache profileCacheIn) {
         profileCache = profileCacheIn;
     }
@@ -43,11 +49,11 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         sessionService = sessionServiceIn;
     }
 
-    public String BlockName;
-    public GameProfile playerProfile;
-    public Boolean comparatorApplied;
-    public Boolean OnlineChecking;
-    public int checkerCooldown;
+    private String BlockName;
+    private GameProfile playerProfile;
+    private Boolean comparatorApplied;
+    private Boolean OnlineChecking;
+    private int checkerCooldown;
 
     public String setName(String name) {
         return this.BlockName = name;
@@ -57,10 +63,11 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     public void read(CompoundNBT compound) {
         super.read(compound);
         this.BlockName = compound.getString("PlayerName");
-        if(getTileData().contains("PlayerProfile"))
-        {
-            playerProfile = NBTUtil.readGameProfile(getTileData().getCompound("PlayerProfile"));
+
+        if (compound.contains("PlayerProfile", 10)) {
+            this.setPlayerProfile(NBTUtil.readGameProfile(compound.getCompound("PlayerProfile")));
         }
+
         comparatorApplied = compound.getBoolean("comparatorApplied");
         OnlineChecking = compound.getBoolean("OnlineChecking");
         checkerCooldown = compound.getInt("checkerCooldown");
@@ -70,11 +77,10 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
         compound.putString("PlayerName", this.BlockName);
-        if (this.playerProfile != null)
-        {
-            CompoundNBT nbttagcompound = getTileData().getCompound("PlayerProfile");
-            NBTUtil.writeGameProfile(nbttagcompound, getPlayerProfile());
-            getTileData().put("PlayerProfile", nbttagcompound);
+        if (this.playerProfile != null) {
+            CompoundNBT compoundnbt = new CompoundNBT();
+            NBTUtil.writeGameProfile(compoundnbt, this.playerProfile);
+            compound.put("PlayerProfile", compoundnbt);
         }
         compound.putBoolean("comparatorApplied", comparatorApplied);
         compound.putBoolean("OnlineChecking", OnlineChecking);
@@ -91,14 +97,14 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     }
 
     @Override
-    public CompoundNBT getUpdateTag()
-    {
-        return this.write(new CompoundNBT());
+    public SUpdateTileEntityPacket getUpdatePacket() {
+        return new SUpdateTileEntityPacket(pos, 4, this.getUpdateTag());
     }
 
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 4, this.getUpdateTag());
+    public CompoundNBT getUpdateTag()
+    {
+        return this.write(new CompoundNBT());
     }
 
     @Override
@@ -107,13 +113,12 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     }
 
     @Nullable
-    public GameProfile getPlayerProfile()
-    {
+    public GameProfile getPlayerProfile() {
         return this.playerProfile;
     }
 
-    public void setPlayerProfile(@Nullable GameProfile p_195485_1_) {
-        this.playerProfile = p_195485_1_;
+    public void setPlayerProfile(@Nullable GameProfile profile) {
+        this.playerProfile = profile;
         this.updatePlayerProfile();
     }
 
@@ -152,29 +157,24 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
             return;
 
         BlockState state = world.getBlockState(getPos());
-        if(state.getBlock() == StatueBlocks.player_statue && comparatorApplied)
-        {
+        if(state.getBlock() == StatueBlocks.player_statue && comparatorApplied) {
             boolean isStateOnline = state.get(PlayerStatueBlock.ONLINE);
 
-            if(!OnlineChecking)
-            {
+            if(!OnlineChecking) {
                 ++this.checkerCooldown;
                 markDirty();
                 if(this.checkerCooldown == 0)
                     this.checkerCooldown = 200;
 
-                if(this.checkerCooldown >= 200){
+                if(this.checkerCooldown >= 200) {
                     this.checkerCooldown = 0;
                     setOnlineChecking(true);
                 }
-            }
-            else
-            {
+            } else {
                 boolean checkAnswer = world.getPlayerByUuid(this.playerProfile.getId()) != null;
                 BlockState newState = state.with(PlayerStatueBlock.ONLINE, checkAnswer);
 
-                if(isStateOnline != checkAnswer)
-                {
+                if(isStateOnline != checkAnswer) {
                     world.setBlockState(getPos(), state.with(PlayerStatueBlock.ONLINE, checkAnswer), 5);
                     world.notifyBlockUpdate(getPos(), state, newState, 5);
                 }

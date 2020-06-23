@@ -41,5 +41,6 @@ public class ClientHandler {
         PlayerProfileCache playerprofilecache = new PlayerProfileCache(gameprofilerepository, new File(mc.gameDir, MinecraftServer.USER_CACHE_FILE.getName()));
         PlayerTile.setProfileCache(playerprofilecache);
         PlayerTile.setSessionService(minecraftsessionservice);
+        PlayerProfileCache.setOnlineMode(false);
     }
 }

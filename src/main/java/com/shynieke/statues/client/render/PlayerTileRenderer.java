@@ -48,8 +48,15 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         BlockState blockstate = te.getBlockState();
         boolean flag = blockstate.getBlock() instanceof PlayerStatueBlock;
         Direction direction = flag ? blockstate.get(PlayerStatueBlock.HORIZONTAL_FACING) : Direction.UP;
+        GameProfile profile = te.getPlayerProfile();
 
-        this.render(direction, te.getPlayerProfile(), matrixStackIn, bufferIn, combinedLightIn);
+        if(profile != null) {
+            System.out.println(profile.getName() + " : " + profile.getId());
+        } else {
+            System.out.println("No profile from: " + te.getPlayerProfile());
+        }
+
+        this.render(direction, profile, matrixStackIn, bufferIn, combinedLightIn);
     }
 
     public static void render(@Nullable Direction direction, @Nullable GameProfile profile, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int combinedLight) {
@@ -73,23 +80,14 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         }
         matrix.scale(-1.0F, -1.0F, 1.0F);
         matrix.translate(0.0D, -1.25D, 0.0D);
-        if(profile != null && SkinUtil.isSlimSkin(profile.getId()) && playerModel != slimModel) {
+        boolean flag = profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId());
+        if(flag && playerModel != slimModel) {
             playerModel = slimModel;
         }
 
         IVertexBuilder ivertexbuilder = typeBuffer.getBuffer(getRenderType(profile));
         playerModel.render(matrix, ivertexbuilder, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         matrix.pop();
-    }
-
-    private static RenderType getRenderType(@Nullable GameProfile gameProfileIn) {
-        if(gameProfileIn != null) {
-            Minecraft minecraft = Minecraft.getInstance();
-            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(gameProfileIn);
-            return map.containsKey(Type.SKIN) ? RenderType.getEntityTranslucent(minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN)) : RenderType.getEntityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(gameProfileIn)));
-        } else {
-            return RenderType.getEntityCutoutNoCull(defaultTexture);
-        }
     }
 
     private static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
@@ -130,7 +128,8 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             matrix.scale(-1.0F, -1.0F, 1.0F);
 
             StatuePlayerModel playerModel = model;
-            if(gameprofile != null && SkinUtil.isSlimSkin(gameprofile.getId())) {
+            boolean flag = gameprofile != null && gameprofile.getId() != null && SkinUtil.isSlimSkin(gameprofile.getId());
+            if(flag && playerModel != slimModel) {
                 playerModel = slimModel;
             }
 
@@ -138,5 +137,19 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             playerModel.render(matrix, ivertexbuilder, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
         matrix.pop();
+    }
+
+    private static RenderType getRenderType(@Nullable GameProfile gameProfileIn) {
+        if(gameProfileIn != null) {
+            Minecraft minecraft = Minecraft.getInstance();
+            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(gameProfileIn);
+            if (map.containsKey(Type.SKIN)) {
+                return RenderType.getEntityTranslucent(minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN));
+            } else {
+                return RenderType.getEntityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(gameProfileIn)));
+            }
+        } else {
+            return RenderType.getEntityCutoutNoCull(defaultTexture);
+        }
     }
 }
