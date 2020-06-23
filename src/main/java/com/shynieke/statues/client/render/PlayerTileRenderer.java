@@ -50,12 +50,6 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         Direction direction = flag ? blockstate.get(PlayerStatueBlock.HORIZONTAL_FACING) : Direction.UP;
         GameProfile profile = te.getPlayerProfile();
 
-        if(profile != null) {
-            System.out.println(profile.getName() + " : " + profile.getId());
-        } else {
-            System.out.println("No profile from: " + te.getPlayerProfile());
-        }
-
         this.render(direction, profile, matrixStackIn, bufferIn, combinedLightIn);
     }
 
