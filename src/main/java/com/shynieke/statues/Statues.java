@@ -1,7 +1,7 @@
 package com.shynieke.statues;
 
-import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.client.ClientHandler;
+import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
 import com.shynieke.statues.recipes.StatueLootList;

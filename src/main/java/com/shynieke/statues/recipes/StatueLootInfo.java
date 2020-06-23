@@ -28,7 +28,7 @@ public class StatueLootInfo {
     }
 
     public void setStack1(ItemStack stack1) {
-        this.loot.setStack1(stack1);;
+        this.loot.setStack1(stack1);
     }
 
     public ItemStack getStack2() {

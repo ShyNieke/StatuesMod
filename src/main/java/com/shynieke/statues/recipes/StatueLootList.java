@@ -72,7 +72,7 @@ public class StatueLootList {
     {
         ItemStack wasteland = new ItemStack(Blocks.SAND).setDisplayName(new StringTextComponent("Wasteland Block").applyTextStyle(TextFormatting.LIGHT_PURPLE));
         wasteland.addEnchantment(Enchantments.VANISHING_CURSE, 1);
-        CompoundNBT nbt = wasteland.getTag();
+        CompoundNBT nbt = wasteland.hasTag() ? wasteland.getTag() : new CompoundNBT();
         nbt.putInt("HideFlags", 1);
         wasteland.setTag(nbt);
         return wasteland;
@@ -89,10 +89,9 @@ public class StatueLootList {
     public static void addLoot(String statue, LootInfo loot)
     {
         loot_info = new StatueLootInfo(statue, loot);
-        if(lootList.contains(loot_info))
-            return;
-        else
+        if(!lootList.contains(loot_info)) {
             lootList.add(loot_info);
+        }
     }
 
     public static void addLoot(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3)
@@ -137,7 +136,7 @@ public class StatueLootList {
 
         for(StatueLootInfo info : lootList)
         {
-            if(info.getStatue() == statue)
+            if(info.getStatue().equals(statue))
             {
                 stacks.add(0, info.getStack1());
                 stacks.add(1, info.getStack2());

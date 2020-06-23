@@ -89,23 +89,18 @@ public class PlayerCompassItem extends Item {
             @OnlyIn(Dist.CLIENT)
             private double getLastLocationToAngle(World worldIn, Entity entityIn, ItemStack stack)
             {
-                if(stack.hasTag())
-                {
+                if(stack.hasTag()) {
                     BlockPos lastLocation = worldIn.getSpawnPoint();
                     CompoundNBT tag = stack.getTag();
-                    if (tag.contains("lastPlayerLocation"))
-                    {
-                        Long location = tag.getLong("lastPlayerLocation");
-                        if(location != 0L)
-                        {
+                    if (tag.contains("lastPlayerLocation")) {
+                        long location = tag.getLong("lastPlayerLocation");
+                        if(location != 0L) {
                             lastLocation = BlockPos.fromLong(location);
                         }
 
                     }
                     return Math.atan2((double)lastLocation.getZ() - entityIn.getPosZ(), (double)lastLocation.getX() - entityIn.getPosZ());
-                }
-                else
-                {
+                } else {
                     return getSpawnToAngle(worldIn, entityIn);
                 }
             }
@@ -123,8 +118,7 @@ public class PlayerCompassItem extends Item {
         if(stack.hasTag())
         {
             CompoundNBT tag = stack.getTag();
-            if (!tag.getString("playerTracking").isEmpty())
-            {
+            if (!tag.getString("playerTracking").isEmpty()) {
                 tooltip.add(new TranslationTextComponent("statues.last.known.location", new Object[] {tag.getString("playerTracking")}).applyTextStyle(TextFormatting.GOLD));
             }
         }

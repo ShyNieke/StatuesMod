@@ -17,7 +17,6 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.INameable;
 import net.minecraft.util.StringUtils;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -49,7 +48,6 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     public Boolean comparatorApplied;
     public Boolean OnlineChecking;
     public int checkerCooldown;
-    public BlockPos playerPos;
 
     public String setName(String name) {
         return this.BlockName = name;
@@ -153,7 +151,6 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         if (this.world.isRemote)
             return;
 
-
         BlockState state = world.getBlockState(getPos());
         if(state.getBlock() == StatueBlocks.player_statue && comparatorApplied)
         {
@@ -173,12 +170,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
             }
             else
             {
-                boolean checkAnswer = false;
-                if(world.getPlayerByUuid(this.playerProfile.getId()) != null)
-                    checkAnswer = true;
-                else
-                    checkAnswer = false;
-
+                boolean checkAnswer = world.getPlayerByUuid(this.playerProfile.getId()) != null;
                 BlockState newState = state.with(PlayerStatueBlock.ONLINE, checkAnswer);
 
                 if(isStateOnline != checkAnswer)
