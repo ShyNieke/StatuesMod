@@ -29,7 +29,7 @@ public class DolphinStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.PIG;
+		return EntityType.DOLPHIN;
 	}
 
 	@Override
