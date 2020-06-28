@@ -31,6 +31,6 @@ public class WitchStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.VILLAGER;
+		return EntityType.WITCH;
 	}
 }

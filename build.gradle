@@ -13,14 +13,14 @@ apply plugin: 'net.minecraftforge.gradle'
 //apply plugin: 'eclipse'
 //apply plugin: 'maven-publish'
 
-version = '0.1.3.2'
+version = '0.1.3.3'
 group = 'com.svennieke.statues' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Statues-1.14.4'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    mappings channel: 'snapshot', version: '20191230-1.14.3'
+    mappings channel: 'stable', version: '58-1.14.4'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
     // accessTransformer = file('build/resources/main/META-INF/accesstransformer.cfg')
@@ -101,7 +101,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.111'
+    minecraft 'net.minecraftforge:forge:1.14.4-28.2.21'
 
     compile fg.deobf("mezz.jei:jei-1.14.4:6.0.0.27")
     compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-1.14.4:5.0.1.160")
