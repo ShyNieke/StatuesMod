@@ -10,6 +10,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -59,7 +60,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 				for (int i = 0; i < luckyPlayers.size(); i++) {
 					if(!luckyPlayers.get(i).isEmpty()) {
 						String luckyUser = luckyPlayers.get(i).trim();
-						if(player.getDisplayName().getFormattedText().equalsIgnoreCase(luckyUser)) {
+						if(player.getDisplayName().getUnformattedComponentText().equalsIgnoreCase(luckyUser)) {
 							randomMessage = "Luck is not on your side today";
 						}
 					}
@@ -70,7 +71,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 				randomMessage = (messages.get(idx));
 			}
 
-			player.sendMessage(new TranslationTextComponent(randomMessage));
+			player.sendMessage(new TranslationTextComponent(randomMessage), Util.DUMMY_UUID);
 			worldIn.playSound(null, pos, SoundEvents.BLOCK_DISPENSER_FAIL, SoundCategory.NEUTRAL, 0.5F, 1.0F);
 		}
 	}

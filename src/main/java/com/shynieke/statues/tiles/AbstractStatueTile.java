@@ -30,8 +30,8 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 	}
 
 	@Override
-	public void read(CompoundNBT compound) {
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound) {
+		super.read(state, compound);
 		cooldown = compound.getInt("StatueCooldown");
 		cooldownMax = compound.getInt("StatueMaxcooldown");
 		statueAble = compound.getBoolean("StatueAble");
@@ -63,7 +63,7 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		read(pkt.getNbtCompound());
+		read(this.getBlockState(), pkt.getNbtCompound());
 
 		BlockState state = world.getBlockState(getPos());
 		world.notifyBlockUpdate(getPos(), state, state, 3);

@@ -40,7 +40,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public String getLootName() {
-		return "sheep_" + COLOR.getName();
+		return "sheep_" + COLOR.getString();
 	}
 
 	@Override

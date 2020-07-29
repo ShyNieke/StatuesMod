@@ -60,8 +60,8 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
+    public void read(BlockState state, CompoundNBT compound) {
+        super.read(state, compound);
         this.BlockName = compound.getString("PlayerName");
 
         if (compound.contains("PlayerProfile", 10)) {
@@ -90,7 +90,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(pkt.getNbtCompound());
+        read(this.getBlockState(), pkt.getNbtCompound());
 
         BlockState state = world.getBlockState(getPos());
         world.notifyBlockUpdate(getPos(), state, state, 3);

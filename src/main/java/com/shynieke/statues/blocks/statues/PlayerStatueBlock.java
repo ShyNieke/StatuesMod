@@ -28,6 +28,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.INameable;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -241,7 +242,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			if(stack.hasTag())
 			{
 				CompoundNBT tag = stack.getTag();
-				tooltip.add(new StringTextComponent("Username: " + stack.getDisplayName().getFormattedText()).applyTextStyle(TextFormatting.GOLD));
+				tooltip.add(new StringTextComponent("Username: " + stack.getDisplayName().getUnformattedComponentText()).mergeStyle(TextFormatting.GOLD));
 
 				if(tag.contains("PlayerProfile"))
 				{
@@ -257,7 +258,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					}
 
 					if(gameprofile != null)
-						tooltip.add(new StringTextComponent("UUID: " + gameprofile.getId().toString()).applyTextStyle(TextFormatting.GOLD));
+						tooltip.add(new StringTextComponent("UUID: " + gameprofile.getId().toString()).mergeStyle(TextFormatting.GOLD));
 				}
 			}
 		}
@@ -303,7 +304,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					CompoundNBT locationTag = new CompoundNBT();
 
 					PlayerEntity player = worldIn.getPlayerByUuid(getTE(worldIn, pos).getPlayerProfile().getId());
-					if(player.dimension == playerIn.dimension) {
+					if(player.world.func_230315_m_() == playerIn.world.func_230315_m_()) {
 						BlockPos playerPos = player.getPosition();
 						locationTag.putLong("lastPlayerLocation", playerPos.toLong());
 						locationTag.putString("playerTracking", getTE(worldIn, pos).getPlayerProfile().getName());
@@ -320,7 +321,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							playerIn.dropItem(playerCompass, false);
 						}
 					} else {
-						playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", new Object[] {TextFormatting.GOLD + playerName}));
+						playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
 						stack.shrink(1);
 						if (stack.isEmpty())
 						{
@@ -333,7 +334,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					}
 
 				} else {
-					playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", new Object[] {TextFormatting.GOLD + playerName}));
+					playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
 					stack.shrink(1);
 					if (stack.isEmpty())
 					{
@@ -351,7 +352,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					CompoundNBT locationTag = new CompoundNBT();
 
 					PlayerEntity player = worldIn.getPlayerByUuid(getTE(worldIn, pos).getPlayerProfile().getId());
-					if(player.dimension == playerIn.dimension)
+					if(player.world.func_230315_m_() == playerIn.world.func_230315_m_())
 					{
 						BlockPos playerPos = player.getPosition();
 						locationTag.putLong("lastPlayerLocation", playerPos.toLong());
@@ -361,7 +362,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					}
 					else
 					{
-						playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", new Object[] {TextFormatting.GOLD + playerName}));
+						playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", new Object[] {TextFormatting.GOLD + playerName}), Util.DUMMY_UUID);
 						stack.shrink(1);
 						if (stack.isEmpty())
 						{
@@ -376,7 +377,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				}
 				else
 				{
-					playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", new Object[] {TextFormatting.GOLD + playerName}));
+					playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
 					stack.shrink(1);
 					if (stack.isEmpty())
 					{

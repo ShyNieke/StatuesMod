@@ -6,17 +6,20 @@ import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.PlayerTile;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,9 +34,9 @@ public class Statues {
 		eventBus.register(StatuesConfig.class);
 
 		eventBus.addListener(this::setup);
-		eventBus.addListener(this::dedicatedServerSetupEvent);
 
 //		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
+		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
@@ -47,8 +50,9 @@ public class Statues {
 		StatueLootList.initializeStatueLoot();
 	}
 
-	private void dedicatedServerSetupEvent (final FMLDedicatedServerSetupEvent event) {
-		DedicatedServer server = event.getServerSupplier().get();
+	@SubscribeEvent
+	public void dedicatedServerSetupEvent(final FMLServerAboutToStartEvent event) {
+		MinecraftServer server = event.getServer();
 		PlayerTile.setProfileCache(server.getPlayerProfileCache());
 		PlayerTile.setSessionService(server.getMinecraftSessionService());
 		PlayerProfileCache.setOnlineMode(server.isServerInOnlineMode());

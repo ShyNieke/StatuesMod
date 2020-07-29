@@ -71,7 +71,7 @@ public class StatueLootList {
 
     public static ItemStack getWastelandBlock()
     {
-        ItemStack wasteland = new ItemStack(Blocks.SAND).setDisplayName(new StringTextComponent("Wasteland Block").applyTextStyle(TextFormatting.LIGHT_PURPLE));
+        ItemStack wasteland = new ItemStack(Blocks.SAND).setDisplayName(new StringTextComponent("Wasteland Block").mergeStyle(TextFormatting.LIGHT_PURPLE));
         wasteland.addEnchantment(Enchantments.VANISHING_CURSE, 1);
         CompoundNBT nbt = wasteland.hasTag() ? wasteland.getTag() : new CompoundNBT();
         nbt.putInt("HideFlags", 1);
@@ -82,7 +82,7 @@ public class StatueLootList {
     public static ItemStack getFloodBucket()
     {
         ItemStack floodBucket = new ItemStack(Items.WATER_BUCKET);
-        floodBucket.setDisplayName(new StringTextComponent("The Flood").applyTextStyle(TextFormatting.BLUE));
+        floodBucket.setDisplayName(new StringTextComponent("The Flood").mergeStyle(TextFormatting.BLUE));
 
         return floodBucket;
     }

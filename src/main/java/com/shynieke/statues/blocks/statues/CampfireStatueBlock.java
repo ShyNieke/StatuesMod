@@ -31,7 +31,9 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 	private static final VoxelShape NORTH_WEST_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 5.0D, 16.0D, 7.0D, 11.0D);
 
 	public CampfireStatueBlock(Properties builder) {
-		super(builder.sound(SoundType.STONE).lightValue(12));
+		super(builder.sound(SoundType.STONE).setLightLevel((p_235418_0_) -> {
+			return 12;
+		}));
 	}
 
 	@Override

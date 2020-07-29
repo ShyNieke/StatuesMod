@@ -112,7 +112,7 @@ public class DropHandler {
                         List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                         if (!luckyPlayers.isEmpty()) {
                             for (String luckyName : luckyPlayers) {
-                                String user = sourcePlayer.getName().getFormattedText();
+                                String user = sourcePlayer.getName().getUnformattedComponentText();
 
                                 if (!luckyName.isEmpty() && user.equals(luckyName)) {
                                     playerDropChance = StatuesConfig.COMMON.playerStatueDropChance.get() / 4;
@@ -167,7 +167,7 @@ public class DropHandler {
                     List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
                         for (String luckyName : luckyPlayers) {
-                            String user = player.getName().getFormattedText();
+                            String user = player.getName().getUnformattedComponentText();
 
                             if (!luckyName.isEmpty() && user.equals(luckyName)) {
                                 default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;
@@ -225,7 +225,7 @@ public class DropHandler {
                     List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
                         for (String luckyName : luckyPlayers) {
-                            String user = player.getName().getFormattedText();
+                            String user = player.getName().getUnformattedComponentText();
 
                             if (!luckyName.isEmpty() && user.equals(luckyName)) {
                                 default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;

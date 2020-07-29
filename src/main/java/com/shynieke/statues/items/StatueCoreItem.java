@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -32,20 +33,20 @@ public class StatueCoreItem extends Item {
 			if(!stack.getTag().isEmpty()) {
 				CompoundNBT nbt = stack.getTag();
 				if(!nbt.getString(entityTag).isEmpty()) {
-					tooltip.add(new TranslationTextComponent("statues.core.info,", new Object[] {nbt.getString(entityTag)}).applyTextStyle(TextFormatting.GOLD));
+					tooltip.add(new TranslationTextComponent("statues.core.info,", new Object[] {nbt.getString(entityTag)}).mergeStyle(TextFormatting.GOLD));
 				}
 			}
 		}
 	}
 
 	@Override
-	public boolean itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entityIn, Hand handIn) {
+	public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entityIn, Hand handIn) {
 		if (!(entityIn instanceof PlayerEntity) && !isLocked) {
 			if(stack.hasTag()) {
 				CompoundNBT nbt = stack.getTag();
 				if(!nbt.getString(entityTag).isEmpty()) {
 					this.isLocked = true;
-					return false;
+					return ActionResultType.FAIL;
 				} else {
 					if (entityIn.isAlive()) {
 						if (entityIn instanceof MobEntity) {
@@ -57,9 +58,9 @@ public class StatueCoreItem extends Item {
 				}
 			}
 
-			return true;
+			return ActionResultType.SUCCESS;
 		} else {
-			return false;
+			return ActionResultType.FAIL;
 		}
 	}
 }
