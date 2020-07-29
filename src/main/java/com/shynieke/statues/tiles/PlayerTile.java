@@ -22,7 +22,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 public class PlayerTile extends TileEntity implements INameable, ITickableTileEntity {
     private static PlayerProfileCache profileCache;
