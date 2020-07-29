@@ -7,7 +7,9 @@ import com.shynieke.statues.blocks.decorative.EndermiteStatueBlock;
 import com.shynieke.statues.blocks.decorative.PebbleBlock;
 import com.shynieke.statues.blocks.decorative.SombreroBlock;
 import com.shynieke.statues.blocks.decorative.TotemOfUndyingStatueBlock;
+import com.shynieke.statues.blocks.statues.AngryBeeStatueBlock;
 import com.shynieke.statues.blocks.statues.BabyZombieStatueBlock;
+import com.shynieke.statues.blocks.statues.BeeStatueBlock;
 import com.shynieke.statues.blocks.statues.BlazeStatueBlock;
 import com.shynieke.statues.blocks.statues.CampfireStatueBlock;
 import com.shynieke.statues.blocks.statues.ChickenJockeyStatueBlock;
@@ -47,6 +49,7 @@ import com.shynieke.statues.blocks.statues.fish.SquidStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.TurtleStatueBlock;
 import com.shynieke.statues.client.render.PlayerTileInventoryRenderer;
 import com.shynieke.statues.items.StatueBlockItem;
+import com.shynieke.statues.items.StatueTransBeeItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
@@ -65,6 +68,8 @@ import java.util.ArrayList;
 @ObjectHolder(Reference.MOD_ID)
 public class StatueBlocks {
 	public static Block baby_zombie_statue;
+	public static Block bee_statue;
+	public static Block angry_bee_statue;
 	public static Block blaze_statue;
 	public static Block campfire_statue;
 	public static Block chicken_jockey_statue;
@@ -160,6 +165,8 @@ public class StatueBlocks {
 		IForgeRegistry<Block> registry = event.getRegistry();
 
 		baby_zombie_statue = registerStatue(new BabyZombieStatueBlock(blockBuilder()), "baby_zombie_statue");
+		angry_bee_statue = registerStatue(new AngryBeeStatueBlock(blockBuilder()), "angry_bee_statue");
+		bee_statue = registerBeeStatue(new BeeStatueBlock(blockBuilder()), "bee_statue");
 		blaze_statue = registerStatue(new BlazeStatueBlock(blockBuilder()), "blaze_statue");
 		bumbo_statue = registerBlock(new BumboStatueBlock(blockBuilder()), "bumbo_statue");
 		campfire_statue = registerStatue(new CampfireStatueBlock(blockBuilder()), "campfire_statue");
@@ -254,6 +261,12 @@ public class StatueBlocks {
 	{
 		block.setRegistryName(new ResourceLocation(Reference.MOD_ID, registry));
 		return registerBlock( block, new StatueBlockItem(block, itemBuilder()));
+	}
+
+	public static <T extends Block> Block registerBeeStatue(T block, String registry)
+	{
+		block.setRegistryName(new ResourceLocation(Reference.MOD_ID, registry));
+		return registerBlock( block, new StatueTransBeeItem(block, itemBuilder()));
 	}
 
 	public static <T extends Block> Block registerPlayerStatue(T block, String registry)

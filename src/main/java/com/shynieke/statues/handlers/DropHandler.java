@@ -12,11 +12,13 @@ import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.EvokerEntity;
 import net.minecraft.entity.monster.VexEntity;
 import net.minecraft.entity.monster.VindicatorEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.SheepEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.util.FakePlayer;
@@ -64,6 +66,18 @@ public class DropHandler {
             ItemStack itemStackToDrop = new ItemStack(StatueBlocks.sheep_shaven_statue);
             if (!sheep.getSheared()) {
                 itemStackToDrop = new ItemStack(SheepStatueBlock.getStatue(sheep.getFleeceColor()));
+            }
+            DropLootStatues(entity, itemStackToDrop, source, event);
+        } else if(entity instanceof BeeEntity) {
+            BeeEntity bee = (BeeEntity)entity;
+            ItemStack itemStackToDrop = new ItemStack(StatueBlocks.bee_statue);
+            if (entity.world.rand.nextBoolean()) {
+                itemStackToDrop = new ItemStack(StatueBlocks.angry_bee_statue);
+            }
+            String trans = "Trans Bee";
+            if(bee.getDisplayName().getUnformattedComponentText().equalsIgnoreCase(trans)) {
+                itemStackToDrop = new ItemStack(StatueBlocks.bee_statue);
+                itemStackToDrop.setDisplayName(new StringTextComponent(trans));
             }
             DropLootStatues(entity, itemStackToDrop, source, event);
         } else {

@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "statues:bee_statue",
+                  "properties": {
+                    "trans": "true"
+                  }
+                }
+              ],
+              "functions": [
+                {
+                  "function": "minecraft:copy_name",
+                  "source": "block_entity"
+                },
+                {
+                  "function": "minecraft:copy_state",
+                  "block": "statues:bee_statue",
+                  "properties": [
+                    "trans"
+                  ]
+                },
+                {
+                  "function": "set_nbt",
+                  "tag": "{display:{Name:'{\"text\":\"Trans Bee\"}'}}"
+                }
+              ],
+              "name": "statues:bee_statue"
+            },
+            {
+              "type": "minecraft:item",
+              "functions": [
+                {
+                  "function": "minecraft:copy_name",
+                  "source": "block_entity"
+                }
+              ],
+              "name": "statues:bee_statue"
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

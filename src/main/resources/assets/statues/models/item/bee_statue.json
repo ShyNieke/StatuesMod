@@ -1,0 +1,11 @@
+{
+    "parent": "statues:block/bee_statue",
+    "overrides": [
+        {
+            "predicate": {
+                "trans": 1
+            },
+            "model": "statues:block/trans_bee_statue"
+        }
+    ]
+}

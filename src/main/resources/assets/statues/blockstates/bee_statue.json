@@ -1,0 +1,20 @@
+{
+	"variants": {
+		"interactive=false,facing=east,trans=false": { "model": "statues:block/bee_statue", "y": 90},
+		"interactive=false,facing=north,trans=false": { "model": "statues:block/bee_statue"},
+		"interactive=false,facing=west,trans=false": { "model": "statues:block/bee_statue", "y": 270},
+		"interactive=false,facing=south,trans=false": { "model": "statues:block/bee_statue", "y": 180},
+		"interactive=true,facing=east,trans=false": { "model": "statues:block/bee_statue", "y": 90},
+		"interactive=true,facing=north,trans=false": { "model": "statues:block/bee_statue"},
+		"interactive=true,facing=west,trans=false": { "model": "statues:block/bee_statue", "y": 270},
+		"interactive=true,facing=south,trans=false": { "model": "statues:block/bee_statue", "y": 180},
+		"interactive=false,facing=east,trans=true": { "model": "statues:block/trans_bee_statue", "y": 90},
+		"interactive=false,facing=north,trans=true": { "model": "statues:block/trans_bee_statue"},
+		"interactive=false,facing=west,trans=true": { "model": "statues:block/trans_bee_statue", "y": 270},
+		"interactive=false,facing=south,trans=true": { "model": "statues:block/trans_bee_statue", "y": 180},
+		"interactive=true,facing=east,trans=true": { "model": "statues:block/trans_bee_statue", "y": 90},
+		"interactive=true,facing=north,trans=true": { "model": "statues:block/trans_bee_statue"},
+		"interactive=true,facing=west,trans=true": { "model": "statues:block/trans_bee_statue", "y": 270},
+		"interactive=true,facing=south,trans=true": { "model": "statues:block/trans_bee_statue", "y": 180}
+	}
+}
