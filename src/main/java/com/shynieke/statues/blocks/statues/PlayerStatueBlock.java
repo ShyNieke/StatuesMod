@@ -163,7 +163,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			} else {
 				GameProfile newProfile = null;
 
-				if(!flag || !flag2) {
+				if(!flag && !flag2) {
 					newProfile = new GameProfile((UUID)null, playerName);
 				}
 
@@ -188,7 +188,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						getTE(worldIn, pos).setName(playerName);
 					}
 				}
-				getTE(worldIn, pos).setPlayerProfile(newProfile);
+				if(newProfile != null) {
+					getTE(worldIn, pos).setPlayerProfile(newProfile);
+				}
 			}
 			getTE(worldIn, pos).markDirty();
 		}
