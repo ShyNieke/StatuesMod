@@ -12,7 +12,7 @@ import net.minecraft.world.IBlockReader;
 
 public class EndermiteStatueBlock extends AbstractStatueBase {
 
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(0, 0, 0, 16, 8, 16);
+    private static final VoxelShape SHAPE = Block.makeCuboidShape(0.1, 0, 0.1, 16, 4, 16);
 
     public EndermiteStatueBlock(Properties properties) {
         super(properties.sound(SoundType.STONE));
@@ -31,5 +31,10 @@ public class EndermiteStatueBlock extends AbstractStatueBase {
     @Override
     public EntityType<?> getEntity() {
         return EntityType.ENDERMITE;
+    }
+
+    @Override
+    public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos) {
+        return false;
     }
 }
