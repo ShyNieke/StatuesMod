@@ -89,7 +89,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(this.getBlockState(), pkt.getNbtCompound());
+        read(getBlockState(), pkt.getNbtCompound());
 
         BlockState state = world.getBlockState(getPos());
         world.notifyBlockUpdate(getPos(), state, state, 3);
@@ -127,7 +127,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     }
 
     public static GameProfile updateGameProfile(GameProfile input) {
-        if (input != null && !StringUtils.isNullOrEmpty(input.getName())) {
+        if (input != null && input.getName() != null && !StringUtils.isNullOrEmpty(input.getName())) {
             if (input.isComplete() && input.getProperties().containsKey("textures")) {
                 return input;
             } else if (profileCache != null && sessionService != null) {
@@ -152,32 +152,34 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public void tick() {
-        if (this.world.isRemote)
-            return;
+        if(this.world != null) {
+            if (this.world.isRemote)
+                return;
 
-        BlockState state = world.getBlockState(getPos());
-        if(state.getBlock() == StatueBlocks.player_statue && comparatorApplied) {
-            boolean isStateOnline = state.get(PlayerStatueBlock.ONLINE);
+            BlockState state = world.getBlockState(getPos());
+            if(state.getBlock() == StatueBlocks.player_statue && comparatorApplied) {
+                boolean isStateOnline = state.get(PlayerStatueBlock.ONLINE);
 
-            if(!OnlineChecking) {
-                ++this.checkerCooldown;
-                markDirty();
-                if(this.checkerCooldown == 0)
-                    this.checkerCooldown = 200;
+                if(!OnlineChecking) {
+                    ++this.checkerCooldown;
+                    markDirty();
+                    if(this.checkerCooldown == 0)
+                        this.checkerCooldown = 200;
 
-                if(this.checkerCooldown >= 200) {
-                    this.checkerCooldown = 0;
-                    setOnlineChecking(true);
+                    if(this.checkerCooldown >= 200) {
+                        this.checkerCooldown = 0;
+                        setOnlineChecking(true);
+                    }
+                } else {
+                    boolean checkAnswer = world.getPlayerByUuid(this.playerProfile.getId()) != null;
+                    BlockState newState = state.with(PlayerStatueBlock.ONLINE, checkAnswer);
+
+                    if(isStateOnline != checkAnswer) {
+                        world.setBlockState(getPos(), state.with(PlayerStatueBlock.ONLINE, checkAnswer), 5);
+                        world.notifyBlockUpdate(getPos(), state, newState, 5);
+                    }
+                    setOnlineChecking(false);
                 }
-            } else {
-                boolean checkAnswer = world.getPlayerByUuid(this.playerProfile.getId()) != null;
-                BlockState newState = state.with(PlayerStatueBlock.ONLINE, checkAnswer);
-
-                if(isStateOnline != checkAnswer) {
-                    world.setBlockState(getPos(), state.with(PlayerStatueBlock.ONLINE, checkAnswer), 5);
-                    world.notifyBlockUpdate(getPos(), state, newState, 5);
-                }
-                setOnlineChecking(false);
             }
         }
     }
