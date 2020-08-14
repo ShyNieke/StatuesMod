@@ -36,5 +36,4 @@ public class EndermiteStatueBlock extends AbstractStatueBase {
     private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
         return false;
     }
-
 }

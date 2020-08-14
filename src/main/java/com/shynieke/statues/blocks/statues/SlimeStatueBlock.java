@@ -10,6 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -44,6 +46,11 @@ public class SlimeStatueBlock extends AbstractStatueBase {
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return this.SHAPE;
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_SLIME_SQUISH;
 	}
 
 	@OnlyIn(Dist.CLIENT)

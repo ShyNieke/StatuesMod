@@ -1,7 +1,7 @@
 package com.shynieke.statues.blocks.statues;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.init.StatueBlocks;
+import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.StatueTile;
 import net.minecraft.block.Block;
@@ -15,6 +15,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -39,7 +41,7 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 			if (block == Blocks.GOLD_BLOCK) {
 				BlockPos downPos = pos.down();
 				worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
-				worldIn.setBlockState(pos.down(), StatueBlocks.king_cluck_statue.getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
+				worldIn.setBlockState(pos.down(), StatueRegistry.KING_CLUCK_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
 				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
 			}
 		}
@@ -65,6 +67,11 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 	@Override
 	public EntityType<?> getEntity() {
 		return EntityType.CHICKEN;
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_CHICKEN_AMBIENT;
 	}
 
 	@Override

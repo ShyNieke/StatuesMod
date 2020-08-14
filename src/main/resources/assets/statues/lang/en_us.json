@@ -164,5 +164,8 @@
 
 	"_comment": "jei",
 	"gui.statue.loot": "Statue Loot",
-	"gui.statue.fill": "Filling Interactions"
+	"gui.statue.fill": "Filling Interactions",
+
+	"_comment": "curios",
+	"curios.identifier.statue": "Statue"
 }

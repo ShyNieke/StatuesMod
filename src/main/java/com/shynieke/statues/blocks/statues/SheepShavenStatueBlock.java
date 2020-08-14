@@ -10,6 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -38,6 +40,11 @@ public class SheepShavenStatueBlock extends AbstractStatueBase {
 	@Override
 	public EntityType<?> getEntity() {
 		return EntityType.SHEEP;
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_SHEEP_AMBIENT;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package com.shynieke.statues.blocks.decorative;
 
 import com.shynieke.statues.blocks.AbstractBaseBlock;
-import com.shynieke.statues.init.StatueBlocks;
+import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -31,7 +31,7 @@ public class SombreroBlock extends AbstractBaseBlock {
         if (block == Blocks.CACTUS) {
             BlockPos downPos = pos.down();
             worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
-            worldIn.setBlockState(pos.down(), StatueBlocks.bumbo_statue.getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
+            worldIn.setBlockState(pos.down(), StatueRegistry.BUMBO_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);

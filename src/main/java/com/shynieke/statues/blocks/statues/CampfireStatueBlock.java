@@ -44,10 +44,14 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-		tile.playSound(getRandomCampfire(), pos, (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F + 1.5F);
 		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
 		tile.summonMob(getGeneral(worldIn));
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return getRandomCampfire();
 	}
 
 	public CreeperEntity getGeneral(World worldIn)

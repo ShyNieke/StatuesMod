@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -75,7 +76,6 @@ public class BeeStatueBlock extends AngryBeeStatueBlock {
 
 	@Override
 	public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-		tile.playSound(SoundEvents.ENTITY_BEE_LOOP, pos, (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F + 1.5F);
 		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 //		tile.FakeMobs(new FakeZombie(worldIn), worldIn, pos, true);
 	}
@@ -88,6 +88,11 @@ public class BeeStatueBlock extends AngryBeeStatueBlock {
 	@Override
 	public EntityType<?> getEntity() {
 		return EntityType.BEE;
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_BEE_LOOP;
 	}
 
 	@Override

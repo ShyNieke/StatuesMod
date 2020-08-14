@@ -25,7 +25,7 @@ public class StatueTiles {
 	@SubscribeEvent
 	public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event)
 	{
-		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) StatueTile::new, StatueBlocks.STATUES.toArray(new Block[StatueBlocks.STATUES.size()])).build(null).setRegistryName(Reference.MOD_ID + "statue_tile"));
-		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) PlayerTile::new, StatueBlocks.player_statue).build(null).setRegistryName(Reference.MOD_ID + "player_tile"));
+		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) StatueTile::new, StatueRegistry.STATUES.toArray(new Block[StatueRegistry.STATUES.size()])).build(null).setRegistryName(Reference.MOD_ID + "statue_tile"));
+		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) PlayerTile::new, StatueRegistry.PLAYER_STATUE.get()).build(null).setRegistryName(Reference.MOD_ID + "player_tile"));
 	}
 }

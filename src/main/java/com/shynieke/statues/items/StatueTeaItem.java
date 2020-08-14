@@ -1,6 +1,6 @@
 package com.shynieke.statues.items;
 
-import com.shynieke.statues.init.StatueItems;
+import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,34 +24,28 @@ public class StatueTeaItem extends Item {
             PlayerEntity playerIn = entityIn instanceof PlayerEntity ? (PlayerEntity)entityIn : null;
             playerIn.onFoodEaten(worldIn, stack);
 
-            if (playerIn == null || !playerIn.abilities.isCreativeMode)
-            {
+            if (playerIn == null || !playerIn.abilities.isCreativeMode) {
                 stack.shrink(1);
             }
 
-            if (playerIn instanceof ServerPlayerEntity)
-            {
+            if (playerIn instanceof ServerPlayerEntity) {
                 CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)playerIn, stack);
             }
 
-            if (playerIn != null)
-            {
+            if (playerIn != null) {
                 playerIn.addStat(Stats.ITEM_USED.get(this));
             }
 
-            if (playerIn == null || !playerIn.abilities.isCreativeMode)
-            {
-                if (stack.isEmpty())
-                {
-                    return new ItemStack(StatueItems.cup);
+            if (playerIn == null || !playerIn.abilities.isCreativeMode) {
+                if (stack.isEmpty()) {
+                    return new ItemStack(StatueRegistry.CUP.get());
                 }
 
                 if (playerIn != null)
-                {
-                    playerIn.inventory.addItemStackToInventory(new ItemStack(StatueItems.cup));
+
+                    playerIn.inventory.addItemStackToInventory(new ItemStack(StatueRegistry.CUP.get()));
                 }
             }
-        }
 
         return stack;
     }

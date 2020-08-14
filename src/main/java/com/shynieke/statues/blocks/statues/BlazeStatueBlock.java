@@ -9,6 +9,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -28,7 +29,6 @@ public class BlazeStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-		tile.playSound(SoundEvents.ENTITY_BLAZE_AMBIENT, pos, (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F + 1.5F);
 		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 //		tile.FakeMobs(new FakeZombie(worldIn), worldIn, pos, true);
 	}
@@ -41,6 +41,11 @@ public class BlazeStatueBlock extends AbstractStatueBase {
 	@Override
 	public EntityType<?> getEntity() {
 		return EntityType.BLAZE;
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_BLAZE_AMBIENT;
 	}
 
 	@Override

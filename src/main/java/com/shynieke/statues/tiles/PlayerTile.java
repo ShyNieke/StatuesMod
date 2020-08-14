@@ -5,7 +5,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.Property;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
-import com.shynieke.statues.init.StatueBlocks;
+import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -157,7 +157,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
                 return;
 
             BlockState state = world.getBlockState(getPos());
-            if(state.getBlock() == StatueBlocks.player_statue && comparatorApplied) {
+            if(state.getBlock() == StatueRegistry.PLAYER_STATUE.get() && comparatorApplied) {
                 boolean isStateOnline = state.get(PlayerStatueBlock.ONLINE);
 
                 if(!OnlineChecking) {

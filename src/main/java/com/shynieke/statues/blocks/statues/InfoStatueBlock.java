@@ -50,9 +50,12 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 			int idx = new Random().nextInt(messages.size());
 			String randomMessage = messages.get(idx);
 
-			if(ModList.get().isLoaded("veinminer") && random < 20)
-			{
+			if(ModList.get().isLoaded("veinminer") && worldIn.rand.nextBoolean()) {
 				randomMessage = "Did you know we have veinminer";
+			}
+
+			if(ModList.get().isLoaded("curios") && worldIn.rand.nextBoolean()) {
+				randomMessage = "Did you know we have curios support";
 			}
 
 			if(!luckyPlayers.isEmpty() && random < 20)

@@ -10,6 +10,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -40,8 +42,12 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 		return EntityType.RABBIT;
 	}
 
-	public RabbitEntity getRabbit(World worldIn)
-	{
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_RABBIT_AMBIENT;
+	}
+
+	public RabbitEntity getRabbit(World worldIn) {
 		RabbitEntity evilRabbit = new RabbitEntity(EntityType.RABBIT, worldIn);
 		evilRabbit.setRabbitType(99);
 

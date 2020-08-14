@@ -1,6 +1,6 @@
 package com.shynieke.statues.tiles;
 
-import com.shynieke.statues.init.StatueItems;
+import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTiles;
 import com.shynieke.statues.recipes.LootInfo;
 import com.shynieke.statues.recipes.StatueLootList;
@@ -40,8 +40,7 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void giveItem(LootInfo loot, PlayerEntity playerIn) {
-		if(isStatueAble())
-		{
+		if(isStatueAble()) {
 			int random = world.rand.nextInt(100);
 			if(!isDecorative() && loot.hasLoot())
 			{
@@ -73,22 +72,17 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void summonMob(LivingEntity entityIn) {
-		if(canSpawnMobs())
-		{
+		if(canSpawnMobs()) {
 			int random = world.rand.nextInt(100);
 
-			if (random < 1)
-			{
-				if(entityIn instanceof RabbitEntity)
-				{
+			if (random < 1) {
+				if(entityIn instanceof RabbitEntity) {
 					RabbitEntity rabbit = (RabbitEntity) entityIn;
 					rabbit.setRabbitType(99);
 					rabbit.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
 
 					world.addEntity(rabbit);
-				}
-				else if(entityIn instanceof CreeperEntity)
-				{
+				} else if(entityIn instanceof CreeperEntity) {
 					CreeperEntity creeper = (CreeperEntity) entityIn;
 					creeper.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
 					CompoundNBT tag = new CompoundNBT();
@@ -99,9 +93,7 @@ public class StatueTile extends AbstractStatueTile{
 					creeper.readAdditional(tag);
 					world.addEntity(creeper);
 					creeper.spawnExplosionParticle();
-				}
-				else
-				{
+				} else {
 					entityIn.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
 					world.addEntity(entityIn);
 				}
@@ -142,12 +134,11 @@ public class StatueTile extends AbstractStatueTile{
 				world.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
 				stack.shrink(1);
 
+				ItemStack soupStack = new ItemStack(StatueRegistry.SOUP.get());
 				if (stack.isEmpty()) {
-					playerIn.setHeldItem(hand, new ItemStack(StatueItems.soup));
-				}
-				else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(StatueItems.soup)))
-				{
-					playerIn.dropItem(new ItemStack(StatueItems.soup), false);
+					playerIn.setHeldItem(hand, soupStack);
+				} else if (!playerIn.inventory.addItemStackToInventory(soupStack)) {
+					playerIn.dropItem(soupStack, false);
 				}
 			}
 		}
@@ -162,9 +153,7 @@ public class StatueTile extends AbstractStatueTile{
 
 				if (stack.isEmpty()) {
 					playerIn.setHeldItem(hand, new ItemStack(Items.MILK_BUCKET));
-				}
-				else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MILK_BUCKET)))
-				{
+				} else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MILK_BUCKET))) {
 					playerIn.dropItem(new ItemStack(Items.MILK_BUCKET), false);
 				}
 			}
@@ -172,13 +161,10 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void giveEffect(BlockPos pos, PlayerEntity player, Effect effect) {
-		if(isStatueAble())
-		{
+		if(isStatueAble()) {
 			int random = world.rand.nextInt(100);
-			if(hasExternalUse())
-			{
-				if(random < 10)
-				{
+			if(hasExternalUse()) {
+				if(random < 10) {
 					if (!world.isRemote) {
 						if (player.getActivePotionEffect(effect) == null) {
 							player.addPotionEffect(new EffectInstance(effect, 20 * 20, 1, true, true));
@@ -199,8 +185,7 @@ public class StatueTile extends AbstractStatueTile{
 		nbt.putBoolean("Trail", true);
 
 		int[] colors = new int[rand.nextInt(8) + 1];
-		for (int i = 0; i < colors.length; i++)
-		{
+		for (int i = 0; i < colors.length; i++) {
 			colors[i] = DYE_COLORS[rand.nextInt(16)];
 		}
 		nbt.putIntArray("Colors", colors);
