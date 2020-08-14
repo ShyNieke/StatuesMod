@@ -9,6 +9,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -36,6 +38,11 @@ public class FloodStatueBlock extends AbstractStatueBase {
 
 		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 		tile.floodBehavior(playerIn, pos, handIn, (float)hitPos.x, (float)hitPos.y, (float)hitPos.z);
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_VILLAGER_AMBIENT;
 	}
 
 	@Override

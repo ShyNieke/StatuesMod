@@ -9,6 +9,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -36,6 +38,11 @@ public class CreeperStatueBlock extends AbstractStatueBase {
 	@Override
 	public EntityType<?> getEntity() {
 		return EntityType.CREEPER;
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_CREEPER_PRIMED;
 	}
 
 	@Override

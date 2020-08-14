@@ -8,6 +8,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -27,12 +29,10 @@ public class FishStatueBlock extends AbstractStatueBase {
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-        switch(size) {
-            default:
-                return SHAPE;
-            case 1:
-                return SHAPE_BIG;
+        if (size == 1) {
+            return SHAPE_BIG;
         }
+        return SHAPE;
     }
 
     @Override
@@ -43,5 +43,10 @@ public class FishStatueBlock extends AbstractStatueBase {
     @Override
     public EntityType<?> getEntity() {
         return EntityType.TROPICAL_FISH;
+    }
+
+    @Override
+    public SoundEvent getSound(BlockState state) {
+        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
     }
 }

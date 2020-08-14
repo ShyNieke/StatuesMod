@@ -20,7 +20,7 @@ import com.shynieke.statues.blocks.statues.EndermanStatueBlock;
 import com.shynieke.statues.blocks.statues.EvokerStatueBlock;
 import com.shynieke.statues.blocks.statues.FloodStatueBlock;
 import com.shynieke.statues.blocks.statues.GhastStatueBlock;
-import com.shynieke.statues.blocks.statues.GuardianStatueBlock;
+import com.shynieke.statues.blocks.statues.fish.GuardianStatueBlock;
 import com.shynieke.statues.blocks.statues.HuskStatueBlock;
 import com.shynieke.statues.blocks.statues.InfoStatueBlock;
 import com.shynieke.statues.blocks.statues.KingCluckStatueBlock;

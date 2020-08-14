@@ -11,6 +11,7 @@ import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -28,11 +29,15 @@ public class ChickenJockeyStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-		tile.playSound(SoundEvents.ENTITY_ZOMBIE_AMBIENT, pos, (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F + 1.5F);
 		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
 		tile.summonMob(new ChickenEntity(EntityType.CHICKEN, worldIn));
 		tile.summonMob(new ZombieEntity(EntityType.ZOMBIE, worldIn));
+	}
+
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
 	}
 
 	@Override

@@ -23,7 +23,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.Random;
 
-public class StatueTile extends AbstractStatueTile{
+public class StatueTile extends AbstractStatueTile {
 
 	public StatueTile() {
 		super(StatueTiles.STATUE);
@@ -219,6 +219,4 @@ public class StatueTile extends AbstractStatueTile{
 
 		return firework;
 	}
-
-
 }

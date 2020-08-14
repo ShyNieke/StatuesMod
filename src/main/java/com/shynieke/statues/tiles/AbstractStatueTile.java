@@ -22,7 +22,6 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 	private boolean makesSounds;
 	private boolean hasExternalUse;
 
-
 	protected AbstractStatueTile(TileEntityType<?> tileType) {
 		super(tileType);
 		this.cooldown = 0;

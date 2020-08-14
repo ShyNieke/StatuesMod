@@ -99,16 +99,16 @@ public class StatuesConfig {
 							"Pigs love mud how will they react on a more sandy block",
 							"Did you know chicken jockeys exist even in statues? go ahead try it out place a baby zombie statue on a chicken statue",
 							"Huge thanks to Xisuma for helping create his statue",
-							"Only decorative statues can be changed to special statues",
-							"Gone Fishing",
+							"Huge thanks to Etho for helping create his statue",
 							"A hat to protect you from the heat, get it in a hot biome near you",
 							"1-3 tall they seem, prickly is a bit mean, Give them a hat and see their true means",
 							"A statue of undying can be found in the pockets of the Woodland residents",
-							"Right click a fake mob with a statue core to prevent them from despawning",
 							"Right click a player statue with a comparator to emit redstone when that player is online",
 							"Right click a player statue with a compass to bound the compass to the last known location of the player",
 							"A player and a creeper with blue fire in the middle",
-							"How to make blue fire, if fire itself does not work"
+							"What happens with a blue shiny rock when it touches lava",
+							"Do bees support Trans rights? Name one to find out!",
+							"Noteblocks make noise, how about a statue on top of one"
 					};
 
 			info_messages = builder
