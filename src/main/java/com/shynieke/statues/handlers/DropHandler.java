@@ -3,7 +3,7 @@ package com.shynieke.statues.handlers;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.blocks.statues.SheepStatueBlock;
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.init.StatueBlocks;
+import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
@@ -24,6 +24,7 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.RegistryObject;
 
 import java.util.List;
 
@@ -39,53 +40,53 @@ public class DropHandler {
         if (entity instanceof VillagerEntity) {
             switch(entity.world.rand.nextInt(4)) {
                 default:
-                    DropLootStatues(entity, new ItemStack(StatueBlocks.villager_br_statue), source, event);
+                    DropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
                     break;
                 case 1:
-                    DropLootStatues(entity, new ItemStack(StatueBlocks.villager_wh_statue), source, event);
+                    DropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_WH_STATUE.get()), source, event);
                     break;
                 case 2:
-                    DropLootStatues(entity, new ItemStack(StatueBlocks.villager_pu_statue), source, event);
+                    DropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_PU_STATUE.get()), source, event);
                     break;
                 case 3:
-                    DropLootStatues(entity, new ItemStack(StatueBlocks.villager_gr_statue), source, event);
+                    DropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_GR_STATUE.get()), source, event);
                     break;
             }
         } else if(entity instanceof EvokerEntity || entity instanceof VindicatorEntity || entity instanceof VexEntity)
         {
             if(entity instanceof EvokerEntity)
             {
-                ItemStack itemStackToDrop = new ItemStack(StatueBlocks.evoker_statue);
+                ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EVOKER_STATUE.get());
                 DropLootStatues(entity, itemStackToDrop, source, event);
             }
 
-            ItemStack itemStackToDrop2 = new ItemStack(StatueBlocks.totem_of_undying_statue);
+            ItemStack itemStackToDrop2 = new ItemStack(StatueRegistry.TOTEM_OF_UNDYING_STATUE.get());
             DropLootStatues(entity, itemStackToDrop2, source, event);
         } else if(entity instanceof SheepEntity) {
             SheepEntity sheep = (SheepEntity) entity;
-            ItemStack itemStackToDrop = new ItemStack(StatueBlocks.sheep_shaven_statue);
+            ItemStack itemStackToDrop = new ItemStack(StatueRegistry.SHEEP_SHAVEN_STATUE.get());
             if (!sheep.getSheared()) {
                 itemStackToDrop = new ItemStack(SheepStatueBlock.getStatue(sheep.getFleeceColor()));
             }
             DropLootStatues(entity, itemStackToDrop, source, event);
         } else if(entity instanceof BeeEntity) {
             BeeEntity bee = (BeeEntity)entity;
-            ItemStack itemStackToDrop = new ItemStack(StatueBlocks.bee_statue);
+            ItemStack itemStackToDrop = new ItemStack(StatueRegistry.BEE_STATUE.get());
             if (entity.world.rand.nextBoolean()) {
-                itemStackToDrop = new ItemStack(StatueBlocks.angry_bee_statue);
+                itemStackToDrop = new ItemStack(StatueRegistry.ANGRY_BEE_STATUE.get());
             }
             String trans = "Trans Bee";
             if(bee.getDisplayName().getUnformattedComponentText().equalsIgnoreCase(trans)) {
-                itemStackToDrop = new ItemStack(StatueBlocks.bee_statue);
+                itemStackToDrop = new ItemStack(StatueRegistry.BEE_STATUE.get());
                 itemStackToDrop.setDisplayName(new StringTextComponent(trans));
             }
             DropLootStatues(entity, itemStackToDrop, source, event);
         } else {
-            for (Block block : StatueBlocks.BLOCKS) {
-                if (block instanceof AbstractStatueBase) {
-                    AbstractStatueBase statue = (AbstractStatueBase) block;
+            for (RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries()) {
+                if (block.get() instanceof AbstractStatueBase) {
+                    AbstractStatueBase statue = (AbstractStatueBase) block.get();
                     if (statue.getEntity().equals(entity.getType()) && !statue.isHiddenStatue()) {
-                        ItemStack itemStackToDrop = new ItemStack(block);
+                        ItemStack itemStackToDrop = new ItemStack(statue);
                         if (entity instanceof MobEntity) {
                             if (((MobEntity) entity).isChild() == statue.isBaby()) {
                                 DropLootStatues(entity, itemStackToDrop, source, event);
@@ -100,7 +101,7 @@ public class DropHandler {
 
         if(StatuesConfig.COMMON.playerDropsStatue.get() && entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
-            ItemStack playerStatueStack = new ItemStack(StatueBlocks.player_statue).setDisplayName(player.getName());
+            ItemStack playerStatueStack = new ItemStack(StatueRegistry.PLAYER_STATUE.get()).setDisplayName(player.getName());
             double random_drop = Math.random();
             double playerDropChance = StatuesConfig.COMMON.playerStatueDropChance.get();
             BlockPos entityPos = entity.getPosition();
@@ -255,7 +256,7 @@ public class DropHandler {
                     {
                         if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
                         {
-                            ItemStack sombreroStack = new ItemStack(StatueBlocks.sombrero);
+                            ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
                             event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                         }
                     }
@@ -270,7 +271,7 @@ public class DropHandler {
                     {
                         if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
                         {
-                            ItemStack sombreroStack = new ItemStack(StatueBlocks.sombrero);
+                            ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
                             event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                         }
                     }
@@ -282,7 +283,7 @@ public class DropHandler {
                 {
                     if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
                     {
-                        ItemStack sombreroStack = new ItemStack(StatueBlocks.sombrero);
+                        ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
                         event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                     }
                 }

@@ -1,6 +1,6 @@
 package com.shynieke.statues.tiles;
 
-import com.shynieke.statues.init.StatueItems;
+import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTiles;
 import com.shynieke.statues.recipes.LootInfo;
 import com.shynieke.statues.recipes.StatueLootList;
@@ -142,12 +142,13 @@ public class StatueTile extends AbstractStatueTile{
 				world.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
 				stack.shrink(1);
 
+				ItemStack soupStack = new ItemStack(StatueRegistry.SOUP.get());
 				if (stack.isEmpty()) {
-					playerIn.setHeldItem(hand, new ItemStack(StatueItems.soup));
+					playerIn.setHeldItem(hand, soupStack);
 				}
-				else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(StatueItems.soup)))
+				else if (!playerIn.inventory.addItemStackToInventory(soupStack))
 				{
-					playerIn.dropItem(new ItemStack(StatueItems.soup), false);
+					playerIn.dropItem(soupStack, false);
 				}
 			}
 		}

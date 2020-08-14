@@ -97,6 +97,9 @@ repositories {
 	maven { 
 		url "http://tehnut.info/maven" 
 	}
+    maven {
+        url = "https://maven.theillusivec4.top/"
+    }
 }
 
 
@@ -104,6 +107,8 @@ dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     compile fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
     compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${mc_version}:${version_crafttweaker}")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios:${version_curios}")
+    compileOnly fg.deobf("top.theillusivec4.curios:curios:${version_curios}:api")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

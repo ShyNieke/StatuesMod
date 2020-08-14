@@ -2,7 +2,7 @@ package com.shynieke.statues.handlers;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
-import com.shynieke.statues.init.StatueBlocks;
+import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -54,7 +54,7 @@ public class SpecialHandler {
                             lavaFound = false;
                         }
 
-                        CampfireData data = properStatuesFound(world, lavaPos.up(), StatueBlocks.player_statue, StatueBlocks.creeper_statue);
+                        CampfireData data = properStatuesFound(world, lavaPos.up(), StatueRegistry.PLAYER_STATUE.get(), StatueRegistry.CREEPER_STATUE.get());
 
                         if (data.getBool() && lavaFound) {
                             requirementsFound = true;
@@ -67,7 +67,7 @@ public class SpecialHandler {
                             world.setBlockState(data.getPos1(), Blocks.AIR.getDefaultState());
                             world.setBlockState(data.getPos2(), Blocks.AIR.getDefaultState());
 
-                            world.setBlockState(lavaPos, StatueBlocks.campfire_statue.getDefaultState().with(AbstractStatueBase.INTERACTIVE, false));
+                            world.setBlockState(lavaPos, StatueRegistry.CAMPFIRE_STATUE.get().getDefaultState().with(AbstractStatueBase.INTERACTIVE, false));
                             world.addParticle(ParticleTypes.FLAME, lavaPos.down().getX(), lavaPos.down().getY(), lavaPos.down().getZ(), 0.0D, 0.0D, 0.0D);
                             itemE.remove();
                         }

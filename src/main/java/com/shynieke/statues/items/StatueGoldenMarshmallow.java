@@ -1,6 +1,6 @@
 package com.shynieke.statues.items;
 
-import com.shynieke.statues.init.StatueItems;
+import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
@@ -22,7 +22,7 @@ public class StatueGoldenMarshmallow extends Item {
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityIn) {
         entityIn.onFoodEaten(worldIn, stack);
         if (!worldIn.isRemote) {
-            if (this == StatueItems.marshmallow_golden) {
+            if (this == StatueRegistry.MARSHMALLOW_GOLDEN.get()) {
                 ArrayList<Effect> potionList = new ArrayList<>(ForgeRegistries.POTIONS.getValues());
                 potionList.remove(Effects.NAUSEA);
 

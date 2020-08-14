@@ -1,7 +1,6 @@
 package com.shynieke.statues.recipes;
 
-import com.shynieke.statues.init.StatueBlocks;
-import com.shynieke.statues.init.StatueItems;
+import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantments;
@@ -10,6 +9,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.RegistryObject;
 
 import java.util.ArrayList;
 
@@ -23,10 +23,10 @@ public class StatueLootList {
         addLoot("blaze", new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.BLAZE_ROD), ItemStack.EMPTY);
         addLoot("chicken", new ItemStack(Items.FEATHER), new ItemStack(Items.CHICKEN), ItemStack.EMPTY);
         addLoot("chicken_jockey", new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.FEATHER), ItemStack.EMPTY);
-        addLoot("king_cluck", new ItemStack(StatueItems.nugget), ItemStack.EMPTY, new ItemStack(Items.GOLD_NUGGET));
+        addLoot("king_cluck", new ItemStack(StatueRegistry.NUGGET.get()), ItemStack.EMPTY, new ItemStack(Items.GOLD_NUGGET));
         addLoot("cow", new ItemStack(Items.BEEF), ItemStack.EMPTY, new ItemStack(Items.LEATHER));
         addLoot("creeper", new ItemStack(Items.GUNPOWDER), ItemStack.EMPTY, ItemStack.EMPTY);
-        addLoot("enderman", new ItemStack(StatueBlocks.pebble, 16), new ItemStack(Items.ENDER_PEARL), ItemStack.EMPTY);
+        addLoot("enderman", new ItemStack(StatueRegistry.PEBBLE.get(), 16), new ItemStack(Items.ENDER_PEARL), ItemStack.EMPTY);
         addLoot("flood", ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY);
         addLoot("ghast", new ItemStack(Items.GUNPOWDER), ItemStack.EMPTY, new ItemStack(Items.GHAST_TEAR));
         addLoot("guardian", new ItemStack(Items.COD), new ItemStack(Items.PRISMARINE_SHARD), new ItemStack(Items.PRISMARINE_CRYSTALS));
@@ -60,12 +60,12 @@ public class StatueLootList {
         addLoot("squid", ItemStack.EMPTY, new ItemStack(Items.INK_SAC), ItemStack.EMPTY);
         addLoot("villager", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.EMERALD));
         addLoot("witch", new ItemStack(Items.GLOWSTONE_DUST), new ItemStack(Items.REDSTONE), new ItemStack(Items.GLASS_BOTTLE));
-        addLoot("wasteland_pig", new ItemStack(StatueItems.tea), getWastelandBlock(), ItemStack.EMPTY);
+        addLoot("wasteland_pig", new ItemStack(StatueRegistry.TEA.get()), getWastelandBlock(), ItemStack.EMPTY);
         addLoot("zombie", new ItemStack(Items.ROTTEN_FLESH), ItemStack.EMPTY, new ItemStack(Items.IRON_INGOT));
         addLoot("pufferfish", ItemStack.EMPTY, new ItemStack(Items.PUFFERFISH), ItemStack.EMPTY);
         addLoot("spider", new ItemStack(Items.STRING), new ItemStack(Items.SPIDER_EYE), ItemStack.EMPTY);
         addLoot("evoker", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.TOTEM_OF_UNDYING));
-        addLoot("etho", new ItemStack(StatueItems.marshmallow), ItemStack.EMPTY, ItemStack.EMPTY);
+        addLoot("etho", new ItemStack(StatueRegistry.MARSHMALLOW_COOKED.get()), ItemStack.EMPTY, ItemStack.EMPTY);
         addLoot("turtle", new ItemStack(Items.SEAGRASS), ItemStack.EMPTY, new ItemStack(Items.BOWL));
     }
 
@@ -159,14 +159,14 @@ public class StatueLootList {
     {
         ArrayList<Block> blockList = new ArrayList<>();
 
-        for(Block blocks : StatueBlocks.BLOCKS)
+        for(RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries())
         {
-            String blockName = blocks.getTranslationKey();
+            String blockName = block.get().getTranslationKey();
             if(blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4")))
             {
-                if (!blockList.contains(blocks))
+                if (!blockList.contains(block))
                 {
-                    blockList.add(blocks);
+                    blockList.add(block.get());
                 }
             }
         }

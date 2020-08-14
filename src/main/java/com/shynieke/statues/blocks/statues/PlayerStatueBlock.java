@@ -3,8 +3,7 @@ package com.shynieke.statues.blocks.statues;
 import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.init.StatueBlocks;
-import com.shynieke.statues.init.StatueItems;
+import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.tiles.PlayerTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -120,7 +119,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean p_196243_5_) {
-		if (state.hasTileEntity() && newState.getBlock() != StatueBlocks.player_statue) {
+		if (state.hasTileEntity() && newState.getBlock() != StatueRegistry.PLAYER_STATUE.get()) {
 			worldIn.removeTileEntity(pos);
 		}
 	}
@@ -179,7 +178,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						tagPlayerName = tag.getString("PlayerName");
 					}
 
-					if(tagPlayerName != null) {
+					if(newProfile != null && tagPlayerName != null) {
 						if(!newProfile.getName().equals(tagPlayerName)) {
 							newProfile = new GameProfile((UUID)null, tagPlayerName);
 						}
@@ -256,7 +255,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			String playerName = tileProfile!= null ? tileProfile.getName() : "Name not found";
 			if(!playerIn.isSneaking() && stack.getItem() == Items.COMPASS && StatuesConfig.COMMON.playerCompass.get()) {
 				if(tileProfile != null && worldIn.getPlayerByUuid(tileProfile.getId()) != null) {
-					ItemStack playerCompass = new ItemStack(StatueItems.player_compass);
+					ItemStack playerCompass = new ItemStack(StatueRegistry.PLAYER_COMPASS.get());
 					CompoundNBT locationTag = new CompoundNBT();
 
 					PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
@@ -293,7 +292,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					}
 				}
 				return ActionResultType.SUCCESS;
-			} else if(!playerIn.isSneaking() && stack.getItem() == StatueItems.player_compass && StatuesConfig.COMMON.playerCompass.get()) {
+			} else if(!playerIn.isSneaking() && stack.getItem() == StatueRegistry.PLAYER_COMPASS.get() && StatuesConfig.COMMON.playerCompass.get()) {
 				if(tileProfile != null && worldIn.getPlayerByUuid(tileProfile.getId()) != null && tileProfile.getName() != null) {
 					CompoundNBT locationTag = new CompoundNBT();
 
@@ -335,7 +334,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				getTE(worldIn, pos).setComparatorApplied(false);
 				playerIn.setHeldItem(hand, new ItemStack(Blocks.COMPARATOR.asItem()));
 				return ActionResultType.SUCCESS;
-			} else if(playerIn.isSneaking() && stack.getItem() == StatueItems.player_compass) {
+			} else if(playerIn.isSneaking() && stack.getItem() == StatueRegistry.PLAYER_COMPASS.get()) {
 				stack.shrink(1);
 				if (stack.isEmpty()) {
 					playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));

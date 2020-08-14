@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.shynieke.statues.client.render.PlayerTileRenderer;
-import com.shynieke.statues.init.StatueBlocks;
+import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTiles;
 import com.shynieke.statues.tiles.PlayerTile;
 import net.minecraft.client.Minecraft;
@@ -23,16 +23,16 @@ public class ClientHandler {
     public static void doClientStuff(final FMLClientSetupEvent event) {
         ClientRegistry.bindTileEntityRenderer(StatueTiles.PLAYER, PlayerTileRenderer::new);
 
-        RenderTypeLookup.setRenderLayer(StatueBlocks.campfire_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.drowned_statue, RenderType.getCutout());;
-        RenderTypeLookup.setRenderLayer(StatueBlocks.husk_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.zombie_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.enderman_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.info_statue, RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.wasteland_statue, RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.CAMPFIRE_STATUE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.getCutout());;
+        RenderTypeLookup.setRenderLayer(StatueRegistry.HUSK_STATUE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.ZOMBIE_STATUE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.ENDERMAN_STATUE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.INFO_STATUE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.WASTELAND_STATUE.get(), RenderType.getCutout());
 
-        RenderTypeLookup.setRenderLayer(StatueBlocks.endermite_statue, RenderType.getTranslucent());
-        RenderTypeLookup.setRenderLayer(StatueBlocks.slime_statue, RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.ENDERMITE_STATUE.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.SLIME_STATUE.get(), RenderType.getTranslucent());
 
         Minecraft mc = Minecraft.getInstance();
         YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(mc.getProxy(), UUID.randomUUID().toString());

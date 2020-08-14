@@ -1,6 +1,6 @@
 package com.shynieke.statues.items;
 
-import com.shynieke.statues.init.StatueItems;
+import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,12 +43,12 @@ public class StatueTeaItem extends Item {
             {
                 if (stack.isEmpty())
                 {
-                    return new ItemStack(StatueItems.cup);
+                    return new ItemStack(StatueRegistry.CUP.get());
                 }
 
                 if (playerIn != null)
                 {
-                    playerIn.inventory.addItemStackToInventory(new ItemStack(StatueItems.cup));
+                    playerIn.inventory.addItemStackToInventory(new ItemStack(StatueRegistry.CUP.get()));
                 }
             }
         }

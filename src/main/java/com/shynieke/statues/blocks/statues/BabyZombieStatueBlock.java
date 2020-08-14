@@ -1,7 +1,7 @@
 package com.shynieke.statues.blocks.statues;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.init.StatueBlocks;
+import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.StatueTile;
 import net.minecraft.block.Block;
@@ -39,13 +39,13 @@ public class BabyZombieStatueBlock extends AbstractStatueBase {
 			BlockState blockState = worldIn.getBlockState(pos.down());
 			if (blockState.getBlock() == Blocks.LAPIS_BLOCK) {
 				worldIn.addParticle(ParticleTypes.EXPLOSION, pos.down().getX(), pos.down().getY(), pos.down().getZ(), 0.0D, 0.0D, 0.0D);
-				worldIn.setBlockState(pos.down(), StatueBlocks.flood_statue.getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
+				worldIn.setBlockState(pos.down(), StatueRegistry.FLOOD_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
 				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
 				worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.ENTITY_VILLAGER_YES, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
-			if (blockState.getBlock() == StatueBlocks.chicken_statue && isDecorative(blockState)) {
+			if (blockState.getBlock() == StatueRegistry.CHICKEN_STATUE.get() && isDecorative(blockState)) {
 				worldIn.addParticle(ParticleTypes.EXPLOSION, pos.down().getX(), pos.down().getY(), pos.down().getZ(), 0.0D, 0.0D, 0.0D);
-				worldIn.setBlockState(pos.down(), StatueBlocks.chicken_jockey_statue.getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
+				worldIn.setBlockState(pos.down(), StatueRegistry.CHICKEN_JOCKEY_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
 				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
 				worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.ENTITY_VILLAGER_YES, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
