@@ -95,17 +95,16 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             GameProfile gameprofile = null;
 
             if(stack.hasDisplayName()) {
-                String stackName = stack.getDisplayName().getUnformattedComponentText();
+                String stackName = stack.getDisplayName().getUnformattedComponentText().toLowerCase();
                 boolean spaceFlag = stackName.contains(" ");
                 boolean emptyFlag = stackName.isEmpty();
 
                 if (!spaceFlag && !emptyFlag) {
-                    CompoundNBT tag = stack.getTag();
-
                     if (GAMEPROFILE_CACHE.containsKey(stackName))
                         gameprofile = GAMEPROFILE_CACHE.get(stackName);
 
                     if (stack.hasTag() && gameprofile == null) {
+                        CompoundNBT tag = stack.getTag();
                         if (tag.contains("PlayerProfile", 10)) {
                             GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
                             if(foundProfile.getName().equalsIgnoreCase(stackName)) {
@@ -113,10 +112,12 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                             }
                         } else if (tag.contains("PlayerProfile", 8) && !StringUtils.isBlank(tag.getString("PlayerProfile"))) {
                             GameProfile gameprofile1 = new GameProfile((UUID) null, tag.getString("PlayerProfile"));
-                            GameProfile foundProfile = SkullTileEntity.updateGameProfile(gameprofile1);
+                            GameProfile foundProfile = PlayerTile.updateGameProfile(gameprofile1);
                             tag.remove("PlayerProfile");
                             tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), foundProfile));
-                            GAMEPROFILE_CACHE.put(foundProfile.getName(), foundProfile);
+                            if(foundProfile != null) {
+                                GAMEPROFILE_CACHE.put(foundProfile.getName(), foundProfile);
+                            }
                             if(foundProfile.getName().equalsIgnoreCase(stackName)) {
                                 gameprofile = foundProfile;
                             }
@@ -126,7 +127,9 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                     if(gameprofile == null) {
                         GameProfile gameprofile1 = new GameProfile((UUID)null, stackName);
                         gameprofile = PlayerTile.updateGameProfile(gameprofile1);
-                        GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
+                        if(gameprofile != null) {
+                            GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
+                        }
                     }
                 } else {
                     if (GAMEPROFILE_CACHE.containsKey("steve"))
@@ -135,7 +138,9 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                     if(gameprofile == null) {
                         GameProfile gameprofile1 = new GameProfile((UUID)null, "steve");
                         gameprofile = PlayerTile.updateGameProfile(gameprofile1);
-                        GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
+                        if(gameprofile != null) {
+                            GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
+                        }
                     }
                 }
             }
