@@ -36,8 +36,11 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-		if (canPlaySound(worldIn, pos, state)) {
+		if(!worldIn.isRemote) {
 			worldIn.playSound(null, pos, getSound(state), SoundCategory.NEUTRAL, 1F, (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F + 1.5F);
+			if (canPlaySound(worldIn, pos, state)) {
+				worldIn.playSound(null, pos, getSound(state), SoundCategory.NEUTRAL, 1F, getPitch());
+			}
 		}
 		if (state.get(INTERACTIVE).booleanValue()) {
 			if (!worldIn.isRemote && (getTE(worldIn, pos) != null)) {
@@ -127,6 +130,10 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 
 	public SoundEvent getSound(BlockState state) {
 		return SoundEvents.BLOCK_ANVIL_LAND;
+	}
+
+	public float getPitch() {
+		return this.isBaby() ? (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.5F : (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.0F;
 	}
 
 	public boolean canPlaySound(World worldIn, BlockPos pos, BlockState state) {
