@@ -10,6 +10,7 @@ import com.shynieke.statues.init.StatueTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -73,13 +74,11 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         return compound;
     }
 
-//    @Override
-//    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-//        read(getBlockState(), pkt.getNbtCompound());
-//
-//        BlockState state = world.getBlockState(getPos());
-//        world.notifyBlockUpdate(getPos(), state, state, 3);
-//    }
+    @Override
+    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+        CompoundNBT compoundNBT = pkt.getNbtCompound();
+        handleUpdateTag(getBlockState(), compoundNBT);
+    }
 
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
