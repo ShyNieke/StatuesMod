@@ -135,7 +135,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                     if(gameprofile == null) {
                         GameProfile gameprofile1 = new GameProfile((UUID)null, "steve");
                         gameprofile = PlayerTile.updateGameProfile(gameprofile1);
-                        GAMEPROFILE_CACHE.put("steve", gameprofile);
+                        GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
                     }
                 }
             }
