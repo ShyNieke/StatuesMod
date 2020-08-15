@@ -149,50 +149,35 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state.with(ONLINE, false), placer, stack);
-		String stackName = stack.getDisplayName().getUnformattedComponentText();
-		String tileName = getTE(worldIn, pos).getName().getString();
-		if (!tileName.equals(stackName)) {
-			playerName = stackName;
-			boolean flag = playerName.contains(" ");
-			boolean flag2 = playerName.isEmpty();
 
-			if((flag || flag2) && placer instanceof PlayerEntity) {
-				PlayerEntity player = (PlayerEntity) placer;
-				getTE(worldIn, pos).setName(player.getName().getUnformattedComponentText());
-				getTE(worldIn, pos).setPlayerProfile(player.getGameProfile());
-			} else {
-				GameProfile newProfile = null;
+		if(stack.hasDisplayName()) {
+			String stackName = stack.getDisplayName().getUnformattedComponentText();
+			boolean spaceFlag = stackName.contains(" ");
+			boolean emptyFlag = stackName.isEmpty();
 
-				if(!flag && !flag2) {
-					newProfile = new GameProfile((UUID)null, playerName);
-				}
+			if(!spaceFlag && !emptyFlag) {
+				GameProfile newProfile = new GameProfile((UUID)null, stackName);
 
 				if (stack.hasTag() && stack.getTag() != null) {
 					CompoundNBT tag = stack.getTag();
-					String tagPlayerName = null;
-
 					if (tag.contains("PlayerProfile")) {
-						newProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
-					}
-
-					if (tag.contains("PlayerName")) {
-						tagPlayerName = tag.getString("PlayerName");
-					}
-
-					if(newProfile != null && tagPlayerName != null) {
-						if(!newProfile.getName().equals(tagPlayerName)) {
-							newProfile = new GameProfile((UUID)null, tagPlayerName);
+						GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
+						if(foundProfile.getName().equalsIgnoreCase(stackName)) {
+							newProfile = foundProfile;
 						}
-						getTE(worldIn, pos).setName(tagPlayerName);
-					} else {
-						getTE(worldIn, pos).setName(playerName);
 					}
 				}
-				if(newProfile != null) {
-					getTE(worldIn, pos).setPlayerProfile(newProfile);
-				}
+
+				getTE(worldIn, pos).setPlayerProfile(newProfile);
+				getTE(worldIn, pos).markDirty();
 			}
-			getTE(worldIn, pos).markDirty();
+		} else {
+			if(placer instanceof PlayerEntity) {
+				PlayerEntity player = (PlayerEntity) placer;
+				getTE(worldIn, pos).setPlayerProfile(player.getGameProfile());
+			} else {
+				getTE(worldIn, pos).setPlayerProfile(new GameProfile((UUID)null, "steve"));
+			}
 		}
 	}
 

@@ -35,6 +35,7 @@ public class Statues {
 		eventBus.register(StatuesConfig.class);
 
 		eventBus.addListener(this::setup);
+		MinecraftForge.EVENT_BUS.addListener(this::dedicatedServerSetupEvent);
 
 		StatueRegistry.BLOCKS.register(eventBus);
 		StatueRegistry.ITEMS.register(eventBus);
@@ -58,11 +59,9 @@ public class Statues {
 		StatueLootList.initializeStatueLoot();
 	}
 
-	@SubscribeEvent
 	public void dedicatedServerSetupEvent(final FMLServerAboutToStartEvent event) {
 		MinecraftServer server = event.getServer();
 		PlayerTile.setProfileCache(server.getPlayerProfileCache());
 		PlayerTile.setSessionService(server.getMinecraftSessionService());
-		PlayerProfileCache.setOnlineMode(server.isServerInOnlineMode());
 	}
 }
