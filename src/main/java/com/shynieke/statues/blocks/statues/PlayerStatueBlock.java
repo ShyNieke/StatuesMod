@@ -52,7 +52,6 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 	public static final BooleanProperty ONLINE = BooleanProperty.create("online");
-	private static String playerName;
 
 	public PlayerStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -81,8 +80,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
-		if (te instanceof PlayerTile && ((INameable)te).hasCustomName())
-		{
+		if (te instanceof PlayerTile && ((INameable)te).hasCustomName()) {
 			PlayerTile tile = (PlayerTile)te;
 			player.addExhaustion(0.005F);
 
@@ -111,9 +109,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			if(tile.getComparatorApplied()) {
 				spawnAsEntity(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
-		}
-		else
-		{
+		} else {
 			super.harvestBlock(worldIn, player, pos, state, null, stack);
 		}
 	}
@@ -149,50 +145,35 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state.with(ONLINE, false), placer, stack);
-		String stackName = stack.getDisplayName().getUnformattedComponentText();
-		String tileName = getTE(worldIn, pos).getName().getString();
-		if (!tileName.equals(stackName)) {
-			playerName = stackName;
-			boolean flag = playerName.contains(" ");
-			boolean flag2 = playerName.isEmpty();
 
-			if((flag || flag2) && placer instanceof PlayerEntity) {
-				PlayerEntity player = (PlayerEntity) placer;
-				getTE(worldIn, pos).setName(player.getName().getUnformattedComponentText());
-				getTE(worldIn, pos).setPlayerProfile(player.getGameProfile());
-			} else {
-				GameProfile newProfile = null;
+		if(stack.hasDisplayName()) {
+			String stackName = stack.getDisplayName().getUnformattedComponentText();
+			boolean spaceFlag = stackName.contains(" ");
+			boolean emptyFlag = stackName.isEmpty();
 
-				if(!flag && !flag2) {
-					newProfile = new GameProfile((UUID)null, playerName);
-				}
+			if(!spaceFlag && !emptyFlag) {
+				GameProfile newProfile = new GameProfile((UUID)null, stackName);
 
 				if (stack.hasTag() && stack.getTag() != null) {
 					CompoundNBT tag = stack.getTag();
-					String tagPlayerName = null;
-
 					if (tag.contains("PlayerProfile")) {
-						newProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
-					}
-
-					if (tag.contains("PlayerName")) {
-						tagPlayerName = tag.getString("PlayerName");
-					}
-
-					if(newProfile != null && tagPlayerName != null) {
-						if(!newProfile.getName().equals(tagPlayerName)) {
-							newProfile = new GameProfile((UUID)null, tagPlayerName);
+						GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
+						if(foundProfile.getName().equalsIgnoreCase(stackName)) {
+							newProfile = foundProfile;
 						}
-						getTE(worldIn, pos).setName(tagPlayerName);
-					} else {
-						getTE(worldIn, pos).setName(playerName);
 					}
 				}
-				if(newProfile != null) {
-					getTE(worldIn, pos).setPlayerProfile(newProfile);
-				}
+
+				getTE(worldIn, pos).setPlayerProfile(newProfile);
+				getTE(worldIn, pos).markDirty();
 			}
-			getTE(worldIn, pos).markDirty();
+		} else {
+			if(placer instanceof PlayerEntity) {
+				PlayerEntity player = (PlayerEntity) placer;
+				getTE(worldIn, pos).setPlayerProfile(player.getGameProfile());
+			} else {
+				getTE(worldIn, pos).setPlayerProfile(new GameProfile((UUID)null, "steve"));
+			}
 		}
 	}
 
@@ -360,6 +341,6 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.SHAPE;
+		return SHAPE;
 	}
 }

@@ -10,7 +10,6 @@ import com.shynieke.statues.init.StatueTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
-import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -27,17 +26,16 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     private static PlayerProfileCache profileCache;
     private static MinecraftSessionService sessionService;
 
+    private GameProfile playerProfile;
+    private Boolean comparatorApplied;
+    private Boolean OnlineChecking;
+    private int checkerCooldown;
+
     public PlayerTile() {
         super(StatueTiles.PLAYER);
-        this.BlockName = "";
         this.comparatorApplied = false;
         this.checkerCooldown = 0;
         this.OnlineChecking = false;
-    }
-
-    public PlayerTile(String name) {
-        this();
-        this.BlockName = name;
     }
 
     public static void setProfileCache(PlayerProfileCache profileCacheIn) {
@@ -48,20 +46,9 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         sessionService = sessionServiceIn;
     }
 
-    private String BlockName;
-    private GameProfile playerProfile;
-    private Boolean comparatorApplied;
-    private Boolean OnlineChecking;
-    private int checkerCooldown;
-
-    public String setName(String name) {
-        return this.BlockName = name;
-    }
-
     @Override
     public void read(BlockState state, CompoundNBT compound) {
         super.read(state, compound);
-        this.BlockName = compound.getString("PlayerName");
 
         if (compound.contains("PlayerProfile", 10)) {
             this.setPlayerProfile(NBTUtil.readGameProfile(compound.getCompound("PlayerProfile")));
@@ -75,7 +62,6 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     @Override
     public CompoundNBT write(CompoundNBT compound) {
         super.write(compound);
-        compound.putString("PlayerName", this.BlockName);
         if (this.playerProfile != null) {
             CompoundNBT compoundnbt = new CompoundNBT();
             NBTUtil.writeGameProfile(compoundnbt, this.playerProfile);
@@ -87,13 +73,13 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         return compound;
     }
 
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        read(getBlockState(), pkt.getNbtCompound());
-
-        BlockState state = world.getBlockState(getPos());
-        world.notifyBlockUpdate(getPos(), state, state, 3);
-    }
+//    @Override
+//    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+//        read(getBlockState(), pkt.getNbtCompound());
+//
+//        BlockState state = world.getBlockState(getPos());
+//        world.notifyBlockUpdate(getPos(), state, state, 3);
+//    }
 
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
@@ -108,7 +94,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public boolean hasCustomName() {
-        return this.BlockName != null && !this.BlockName.isEmpty();
+        return this.playerProfile != null && !this.playerProfile.getName().isEmpty();
     }
 
     @Nullable
@@ -126,8 +112,9 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         this.markDirty();
     }
 
-    public static GameProfile updateGameProfile(GameProfile input) {
-        if (input != null && input.getName() != null && !StringUtils.isNullOrEmpty(input.getName())) {
+    @Nullable
+    public static GameProfile updateGameProfile(@Nullable GameProfile input) {
+        if (input != null && !StringUtils.isNullOrEmpty(input.getName())) {
             if (input.isComplete() && input.getProperties().containsKey("textures")) {
                 return input;
             } else if (profileCache != null && sessionService != null) {
@@ -204,7 +191,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public ITextComponent getName() {
-        return this.hasCustomName() ? new StringTextComponent(this.BlockName) : new TranslationTextComponent("statue.player");
+        return this.hasCustomName() ? new StringTextComponent(this.playerProfile != null ? playerProfile.getName() : "") : new TranslationTextComponent("statue.player");
     }
 
     @Override

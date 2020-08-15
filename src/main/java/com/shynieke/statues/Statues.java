@@ -35,6 +35,7 @@ public class Statues {
 		eventBus.register(StatuesConfig.class);
 
 		eventBus.addListener(this::setup);
+		MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
 
 		StatueRegistry.BLOCKS.register(eventBus);
 		StatueRegistry.ITEMS.register(eventBus);
@@ -44,7 +45,6 @@ public class Statues {
 		}
 
 //		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
-		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
@@ -58,11 +58,9 @@ public class Statues {
 		StatueLootList.initializeStatueLoot();
 	}
 
-	@SubscribeEvent
-	public void dedicatedServerSetupEvent(final FMLServerAboutToStartEvent event) {
+	public void serverAboutToStart(final FMLServerAboutToStartEvent event) {
 		MinecraftServer server = event.getServer();
 		PlayerTile.setProfileCache(server.getPlayerProfileCache());
 		PlayerTile.setSessionService(server.getMinecraftSessionService());
-		PlayerProfileCache.setOnlineMode(server.isServerInOnlineMode());
 	}
 }
