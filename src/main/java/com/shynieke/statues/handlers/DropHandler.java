@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
+import net.minecraft.world.biome.Biome.Category;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -52,10 +52,8 @@ public class DropHandler {
                     DropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_GR_STATUE.get()), source, event);
                     break;
             }
-        } else if(entity instanceof EvokerEntity || entity instanceof VindicatorEntity || entity instanceof VexEntity)
-        {
-            if(entity instanceof EvokerEntity)
-            {
+        } else if(entity instanceof EvokerEntity || entity instanceof VindicatorEntity || entity instanceof VexEntity) {
+            if(entity instanceof EvokerEntity) {
                 ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EVOKER_STATUE.get());
                 DropLootStatues(entity, itemStackToDrop, source, event);
             }
@@ -210,18 +208,15 @@ public class DropHandler {
         }
     }
 
-    public static void addSombrero(Entity entity, Entity source, LivingDropsEvent event)
-    {
+    public static void addSombrero(Entity entity, Entity source, LivingDropsEvent event) {
         double random_drop;
         double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
         BlockPos entityPos = entity.getPosition();
-        Biome biome = entity.world.getBiome(entity.getPosition());
+        Biome biome = entity.world.getBiome(entityPos);
 
-        switch (StatuesConfig.COMMON.statueKillSource.get())
-        {
+        switch (StatuesConfig.COMMON.statueKillSource.get()) {
             default:
-                if(source instanceof PlayerEntity && !(source instanceof FakePlayer))
-                {
+                if(source instanceof PlayerEntity && !(source instanceof FakePlayer)) {
                     ServerPlayerEntity player = (ServerPlayerEntity)source;
                     List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
@@ -252,10 +247,8 @@ public class DropHandler {
 //					else
 //					{
                     random_drop = Math.random();
-                    if (random_drop < default_drop_chance)
-                    {
-                        if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-                        {
+                    if (random_drop < default_drop_chance) {
+                        if(biome.getTemperature(entityPos) < 0.8F && biome.getCategory() == Category.DESERT) {
                             ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
                             event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                         }
@@ -264,13 +257,10 @@ public class DropHandler {
                 }
                 break;
             case PLAYER_FAKEPLAYER:
-                if(source instanceof PlayerEntity)
-                {
+                if(source instanceof PlayerEntity) {
                     random_drop = Math.random();
-                    if (random_drop < default_drop_chance)
-                    {
-                        if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-                        {
+                    if (random_drop < default_drop_chance) {
+                        if(biome.getTemperature(entityPos) < 0.8F && biome.getCategory() == Category.DESERT) {
                             ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
                             event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                         }
@@ -279,10 +269,9 @@ public class DropHandler {
                 break;
             case ALL:
                 random_drop = Math.random();
-                if (random_drop < default_drop_chance)
-                {
-                    if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-                    {
+                if (random_drop < default_drop_chance) {
+                    //BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY)
+                    if(biome.getTemperature(entityPos) < 0.8F && biome.getCategory() == Category.DESERT) {
                         ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
                         event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
                     }

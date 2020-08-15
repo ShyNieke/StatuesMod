@@ -260,7 +260,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					CompoundNBT locationTag = new CompoundNBT();
 
 					PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
-					if(player != null && player.world.func_234923_W_().func_240901_a_().equals(playerIn.world.func_234923_W_().func_240901_a_())) {
+					if(player != null && player.world.getDimensionKey().func_240901_a_().equals(playerIn.world.getDimensionKey().func_240901_a_())) {
 						BlockPos playerPos = player.getPosition();
 						locationTag.putLong("lastPlayerLocation", playerPos.toLong());
 						locationTag.putString("playerTracking", tileProfile.getName());
@@ -298,7 +298,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					CompoundNBT locationTag = new CompoundNBT();
 
 					PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
-					if(player != null && player.world.func_234923_W_().func_240901_a_().equals(playerIn.world.func_234923_W_().func_240901_a_())) {
+					if(player != null && player.world.getDimensionKey().func_240901_a_().equals(playerIn.world.getDimensionKey().func_240901_a_())) {
 						BlockPos playerPos = player.getPosition();
 						locationTag.putLong("lastPlayerLocation", playerPos.toLong());
 						locationTag.putString("playerTracking", tileProfile.getName());
