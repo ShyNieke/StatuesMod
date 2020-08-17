@@ -47,6 +47,6 @@ public class MagmaStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_CHICKEN_AMBIENT;
+		return SoundEvents.ENTITY_MAGMA_CUBE_SQUISH;
 	}
 }

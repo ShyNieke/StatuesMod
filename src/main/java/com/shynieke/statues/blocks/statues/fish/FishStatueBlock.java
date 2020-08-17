@@ -47,6 +47,6 @@ public class FishStatueBlock extends AbstractStatueBase {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
+        return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
     }
 }

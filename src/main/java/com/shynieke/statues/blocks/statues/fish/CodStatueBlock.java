@@ -40,6 +40,6 @@ public class CodStatueBlock extends FishStatueBlock {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_COD_AMBIENT;
+        return SoundEvents.ENTITY_COD_FLOP;
     }
 }

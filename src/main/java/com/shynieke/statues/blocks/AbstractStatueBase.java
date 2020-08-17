@@ -36,19 +36,18 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	@SuppressWarnings("deprecation")
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-		if(!worldIn.isRemote) {
+		if(!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
 			worldIn.playSound(null, pos, getSound(state), SoundCategory.NEUTRAL, 1F, (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F + 1.5F);
 			if (canPlaySound(worldIn, pos, state)) {
 				worldIn.playSound(null, pos, getSound(state), SoundCategory.NEUTRAL, 1F, getPitch());
 			}
 		}
-		if (state.get(INTERACTIVE).booleanValue()) {
+		if (state.get(INTERACTIVE).booleanValue() && handIn == Hand.MAIN_HAND) {
 			if (!worldIn.isRemote && (getTE(worldIn, pos) != null)) {
 				executeStatueBehavior(getTE(worldIn, pos), state, worldIn, pos, playerIn, handIn, result);
 			}
-			return ActionResultType.SUCCESS;
-		} else
-			return ActionResultType.FAIL;
+		}
+		return ActionResultType.SUCCESS;
 	}
 
 	public StatueTile getTE(World world, BlockPos pos) {
