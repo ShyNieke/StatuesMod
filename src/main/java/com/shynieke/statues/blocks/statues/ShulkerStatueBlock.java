@@ -36,7 +36,7 @@ public class ShulkerStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_SHEEP_AMBIENT;
+		return SoundEvents.ENTITY_SHULKER_AMBIENT;
 	}
 
 	@Override

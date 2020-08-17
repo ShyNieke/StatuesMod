@@ -16,12 +16,12 @@
 			"from": [ 5.999923, 0.0005268479, 6.000713 ],
 			"to": [ 9.999924, 4.000527, 10.00071 ],
 			"faces": {
-				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow", "cullface": "down" },
-				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow", "cullface": "up" },
-				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow", "cullface": "north" },
-				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow", "cullface": "south" },
-				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow", "cullface": "west" },
-				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow", "cullface": "east" }
+				"down": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"up": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"north": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"south": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"west": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" },
+				"east": { "uv": [ 0, 0, 16, 16 ], "texture": "#SnowGolemSnow" }
 			}
 		},
 		{

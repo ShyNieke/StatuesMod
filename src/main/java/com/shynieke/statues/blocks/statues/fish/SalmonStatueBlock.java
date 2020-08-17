@@ -40,6 +40,6 @@ public class SalmonStatueBlock extends FishStatueBlock {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_SALMON_AMBIENT;
+        return SoundEvents.ENTITY_SALMON_FLOP;
     }
 }
