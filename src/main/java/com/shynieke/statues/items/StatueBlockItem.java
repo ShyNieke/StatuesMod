@@ -1,7 +1,6 @@
 package com.shynieke.statues.items;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.compat.curios.CuriosCompat;
 import com.shynieke.statues.compat.curios.CuriosCompat.StatueCurioCapabilityProvider;
 import com.shynieke.statues.init.StatueTabs;
 import net.minecraft.block.Block;
@@ -14,7 +13,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nullable;

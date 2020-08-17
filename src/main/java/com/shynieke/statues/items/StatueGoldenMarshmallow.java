@@ -3,7 +3,6 @@ package com.shynieke.statues.items;
 import com.shynieke.statues.init.StatueFoods;
 import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
