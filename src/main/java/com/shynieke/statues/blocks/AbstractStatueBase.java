@@ -37,7 +37,6 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
 		if(!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
-			worldIn.playSound(null, pos, getSound(state), SoundCategory.NEUTRAL, 1F, (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F + 1.5F);
 			if (canPlaySound(worldIn, pos, state)) {
 				worldIn.playSound(null, pos, getSound(state), SoundCategory.NEUTRAL, 1F, getPitch());
 			}
