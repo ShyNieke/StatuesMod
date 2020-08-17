@@ -60,6 +60,6 @@ public class PufferfishStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_PUFFER_FISH_AMBIENT;
+		return SoundEvents.ENTITY_PUFFER_FISH_BLOW_UP;
 	}
 }

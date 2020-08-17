@@ -5,11 +5,18 @@ import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.NoteBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
@@ -35,6 +42,24 @@ public class SombreroBlock extends AbstractBaseBlock {
             worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
         }
         super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+    }
+
+    @Override
+    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+        if(!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+            if (canPlaySound(worldIn, pos, state)) {
+                worldIn.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.NEUTRAL, 1F, getPitch());
+            }
+        }
+        return ActionResultType.SUCCESS;
+    }
+
+    public float getPitch() {
+        return (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.0F;
+    }
+
+    public boolean canPlaySound(World worldIn, BlockPos pos, BlockState state) {
+        return worldIn.getBlockState(pos.down()).getBlock() instanceof NoteBlock;
     }
 
     @Override

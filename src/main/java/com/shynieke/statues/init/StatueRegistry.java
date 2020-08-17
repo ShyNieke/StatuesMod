@@ -20,7 +20,6 @@ import com.shynieke.statues.blocks.statues.EndermanStatueBlock;
 import com.shynieke.statues.blocks.statues.EvokerStatueBlock;
 import com.shynieke.statues.blocks.statues.FloodStatueBlock;
 import com.shynieke.statues.blocks.statues.GhastStatueBlock;
-import com.shynieke.statues.blocks.statues.fish.GuardianStatueBlock;
 import com.shynieke.statues.blocks.statues.HuskStatueBlock;
 import com.shynieke.statues.blocks.statues.InfoStatueBlock;
 import com.shynieke.statues.blocks.statues.KingCluckStatueBlock;
@@ -43,6 +42,7 @@ import com.shynieke.statues.blocks.statues.fish.CodStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.DolphinStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.DrownedStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
+import com.shynieke.statues.blocks.statues.fish.GuardianStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.PufferfishStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.SalmonStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.SquidStatueBlock;
@@ -160,10 +160,10 @@ public class StatueRegistry {
     public static final RegistryObject<Item> MARSHMALLOW = ITEMS.register("marshmallow", () -> new Item(itemBuilder().food(StatueFoods.MARSHMALLOW)));
     public static final RegistryObject<Item> MARSHMALLOW_CHARRED = ITEMS.register("marshmallow_charred", () -> new StatueCharredMarshmallow(itemBuilder()));
     public static final RegistryObject<Item> MARSHMALLOW_COOKED = ITEMS.register("marshmallow_cooked", () -> new Item(itemBuilder().food(StatueFoods.COOKED_MARSHMALLOW)));
-    public static final RegistryObject<Item> MARSHMALLOW_GOLDEN = ITEMS.register("marshmallow_golden", () -> new StatueGoldenMarshmallow(itemBuilder(), StatueFoods.GOLDEN_MARSHMALLOW));
+    public static final RegistryObject<Item> MARSHMALLOW_GOLDEN = ITEMS.register("marshmallow_golden", () -> new StatueGoldenMarshmallow(itemBuilder()));
     public static final RegistryObject<Item> NUGGET = ITEMS.register("royal_nugget", () -> new Item(itemBuilder().food(StatueFoods.ROYAL_NUGGET)));
     public static final RegistryObject<Item> PLAYER_COMPASS = ITEMS.register("player_compass", () -> new PlayerCompassItem(itemBuilder()));
-    public static final RegistryObject<Item> SOUP = ITEMS.register("mooshroom_soup", () -> new StatueMooshroomSoup(itemBuilder(), StatueFoods.SOUP));
+    public static final RegistryObject<Item> SOUP = ITEMS.register("mooshroom_soup", () -> new StatueMooshroomSoup(itemBuilder()));
     public static final RegistryObject<Item> STATUE_CORE = ITEMS.register("statue_core", () -> new StatueCoreItem(itemBuilder()));
     public static final RegistryObject<Item> TEA = ITEMS.register("tea", () -> new StatueTeaItem(itemBuilder(), StatueFoods.TEA));
 

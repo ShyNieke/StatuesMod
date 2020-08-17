@@ -5,13 +5,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.entity.EntityType;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 public class EndermiteStatueBlock extends AbstractStatueBase {
-
     private static final VoxelShape SHAPE = Block.makeCuboidShape(0.1, 0, 0.1, 16, 4, 16);
 
     public EndermiteStatueBlock(Properties properties) {
@@ -31,6 +32,11 @@ public class EndermiteStatueBlock extends AbstractStatueBase {
     @Override
     public EntityType<?> getEntity() {
         return EntityType.ENDERMITE;
+    }
+
+    @Override
+    public SoundEvent getSound(BlockState state) {
+        return SoundEvents.ENTITY_ENDERMITE_AMBIENT;
     }
 
     @Override

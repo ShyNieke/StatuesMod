@@ -19,35 +19,24 @@ public class StatueTeaItem extends Item {
 
     @Override
     public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityIn) {
-        if(entityIn instanceof PlayerEntity)
-        {
+        if(entityIn instanceof PlayerEntity) {
             PlayerEntity playerIn = entityIn instanceof PlayerEntity ? (PlayerEntity)entityIn : null;
             playerIn.onFoodEaten(worldIn, stack);
 
-            if (playerIn == null || !playerIn.abilities.isCreativeMode)
-            {
-                stack.shrink(1);
-            }
-
-            if (playerIn instanceof ServerPlayerEntity)
-            {
+            if (playerIn instanceof ServerPlayerEntity) {
                 CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)playerIn, stack);
             }
 
-            if (playerIn != null)
-            {
+            if (playerIn != null) {
                 playerIn.addStat(Stats.ITEM_USED.get(this));
             }
 
-            if (playerIn == null || !playerIn.abilities.isCreativeMode)
-            {
-                if (stack.isEmpty())
-                {
+            if (playerIn == null || !playerIn.abilities.isCreativeMode) {
+                if (stack.isEmpty()) {
                     return new ItemStack(StatueRegistry.CUP.get());
                 }
 
-                if (playerIn != null)
-                {
+                if (playerIn != null) {
                     playerIn.inventory.addItemStackToInventory(new ItemStack(StatueRegistry.CUP.get()));
                 }
             }
