@@ -56,12 +56,11 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
 
     public static void render(@Nullable Direction direction, @Nullable GameProfile profile, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int combinedLight) {
         StatuePlayerModel playerModel = model;
-        GameProfile gameProfile = profile;
 
         matrix.translate(0.5D, 0.25D, 0.5D);
         matrix.push();
         if (direction != null) {
-           switch(direction) {
+            switch(direction) {
                 case NORTH:
                     break;
                 case SOUTH:
@@ -76,12 +75,12 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         }
         matrix.scale(-1.0F, -1.0F, 1.0F);
         matrix.translate(0.0D, -1.25D, 0.0D);
-        boolean flag = gameProfile != null && gameProfile.getId() != null && SkinUtil.isSlimSkin(gameProfile.getId());
+        boolean flag = profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId());
         if(flag && playerModel != slimModel) {
             playerModel = slimModel;
         }
 
-        IVertexBuilder ivertexbuilder = typeBuffer.getBuffer(getRenderType(gameProfile));
+        IVertexBuilder ivertexbuilder = typeBuffer.getBuffer(getRenderType(profile));
         playerModel.render(matrix, ivertexbuilder, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         matrix.pop();
     }
@@ -107,16 +106,20 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                         CompoundNBT tag = stack.getTag();
                         if (tag.contains("PlayerProfile", 10)) {
                             GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
+                            if(foundProfile != null) {
+                                GAMEPROFILE_CACHE.put(foundProfile.getName().toLowerCase(), foundProfile);
+                            }
                             if(foundProfile.getName().equalsIgnoreCase(stackName)) {
                                 gameprofile = foundProfile;
                             }
                         } else if (tag.contains("PlayerProfile", 8) && !StringUtils.isBlank(tag.getString("PlayerProfile"))) {
+                            System.out.println("here");
                             GameProfile gameprofile1 = new GameProfile((UUID) null, tag.getString("PlayerProfile"));
                             GameProfile foundProfile = PlayerTile.updateGameProfile(gameprofile1);
                             tag.remove("PlayerProfile");
                             tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), foundProfile));
                             if(foundProfile != null) {
-                                GAMEPROFILE_CACHE.put(foundProfile.getName(), foundProfile);
+                                GAMEPROFILE_CACHE.put(foundProfile.getName().toLowerCase(), foundProfile);
                             }
                             if(foundProfile.getName().equalsIgnoreCase(stackName)) {
                                 gameprofile = foundProfile;
@@ -126,9 +129,10 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
 
                     if(gameprofile == null) {
                         GameProfile gameprofile1 = new GameProfile((UUID)null, stackName);
-                        gameprofile = PlayerTile.updateGameProfile(gameprofile1);
-                        if(gameprofile != null) {
-                            GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
+                        gameprofile1 = PlayerTile.updateGameProfile(gameprofile1);
+                        if(gameprofile1 != null) {
+                            gameprofile = gameprofile1;
+                            GAMEPROFILE_CACHE.put(gameprofile1.getName().toLowerCase(), gameprofile1);
                         }
                     }
                 } else {

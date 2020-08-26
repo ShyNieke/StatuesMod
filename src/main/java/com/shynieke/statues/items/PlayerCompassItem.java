@@ -1,14 +1,19 @@
 package com.shynieke.statues.items;
 
+import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.init.StatueTabs;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -114,12 +119,22 @@ public class PlayerCompassItem extends Item {
     }
 
     @Override
+    public ActionResultType onItemUse(ItemUseContext context) {
+        World worldIn = context.getWorld();
+        BlockPos pos = context.getPos();
+        PlayerEntity playerIn = context.getPlayer();
+        if(!worldIn.isRemote && playerIn != null && playerIn.isSneaking() && worldIn.getBlockState(pos).getBlock() instanceof PlayerStatueBlock) {
+            playerIn.setHeldItem(context.getHand(), new ItemStack(Items.COMPASS));
+        }
+        return super.onItemUse(context);
+    }
+
+    @Override
     public void addInformation(ItemStack stack, @Nullable World reader, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        if(stack.hasTag())
-        {
+        if(stack.hasTag()) {
             CompoundNBT tag = stack.getTag();
             if (!tag.getString("playerTracking").isEmpty()) {
-                tooltip.add(new TranslationTextComponent("statues.last.known.location", new Object[] {tag.getString("playerTracking")}).applyTextStyle(TextFormatting.GOLD));
+                tooltip.add(new TranslationTextComponent("statues.last.known.location", tag.getString("playerTracking")).applyTextStyle(TextFormatting.GOLD));
             }
         }
     }
