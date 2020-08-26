@@ -15,7 +15,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -28,6 +27,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.INameable;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.StringUtils;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -43,7 +43,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -127,11 +126,15 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			PlayerTile playerTile = (PlayerTile)tileentity;
 			ItemStack stack = new ItemStack(state.getBlock());
 
-			if (playerTile.getPlayerProfile() != null) {
-				CompoundNBT tag = stack.getTag() != null ? stack.getTag() : new CompoundNBT();
-				CompoundNBT tag2 = new CompoundNBT();
-				NBTUtil.writeGameProfile(tag2, playerTile.getPlayerProfile());
-				tag.put("PlayerProfile", tag2);
+			GameProfile profile = playerTile.getPlayerProfile();
+			if (profile != null) {
+				CompoundNBT tag = new CompoundNBT();
+
+				if (profile != null && !StringUtils.isNullOrEmpty(profile.getName())) {
+					GameProfile gameprofile = new GameProfile((UUID)null, profile.getName());
+					gameprofile = PlayerTile.updateGameProfile(gameprofile);
+					tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
+				}
 				stack.setTag(tag);
 			}
 
@@ -145,30 +148,29 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state.with(ONLINE, false), placer, stack);
 
-		PlayerTile tile = getTE(worldIn, pos);
-		if(tile != null && stack.hasDisplayName()) {
-			String stackName = stack.getDisplayName().getUnformattedComponentText();
-			boolean spaceFlag = stackName.contains(" ");
-			boolean emptyFlag = stackName.isEmpty();
+		if(!worldIn.isRemote && getTE(worldIn, pos) != null) {
+			PlayerTile tile = getTE(worldIn, pos);
+			if(stack.hasDisplayName()) {
+				String stackName = stack.getDisplayName().getUnformattedComponentText();
+				boolean spaceFlag = stackName.contains(" ");
+				boolean emptyFlag = stackName.isEmpty();
 
-			if(!spaceFlag && !emptyFlag) {
-				GameProfile newProfile = new GameProfile((UUID)null, stackName);
+				if(!spaceFlag && !emptyFlag) {
+					GameProfile newProfile = new GameProfile((UUID)null, stackName);
 
-				if (stack.hasTag() && stack.getTag() != null) {
-					CompoundNBT tag = stack.getTag();
-					if (tag.contains("PlayerProfile")) {
-						GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
-						if(foundProfile.getName().equalsIgnoreCase(stackName)) {
-							newProfile = foundProfile;
+					if (stack.hasTag() && stack.getTag() != null) {
+						CompoundNBT tag = stack.getTag();
+						if (tag.contains("PlayerProfile")) {
+							GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
+							if(foundProfile != null && foundProfile.getName().equalsIgnoreCase(stackName)) {
+								newProfile = foundProfile;
+							}
 						}
 					}
-				}
 
-				tile.setPlayerProfile(newProfile);
-				tile.markDirty();
-			}
-		} else {
-			if(tile != null) {
+					tile.setPlayerProfile(newProfile);
+				}
+			} else {
 				if(placer instanceof PlayerEntity) {
 					PlayerEntity player = (PlayerEntity) placer;
 					tile.setPlayerProfile(player.getGameProfile());
@@ -180,7 +182,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable IBlockReader reader, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if(Screen.hasShiftDown()){
 			if(stack.hasTag()) {
 				CompoundNBT tag = stack.getTag();
@@ -191,7 +193,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					if(profileTag != null) {
 						GameProfile gameprofile = NBTUtil.readGameProfile(profileTag);
 
-						if (!StringUtils.isBlank(tag.getString("PlayerProfile"))) {
+						if(!StringUtils.isNullOrEmpty(gameprofile.getName())) {
 							gameprofile = new GameProfile((UUID)null, tag.getString("PlayerProfile"));
 						}
 

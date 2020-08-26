@@ -113,7 +113,6 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                                 gameprofile = foundProfile;
                             }
                         } else if (tag.contains("PlayerProfile", 8) && !StringUtils.isBlank(tag.getString("PlayerProfile"))) {
-                            System.out.println("here");
                             GameProfile gameprofile1 = new GameProfile((UUID) null, tag.getString("PlayerProfile"));
                             GameProfile foundProfile = PlayerTile.updateGameProfile(gameprofile1);
                             tag.remove("PlayerProfile");
