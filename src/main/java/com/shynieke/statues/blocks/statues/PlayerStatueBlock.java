@@ -13,8 +13,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,6 +27,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.INameable;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.StringUtils;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -42,7 +43,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -52,7 +52,6 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 	public static final BooleanProperty ONLINE = BooleanProperty.create("online");
-	private static String playerName;
 
 	public PlayerStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -81,20 +80,17 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
-		if (te instanceof PlayerTile && ((INameable)te).hasCustomName())
-		{
+		if (te instanceof PlayerTile && ((INameable)te).hasCustomName()) {
 			PlayerTile tile = (PlayerTile)te;
 			player.addExhaustion(0.005F);
 
 			if (worldIn.isRemote)
 				return;
 
-			Item item = this.asItem();
-
-			if (item == Items.AIR)
+			if (this == Blocks.AIR)
 				return;
 
-			ItemStack itemstack = new ItemStack(item);
+			ItemStack itemstack = new ItemStack(this);
 			itemstack.setDisplayName(((INameable)tile).getName());
 
 			if (tile.getPlayerProfile() != null) {
@@ -111,9 +107,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			if(tile.getComparatorApplied()) {
 				spawnAsEntity(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
-		}
-		else
-		{
+		} else {
 			super.harvestBlock(worldIn, player, pos, state, null, stack);
 		}
 	}
@@ -132,11 +126,15 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			PlayerTile playerTile = (PlayerTile)tileentity;
 			ItemStack stack = new ItemStack(state.getBlock());
 
-			if (playerTile.getPlayerProfile() != null) {
-				CompoundNBT tag = stack.getTag() != null ? stack.getTag() : new CompoundNBT();
-				CompoundNBT tag2 = new CompoundNBT();
-				NBTUtil.writeGameProfile(tag2, playerTile.getPlayerProfile());
-				tag.put("PlayerProfile", tag2);
+			GameProfile profile = playerTile.getPlayerProfile();
+			if (profile != null) {
+				CompoundNBT tag = new CompoundNBT();
+
+				if (profile != null && !StringUtils.isNullOrEmpty(profile.getName())) {
+					GameProfile gameprofile = new GameProfile((UUID)null, profile.getName());
+					gameprofile = PlayerTile.updateGameProfile(gameprofile);
+					tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
+				}
 				stack.setTag(tag);
 			}
 
@@ -150,39 +148,41 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state.with(ONLINE, false), placer, stack);
 
-		if(stack.hasDisplayName()) {
-			String stackName = stack.getDisplayName().getUnformattedComponentText();
-			boolean spaceFlag = stackName.contains(" ");
-			boolean emptyFlag = stackName.isEmpty();
+		if(!worldIn.isRemote && getTE(worldIn, pos) != null) {
+			PlayerTile tile = getTE(worldIn, pos);
+			if(stack.hasDisplayName()) {
+				String stackName = stack.getDisplayName().getUnformattedComponentText();
+				boolean spaceFlag = stackName.contains(" ");
+				boolean emptyFlag = stackName.isEmpty();
 
-			if(!spaceFlag && !emptyFlag) {
-				GameProfile newProfile = new GameProfile((UUID)null, stackName);
+				if(!spaceFlag && !emptyFlag) {
+					GameProfile newProfile = new GameProfile((UUID)null, stackName);
 
-				if (stack.hasTag() && stack.getTag() != null) {
-					CompoundNBT tag = stack.getTag();
-					if (tag.contains("PlayerProfile")) {
-						GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
-						if(foundProfile.getName().equalsIgnoreCase(stackName)) {
-							newProfile = foundProfile;
+					if (stack.hasTag() && stack.getTag() != null) {
+						CompoundNBT tag = stack.getTag();
+						if (tag.contains("PlayerProfile")) {
+							GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
+							if(foundProfile != null && foundProfile.getName().equalsIgnoreCase(stackName)) {
+								newProfile = foundProfile;
+							}
 						}
 					}
-				}
 
-				getTE(worldIn, pos).setPlayerProfile(newProfile);
-				getTE(worldIn, pos).markDirty();
-			}
-		} else {
-			if(placer instanceof PlayerEntity) {
-				PlayerEntity player = (PlayerEntity) placer;
-				getTE(worldIn, pos).setPlayerProfile(player.getGameProfile());
+					tile.setPlayerProfile(newProfile);
+				}
 			} else {
-				getTE(worldIn, pos).setPlayerProfile(new GameProfile((UUID)null, "steve"));
+				if(placer instanceof PlayerEntity) {
+					PlayerEntity player = (PlayerEntity) placer;
+					tile.setPlayerProfile(player.getGameProfile());
+				} else {
+					tile.setPlayerProfile(new GameProfile((UUID)null, "steve"));
+				}
 			}
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable IBlockReader reader, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if(Screen.hasShiftDown()){
 			if(stack.hasTag()) {
 				CompoundNBT tag = stack.getTag();
@@ -193,7 +193,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					if(profileTag != null) {
 						GameProfile gameprofile = NBTUtil.readGameProfile(profileTag);
 
-						if (!StringUtils.isBlank(tag.getString("PlayerProfile"))) {
+						if(!StringUtils.isNullOrEmpty(gameprofile.getName())) {
 							gameprofile = new GameProfile((UUID)null, tag.getString("PlayerProfile"));
 						}
 
@@ -237,100 +237,64 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult result) {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		GameProfile tileProfile = getTE(worldIn, pos).getPlayerProfile();
-		if(!worldIn.isRemote) {
-			String playerName = tileProfile!= null ? tileProfile.getName() : "Name not found";
-			if(!playerIn.isSneaking() && stack.getItem() == Items.COMPASS && StatuesConfig.COMMON.playerCompass.get()) {
-				if(tileProfile != null && worldIn.getPlayerByUuid(tileProfile.getId()) != null) {
-					ItemStack playerCompass = new ItemStack(StatueRegistry.PLAYER_COMPASS.get());
-					CompoundNBT locationTag = new CompoundNBT();
+		PlayerTile tile = getTE(worldIn, pos);
+		if(!worldIn.isRemote && tile != null && tileProfile != null) {
+			String playerName = tileProfile.getName();
+			boolean onlineFlag = worldIn.getPlayerByUuid(tileProfile.getId()) != null;
 
-					PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
-					if(player != null && player.world.getDimensionKey().func_240901_a_().equals(playerIn.world.getDimensionKey().func_240901_a_())) {
-						BlockPos playerPos = player.getPosition();
-						locationTag.putLong("lastPlayerLocation", playerPos.toLong());
-						locationTag.putString("playerTracking", tileProfile.getName());
-
-						playerCompass.setTag(locationTag);
-
-						stack.shrink(1);
-						if (stack.isEmpty()) {
-							playerIn.setHeldItem(hand, playerCompass);
-						} else if (!playerIn.inventory.addItemStackToInventory(playerCompass)) {
-							playerIn.dropItem(playerCompass, false);
-						}
-					} else {
-						playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
-						stack.shrink(1);
-						if (stack.isEmpty()) {
-							playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
-						} else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS))) {
-							playerIn.dropItem(new ItemStack(Items.COMPASS), false);
-						}
-					}
-
-				} else {
-					playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
-					stack.shrink(1);
-					if (stack.isEmpty()) {
-						playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
-					} else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS))) {
-						playerIn.dropItem(new ItemStack(Items.COMPASS), false);
+			if(playerIn.isSneaking()) {
+				if(tile.getComparatorApplied()) {
+					getTE(worldIn, pos).setComparatorApplied(false);
+					ItemStack comparatorStack = new ItemStack(Items.COMPARATOR);
+					if(!playerIn.addItemStackToInventory(comparatorStack)) {
+						worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
 					}
 				}
 				return ActionResultType.SUCCESS;
-			} else if(!playerIn.isSneaking() && stack.getItem() == StatueRegistry.PLAYER_COMPASS.get() && StatuesConfig.COMMON.playerCompass.get()) {
-				if(tileProfile != null && worldIn.getPlayerByUuid(tileProfile.getId()) != null && tileProfile.getName() != null) {
-					CompoundNBT locationTag = new CompoundNBT();
+			} else {
+				if(StatuesConfig.COMMON.playerCompass.get()) {
+					if(stack.getItem() == Items.COMPASS || stack.getItem() == StatueRegistry.PLAYER_COMPASS.get()) {
+						boolean isPlayerCompass = stack.getItem() == StatueRegistry.PLAYER_COMPASS.get();
+						if(onlineFlag) {
+							ItemStack playerCompass = isPlayerCompass ? stack : new ItemStack(StatueRegistry.PLAYER_COMPASS.get());
+							CompoundNBT locationTag = new CompoundNBT();
 
-					PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
-					if(player != null && player.world.getDimensionKey().func_240901_a_().equals(playerIn.world.getDimensionKey().func_240901_a_())) {
-						BlockPos playerPos = player.getPosition();
-						locationTag.putLong("lastPlayerLocation", playerPos.toLong());
-						locationTag.putString("playerTracking", tileProfile.getName());
+							PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
+							if(player != null && player.world.getDimensionKey().func_240901_a_().equals(playerIn.world.getDimensionKey().func_240901_a_())) {
+								BlockPos playerPos = player.getPosition();
+								locationTag.putLong("lastPlayerLocation", playerPos.toLong());
+								locationTag.putString("playerTracking", tileProfile.getName());
 
-						stack.setTag(locationTag);
-					} else {
-						playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
-						stack.shrink(1);
-						if (stack.isEmpty()) {
-							playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
-						} else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS))) {
-							playerIn.dropItem(new ItemStack(Items.COMPASS), false);
+								playerCompass.setTag(locationTag);
+
+								if(!isPlayerCompass) {
+									stack.shrink(1);
+									if (stack.isEmpty()) {
+										playerIn.setHeldItem(hand, playerCompass);
+									} else if (!playerIn.inventory.addItemStackToInventory(playerCompass)) {
+										playerIn.dropItem(playerCompass, false);
+									}
+								}
+							} else {
+								playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
+							}
+
+						} else {
+							playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
+						}
+						return ActionResultType.SUCCESS;
+					}
+					if(stack.getItem() == Items.COMPARATOR) {
+						if(!getTE(worldIn, pos).getComparatorApplied()) {
+							stack.shrink(1);
+							getTE(worldIn, pos).setComparatorApplied(true);
+							return ActionResultType.SUCCESS;
 						}
 					}
-
-				} else {
-					playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
-					stack.shrink(1);
-					if (stack.isEmpty()) {
-						playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
-					} else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS))) {
-						playerIn.dropItem(new ItemStack(Items.COMPASS), false);
-					}
-
 				}
-				return ActionResultType.SUCCESS;
-			} else if(!playerIn.isSneaking() && stack.getItem() == Blocks.COMPARATOR.asItem()) {
-				if(!getTE(worldIn, pos).getComparatorApplied()) {
-					stack.shrink(1);
-					getTE(worldIn, pos).setComparatorApplied(true);
-					return ActionResultType.SUCCESS;
-				}
-			} else if(playerIn.isSneaking() && stack.isEmpty() && getTE(worldIn, pos).getComparatorApplied()) {
-				getTE(worldIn, pos).setComparatorApplied(false);
-				playerIn.setHeldItem(hand, new ItemStack(Blocks.COMPARATOR.asItem()));
-				return ActionResultType.SUCCESS;
-			} else if(playerIn.isSneaking() && stack.getItem() == StatueRegistry.PLAYER_COMPASS.get()) {
-				stack.shrink(1);
-				if (stack.isEmpty()) {
-					playerIn.setHeldItem(hand, new ItemStack(Items.COMPASS));
-				} else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.COMPASS))) {
-					playerIn.dropItem(new ItemStack(Items.COMPASS), false);
-				}
-				return ActionResultType.SUCCESS;
 			}
 		}
-		return ActionResultType.FAIL;
+		return ActionResultType.PASS;
 	}
 
 	@Override
@@ -345,6 +309,6 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.SHAPE;
+		return SHAPE;
 	}
 }

@@ -106,6 +106,9 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                         CompoundNBT tag = stack.getTag();
                         if (tag.contains("PlayerProfile", 10)) {
                             GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
+                            if(foundProfile != null) {
+                                GAMEPROFILE_CACHE.put(foundProfile.getName().toLowerCase(), foundProfile);
+                            }
                             if(foundProfile.getName().equalsIgnoreCase(stackName)) {
                                 gameprofile = foundProfile;
                             }
@@ -115,7 +118,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
                             tag.remove("PlayerProfile");
                             tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), foundProfile));
                             if(foundProfile != null) {
-                                GAMEPROFILE_CACHE.put(foundProfile.getName(), foundProfile);
+                                GAMEPROFILE_CACHE.put(foundProfile.getName().toLowerCase(), foundProfile);
                             }
                             if(foundProfile.getName().equalsIgnoreCase(stackName)) {
                                 gameprofile = foundProfile;
@@ -125,9 +128,10 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
 
                     if(gameprofile == null) {
                         GameProfile gameprofile1 = new GameProfile((UUID)null, stackName);
-                        gameprofile = PlayerTile.updateGameProfile(gameprofile1);
-                        if(gameprofile != null) {
-                            GAMEPROFILE_CACHE.put(gameprofile.getName(), gameprofile);
+                        gameprofile1 = PlayerTile.updateGameProfile(gameprofile1);
+                        if(gameprofile1 != null) {
+                            gameprofile = gameprofile1;
+                            GAMEPROFILE_CACHE.put(gameprofile1.getName().toLowerCase(), gameprofile1);
                         }
                     }
                 } else {
