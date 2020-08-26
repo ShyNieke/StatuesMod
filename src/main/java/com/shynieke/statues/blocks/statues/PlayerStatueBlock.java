@@ -10,6 +10,8 @@ import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,6 +34,8 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
@@ -41,6 +45,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
 public class PlayerStatueBlock extends AbstractBaseBlock {
@@ -208,15 +213,15 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult result) {
 		ItemStack stack = playerIn.getHeldItem(hand);
-		GameProfile tileProfile = getTE(worldIn, pos).getPlayerProfile();
 		PlayerTile tile = getTE(worldIn, pos);
+		GameProfile tileProfile = tile != null ? tile.getPlayerProfile() : null;
 		if(!worldIn.isRemote && tile != null && tileProfile != null) {
 			String playerName = tileProfile.getName();
 			boolean onlineFlag = worldIn.getPlayerByUuid(tileProfile.getId()) != null;
 
 			if(playerIn.isSneaking()) {
 				if(tile.getComparatorApplied()) {
-					getTE(worldIn, pos).setComparatorApplied(false);
+					tile.setComparatorApplied(false);
 					ItemStack comparatorStack = new ItemStack(Items.COMPARATOR);
 					if(!playerIn.addItemStackToInventory(comparatorStack)) {
 						worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
@@ -257,9 +262,10 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						return ActionResultType.SUCCESS;
 					}
 					if(stack.getItem() == Items.COMPARATOR) {
-						if(!getTE(worldIn, pos).getComparatorApplied()) {
+						if(!tile.getComparatorApplied()) {
 							stack.shrink(1);
-							getTE(worldIn, pos).setComparatorApplied(true);
+							tile.setComparatorApplied(true);
+							tile.updateOnline();
 							return ActionResultType.SUCCESS;
 						}
 					}
@@ -267,6 +273,27 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			}
 		}
 		return ActionResultType.PASS;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		if(Screen.hasShiftDown()){
+			if(stack.hasTag()) {
+				CompoundNBT tag = stack.getTag();
+				tooltip.add(new StringTextComponent("Username: " + stack.getDisplayName().getUnformattedComponentText()).applyTextStyle(TextFormatting.GOLD));
+
+				if(tag != null && tag.contains("PlayerProfile")) {
+					CompoundNBT profileTag = (CompoundNBT)tag.get("PlayerProfile");
+					if(profileTag != null) {
+						GameProfile gameprofile = NBTUtil.readGameProfile(profileTag);
+
+						if(gameprofile != null && !StringUtils.isNullOrEmpty(gameprofile.getName())) {
+							tooltip.add(new StringTextComponent("UUID: " + gameprofile.getId().toString()).applyTextStyle(TextFormatting.GOLD));
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@Override

@@ -28,8 +28,8 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     private static MinecraftSessionService sessionService;
 
     private GameProfile playerProfile;
-    private Boolean comparatorApplied;
-    private Boolean OnlineChecking;
+    private boolean comparatorApplied;
+    private boolean OnlineChecking;
     private int checkerCooldown;
 
     public PlayerTile() {
@@ -138,14 +138,9 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public void tick() {
-        if(this.world != null) {
-            if (this.world.isRemote)
-                return;
-
-            BlockState state = world.getBlockState(getPos());
+        if(this.world != null && !this.world.isRemote) {
+            BlockState state = getBlockState();
             if(state.getBlock() == StatueRegistry.PLAYER_STATUE.get() && comparatorApplied) {
-                boolean isStateOnline = state.get(PlayerStatueBlock.ONLINE);
-
                 if(!OnlineChecking) {
                     ++this.checkerCooldown;
                     markDirty();
@@ -157,25 +152,37 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
                         setOnlineChecking(true);
                     }
                 } else {
-                    boolean checkAnswer = world.getPlayerByUuid(this.playerProfile.getId()) != null;
-                    BlockState newState = state.with(PlayerStatueBlock.ONLINE, checkAnswer);
-
-                    if(isStateOnline != checkAnswer) {
-                        world.setBlockState(getPos(), state.with(PlayerStatueBlock.ONLINE, checkAnswer), 5);
-                        world.notifyBlockUpdate(getPos(), state, newState, 5);
-                    }
+                    updateOnline();
                     setOnlineChecking(false);
                 }
             }
         }
     }
 
-    public void setComparatorApplied(Boolean comparatorApplied) {
+    public void updateOnline() {
+        BlockState state = getBlockState();
+        boolean isStateOnline = state.get(PlayerStatueBlock.ONLINE);
+        boolean checkAnswer = world.getPlayerByUuid(this.playerProfile.getId()) != null;
+        if(isStateOnline != checkAnswer) {
+            BlockState newState = state.with(PlayerStatueBlock.ONLINE, checkAnswer);
+            world.setBlockState(getPos(), newState);
+            world.notifyBlockUpdate(getPos(), state, newState, 3);
+        }
+    }
+
+
+    public void setComparatorApplied(boolean comparatorApplied) {
         this.comparatorApplied = comparatorApplied;
+        if(!comparatorApplied) {
+            BlockState state = getBlockState();
+            BlockState newState = state.with(PlayerStatueBlock.ONLINE, false);
+            world.setBlockState(getPos(), newState);
+            world.notifyBlockUpdate(getPos(), state, newState, 3);
+        }
         this.markDirty();
     }
 
-    public Boolean getComparatorApplied() {
+    public boolean getComparatorApplied() {
         return comparatorApplied;
     }
 

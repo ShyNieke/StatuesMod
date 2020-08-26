@@ -5,6 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import top.theillusivec4.curios.api.capability.ICurio;
@@ -33,7 +34,7 @@ public class StatueCurioCapability implements ICurio {
         matrixStack.translate(0.0D, -0.25D, 0.0D);
         matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F));
         matrixStack.scale(0.65F, -0.65F, -0.65F);
-        Minecraft.getInstance().getFirstPersonRenderer().renderItemSide(livingEntity, this.displayedItem, ItemCameraTransforms.TransformType.HEAD, false, matrixStack, renderTypeBuffer, light);
+        Minecraft.getInstance().getItemRenderer().renderItem(this.displayedItem, ItemCameraTransforms.TransformType.HEAD, light, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
         matrixStack.pop();
     }
 }
