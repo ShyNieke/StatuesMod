@@ -118,7 +118,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
 		TileEntity tileentity = world.getTileEntity(pos);
-		if (!player.world.isRemote && tileentity instanceof PlayerTile) {
+		if (tileentity instanceof PlayerTile) {
 			PlayerTile playerTile = (PlayerTile)tileentity;
 			ItemStack stack = new ItemStack(state.getBlock());
 
@@ -164,8 +164,6 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						}
 					}
 
-					System.out.println(newProfile.getId());
-					System.out.println(newProfile.getName());
 					tile.setPlayerProfile(newProfile);
 				}
 			} else {
