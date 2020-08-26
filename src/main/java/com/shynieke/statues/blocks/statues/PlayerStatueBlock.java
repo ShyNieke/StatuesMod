@@ -193,12 +193,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					if(profileTag != null) {
 						GameProfile gameprofile = NBTUtil.readGameProfile(profileTag);
 
-						if(!StringUtils.isNullOrEmpty(gameprofile.getName())) {
-							gameprofile = new GameProfile((UUID)null, tag.getString("PlayerProfile"));
-						}
-
-						if(gameprofile != null)
+						if(gameprofile != null && !StringUtils.isNullOrEmpty(gameprofile.getName())) {
 							tooltip.add(new StringTextComponent("UUID: " + gameprofile.getId().toString()).mergeStyle(TextFormatting.GOLD));
+						}
 					}
 				}
 			}
@@ -244,7 +241,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 			if(playerIn.isSneaking()) {
 				if(tile.getComparatorApplied()) {
-					getTE(worldIn, pos).setComparatorApplied(false);
+					tile.setComparatorApplied(false);
 					ItemStack comparatorStack = new ItemStack(Items.COMPARATOR);
 					if(!playerIn.addItemStackToInventory(comparatorStack)) {
 						worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
@@ -260,7 +257,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							CompoundNBT locationTag = new CompoundNBT();
 
 							PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
-							if(player != null && player.world.func_234923_W_().func_240901_a_().equals(playerIn.world.func_234923_W_().func_240901_a_())) {
+							if(player != null && player.world.getDimensionKey().func_240901_a_().equals(playerIn.world.getDimensionKey().func_240901_a_())) {
 								BlockPos playerPos = player.getPosition();
 								locationTag.putLong("lastPlayerLocation", playerPos.toLong());
 								locationTag.putString("playerTracking", tileProfile.getName());
@@ -285,9 +282,10 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						return ActionResultType.SUCCESS;
 					}
 					if(stack.getItem() == Items.COMPARATOR) {
-						if(!getTE(worldIn, pos).getComparatorApplied()) {
+						if(!tile.getComparatorApplied()) {
 							stack.shrink(1);
-							getTE(worldIn, pos).setComparatorApplied(true);
+							tile.setComparatorApplied(true);
+							tile.updateOnline();
 							return ActionResultType.SUCCESS;
 						}
 					}
