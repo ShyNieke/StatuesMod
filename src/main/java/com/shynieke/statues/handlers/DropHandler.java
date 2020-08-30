@@ -26,9 +26,12 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class DropHandler {
+    private static final Random rand = new Random();
 
     @SubscribeEvent
     public void onLivingDrop(LivingDropsEvent event) {
@@ -80,19 +83,25 @@ public class DropHandler {
             }
             DropLootStatues(entity, itemStackToDrop, source, event);
         } else {
+            List<RegistryObject<Block>> matchingStatues = new ArrayList<>();
             for (RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries()) {
                 if (block.get() instanceof AbstractStatueBase) {
                     AbstractStatueBase statue = (AbstractStatueBase) block.get();
                     if (statue.getEntity().equals(entity.getType()) && !statue.isHiddenStatue()) {
-                        ItemStack itemStackToDrop = new ItemStack(statue);
-                        if (entity instanceof MobEntity) {
-                            if (((MobEntity) entity).isChild() == statue.isBaby()) {
-                                DropLootStatues(entity, itemStackToDrop, source, event);
-                            }
-                        } else {
-                            DropLootStatues(entity, itemStackToDrop, source, event);
-                        }
+                        matchingStatues.add(block);
                     }
+                }
+            }
+            if(!matchingStatues.isEmpty()) {
+                RegistryObject block = matchingStatues.get(rand.nextInt(matchingStatues.size()));
+                AbstractStatueBase statue = (AbstractStatueBase) block.get();
+                ItemStack itemStackToDrop = new ItemStack(statue);
+                if (entity instanceof MobEntity) {
+                    if (((MobEntity) entity).isChild() == statue.isBaby()) {
+                        DropLootStatues(entity, itemStackToDrop, source, event);
+                    }
+                } else {
+                    DropLootStatues(entity, itemStackToDrop, source, event);
                 }
             }
         }
