@@ -30,7 +30,7 @@ public class SalmonStatueBlock extends FishStatueBlock {
 
     @Override
     public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-        //TODO: Fish stuff? Wut should it do.
+        //TODO: Fish stuff? What should it do.
     }
 
     @Override
