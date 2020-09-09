@@ -35,8 +35,7 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		if(this.isDecorative(state))
-		{
+		if(this.isDecorative(state) && placer != null) {
 			Block block = worldIn.getBlockState(pos.down()).getBlock();
 			if (block == Blocks.GOLD_BLOCK) {
 				BlockPos downPos = pos.down();
@@ -76,6 +75,6 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.SHAPE;
+		return SHAPE;
 	}
 }

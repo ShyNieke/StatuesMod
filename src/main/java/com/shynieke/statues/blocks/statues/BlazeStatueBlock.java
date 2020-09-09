@@ -22,9 +22,7 @@ public class BlazeStatueBlock extends AbstractStatueBase {
 	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 1.0D, 4.0D, 12.0D, 9.5D, 12.0D);
 
 	public BlazeStatueBlock(Properties builder) {
-		super(builder.sound(SoundType.STONE).setLightLevel((p_235418_0_) -> {
-			return 8;
-		}));
+		super(builder.sound(SoundType.STONE).setLightLevel((p_235418_0_) -> 8));
 	}
 
 	@Override
@@ -50,6 +48,6 @@ public class BlazeStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.SHAPE;
+		return SHAPE;
 	}
 }

@@ -130,7 +130,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			if (profile != null) {
 				CompoundNBT tag = new CompoundNBT();
 
-				if (profile != null && !StringUtils.isNullOrEmpty(profile.getName())) {
+				if (!StringUtils.isNullOrEmpty(profile.getName())) {
 					GameProfile gameprofile = new GameProfile((UUID)null, profile.getName());
 					gameprofile = PlayerTile.updateGameProfile(gameprofile);
 					tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));

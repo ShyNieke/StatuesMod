@@ -29,28 +29,23 @@ public class StatueCoreItem extends Item {
 
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World WorldIn, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		if(stack.hasTag()) {
-			if(!stack.getTag().isEmpty()) {
-				CompoundNBT nbt = stack.getTag();
-				if(!nbt.getString(entityTag).isEmpty()) {
-					tooltip.add(new TranslationTextComponent("statues.core.info,", new Object[] {nbt.getString(entityTag)}).mergeStyle(TextFormatting.GOLD));
-				}
-			}
+		CompoundNBT tag = stack.hasTag() ? stack.getTag() : new CompoundNBT();
+		if (tag != null && !tag.getString(entityTag).isEmpty()) {
+			tooltip.add(new TranslationTextComponent("statues.core.info,", tag.getString(entityTag)).mergeStyle(TextFormatting.GOLD));
 		}
 	}
 
 	@Override
 	public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entityIn, Hand handIn) {
 		if (!(entityIn instanceof PlayerEntity) && !isLocked) {
-			if(stack.hasTag()) {
-				CompoundNBT nbt = stack.getTag();
-				if(!nbt.getString(entityTag).isEmpty()) {
+			CompoundNBT tag = stack.hasTag() ? stack.getTag() : new CompoundNBT();
+			if(tag != null) {
+				if(!tag.getString(entityTag).isEmpty()) {
 					this.isLocked = true;
 					return ActionResultType.FAIL;
 				} else {
 					if (entityIn.isAlive()) {
 						if (entityIn instanceof MobEntity) {
-							CompoundNBT tag = new CompoundNBT();
 							tag.putString(entityTag, String.valueOf(ForgeRegistries.ENTITIES.getKey(entityIn.getType())));
 							stack.setTag(tag);
 						}

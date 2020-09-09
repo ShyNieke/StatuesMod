@@ -95,7 +95,7 @@ public class DropHandler {
                 }
             }
             if(!matchingStatues.isEmpty()) {
-                RegistryObject block = matchingStatues.get(rand.nextInt(matchingStatues.size()));
+                RegistryObject<Block> block = matchingStatues.get(rand.nextInt(matchingStatues.size()));
                 AbstractStatueBase statue = (AbstractStatueBase) block.get();
                 ItemStack itemStackToDrop = new ItemStack(statue);
                 if (entity instanceof MobEntity) {

@@ -58,19 +58,16 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 				randomMessage = "Did you know we have curios support";
 			}
 
-			if(!luckyPlayers.isEmpty() && random < 20)
-			{
-				for (int i = 0; i < luckyPlayers.size(); i++) {
-					if(!luckyPlayers.get(i).isEmpty()) {
-						String luckyUser = luckyPlayers.get(i).trim();
-						if(player.getDisplayName().getUnformattedComponentText().equalsIgnoreCase(luckyUser)) {
+			if(!luckyPlayers.isEmpty() && random < 20) {
+				for (String luckyPlayer : luckyPlayers) {
+					if (!luckyPlayer.isEmpty()) {
+						String luckyUser = luckyPlayer.trim();
+						if (player.getDisplayName().getUnformattedComponentText().equalsIgnoreCase(luckyUser)) {
 							randomMessage = "Luck is not on your side today";
 						}
 					}
 				}
-			}
-			else
-			{
+			} else {
 				randomMessage = (messages.get(idx));
 			}
 
@@ -81,6 +78,6 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.SHAPE;
+		return SHAPE;
 	}
 }

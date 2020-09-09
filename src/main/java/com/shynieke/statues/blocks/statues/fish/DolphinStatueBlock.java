@@ -36,7 +36,7 @@ public class DolphinStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.SHAPE;
+		return SHAPE;
 	}
 
 	@Override

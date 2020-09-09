@@ -3,7 +3,7 @@ package com.shynieke.statues.recipes;
 import net.minecraft.item.ItemStack;
 
 public class StatueLootInfo {
-    private String statue;
+    private final String statue;
     private LootInfo loot;
 
     public StatueLootInfo(String statue, LootInfo loot) {

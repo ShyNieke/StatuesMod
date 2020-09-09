@@ -69,40 +69,37 @@ public class StatueLootList {
         addLoot("turtle", new ItemStack(Items.SEAGRASS), ItemStack.EMPTY, new ItemStack(Items.BOWL));
     }
 
-    public static ItemStack getWastelandBlock()
-    {
+    public static ItemStack getWastelandBlock() {
         ItemStack wasteland = new ItemStack(Blocks.SAND).setDisplayName(new StringTextComponent("Wasteland Block").mergeStyle(TextFormatting.LIGHT_PURPLE));
         wasteland.addEnchantment(Enchantments.VANISHING_CURSE, 1);
         CompoundNBT nbt = wasteland.hasTag() ? wasteland.getTag() : new CompoundNBT();
-        nbt.putInt("HideFlags", 1);
-        wasteland.setTag(nbt);
+        if(nbt != null) {
+            nbt.putInt("HideFlags", 1);
+            wasteland.setTag(nbt);
+        }
         return wasteland;
     }
 
-    public static ItemStack getFloodBucket()
-    {
+    public static ItemStack getFloodBucket() {
         ItemStack floodBucket = new ItemStack(Items.WATER_BUCKET);
         floodBucket.setDisplayName(new StringTextComponent("The Flood").mergeStyle(TextFormatting.BLUE));
 
         return floodBucket;
     }
 
-    public static void addLoot(String statue, LootInfo loot)
-    {
+    public static void addLoot(String statue, LootInfo loot) {
         loot_info = new StatueLootInfo(statue, loot);
         if(!lootList.contains(loot_info)) {
             lootList.add(loot_info);
         }
     }
 
-    public static void addLoot(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3)
-    {
+    public static void addLoot(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3) {
         LootInfo info = new LootInfo(stack1, stack2, stack3);
         addLoot(statue, info);
     }
 
-    public static void changeLoot(String statue, LootInfo loot)
-    {
+    public static void changeLoot(String statue, LootInfo loot) {
         if(!statue.isEmpty()) {
             for (int i = 0; i < lootList.size(); i++) {
                 StatueLootInfo oldLoot = lootList.get(i);
@@ -121,8 +118,7 @@ public class StatueLootList {
      */
     public static StatueLootInfo getLootInfo(String statueName) {
         StatueLootInfo loot = new StatueLootInfo(statueName, LootInfo.EMPTY);
-        for(StatueLootInfo info : lootList)
-        {
+        for(StatueLootInfo info : lootList) {
             if(info.getStatue().equalsIgnoreCase(statueName)) {
                 loot = info;
             }
@@ -131,14 +127,11 @@ public class StatueLootList {
         return loot;
     }
 
-    public static ArrayList<ItemStack> getStacksForStatue(String statue)
-    {
+    public static ArrayList<ItemStack> getStacksForStatue(String statue) {
         ArrayList<ItemStack> stacks = new ArrayList<>();
 
-        for(StatueLootInfo info : lootList)
-        {
-            if(info.getStatue().equals(statue))
-            {
+        for(StatueLootInfo info : lootList) {
+            if(info.getStatue().equals(statue)) {
                 stacks.add(0, info.getStack1());
                 stacks.add(1, info.getStack2());
                 stacks.add(2, info.getStack2());
@@ -155,17 +148,14 @@ public class StatueLootList {
         return stacks;
     }
 
-    public static ArrayList<Block> getBlockForStatue(String statue)
-    {
+    public static ArrayList<Block> getBlockForStatue(String statue) {
         ArrayList<Block> blockList = new ArrayList<>();
 
         for(RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries())
         {
-            String blockName = block.get() != null ? block.get().getTranslationKey() : "";
-            if(!blockName.isEmpty() && blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4")))
-            {
-                if (!blockList.contains(block.get()))
-                {
+            String blockName = block.get().getTranslationKey();
+            if(!blockName.isEmpty() && blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4"))) {
+                if (!blockList.contains(block.get())) {
                     blockList.add(block.get());
                 }
             }

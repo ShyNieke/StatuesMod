@@ -23,7 +23,7 @@ public class DisplayStandBlock extends Block implements IBucketPickupHandler, IL
     private static final VoxelShape BOTTOM_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
     private static final VoxelShape MIDDLE_SHAPE = Block.makeCuboidShape(3.0D, 6.0D, 3.0D, 13.0D, 10.0D, 13.0D);
     private static final VoxelShape TOP_SHAPE = Block.makeCuboidShape(0.0D, 10.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    private static final VoxelShape SHAPE = VoxelShapes.or(BOTTOM_SHAPE, new VoxelShape[]{MIDDLE_SHAPE, TOP_SHAPE});;
+    private static final VoxelShape SHAPE = VoxelShapes.or(BOTTOM_SHAPE, MIDDLE_SHAPE, TOP_SHAPE);
 
     public DisplayStandBlock(Properties properties) {
         super(properties.setOpaque(DisplayStandBlock::isntSolid));
