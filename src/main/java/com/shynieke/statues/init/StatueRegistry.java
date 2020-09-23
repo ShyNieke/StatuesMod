@@ -223,7 +223,7 @@ public class StatueRegistry {
 
     public static <B extends Block> RegistryObject<B> registerPlayerStatue(String name, Supplier<? extends B> supplier, Item.Properties properties) {
         RegistryObject<B> block = StatueRegistry.BLOCKS.register(name, supplier);
-        ITEMS.register(name, () -> new StatueBlockItem(block.get(), properties.setISTER(() -> PlayerTileInventoryRenderer::new)));
+        ITEMS.register(name, () -> new StatueBlockItem(block.get(), properties.setISTER(StatueISTERProvider::playerStatue)));
         return block;
     }
 
