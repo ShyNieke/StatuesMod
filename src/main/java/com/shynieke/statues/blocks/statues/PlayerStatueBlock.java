@@ -130,7 +130,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			if (profile != null) {
 				CompoundNBT tag = new CompoundNBT();
 
-				if (profile != null && !StringUtils.isNullOrEmpty(profile.getName())) {
+				if (!StringUtils.isNullOrEmpty(profile.getName())) {
 					GameProfile gameprofile = new GameProfile((UUID)null, profile.getName());
 					gameprofile = PlayerTile.updateGameProfile(gameprofile);
 					tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
@@ -257,7 +257,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							CompoundNBT locationTag = new CompoundNBT();
 
 							PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
-							if(player != null && player.world.getDimensionKey().func_240901_a_().equals(playerIn.world.getDimensionKey().func_240901_a_())) {
+							if(player != null && player.world.getDimensionKey().getLocation().equals(playerIn.world.getDimensionKey().getLocation())) {
 								BlockPos playerPos = player.getPosition();
 								locationTag.putLong("lastPlayerLocation", playerPos.toLong());
 								locationTag.putString("playerTracking", tileProfile.getName());

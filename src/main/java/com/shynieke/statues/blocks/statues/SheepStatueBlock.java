@@ -27,7 +27,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 	private static final VoxelShape SOUTH_EAST_SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 3.5D, 12.0D, 8.5D, 12.5D);
 	private static final VoxelShape NORTH_WEST_SHAPE = Block.makeCuboidShape(3.5D, 0.0D, 4.0D, 12.5D, 8.5D, 12.0D);
 	private static final Map<DyeColor, SheepStatueBlock> COLOR_DYE_STATUE_MAP = Maps.newEnumMap(DyeColor.class);
-	private DyeColor COLOR;
+	private final DyeColor COLOR;
 
 	public SheepStatueBlock(Properties builder, DyeColor color) {
 		super(builder.sound(SoundType.STONE));
@@ -60,7 +60,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 	}
 
 	public static SheepStatueBlock getStatue(DyeColor color) {
-		return (SheepStatueBlock)COLOR_DYE_STATUE_MAP.get(color);
+		return COLOR_DYE_STATUE_MAP.get(color);
 	}
 
 	@Override

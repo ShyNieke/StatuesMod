@@ -26,6 +26,11 @@ public class EndermiteStatueBlock extends AbstractStatueBase {
     }
 
     @Override
+    public SoundEvent getSound(BlockState state) {
+        return SoundEvents.ENTITY_ENDERMITE_AMBIENT;
+    }
+
+    @Override
     public boolean canBeUpgraded() {
         return false;
     }
@@ -33,11 +38,6 @@ public class EndermiteStatueBlock extends AbstractStatueBase {
     @Override
     public EntityType<?> getEntity() {
         return EntityType.ENDERMITE;
-    }
-
-    @Override
-    public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_ENDERMITE_AMBIENT;
     }
 
     private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {

@@ -60,7 +60,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         matrix.translate(0.5D, 0.25D, 0.5D);
         matrix.push();
         if (direction != null) {
-            switch(direction) {
+           switch(direction) {
                 case NORTH:
                     break;
                 case SOUTH:

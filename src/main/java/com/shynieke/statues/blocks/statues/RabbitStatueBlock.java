@@ -29,7 +29,7 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 	@Override
 	public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
 		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
-		tile.summonMob(getRabbit(worldIn));
+		tile.summonMob(getKillerRabbit(worldIn));
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 		return SoundEvents.ENTITY_RABBIT_AMBIENT;
 	}
 
-	public RabbitEntity getRabbit(World worldIn) {
+	public RabbitEntity getKillerRabbit(World worldIn) {
 		RabbitEntity evilRabbit = new RabbitEntity(EntityType.RABBIT, worldIn);
 		evilRabbit.setRabbitType(99);
 
@@ -56,6 +56,6 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.SHAPE;
+		return SHAPE;
 	}
 }

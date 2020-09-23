@@ -29,13 +29,13 @@ public class SombreroBlock extends AbstractBaseBlock {
     private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 8, 12);
 
     public SombreroBlock(Properties properties) {
-        super(properties.sound(SoundType.STONE).notSolid());
+        super(properties.sound(SoundType.STONE));
     }
 
     @Override
     public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         Block block = worldIn.getBlockState(pos.down()).getBlock();
-        if (block == Blocks.CACTUS) {
+        if (block == Blocks.CACTUS && placer != null) {
             BlockPos downPos = pos.down();
             worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
             worldIn.setBlockState(pos.down(), StatueRegistry.BUMBO_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));

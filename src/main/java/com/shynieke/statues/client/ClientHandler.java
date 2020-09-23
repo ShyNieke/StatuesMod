@@ -63,7 +63,7 @@ public class ClientHandler {
         PlayerTile.setSessionService(minecraftsessionservice);
         PlayerProfileCache.setOnlineMode(false);
 
-        ItemModelsProperties.func_239418_a_(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new IItemPropertyGetter() {
+        ItemModelsProperties.registerProperty(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new IItemPropertyGetter() {
             private final ClientHandler.Angle rotation = new ClientHandler.Angle();
             private final ClientHandler.Angle rota = new ClientHandler.Angle();
 
@@ -125,7 +125,7 @@ public class ClientHandler {
 
             @Nullable
             private BlockPos getWorldPos(ClientWorld world) {
-                return world.func_230315_m_().func_236043_f_() ? world.func_239140_u_() : null;
+                return world.getDimensionType().isNatural() ? world.func_239140_u_() : null;
             }
 
             private double getFrameRotation(ItemFrameEntity itemFrameIn) {
@@ -139,7 +139,7 @@ public class ClientHandler {
             }
         });
 
-        ItemModelsProperties.func_239418_a_(Item.getItemFromBlock(StatueRegistry.BEE_STATUE.get()), new ResourceLocation("trans"), (stack, worldIn, entityIn) -> StatueTransBeeItem.isTrans(stack) ? 1.0F : 0.0F);
+        ItemModelsProperties.registerProperty(Item.getItemFromBlock(StatueRegistry.BEE_STATUE.get()), new ResourceLocation("trans"), (stack, worldIn, entityIn) -> StatueTransBeeItem.isTrans(stack) ? 1.0F : 0.0F);
     }
 
     @OnlyIn(Dist.CLIENT)

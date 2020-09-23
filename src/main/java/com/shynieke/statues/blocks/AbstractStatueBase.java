@@ -46,7 +46,6 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 				executeStatueBehavior(getTE(worldIn, pos), state, worldIn, pos, playerIn, handIn, result);
 			}
 		}
-
 		return ActionResultType.SUCCESS;
 	}
 
@@ -60,11 +59,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 
 	@Override
 	public boolean hasTileEntity(BlockState state) {
-		if (state.get(INTERACTIVE).booleanValue()) {
-			return true;
-		} else {
-			return false;
-		}
+		return state.get(INTERACTIVE).booleanValue();
 	}
 
 	@Override
@@ -79,8 +74,8 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	@Override
 	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
 		ItemStack itemstack = super.getItem(worldIn, pos, state);
-		if(state.get(INTERACTIVE)) {
-			StatueTile statueTile = (StatueTile)worldIn.getTileEntity(pos);
+		StatueTile statueTile = (StatueTile)worldIn.getTileEntity(pos);
+		if(state.get(INTERACTIVE) && statueTile != null) {
 			CompoundNBT compoundnbt = statueTile.saveToNbt(new CompoundNBT());
 			if (!compoundnbt.isEmpty()) {
 				itemstack.setTagInfo("BlockEntityTag", compoundnbt);
@@ -120,7 +115,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	}
 
 	public EntityType<?> getEntity() {
-		return EntityType.BAT;
+		return EntityType.EGG;
 	}
 
 	public String getLootName() {
@@ -136,7 +131,8 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	}
 
 	public boolean canPlaySound(World worldIn, BlockPos pos, BlockState state) {
-		boolean flag = state.get(INTERACTIVE) && ((StatueTile)worldIn.getTileEntity(pos)).makesSounds();
+		TileEntity tile = worldIn.getTileEntity(pos);
+		boolean flag = state.get(INTERACTIVE) && (tile instanceof StatueTile && ((StatueTile) tile).makesSounds());
 		boolean flag2 = worldIn.getBlockState(pos.down()).getBlock() instanceof NoteBlock;
 		return flag || flag2;
 	}

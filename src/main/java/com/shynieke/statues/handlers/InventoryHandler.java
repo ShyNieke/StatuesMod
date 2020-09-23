@@ -34,7 +34,7 @@ public class InventoryHandler {
                     AbstractStatueBase statue = (AbstractStatueBase) ((StatueBlockItem) stack.getItem()).getBlock();
                     Statues.LOGGER.info(EntityType.ZOMBIE.getRegistryName());
                     Statues.LOGGER.info(killedEntity.getType().getRegistryName());
-                    if(killedEntity.getType().getRegistryName().equals(statue.getEntity())) {
+                    if(killedEntity.getType().getRegistryName().equals(statue.getEntity().getRegistryName())) {
                         Statues.LOGGER.info("Statue isChild: " + statue.isBaby());
                         Statues.LOGGER.info("isChild: " + killedEntity.isChild());
                         if(statue.isBaby() == killedEntity.isChild()) {

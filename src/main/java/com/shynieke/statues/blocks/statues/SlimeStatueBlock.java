@@ -45,7 +45,7 @@ public class SlimeStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return this.SHAPE;
+		return SHAPE;
 	}
 
 	@Override
@@ -55,6 +55,6 @@ public class SlimeStatueBlock extends AbstractStatueBase {
 
 	@OnlyIn(Dist.CLIENT)
 	public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-		return state2.getBlock() == this ? true : super.isSideInvisible(state, state2, direction);
+		return state2.getBlock() == this || super.isSideInvisible(state, state2, direction);
 	}
 }

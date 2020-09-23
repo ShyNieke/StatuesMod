@@ -87,20 +87,18 @@ repositories {
 		name = "Progwml6 maven"
 		url = "https://dvs1.progwml6.com/files/maven/"
 	}
+//    maven {
+//        // location of a maven mirror for JEI files, as a fallback
+//        name = "ModMaven"
+//        url = "https://modmaven.k-4u.nl"
+//    }
 	maven {
-        url "http://maven.blamejared.com"
-	}
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
+        name = "Heh"
+        url 'https://maven.latmod.com/'
     }
-	maven { 
-		url "http://tehnut.info/maven" 
-	}
-	maven {
-        url 'https://www.dogforce-games.com/maven/'
-    }
+//    maven {
+//        url "http://maven.blamejared.com"
+//    }
     maven {
         url = "https://maven.theillusivec4.top/"
     }
@@ -109,10 +107,11 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    compile fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
+    compile fg.deobf("mezz.jei:jei-1.16.3:${version_jei}")
 //    compile fg.deobf("com.blamejared.crafttweaker:CraftTweaker-${mc_version}:${version_crafttweaker}")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}:api")
+    compileOnly fg.deobf('com.feed_the_beast.mods:ftb-gui-library:1.0.0.18') //TEMPORARY
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

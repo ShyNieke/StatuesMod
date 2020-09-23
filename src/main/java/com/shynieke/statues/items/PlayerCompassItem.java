@@ -38,11 +38,9 @@ public class PlayerCompassItem extends Item {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World reader, List<ITextComponent> tooltip, ITooltipFlag flag) {
-        if(stack.hasTag()) {
-            CompoundNBT tag = stack.getTag();
-            if (!tag.getString("playerTracking").isEmpty()) {
-                tooltip.add(new TranslationTextComponent("statues.last.known.location", tag.getString("playerTracking")).mergeStyle(TextFormatting.GOLD));
-            }
+        CompoundNBT tag = stack.hasTag() ? stack.getTag() : new CompoundNBT();
+        if (tag != null && !tag.getString("playerTracking").isEmpty()) {
+            tooltip.add(new TranslationTextComponent("statues.last.known.location", tag.getString("playerTracking")).mergeStyle(TextFormatting.GOLD));
         }
     }
 }

@@ -27,19 +27,16 @@ public class StatueTeaItem extends Item {
                 CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)playerIn, stack);
             }
 
-            if (playerIn != null) {
-                playerIn.addStat(Stats.ITEM_USED.get(this));
-            }
+            playerIn.addStat(Stats.ITEM_USED.get(this));
 
-            if (playerIn == null || !playerIn.abilities.isCreativeMode) {
+            if (!playerIn.abilities.isCreativeMode) {
                 if (stack.isEmpty()) {
                     return new ItemStack(StatueRegistry.CUP.get());
                 }
 
-                if (playerIn != null)
-                    playerIn.inventory.addItemStackToInventory(new ItemStack(StatueRegistry.CUP.get()));
-                }
+                playerIn.inventory.addItemStackToInventory(new ItemStack(StatueRegistry.CUP.get()));
             }
+        }
 
         return stack;
     }

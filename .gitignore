@@ -17,6 +17,7 @@ out
 build
 .gradle
 classes
+logs
 
 # other
 eclipse

@@ -20,29 +20,25 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class SpecialHandler {
     @SubscribeEvent
-    public void playerTick(PlayerTickEvent event)
-    {
+    public void playerTick(PlayerTickEvent event) {
         if(event.phase == TickEvent.Phase.START)
             return;
 
-        if(!event.player.world.isRemote)
-        {
+        if(!event.player.world.isRemote) {
             final PlayerEntity player = event.player;
             World world = player.world;
             BlockPos pos = player.getPosition();
             AxisAlignedBB hitbox = new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
                     .expand(-3, -3, -3).expand(3, 3, 3);
 
-            for(ItemEntity entity : player.world.getEntitiesWithinAABB(ItemEntity.class, hitbox)) {
-                if(entity instanceof ItemEntity) {
-                    ItemEntity itemE = (ItemEntity) entity;
-
+            for(ItemEntity itemE : player.world.getEntitiesWithinAABB(ItemEntity.class, hitbox)) {
+                if(itemE != null) {
                     if (itemE.getItem().getItem().equals(Items.DIAMOND)) {
                         AxisAlignedBB bb = itemE.getBoundingBox().contract(0.1, 0.1, 0.1);
                         BlockPos lavaPos = itemE.getPosition();
 
-                        Boolean lavaFound = false;
-                        Boolean requirementsFound = false;
+                        boolean lavaFound;
+                        boolean requirementsFound;
 
                         if (world.getBlockState(itemE.getPosition()).getBlock() == Blocks.LAVA) {
                             lavaFound = true;
@@ -56,11 +52,7 @@ public class SpecialHandler {
 
                         CampfireData data = properStatuesFound(world, lavaPos.up(), StatueRegistry.PLAYER_STATUE.get(), StatueRegistry.CREEPER_STATUE.get());
 
-                        if (data.getBool() && lavaFound) {
-                            requirementsFound = true;
-                        } else {
-                            requirementsFound = false;
-                        }
+                        requirementsFound = data.getBool() && lavaFound;
 
                         if (requirementsFound) {
                             world.setBlockState(lavaPos, Blocks.AIR.getDefaultState());
@@ -77,8 +69,7 @@ public class SpecialHandler {
         }
     }
 
-    public CampfireData properStatuesFound(World worldIn, BlockPos pos, Block block, Block block1)
-    {
+    public CampfireData properStatuesFound(World worldIn, BlockPos pos, Block block, Block block1) {
         CampfireData data = new CampfireData(false, pos, pos);
 
         BlockState northBlock = worldIn.getBlockState(pos.offset(Direction.NORTH));
@@ -86,17 +77,13 @@ public class SpecialHandler {
         BlockState southBlock = worldIn.getBlockState(pos.offset(Direction.SOUTH));
         BlockState westBlock = worldIn.getBlockState(pos.offset(Direction.WEST));
 
-        if(isValidBlock(northBlock, block) && isValidBlock(southBlock, block1))
-        {
+        if(isValidBlock(northBlock, block) && isValidBlock(southBlock, block1)) {
             data = new CampfireData(true, pos.offset(Direction.NORTH), pos.offset(Direction.SOUTH));
-        } else if(isValidBlock(northBlock, block1) && isValidBlock(southBlock, block))
-        {
+        } else if(isValidBlock(northBlock, block1) && isValidBlock(southBlock, block)) {
             data = new CampfireData(true, pos.offset(Direction.NORTH), pos.offset(Direction.SOUTH));
-        } else if(isValidBlock(westBlock, block) && isValidBlock(eastBlock, block1))
-        {
+        } else if(isValidBlock(westBlock, block) && isValidBlock(eastBlock, block1)) {
             data = new CampfireData(true, pos.offset(Direction.WEST), pos.offset(Direction.EAST));
-        } else if(isValidBlock(westBlock, block1) && isValidBlock(eastBlock, block))
-        {
+        } else if(isValidBlock(westBlock, block1) && isValidBlock(eastBlock, block)) {
             data = new CampfireData(true, pos.offset(Direction.WEST), pos.offset(Direction.EAST));
         }
 
@@ -111,9 +98,9 @@ public class SpecialHandler {
         }
     }
 
-    public class CampfireData
+    public static class CampfireData
     {
-        private final Boolean bool;
+        private final boolean bool;
         private final BlockPos pos1;
         private final BlockPos pos2;
 

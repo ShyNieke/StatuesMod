@@ -1,0 +1,12 @@
+{
+   "variants": {
+           "interactive=false,facing=east": { "model": "statues:block/tuxedo_cat_statue", "y": 90},
+           "interactive=false,facing=north": { "model": "statues:block/tuxedo_cat_statue"},
+           "interactive=false,facing=west": { "model": "statues:block/tuxedo_cat_statue", "y": 270},
+           "interactive=false,facing=south": { "model": "statues:block/tuxedo_cat_statue", "y": 180},
+           "interactive=true,facing=east": { "model": "statues:block/tuxedo_cat_statue", "y": 90},
+           "interactive=true,facing=north": { "model": "statues:block/tuxedo_cat_statue"},
+           "interactive=true,facing=west": { "model": "statues:block/tuxedo_cat_statue", "y": 270},
+           "interactive=true,facing=south": { "model": "statues:block/tuxedo_cat_statue", "y": 180}
+   }
+}

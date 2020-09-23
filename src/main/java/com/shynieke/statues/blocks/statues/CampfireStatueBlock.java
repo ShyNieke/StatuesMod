@@ -31,9 +31,7 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 	private static final VoxelShape NORTH_WEST_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 5.0D, 16.0D, 7.0D, 11.0D);
 
 	public CampfireStatueBlock(Properties builder) {
-		super(builder.sound(SoundType.STONE).setLightLevel((p_235418_0_) -> {
-			return 12;
-		}));
+		super(builder.sound(SoundType.STONE).setLightLevel((p_235418_0_) -> 12));
 	}
 
 	@Override
@@ -54,8 +52,7 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 		return getRandomCampfire();
 	}
 
-	public CreeperEntity getGeneral(World worldIn)
-	{
+	public CreeperEntity getGeneral(World worldIn) {
 		CreeperEntity general = new CreeperEntity(EntityType.CREEPER, worldIn);
 		general.setCustomName(new StringTextComponent("General Spazz"));
 		CompoundNBT tag = new CompoundNBT();
@@ -72,10 +69,8 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 			StatuesSounds.campfire_hello_random,
 			StatuesSounds.campfire_snacks_random);
 
-	public static SoundEvent getRandomCampfire()
-	{
-		SoundEvent sound = ListHelper.getRandomFromList(campfire_sounds);
-		return sound;
+	public static SoundEvent getRandomCampfire() {
+		return ListHelper.getRandomFromList(campfire_sounds);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 {
 	"__comment": "Designed by ShyNieke with Cubik Studio - https://cubik.studio",
 	"textures": {
-		"particle": "block/quartz_block_side",
+		"particle": "statues:block/rabbit_statue_white",
 		"texture": "statues:block/rabbit_statue_white"
 	},
 	"elements": [

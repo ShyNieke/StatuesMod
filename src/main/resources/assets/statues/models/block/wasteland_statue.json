@@ -1,7 +1,7 @@
 {
 	"__comment": "Designed by ShyNieke with Cubik Studio - https://cubik.studio",
 	"textures": {
-		"particle": "block/white_terracotta",
+		"particle": "statues:block/wastelandpig",
 		"texture": "statues:block/pig_statue",
 		"texture1": "statues:block/wastelandpig",
 		"texture2": "statues:block/xisuma",
