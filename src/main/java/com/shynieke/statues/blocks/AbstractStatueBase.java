@@ -115,7 +115,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	}
 
 	public EntityType<?> getEntity() {
-		return EntityType.BAT;
+		return EntityType.EGG;
 	}
 
 	public String getLootName() {

@@ -56,7 +56,6 @@ import com.shynieke.statues.blocks.statues.fish.PufferfishStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.SalmonStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.SquidStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.TurtleStatueBlock;
-import com.shynieke.statues.client.render.PlayerTileInventoryRenderer;
 import com.shynieke.statues.items.PlayerCompassItem;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.items.StatueCharredMarshmallow;

@@ -12,7 +12,6 @@ import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.ElderGuardianEntity;
 import net.minecraft.entity.monster.EvokerEntity;
 import net.minecraft.entity.monster.RavagerEntity;
-import net.minecraft.entity.monster.VexEntity;
 import net.minecraft.entity.monster.VindicatorEntity;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.CatEntity;
@@ -27,8 +26,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -46,8 +43,6 @@ public class DropHandler {
         Entity entity = event.getEntity();
         Entity source = event.getSource().getTrueSource();
 
-        addSombrero(entity, source, event);
-
         if (entity instanceof VillagerEntity) {
             switch(entity.world.rand.nextInt(4)) {
                 default:
@@ -63,18 +58,13 @@ public class DropHandler {
                     DropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_GR_STATUE.get()), source, event);
                     break;
             }
-        } else if(entity instanceof EvokerEntity || entity instanceof VindicatorEntity || entity instanceof VexEntity) {
-            if(entity instanceof EvokerEntity) {
-                ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EVOKER_STATUE.get());
-                DropLootStatues(entity, itemStackToDrop, source, event);
-            }
-            if(entity instanceof VindicatorEntity) {
-                ItemStack itemStackToDrop = new ItemStack(StatueRegistry.VINDICATOR_STATUE.get());
-                DropLootStatues(entity, itemStackToDrop, source, event);
-            }
-
-            ItemStack itemStackToDrop2 = new ItemStack(StatueRegistry.TOTEM_OF_UNDYING_STATUE.get());
-            DropLootStatues(entity, itemStackToDrop2, source, event);
+        } else if(entity instanceof EvokerEntity) {
+            ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EVOKER_STATUE.get());
+            DropLootStatues(entity, itemStackToDrop, source, event);
+        }
+        else if(entity instanceof VindicatorEntity) {
+            ItemStack itemStackToDrop = new ItemStack(StatueRegistry.VINDICATOR_STATUE.get());
+            DropLootStatues(entity, itemStackToDrop, source, event);
         } else if(entity instanceof SheepEntity) {
             SheepEntity sheep = (SheepEntity) entity;
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.SHEEP_SHAVEN_STATUE.get());
@@ -329,87 +319,6 @@ public class DropHandler {
             case ALL:
                 if (random_drop < default_drop_chance) {
                     event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
-                }
-                break;
-        }
-    }
-
-    public static void addSombrero(Entity entity, Entity source, LivingDropsEvent event)
-    {
-        double random_drop;
-        double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
-        BlockPos entityPos = entity.getPosition();
-        Biome biome = entity.world.getBiome(entity.getPosition());
-
-        switch (StatuesConfig.COMMON.statueKillSource.get())
-        {
-            default:
-                if(source instanceof PlayerEntity && !(source instanceof FakePlayer))
-                {
-                    ServerPlayerEntity player = (ServerPlayerEntity)source;
-                    List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
-                    if (!luckyPlayers.isEmpty()) {
-                        for (String luckyName : luckyPlayers) {
-                            String user = player.getName().getUnformattedComponentText();
-
-                            if (!luckyName.isEmpty() && user.equals(luckyName)) {
-                                default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;
-                            }
-                        }
-                    }
-//					if(StatuesConfigGen.othersettings.antiAfk)
-//					{
-//						if(!player.getEntityData().getBoolean(FishHandler.afkKey))
-//						{
-//							random_drop = Math.random();
-//							if (random_drop < default_drop_chance )
-//					    	{
-//								Biome biome = entity.world.getBiomeForCoordsBody(entity.getPosition());
-//								if(biome == Biomes.DESERT || biome == Biomes.DESERT_HILLS || biome == Biomes.MUTATED_DESERT || BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-//								{
-//									ItemStack sombreroStack = new ItemStack(StatuesBlocks.sombrero);
-//					            	event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, sombreroStack));
-//								}
-//					    	}
-//						}
-//					}
-//					else
-//					{
-                    random_drop = Math.random();
-                    if (random_drop < default_drop_chance)
-                    {
-                        if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-                        {
-                            ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
-                            event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
-                        }
-                    }
-//					}
-                }
-                break;
-            case PLAYER_FAKEPLAYER:
-                if(source instanceof PlayerEntity)
-                {
-                    random_drop = Math.random();
-                    if (random_drop < default_drop_chance)
-                    {
-                        if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-                        {
-                            ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
-                            event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
-                        }
-                    }
-                }
-                break;
-            case ALL:
-                random_drop = Math.random();
-                if (random_drop < default_drop_chance)
-                {
-                    if(BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY))
-                    {
-                        ItemStack sombreroStack = new ItemStack(StatueRegistry.SOMBRERO.get());
-                        event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), sombreroStack));
-                    }
                 }
                 break;
         }

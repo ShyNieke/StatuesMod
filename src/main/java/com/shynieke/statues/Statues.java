@@ -5,6 +5,7 @@ import com.shynieke.statues.compat.curios.CuriosCompat;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
+import com.shynieke.statues.handlers.TraderHandler;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.PlayerTile;
@@ -43,6 +44,7 @@ public class Statues {
 		}
 
 //		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
+		MinecraftForge.EVENT_BUS.register(new TraderHandler());
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
