@@ -106,7 +106,8 @@ public class StatuesConfig {
 							"Right click a player statue with a comparator to emit redstone when that player is online",
 							"Right click a player statue with a compass to bound the compass to the last known location of the player",
 							"A player and a creeper with blue fire in the middle",
-							"How to make blue fire, if fire itself does not work"
+							"How to make blue fire, if fire itself does not work",
+							"Rename a bee 'Trans Bee' to show support for trans people"
 					};
 
 			info_messages = builder

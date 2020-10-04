@@ -72,21 +72,17 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public class StatueRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Reference.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
 
-    public static ArrayList<Block> STATUES = new ArrayList<>();
-
     public static final RegistryObject<Block> ANGRY_BEE_STATUE = registerStatue("angry_bee_statue", () -> new AngryBeeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BABY_ZOMBIE_STATUE = registerStatue("baby_zombie_statue", () -> new BabyZombieStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BEE_STATUE = registerBeeStatue("bee_statue", () -> new BeeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BLAZE_STATUE = registerStatue("blaze_statue", () -> new BlazeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BROWN_MOOSHROOM_STATUE = registerStatue("brown_mooshroom_statue", () -> new BrownMooshroomStatueBlock(blockBuilder()), blockItemBuilder());
-    public static final RegistryObject<Block> BUMBO_STATUE = registerBlock("bumbo_statue", () -> new BumboStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> CAMPFIRE_STATUE = registerStatue("campfire_statue", () -> new CampfireStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> CAT_BLACK_STATUE = registerStatue("cat_black_statue", () -> new CatStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> CAT_BRITISH_SHORTHAIR_STATUE = registerStatue("cat_british_shorthair_statue", () -> new CatStatueBlock(blockBuilder()), blockItemBuilder());
@@ -105,7 +101,6 @@ public class StatueRegistry {
     public static final RegistryObject<Block> COW_STATUE = registerStatue("cow_statue", () -> new CowStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> CREEPER_STATUE = registerStatue("creeper_statue", () -> new CreeperStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> DETECTIVE_PLATYPUS = registerStatue("detective_platypus_statue", () -> new DetectivePlatypusStatueBlock(blockBuilder()), blockItemBuilder());
-    public static final RegistryObject<Block> DISPLAY_STAND = registerBlock("display_stand", () -> new DisplayStandBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> DOLPHIN_STATUE = registerStatue("dolphin_statue", () -> new DolphinStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> DROWNED_STATUE = registerStatue("drowned_statue", () -> new DrownedStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> ELDER_GUARDIAN_STATUE = registerStatue("elder_guardian_statue", () -> new ElderGuardianStatueBlock(blockBuilder()), blockItemBuilder());
@@ -129,7 +124,6 @@ public class StatueRegistry {
     public static final RegistryObject<Block> PANDA_PLAYFUL_STATUE = registerStatue("panda_playful_statue", () -> new PandaStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> PANDA_WEAK_STATUE = registerStatue("panda_weak_statue", () -> new PandaStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> PANDA_WORRIED_STATUE = registerStatue("panda_worried_statue", () -> new PandaStatueBlock(blockBuilder()), blockItemBuilder());
-    public static final RegistryObject<Block> PEBBLE = registerBlock("pebble", () -> new PebbleBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> PIG_STATUE = registerStatue("pig_statue", () -> new PigStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> PILLAGER_STATUE = registerStatue("pillager_statue", () -> new PillagerStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> PLAYER_STATUE = registerPlayerStatue("player_statue", () -> new PlayerStatueBlock(blockBuilder()), blockItemBuilder());
@@ -164,7 +158,6 @@ public class StatueRegistry {
     public static final RegistryObject<Block> SHULKER_STATUE = registerStatue("shulker_statue", () -> new ShulkerStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> SLIME_STATUE = registerStatue("slime_statue", () -> new SlimeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> SNOW_GOLEM_STATUE = registerStatue("snow_golem_statue", () -> new SnowGolemStatueBlock(blockBuilder()), blockItemBuilder());
-    public static final RegistryObject<Block> SOMBRERO = registerBlock("sombrero", () -> new SombreroBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> SPIDER_STATUE = registerStatue("spider_statue", () -> new SpiderStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> SQUID_STATUE = registerStatue("squid_statue", () -> new SquidStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> TOTEM_OF_UNDYING_STATUE = registerStatue("totem_of_undying_statue", () -> new TotemOfUndyingStatueBlock(blockBuilder()), blockItemBuilder());
@@ -190,6 +183,11 @@ public class StatueRegistry {
     public static final RegistryObject<Block> WITCH_STATUE = registerStatue("witch_statue", () -> new WitchStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> ZOMBIE_STATUE = registerStatue("zombie_statue", () -> new ZombieStatueBlock(blockBuilder()), blockItemBuilder());
 
+    public static final RegistryObject<Block> DISPLAY_STAND = registerBlock("display_stand", () -> new DisplayStandBlock(blockBuilder()), blockItemBuilder());
+    public static final RegistryObject<Block> BUMBO_STATUE = registerBlock("bumbo_statue", () -> new BumboStatueBlock(blockBuilder()), blockItemBuilder());
+    public static final RegistryObject<Block> PEBBLE = registerBlock("pebble", () -> new PebbleBlock(blockBuilder()), blockItemBuilder());
+    public static final RegistryObject<Block> SOMBRERO = registerBlock("sombrero", () -> new SombreroBlock(blockBuilder()), blockItemBuilder());
+
     public static final RegistryObject<Item> CUP = ITEMS.register("cup", () -> new Item(itemBuilder().food(StatueFoods.CUP)));
     public static final RegistryObject<Item> MARSHMALLOW = ITEMS.register("marshmallow", () -> new Item(itemBuilder().food(StatueFoods.MARSHMALLOW)));
     public static final RegistryObject<Item> MARSHMALLOW_CHARRED = ITEMS.register("marshmallow_charred", () -> new StatueCharredMarshmallow(itemBuilder()));
@@ -203,7 +201,6 @@ public class StatueRegistry {
 
     public static <B extends Block> RegistryObject<B> registerStatue(String name, Supplier<? extends B> supplier, Item.Properties properties) {
         RegistryObject<B> block = StatueRegistry.BLOCKS.register(name, supplier);
-        STATUES.add(supplier.get());
         ITEMS.register(name, () -> new StatueBlockItem(block.get(), properties));
         return block;
     }

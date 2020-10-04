@@ -50,6 +50,7 @@ public class Statues {
 
 		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
 			eventBus.addListener(ClientHandler::doClientStuff);
+			eventBus.addListener(ClientHandler::registerBlockColors);
 		});
 
 	}

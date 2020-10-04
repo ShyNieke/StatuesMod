@@ -3,6 +3,7 @@ package com.shynieke.statues.client;
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
+import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
 import com.shynieke.statues.client.render.PlayerTileRenderer;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTiles;
@@ -11,6 +12,7 @@ import com.shynieke.statues.tiles.PlayerTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -31,6 +33,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -163,5 +166,16 @@ public class ClientHandler {
             this.field_239446_b_ *= 0.8D;
             this.field_239445_a_ = MathHelper.positiveModulo(this.field_239445_a_ + this.field_239446_b_, 1.0D);
         }
+    }
+
+    public static void registerBlockColors(final ColorHandlerEvent.Block event) {
+        BlockColors colors = event.getBlockColors();
+
+        colors.register((state, world, pos, tintIndex) -> {
+            return FishStatueBlock.getColor(state, world, pos, tintIndex);
+        }, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
+                StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
+                StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(),
+                StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get());
     }
 }
