@@ -1,0 +1,83 @@
+{
+	"parent": "statues:rabbit_statue",
+	"display": {
+		"icon": {
+			"item": "statues:rabbit_wh_statue"
+		},
+		"title": {
+			"text": "Just Caerbannog missing"
+		},
+		"description": {
+			"text": "Obtain all Rabbit Statues"
+		},
+		"frame": "goal",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"rewards": {
+		"function": "statues:killer_rabbit"
+	},
+	"criteria": {
+		"rabbit_brown": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_br_statue"
+                }
+                ]
+			}
+		},
+		"rabbit_black": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_bs_statue"
+                }
+                ]
+			}
+		},
+				"rabbit_brown_white": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_bw_statue"
+                }
+                ]
+			}
+		},
+				"rabbit_yellow": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_go_statue"
+                }
+                ]
+			}
+		},
+				"rabbit_albino": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_wh_statue"
+                }
+                ]
+			}
+		},
+				"rabbit_white": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_ws_statue"
+                }
+                ]
+			}
+		}
+	}
+}

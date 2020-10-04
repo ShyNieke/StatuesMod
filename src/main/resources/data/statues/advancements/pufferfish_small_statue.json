@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Tiny Pufferfish"
-	},
-	"description": {
-	  "text": "Obtain the smallest Pufferfish Statue"
-	},
-	"icon": {
-	  "item": "statues:pufferfish_small_statue"
-	},
-	"frame": "task",
-	"show_toast": true,
-	"announce_to_chat": true,
-	"hidden": false
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:pufferfish_small_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:dolphin_statue"
+    "parent": "statues:dolphin_statue",
+    "display": {
+        "icon": {
+            "item": "statues:pufferfish_small_statue"
+        },
+        "title": {
+            "text": "It is so Smoll protect it all cost!"
+        },
+        "description": {
+            "text": "Obtain the smallest Pufferfish Statue"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "smoll_pufferfish": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:pufferfish_small_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "smoll_pufferfish"
+        ]
+    ]
 }

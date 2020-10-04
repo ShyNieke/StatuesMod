@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Don't scare it"
-	},
-	"description": {
-	  "text": "Obtain a slightly bloated Pufferfish Statue"
-	},
-	"icon": {
-	  "item": "statues:pufferfish_medium_statue"
-	},
-	"frame": "task",
-	"show_toast": true,
-	"announce_to_chat": true,
-	"hidden": false
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:pufferfish_medium_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:pufferfish_small_statue"
+    "parent": "statues:pufferfish_small_statue",
+    "display": {
+        "icon": {
+            "item": "statues:pufferfish_medium_statue"
+        },
+        "title": {
+            "text": "Don't scare it"
+        },
+        "description": {
+            "text": "Obtain a slightly bloated Pufferfish Statue"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "pufferfish_slightly_bloated": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:pufferfish_medium_statue"
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "pufferfish_slightly_bloated"
+        ]
+    ]
 }

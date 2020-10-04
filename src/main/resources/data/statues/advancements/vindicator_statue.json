@@ -1,0 +1,35 @@
+{
+    "parent": "statues:pillager_statue",
+    "display": {
+        "icon": {
+            "item": "statues:vindicator_statue"
+        },
+        "title": {
+            "text": "Can i axe you a question"
+        },
+        "description": {
+            "text": "Obtain a Vindicator Statue"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "vindicator": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "statues:vindicator_statue"
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "vindicator"
+        ]
+    ]
+}

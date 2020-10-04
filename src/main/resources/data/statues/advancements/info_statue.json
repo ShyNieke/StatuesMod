@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Be informed!"
-	},
-	"description": {
-	  "text": "Craft or obtain a informative statue"
-	},
-	"icon": {
-	  "item": "statues:info_statue"
-	},
-	"frame": "task",
-	"show_toast": true,
-	"announce_to_chat": false,
-	"hidden": false
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:info_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:display_stand"
+    "parent": "statues:display_stand",
+    "display": {
+        "icon": {
+            "item": "statues:info_statue"
+        },
+        "title": {
+            "text": "Question about Statues? just right click me"
+        },
+        "description": {
+            "text": "Crafted an Informative Statue"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "info_statue": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:info_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "info_statue"
+        ]
+    ]
 }

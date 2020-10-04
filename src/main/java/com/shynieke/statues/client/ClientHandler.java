@@ -7,7 +7,6 @@ import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
 import com.shynieke.statues.client.render.PlayerTileRenderer;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTiles;
-import com.shynieke.statues.items.StatueTransBeeItem;
 import com.shynieke.statues.tiles.PlayerTile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -20,7 +19,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.item.ItemFrameEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -141,8 +139,6 @@ public class ClientHandler {
                 return Math.atan2(location.getZ() - entityIn.getPosZ(), location.getX() - entityIn.getPosX());
             }
         });
-
-        ItemModelsProperties.registerProperty(Item.getItemFromBlock(StatueRegistry.BEE_STATUE.get()), new ResourceLocation("trans"), (stack, worldIn, entityIn) -> StatueTransBeeItem.isTrans(stack) ? 1.0F : 0.0F);
     }
 
     @OnlyIn(Dist.CLIENT)

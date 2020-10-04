@@ -1,0 +1,35 @@
+{
+    "parent": "statues:bee_statue",
+    "display": {
+        "icon": {
+            "item": "statues:angry_bee_statue"
+        },
+        "title": {
+            "text": "This one must sting!"
+        },
+        "description": {
+            "text": "Obtain an Angry Bee Statue"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "angry_bee": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:angry_bee_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "angry_bee"
+        ]
+    ]
+}

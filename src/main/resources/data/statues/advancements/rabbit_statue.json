@@ -1,0 +1,90 @@
+{
+	"parent": "statues:pig_statue",
+	"display": {
+		"icon": {
+			"item": "statues:rabbit_br_statue"
+		},
+		"title": {
+			"text": "Rabbit statue"
+		},
+		"description": {
+			"text": "Obtain any Rabbit Statue"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"rabbit_brown": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_br_statue"
+                }
+                ]
+			}
+		},
+		"rabbit_black": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_bs_statue"
+                }
+                ]
+			}
+		},
+				"rabbit_brown_white": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_bw_statue"
+                }
+                ]
+			}
+		},
+				"rabbit_yellow": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_go_statue"
+                }
+                ]
+			}
+		},
+				"rabbit_albino": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_wh_statue"
+                }
+                ]
+			}
+		},
+				"rabbit_white": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+				{
+					"item": "statues:rabbit_ws_statue"
+                }
+                ]
+			}
+		}
+	},
+		"requirements": [
+			[
+				"rabbit_brown",
+				"rabbit_black",
+				"rabbit_brown_white",
+				"rabbit_yellow",
+				"rabbit_albino",
+				"rabbit_white"
+			]
+		]
+}

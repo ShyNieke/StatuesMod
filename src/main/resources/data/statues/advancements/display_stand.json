@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Display all the things!"
-	},
-	"description": {
-	  "text": "Craft a Display Stand"
-	},
-	"icon": {
-	  "item": "statues:display_stand"
-	},
-	"frame": "task",
-	"show_toast": true,
-	"announce_to_chat": false,
-	"hidden": false
-  },
-  "criteria": {
-	"display_stand": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:display_stand"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:root"
+    "parent": "statues:root",
+    "display": {
+        "icon": {
+            "item": "statues:display_stand"
+        },
+        "title": {
+            "text": "A fancy way to display statues and more!"
+        },
+        "description": {
+            "text": "You cut the Nether Quartz in just the right pieces"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "display_stand": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:display_stand"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "display_stand"
+        ]
+    ]
 }

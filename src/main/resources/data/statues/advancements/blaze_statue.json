@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Blaze Statue"
-	},
-	"description": {
-	  "text": "Obtain a Blaze Statue"
-	},
-	"icon": {
-	  "item": "statues:blaze_statue"
-	},
-	"frame": "task",
-	"show_toast": true,
-	"announce_to_chat": true,
-	"hidden": false
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:blaze_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:root"
+    "parent": "statues:root",
+    "display": {
+        "icon": {
+            "item": "statues:blaze_statue"
+        },
+        "title": {
+            "text": "Retrieved from fire"
+        },
+        "description": {
+            "text": "Obtain a Blaze Statue"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "blaze_statue": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:blaze_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "blaze_statue"
+        ]
+    ]
 }

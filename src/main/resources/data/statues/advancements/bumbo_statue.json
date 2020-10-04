@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "BUMBO!"
-	},
-	"description": {
-	  "text": "Put a hat on a cactus and make bumbo live forever"
-	},
-	"icon": {
-	  "item": "statues:bumbo_statue"
-	},
-	"frame": "task",
-	"show_toast": true,
-	"announce_to_chat": false,
-	"hidden": false
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:bumbo_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:sombrero"
+    "parent": "statues:info_statue",
+    "display": {
+        "icon": {
+            "item": "statues:bumbo_statue"
+        },
+        "title": {
+            "text": "Bumbo's legacy"
+        },
+        "description": {
+            "text": "Put a hat on a cactus"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "bumbo_statue": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:bumbo_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "bumbo_statue"
+        ]
+    ]
 }

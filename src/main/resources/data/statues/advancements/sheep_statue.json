@@ -1,0 +1,211 @@
+{
+	"parent": "statues:pig_statue",
+	"display": {
+		"icon": {
+			"item": "statues:sheep_statue_white"
+		},
+		"title": {
+			"text": "Sheep Statue"
+		},
+		"description": {
+			"text": "Obtain any Sheep Statue"
+		},
+		"frame": "task",
+		"show_toast": true,
+		"announce_to_chat": true,
+		"hidden": false
+	},
+	"criteria": {
+		"sheep_shaven": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_shaven_statue"
+                }
+                ]
+			}
+		},
+		"sheep_black": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_black"
+                }
+                ]
+			}
+		},
+		"sheep_blue": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_blue"
+                }
+                ]
+			}
+		},
+		"sheep_brown": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_brown"
+                }
+                ]
+			}
+		},
+		"sheep_cyan": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_cyan"
+                }
+                ]
+			}
+		},
+		"sheep_gray": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_gray"
+                }
+                ]
+			}
+		},
+		"sheep_green": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_green"
+                }
+                ]
+			}
+		},
+		"sheep_light_blue": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_light_blue"
+                }
+                ]
+			}
+		},
+		"sheep_light_gray": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_light_gray"
+                }
+                ]
+			}
+		},
+		"sheep_lime": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_lime"
+                }
+                ]
+			}
+		},
+		"sheep_magenta": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_magenta"
+                }
+                ]
+			}
+		},
+		"sheep_orange": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_orange"
+                }
+                ]
+			}
+		},
+		"sheep_pink": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_pink"
+                }
+                ]
+			}
+		},
+		"sheep_purple": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_purple"
+                }
+                ]
+			}
+		},
+		"sheep_red": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_red"
+                }
+                ]
+			}
+		},
+		"sheep_white": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_white"
+                }
+                ]
+			}
+		},
+		"sheep_yellow": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+                {
+					"item": "statues:sheep_statue_yellow"
+                }
+                ]
+			}
+		}
+	},
+	"requirements": [
+		[
+			"sheep_shaven",
+			"sheep_black",
+			"sheep_blue",
+			"sheep_brown",
+			"sheep_cyan",
+			"sheep_gray",
+			"sheep_green",
+			"sheep_light_blue",
+			"sheep_light_gray",
+			"sheep_lime",
+			"sheep_magenta",
+			"sheep_orange",
+			"sheep_pink",
+			"sheep_purple",
+			"sheep_red",
+			"sheep_white",
+			"sheep_yellow"
+		]
+	]
+}

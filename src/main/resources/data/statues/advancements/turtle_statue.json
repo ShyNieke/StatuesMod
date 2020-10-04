@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Turtle Statue"
-	},
-	"description": {
-	  "text": "Obtain a Turtle Statue"
-	},
-	"icon": {
-	  "item": "statues:turtle_statue"
-	},
-	"frame": "task",
-	"show_toast": true,
-	"announce_to_chat": true,
-	"hidden": false
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:turtle_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:tropical_fish_b"
+    "parent": "statues:tropical_fish_statue",
+    "display": {
+        "icon": {
+            "item": "statues:turtle_statue"
+        },
+        "title": {
+            "text": "Does it live in a sewer?"
+        },
+        "description": {
+            "text": "Obtain a Turtle Statue"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "turtle": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:turtle_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "turtle"
+        ]
+    ]
 }

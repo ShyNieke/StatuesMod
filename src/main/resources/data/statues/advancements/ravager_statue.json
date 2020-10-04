@@ -1,0 +1,35 @@
+{
+    "parent": "statues:elder_guardian_statue",
+    "display": {
+        "icon": {
+            "item": "statues:ravager_statue"
+        },
+        "title": {
+            "text": "Ravaging through the statues"
+        },
+        "description": {
+            "text": "Obtain a Ravager Statue"
+        },
+        "frame": "goal",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "ravager": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:ravager_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "ravager"
+        ]
+    ]
+}

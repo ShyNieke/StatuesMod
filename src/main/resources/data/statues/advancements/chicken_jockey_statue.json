@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Jockey"
-	},
-	"description": {
-	  "text": "Found how chicken jockeys are made"
-	},
-	"icon": {
-	  "item": "statues:chicken_jockey_statue"
-	},
-	"frame": "challenge",
-	"show_toast": true,
-	"announce_to_chat": true,
-	"hidden": true
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:chicken_jockey_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:chicken_statue"
+    "parent": "statues:chicken_statue",
+    "display": {
+        "icon": {
+            "item": "statues:chicken_jockey_statue"
+        },
+        "title": {
+            "text": "Zombie loves chicken"
+        },
+        "description": {
+            "text": "You successfully created a Chicken Jockey"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "chicken_jockey_statue": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:chicken_jockey_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "chicken_jockey_statue"
+        ]
+    ]
 }

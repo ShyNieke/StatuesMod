@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Player statue"
-	},
-	"description": {
-	  "text": "Die by the hands of a player"
-	},
-	"icon": {
-	  "item": "statues:player_statue"
-	},
-	"frame": "task",
-	"show_toast": true,
-	"announce_to_chat": true,
-	"hidden": false
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:player_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:root"
+    "parent": "statues:root",
+    "display": {
+        "icon": {
+            "item": "statues:player_statue"
+        },
+        "title": {
+            "text": "A statue of a friend or foe"
+        },
+        "description": {
+            "text": "Obtain a Player Statue by having to respawn thanks to a player"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "player": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:player_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "player"
+        ]
+    ]
 }

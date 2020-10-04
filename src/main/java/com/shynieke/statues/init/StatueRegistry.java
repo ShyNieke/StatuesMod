@@ -81,6 +81,7 @@ public class StatueRegistry {
     public static final RegistryObject<Block> ANGRY_BEE_STATUE = registerStatue("angry_bee_statue", () -> new AngryBeeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BABY_ZOMBIE_STATUE = registerStatue("baby_zombie_statue", () -> new BabyZombieStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BEE_STATUE = registerBeeStatue("bee_statue", () -> new BeeStatueBlock(blockBuilder()), blockItemBuilder());
+    public static final RegistryObject<Block> TRANS_BEE = registerStatue("trans_bee_statue", () -> new BeeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BLAZE_STATUE = registerStatue("blaze_statue", () -> new BlazeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BROWN_MOOSHROOM_STATUE = registerStatue("brown_mooshroom_statue", () -> new BrownMooshroomStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> CAMPFIRE_STATUE = registerStatue("campfire_statue", () -> new CampfireStatueBlock(blockBuilder()), blockItemBuilder());
@@ -205,15 +206,15 @@ public class StatueRegistry {
         return block;
     }
 
-    public static <B extends Block> RegistryObject<B> registerBlock(String name, Supplier<? extends B> supplier, Item.Properties properties) {
-        RegistryObject<B> block = StatueRegistry.BLOCKS.register(name, supplier);
-        ITEMS.register(name, () -> new StatueBlockItem(block.get(), properties));
-        return block;
-    }
-
     public static <B extends Block> RegistryObject<B> registerBeeStatue(String name, Supplier<? extends B> supplier, Item.Properties properties) {
         RegistryObject<B> block = StatueRegistry.BLOCKS.register(name, supplier);
         ITEMS.register(name, () -> new StatueTransBeeItem(block.get(), properties));
+        return block;
+    }
+
+    public static <B extends Block> RegistryObject<B> registerBlock(String name, Supplier<? extends B> supplier, Item.Properties properties) {
+        RegistryObject<B> block = StatueRegistry.BLOCKS.register(name, supplier);
+        ITEMS.register(name, () -> new StatueBlockItem(block.get(), properties));
         return block;
     }
 

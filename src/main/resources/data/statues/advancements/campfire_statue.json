@@ -1,30 +1,35 @@
 {
-  "display": {
-	"title": {
-	  "text": "Campfire Statue"
-	},
-	"description": {
-	  "text": "You found Etho's secret statue"
-	},
-	"icon": {
-	  "item": "statues:campfire_statue"
-	},
-	"frame": "challenge",
-	"show_toast": true,
-	"announce_to_chat": true,
-	"hidden": true
-  },
-  "criteria": {
-	"statue": {
-	  "trigger": "minecraft:inventory_changed",
-	  "conditions": {
-		"items": [
-		  {
-			"item": "statues:campfire_statue"
-		  }
-		]
-	  }
-	}
-  },
-  "parent": "statues:creeper_statue"
+    "parent": "statues:creeper_statue",
+    "display": {
+        "icon": {
+            "item": "statues:campfire_statue"
+        },
+        "title": {
+            "text": "Created blue fire, the old fashioned way"
+        },
+        "description": {
+            "text": "Obtain Etho's secret statue"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true
+    },
+    "criteria": {
+        "campfire_statue": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:campfire_statue"
+                }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "campfire_statue"
+        ]
+    ]
 }

@@ -1,0 +1,130 @@
+{
+    "parent": "statues:cat_statue",
+    "display": {
+        "icon": {
+            "item": "statues:cat_tuxedo_statue"
+        },
+        "title": {
+            "text": "Catastopic collection"
+        },
+        "description": {
+            "text": "Collect all Cat Statues"
+        },
+        "frame": "goal",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "criteria": {
+        "black": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_black_statue"
+                }
+                ]
+            }
+        },
+         "british_shorthair": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_british_shorthair_statue"
+                }
+                ]
+            }
+        },
+         "calico": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_calico_statue"
+                }
+                ]
+            }
+        },
+         "jellie": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_jellie_statue"
+                }
+                ]
+            }
+        },
+         "persian": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_persian_statue"
+                }
+                ]
+            }
+        },
+         "ragdoll": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_ragdoll_statue"
+                }
+                ]
+            }
+        },
+         "red": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_red_statue"
+                }
+                ]
+            }
+        },
+         "siamese": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_siamese_statue"
+                }
+                ]
+            }
+        },
+         "tabby": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_tabby_statue"
+                }
+                ]
+            }
+        },
+         "tuxedo": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_tuxedo_statue"
+                }
+                ]
+            }
+        },
+         "white": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                {
+                    "item": "statues:cat_white_statue"
+                }
+                ]
+            }
+        }
+    }
+}
