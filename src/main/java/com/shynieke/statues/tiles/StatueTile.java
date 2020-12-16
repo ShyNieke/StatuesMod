@@ -15,6 +15,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -27,6 +28,10 @@ public class StatueTile extends AbstractStatueTile{
 
 	public StatueTile() {
 		super(StatueTiles.STATUE);
+	}
+
+	public StatueTile(TileEntityType<?> tileType) {
+		super(tileType);
 	}
 
 	public void playSound(SoundEvent sound, BlockPos pos) {
@@ -42,26 +47,24 @@ public class StatueTile extends AbstractStatueTile{
 	public void giveItem(LootInfo loot, PlayerEntity playerIn) {
 		if(isStatueAble()) {
 			int random = world.rand.nextInt(100);
-			if(!isDecorative() && loot.hasLoot())
-			{
+			if(!isDecorative() && loot.hasLoot()) {
 				ItemStack stack1 = loot.getStack1();
 				ItemStack stack2 = loot.getStack2();
 				ItemStack stack3 = loot.getStack3();
 
-				if (random < 100 && stack1 != null && stack1 != ItemStack.EMPTY)
-				{
+				if (stack1 != null && stack1 != ItemStack.EMPTY) {
 					playerIn.dropItem(stack1, true);
 				}
 
 				if(stack2 != null && stack2 != ItemStack.EMPTY){
-					if(random < 50)
+					if(random <= 50)
 					{
 						playerIn.dropItem(stack2, true);
 					}
 				}
 
 				if(stack3 != null && stack3 != ItemStack.EMPTY){
-					if(random < 10)
+					if(random <= 10)
 					{
 						playerIn.dropItem(stack3, true);
 					}

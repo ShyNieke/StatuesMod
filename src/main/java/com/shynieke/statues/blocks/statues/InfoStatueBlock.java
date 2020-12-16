@@ -16,11 +16,17 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.ModList;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -44,34 +50,42 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 		if (!worldIn.isRemote) {
 			int random = worldIn.rand.nextInt(100);
 
-			List<? extends String> messages = StatuesConfig.COMMON.info_messages.get();
+			List<String> messages = new ArrayList<>(StatuesConfig.COMMON.info_messages.get());
 			List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 
+			if(ModList.get().isLoaded("veinminer")) {
+				messages.add("Did you know we have veinminer");
+			}
+			if(ModList.get().isLoaded("curios")) {
+				messages.add("Did you know we have curios support");
+			}
+
 			int idx = new Random().nextInt(messages.size());
-			String randomMessage = messages.get(idx);
-
-			if(ModList.get().isLoaded("veinminer") && worldIn.rand.nextBoolean()) {
-				randomMessage = "Did you know we have veinminer";
-			}
-
-			if(ModList.get().isLoaded("curios") && worldIn.rand.nextBoolean()) {
-				randomMessage = "Did you know we have curios support";
-			}
+			ITextComponent randomMessage = new StringTextComponent(messages.get(idx));
 
 			if(!luckyPlayers.isEmpty() && random < 20) {
 				for (String luckyPlayer : luckyPlayers) {
 					if (!luckyPlayer.isEmpty()) {
 						String luckyUser = luckyPlayer.trim();
 						if (player.getDisplayName().getUnformattedComponentText().equalsIgnoreCase(luckyUser)) {
-							randomMessage = "Luck is not on your side today";
+							randomMessage = new StringTextComponent("Luck is not on your side today");
 						}
 					}
 				}
 			} else {
-				randomMessage = (messages.get(idx));
+				LocalDate localdate = LocalDate.now();
+				int i = localdate.get(ChronoField.DAY_OF_MONTH);
+				int j = localdate.get(ChronoField.MONTH_OF_YEAR);
+
+				if(worldIn.rand.nextDouble() <= 0.3D && j == 11 && i <= 20) {
+					randomMessage = new StringTextComponent("Please check out our friends over at ")
+							.mergeStyle(TextFormatting.YELLOW).append(ForgeHooks.newChatWithLinks("https://lovetropics.com/"));
+				} else {
+					randomMessage = new StringTextComponent(messages.get(idx));
+				}
 			}
 
-			player.sendMessage(new TranslationTextComponent(randomMessage), Util.DUMMY_UUID);
+			player.sendMessage(randomMessage, Util.DUMMY_UUID);
 			worldIn.playSound(null, pos, SoundEvents.BLOCK_DISPENSER_FAIL, SoundCategory.NEUTRAL, 0.5F, 1.0F);
 		}
 	}

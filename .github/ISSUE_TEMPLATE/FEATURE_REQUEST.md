@@ -13,7 +13,7 @@ about: For suggesting changes / additions to the mod.
 - [ ] I would like to propose changes.
 - [ ] I would like to propose another thing.
 
-<!-- SUGGESTIONS INFORMATION - Please explain what you want changed/added and why.
+<!-- SUGGESTIONS INFORMATION - Please explain what you want changed/added and why. !-->
 ## SUGGESTION INFORMATION
 
 

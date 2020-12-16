@@ -49,7 +49,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 		return ActionResultType.SUCCESS;
 	}
 
-	public StatueTile getTE(World world, BlockPos pos) {
+	public StatueTile getTE(IBlockReader world, BlockPos pos) {
 		return world.getTileEntity(pos) instanceof StatueTile ? (StatueTile) world.getTileEntity(pos): null;
 	}
 
@@ -74,8 +74,8 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	@Override
 	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
 		ItemStack itemstack = super.getItem(worldIn, pos, state);
-		StatueTile statueTile = (StatueTile)worldIn.getTileEntity(pos);
-		if(state.get(INTERACTIVE) && statueTile != null) {
+		StatueTile statueTile = getTE(worldIn, pos);
+		if(statueTile != null && state.get(INTERACTIVE)) {
 			CompoundNBT compoundnbt = statueTile.saveToNbt(new CompoundNBT());
 			if (!compoundnbt.isEmpty()) {
 				itemstack.setTagInfo("BlockEntityTag", compoundnbt);

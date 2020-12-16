@@ -87,14 +87,12 @@ repositories {
 		name = "Progwml6 maven"
 		url = "https://dvs1.progwml6.com/files/maven/"
 	}
-//    maven {
-//        // location of a maven mirror for JEI files, as a fallback
-//        name = "ModMaven"
-//        url = "https://modmaven.k-4u.nl"
-//    }
 	maven {
         name = "Heh"
         url 'https://maven.latmod.com/'
+    }
+    maven {
+        url 'https://maven.mcmoddev.com'
     }
 //    maven {
 //        url "http://maven.blamejared.com"
@@ -112,6 +110,10 @@ dependencies {
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}:api")
     compileOnly fg.deobf('com.feed_the_beast.mods:ftb-gui-library:1.0.0.18') //TEMPORARY
+
+//    compile fg.deobf("net.darkhax.darkutilities:DarkUtilities-${mc_version}:${darkutilities_version}")
+//    compile fg.deobf("net.darkhax.runelic:Runelic-${mc_version}:${runelic_version}")
+//    compile fg.deobf("net.darkhax.bookshelf:Bookshelf-${mc_version}:${bookshelf_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

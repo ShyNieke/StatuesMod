@@ -1,5 +1,6 @@
 package com.shynieke.statues.tiles;
 
+import com.shynieke.statues.blocks.AbstractStatueBase;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -21,7 +22,6 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 	private boolean spawnsMobs;
 	private boolean makesSounds;
 	private boolean hasExternalUse;
-
 
 	protected AbstractStatueTile(TileEntityType<?> tileType) {
 		super(tileType);
@@ -50,15 +50,18 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 
 	@Override
 	public void tick() {
-		if (!this.statueAble) {
-			++this.cooldown;
-			this.markDirty();
+		if(getBlockState().getBlock() instanceof AbstractStatueBase && getBlockState().get(AbstractStatueBase.INTERACTIVE)) {
+			if (!this.statueAble) {
+				++this.cooldown;
+				this.markDirty();
 
-			if(this.cooldown >= this.cooldownMax) {
-				this.cooldown = 0;
-				setStatueAble(true);
+				if(this.cooldown >= this.cooldownMax) {
+					this.cooldown = 0;
+					setStatueAble(true);
+				}
 			}
 		}
+
 	}
 
 	@Override

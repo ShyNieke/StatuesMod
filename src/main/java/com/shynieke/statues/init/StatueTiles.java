@@ -3,6 +3,7 @@ package com.shynieke.statues.init;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.tiles.PlayerTile;
 import com.shynieke.statues.tiles.StatueTile;
+import com.shynieke.statues.tiles.TropicalFishTile;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -23,6 +24,9 @@ public class StatueTiles {
 
 	@ObjectHolder(Reference.MOD_ID + "player_tile")
 	public static TileEntityType<PlayerTile> PLAYER;
+
+	@ObjectHolder(Reference.MOD_ID + "tropical_tile")
+	public static TileEntityType<TropicalFishTile> TROPICAL_TILE;
 
 	@SubscribeEvent
 	public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event) {
@@ -55,6 +59,13 @@ public class StatueTiles {
 				StatueRegistry.VILLAGER_GR_STATUE.get(), StatueRegistry.VILLAGER_PU_STATUE.get(), StatueRegistry.VILLAGER_WH_STATUE.get(), StatueRegistry.VINDICATOR_STATUE.get(),
 				StatueRegistry.WASTELAND_STATUE.get(), StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get()).build(null)
 				.setRegistryName(Reference.MOD_ID + "statue_tile"));
+
+		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) TropicalFishTile::new, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
+				StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
+				StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(),
+				StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()).build(null)
+				.setRegistryName(Reference.MOD_ID + "tropical_tile"));
+
 		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) PlayerTile::new, StatueRegistry.PLAYER_STATUE.get()).build(null).setRegistryName(Reference.MOD_ID + "player_tile"));
 	}
 }
