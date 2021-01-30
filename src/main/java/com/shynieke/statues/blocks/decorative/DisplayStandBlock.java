@@ -11,19 +11,40 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.IBooleanFunction;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 
+import java.util.stream.Stream;
+
 public class DisplayStandBlock extends Block implements IBucketPickupHandler, ILiquidContainer {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    private static final VoxelShape BOTTOM_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
-    private static final VoxelShape MIDDLE_SHAPE = Block.makeCuboidShape(3.0D, 6.0D, 3.0D, 13.0D, 10.0D, 13.0D);
-    private static final VoxelShape TOP_SHAPE = Block.makeCuboidShape(0.0D, 10.0D, 0.0D, 16.0D, 16.0D, 16.0D);
-    private static final VoxelShape SHAPE = VoxelShapes.or(BOTTOM_SHAPE, MIDDLE_SHAPE, TOP_SHAPE);
+    private static final VoxelShape SHAPE = Stream.of(
+            Block.makeCuboidShape(2, 4, 2, 14, 6, 14),
+            Block.makeCuboidShape(0, 0, 0, 16, 2, 16),
+            Block.makeCuboidShape(1, 2, 1, 15, 4, 15),
+            Block.makeCuboidShape(3, 6, 3, 13, 10, 13),
+            Block.makeCuboidShape(2, 10, 2, 14, 12, 14),
+            Block.makeCuboidShape(1, 12, 1, 15, 14, 15),
+            Block.makeCuboidShape(0, 14, 0, 16, 15, 16),
+            Block.makeCuboidShape(0, 15, 0, 16, 16, 2),
+            Block.makeCuboidShape(0, 15, 14, 16, 16, 16),
+            Block.makeCuboidShape(0, 15, 2, 2, 16, 14),
+            Block.makeCuboidShape(14, 15, 2, 16, 16, 14),
+            Block.makeCuboidShape(2, 15, 2, 14, 16, 4),
+            Block.makeCuboidShape(2, 15, 12, 14, 16, 14),
+            Block.makeCuboidShape(2, 15, 4, 4, 16, 12),
+            Block.makeCuboidShape(12, 15, 4, 14, 16, 12),
+            Block.makeCuboidShape(4, 15, 4, 12, 16, 5),
+            Block.makeCuboidShape(4, 15, 11, 12, 16, 12),
+            Block.makeCuboidShape(4, 15, 5, 5, 16, 11),
+            Block.makeCuboidShape(11, 15, 5, 12, 16, 11),
+            Block.makeCuboidShape(5, 15, 5, 11, 16, 11)
+    ).reduce((v1, v2) -> { return VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR);} ).get();
 
     public DisplayStandBlock(Properties properties) {
         super(properties.setOpaque(DisplayStandBlock::isntSolid));
