@@ -56,7 +56,11 @@ import com.shynieke.statues.blocks.statues.fish.PufferfishStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.SalmonStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.SquidStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.TurtleStatueBlock;
+import com.shynieke.statues.entity.PlayerStatueEntity;
+import com.shynieke.statues.entity.StatueBatEntity;
+import com.shynieke.statues.items.CustomSpawnEggItem;
 import com.shynieke.statues.items.PlayerCompassItem;
+import com.shynieke.statues.items.PlayerStatueItem;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.items.StatueCharredMarshmallow;
 import com.shynieke.statues.items.StatueCoreItem;
@@ -66,6 +70,9 @@ import com.shynieke.statues.items.StatueTeaItem;
 import com.shynieke.statues.items.StatueTransBeeItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -77,6 +84,14 @@ import java.util.function.Supplier;
 public class StatueRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Reference.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Reference.MOD_ID);
+
+    public static final RegistryObject<EntityType<PlayerStatueEntity>> PLAYER_STATUE_ENTITY = ENTITIES.register("player_statue",
+            () -> register("player_statue", EntityType.Builder.<PlayerStatueEntity>create(PlayerStatueEntity::new, EntityClassification.MISC)
+                    .size(0.6F, 1.8F).trackingRange(10)));
+    public static final RegistryObject<EntityType<StatueBatEntity>> STATUE_BAT = ENTITIES.register("statue_bat",
+            () -> register("statue_bat", EntityType.Builder.<StatueBatEntity>create(StatueBatEntity::new, EntityClassification.AMBIENT)
+                    .size(0.5F, 0.9F).trackingRange(5)));
 
     public static final RegistryObject<Block> ANGRY_BEE_STATUE = registerStatue("angry_bee_statue", () -> new AngryBeeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BABY_ZOMBIE_STATUE = registerStatue("baby_zombie_statue", () -> new BabyZombieStatueBlock(blockBuilder()), blockItemBuilder());
@@ -200,6 +215,9 @@ public class StatueRegistry {
     public static final RegistryObject<Item> STATUE_CORE = ITEMS.register("statue_core", () -> new StatueCoreItem(itemBuilder()));
     public static final RegistryObject<Item> TEA = ITEMS.register("tea", () -> new StatueTeaItem(itemBuilder(), StatueFoods.TEA));
 
+    public static final RegistryObject<Item> PLAYER_STATUE_TEST = ITEMS.register("player_statue_spawn_egg", () -> new PlayerStatueItem(itemBuilder()));
+    public static final RegistryObject<Item> STATUE_BAT_SPANW_EGG = ITEMS.register("statue_bat_spawn_egg", () -> new CustomSpawnEggItem(() -> StatueRegistry.STATUE_BAT.get(), 3421236, 3556687, itemBuilder()));
+
     public static <B extends Block> RegistryObject<B> registerStatue(String name, Supplier<? extends B> supplier, Item.Properties properties) {
         RegistryObject<B> block = StatueRegistry.BLOCKS.register(name, supplier);
         ITEMS.register(name, () -> new StatueBlockItem(block.get(), properties));
@@ -233,4 +251,8 @@ public class StatueRegistry {
     }
 
     private static Block.Properties blockBuilder() { return Block.Properties.create(Material.SHULKER); }
+
+    public static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder) {
+        return builder.build(id);
+    }
 }

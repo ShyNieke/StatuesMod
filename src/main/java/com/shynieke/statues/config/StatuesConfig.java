@@ -31,6 +31,8 @@ public class StatuesConfig {
 		public final DoubleValue playerStatueDropChance;
 		public final BooleanValue playerCompass;
 
+		public final BooleanValue statueBatSpawning;
+
 		//Lucky Players
 		public final ConfigValue<List<? extends String>> lucky_players;
 
@@ -42,6 +44,10 @@ public class StatuesConfig {
 			builder.comment("General settings")
 					.push("general");
 
+			statueBatSpawning = builder
+					.comment("Setting this to false disables the statue bat from spawning naturally (Default: true)")
+					.define("statueBatSpawning", true);
+
 			builder.pop();
 
 			//Statue drop settings
@@ -49,11 +55,11 @@ public class StatuesConfig {
 					.push("drops");
 
 			statueDropChance = builder
-					.comment("The drop chance of statues when statue drops is true")
+					.comment("The drop chance of statues when statue drops is true (Default: 0.01)")
 					.defineInRange("statueDropChance", 0.01, 0, 1.0);
 
 			statueKillSource = builder
-					.comment("Source of death that determines how the Statues drop [player statue has it's own config option]",
+					.comment("Source of death that determines how the Statues drop (Default: \"PLAYER\") [player statue has it's own config option]",
 							"ALL = All sources",
 							"PLAYER = Player only",
 							"PLAYER_FAKEPLAYER = Players / Fake players only")
@@ -66,22 +72,22 @@ public class StatuesConfig {
 					.push("player");
 
 			playerDropsStatue = builder
-					.comment("When true players will drop Player Statues when killed")
+					.comment("When true players will drop Player Statues when killed (Default: true)")
 					.define("playerDropsStatue", true);
 
 			playerStatueKillSource = builder
-					.comment("Source of death that determines how the Player Statue drops [player statue has it's own config option]",
+					.comment("Source of death that determines how the Player Statue drops (Default: \"PLAYER\") [player statue has it's own config option]",
 							"ALL = All sources",
 							"PLAYER = Player only",
 							"PLAYER_FAKEPLAYER = Players / Fake players only")
 					.defineEnum("playerDropsKillSource", EnumDeathSource.PLAYER);
 
 			playerStatueDropChance = builder
-					.comment("The drop chance of player statues when playerDropsStatue is enabled")
+					.comment("The drop chance of player statues when playerDropsStatue is enabled (Default: 1.0)")
 					.defineInRange("statueDropChance", 1.0, 0, 1.0);
 
 			playerCompass = builder
-					.comment("When true Statues will add a player compass")
+					.comment("When true Statues will add a player compass (Default: true)")
 					.define("playerCompass", true);
 
 			builder.pop();

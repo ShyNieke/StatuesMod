@@ -91,9 +91,6 @@ repositories {
         name = "Heh"
         url 'https://maven.latmod.com/'
     }
-    maven {
-        url 'https://maven.mcmoddev.com'
-    }
 //    maven {
 //        url "http://maven.blamejared.com"
 //    }

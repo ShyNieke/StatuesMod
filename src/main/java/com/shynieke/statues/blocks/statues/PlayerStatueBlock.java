@@ -3,7 +3,10 @@ package com.shynieke.statues.blocks.statues;
 import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.config.StatuesConfig;
+import com.shynieke.statues.entity.PlayerStatueEntity;
 import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.init.StatueTags;
+import com.shynieke.statues.items.PlayerStatueItem;
 import com.shynieke.statues.tiles.PlayerTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
@@ -13,6 +16,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -27,10 +31,13 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.INameable;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -41,6 +48,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -265,7 +273,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 								playerCompass.setTag(locationTag);
 
 								if(!isPlayerCompass) {
-									stack.shrink(1);
+									if(!playerIn.abilities.isCreativeMode) {
+										stack.shrink(1);
+									}
 									if (stack.isEmpty()) {
 										playerIn.setHeldItem(hand, playerCompass);
 									} else if (!playerIn.inventory.addItemStackToInventory(playerCompass)) {
@@ -283,10 +293,34 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					}
 					if(stack.getItem() == Items.COMPARATOR) {
 						if(!tile.getComparatorApplied()) {
-							stack.shrink(1);
+							if(!playerIn.abilities.isCreativeMode) {
+								stack.shrink(1);
+							}
 							tile.setComparatorApplied(true);
 							tile.updateOnline();
 							return ActionResultType.SUCCESS;
+						}
+					}
+					if(stack.getItem().isIn(StatueTags.PLAYER_UPGRADE_ITEM)) {
+						if (worldIn instanceof ServerWorld) {
+							ServerWorld serverworld = (ServerWorld)worldIn;
+							PlayerStatueEntity playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), tile.getName(), playerIn, pos, SpawnReason.SPAWN_EGG, true, true);
+							if (playerStatueEntity == null) {
+								return ActionResultType.FAIL;
+							}
+
+							serverworld.func_242417_l(playerStatueEntity);
+							float f = (float) MathHelper.floor((MathHelper.wrapDegrees(playerIn.rotationYaw - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+							playerStatueEntity.setLocationAndAngles(playerStatueEntity.getPosX(), playerStatueEntity.getPosY(), playerStatueEntity.getPosZ(), f, 0.0F);
+							PlayerStatueItem.applyRandomRotations(playerStatueEntity, worldIn.rand);
+							playerStatueEntity.setGameProfile(tile.getPlayerProfile());
+							worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+							worldIn.addEntity(playerStatueEntity);
+							worldIn.playSound((PlayerEntity)null, playerStatueEntity.getPosX(), playerStatueEntity.getPosY(), playerStatueEntity.getPosZ(), SoundEvents.ENTITY_ARMOR_STAND_PLACE, SoundCategory.BLOCKS, 0.75F, 0.8F);
+
+							if(!playerIn.abilities.isCreativeMode) {
+								stack.shrink(1);
+							}
 						}
 					}
 				}

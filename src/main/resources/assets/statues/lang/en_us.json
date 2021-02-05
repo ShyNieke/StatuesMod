@@ -129,6 +129,8 @@
 	"item.statues.marshmallow_golden": "Golden Marshmallow",
 	"item.statues.marshmallow_charred": "Charred Marshmallow",
 	"item.statues.player_compass": "Player Compass",
+	"item.statues.player_statue_spawn_egg": "Player Statue Spawn Egg",
+	"item.statues.statue_bat_spawn_egg": "Statue Bat Spawn Egg",
 
 	"_comment": "Special Lore",
 	"statues.cluckington.info": "Also known as Cluckington",
@@ -169,6 +171,17 @@
 	"_comment": "container",
 	"statues:container.shulkerStatue": "Shulker Statue",
 	"statues:container.shulker_statue.more": "and %s more...",
+
+	"_comment": "gui",
+	"statues.playerstatue.gui.title": "Player Statue",
+	"statues.playerstatue.gui.label.small": "Small",
+	"statues.playerstatue.gui.label.rotation": "Rotation",
+	"statues.playerstatue.gui.label.head": "Head",
+	"statues.playerstatue.gui.label.body": "Body",
+	"statues.playerstatue.gui.label.left_leg": "Left Leg",
+	"statues.playerstatue.gui.label.right_leg": "Right Leg",
+	"statues.playerstatue.gui.label.left_arm": "Left Arm",
+	"statues.playerstatue.gui.label.right_arm": "Right Arm",
 
 	"_comment": "messages",
 	"statues:player.compass.dimension.failure": "%s is in another dimension.",
