@@ -29,7 +29,7 @@ public class PlayerPoseScreen extends Screen {
 
     private NumberFieldWidget rotationTextField;
     private ToggleButton smallButton;
-    private NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
+    private final NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
 
     private Button doneButton;
     private Button cancelButton;

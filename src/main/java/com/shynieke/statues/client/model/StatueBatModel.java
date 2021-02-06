@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.shynieke.statues.entity.StatueBatEntity;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.util.math.MathHelper;
 
 /**

@@ -2,11 +2,10 @@ package com.shynieke.statues.blocks.decorative;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.IBucketPickupHandler;
-import net.minecraft.block.ILiquidContainer;
-import net.minecraft.fluid.Fluid;
+import net.minecraft.block.IWaterLoggable;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer.Builder;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -16,11 +15,11 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 
+import javax.annotation.Nullable;
 import java.util.stream.Stream;
 
-public class DisplayStandBlock extends Block implements IBucketPickupHandler, ILiquidContainer {
+public class DisplayStandBlock extends Block implements IWaterLoggable {
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
     private static final VoxelShape SHAPE = Stream.of(
@@ -50,36 +49,6 @@ public class DisplayStandBlock extends Block implements IBucketPickupHandler, IL
         super(properties.setOpaque(DisplayStandBlock::isntSolid));
         this.setDefaultState(this.getDefaultState().with(WATERLOGGED, Boolean.valueOf(false)));
     }
-
-    @Override
-    public Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {
-        if (state.get(WATERLOGGED)) {
-            worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(false)), 3);
-            return Fluids.WATER;
-        } else {
-            return Fluids.EMPTY;
-        }
-    }
-
-    @Override
-    public boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn) {
-        return !state.get(WATERLOGGED) && fluidIn == Fluids.WATER;
-    }
-
-    @Override
-    public boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
-        if (!state.get(WATERLOGGED) && fluidStateIn.getFluid() == Fluids.WATER) {
-            if (!worldIn.isRemote()) {
-                worldIn.setBlockState(pos, state.with(WATERLOGGED, Boolean.valueOf(true)), 3);
-                worldIn.getPendingFluidTicks().scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(worldIn));
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     @SuppressWarnings("deprecation")
     @Override
     public FluidState getFluidState(BlockState state) {
@@ -103,5 +72,13 @@ public class DisplayStandBlock extends Block implements IBucketPickupHandler, IL
 
     private static boolean isntSolid(BlockState state, IBlockReader reader, BlockPos pos) {
         return false;
+    }
+
+    @Nullable
+    @Override
+    public BlockState getStateForPlacement(BlockItemUseContext context) {
+        BlockPos blockpos = context.getPos();
+        FluidState fluidstate = context.getWorld().getFluidState(blockpos);
+        return this.getDefaultState().with(WATERLOGGED, Boolean.valueOf(fluidstate.getFluid() == Fluids.WATER));
     }
 }
