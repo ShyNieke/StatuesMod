@@ -31,7 +31,7 @@ public class StatueEntities {
     @SubscribeEvent(priority =  EventPriority.HIGH)
     public static void addSpawn(BiomeLoadingEvent event) {
         RegistryKey<Biome> biomeKey = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName());
-        if(StatuesConfig.COMMON.statueBatSpawning.get() && !BiomeDictionary.hasType(biomeKey, Type.NETHER) || !BiomeDictionary.hasType(biomeKey, Type.END)) {
+        if(StatuesConfig.COMMON.statueBatSpawning.get() && !BiomeDictionary.hasType(biomeKey, Type.END)) {
             event.getSpawns().getSpawner(EntityClassification.AMBIENT).add(new MobSpawnInfo.Spawners(StatueRegistry.STATUE_BAT.get(), 4, 1, 2));
         }
     }

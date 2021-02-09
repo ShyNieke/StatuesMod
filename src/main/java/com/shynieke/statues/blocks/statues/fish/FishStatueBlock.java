@@ -108,10 +108,12 @@ public class FishStatueBlock extends AbstractStatueBase {
 
     @OnlyIn(Dist.CLIENT)
     public static int getColor(BlockState state, IBlockReader world, BlockPos pos, int tintIndex) {
-        TileEntity tile = world.getTileEntity(pos);
-        if(tile instanceof TropicalFishTile) {
-            TropicalFishTile fishTile = (TropicalFishTile) tile;
-            return tintIndex == 1 ? fromColor(fishTile.getMainColor()) : tintIndex == 2 ? fromColor(fishTile.getSecondaryColor()) : -1;
+        if(pos != null) {
+            TileEntity tile = world.getTileEntity(pos);
+            if(tile instanceof TropicalFishTile) {
+                TropicalFishTile fishTile = (TropicalFishTile) tile;
+                return tintIndex == 1 ? fromColor(fishTile.getMainColor()) : tintIndex == 2 ? fromColor(fishTile.getSecondaryColor()) : -1;
+            }
         }
         return -1;
     }

@@ -105,7 +105,6 @@ public class StatuesConfig {
 							"Pigs love mud how will they react on a more sandy block",
 							"Did you know chicken jockeys exist even in statues? go ahead try it out place a baby zombie statue on a chicken statue",
 							"Huge thanks to Xisuma for helping create his statue",
-							"Only decorative statues can be changed to special statues",
 							"Gone Fishing",
 							"1-3 tall they seem, prickly is a bit mean, Give them a hat and see their true means",
 							"Right click a fake mob with a statue core to prevent them from despawning",
@@ -113,7 +112,9 @@ public class StatuesConfig {
 							"Right click a player statue with a compass to bound the compass to the last known location of the player",
 							"A player and a creeper with blue fire in the middle",
 							"How to make blue fire, if fire itself does not work",
-							"Rename a bee 'Trans Bee' to show support for trans people"
+							"Rename a bee 'Trans Bee' to show support for trans people",
+							"Using a Statue Core on a player statue will make them grow, and will add more features to it",
+							"The bat has returned, find them in caves near you, or in your local hellish dimension"
 					};
 
 			info_messages = builder
@@ -126,14 +127,14 @@ public class StatuesConfig {
 			builder.comment("Lucky players")
 					.push("lucky_players");
 
-			String[] luckyplayers = new String[]
+			String[] luckyPlayers = new String[]
 					{
 							"iskall85"
 					};
 
 			lucky_players = builder
 					.comment("Adding usernames will make these users have less luck with getting statues")
-					.defineList("lucky_players", Arrays.asList(luckyplayers), o -> (o instanceof String));
+					.defineList("lucky_players", Arrays.asList(luckyPlayers), o -> (o instanceof String));
 
 			builder.pop();
 		}
