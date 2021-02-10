@@ -355,7 +355,9 @@ public class PlayerStatueEntity extends LivingEntity {
     @Override
     public void setCustomName(@Nullable ITextComponent name) {
         super.setCustomName(name);
-        this.setGameProfile(new GameProfile((UUID)null, name.getUnformattedComponentText().toLowerCase(Locale.ROOT)));
+        if(name != null) {
+            this.setGameProfile(new GameProfile((UUID)null, name.getUnformattedComponentText().toLowerCase(Locale.ROOT)));
+        }
     }
 
     /**

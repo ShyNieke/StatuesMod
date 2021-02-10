@@ -15,6 +15,7 @@ import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.PlayerTile;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.management.PlayerProfileCache;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -86,5 +87,6 @@ public class Statues {
 		MinecraftServer server = event.getServer();
 		PlayerTile.setProfileCache(server.getPlayerProfileCache());
 		PlayerTile.setSessionService(server.getMinecraftSessionService());
+		PlayerProfileCache.setOnlineMode(server.isServerInOnlineMode());
 	}
 }
