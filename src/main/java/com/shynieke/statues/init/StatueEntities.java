@@ -32,7 +32,13 @@ public class StatueEntities {
     public static void addSpawn(BiomeLoadingEvent event) {
         RegistryKey<Biome> biomeKey = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName());
         if(StatuesConfig.COMMON.statueBatSpawning.get() && !BiomeDictionary.hasType(biomeKey, Type.END)) {
-            event.getSpawns().getSpawner(EntityClassification.AMBIENT).add(new MobSpawnInfo.Spawners(StatueRegistry.STATUE_BAT.get(), 4, 1, 2));
+            if(BiomeDictionary.hasType(biomeKey, Type.NETHER)) {
+                if(event.getName().getPath().equals("basalt_deltas")) {
+                    event.getSpawns().getSpawner(EntityClassification.AMBIENT).add(new MobSpawnInfo.Spawners(StatueRegistry.STATUE_BAT.get(), 1, 1, 1));
+                }
+            } else {
+                event.getSpawns().getSpawner(EntityClassification.AMBIENT).add(new MobSpawnInfo.Spawners(StatueRegistry.STATUE_BAT.get(), 4, 1, 2));
+            }
         }
     }
 }

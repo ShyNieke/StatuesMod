@@ -2,7 +2,7 @@ package com.shynieke.statues.blocks.statues;
 
 import com.google.common.collect.ImmutableList;
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.init.StatuesSounds;
+import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.StatueTile;
 import com.shynieke.statues.util.ListHelper;
@@ -63,11 +63,11 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 	}
 
 	public static List<SoundEvent> campfire_sounds = ImmutableList.of(
-			StatuesSounds.campfire_bye_random,
-			StatuesSounds.campfire_cold_random,
-			StatuesSounds.campfire_greetings_random,
-			StatuesSounds.campfire_hello_random,
-			StatuesSounds.campfire_snacks_random);
+			StatueSounds.campfire_bye_random,
+			StatueSounds.campfire_cold_random,
+			StatueSounds.campfire_greetings_random,
+			StatueSounds.campfire_hello_random,
+			StatueSounds.campfire_snacks_random);
 
 	public static SoundEvent getRandomCampfire() {
 		return ListHelper.getRandomFromList(campfire_sounds);

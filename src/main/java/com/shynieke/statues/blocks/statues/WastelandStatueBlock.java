@@ -1,7 +1,7 @@
 package com.shynieke.statues.blocks.statues;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.init.StatuesSounds;
+import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.StatueTile;
 import net.minecraft.block.BlockState;
@@ -33,7 +33,7 @@ public class WastelandStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return RANDOM.nextBoolean() ? StatuesSounds.wasteland_hello : StatuesSounds.wasteland_onwards;
+		return RANDOM.nextBoolean() ? StatueSounds.wasteland_hello : StatueSounds.wasteland_onwards;
 	}
 
 	@Override

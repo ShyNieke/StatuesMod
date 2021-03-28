@@ -1,0 +1,21 @@
+{
+    "type": "minecraft:entity",
+    "pools": [
+        {
+            "name": "main",
+            "rolls": 1,
+            "conditions": [
+                {
+                    "condition": "killed_by_player"
+                }
+            ],
+            "entries": [
+                {
+                    "type": "item",
+                    "weight": 1,
+                    "name": "statues:statue_core"
+                }
+            ]
+        }
+    ]
+}

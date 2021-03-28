@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class StatuesSounds {
+public class StatueSounds {
     private static List<SoundEvent> sounds = Lists.newArrayList();
 
     public static final SoundEvent wasteland_hello = createSound("wasteland.hello");
