@@ -10,12 +10,12 @@ public class StatueTabs {
 		public ItemStack createIcon() {
 			return new ItemStack(StatueRegistry.SLIME_STATUE.get());
 		}
-	}.setTabPath("statues_blocks");
+	}.setGroupPath("statues_blocks");
 
 	public static final ItemGroup STATUES_ITEMS = new ItemGroup(Reference.MOD_ID + ".items") {
 		@Override
 		public ItemStack createIcon() {
 			return new ItemStack(StatueRegistry.STATUE_CORE.get());
 		}
-	}.setTabPath("statues_items");
+	}.setGroupPath("statues_items");
 }

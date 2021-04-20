@@ -79,7 +79,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 
 				if(worldIn.rand.nextDouble() <= 0.3D && j == 11 && i <= 20) {
 					randomMessage = new StringTextComponent("Please check out our friends over at ")
-							.mergeStyle(TextFormatting.YELLOW).append(ForgeHooks.newChatWithLinks("https://lovetropics.com/"));
+							.mergeStyle(TextFormatting.YELLOW).appendSibling(ForgeHooks.newChatWithLinks("https://lovetropics.com/"));
 				} else {
 					randomMessage = new StringTextComponent(messages.get(idx));
 				}

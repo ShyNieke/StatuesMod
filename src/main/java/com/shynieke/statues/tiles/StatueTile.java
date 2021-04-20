@@ -27,7 +27,7 @@ import java.util.Random;
 public class StatueTile extends AbstractStatueTile{
 
 	public StatueTile() {
-		super(StatueTiles.STATUE);
+		this(StatueTiles.STATUE);
 	}
 
 	public StatueTile(TileEntityType<?> tileType) {
