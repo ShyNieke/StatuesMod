@@ -7,6 +7,8 @@ import net.minecraftforge.common.util.Constants.NBT;
 
 public class PlayerStatueData {
     public boolean small = false;
+    public boolean locked = false;
+    public boolean nameVisible = true;
 
     public float rotation = 0F;
 
@@ -16,8 +18,18 @@ public class PlayerStatueData {
         return this.small;
     }
 
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public boolean getNameVisible() {
+        return nameVisible;
+    }
+
     public void readNBT(CompoundNBT compound) {
         this.small = compound.getBoolean("Small");
+        this.locked = compound.getBoolean("Locked");
+        this.nameVisible = compound.getBoolean("CustomNameVisible");
 
         if (compound.contains("Rotation")) {
             this.rotation = compound.getList("Rotation", NBT.TAG_FLOAT).getFloat(0);
@@ -42,6 +54,8 @@ public class PlayerStatueData {
     public CompoundNBT writeNBT() {
         CompoundNBT compound = new CompoundNBT();
         compound.putBoolean("Small", this.small);
+        compound.putBoolean("Locked", this.locked);
+        compound.putBoolean("CustomNameVisible", this.nameVisible);
 
         ListNBT rotationTag = new ListNBT();
         rotationTag.add(FloatNBT.valueOf(this.rotation));

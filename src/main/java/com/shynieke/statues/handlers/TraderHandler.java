@@ -16,6 +16,7 @@ import java.util.Random;
 public class TraderHandler {
     @SubscribeEvent
     public void onWandererTradesEvent(WandererTradesEvent event) {
+        event.getGenericTrades().add(new TraderHandler.ItemsForEmeraldsTrade(StatueRegistry.INFO_STATUE.get(), 1, 2, 1, 1));
         event.getGenericTrades().add(new TraderHandler.ItemsForEmeraldsTrade(StatueRegistry.SOMBRERO.get(), 1, 10, 1, 1));
         event.getGenericTrades().add(new TraderHandler.ItemsForEmeraldsTrade(StatueRegistry.TOTEM_OF_UNDYING_STATUE.get(), 1, 32, 1, 5));
     }

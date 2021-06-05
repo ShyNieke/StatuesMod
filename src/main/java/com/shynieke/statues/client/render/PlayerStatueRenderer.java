@@ -40,8 +40,8 @@ public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, Pla
     }
 
     @Override
-    public ResourceLocation getEntityTexture(PlayerStatueEntity entity) {
-        return entity.getGameProfile()
+    public ResourceLocation getEntityTexture(PlayerStatueEntity playerStatue) {
+        return playerStatue.getGameProfile()
                 .map(this::getSkin)
                 .orElseGet(() -> new ResourceLocation("minecraft:textures/entity/steve.png"));
     }
@@ -64,24 +64,29 @@ public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, Pla
     }
 
     @Override
-    public void render(PlayerStatueEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+    public void render(PlayerStatueEntity playerStatue, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
         this.entityModel = model;
-        if(entityIn.isSlim() && this.entityModel != slimModel) {
+        if(playerStatue.isSlim() && this.entityModel != slimModel) {
             this.entityModel = slimModel;
         }
-        super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        super.render(playerStatue, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }
 
-    protected void applyRotations(PlayerStatueEntity entityLiving, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
+    @Override
+    protected boolean canRenderName(PlayerStatueEntity playerStatue) {
+        return playerStatue.isCustomNameVisible();
+    }
+
+    protected void applyRotations(PlayerStatueEntity playerStatue, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
         matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F - rotationYaw));
-        float f = (float)(entityLiving.world.getGameTime() - entityLiving.punchCooldown) + partialTicks;
+        float f = (float)(playerStatue.world.getGameTime() - playerStatue.punchCooldown) + partialTicks;
         if (f < 5.0F) {
             matrixStackIn.rotate(Vector3f.YP.rotationDegrees(MathHelper.sin(f / 1.5F * (float)Math.PI) * 3.0F));
         }
     }
 
-    protected void preRenderCallback(PlayerStatueEntity entitylivingbaseIn, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void preRenderCallback(PlayerStatueEntity playerStatue, MatrixStack matrixStackIn, float partialTickTime) {
         float f = 0.9375F;
-        matrixStackIn.scale(0.9375F, 0.9375F, 0.9375F);
+        matrixStackIn.scale(f, f, f);
     }
 }

@@ -24,11 +24,13 @@ public class PlayerPoseScreen extends Screen {
     private final PlayerStatueEntity playerStatueEntity;
     private final PlayerStatueData playerStatueData;
 
-    private final String[] buttonLabels = new String[] { "small", "rotation" };
+    private final String[] buttonLabels = new String[] { "small", "rotation", "locked", "name_visible" };
     private final String[] sliderLabels = new String[] { "head", "body", "left_leg", "right_leg", "left_arm", "right_arm" };
 
     private NumberFieldWidget rotationTextField;
     private ToggleButton smallButton;
+    private ToggleButton lockButton;
+    private ToggleButton nameVisibleButton;
     private final NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
 
     private Button doneButton;
@@ -59,8 +61,17 @@ public class PlayerPoseScreen extends Screen {
         int offsetX = 110;
         int offsetY = 50;
 
-
         this.smallButton = this.addButton(new ToggleButton(offsetX, offsetY, 40, 20, this.playerStatueData.isSmall(), (button) -> {
+            ToggleButton toggleButton = ((ToggleButton)button);
+            toggleButton.setValue(!toggleButton.getValue());
+            this.textFieldUpdated();
+        }));
+        this.lockButton = this.addButton(new ToggleButton(offsetX, offsetY + 43, 40, 20, this.playerStatueData.isLocked(), (button) -> {
+            ToggleButton toggleButton = ((ToggleButton)button);
+            toggleButton.setValue(!toggleButton.getValue());
+            this.textFieldUpdated();
+        }));
+        this.nameVisibleButton = this.addButton(new ToggleButton(offsetX, offsetY + 66, 40, 20, this.playerStatueData.getNameVisible(), (button) -> {
             ToggleButton toggleButton = ((ToggleButton)button);
             toggleButton.setValue(!toggleButton.getValue());
             this.textFieldUpdated();
@@ -205,6 +216,8 @@ public class PlayerPoseScreen extends Screen {
     private CompoundNBT writeFieldsToNBT() {
         CompoundNBT compound = new CompoundNBT();
         compound.putBoolean("Small", this.smallButton.getValue());
+        compound.putBoolean("Locked", this.lockButton.getValue());
+        compound.putBoolean("CustomNameVisible", this.nameVisibleButton.getValue());
 
         ListNBT rotationTag = new ListNBT();
         rotationTag.add(FloatNBT.valueOf(this.rotationTextField.getFloat()));

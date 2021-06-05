@@ -43,7 +43,7 @@ public class DisplayStandBlock extends Block implements IWaterLoggable {
             Block.makeCuboidShape(4, 15, 5, 5, 16, 11),
             Block.makeCuboidShape(11, 15, 5, 12, 16, 11),
             Block.makeCuboidShape(5, 15, 5, 11, 16, 11)
-    ).reduce((v1, v2) -> { return VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR);} ).get();
+    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
 
     public DisplayStandBlock(Properties properties) {
         super(properties.setOpaque(DisplayStandBlock::isntSolid));

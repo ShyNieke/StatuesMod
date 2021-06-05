@@ -12,7 +12,7 @@ public class PebbleBlock extends FallingBlock {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public int getDustColor(BlockState p_189876_1_) {
+    public int getDustColor(BlockState blockState) {
         return -8356741;
     }
 }

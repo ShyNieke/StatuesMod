@@ -30,6 +30,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.server.management.PreYggdrasilConverter;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
@@ -70,10 +71,10 @@ public class PlayerStatueEntity extends LivingEntity {
     public static final DataParameter<Rotations> RIGHT_ARM_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
     public static final DataParameter<Rotations> LEFT_LEG_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
     public static final DataParameter<Rotations> RIGHT_LEG_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
+    public static final DataParameter<Optional<UUID>> LOCKED_BY_UUID = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
     private final NonNullList<ItemStack> handItems = NonNullList.withSize(2, ItemStack.EMPTY);
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(4, ItemStack.EMPTY);
-    private boolean canInteract;
     /** After punching the stand, the cooldown before you can punch it again without breaking it. */
     public long punchCooldown;
     private int disabledSlots;
@@ -134,6 +135,7 @@ public class PlayerStatueEntity extends LivingEntity {
         this.dataManager.register(RIGHT_ARM_ROTATION, DEFAULT_RIGHTARM_ROTATION);
         this.dataManager.register(LEFT_LEG_ROTATION, DEFAULT_LEFTLEG_ROTATION);
         this.dataManager.register(RIGHT_LEG_ROTATION, DEFAULT_RIGHTLEG_ROTATION);
+        this.dataManager.register(LOCKED_BY_UUID, Optional.empty());
     }
 
     public Optional<GameProfile> getGameProfile() {
@@ -145,6 +147,24 @@ public class PlayerStatueEntity extends LivingEntity {
         dataManager.set(GAMEPROFILE, Optional.of(profile));
 
         this.setSlim(profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId()));
+    }
+
+    @Nullable
+    public boolean isLocked() {
+        return this.dataManager.get(LOCKED_BY_UUID).isPresent();
+    }
+
+    @Nullable
+    public UUID getLockedBy() {
+        return this.dataManager.get(LOCKED_BY_UUID).orElse((UUID)null);
+    }
+
+    public void setLockedBy(@Nullable UUID uuid) {
+        this.dataManager.set(LOCKED_BY_UUID, Optional.ofNullable(uuid));
+    }
+
+    public void setUnlocked() {
+        this.dataManager.set(LOCKED_BY_UUID, Optional.empty());
     }
 
     public void setSlim(boolean slim) {
@@ -252,6 +272,11 @@ public class PlayerStatueEntity extends LivingEntity {
             listnbt1.add(compoundnbt1);
         }
 
+        compound.putBoolean("Locked", this.isLocked());
+        if (this.isLocked() && this.getLockedBy() != null) {
+            compound.putUniqueId("LockedBy", this.getLockedBy());
+        }
+
         compound.put("HandItems", listnbt1);
         compound.putBoolean("Small", this.isSmall());
         compound.putInt("DisabledSlots", this.disabledSlots);
@@ -279,6 +304,20 @@ public class PlayerStatueEntity extends LivingEntity {
 
             for(int i = 0; i < this.armorItems.size(); ++i) {
                 this.armorItems.set(i, ItemStack.read(listnbt.getCompound(i)));
+            }
+        }
+
+        if(compound.getBoolean("Locked")) {
+            UUID uuid;
+            if (compound.hasUniqueId("LockedBy")) {
+                uuid = compound.getUniqueId("LockedBy");
+            } else {
+                String s = compound.getString("LockedBy");
+                uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s);
+            }
+
+            if (uuid != null) {
+                this.setLockedBy(uuid);
             }
         }
 
@@ -354,9 +393,12 @@ public class PlayerStatueEntity extends LivingEntity {
 
     @Override
     public void setCustomName(@Nullable ITextComponent name) {
-        super.setCustomName(name);
         if(name != null) {
-            this.setGameProfile(new GameProfile((UUID)null, name.getUnformattedComponentText().toLowerCase(Locale.ROOT)));
+            if(!isLocked()) {
+                super.setCustomName(name);
+
+                this.setGameProfile(new GameProfile((UUID)null, name.getUnformattedComponentText().toLowerCase(Locale.ROOT)));
+            }
         }
     }
 
@@ -367,37 +409,45 @@ public class PlayerStatueEntity extends LivingEntity {
         ItemStack itemstack = player.getHeldItem(hand);
         if(player.isSneaking()) {
             if(!world.isRemote && player != null) {
-                Statues.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PlayerStatueScreenMessage(getEntityId()));
-            }
-        }
-        if (itemstack.getItem() != Items.NAME_TAG) {
-            if (player.isSpectator()) {
-                return ActionResultType.SUCCESS;
-            } else if (player.world.isRemote) {
-                return ActionResultType.CONSUME;
-            } else {
-                EquipmentSlotType equipmentslottype = MobEntity.getSlotForItemStack(itemstack);
-                if (itemstack.isEmpty()) {
-                    EquipmentSlotType equipmentslottype1 = this.getClickedSlot(vec);
-                    EquipmentSlotType equipmentslottype2 = this.isDisabled(equipmentslottype1) ? equipmentslottype : equipmentslottype1;
-                    if (this.hasItemInSlot(equipmentslottype2) && this.equipOrSwap(player, equipmentslottype2, itemstack, hand)) {
-                        return ActionResultType.SUCCESS;
+                if(isLocked() && getLockedBy() != null) {
+                    if(player.getUniqueID().equals(getLockedBy())) {
+                        Statues.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PlayerStatueScreenMessage(getEntityId()));
                     }
                 } else {
-                    if (this.isDisabled(equipmentslottype)) {
-                        return ActionResultType.FAIL;
-                    }
-
-                    if (this.equipOrSwap(player, equipmentslottype, itemstack, hand)) {
-                        return ActionResultType.SUCCESS;
-                    }
+                    Statues.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PlayerStatueScreenMessage(getEntityId()));
                 }
-
-                return ActionResultType.PASS;
             }
         } else {
-            return ActionResultType.PASS;
+            if (itemstack.getItem() != Items.NAME_TAG) {
+                if (player.isSpectator()) {
+                    return ActionResultType.SUCCESS;
+                } else if (player.world.isRemote) {
+                    return ActionResultType.CONSUME;
+                } else {
+                    if(!isLocked()) {
+                        EquipmentSlotType equipmentslottype = MobEntity.getSlotForItemStack(itemstack);
+                        if (itemstack.isEmpty()) {
+                            EquipmentSlotType equipmentslottype1 = this.getClickedSlot(vec);
+                            EquipmentSlotType equipmentslottype2 = this.isDisabled(equipmentslottype1) ? equipmentslottype : equipmentslottype1;
+                            if (this.hasItemInSlot(equipmentslottype2) && this.equipOrSwap(player, equipmentslottype2, itemstack, hand)) {
+                                return ActionResultType.SUCCESS;
+                            }
+                        } else {
+                            if (this.isDisabled(equipmentslottype)) {
+                                return ActionResultType.FAIL;
+                            }
+
+                            if (this.equipOrSwap(player, equipmentslottype, itemstack, hand)) {
+                                return ActionResultType.SUCCESS;
+                            }
+                        }
+                    }
+
+                    return ActionResultType.PASS;
+                }
+            }
         }
+        return ActionResultType.PASS;
     }
 
     private EquipmentSlotType getClickedSlot(Vector3d p_190772_1_) {
@@ -452,6 +502,31 @@ public class PlayerStatueEntity extends LivingEntity {
         }
     }
 
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        if(isLocked()) {
+            return true;
+        }
+
+        System.out.println(super.isInvulnerableTo(source));
+        return super.isInvulnerableTo(source);
+    }
+
+    public boolean canInteract(DamageSource source) {
+        if(isLocked()) {
+            if(source.getTrueSource() instanceof PlayerEntity) {
+                if(source.getTrueSource().getUniqueID().equals(getLockedBy())) {
+                    System.out.println(true);
+                    return true;
+                }
+            }
+            System.out.println(false);
+            return false;
+        }
+        System.out.println(true);
+        return true;
+    }
+
     /**
      * Called when the entity is attacked.
      */
@@ -460,7 +535,7 @@ public class PlayerStatueEntity extends LivingEntity {
             if (DamageSource.OUT_OF_WORLD.equals(source)) {
                 this.remove();
                 return false;
-            } else if (!this.isInvulnerableTo(source) && !this.canInteract) {
+            } else if (!this.isInvulnerableTo(source)) {
                 if (source.isExplosion()) {
                     this.func_213816_g(source);
                     this.remove();

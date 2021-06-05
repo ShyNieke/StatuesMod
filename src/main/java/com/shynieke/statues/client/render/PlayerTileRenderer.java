@@ -17,6 +17,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.DefaultPlayerSkin;
+import net.minecraft.client.resources.SkinManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -51,7 +52,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         Direction direction = flag ? blockstate.get(PlayerStatueBlock.HORIZONTAL_FACING) : Direction.UP;
         GameProfile profile = te.getPlayerProfile();
 
-        this.render(direction, profile, matrixStackIn, bufferIn, combinedLightIn);
+        render(direction, profile, matrixStackIn, bufferIn, combinedLightIn);
     }
 
     public static void render(@Nullable Direction direction, @Nullable GameProfile profile, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int combinedLight) {
@@ -164,16 +165,17 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
     }
 
     private static RenderType getRenderType(@Nullable GameProfile gameProfileIn) {
-        if(gameProfileIn != null) {
-            Minecraft minecraft = Minecraft.getInstance();
-            Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(gameProfileIn);
+        if (gameProfileIn == null || !gameProfileIn.isComplete()) {
+            return RenderType.getEntityCutoutNoCull(defaultTexture);
+        } else {
+            final Minecraft minecraft = Minecraft.getInstance();
+            SkinManager skinManager = minecraft.getSkinManager();
+            final Map<Type, MinecraftProfileTexture> map = skinManager.loadSkinFromCache(gameProfileIn);
             if (map.containsKey(Type.SKIN)) {
-                return RenderType.getEntityTranslucent(minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN));
+                return RenderType.getEntityTranslucent(skinManager.loadSkin(map.get(Type.SKIN), Type.SKIN));
             } else {
                 return RenderType.getEntityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(gameProfileIn)));
             }
-        } else {
-            return RenderType.getEntityCutoutNoCull(defaultTexture);
         }
     }
 }

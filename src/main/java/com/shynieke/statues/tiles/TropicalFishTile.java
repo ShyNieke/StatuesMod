@@ -30,8 +30,10 @@ public class TropicalFishTile extends StatueTile {
     }
 
     public void scrambleColors() {
-        this.MAIN_COLOR = world.rand.nextInt(16);
-        this.SECONDARY_COLOR = world.rand.nextInt(16);
+        if(world != null) {
+            this.MAIN_COLOR = world.rand.nextInt(16);
+            this.SECONDARY_COLOR = world.rand.nextInt(16);
+        }
         markDirty();
     }
 

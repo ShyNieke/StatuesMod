@@ -53,7 +53,7 @@ public class ClientHandler {
         RenderingRegistry.registerEntityRenderingHandler(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
 
         RenderTypeLookup.setRenderLayer(StatueRegistry.CAMPFIRE_STATUE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.getCutout());;
+        RenderTypeLookup.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(StatueRegistry.HUSK_STATUE.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(StatueRegistry.ZOMBIE_STATUE.get(), RenderType.getCutout());
         RenderTypeLookup.setRenderLayer(StatueRegistry.ENDERMAN_STATUE.get(), RenderType.getCutout());
@@ -175,9 +175,7 @@ public class ClientHandler {
     public static void registerBlockColors(final ColorHandlerEvent.Block event) {
         BlockColors colors = event.getBlockColors();
 
-        colors.register((state, world, pos, tintIndex) -> {
-            return FishStatueBlock.getColor(state, world, pos, tintIndex);
-        }, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
+        colors.register(FishStatueBlock::getColor, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
                 StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
                 StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(),
                 StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get());
@@ -187,9 +185,7 @@ public class ClientHandler {
         ItemColors colors = event.getItemColors();
 
         for(CustomSpawnEggItem item : CustomSpawnEggItem.getEggs()) {
-            colors.register((p_198141_1_, p_198141_2_) -> {
-                return item.getColor(p_198141_2_);
-            }, item);
+            colors.register((p_198141_1_, p_198141_2_) -> item.getColor(p_198141_2_), item);
         }
     }
 }

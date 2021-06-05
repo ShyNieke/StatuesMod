@@ -45,7 +45,7 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void giveItem(LootInfo loot, PlayerEntity playerIn) {
-		if(isStatueAble()) {
+		if(world != null && isStatueAble()) {
 			int random = world.rand.nextInt(100);
 			if(!isDecorative() && loot.hasLoot()) {
 				ItemStack stack1 = loot.getStack1();
@@ -75,7 +75,7 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void summonMob(LivingEntity entityIn) {
-		if(canSpawnMobs()) {
+		if(world != null && canSpawnMobs()) {
 			int random = world.rand.nextInt(100);
 
 			if (random < 1) {
@@ -106,7 +106,7 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void floodBehavior(PlayerEntity playerIn, BlockPos pos, Hand hand, float hitX, float hitY, float hitZ) {
-		if(!world.isRemote) {
+		if(world != null && !world.isRemote) {
 			ItemStack stack = playerIn.getHeldItem(hand);
 			int random = world.rand.nextInt(100);
 			if (stack.getItem() == Items.BUCKET && !playerIn.abilities.isCreativeMode) {
@@ -131,7 +131,7 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void mooshroomBehavior(PlayerEntity playerIn, BlockPos pos, Hand hand) {
-		if(!world.isRemote) {
+		if(world != null && !world.isRemote) {
 			ItemStack stack = playerIn.getHeldItem(hand);
 			if (stack.getItem() == Items.BOWL && !playerIn.abilities.isCreativeMode) {
 				world.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
@@ -148,7 +148,7 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void cowBehavior(PlayerEntity playerIn, BlockPos pos, Hand hand) {
-		if(!world.isRemote) {
+		if(world != null && !world.isRemote) {
 			ItemStack stack = playerIn.getHeldItem(hand);
 			if (stack.getItem() == Items.BUCKET && !playerIn.abilities.isCreativeMode) {
 				world.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
@@ -164,7 +164,7 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void giveEffect(BlockPos pos, PlayerEntity player, Effect effect) {
-		if(isStatueAble()) {
+		if(isStatueAble() && world != null) {
 			int random = world.rand.nextInt(100);
 			if(hasExternalUse()) {
 				if(random < 10) {
@@ -182,7 +182,7 @@ public class StatueTile extends AbstractStatueTile{
 
 	public ItemStack getFirework(Random rand) {
 		ItemStack firework = new ItemStack(Items.FIREWORK_ROCKET);
-		firework.setTag(new CompoundNBT());
+		firework.getOrCreateTag();
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putBoolean("Flicker", true);
 		nbt.putBoolean("Trail", true);
@@ -202,7 +202,9 @@ public class StatueTile extends AbstractStatueTile{
 		CompoundNBT fireworkTag = new CompoundNBT();
 		fireworkTag.put("Explosions", explosions);
 		fireworkTag.putByte("Flight", (byte) 1);
-		firework.getTag().put("Fireworks", fireworkTag);
+		CompoundNBT stackTag = firework.getOrCreateTag();
+		stackTag.put("Fireworks", fireworkTag);
+		firework.setTag(stackTag);
 
 		return firework;
 	}

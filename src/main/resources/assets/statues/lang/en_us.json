@@ -175,6 +175,8 @@
 	"_comment": "gui",
 	"statues.playerstatue.gui.title": "Player Statue",
 	"statues.playerstatue.gui.label.small": "Small",
+	"statues.playerstatue.gui.label.locked": "Locked",
+	"statues.playerstatue.gui.label.name_visible": "Name Visible",
 	"statues.playerstatue.gui.label.rotation": "Rotation",
 	"statues.playerstatue.gui.label.head": "Head",
 	"statues.playerstatue.gui.label.body": "Body",

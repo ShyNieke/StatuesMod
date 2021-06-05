@@ -52,6 +52,15 @@ public class PlayerStatueSyncMessage {
                         playerStatue.read(entityTagCopy);
                         playerStatue.setUniqueId(uuid);
                     }
+
+                    if(ctx.getSender() != null) {
+                        boolean lockFlag = data.getBoolean("Locked");
+                        if(lockFlag) {
+                            playerStatue.setLockedBy(ctx.getSender().getUniqueID());
+                        } else {
+                            playerStatue.setUnlocked();
+                        }
+                    }
                 }
             }
         });
