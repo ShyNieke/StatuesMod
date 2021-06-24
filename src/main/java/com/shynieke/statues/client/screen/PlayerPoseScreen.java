@@ -24,13 +24,15 @@ public class PlayerPoseScreen extends Screen {
     private final PlayerStatueEntity playerStatueEntity;
     private final PlayerStatueData playerStatueData;
 
-    private final String[] buttonLabels = new String[] { "small", "rotation", "locked", "name_visible" };
+    private final String[] buttonLabels = new String[] { "small", "rotation", "y_offset", "locked", "name_visible", "gravity" };
     private final String[] sliderLabels = new String[] { "head", "body", "left_leg", "right_leg", "left_arm", "right_arm" };
 
     private NumberFieldWidget rotationTextField;
+    private DecimalNumberFieldWidget YOffsetTextField;
     private ToggleButton smallButton;
     private ToggleButton lockButton;
     private ToggleButton nameVisibleButton;
+    private ToggleButton noGravityButton;
     private final NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
 
     private Button doneButton;
@@ -61,17 +63,22 @@ public class PlayerPoseScreen extends Screen {
         int offsetX = 110;
         int offsetY = 50;
 
-        this.smallButton = this.addButton(new ToggleButton(offsetX, offsetY, 40, 20, this.playerStatueData.isSmall(), (button) -> {
+        this.addButton(this.smallButton = new ToggleButton(offsetX, offsetY, 40, 20, this.playerStatueData.isSmall(), (button) -> {
             ToggleButton toggleButton = ((ToggleButton)button);
             toggleButton.setValue(!toggleButton.getValue());
             this.textFieldUpdated();
         }));
-        this.lockButton = this.addButton(new ToggleButton(offsetX, offsetY + 43, 40, 20, this.playerStatueData.isLocked(), (button) -> {
+        this.addButton(this.lockButton = new ToggleButton(offsetX, offsetY + 66, 40, 20, this.playerStatueData.isLocked(), (button) -> {
             ToggleButton toggleButton = ((ToggleButton)button);
             toggleButton.setValue(!toggleButton.getValue());
             this.textFieldUpdated();
         }));
-        this.nameVisibleButton = this.addButton(new ToggleButton(offsetX, offsetY + 66, 40, 20, this.playerStatueData.getNameVisible(), (button) -> {
+        this.addButton(this.nameVisibleButton = new ToggleButton(offsetX, offsetY + 89, 40, 20, this.playerStatueData.getNameVisible(), (button) -> {
+            ToggleButton toggleButton = ((ToggleButton)button);
+            toggleButton.setValue(!toggleButton.getValue());
+            this.textFieldUpdated();
+        }));
+        this.addButton(this.noGravityButton = new ToggleButton(offsetX, offsetY + 112, 40, 20, this.playerStatueData.hasNoGravity(), (button) -> {
             ToggleButton toggleButton = ((ToggleButton)button);
             toggleButton.setValue(!toggleButton.getValue());
             this.textFieldUpdated();
@@ -82,6 +89,12 @@ public class PlayerPoseScreen extends Screen {
         this.rotationTextField.setText(String.valueOf((int)this.playerStatueData.rotation));
         this.rotationTextField.setMaxStringLength(3);
         this.addListener(this.rotationTextField);
+
+        // Y Offset textbox
+        this.YOffsetTextField = new DecimalNumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (44), 38, 17, new StringTextComponent("field.yOffset"));
+        this.YOffsetTextField.setText(String.valueOf((double) this.playerStatueData.yOffset));
+        this.YOffsetTextField.setMaxStringLength(5);
+        this.addListener(this.YOffsetTextField);
 
         // pose textboxes
         offsetX = this.width - 20 - 100;
@@ -102,11 +115,11 @@ public class PlayerPoseScreen extends Screen {
 
         // done & cancel buttons
         offsetX = this.width - 20;
-        this.doneButton = this.addButton(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslationTextComponent("gui.done"), (button) -> {
+        this.addButton(this.doneButton = new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslationTextComponent("gui.done"), (button) -> {
             this.updateEntity(this.writeFieldsToNBT());
             this.minecraft.displayGuiScreen((Screen) null);
         }));
-        this.cancelButton = this.addButton(new Button(offsetX - 96, offsetY, 96, 20, new TranslationTextComponent("gui.cancel"), (button) -> {
+        this.addButton(this.cancelButton = new Button(offsetX - 96, offsetY, 96, 20, new TranslationTextComponent("gui.cancel"), (button) -> {
             this.updateEntity(this.playerStatueData.writeNBT());
             this.minecraft.displayGuiScreen((Screen) null);
         }));
@@ -121,6 +134,7 @@ public class PlayerPoseScreen extends Screen {
 
         // textboxes
         this.rotationTextField.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.YOffsetTextField.render(matrixStack, mouseX, mouseY, partialTicks);
         for (NumberFieldWidget textField : this.poseTextFields)
             textField.render(matrixStack, mouseX, mouseY, partialTicks);
 
@@ -154,6 +168,7 @@ public class PlayerPoseScreen extends Screen {
     public void tick() {
         super.tick();
         this.rotationTextField.tick();
+        this.YOffsetTextField.tick();
         for (NumberFieldWidget textField : this.poseTextFields)
             textField.tick();
     }
@@ -186,6 +201,9 @@ public class PlayerPoseScreen extends Screen {
             if (this.rotationTextField.keyPressed(keyCode, scanCode, modifiers)) {
                 this.textFieldUpdated();
                 return true;
+            } else if (this.YOffsetTextField.keyPressed(keyCode, scanCode, modifiers)) {
+                this.textFieldUpdated();
+                return true;
             } else {
                 for (NumberFieldWidget textField : this.poseTextFields) {
                     if (textField.keyPressed(keyCode, scanCode, modifiers)) {
@@ -201,6 +219,7 @@ public class PlayerPoseScreen extends Screen {
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         this.rotationTextField.mouseClicked(mouseX, mouseY, button);
+        this.YOffsetTextField.mouseClicked(mouseX, mouseY, button);
         for (NumberFieldWidget textField : this.poseTextFields) {
             textField.mouseClicked(mouseX, mouseY, button);
             this.textFieldUpdated();
@@ -218,6 +237,8 @@ public class PlayerPoseScreen extends Screen {
         compound.putBoolean("Small", this.smallButton.getValue());
         compound.putBoolean("Locked", this.lockButton.getValue());
         compound.putBoolean("CustomNameVisible", this.nameVisibleButton.getValue());
+        compound.putBoolean("NoGravity", this.noGravityButton.getValue());
+        compound.putDouble("yOffset", this.YOffsetTextField.getFloat());
 
         ListNBT rotationTag = new ListNBT();
         rotationTag.add(FloatNBT.valueOf(this.rotationTextField.getFloat()));

@@ -38,6 +38,7 @@ import net.minecraft.util.HandSide;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Rotations;
 import net.minecraft.util.math.vector.Vector3d;
@@ -65,6 +66,7 @@ public class PlayerStatueEntity extends LivingEntity {
     private static final DataParameter<Optional<GameProfile>> GAMEPROFILE = EntityDataManager.createKey(PlayerStatueEntity.class, StatueSerializers.OPTIONAL_GAME_PROFILE);
     public static final DataParameter<Boolean> SLIM = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.BOOLEAN);
     public static final DataParameter<Byte> STATUS = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.BYTE);
+    public static final DataParameter<Float> Y_OFFSET = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.FLOAT);
     public static final DataParameter<Rotations> HEAD_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
     public static final DataParameter<Rotations> BODY_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
     public static final DataParameter<Rotations> LEFT_ARM_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
@@ -114,7 +116,7 @@ public class PlayerStatueEntity extends LivingEntity {
 
     @Override
     public boolean hasNoGravity() {
-        return this.ticksExisted > 200;
+        return this.ticksExisted > 200 && super.hasNoGravity();
     }
 
     /**
@@ -129,6 +131,7 @@ public class PlayerStatueEntity extends LivingEntity {
         this.dataManager.register(GAMEPROFILE, Optional.empty());
         this.dataManager.register(SLIM, false);
         this.dataManager.register(STATUS, (byte)0);
+        this.dataManager.register(Y_OFFSET, 0F);
         this.dataManager.register(HEAD_ROTATION, DEFAULT_HEAD_ROTATION);
         this.dataManager.register(BODY_ROTATION, DEFAULT_BODY_ROTATION);
         this.dataManager.register(LEFT_ARM_ROTATION, DEFAULT_LEFTARM_ROTATION);
@@ -173,6 +176,14 @@ public class PlayerStatueEntity extends LivingEntity {
 
     public boolean isSlim() {
         return dataManager.get(SLIM);
+    }
+
+    public void setYOffset(float yOffset) {
+        dataManager.set(Y_OFFSET, MathHelper.clamp(yOffset, -1, 1));
+    }
+
+    public float getYOffsetData() {
+        return dataManager.get(Y_OFFSET);
     }
 
     public Iterable<ItemStack> getHeldEquipment() {
@@ -249,6 +260,8 @@ public class PlayerStatueEntity extends LivingEntity {
         }
         compound.putBoolean("Slim", isSlim());
 
+        compound.putFloat("yOffset", getYOffsetData());
+
         ListNBT listnbt = new ListNBT();
 
         for(ItemStack itemstack : this.armorItems) {
@@ -299,6 +312,7 @@ public class PlayerStatueEntity extends LivingEntity {
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         this.setSlim(compound.getBoolean("Slim"));
+        this.setYOffset(compound.getFloat("yOffset"));
         if (compound.contains("ArmorItems", 9)) {
             ListNBT listnbt = compound.getList("ArmorItems", 10);
 
@@ -700,7 +714,7 @@ public class PlayerStatueEntity extends LivingEntity {
      * Returns the Y Offset of this entity.
      */
     public double getYOffset() {
-        return (double)0.1F; //TODO: what does this do?
+        return (double)0.1F + getYOffsetData(); //TODO: what does this do?
     }
 
     public void travel(Vector3d travelVector) {

@@ -38,7 +38,7 @@ public class NumberFieldWidget extends TextFieldWidget {
         }
     }
 
-    private boolean isNumeric(String value) {
+    protected boolean isNumeric(String value) {
         return value.equals("-") || NumberUtils.isParsable(value);
     }
 }

@@ -177,6 +177,8 @@
 	"statues.playerstatue.gui.label.small": "Small",
 	"statues.playerstatue.gui.label.locked": "Locked",
 	"statues.playerstatue.gui.label.name_visible": "Name Visible",
+	"statues.playerstatue.gui.label.gravity": "Zero Gravity",
+	"statues.playerstatue.gui.label.y_offset": "Y Offset",
 	"statues.playerstatue.gui.label.rotation": "Rotation",
 	"statues.playerstatue.gui.label.head": "Head",
 	"statues.playerstatue.gui.label.body": "Body",

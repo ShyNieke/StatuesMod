@@ -9,6 +9,8 @@ public class PlayerStatueData {
     public boolean small = false;
     public boolean locked = false;
     public boolean nameVisible = true;
+    public boolean noGravity = false;
+    public float yOffset = 0F;
 
     public float rotation = 0F;
 
@@ -26,10 +28,16 @@ public class PlayerStatueData {
         return nameVisible;
     }
 
+    public boolean hasNoGravity() {
+        return noGravity;
+    }
+
     public void readNBT(CompoundNBT compound) {
         this.small = compound.getBoolean("Small");
         this.locked = compound.getBoolean("Locked");
         this.nameVisible = compound.getBoolean("CustomNameVisible");
+        this.noGravity = compound.getBoolean("NoGravity");
+        this.yOffset = compound.getFloat("yOffset");
 
         if (compound.contains("Rotation")) {
             this.rotation = compound.getList("Rotation", NBT.TAG_FLOAT).getFloat(0);
@@ -56,6 +64,8 @@ public class PlayerStatueData {
         compound.putBoolean("Small", this.small);
         compound.putBoolean("Locked", this.locked);
         compound.putBoolean("CustomNameVisible", this.nameVisible);
+        compound.putBoolean("NoGravity", this.noGravity);
+        compound.putFloat("yOffset", this.yOffset);
 
         ListNBT rotationTag = new ListNBT();
         rotationTag.add(FloatNBT.valueOf(this.rotation));

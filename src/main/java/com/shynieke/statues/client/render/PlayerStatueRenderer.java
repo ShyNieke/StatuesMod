@@ -69,6 +69,7 @@ public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, Pla
         if(playerStatue.isSlim() && this.entityModel != slimModel) {
             this.entityModel = slimModel;
         }
+        matrixStackIn.translate(0, playerStatue.getYOffsetData(), 0);
         super.render(playerStatue, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }
 

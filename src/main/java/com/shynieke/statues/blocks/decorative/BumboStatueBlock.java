@@ -4,6 +4,8 @@ import com.shynieke.statues.blocks.AbstractStatueBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -25,5 +27,10 @@ public class BumboStatueBlock extends AbstractStatueBase {
     @Override
     public boolean canBeUpgraded() {
         return false;
+    }
+
+    @Override
+    public SoundEvent getSound(BlockState state) {
+        return SoundEvents.BLOCK_WOOL_BREAK;
     }
 }
