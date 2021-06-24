@@ -503,28 +503,17 @@ public class PlayerStatueEntity extends LivingEntity {
     }
 
     @Override
+    public boolean isInvulnerable() {
+        return isLocked() || super.isInvulnerable();
+    }
+
+    @Override
     public boolean isInvulnerableTo(DamageSource source) {
         if(isLocked()) {
             return true;
         }
 
-        System.out.println(super.isInvulnerableTo(source));
         return super.isInvulnerableTo(source);
-    }
-
-    public boolean canInteract(DamageSource source) {
-        if(isLocked()) {
-            if(source.getTrueSource() instanceof PlayerEntity) {
-                if(source.getTrueSource().getUniqueID().equals(getLockedBy())) {
-                    System.out.println(true);
-                    return true;
-                }
-            }
-            System.out.println(false);
-            return false;
-        }
-        System.out.println(true);
-        return true;
     }
 
     /**

@@ -17,7 +17,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.client.resources.SkinManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -76,7 +75,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         }
         matrix.scale(-1.0F, -1.0F, 1.0F);
         matrix.translate(0.0D, -1.25D, 0.0D);
-        boolean flag = profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId());
+        boolean flag = profile != null && profile.isComplete() && SkinUtil.isSlimSkin(profile.getId());
         if(flag && playerModel != slimModel) {
             playerModel = slimModel;
         }
@@ -153,7 +152,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             matrix.scale(-1.0F, -1.0F, 1.0F);
 
             StatuePlayerModel playerModel = model;
-            boolean flag = gameprofile != null && gameprofile.getId() != null && SkinUtil.isSlimSkin(gameprofile.getId());
+            boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
             if(flag && playerModel != slimModel) {
                 playerModel = slimModel;
             }
@@ -169,10 +168,9 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             return RenderType.getEntityCutoutNoCull(defaultTexture);
         } else {
             final Minecraft minecraft = Minecraft.getInstance();
-            SkinManager skinManager = minecraft.getSkinManager();
-            final Map<Type, MinecraftProfileTexture> map = skinManager.loadSkinFromCache(gameProfileIn);
+            final Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(gameProfileIn);
             if (map.containsKey(Type.SKIN)) {
-                return RenderType.getEntityTranslucent(skinManager.loadSkin(map.get(Type.SKIN), Type.SKIN));
+                return RenderType.getEntityTranslucent(minecraft.getSkinManager().loadSkin((MinecraftProfileTexture)map.get(Type.SKIN), Type.SKIN));
             } else {
                 return RenderType.getEntityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(gameProfileIn)));
             }
