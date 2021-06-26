@@ -13,6 +13,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.FloatNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -92,7 +93,7 @@ public class PlayerPoseScreen extends Screen {
 
         // Y Offset textbox
         this.YOffsetTextField = new DecimalNumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (44), 38, 17, new StringTextComponent("field.yOffset"));
-        this.YOffsetTextField.setText(String.valueOf((double) this.playerStatueData.yOffset));
+        this.YOffsetTextField.setText(String.valueOf((float) MathHelper.clamp(this.playerStatueData.yOffset, -1, 1)));
         this.YOffsetTextField.setMaxStringLength(5);
         this.addListener(this.YOffsetTextField);
 
