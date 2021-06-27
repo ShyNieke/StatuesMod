@@ -7,6 +7,9 @@ import com.shynieke.statues.blocks.decorative.EndermiteStatueBlock;
 import com.shynieke.statues.blocks.decorative.PebbleBlock;
 import com.shynieke.statues.blocks.decorative.SombreroBlock;
 import com.shynieke.statues.blocks.decorative.TotemOfUndyingStatueBlock;
+import com.shynieke.statues.blocks.decorative.charity.EagleRayStatueBlock;
+import com.shynieke.statues.blocks.decorative.charity.SlabFishStatueBlock;
+import com.shynieke.statues.blocks.decorative.charity.TropiBeeStatueBlock;
 import com.shynieke.statues.blocks.statues.AngryBeeStatueBlock;
 import com.shynieke.statues.blocks.statues.BabyZombieStatueBlock;
 import com.shynieke.statues.blocks.statues.BeeStatueBlock;
@@ -67,7 +70,7 @@ import com.shynieke.statues.items.StatueCoreItem;
 import com.shynieke.statues.items.StatueGoldenMarshmallow;
 import com.shynieke.statues.items.StatueMooshroomSoup;
 import com.shynieke.statues.items.StatueTeaItem;
-import com.shynieke.statues.items.StatueTransBeeItem;
+import com.shynieke.statues.items.StatueBeeItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -204,6 +207,10 @@ public class StatueRegistry {
     public static final RegistryObject<Block> PEBBLE = registerBlock("pebble", () -> new PebbleBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> SOMBRERO = registerBlock("sombrero", () -> new SombreroBlock(blockBuilder()), blockItemBuilder());
 
+    public static final RegistryObject<Block> TROPIBEE = registerBlock("tropibee", () -> new TropiBeeStatueBlock(blockBuilder()), blockItemBuilder());
+    public static final RegistryObject<Block> EAGLE_RAY = registerBlock("eagle_ray", () -> new EagleRayStatueBlock(blockBuilder()), blockItemBuilder());
+    public static final RegistryObject<Block> SLABFISH = registerBlock("slabfish", () -> new SlabFishStatueBlock(blockBuilder()), blockItemBuilder());
+
     public static final RegistryObject<Item> CUP = ITEMS.register("cup", () -> new Item(itemBuilder().food(StatueFoods.CUP)));
     public static final RegistryObject<Item> MARSHMALLOW = ITEMS.register("marshmallow", () -> new Item(itemBuilder().food(StatueFoods.MARSHMALLOW)));
     public static final RegistryObject<Item> MARSHMALLOW_CHARRED = ITEMS.register("marshmallow_charred", () -> new StatueCharredMarshmallow(itemBuilder()));
@@ -226,7 +233,7 @@ public class StatueRegistry {
 
     public static <B extends Block> RegistryObject<B> registerBeeStatue(String name, Supplier<? extends B> supplier, Item.Properties properties) {
         RegistryObject<B> block = StatueRegistry.BLOCKS.register(name, supplier);
-        ITEMS.register(name, () -> new StatueTransBeeItem(block.get(), properties));
+        ITEMS.register(name, () -> new StatueBeeItem(block.get(), properties));
         return block;
     }
 

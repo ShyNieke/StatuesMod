@@ -4,6 +4,7 @@ import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.compat.curios.CuriosCompat;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.handlers.DropHandler;
+import com.shynieke.statues.handlers.FishHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
 import com.shynieke.statues.handlers.TraderHandler;
 import com.shynieke.statues.init.StatueEntities;
@@ -57,11 +58,14 @@ public class Statues {
 		StatueRegistry.BLOCKS.register(eventBus);
 		StatueRegistry.ITEMS.register(eventBus);
 
+		eventBus.addListener(StatueEntities::registerEntityAttributes);
+
 		if (ModList.get().isLoaded("curios")) {
 			eventBus.addListener(CuriosCompat::sendImc);
 		}
 
 //		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
+		MinecraftForge.EVENT_BUS.register(new FishHandler());
 		MinecraftForge.EVENT_BUS.register(new TraderHandler());
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
