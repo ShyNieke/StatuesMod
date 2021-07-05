@@ -107,14 +107,15 @@ public class StatuesConfig {
 							"Huge thanks to Xisuma for helping create his statue",
 							"Gone Fishing",
 							"1-3 tall they seem, prickly is a bit mean, Give them a hat and see their true means",
-							"Right click a fake mob with a statue core to prevent them from despawning",
 							"Right click a player statue with a comparator to emit redstone when that player is online",
 							"Right click a player statue with a compass to bound the compass to the last known location of the player",
-							"A player and a creeper with blue fire in the middle",
-							"How to make blue fire, if fire itself does not work",
+							"A player and a creeper next to a pool of lave, throw in a shiny rock",
 							"Rename a bee 'Trans Bee' to show support for trans people",
+							"Rename a bee to a tropical name to find its name-sake",
 							"Using a Statue Core on a player statue will make them grow, and will add more features to it",
-							"The bat has returned, find them in caves near you, or in your local hellish dimension"
+							"The bat has returned, find them in caves near you, or in your local hellish dimension",
+							"Check the pockets of your local wondering traders",
+							"Looking for a player skin? Just rename the right statue"
 					};
 
 			info_messages = builder
