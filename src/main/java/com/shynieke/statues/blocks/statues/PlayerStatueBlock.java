@@ -41,6 +41,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -194,15 +195,19 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		if(Screen.hasShiftDown()){
 			if(stack.hasTag()) {
 				CompoundNBT tag = stack.getTag();
-				tooltip.add(new StringTextComponent("Username: " + stack.getDisplayName().getUnformattedComponentText()).mergeStyle(TextFormatting.GOLD));
+				IFormattableTextComponent userComponent = new StringTextComponent("Username: ").mergeStyle(TextFormatting.GOLD);
+				userComponent.appendSibling(stack.getDisplayName().copyRaw().mergeStyle(TextFormatting.WHITE));
+				tooltip.add(userComponent);
 
 				if(tag != null && tag.contains("PlayerProfile")) {
 					CompoundNBT profileTag = (CompoundNBT)tag.get("PlayerProfile");
 					if(profileTag != null) {
 						GameProfile gameprofile = NBTUtil.readGameProfile(profileTag);
 
-						if(gameprofile != null && !StringUtils.isNullOrEmpty(gameprofile.getName())) {
-							tooltip.add(new StringTextComponent("UUID: " + gameprofile.getId().toString()).mergeStyle(TextFormatting.GOLD));
+						if(gameprofile != null && gameprofile.isComplete()) {
+							IFormattableTextComponent UUIDComponent = new StringTextComponent("UUID: ").mergeStyle(TextFormatting.GOLD);
+							UUIDComponent.appendSibling(new StringTextComponent(gameprofile.getId().toString()).mergeStyle(TextFormatting.WHITE));
+							tooltip.add(UUIDComponent);
 						}
 					}
 				}
