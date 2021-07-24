@@ -1,35 +1,37 @@
 {
-    "parent": "statues:chicken_statue",
-    "display": {
-        "icon": {
-            "item": "statues:king_cluck_statue"
-        },
-        "title": {
-            "text": "A royal chicken, who would have thought"
-        },
-        "description": {
-            "text": "You managed to make a chicken royal!"
-        },
-        "frame": "goal",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:chicken_statue",
+  "display": {
+    "icon": {
+      "item": "statues:king_cluck_statue"
     },
-    "criteria": {
-        "king_cluck": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:king_cluck_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "A royal chicken, who would have thought"
     },
-    "requirements": [
-        [
-            "king_cluck"
+    "description": {
+      "text": "You managed to make a chicken royal!"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "king_cluck": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:king_cluck_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "king_cluck"
     ]
+  ]
 }

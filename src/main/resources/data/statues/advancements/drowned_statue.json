@@ -1,35 +1,37 @@
 {
-    "parent": "statues:guardian_statue",
-    "display": {
-        "icon": {
-            "item": "statues:drowned_statue"
-        },
-        "title": {
-            "text": "Drowning a zombie statue does not work"
-        },
-        "description": {
-            "text": "Obtain a Drowned Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:guardian_statue",
+  "display": {
+    "icon": {
+      "item": "statues:drowned_statue"
     },
-    "criteria": {
-        "drowned_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:drowned_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Drowning a zombie statue does not work"
     },
-    "requirements": [
-        [
-            "drowned_statue"
+    "description": {
+      "text": "Obtain a Drowned Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "drowned_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:drowned_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "drowned_statue"
     ]
+  ]
 }

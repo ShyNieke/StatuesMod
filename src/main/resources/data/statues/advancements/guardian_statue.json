@@ -1,35 +1,37 @@
 {
-    "parent": "statues:root",
-    "display": {
-        "icon": {
-            "item": "statues:guardian_statue"
-        },
-        "title": {
-            "text": "Slaying the protectors of the ocean"
-        },
-        "description": {
-            "text": "Obtain a Guardian Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:root",
+  "display": {
+    "icon": {
+      "item": "statues:guardian_statue"
     },
-    "criteria": {
-        "guardian_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:guardian_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Slaying the protectors of the ocean"
     },
-    "requirements": [
-        [
-            "guardian_statue"
+    "description": {
+      "text": "Obtain a Guardian Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "guardian_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:guardian_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "guardian_statue"
     ]
+  ]
 }

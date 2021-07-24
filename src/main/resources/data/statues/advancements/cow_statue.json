@@ -1,35 +1,37 @@
 {
-    "parent": "statues:chicken_statue",
-    "display": {
-        "icon": {
-            "item": "statues:cow_statue"
-        },
-        "title": {
-            "text": "This one is amoozing"
-        },
-        "description": {
-            "text": "Collect a Cow Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:chicken_statue",
+  "display": {
+    "icon": {
+      "item": "statues:cow_statue"
     },
-    "criteria": {
-        "cow_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:cow_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "This one is amoozing"
     },
-    "requirements": [
-        [
-            "cow_statue"
+    "description": {
+      "text": "Collect a Cow Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "cow_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cow_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cow_statue"
     ]
+  ]
 }

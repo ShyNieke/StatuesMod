@@ -1,35 +1,37 @@
 {
-    "parent": "statues:creeper_statue",
-    "display": {
-        "icon": {
-            "item": "statues:husk_statue"
-        },
-        "title": {
-            "text": "Letting a zombie dry up in the sun... would be funny if that worked"
-        },
-        "description": {
-            "text": "Obtain a Husk Statues"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:creeper_statue",
+  "display": {
+    "icon": {
+      "item": "statues:husk_statue"
     },
-    "criteria": {
-        "husk_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:husk_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Letting a zombie dry up in the sun... would be funny if that worked"
     },
-    "requirements": [
-        [
-            "husk_statue"
+    "description": {
+      "text": "Obtain a Husk Statues"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "husk_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:husk_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "husk_statue"
     ]
+  ]
 }

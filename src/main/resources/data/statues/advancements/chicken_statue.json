@@ -1,35 +1,36 @@
 {
-    "parent": "statues:root",
-    "display": {
-        "icon": {
-            "item": "statues:chicken_statue"
-        },
-        "title": {
-            "text": "Clearly the chicken came first, there is no egg statue"
-        },
-        "description": {
-            "text": "Obtain a Chicken Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:root",
+  "display": {
+    "icon": {
+      "item": "statues:chicken_statue"
     },
-    "criteria": {
-        "chicken_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:chicken_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Clearly the chicken came first, there is no egg statue"
     },
-    "requirements": [
-        [
-            "chicken_statue"
+    "description": {
+      "text": "Obtain a Chicken Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "chicken_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["statues:chicken_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "chicken_statue"
     ]
+  ]
 }

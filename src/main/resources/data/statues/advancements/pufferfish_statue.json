@@ -1,35 +1,37 @@
 {
-    "parent": "statues:pufferfish_medium_statue",
-    "display": {
-        "icon": {
-            "item": "statues:pufferfish_statue"
-        },
-        "title": {
-            "text": "You scared it!"
-        },
-        "description": {
-            "text": "Obtain a bloated Pufferfish Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:pufferfish_medium_statue",
+  "display": {
+    "icon": {
+      "item": "statues:pufferfish_statue"
     },
-    "criteria": {
-        "bloated_pufferfish": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:pufferfish_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "You scared it!"
     },
-    "requirements": [
-        [
-            "bloated_pufferfish"
+    "description": {
+      "text": "Obtain a bloated Pufferfish Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "bloated_pufferfish": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:pufferfish_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bloated_pufferfish"
     ]
+  ]
 }

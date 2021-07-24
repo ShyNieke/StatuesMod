@@ -1,35 +1,37 @@
 {
-    "parent": "statues:baby_zombie_statue",
-    "display": {
-        "icon": {
-            "item": "statues:creeper_statue"
-        },
-        "title": {
-            "text": "It won't blow up this time"
-        },
-        "description": {
-            "text": "Obtain a Creeper Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:baby_zombie_statue",
+  "display": {
+    "icon": {
+      "item": "statues:creeper_statue"
     },
-    "criteria": {
-        "creeper_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:creeper_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "It won't blow up this time"
     },
-    "requirements": [
-        [
-            "creeper_statue"
+    "description": {
+      "text": "Obtain a Creeper Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "creeper_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:creeper_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "creeper_statue"
     ]
+  ]
 }

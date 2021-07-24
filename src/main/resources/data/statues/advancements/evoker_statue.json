@@ -1,35 +1,37 @@
 {
-    "parent": "statues:witch_statue",
-    "display": {
-        "icon": {
-            "item": "statues:evoker_statue"
-        },
-        "title": {
-            "text": "Wooolooolooo"
-        },
-        "description": {
-            "text": "obtain an Evoker Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:witch_statue",
+  "display": {
+    "icon": {
+      "item": "statues:evoker_statue"
     },
-    "criteria": {
-        "evoker_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:evoker_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Wooolooolooo"
     },
-    "requirements": [
-        [
-            "evoker_statue"
+    "description": {
+      "text": "obtain an Evoker Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "evoker_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:evoker_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "evoker_statue"
     ]
+  ]
 }

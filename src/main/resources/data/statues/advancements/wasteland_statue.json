@@ -1,35 +1,37 @@
 {
-    "parent": "statues:pig_statue",
-    "display": {
-        "icon": {
-            "item": "statues:wasteland_statue"
-        },
-        "title": {
-            "text": "Riding the pigs!"
-        },
-        "description": {
-            "text": "You found Xisuma's secret statue"
-        },
-        "frame": "challenge",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": true
+  "parent": "statues:pig_statue",
+  "display": {
+    "icon": {
+      "item": "statues:wasteland_statue"
     },
-    "criteria": {
-        "wasteland_pig": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:wasteland_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Riding the pigs!"
     },
-    "requirements": [
-        [
-            "wasteland_pig"
+    "description": {
+      "text": "You found Xisuma's secret statue"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "wasteland_pig": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:wasteland_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "wasteland_pig"
     ]
+  ]
 }

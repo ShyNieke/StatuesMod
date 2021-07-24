@@ -1,35 +1,37 @@
 {
-    "parent": "statues:root",
-    "display": {
-        "icon": {
-            "item": "statues:elder_guardian_statue"
-        },
-        "title": {
-            "text": "Slaying the elders of the monuments"
-        },
-        "description": {
-            "text": "Obtain a Elder Guardian Statue"
-        },
-        "frame": "goal",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:root",
+  "display": {
+    "icon": {
+      "item": "statues:elder_guardian_statue"
     },
-    "criteria": {
-        "elder_guardian": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:elder_guardian_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Slaying the elders of the monuments"
     },
-    "requirements": [
-        [
-            "elder_guardian"
+    "description": {
+      "text": "Obtain a Elder Guardian Statue"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "elder_guardian": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:elder_guardian_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "elder_guardian"
     ]
+  ]
 }

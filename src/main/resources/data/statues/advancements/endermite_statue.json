@@ -1,35 +1,37 @@
 {
-    "parent": "statues:enderman_statue",
-    "display": {
-        "icon": {
-            "item": "statues:endermite_statue"
-        },
-        "title": {
-            "text": "That pearl was in fact infected"
-        },
-        "description": {
-            "text": "Obtain an Endermite Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:enderman_statue",
+  "display": {
+    "icon": {
+      "item": "statues:endermite_statue"
     },
-    "criteria": {
-        "endermite_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:endermite_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "That pearl was in fact infected"
     },
-    "requirements": [
-        [
-            "endermite_statue"
+    "description": {
+      "text": "Obtain an Endermite Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "endermite_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:endermite_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "endermite_statue"
     ]
+  ]
 }

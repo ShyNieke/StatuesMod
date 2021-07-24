@@ -1,35 +1,37 @@
 {
-    "parent": "statues:ghast_statue",
-    "display": {
-        "icon": {
-            "item": "statues:magma_statue"
-        },
-        "title": {
-            "text": "Boiled Slimes"
-        },
-        "description": {
-            "text": "Obtain a Magma Cube Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:ghast_statue",
+  "display": {
+    "icon": {
+      "item": "statues:magma_statue"
     },
-    "criteria": {
-        "magma_cube": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:magma_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Boiled Slimes"
     },
-    "requirements": [
-        [
-            "magma_cube"
+    "description": {
+      "text": "Obtain a Magma Cube Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "magma_cube": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:magma_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "magma_cube"
     ]
+  ]
 }

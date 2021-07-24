@@ -1,35 +1,37 @@
 {
-	"parent": "statues:zombie_statue",
-	"display": {
-		"icon": {
-			"item": "statues:baby_zombie_statue"
-		},
-		"title": {
-			"text": "Baby undead"
-		},
-		"description": {
-			"text": "Obtain a Baby Zombie Statue"
-		},
-		"frame": "task",
-		"show_toast": true,
-		"announce_to_chat": true,
-		"hidden": false
-	},
-	"criteria": {
-		"baby_zombie_statue": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"items": [
-				{
-					"item": "statues:baby_zombie_statue"
-				}
-				]
-			}
-		}
-	},
-	"requirements": [
-		[
-			"baby_zombie_statue"
-		]
-	]
+  "parent": "statues:zombie_statue",
+  "display": {
+    "icon": {
+      "item": "statues:baby_zombie_statue"
+    },
+    "title": {
+      "text": "Baby undead"
+    },
+    "description": {
+      "text": "Obtain a Baby Zombie Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "baby_zombie_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:baby_zombie_statue"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "baby_zombie_statue"
+    ]
+  ]
 }

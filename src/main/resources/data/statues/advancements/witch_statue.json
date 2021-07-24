@@ -1,35 +1,37 @@
 {
-    "parent": "statues:husk_statue",
-    "display": {
-        "icon": {
-            "item": "statues:witch_statue"
-        },
-        "title": {
-            "text": "Bewitched!"
-        },
-        "description": {
-            "text": "Obtain a Witch Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:husk_statue",
+  "display": {
+    "icon": {
+      "item": "statues:witch_statue"
     },
-    "criteria": {
-        "witch": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:witch_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Bewitched!"
     },
-    "requirements": [
-        [
-            "witch"
+    "description": {
+      "text": "Obtain a Witch Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "witch": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:witch_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "witch"
     ]
+  ]
 }

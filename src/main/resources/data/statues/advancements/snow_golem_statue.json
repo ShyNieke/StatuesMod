@@ -1,35 +1,37 @@
 {
-    "parent": "statues:sheep_statue",
-    "display": {
-        "icon": {
-            "item": "statues:snow_golem_statue"
-        },
-        "title": {
-            "text": "Do you want to kill a Snow Man"
-        },
-        "description": {
-            "text": "Obtain a Snow Man Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:sheep_statue",
+  "display": {
+    "icon": {
+      "item": "statues:snow_golem_statue"
     },
-    "criteria": {
-        "snow_man": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:snow_golem_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Do you want to kill a Snow Man"
     },
-    "requirements": [
-        [
-            "snow_man"
+    "description": {
+      "text": "Obtain a Snow Man Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "snow_man": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:snow_golem_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "snow_man"
     ]
+  ]
 }

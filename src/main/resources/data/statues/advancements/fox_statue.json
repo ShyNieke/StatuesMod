@@ -1,35 +1,37 @@
 {
-    "parent": "statues:cat_statue",
-    "display": {
-        "icon": {
-            "item": "statues:fox_statue"
-        },
-        "title": {
-            "text": "Burning it would make it a firefox right?"
-        },
-        "description": {
-            "text": "Obtain a Fox Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:cat_statue",
+  "display": {
+    "icon": {
+      "item": "statues:fox_statue"
     },
-    "criteria": {
-        "fox": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:fox_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Burning it would make it a firefox right?"
     },
-    "requirements": [
-        [
-            "fox"
+    "description": {
+      "text": "Obtain a Fox Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "fox": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:fox_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "fox"
     ]
+  ]
 }

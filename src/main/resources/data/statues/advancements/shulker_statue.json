@@ -1,35 +1,37 @@
 {
-    "parent": "statues:endermite_statue",
-    "display": {
-        "icon": {
-            "item": "statues:shulker_statue"
-        },
-        "title": {
-            "text": "Relocating the City citizen"
-        },
-        "description": {
-            "text": "Obtain a Shulker Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:endermite_statue",
+  "display": {
+    "icon": {
+      "item": "statues:shulker_statue"
     },
-    "criteria": {
-        "shulker": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:shulker_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Relocating the City citizen"
     },
-    "requirements": [
-        [
-            "shulker"
+    "description": {
+      "text": "Obtain a Shulker Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shulker": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:shulker_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "shulker"
     ]
+  ]
 }

@@ -1,35 +1,37 @@
 {
-    "parent": "statues:panda_statue",
-    "display": {
-        "icon": {
-            "item": "statues:bee_statue"
-        },
-        "title": {
-            "text": "What is all the buzz about"
-        },
-        "description": {
-            "text": "Obtain a Bee Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:panda_statue",
+  "display": {
+    "icon": {
+      "item": "statues:bee_statue"
     },
-    "criteria": {
-        "bee": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:bee_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "What is all the buzz about"
     },
-    "requirements": [
-        [
-            "bee"
+    "description": {
+      "text": "Obtain a Bee Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "bee": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:bee_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "bee"
     ]
+  ]
 }

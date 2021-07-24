@@ -1,35 +1,37 @@
 {
-    "parent": "statues:cod_statue",
-    "display": {
-        "icon": {
-            "item": "statues:dolphin_statue"
-        },
-        "title": {
-            "text": "A playful friend"
-        },
-        "description": {
-            "text": "Obtain a Dolphin Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:cod_statue",
+  "display": {
+    "icon": {
+      "item": "statues:dolphin_statue"
     },
-    "criteria": {
-        "dolphin_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:dolphin_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "A playful friend"
     },
-    "requirements": [
-        [
-            "dolphin_statue"
+    "description": {
+      "text": "Obtain a Dolphin Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dolphin_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:dolphin_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dolphin_statue"
     ]
+  ]
 }

@@ -1,35 +1,37 @@
 {
-    "parent": "statues:blaze_statue",
-    "display": {
-        "icon": {
-            "item": "statues:ghast_statue"
-        },
-        "title": {
-            "text": "The squids from the nether"
-        },
-        "description": {
-            "text": "Obtain a Ghast Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:blaze_statue",
+  "display": {
+    "icon": {
+      "item": "statues:ghast_statue"
     },
-    "criteria": {
-        "ghast_statue": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                    {
-                        "item": "statues:ghast_statue"
-                    }
-                ]
-            }
-        }
+    "title": {
+      "text": "The squids from the nether"
     },
-    "requirements": [
-        [
-            "ghast_statue"
+    "description": {
+      "text": "Obtain a Ghast Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "ghast_statue": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:ghast_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ghast_statue"
     ]
+  ]
 }

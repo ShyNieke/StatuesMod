@@ -1,35 +1,37 @@
 {
-    "parent": "statues:slime_statue",
-    "display": {
-        "icon": {
-            "item": "statues:pillager_statue"
-        },
-        "title": {
-            "text": "Crossbow Included"
-        },
-        "description": {
-            "text": "Obtain a Pillager Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:slime_statue",
+  "display": {
+    "icon": {
+      "item": "statues:pillager_statue"
     },
-    "criteria": {
-        "pillager": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:pillager_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Crossbow Included"
     },
-    "requirements": [
-        [
-            "pillager"
+    "description": {
+      "text": "Obtain a Pillager Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "pillager": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:pillager_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "pillager"
     ]
+  ]
 }

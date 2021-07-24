@@ -1,35 +1,37 @@
 {
-    "parent": "statues:salmon_statue",
-    "display": {
-        "icon": {
-            "item": "statues:squid_statue"
-        },
-        "title": {
-            "text": "Release the kraken!"
-        },
-        "description": {
-            "text": "Obtain a Squid Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
+  "parent": "statues:salmon_statue",
+  "display": {
+    "icon": {
+      "item": "statues:squid_statue"
     },
-    "criteria": {
-        "squid": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:squid_statue"
-                }
-                ]
-            }
-        }
+    "title": {
+      "text": "Release the kraken!"
     },
-    "requirements": [
-        [
-            "squid"
+    "description": {
+      "text": "Obtain a Squid Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "squid": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:squid_statue"
+            ]
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "squid"
     ]
+  ]
 }
