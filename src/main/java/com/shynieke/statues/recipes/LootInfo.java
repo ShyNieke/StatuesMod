@@ -1,6 +1,6 @@
 package com.shynieke.statues.recipes;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class LootInfo {
     public static final LootInfo EMPTY = new LootInfo(ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY);

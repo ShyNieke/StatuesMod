@@ -2,17 +2,16 @@ package com.shynieke.statues.init;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.entity.PlayerStatueEntity;
+import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.entity.StatueBatEntity;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.Biome.Category;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -24,25 +23,25 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Reference.MOD_ID)
 public class StatueEntities {
     public static void setupEntities() {
-        EntitySpawnPlacementRegistry.register(StatueRegistry.STATUE_BAT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, StatueBatEntity::canSpawnHere);
+        SpawnPlacements.register(StatueRegistry.STATUE_BAT.get(), SpawnPlacements.Type.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, StatueBatEntity::canSpawnHere);
     }
 
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueEntity.registerAttributes().create());
-        event.put(StatueRegistry.STATUE_BAT.get(), StatueBatEntity.registerAttributes().create());
+        event.put(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatue.createLivingAttributes().build());
+        event.put(StatueRegistry.STATUE_BAT.get(), StatueBatEntity.createAttributes().build());
     }
 
     @SubscribeEvent(priority =  EventPriority.HIGH)
     public static void addSpawn(BiomeLoadingEvent event) {
-        RegistryKey<Biome> biomeKey = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName());
+        ResourceKey<Biome> biomeKey = ResourceKey.create(Registry.BIOME_REGISTRY, event.getName());
         if(StatuesConfig.COMMON.statueBatSpawning.get() && !BiomeDictionary.hasType(biomeKey, Type.END)) {
-            if(event.getCategory() == Category.NETHER) {
+            if(event.getCategory() == BiomeCategory.NETHER) {
                 if(event.getName().getPath().equals("basalt_deltas")) {
-                    event.getSpawns().getSpawner(EntityClassification.AMBIENT).add(new MobSpawnInfo.Spawners(StatueRegistry.STATUE_BAT.get(), 1, 1, 1));
+                    event.getSpawns().getSpawner(MobCategory.AMBIENT).add(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), 1, 1, 1));
                 }
             } else {
-                if(event.getCategory() != Category.MUSHROOM && event.getCategory() != Category.NONE) {
-                    event.getSpawns().getSpawner(EntityClassification.AMBIENT).add(new MobSpawnInfo.Spawners(StatueRegistry.STATUE_BAT.get(), 4, 1, 2));
+                if(event.getCategory() != BiomeCategory.MUSHROOM && event.getCategory() != BiomeCategory.NONE) {
+                    event.getSpawns().getSpawner(MobCategory.AMBIENT).add(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), 4, 1, 2));
                 }
             }
         }

@@ -2,38 +2,38 @@ package com.shynieke.statues.items;
 
 import com.shynieke.statues.init.StatueFoods;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 
 public class StatueMooshroomSoup extends Item {
 
     public StatueMooshroomSoup(Properties builder) {
-        super(builder.food(StatueFoods.SOUP).maxStackSize(8));
+        super(builder.food(StatueFoods.SOUP).stacksTo(8));
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityIn) {
-        if (entityIn instanceof PlayerEntity && !((PlayerEntity) entityIn).abilities.isCreativeMode) {
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityIn) {
+        if(entityIn instanceof Player && !((Player) entityIn).getAbilities().instabuild) {
             ItemStack bowlStack = new ItemStack(Items.BOWL);
-            PlayerEntity playerIn = (PlayerEntity)entityIn;
-            PlayerInventory playerInv = playerIn.inventory;
-            playerIn.onFoodEaten(worldIn, stack);
+            Player playerIn = (Player)entityIn;
+            Inventory playerInv = playerIn.getInventory();
+            playerIn.eat(worldIn, stack);
 
-            if (playerIn instanceof ServerPlayerEntity) {
-                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerIn, stack);
+            if (playerIn instanceof ServerPlayer) {
+                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) playerIn, stack);
             }
 
-            if(!worldIn.isRemote) {
-                if(playerInv.getFirstEmptyStack() == -1) {
-                    playerIn.entityDropItem(bowlStack, 0F);
+            if(!worldIn.isClientSide) {
+                if(playerInv.getFreeSlot() == -1) {
+                    playerIn.spawnAtLocation(bowlStack, 0F);
                 } else {
-                    playerInv.addItemStackToInventory(bowlStack);
+                    playerInv.add(bowlStack);
                 }
             }
         }

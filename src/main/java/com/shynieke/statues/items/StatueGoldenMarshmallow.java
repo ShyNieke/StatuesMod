@@ -2,13 +2,13 @@ package com.shynieke.statues.items;
 
 import com.shynieke.statues.init.StatueFoods;
 import com.shynieke.statues.init.StatueRegistry;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
@@ -19,28 +19,28 @@ public class StatueGoldenMarshmallow extends Item {
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityIn) {
-        if(this.isFood()) {
-            if (!worldIn.isRemote) {
+    public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityIn) {
+        if(this.isEdible()) {
+            if (!level.isClientSide) {
                 if (this == StatueRegistry.MARSHMALLOW_GOLDEN.get()) {
-                    ArrayList<Effect> potionList = new ArrayList<>(ForgeRegistries.POTIONS.getValues());
-                    potionList.remove(Effects.NAUSEA);
+                    ArrayList<MobEffect> potionList = new ArrayList<>(ForgeRegistries.POTIONS.getValues());
+                    potionList.remove(MobEffects.CONFUSION);
 
-                    int i = random.nextInt(potionList.size());
-                    int amplifier = random.nextInt(2);
-                    Effect randomPotion = potionList.get(i);
-                    EffectInstance randomEffect = new EffectInstance(randomPotion, 200, amplifier);
-                    entityIn.addPotionEffect(randomEffect);
+                    int i = level.random.nextInt(potionList.size());
+                    int amplifier = level.random.nextInt(2);
+                    MobEffect randomPotion = potionList.get(i);
+                    MobEffectInstance randomEffect = new MobEffectInstance(randomPotion, 200, amplifier);
+                    entityIn.addEffect(randomEffect);
                 }
             }
-            return entityIn.onFoodEaten(worldIn, stack);
+            return entityIn.eat(level, stack);
         }
 
         return stack;
     }
 
     @Override
-    public boolean hasEffect(ItemStack p_77636_1_) {
+    public boolean isFoil(ItemStack p_77636_1_) {
         return true;
     }
 }

@@ -1,17 +1,18 @@
 package com.shynieke.statues.packets;
 
-import com.shynieke.statues.entity.PlayerStatueEntity;
+import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 
 public class PlayerStatueScreenMessage {
     private int entityID;
 
-    private PlayerStatueScreenMessage(PacketBuffer buf) {
+    private PlayerStatueScreenMessage(FriendlyByteBuf buf) {
         this.entityID = buf.readInt();
     }
 
@@ -19,22 +20,22 @@ public class PlayerStatueScreenMessage {
         this.entityID = playerUUID;
     }
 
-    public void encode(PacketBuffer buf) {
+    public void encode(FriendlyByteBuf buf) {
         buf.writeInt(entityID);
     }
 
-    public static PlayerStatueScreenMessage decode(final PacketBuffer packetBuffer) {
+    public static PlayerStatueScreenMessage decode(final FriendlyByteBuf packetBuffer) {
         return new PlayerStatueScreenMessage(packetBuffer.readInt());
     }
 
     public void handle(Supplier<Context> context) {
-        Context ctx = context.get();
+        NetworkEvent.Context ctx = context.get();
         ctx.enqueueWork(() -> {
             if (ctx.getDirection().getReceptionSide().isClient()) {
                 Minecraft mc = Minecraft.getInstance();
-                Entity entity = mc.world.getEntityByID(entityID);
-                if (entity instanceof PlayerStatueEntity) {
-                    PlayerStatueEntity playerStatue = (PlayerStatueEntity)entity;
+                Entity entity = mc.level.getEntity(entityID);
+                if (entity instanceof PlayerStatue) {
+                    PlayerStatue playerStatue = (PlayerStatue)entity;
                     com.shynieke.statues.client.screen.PlayerPoseScreen.openScreen(playerStatue);
                 }
             }

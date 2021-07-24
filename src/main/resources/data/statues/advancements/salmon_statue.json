@@ -1,35 +1,35 @@
 {
-    "parent": "statues:dolphin_statue",
-    "display": {
-        "icon": {
+  "parent": "statues:dolphin_statue",
+  "display": {
+    "icon": {
+      "item": "statues:salmon_statue"
+    },
+    "title": {
+      "text": "Going upstream!"
+    },
+    "description": {
+      "text": "Obtain a Salmon Statue"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "salmon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
             "item": "statues:salmon_statue"
-        },
-        "title": {
-            "text": "Going upstream!"
-        },
-        "description": {
-            "text": "Obtain a Salmon Statue"
-        },
-        "frame": "task",
-        "show_toast": true,
-        "announce_to_chat": true,
-        "hidden": false
-    },
-    "criteria": {
-        "salmon": {
-            "trigger": "minecraft:inventory_changed",
-            "conditions": {
-                "items": [
-                {
-                    "item": "statues:salmon_statue"
-                }
-                ]
-            }
-        }
-    },
-    "requirements": [
-        [
-            "salmon"
+          }
         ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "salmon"
     ]
+  ]
 }

@@ -1,65 +1,65 @@
 package com.shynieke.statues.entity;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ambient.Bat;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.util.Random;
 
-public class StatueBatEntity extends BatEntity {
-    public StatueBatEntity(EntityType<? extends StatueBatEntity> type, World worldIn) {
-        super(type, worldIn);
+public class StatueBatEntity extends Bat {
+    public StatueBatEntity(EntityType<? extends StatueBatEntity> type, Level level) {
+        super(type, level);
     }
 
-    public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 12.0D);
+    public static AttributeSupplier.Builder createAttributes() {
+        return Bat.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D);
     }
 
     @Nullable
     @Override
-    public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-        int random = getRNG().nextInt(10);
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+        int random = getRandom().nextInt(10);
         if(random < 5) {
-            addPotionEffect(new EffectInstance(Effects.SPEED, 2000 * 20, 2, true, false));
+            addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2000 * 20, 2, true, false));
         }
-        return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (!source.isMagicDamage() && source.getImmediateSource() instanceof LivingEntity) {
-            LivingEntity entitylivingbase = (LivingEntity)source.getImmediateSource();
+    public boolean hurt(DamageSource source, float amount) {
+        if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity) {
+            LivingEntity entitylivingbase = (LivingEntity)source.getDirectEntity();
 
             if (!source.isExplosion()) {
-                entitylivingbase.attackEntityFrom(DamageSource.causeThornsDamage(this), 2.0F);
+                entitylivingbase.hurt(DamageSource.thorns(this), 2.0F);
             }
         }
 
-        return super.attackEntityFrom(source, amount);
+        return super.hurt(source, amount);
     }
 
-    public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
+    public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
         if (pos.getY() >= worldIn.getSeaLevel()) {
             return false;
         } else {
-            int i = worldIn.getLight(pos);
+            int i = worldIn.getMaxLocalRawBrightness(pos);
             int j = 4;
             if (isNearHalloween()) {
                 j = 7;
@@ -67,7 +67,7 @@ public class StatueBatEntity extends BatEntity {
                 return false;
             }
 
-            return i > randomIn.nextInt(j) ? false : canSpawnOn(batIn, worldIn, reason, pos, randomIn);
+            return i > randomIn.nextInt(j) ? false : checkMobSpawnRules(batIn, worldIn, reason, pos, randomIn);
         }
     }
 

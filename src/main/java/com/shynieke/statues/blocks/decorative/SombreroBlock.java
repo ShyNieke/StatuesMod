@@ -2,68 +2,68 @@ package com.shynieke.statues.blocks.decorative;
 
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.init.StatueRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.NoteBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.NoteBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 
 public class SombreroBlock extends AbstractBaseBlock {
 
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 8, 12);
+    private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 8, 12);
 
     public SombreroBlock(Properties properties) {
         super(properties.sound(SoundType.STONE));
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        Block block = worldIn.getBlockState(pos.down()).getBlock();
+    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        Block block = worldIn.getBlockState(pos.below()).getBlock();
         if (block == Blocks.CACTUS && placer != null) {
-            BlockPos downPos = pos.down();
+            BlockPos downPos = pos.below();
             worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
-            worldIn.setBlockState(pos.down(), StatueRegistry.BUMBO_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
-            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+            worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.BUMBO_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+            worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         }
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        super.setPlacedBy(worldIn, pos, state, placer, stack);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-        if(!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+        if(!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
             if (canPlaySound(worldIn, pos, state)) {
-                worldIn.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.NEUTRAL, 1F, getPitch());
+                worldIn.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.NEUTRAL, 1F, getPitch());
             }
         }
-        return ActionResultType.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     public float getPitch() {
         return (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.0F;
     }
 
-    public boolean canPlaySound(World worldIn, BlockPos pos, BlockState state) {
-        return worldIn.getBlockState(pos.down()).getBlock() instanceof NoteBlock;
+    public boolean canPlaySound(Level worldIn, BlockPos pos, BlockState state) {
+        return worldIn.getBlockState(pos.below()).getBlock() instanceof NoteBlock;
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return SHAPE;
     }
 }

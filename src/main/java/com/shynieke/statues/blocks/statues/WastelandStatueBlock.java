@@ -3,18 +3,18 @@ package com.shynieke.statues.blocks.statues;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.recipes.StatueLootList;
-import com.shynieke.statues.tiles.StatueTile;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.PigEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import com.shynieke.statues.tiles.StatueBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class WastelandStatueBlock extends AbstractStatueBase {
 
@@ -23,17 +23,17 @@ public class WastelandStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+	public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
-		PigEntity pig = new PigEntity(EntityType.PIG, worldIn);
-		pig.setCustomName(new StringTextComponent("Wasteland Pig"));
+		Pig pig = new Pig(EntityType.PIG, worldIn);
+		pig.setCustomName(new TextComponent("Wasteland Pig"));
 		tile.summonMob(pig);
 	}
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return RANDOM.nextBoolean() ? StatueSounds.wasteland_hello : StatueSounds.wasteland_onwards;
+		return RANDOM.nextBoolean() ? StatueSounds.WASTELAND_HELLO.get() : StatueSounds.WASTELAND_ONWARDS.get();
 	}
 
 	@Override

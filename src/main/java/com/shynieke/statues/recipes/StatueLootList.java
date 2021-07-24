@@ -1,15 +1,15 @@
 package com.shynieke.statues.recipes;
 
 import com.shynieke.statues.init.StatueRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.fmllegacy.RegistryObject;
 
 import java.util.ArrayList;
 
@@ -70,9 +70,9 @@ public class StatueLootList {
     }
 
     public static ItemStack getWastelandBlock() {
-        ItemStack wasteland = new ItemStack(Blocks.SAND).setDisplayName(new StringTextComponent("Wasteland Block").mergeStyle(TextFormatting.LIGHT_PURPLE));
-        wasteland.addEnchantment(Enchantments.VANISHING_CURSE, 1);
-        CompoundNBT nbt = wasteland.hasTag() ? wasteland.getTag() : new CompoundNBT();
+        ItemStack wasteland = new ItemStack(Blocks.SAND).setHoverName(new TextComponent("Wasteland Block").withStyle(ChatFormatting.LIGHT_PURPLE));
+        wasteland.enchant(Enchantments.VANISHING_CURSE, 1);
+        CompoundTag nbt = wasteland.hasTag() ? wasteland.getTag() : new CompoundTag();
         if(nbt != null) {
             nbt.putInt("HideFlags", 1);
             wasteland.setTag(nbt);
@@ -82,7 +82,7 @@ public class StatueLootList {
 
     public static ItemStack getFloodBucket() {
         ItemStack floodBucket = new ItemStack(Items.WATER_BUCKET);
-        floodBucket.setDisplayName(new StringTextComponent("The Flood").mergeStyle(TextFormatting.BLUE));
+        floodBucket.setHoverName(new TextComponent("The Flood").withStyle(ChatFormatting.BLUE));
 
         return floodBucket;
     }
@@ -151,9 +151,8 @@ public class StatueLootList {
     public static ArrayList<Block> getBlockForStatue(String statue) {
         ArrayList<Block> blockList = new ArrayList<>();
 
-        for(RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries())
-        {
-            String blockName = block.get().getTranslationKey();
+        for(RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries()) {
+            String blockName = block.get().getDescriptionId();
             if(!blockName.isEmpty() && blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4"))) {
                 if (!blockList.contains(block.get())) {
                     blockList.add(block.get());

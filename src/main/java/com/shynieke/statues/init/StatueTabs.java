@@ -1,21 +1,21 @@
 package com.shynieke.statues.init;
 
 import com.shynieke.statues.Reference;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
 public class StatueTabs {
-	public static final ItemGroup STATUES_BLOCKS = new ItemGroup(Reference.MOD_ID + ".blocks") {
+	public static final CreativeModeTab STATUES_BLOCKS = new CreativeModeTab(Reference.MOD_ID + ".blocks") {
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(StatueRegistry.SLIME_STATUE.get());
 		}
-	}.setGroupPath("statues_blocks");
+	}.setRecipeFolderName("statues_blocks");
 
-	public static final ItemGroup STATUES_ITEMS = new ItemGroup(Reference.MOD_ID + ".items") {
+	public static final CreativeModeTab STATUES_ITEMS = new CreativeModeTab(Reference.MOD_ID + ".items") {
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(StatueRegistry.STATUE_CORE.get());
 		}
-	}.setGroupPath("statues_items");
+	}.setRecipeFolderName("statues_items");
 }

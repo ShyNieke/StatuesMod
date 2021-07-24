@@ -20,9 +20,9 @@
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
-                {
-                    "item": "statues:angry_bee_statue"
-                }
+                    {
+                        "item": "statues:angry_bee_statue"
+                    }
                 ]
             }
         }

@@ -1,6 +1,6 @@
 package com.shynieke.statues.recipes;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 public class StatueLootInfo {
     private final String statue;

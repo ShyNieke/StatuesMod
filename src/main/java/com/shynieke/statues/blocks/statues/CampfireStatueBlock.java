@@ -4,44 +4,45 @@ import com.google.common.collect.ImmutableList;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.recipes.StatueLootList;
-import com.shynieke.statues.tiles.StatueTile;
+import com.shynieke.statues.tiles.StatueBlockEntity;
 import com.shynieke.statues.util.ListHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class CampfireStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SOUTH_EAST_SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 0.0D, 11.0D, 7.0D, 16.0D);
-	private static final VoxelShape NORTH_WEST_SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 5.0D, 16.0D, 7.0D, 11.0D);
+	private static final VoxelShape SOUTH_EAST_SHAPE = Block.box(5.0D, 0.0D, 0.0D, 11.0D, 7.0D, 16.0D);
+	private static final VoxelShape NORTH_WEST_SHAPE = Block.box(0.0D, 0.0D, 5.0D, 16.0D, 7.0D, 11.0D);
 
 	public CampfireStatueBlock(Properties builder) {
-		super(builder.sound(SoundType.STONE).setLightLevel((p_235418_0_) -> 12));
+		super(builder.sound(SoundType.STONE).lightLevel((state) -> 12));
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		Direction direction = state.get(HORIZONTAL_FACING);
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		Direction direction = state.getValue(FACING);
 		return direction.getAxis() == Direction.Axis.X ? NORTH_WEST_SHAPE : SOUTH_EAST_SHAPE;
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+	public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
 		tile.summonMob(getGeneral(worldIn));
@@ -52,25 +53,25 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 		return getRandomCampfire();
 	}
 
-	public CreeperEntity getGeneral(World worldIn) {
-		CreeperEntity general = new CreeperEntity(EntityType.CREEPER, worldIn);
-		general.setCustomName(new StringTextComponent("General Spazz"));
-		CompoundNBT tag = new CompoundNBT();
+	public Creeper getGeneral(Level worldIn) {
+		Creeper general = new Creeper(EntityType.CREEPER, worldIn);
+		general.setCustomName(new TextComponent("General Spazz"));
+		CompoundTag tag = new CompoundTag();
 		tag.putByte("ExplosionRadius", (byte) 0);
-		general.writeAdditional(tag);
+		general.addAdditionalSaveData(tag);
 
 		return general;
 	}
 
-	public static List<SoundEvent> campfire_sounds = ImmutableList.of(
-			StatueSounds.campfire_bye_random,
-			StatueSounds.campfire_cold_random,
-			StatueSounds.campfire_greetings_random,
-			StatueSounds.campfire_hello_random,
-			StatueSounds.campfire_snacks_random);
+	public static List<Supplier<SoundEvent>> campfire_sounds = ImmutableList.of(
+			StatueSounds.CAMPFIRE_BYE_RANDOM,
+			StatueSounds.CAMPFIRE_COLD_RANDOM,
+			StatueSounds.CAMPFIRE_GREETINGS_RANDOM,
+			StatueSounds.CAMPFIRE_HELLO_RANDOM,
+			StatueSounds.CAMPFIRE_SNACKS_RANDOM);
 
 	public static SoundEvent getRandomCampfire() {
-		return ListHelper.getRandomFromList(campfire_sounds);
+		return ListHelper.getRandomFromList(campfire_sounds).get();
 	}
 
 	@Override

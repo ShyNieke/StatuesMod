@@ -3,59 +3,64 @@ package com.shynieke.statues.client.render;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.shynieke.statues.client.model.PlayerStatueModel;
-import com.shynieke.statues.entity.PlayerStatueEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+import com.shynieke.statues.client.StatuePlayerModel;
+import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.LivingRenderer;
-import net.minecraft.client.renderer.entity.layers.BipedArmorLayer;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.layers.ElytraLayer;
-import net.minecraft.client.renderer.entity.layers.HeadLayer;
-import net.minecraft.client.renderer.entity.layers.HeldItemLayer;
-import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 import java.util.Map;
 
-public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, PlayerStatueModel> {
-    public static final PlayerStatueModel model = new PlayerStatueModel(0.03125F, false);
-    public static final PlayerStatueModel slimModel = new PlayerStatueModel(0.03125F, true);
+public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, StatuePlayerModel<PlayerStatue>> {
+    private final StatuePlayerModel<PlayerStatue> playerModel;
+    private final StatuePlayerModel<PlayerStatue> slimPlayerModel;
+    public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkin();
 
-    public PlayerStatueRenderer(EntityRendererManager renderManager) {
-        this(renderManager, false);
+    public PlayerStatueRenderer(EntityRendererProvider.Context context) {
+        this(context, false);
     }
 
-    public PlayerStatueRenderer(EntityRendererManager manager, boolean useSmallArms) {
-        super(manager, new PlayerStatueModel(0.0F, useSmallArms), 0.0F);
-        this.addLayer(new BipedArmorLayer<>(this, new BipedModel(0.5F), new BipedModel(1.0F)));
-        this.addLayer(new HeldItemLayer<>(this));
-        this.addLayer(new ElytraLayer<>(this));
-        this.addLayer(new HeadLayer<>(this));
+    public PlayerStatueRenderer(EntityRendererProvider.Context context, boolean slim) {
+        super(context, new StatuePlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), slim), 0.0F);
+        this.playerModel = new StatuePlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false);
+        this.slimPlayerModel = new StatuePlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false);
+
+        this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_INNER_ARMOR :
+                ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_OUTER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR))));
+        this.addLayer(new ItemInHandLayer<>(this));
+        this.addLayer(new ElytraLayer<>(this, context.getModelSet()));
+        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet()));
     }
 
     @Override
-    public ResourceLocation getEntityTexture(PlayerStatueEntity playerStatue) {
+    public ResourceLocation getTextureLocation(PlayerStatue playerStatue) {
         return playerStatue.getGameProfile()
                 .map(this::getSkin)
-                .orElseGet(() -> new ResourceLocation("minecraft:textures/entity/steve.png"));
+                .orElse(defaultTexture);
     }
 
     private ResourceLocation getSkin(GameProfile gameProfile) {
         if (!gameProfile.isComplete()) {
-            return new ResourceLocation("minecraft:textures/entity/steve.png");
-        }
-        else {
+            return defaultTexture;
+        } else {
             final Minecraft minecraft = Minecraft.getInstance();
             SkinManager skinManager = minecraft.getSkinManager();
-            final Map<Type, MinecraftProfileTexture> loadSkinFromCache = skinManager.loadSkinFromCache(gameProfile); // returned map may or may not be typed
+            final Map<Type, MinecraftProfileTexture> loadSkinFromCache = skinManager.getInsecureSkinInformation(gameProfile); // returned map may or may not be typed
             if (loadSkinFromCache.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-                return skinManager.loadSkin(loadSkinFromCache.get(Type.SKIN), Type.SKIN);
+                return skinManager.registerTexture(loadSkinFromCache.get(Type.SKIN), Type.SKIN);
             }
             else {
                 return DefaultPlayerSkin.getDefaultSkin(gameProfile.getId());
@@ -64,29 +69,28 @@ public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, Pla
     }
 
     @Override
-    public void render(PlayerStatueEntity playerStatue, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-        this.entityModel = model;
-        if(playerStatue.isSlim() && this.entityModel != slimModel) {
-            this.entityModel = slimModel;
+    public void render(PlayerStatue playerStatue, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
+        if(playerStatue.isSlim() && this.playerModel != slimPlayerModel) {
+            this.model = slimPlayerModel;
         }
-        matrixStackIn.translate(0, playerStatue.getYOffsetData(), 0);
-        super.render(playerStatue, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+        poseStack.translate(0, playerStatue.getYOffsetData(), 0);
+        super.render(playerStatue, entityYaw, partialTicks, poseStack, bufferSource, packedLightIn);
     }
 
     @Override
-    protected boolean canRenderName(PlayerStatueEntity playerStatue) {
+    protected boolean shouldShowName(PlayerStatue playerStatue) {
         return playerStatue.isCustomNameVisible();
     }
 
-    protected void applyRotations(PlayerStatueEntity playerStatue, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
-        matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F - rotationYaw));
-        float f = (float)(playerStatue.world.getGameTime() - playerStatue.punchCooldown) + partialTicks;
+    protected void setupRotations(PlayerStatue playerStatue, PoseStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotationYaw));
+        float f = (float)(playerStatue.level.getGameTime() - playerStatue.punchCooldown) + partialTicks;
         if (f < 5.0F) {
-            matrixStackIn.rotate(Vector3f.YP.rotationDegrees(MathHelper.sin(f / 1.5F * (float)Math.PI) * 3.0F));
+            matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(f / 1.5F * (float)Math.PI) * 3.0F));
         }
     }
 
-    protected void preRenderCallback(PlayerStatueEntity playerStatue, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(PlayerStatue playerStatue, PoseStack matrixStackIn, float partialTickTime) {
         float f = 0.9375F;
         matrixStackIn.scale(f, f, f);
     }

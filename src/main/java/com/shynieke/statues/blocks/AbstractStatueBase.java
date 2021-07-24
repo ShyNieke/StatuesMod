@@ -1,84 +1,101 @@
 package com.shynieke.statues.blocks;
 
-import com.shynieke.statues.tiles.StatueTile;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.NoteBlock;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer.Builder;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import com.shynieke.statues.init.StatueBlockEntities;
+import com.shynieke.statues.tiles.AbstractStatueBlockEntity;
+import com.shynieke.statues.tiles.StatueBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.NoteBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-public abstract class AbstractStatueBase extends AbstractBaseBlock {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
+import javax.annotation.Nullable;
+
+public abstract class AbstractStatueBase extends AbstractBaseBlock implements EntityBlock {
+	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
 	public static final BooleanProperty INTERACTIVE = BooleanProperty.create("interactive");
 
 	public AbstractStatueBase(Block.Properties builder) {
-		super(builder.hardnessAndResistance(0.6F)); // Resistance 0.6F
-		this.setDefaultState(this.getDefaultState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.valueOf(false)).with(INTERACTIVE, false));
+		super(builder.strength(0.6F)); // Resistance 0.6F
+		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(INTERACTIVE, false));
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-		if(!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
-			if (canPlaySound(worldIn, pos, state)) {
-				worldIn.playSound(null, pos, getSound(state), SoundCategory.NEUTRAL, 1F, getPitch());
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+		if(!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+			if (canPlaySound(level, pos, state)) {
+				level.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F, getPitch());
 			}
 		}
-		if (state.get(INTERACTIVE).booleanValue() && handIn == Hand.MAIN_HAND) {
-			if (!worldIn.isRemote && (getTE(worldIn, pos) != null)) {
-				executeStatueBehavior(getTE(worldIn, pos), state, worldIn, pos, playerIn, handIn, result);
+		if (state.getValue(INTERACTIVE).booleanValue() && handIn == InteractionHand.MAIN_HAND) {
+			if (!level.isClientSide && (getTE(level, pos) != null)) {
+				executeStatueBehavior(getTE(level, pos), state, level, pos, playerIn, handIn, result);
 			}
 		}
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
-	public StatueTile getTE(IBlockReader world, BlockPos pos) {
-		return world.getTileEntity(pos) instanceof StatueTile ? (StatueTile) world.getTileEntity(pos): null;
+	public StatueBlockEntity getTE(BlockGetter getter, BlockPos pos) {
+		return getter.getBlockEntity(pos) instanceof StatueBlockEntity ? (StatueBlockEntity) getter.getBlockEntity(pos): null;
 	}
 
-	public void executeStatueBehavior(StatueTile tile, BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+	public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 
 	}
 
+	@Nullable
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return state.get(INTERACTIVE).booleanValue();
-	}
-
-	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		if (state.get(INTERACTIVE).booleanValue()) {
-			return new StatueTile();
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		if (state.getValue(INTERACTIVE).booleanValue()) {
+			return new StatueBlockEntity(pos, state);
 		} else {
 			return null;
 		}
 	}
 
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+		if (state.getValue(INTERACTIVE).booleanValue()) {
+			return createStatueTicker(level, blockEntityType, StatueBlockEntities.STATUE.get());
+		} else {
+			return null;
+		}
+	}
+
+	@Nullable
+	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends AbstractStatueBlockEntity> blockEntityType1) {
+		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, AbstractStatueBlockEntity::serverTick);
+	}
+
 	@Override
-	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
-		ItemStack itemstack = super.getItem(worldIn, pos, state);
-		StatueTile statueTile = getTE(worldIn, pos);
-		if(statueTile != null && state.get(INTERACTIVE)) {
-			CompoundNBT compoundnbt = statueTile.saveToNbt(new CompoundNBT());
+	public ItemStack getCloneItemStack(BlockGetter getter, BlockPos pos, BlockState state) {
+		ItemStack itemstack = super.getCloneItemStack(getter, pos, state);
+		StatueBlockEntity statueBlockEntity = getTE(getter, pos);
+		if(statueBlockEntity != null && state.getValue(INTERACTIVE)) {
+			CompoundTag compoundnbt = statueBlockEntity.saveToNbt(new CompoundTag());
 			if (!compoundnbt.isEmpty()) {
-				itemstack.setTagInfo("BlockEntityTag", compoundnbt);
+				itemstack.addTagElement("BlockEntityTag", compoundnbt);
 			}
 		}
 
@@ -86,21 +103,21 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	}
 
 	@Override
-	protected void fillStateContainer(Builder<Block, BlockState> builder) {
-		builder.add(HORIZONTAL_FACING, WATERLOGGED, INTERACTIVE);
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(FACING, WATERLOGGED, INTERACTIVE);
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
 		return true;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (state.getBlock() != newState.getBlock()) {
-			super.onReplaced(state, worldIn, pos, newState, isMoving);
-			worldIn.removeTileEntity(pos);
+			super.onRemove(state, level, pos, newState, isMoving);
+			level.removeBlockEntity(pos);
 		}
 	}
 
@@ -123,30 +140,30 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock {
 	}
 
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.BLOCK_ANVIL_LAND;
+		return SoundEvents.ANVIL_LAND;
 	}
 
 	public float getPitch() {
 		return this.isBaby() ? (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.5F : (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.0F;
 	}
 
-	public boolean canPlaySound(World worldIn, BlockPos pos, BlockState state) {
-		TileEntity tile = worldIn.getTileEntity(pos);
-		boolean flag = state.get(INTERACTIVE) && (tile instanceof StatueTile && ((StatueTile) tile).makesSounds());
-		boolean flag2 = worldIn.getBlockState(pos.down()).getBlock() instanceof NoteBlock;
+	public boolean canPlaySound(Level worldIn, BlockPos pos, BlockState state) {
+		BlockEntity tile = worldIn.getBlockEntity(pos);
+		boolean flag = state.getValue(INTERACTIVE) && (tile instanceof StatueBlockEntity && ((StatueBlockEntity) tile).makesSounds());
+		boolean flag2 = worldIn.getBlockState(pos.below()).getBlock() instanceof NoteBlock;
 		return flag || flag2;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if (!worldIn.isRemote) {
-			if (canPlaySound(worldIn, pos, state) && worldIn.isBlockPowered(pos)) {
-				worldIn.playSound(null, pos, getSound(state), SoundCategory.NEUTRAL, 1F, (worldIn.rand.nextFloat() - worldIn.rand.nextFloat()) * 0.2F + 1.5F);
+	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if (!worldIn.isClientSide) {
+			if (canPlaySound(worldIn, pos, state) && worldIn.hasNeighborSignal(pos)) {
+				worldIn.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F, (worldIn.random.nextFloat() - worldIn.random.nextFloat()) * 0.2F + 1.5F);
 			}
 		}
 		super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);

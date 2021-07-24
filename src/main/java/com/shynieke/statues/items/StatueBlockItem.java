@@ -1,32 +1,28 @@
 package com.shynieke.statues.items;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.compat.curios.CuriosCompat.StatueCurioCapabilityProvider;
 import com.shynieke.statues.init.StatueTabs;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntityType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.ModList;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
 public class StatueBlockItem extends BlockItem {
 
 	public StatueBlockItem(Block blockIn, Item.Properties builder) {
-		super(blockIn, builder.group(StatueTabs.STATUES_BLOCKS));
+		super(blockIn, builder.tab(StatueTabs.STATUES_BLOCKS));
 	}
 
 	@Nullable
 	@Override
-	public EquipmentSlotType getEquipmentSlot(ItemStack stack) {
-		return EquipmentSlotType.HEAD;
+	public EquipmentSlot getEquipmentSlot(ItemStack stack) {
+		return EquipmentSlot.HEAD;
 	}
 
 	public boolean isBaby() {
@@ -47,22 +43,22 @@ public class StatueBlockItem extends BlockItem {
 
 	@Nullable
 	@Override
-	protected BlockState getStateForPlacement(BlockItemUseContext context) {
-		BlockState state = super.getStateForPlacement(context);
-		ItemStack stack = context.getItem();
-		if(Block.getBlockFromItem(stack.getItem()) instanceof AbstractStatueBase) {
+	protected BlockState getPlacementState(BlockPlaceContext context) {
+		BlockState state = super.getPlacementState(context);
+		ItemStack stack = context.getItemInHand();
+		if(Block.byItem(stack.getItem()) instanceof AbstractStatueBase) {
 			if(stack.hasTag() && stack.getTag().get("Traits") != null) {
-				state = state.with(AbstractStatueBase.INTERACTIVE, true);
+				state = state.setValue(AbstractStatueBase.INTERACTIVE, true);
 			}
 		}
 		return state;
 	}
 
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-		if(ModList.get().isLoaded("curios"))
-			return new StatueCurioCapabilityProvider(stack);
-		else
-			return null;
-	}
+//	@Override
+//	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+//		if(ModList.get().isLoaded("curios"))
+//			return new StatueCurioCapabilityProvider(stack);
+//		else
+//			return null;
+//	}
 }

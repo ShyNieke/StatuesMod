@@ -3,55 +3,57 @@ package com.shynieke.statues.blocks.statues;
 import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.entity.PlayerStatueEntity;
+import com.shynieke.statues.entity.PlayerStatue;
+import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTags;
-import com.shynieke.statues.items.PlayerStatueItem;
-import com.shynieke.statues.tiles.PlayerTile;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTUtil;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.INameable;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.StringUtils;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import com.shynieke.statues.items.PlayerStatueSpawnItem;
+import com.shynieke.statues.tiles.PlayerBlockEntity;
+import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.StringUtil;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition.Builder;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -59,108 +61,114 @@ import java.util.UUID;
 
 public class PlayerStatueBlock extends AbstractBaseBlock {
 
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
+	private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 	public static final BooleanProperty ONLINE = BooleanProperty.create("online");
 
 	public PlayerStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
-		this.setDefaultState(this.getDefaultState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(ONLINE, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE).setValue(ONLINE, false));
+	}
+
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return new PlayerBlockEntity(pos, state);
+	}
+
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+		return createStatueTicker(level, blockEntityType, StatueBlockEntities.PLAYER.get());
+	}
+
+	@Nullable
+	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends PlayerBlockEntity> blockEntityType1) {
+		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, PlayerBlockEntity::serverTick);
+	}
+
+	private PlayerBlockEntity getBE(Level world, BlockPos pos) {
+		return (PlayerBlockEntity) world.getBlockEntity(pos);
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return true;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.ENTITYBLOCK_ANIMATED;
 	}
 
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-		return new PlayerTile();
-	}
+	public void playerDestroy(Level worldIn, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
+		if (te instanceof PlayerBlockEntity && ((Nameable)te).hasCustomName()) {
+			PlayerBlockEntity tile = (PlayerBlockEntity)te;
+			player.causeFoodExhaustion(0.005F);
 
-	private PlayerTile getTE(World world, BlockPos pos) {
-		return (PlayerTile) world.getTileEntity(pos);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	@Override
-	public BlockRenderType getRenderType(BlockState p_149645_1_) {
-		return BlockRenderType.ENTITYBLOCK_ANIMATED;
-	}
-
-	@Override
-	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
-		if (te instanceof PlayerTile && ((INameable)te).hasCustomName()) {
-			PlayerTile tile = (PlayerTile)te;
-			player.addExhaustion(0.005F);
-
-			if (worldIn.isRemote)
+			if (worldIn.isClientSide)
 				return;
 
 			if (this == Blocks.AIR)
 				return;
 
 			ItemStack itemstack = new ItemStack(this);
-			itemstack.setDisplayName(((INameable)tile).getName());
+			itemstack.setHoverName(((Nameable)tile).getName());
 
 			if (tile.getPlayerProfile() != null) {
-				CompoundNBT stackTag = itemstack.getTag() != null ? itemstack.getTag() : new CompoundNBT();
-				CompoundNBT nbttagcompound = new CompoundNBT();
-				NBTUtil.writeGameProfile(nbttagcompound, tile.getPlayerProfile());
+				CompoundTag stackTag = itemstack.getTag() != null ? itemstack.getTag() : new CompoundTag();
+				CompoundTag nbttagcompound = new CompoundTag();
+				NbtUtils.writeGameProfile(nbttagcompound, tile.getPlayerProfile());
 				stackTag.put("PlayerProfile", nbttagcompound);
 				itemstack.setTag(stackTag);
-				itemstack.setDisplayName(((INameable)tile).getName());
+				itemstack.setHoverName(((Nameable)tile).getName());
 			}
 
-			spawnAsEntity(worldIn, pos, itemstack);
+			popResource(worldIn, pos, itemstack);
 
 			if(tile.getComparatorApplied()) {
-				spawnAsEntity(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
+				popResource(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
 		} else {
-			super.harvestBlock(worldIn, player, pos, state, null, stack);
+			super.playerDestroy(worldIn, player, pos, state, null, stack);
 		}
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean p_196243_5_) {
-		if (state.hasTileEntity() && newState.getBlock() != StatueRegistry.PLAYER_STATUE.get()) {
-			worldIn.removeTileEntity(pos);
+	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean p_196243_5_) {
+		if (state.hasBlockEntity() && newState.getBlock() != StatueRegistry.PLAYER_STATUE.get()) {
+			worldIn.removeBlockEntity(pos);
 		}
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		TileEntity tileentity = world.getTileEntity(pos);
-		if (tileentity instanceof PlayerTile) {
-			PlayerTile playerTile = (PlayerTile)tileentity;
+	public ItemStack pickupBlock(LevelAccessor level, BlockPos pos, BlockState state) {
+		BlockEntity tileentity = level.getBlockEntity(pos);
+		if (tileentity instanceof PlayerBlockEntity) {
+			PlayerBlockEntity playerTile = (PlayerBlockEntity)tileentity;
 			ItemStack stack = new ItemStack(state.getBlock());
 
 			GameProfile profile = playerTile.getPlayerProfile();
 			if (profile != null) {
-				CompoundNBT tag = new CompoundNBT();
+				CompoundTag tag = new CompoundTag();
 
-				if (!StringUtils.isNullOrEmpty(profile.getName())) {
+				if (!StringUtil.isNullOrEmpty(profile.getName())) {
 					GameProfile gameprofile = new GameProfile((UUID)null, profile.getName());
-					gameprofile = PlayerTile.updateGameProfile(gameprofile);
-					tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
+					PlayerBlockEntity.updateGameprofile(gameprofile, (newProfile) -> {
+						tag.put("PlayerProfile", NbtUtils.writeGameProfile(new CompoundTag(), newProfile));
+					});
 				}
 				stack.setTag(tag);
 			}
 
-			return stack.setDisplayName(playerTile.getName());
+			return stack.setHoverName(playerTile.getName());
 		} else {
 			return new ItemStack(state.getBlock());
 		}
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		super.onBlockPlacedBy(worldIn, pos, state.with(ONLINE, false), placer, stack);
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		super.setPlacedBy(worldIn, pos, state.setValue(ONLINE, false), placer, stack);
 
-		if(!worldIn.isRemote && getTE(worldIn, pos) != null) {
-			PlayerTile tile = getTE(worldIn, pos);
-			if(stack.hasDisplayName()) {
-				String stackName = stack.getDisplayName().getUnformattedComponentText();
+		if(!worldIn.isClientSide && getBE(worldIn, pos) != null) {
+			PlayerBlockEntity tile = getBE(worldIn, pos);
+			if(stack.hasCustomHoverName()) {
+				String stackName = stack.getHoverName().getContents();
 				boolean spaceFlag = stackName.contains(" ");
 				boolean emptyFlag = stackName.isEmpty();
 
@@ -168,9 +176,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					GameProfile newProfile = new GameProfile((UUID)null, stackName);
 
 					if (stack.hasTag() && stack.getTag() != null) {
-						CompoundNBT tag = stack.getTag();
+						CompoundTag tag = stack.getTag();
 						if (tag.contains("PlayerProfile")) {
-							GameProfile foundProfile = NBTUtil.readGameProfile(tag.getCompound("PlayerProfile"));
+							GameProfile foundProfile = NbtUtils.readGameProfile(tag.getCompound("PlayerProfile"));
 							if(foundProfile != null && foundProfile.getName().equalsIgnoreCase(stackName)) {
 								newProfile = foundProfile;
 							}
@@ -180,8 +188,8 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					tile.setPlayerProfile(newProfile);
 				}
 			} else {
-				if(placer instanceof PlayerEntity) {
-					PlayerEntity player = (PlayerEntity) placer;
+				if(placer instanceof Player) {
+					Player player = (Player) placer;
 					tile.setPlayerProfile(player.getGameProfile());
 				} else {
 					tile.setPlayerProfile(new GameProfile((UUID)null, "steve"));
@@ -191,22 +199,22 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		if(Screen.hasShiftDown()){
 			if(stack.hasTag()) {
-				CompoundNBT tag = stack.getTag();
-				IFormattableTextComponent userComponent = new StringTextComponent("Username: ").mergeStyle(TextFormatting.GOLD);
-				userComponent.appendSibling(stack.getDisplayName().copyRaw().mergeStyle(TextFormatting.WHITE));
+				CompoundTag tag = stack.getTag();
+				MutableComponent userComponent = new TextComponent("Username: ").withStyle(ChatFormatting.GOLD);
+				userComponent.append(stack.getHoverName().plainCopy().withStyle(ChatFormatting.WHITE));
 				tooltip.add(userComponent);
 
 				if(tag != null && tag.contains("PlayerProfile")) {
-					CompoundNBT profileTag = (CompoundNBT)tag.get("PlayerProfile");
+					CompoundTag profileTag = (CompoundTag)tag.get("PlayerProfile");
 					if(profileTag != null) {
-						GameProfile gameprofile = NBTUtil.readGameProfile(profileTag);
+						GameProfile gameprofile = NbtUtils.readGameProfile(profileTag);
 
 						if(gameprofile != null && gameprofile.isComplete()) {
-							IFormattableTextComponent UUIDComponent = new StringTextComponent("UUID: ").mergeStyle(TextFormatting.GOLD);
-							UUIDComponent.appendSibling(new StringTextComponent(gameprofile.getId().toString()).mergeStyle(TextFormatting.WHITE));
+							MutableComponent UUIDComponent = new TextComponent("UUID: ").withStyle(ChatFormatting.GOLD);
+							UUIDComponent.append(new TextComponent(gameprofile.getId().toString()).withStyle(ChatFormatting.WHITE));
 							tooltip.add(UUIDComponent);
 						}
 					}
@@ -216,114 +224,109 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-		if (blockState.get(ONLINE))
+	public int getSignal(BlockState blockState, BlockGetter blockAccess, BlockPos pos, Direction side) {
+		if (blockState.getValue(ONLINE))
 			return 15;
 		return 0;
 	}
 
 	@Override
-	public boolean canProvidePower(BlockState state)
+	public boolean isSignalSource(BlockState state)
 	{
-		return true;
+		return state.getValue(ONLINE);
 	}
 
 	@Override
-	public boolean canConnectRedstone(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-		return blockState.get(ONLINE);
-	}
-
-	@Override
-	public boolean shouldCheckWeakPower(BlockState state, IWorldReader world, BlockPos pos, Direction side) {
+	public boolean shouldCheckWeakPower(BlockState state, LevelReader world, BlockPos pos, Direction side) {
 		return false;
 	}
 
 	@Override
-	protected void fillStateContainer(net.minecraft.state.StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(HORIZONTAL_FACING, WATERLOGGED, ONLINE);
+	protected void createBlockStateDefinition(Builder<Block, BlockState> blockStateBuilder) {
+		blockStateBuilder.add(FACING, WATERLOGGED, ONLINE);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult result) {
-		ItemStack stack = playerIn.getHeldItem(hand);
-		GameProfile tileProfile = getTE(worldIn, pos).getPlayerProfile();
-		PlayerTile tile = getTE(worldIn, pos);
-		if(!worldIn.isRemote && tile != null && tileProfile != null) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult result) {
+		ItemStack stack = playerIn.getItemInHand(hand);
+		GameProfile tileProfile = getBE(level, pos).getPlayerProfile();
+		PlayerBlockEntity tile = getBE(level, pos);
+		if(!level.isClientSide && tile != null && tileProfile != null) {
 			String playerName = tileProfile.getName();
-			boolean onlineFlag = worldIn.getPlayerByUuid(tileProfile.getId()) != null;
+			boolean onlineFlag = level.getPlayerByUUID(tileProfile.getId()) != null;
 
-			if(playerIn.isSneaking()) {
+			if(playerIn.isShiftKeyDown()) {
 				if(tile.getComparatorApplied()) {
 					tile.setComparatorApplied(false);
 					ItemStack comparatorStack = new ItemStack(Items.COMPARATOR);
-					if(!playerIn.addItemStackToInventory(comparatorStack)) {
-						worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
+					if(!playerIn.addItem(comparatorStack)) {
+						level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
 					}
 				}
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			} else {
 				if(StatuesConfig.COMMON.playerCompass.get()) {
 					if(stack.getItem() == Items.COMPASS || stack.getItem() == StatueRegistry.PLAYER_COMPASS.get()) {
 						boolean isPlayerCompass = stack.getItem() == StatueRegistry.PLAYER_COMPASS.get();
 						if(onlineFlag) {
 							ItemStack playerCompass = isPlayerCompass ? stack : new ItemStack(StatueRegistry.PLAYER_COMPASS.get());
-							CompoundNBT locationTag = new CompoundNBT();
+							CompoundTag locationTag = new CompoundTag();
 
-							PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
-							if(player != null && player.world.getDimensionKey().getLocation().equals(playerIn.world.getDimensionKey().getLocation())) {
-								BlockPos playerPos = player.getPosition();
-								locationTag.putLong("lastPlayerLocation", playerPos.toLong());
+							Player player = level.getPlayerByUUID(tileProfile.getId());
+							if(player != null && player.level.dimension().location().equals(playerIn.level.dimension().location())) {
+								BlockPos playerPos = player.blockPosition();
+								locationTag.putLong("lastPlayerLocation", playerPos.asLong());
 								locationTag.putString("playerTracking", tileProfile.getName());
 
 								playerCompass.setTag(locationTag);
 
 								if(!isPlayerCompass) {
-									if(!playerIn.abilities.isCreativeMode) {
+									if(!playerIn.getAbilities().instabuild) {
 										stack.shrink(1);
 									}
 									if (stack.isEmpty()) {
-										playerIn.setHeldItem(hand, playerCompass);
-									} else if (!playerIn.inventory.addItemStackToInventory(playerCompass)) {
-										playerIn.dropItem(playerCompass, false);
+										playerIn.setItemInHand(hand, playerCompass);
+									} else if (!playerIn.getInventory().add(playerCompass)) {
+										playerIn.drop(playerCompass, false);
 									}
 								}
 							} else {
-								playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
+								playerIn.sendMessage(new TranslatableComponent("statues:player.compass.dimension.failure", ChatFormatting.GOLD + playerName), Util.NIL_UUID);
 							}
 
 						} else {
-							playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
+							playerIn.sendMessage(new TranslatableComponent("statues:player.compass.offline", ChatFormatting.GOLD + playerName), Util.NIL_UUID);
 						}
-						return ActionResultType.SUCCESS;
+						return InteractionResult.SUCCESS;
 					}
 					if(stack.getItem() == Items.COMPARATOR) {
 						if(!tile.getComparatorApplied()) {
-							if(!playerIn.abilities.isCreativeMode) {
+							if(!playerIn.getAbilities().instabuild) {
 								stack.shrink(1);
 							}
 							tile.setComparatorApplied(true);
 							tile.updateOnline();
-							return ActionResultType.SUCCESS;
+							return InteractionResult.SUCCESS;
 						}
 					}
-					if(stack.getItem().isIn(StatueTags.PLAYER_UPGRADE_ITEM)) {
-						if (worldIn instanceof ServerWorld) {
-							ServerWorld serverworld = (ServerWorld)worldIn;
-							PlayerStatueEntity playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), tile.getName(), playerIn, pos, SpawnReason.SPAWN_EGG, true, true);
+					if(stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
+						if (level instanceof ServerLevel) {
+							ServerLevel serverworld = (ServerLevel) level;
+							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), tile.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
 							if (playerStatueEntity == null) {
-								return ActionResultType.FAIL;
+								return InteractionResult.FAIL;
 							}
 
-							serverworld.func_242417_l(playerStatueEntity);
-							float f = (float) MathHelper.floor((MathHelper.wrapDegrees(playerIn.rotationYaw - 180.0F) + 22.5F) / 45.0F) * 45.0F;
-							playerStatueEntity.setLocationAndAngles(playerStatueEntity.getPosX(), playerStatueEntity.getPosY(), playerStatueEntity.getPosZ(), f, 0.0F);
-							PlayerStatueItem.applyRandomRotations(playerStatueEntity, worldIn.rand);
+							serverworld.addFreshEntityWithPassengers(playerStatueEntity);
+							float f = (float) Mth.floor((Mth.wrapDegrees(playerIn.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+							playerStatueEntity.moveTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
+							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.random);
 							playerStatueEntity.setGameProfile(tile.getPlayerProfile());
-							worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
-							worldIn.addEntity(playerStatueEntity);
-							worldIn.playSound((PlayerEntity)null, playerStatueEntity.getPosX(), playerStatueEntity.getPosY(), playerStatueEntity.getPosZ(), SoundEvents.ENTITY_ARMOR_STAND_PLACE, SoundCategory.BLOCKS, 0.75F, 0.8F);
+							level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+							level.addFreshEntity(playerStatueEntity);
+							level.playSound((Player)null, playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundSource.BLOCKS, 0.75F, 0.8F);
 
-							if(!playerIn.abilities.isCreativeMode) {
+							if(!playerIn.getAbilities().instabuild) {
 								stack.shrink(1);
 							}
 						}
@@ -331,21 +334,21 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				}
 			}
 		}
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.with(HORIZONTAL_FACING, rot.rotate(state.get(HORIZONTAL_FACING))).with(ONLINE, false);
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING))).setValue(ONLINE, false);
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(HORIZONTAL_FACING))).with(ONLINE, false);
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING))).setValue(ONLINE, false);
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

@@ -1,14 +1,15 @@
 package com.shynieke.statues.blocks.decorative;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.block.SoundType;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PebbleBlock extends FallingBlock {
-    public PebbleBlock(Properties properties) {
-        super(properties.hardnessAndResistance(0.6F).sound(SoundType.GROUND));
+    public PebbleBlock(Block.Properties properties) {
+        super(properties.strength(0.6F).sound(SoundType.GRAVEL));
     }
 
     @OnlyIn(Dist.CLIENT)

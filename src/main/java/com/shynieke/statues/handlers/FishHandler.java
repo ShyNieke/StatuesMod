@@ -2,11 +2,11 @@ package com.shynieke.statues.handlers;
 
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.init.StatueRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -16,9 +16,9 @@ import java.util.List;
 public class FishHandler {
     @SubscribeEvent
     public void onItemFished(ItemFishedEvent event) {
-        PlayerEntity player = event.getPlayer();
-        World world = player.world;
-        if(!world.isRemote){
+        Player player = event.getPlayer();
+        Level level = player.level;
+        if(!level.isClientSide){
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EAGLE_RAY.get());
             dropFishedStatue(itemStackToDrop, player, event);
         }
@@ -30,12 +30,12 @@ public class FishHandler {
 
         switch (StatuesConfig.COMMON.statueKillSource.get()) {
             default:
-                if (source instanceof ServerPlayerEntity && !(source instanceof FakePlayer)) {
-                    ServerPlayerEntity player = (ServerPlayerEntity) source;
+                if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
+                    ServerPlayer player = (ServerPlayer) source;
                     List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
                         for (String luckyName : luckyPlayers) {
-                            String user = player.getName().getUnformattedComponentText();
+                            String user = player.getName().getContents();
 
                             if (!luckyName.isEmpty() && user.equals(luckyName)) {
                                 default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;
@@ -49,7 +49,7 @@ public class FishHandler {
                 }
                 break;
             case PLAYER_FAKEPLAYER:
-                if (source instanceof ServerPlayerEntity) {
+                if (source instanceof ServerPlayer) {
                     if (random_drop <= default_drop_chance) {
                         event.getDrops().add(itemStackToDrop);
                     }

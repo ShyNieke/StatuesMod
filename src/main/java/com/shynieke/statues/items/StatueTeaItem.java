@@ -2,39 +2,39 @@ package com.shynieke.statues.items;
 
 import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class StatueTeaItem extends Item {
 
-    public StatueTeaItem(Properties builder, Food food) {
-        super(builder.food(food).maxStackSize(8));
+    public StatueTeaItem(Properties builder, FoodProperties food) {
+        super(builder.food(food).stacksTo(8));
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityIn) {
-        if(entityIn instanceof PlayerEntity) {
-            PlayerEntity playerIn = entityIn instanceof PlayerEntity ? (PlayerEntity)entityIn : null;
-            playerIn.onFoodEaten(worldIn, stack);
+    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityIn) {
+        if(entityIn instanceof Player) {
+            Player playerIn = entityIn instanceof Player ? (Player)entityIn : null;
+            playerIn.eat(worldIn, stack);
 
-            if (playerIn instanceof ServerPlayerEntity) {
-                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)playerIn, stack);
+            if (playerIn instanceof ServerPlayer) {
+                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)playerIn, stack);
             }
 
-            playerIn.addStat(Stats.ITEM_USED.get(this));
+            playerIn.awardStat(Stats.ITEM_USED.get(this));
 
-            if (!playerIn.abilities.isCreativeMode) {
+            if (!playerIn.getAbilities().instabuild) {
                 if (stack.isEmpty()) {
                     return new ItemStack(StatueRegistry.CUP.get());
                 }
 
-                playerIn.inventory.addItemStackToInventory(new ItemStack(StatueRegistry.CUP.get()));
+                playerIn.getInventory().add(new ItemStack(StatueRegistry.CUP.get()));
             }
         }
 
