@@ -3,14 +3,12 @@ package com.shynieke.statues.client.render;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.shynieke.statues.Statues;
 import com.shynieke.statues.client.ClientHandler;
-import com.shynieke.statues.client.StatuePlayerModel;
+import com.shynieke.statues.client.model.StatuePlayerTileModel;
 import com.shynieke.statues.tiles.PlayerBlockEntity;
 import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
@@ -27,8 +25,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PlayerTileInventoryRenderer extends BlockEntityWithoutLevelRenderer {
-    private StatuePlayerModel model;
-    private StatuePlayerModel slimModel;
+    private StatuePlayerTileModel model;
+    private StatuePlayerTileModel slimModel;
 
     public PlayerTileInventoryRenderer() {
         super(null, null);
@@ -46,8 +44,8 @@ public class PlayerTileInventoryRenderer extends BlockEntityWithoutLevelRenderer
         EntityModelSet modelSet = Minecraft.getInstance().getEntityModels();
         modelSet.onResourceManagerReload(manager);
         if(modelSet != null) {
-            this.model = new StatuePlayerModel(modelSet.bakeLayer(ClientHandler.PLAYER_STATUE), false);
-            this.slimModel = new StatuePlayerModel(modelSet.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
+            this.model = new StatuePlayerTileModel(modelSet.bakeLayer(ClientHandler.PLAYER_STATUE), false);
+            this.slimModel = new StatuePlayerTileModel(modelSet.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
         }
     }
 

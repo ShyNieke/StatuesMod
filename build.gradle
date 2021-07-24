@@ -108,7 +108,6 @@ repositories {
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    implementation('cpw.mods:securejarhandler') { version { strictly '0.9.45' } }
     // compileOnly fg.deobf("mezz.jei:jei-1.16.4:${version_jei}")
     // runtimeOnly fg.deobf("mezz.jei:jei-1.16.4:${version_jei}")
 

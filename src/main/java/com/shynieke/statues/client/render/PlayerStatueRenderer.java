@@ -5,7 +5,8 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import com.shynieke.statues.client.StatuePlayerModel;
+import com.shynieke.statues.client.model.StatuePlayerTileModel;
+import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
@@ -24,9 +25,9 @@ import net.minecraft.util.Mth;
 
 import java.util.Map;
 
-public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, StatuePlayerModel<PlayerStatue>> {
-    private final StatuePlayerModel<PlayerStatue> playerModel;
-    private final StatuePlayerModel<PlayerStatue> slimPlayerModel;
+public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, PlayerStatueModel> {
+    private final PlayerStatueModel playerModel;
+    private final PlayerStatueModel slimPlayerModel;
     public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkin();
 
     public PlayerStatueRenderer(EntityRendererProvider.Context context) {
@@ -34,9 +35,9 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Sta
     }
 
     public PlayerStatueRenderer(EntityRendererProvider.Context context, boolean slim) {
-        super(context, new StatuePlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), slim), 0.0F);
-        this.playerModel = new StatuePlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false);
-        this.slimPlayerModel = new StatuePlayerModel<>(context.bakeLayer(ModelLayers.PLAYER), false);
+        super(context, new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER), slim), 0.0F);
+        this.playerModel = new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER), false);
+        this.slimPlayerModel = new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER), false);
 
         this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_INNER_ARMOR :
                 ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_OUTER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR))));

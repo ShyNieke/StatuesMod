@@ -34,6 +34,7 @@ public class PlayerStatueModel extends PlayerModel<PlayerStatue> {
         return meshdefinition;
     }
 
+    @Override
     public void setupAnim(PlayerStatue entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.head.xRot = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getX();
         this.head.yRot = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getY();

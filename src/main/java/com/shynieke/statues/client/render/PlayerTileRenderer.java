@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
-import com.shynieke.statues.client.StatuePlayerModel;
+import com.shynieke.statues.client.model.StatuePlayerTileModel;
 import com.shynieke.statues.tiles.PlayerBlockEntity;
 import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.Minecraft;
@@ -30,14 +30,14 @@ import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity> {
-    private final StatuePlayerModel model;
-    private final StatuePlayerModel slimModel;
+    private final StatuePlayerTileModel model;
+    private final StatuePlayerTileModel slimModel;
 
     public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkin();
 
     public PlayerTileRenderer(BlockEntityRendererProvider.Context context) {
-        this.model = new StatuePlayerModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
-        this.slimModel = new StatuePlayerModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
+        this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
+        this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
     }
 
     @Override

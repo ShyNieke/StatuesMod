@@ -22,6 +22,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
@@ -59,8 +60,8 @@ public class ClientHandler {
         RenderingRegistry.registerLayerDefinition(PLAYER_STATUE, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, false), 64, 64));
         RenderingRegistry.registerLayerDefinition(PLAYER_STATUE_SLIM, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, true), 64, 64));
 
-        RenderingRegistry.registerEntityRenderingHandler(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
+        EntityRenderers.register(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
+        EntityRenderers.register(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
 
         ItemBlockRenderTypes.setRenderLayer(StatueRegistry.CAMPFIRE_STATUE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.cutout());

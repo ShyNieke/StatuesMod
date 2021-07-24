@@ -392,7 +392,7 @@ public class PlayerStatue extends LivingEntity {
     /**
      * Applies the given player interaction to this Entity.
      */
-    public InteractionResult intedractAt(Player player, Vec3 vec, InteractionHand hand) {
+    public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
         if(player.isShiftKeyDown()) {
             if(!level.isClientSide && player != null) {
@@ -623,6 +623,7 @@ public class PlayerStatue extends LivingEntity {
         }
 
         Block.popResource(this.level, this.blockPosition(), stack);
+        Block.popResource(this.level, this.blockPosition(), new ItemStack(StatueRegistry.STATUE_CORE.get()));
         this.brokenByAnything(source);
     }
 

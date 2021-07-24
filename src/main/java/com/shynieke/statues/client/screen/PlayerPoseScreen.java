@@ -64,22 +64,22 @@ public class PlayerPoseScreen extends Screen {
         int offsetX = 110;
         int offsetY = 50;
 
-        this.addWidget(this.smallButton = new ToggleButton(offsetX, offsetY, 40, 20, this.playerStatueData.isSmall(), (button) -> {
+        this.smallButton = this.addRenderableWidget(new ToggleButton(offsetX, offsetY, 40, 20, this.playerStatueData.isSmall(), (button) -> {
             ToggleButton toggleButton = ((ToggleButton)button);
             toggleButton.setValue(!toggleButton.getValue());
             this.textFieldUpdated();
         }));
-        this.addWidget(this.lockButton = new ToggleButton(offsetX, offsetY + 66, 40, 20, this.playerStatueData.isLocked(), (button) -> {
+        this.lockButton = this.addRenderableWidget(new ToggleButton(offsetX, offsetY + 66, 40, 20, this.playerStatueData.isLocked(), (button) -> {
             ToggleButton toggleButton = ((ToggleButton)button);
             toggleButton.setValue(!toggleButton.getValue());
             this.textFieldUpdated();
         }));
-        this.addWidget(this.nameVisibleButton = new ToggleButton(offsetX, offsetY + 89, 40, 20, this.playerStatueData.getNameVisible(), (button) -> {
+        this.nameVisibleButton = this.addRenderableWidget(new ToggleButton(offsetX, offsetY + 89, 40, 20, this.playerStatueData.getNameVisible(), (button) -> {
             ToggleButton toggleButton = ((ToggleButton)button);
             toggleButton.setValue(!toggleButton.getValue());
             this.textFieldUpdated();
         }));
-        this.addWidget(this.noGravityButton = new ToggleButton(offsetX, offsetY + 112, 40, 20, this.playerStatueData.hasNoGravity(), (button) -> {
+        this.noGravityButton = this.addRenderableWidget(new ToggleButton(offsetX, offsetY + 112, 40, 20, this.playerStatueData.hasNoGravity(), (button) -> {
             ToggleButton toggleButton = ((ToggleButton)button);
             toggleButton.setValue(!toggleButton.getValue());
             this.textFieldUpdated();
@@ -116,11 +116,11 @@ public class PlayerPoseScreen extends Screen {
 
         // done & cancel buttons
         offsetX = this.width - 20;
-        this.addWidget(this.doneButton = new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslatableComponent("gui.done"), (button) -> {
+        this.doneButton = this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslatableComponent("gui.done"), (button) -> {
             this.updateEntity(this.writeFieldsToNBT());
             this.minecraft.setScreen((Screen) null);
         }));
-        this.addWidget(this.cancelButton = new Button(offsetX - 96, offsetY, 96, 20, new TranslatableComponent("gui.cancel"), (button) -> {
+        this.cancelButton = this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, new TranslatableComponent("gui.cancel"), (button) -> {
             this.updateEntity(this.playerStatueData.writeNBT());
             this.minecraft.setScreen((Screen) null);
         }));
