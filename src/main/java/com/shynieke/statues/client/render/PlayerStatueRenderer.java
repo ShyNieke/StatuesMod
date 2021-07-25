@@ -5,7 +5,6 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import com.shynieke.statues.client.model.StatuePlayerTileModel;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.client.Minecraft;

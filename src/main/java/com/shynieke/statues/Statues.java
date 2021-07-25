@@ -53,7 +53,7 @@ public class Statues {
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 
-//		if (ModList.get().isLoaded("curios")) {
+//		if (ModList.get().isLoaded("curios")) { TODO: Reimplement when Curio is back
 //			eventBus.addListener(CuriosCompat::sendImc);
 //		}
 
@@ -63,8 +63,10 @@ public class Statues {
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
-		DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
 			eventBus.addListener(ClientHandler::doClientStuff);
+			eventBus.addListener(ClientHandler::registerEntityRenders);
+			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 			eventBus.addListener(ClientHandler::registerBlockColors);
 		});
 
@@ -79,8 +81,7 @@ public class Statues {
 
 		event.enqueueWork(() -> {
 				for(RegistryObject<Item> registryObject : StatueRegistry.ITEMS.getEntries()) {
-					if(registryObject.get() instanceof CustomSpawnEggItem) {
-						CustomSpawnEggItem spawnEgg = (CustomSpawnEggItem) registryObject.get();
+					if(registryObject.get() instanceof CustomSpawnEggItem spawnEgg) {
 						SpawnEggItem.BY_ID.put(spawnEgg.entityType.get(), spawnEgg);
 					}
 				}

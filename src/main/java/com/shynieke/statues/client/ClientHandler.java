@@ -14,7 +14,6 @@ import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.tiles.PlayerBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
-import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -22,7 +21,6 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
@@ -42,9 +40,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fmlclient.registry.ClientRegistry;
-import net.minecraftforge.fmlclient.registry.RenderingRegistry;
 
 import javax.annotation.Nullable;
 import java.io.File;
@@ -56,12 +53,6 @@ public class ClientHandler {
 
     public static void doClientStuff(final FMLClientSetupEvent event) {
         BlockEntityRenderers.register(StatueBlockEntities.PLAYER.get(), PlayerTileRenderer::new);
-
-        RenderingRegistry.registerLayerDefinition(PLAYER_STATUE, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, false), 64, 64));
-        RenderingRegistry.registerLayerDefinition(PLAYER_STATUE_SLIM, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, true), 64, 64));
-
-        EntityRenderers.register(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
-        EntityRenderers.register(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
 
         ItemBlockRenderTypes.setRenderLayer(StatueRegistry.CAMPFIRE_STATUE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.cutout());
@@ -182,6 +173,16 @@ public class ClientHandler {
             this.deltaRotation *= 0.8D;
             this.rotation = Mth.positiveModulo(this.rotation + this.deltaRotation, 1.0D);
         }
+    }
+
+    public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
+        event.registerEntityRenderer(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
+    }
+
+    public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(PLAYER_STATUE, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, false), 64, 64));
+        event.registerLayerDefinition(PLAYER_STATUE_SLIM, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, true), 64, 64));
     }
 
     public static void registerBlockColors(final ColorHandlerEvent.Block event) {

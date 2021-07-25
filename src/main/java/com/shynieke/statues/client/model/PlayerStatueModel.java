@@ -2,7 +2,6 @@ package com.shynieke.statues.client.model;
 
 import com.google.common.collect.ImmutableList;
 import com.shynieke.statues.entity.PlayerStatue;
-import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

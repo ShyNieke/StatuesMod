@@ -1,5 +1,6 @@
 package com.shynieke.statues.handlers;
 
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.blocks.statues.SheepStatueBlock;
 import com.shynieke.statues.config.StatuesConfig;
@@ -44,19 +45,11 @@ public class DropHandler {
         Entity source = event.getSource().getEntity();
 
         if (entity instanceof Villager) {
-            switch(entity.level.random.nextInt(4)) {
-                default:
-                    dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
-                    break;
-                case 1:
-                    dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_WH_STATUE.get()), source, event);
-                    break;
-                case 2:
-                    dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_PU_STATUE.get()), source, event);
-                    break;
-                case 3:
-                    dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_GR_STATUE.get()), source, event);
-                    break;
+            switch (entity.level.random.nextInt(4)) {
+                default -> dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
+                case 1 -> dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_WH_STATUE.get()), source, event);
+                case 2 -> dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_PU_STATUE.get()), source, event);
+                case 3 -> dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_GR_STATUE.get()), source, event);
             }
         } else if(entity instanceof Evoker) {
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EVOKER_STATUE.get());
@@ -65,15 +58,13 @@ public class DropHandler {
         else if(entity instanceof Vindicator) {
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.VINDICATOR_STATUE.get());
             dropLootStatues(entity, itemStackToDrop, source, event);
-        } else if(entity instanceof Sheep) {
-            Sheep sheep = (Sheep) entity;
+        } else if(entity instanceof Sheep sheep) {
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.SHEEP_SHAVEN_STATUE.get());
             if (!sheep.isSheared()) {
                 itemStackToDrop = new ItemStack(SheepStatueBlock.getStatue(sheep.getColor()));
             }
             dropLootStatues(entity, itemStackToDrop, source, event);
-        } else if(entity instanceof Bee) {
-            Bee bee = (Bee)entity;
+        } else if(entity instanceof Bee bee) {
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.BEE_STATUE.get());
             if (entity.level.random.nextBoolean()) {
                 itemStackToDrop = new ItemStack(StatueRegistry.ANGRY_BEE_STATUE.get());
@@ -89,86 +80,44 @@ public class DropHandler {
                 itemStackToDrop.setHoverName(new TextComponent(tropi));
             }
             dropLootStatues(entity, itemStackToDrop, source, event);
-        } else if(entity instanceof Rabbit) {
-            Rabbit rabbit = (Rabbit)entity;
-            ItemStack itemStackToDrop = new ItemStack(StatueRegistry.RABBIT_BR_STATUE.get());
-            switch(rabbit.getRabbitType()) {
-                case 1:
-                    itemStackToDrop = new ItemStack(StatueRegistry.RABBIT_WH_STATUE.get());
-                    break;
-                case 2:
-                    itemStackToDrop = new ItemStack(StatueRegistry.RABBIT_WS_STATUE.get());
-                    break;
-                case 3:
-                    itemStackToDrop = new ItemStack(StatueRegistry.RABBIT_BS_STATUE.get());
-                    break;
-                case 4:
-                    itemStackToDrop = new ItemStack(StatueRegistry.RABBIT_GO_STATUE.get());
-                    break;
-                case 5:
-                    itemStackToDrop = new ItemStack(StatueRegistry.RABBIT_BW_STATUE.get());
-                    break;
-            }
+        } else if(entity instanceof Rabbit rabbit) {
+            new ItemStack(StatueRegistry.RABBIT_BR_STATUE.get());
+            ItemStack itemStackToDrop = switch (rabbit.getRabbitType()) {
+                case 1 -> new ItemStack(StatueRegistry.RABBIT_WH_STATUE.get());
+                case 2 -> new ItemStack(StatueRegistry.RABBIT_WS_STATUE.get());
+                case 3 -> new ItemStack(StatueRegistry.RABBIT_BS_STATUE.get());
+                case 4 -> new ItemStack(StatueRegistry.RABBIT_GO_STATUE.get());
+                case 5 -> new ItemStack(StatueRegistry.RABBIT_BW_STATUE.get());
+                default -> new ItemStack(StatueRegistry.RABBIT_BR_STATUE.get());
+            };
             dropLootStatues(entity, itemStackToDrop, source, event);
-        } else if(entity instanceof Panda) {
-            Panda panda = (Panda)entity;
-            ItemStack itemStackToDrop = new ItemStack(StatueRegistry.PANDA_NORMAL_STATUE.get());
-            switch(panda.getMainGene()) {
-                case AGGRESSIVE:
-                    itemStackToDrop = new ItemStack(StatueRegistry.PANDA_ANGRY_STATUE.get());
-                    break;
-                case BROWN:
-                    itemStackToDrop = new ItemStack(StatueRegistry.PANDA_BROWN_STATUE.get());
-                    break;
-                case LAZY:
-                    itemStackToDrop = new ItemStack(StatueRegistry.PANDA_LAZY_STATUE.get());
-                    break;
-                case PLAYFUL:
-                    itemStackToDrop = new ItemStack(StatueRegistry.PANDA_PLAYFUL_STATUE.get());
-                    break;
-                case WEAK:
-                    itemStackToDrop = new ItemStack(StatueRegistry.PANDA_WEAK_STATUE.get());
-                    break;
-                case WORRIED:
-                    itemStackToDrop = new ItemStack(StatueRegistry.PANDA_WORRIED_STATUE.get());
-                    break;
-            }
+        } else if(entity instanceof Panda panda) {
+            new ItemStack(StatueRegistry.PANDA_NORMAL_STATUE.get());
+            ItemStack itemStackToDrop = switch (panda.getMainGene()) {
+                case AGGRESSIVE -> new ItemStack(StatueRegistry.PANDA_ANGRY_STATUE.get());
+                case BROWN -> new ItemStack(StatueRegistry.PANDA_BROWN_STATUE.get());
+                case LAZY -> new ItemStack(StatueRegistry.PANDA_LAZY_STATUE.get());
+                case PLAYFUL -> new ItemStack(StatueRegistry.PANDA_PLAYFUL_STATUE.get());
+                case WEAK -> new ItemStack(StatueRegistry.PANDA_WEAK_STATUE.get());
+                case WORRIED -> new ItemStack(StatueRegistry.PANDA_WORRIED_STATUE.get());
+                default -> new ItemStack(StatueRegistry.PANDA_NORMAL_STATUE.get());
+            };
             dropLootStatues(entity, itemStackToDrop, source, event);
-        } else if(entity instanceof Cat) {
-            Cat cat = (Cat)entity;
-            ItemStack itemStackToDrop = new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
-            switch(cat.getCatType()) {
-                case 1:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_TUXEDO_STATUE.get());
-                    break;
-                case 2:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_RED_STATUE.get());
-                    break;
-                case 3:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_SIAMESE_STATUE.get());
-                    break;
-                case 4:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get());
-                    break;
-                case 5:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_CALICO_STATUE.get());
-                    break;
-                case 6:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_PERSIAN_STATUE.get());
-                    break;
-                case 7:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_RAGDOLL_STATUE.get());
-                    break;
-                case 8:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_WHITE_STATUE.get());
-                    break;
-                case 9:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_JELLIE_STATUE.get());
-                    break;
-                case 10:
-                    itemStackToDrop = new ItemStack(StatueRegistry.CAT_BLACK_STATUE.get());
-                    break;
-            }
+        } else if(entity instanceof Cat cat) {
+            new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
+            ItemStack itemStackToDrop = switch (cat.getCatType()) {
+                case 1 -> new ItemStack(StatueRegistry.CAT_TUXEDO_STATUE.get());
+                case 2 -> new ItemStack(StatueRegistry.CAT_RED_STATUE.get());
+                case 3 -> new ItemStack(StatueRegistry.CAT_SIAMESE_STATUE.get());
+                case 4 -> new ItemStack(StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get());
+                case 5 -> new ItemStack(StatueRegistry.CAT_CALICO_STATUE.get());
+                case 6 -> new ItemStack(StatueRegistry.CAT_PERSIAN_STATUE.get());
+                case 7 -> new ItemStack(StatueRegistry.CAT_RAGDOLL_STATUE.get());
+                case 8 -> new ItemStack(StatueRegistry.CAT_WHITE_STATUE.get());
+                case 9 -> new ItemStack(StatueRegistry.CAT_JELLIE_STATUE.get());
+                case 10 -> new ItemStack(StatueRegistry.CAT_BLACK_STATUE.get());
+                default -> new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
+            };
             dropLootStatues(entity, itemStackToDrop, source, event);
         } else if(entity instanceof ElderGuardian) {
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.ELDER_GUARDIAN_STATUE.get());
@@ -178,15 +127,13 @@ public class DropHandler {
             if(rand.nextFloat() <= 0.25F) {
                 dropBossStatue(entity, itemStackToDrop, source, event);
             }
-        } else if(entity instanceof MushroomCow) {
+        } else if(entity instanceof MushroomCow mooshroom) {
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.MOOSHROOM_STATUE.get());
-            MushroomCow mooshroom = (MushroomCow)entity;
             if(mooshroom.getMushroomType() == MushroomCow.MushroomType.BROWN) {
                 itemStackToDrop = new ItemStack(StatueRegistry.BROWN_MOOSHROOM_STATUE.get());
             }
             dropLootStatues(entity, itemStackToDrop, source, event);
-        } else if(entity instanceof Fox) {
-            Fox fox = (Fox)entity;
+        } else if(entity instanceof Fox fox) {
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.FOX_STATUE.get());
             if(fox.getFoxType() == Type.SNOW) {
                 itemStackToDrop = new ItemStack(StatueRegistry.FOX_SNOW_STATUE.get());
@@ -195,8 +142,7 @@ public class DropHandler {
         } else {
             List<RegistryObject<Block>> matchingStatues = new ArrayList<>();
             for (RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries()) {
-                if (block.get() instanceof AbstractStatueBase) {
-                    AbstractStatueBase statue = (AbstractStatueBase) block.get();
+                if (block.get() instanceof AbstractStatueBase statue) {
                     if (statue.getEntity().equals(entity.getType()) && !statue.isHiddenStatue()) {
                         matchingStatues.add(block);
                     }
@@ -216,8 +162,7 @@ public class DropHandler {
             }
         }
 
-        if(StatuesConfig.COMMON.playerDropsStatue.get() && entity instanceof Player) {
-            Player player = (Player)entity;
+        if(StatuesConfig.COMMON.playerDropsStatue.get() && entity instanceof Player player) {
             ItemStack playerStatueStack = new ItemStack(StatueRegistry.PLAYER_STATUE.get()).setHoverName(player.getName());
             double random_drop = Math.random();
             double playerDropChance = StatuesConfig.COMMON.playerStatueDropChance.get();
@@ -225,8 +170,7 @@ public class DropHandler {
 
             switch (StatuesConfig.COMMON.playerStatueKillSource.get()) {
                 default:
-                    if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
-                        ServerPlayer sourcePlayer = (ServerPlayer) source;
+                    if (source instanceof ServerPlayer sourcePlayer && !(source instanceof FakePlayer)) {
                         List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                         if (!luckyPlayers.isEmpty()) {
                             for (String luckyName : luckyPlayers) {
@@ -296,12 +240,12 @@ public class DropHandler {
     public void dropLootStatues(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
         double random_drop = Math.random();
         double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
+        Statues.LOGGER.info(itemStackToDrop);
         BlockPos entityPos = entity.blockPosition();
 
         switch (StatuesConfig.COMMON.statueKillSource.get()) {
             default:
-                if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
-                    ServerPlayer player = (ServerPlayer) source;
+                if (source instanceof ServerPlayer player && !(source instanceof FakePlayer)) {
                     List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
                         for (String luckyName : luckyPlayers) {
