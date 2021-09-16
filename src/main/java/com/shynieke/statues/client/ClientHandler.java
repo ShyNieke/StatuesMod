@@ -20,7 +20,6 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
@@ -41,6 +40,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import javax.annotation.Nullable;
@@ -52,8 +52,6 @@ public class ClientHandler {
     public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue_slim"), "player_statue_slim");
 
     public static void doClientStuff(final FMLClientSetupEvent event) {
-        BlockEntityRenderers.register(StatueBlockEntities.PLAYER.get(), PlayerTileRenderer::new);
-
         ItemBlockRenderTypes.setRenderLayer(StatueRegistry.CAMPFIRE_STATUE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(StatueRegistry.HUSK_STATUE.get(), RenderType.cutout());
@@ -150,6 +148,10 @@ public class ClientHandler {
                 return Math.atan2(location.z() - entityIn.getZ(), location.x() - entityIn.getX());
             }
         });
+
+        if(ModList.get().isLoaded("curios")) {
+            com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);
+        }
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -176,6 +178,8 @@ public class ClientHandler {
     }
 
     public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(StatueBlockEntities.PLAYER.get(), PlayerTileRenderer::new);
+
         event.registerEntityRenderer(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
         event.registerEntityRenderer(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
     }

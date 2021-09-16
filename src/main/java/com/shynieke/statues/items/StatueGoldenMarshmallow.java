@@ -23,12 +23,12 @@ public class StatueGoldenMarshmallow extends Item {
         if(this.isEdible()) {
             if (!level.isClientSide) {
                 if (this == StatueRegistry.MARSHMALLOW_GOLDEN.get()) {
-                    ArrayList<MobEffect> potionList = new ArrayList<>(ForgeRegistries.POTIONS.getValues());
-                    potionList.remove(MobEffects.CONFUSION);
+                    ArrayList<MobEffect> effectList = new ArrayList<>(ForgeRegistries.MOB_EFFECTS.getValues());
+                    effectList.remove(MobEffects.CONFUSION);
 
-                    int i = level.random.nextInt(potionList.size());
+                    int i = level.random.nextInt(effectList.size());
                     int amplifier = level.random.nextInt(2);
-                    MobEffect randomPotion = potionList.get(i);
+                    MobEffect randomPotion = effectList.get(i);
                     MobEffectInstance randomEffect = new MobEffectInstance(randomPotion, 200, amplifier);
                     entityIn.addEffect(randomEffect);
                 }

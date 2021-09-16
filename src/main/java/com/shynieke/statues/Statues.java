@@ -23,6 +23,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -53,9 +54,9 @@ public class Statues {
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 
-//		if (ModList.get().isLoaded("curios")) { TODO: Reimplement when Curio is back
-//			eventBus.addListener(CuriosCompat::sendImc);
-//		}
+		if (ModList.get().isLoaded("curios")) {
+			eventBus.addListener(com.shynieke.statues.compat.curios.CuriosCompat::sendImc);
+		}
 
 //		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
 		MinecraftForge.EVENT_BUS.register(new FishHandler());

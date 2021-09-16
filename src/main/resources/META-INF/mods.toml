@@ -12,3 +12,9 @@ authors="ShyNieke, Mrbysco"
 description='''
 Just a little functional decoration.
 '''
+[[dependencies.statues]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.17.1,1.18)"
+ordering="NONE"
+side="BOTH"
