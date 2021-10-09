@@ -51,10 +51,10 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         Direction direction = flag ? blockstate.get(PlayerStatueBlock.HORIZONTAL_FACING) : Direction.UP;
         GameProfile profile = te.getPlayerProfile();
 
-        render(direction, profile, matrixStackIn, bufferIn, combinedLightIn);
+        render(direction, profile, te.isSlim(), matrixStackIn, bufferIn, combinedLightIn);
     }
 
-    public static void render(@Nullable Direction direction, @Nullable GameProfile profile, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int combinedLight) {
+    public static void render(@Nullable Direction direction, @Nullable GameProfile profile, boolean isSlim, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int combinedLight) {
         StatuePlayerModel playerModel = model;
 
         matrix.translate(0.5D, 0.25D, 0.5D);
@@ -75,8 +75,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         }
         matrix.scale(-1.0F, -1.0F, 1.0F);
         matrix.translate(0.0D, -1.25D, 0.0D);
-        boolean flag = profile != null && profile.isComplete() && SkinUtil.isSlimSkin(profile.getId());
-        if(flag && playerModel != slimModel) {
+        if(isSlim) {
             playerModel = slimModel;
         }
 
