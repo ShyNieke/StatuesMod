@@ -6,7 +6,6 @@ import com.shynieke.statues.entity.PlayerStatueEntity;
 import com.shynieke.statues.entity.StatueBatEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;

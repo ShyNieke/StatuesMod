@@ -1,9 +1,7 @@
 package com.shynieke.statues.client.screen;
 
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.util.text.ITextComponent;
-import org.apache.commons.lang3.math.NumberUtils;
 
 public class DecimalNumberFieldWidget extends NumberFieldWidget {
 
