@@ -1,6 +1,7 @@
 package com.shynieke.statues.entity;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.shynieke.statues.Statues;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueSerializers;
@@ -8,6 +9,7 @@ import com.shynieke.statues.packets.PlayerStatueScreenMessage;
 import com.shynieke.statues.tiles.PlayerTile;
 import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -31,13 +33,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.server.management.PreYggdrasilConverter;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.HandSide;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Rotations;
@@ -51,6 +47,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Optional;
@@ -64,7 +61,6 @@ public class PlayerStatueEntity extends LivingEntity {
     private static final Rotations DEFAULT_LEFTLEG_ROTATION = new Rotations(-1.0F, 0.0F, -1.0F);
     private static final Rotations DEFAULT_RIGHTLEG_ROTATION = new Rotations(1.0F, 0.0F, 1.0F);
     private static final DataParameter<Optional<GameProfile>> GAMEPROFILE = EntityDataManager.createKey(PlayerStatueEntity.class, StatueSerializers.OPTIONAL_GAME_PROFILE);
-    public static final DataParameter<Boolean> SLIM = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.BOOLEAN);
     public static final DataParameter<Byte> STATUS = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.BYTE);
     public static final DataParameter<Float> Y_OFFSET = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.FLOAT);
     public static final DataParameter<Rotations> HEAD_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
@@ -80,6 +76,7 @@ public class PlayerStatueEntity extends LivingEntity {
     /** After punching the stand, the cooldown before you can punch it again without breaking it. */
     public long punchCooldown;
     private int disabledSlots;
+    private boolean isSlim = false;
     private Rotations headRotation = DEFAULT_HEAD_ROTATION;
     private Rotations bodyRotation = DEFAULT_BODY_ROTATION;
     private Rotations leftArmRotation = DEFAULT_LEFTARM_ROTATION;
@@ -129,7 +126,6 @@ public class PlayerStatueEntity extends LivingEntity {
     protected void registerData() {
         super.registerData();
         this.dataManager.register(GAMEPROFILE, Optional.empty());
-        this.dataManager.register(SLIM, false);
         this.dataManager.register(STATUS, (byte)0);
         this.dataManager.register(Y_OFFSET, 0F);
         this.dataManager.register(HEAD_ROTATION, DEFAULT_HEAD_ROTATION);
@@ -148,11 +144,8 @@ public class PlayerStatueEntity extends LivingEntity {
     public void setGameProfile(GameProfile playerProfile) {
         GameProfile profile = PlayerTile.updateGameProfile(playerProfile);
         dataManager.set(GAMEPROFILE, Optional.of(profile));
-
-        this.setSlim(profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId()));
     }
 
-    @Nullable
     public boolean isLocked() {
         return this.dataManager.get(LOCKED_BY_UUID).isPresent();
     }
@@ -171,11 +164,11 @@ public class PlayerStatueEntity extends LivingEntity {
     }
 
     public void setSlim(boolean slim) {
-        dataManager.set(SLIM, slim);
+        this.isSlim = slim;
     }
 
     public boolean isSlim() {
-        return dataManager.get(SLIM);
+        return this.isSlim;
     }
 
     public void setYOffset(float yOffset) {
@@ -186,14 +179,20 @@ public class PlayerStatueEntity extends LivingEntity {
         return dataManager.get(Y_OFFSET);
     }
 
+    @Override
+    @Nonnull
     public Iterable<ItemStack> getHeldEquipment() {
         return this.handItems;
     }
 
+    @Override
+    @Nonnull
     public Iterable<ItemStack> getArmorInventoryList() {
         return this.armorItems;
     }
 
+    @Override
+    @Nonnull
     public ItemStack getItemStackFromSlot(EquipmentSlotType slotIn) {
         switch(slotIn.getSlotType()) {
             case HAND:
@@ -246,6 +245,7 @@ public class PlayerStatueEntity extends LivingEntity {
         }
     }
 
+    @Override
     public boolean canPickUpItem(ItemStack itemstackIn) {
         EquipmentSlotType equipmentslottype = MobEntity.getSlotForItemStack(itemstackIn);
         return this.getItemStackFromSlot(equipmentslottype).isEmpty() && !this.isDisabled(equipmentslottype);
@@ -258,7 +258,6 @@ public class PlayerStatueEntity extends LivingEntity {
         if (getGameProfile().isPresent()) {
             compound.put("gameProfile", NBTUtil.writeGameProfile(new CompoundNBT(), dataManager.get(GAMEPROFILE).get()));
         }
-        compound.putBoolean("Slim", isSlim());
 
         compound.putFloat("yOffset", getYOffsetData());
 
@@ -311,7 +310,6 @@ public class PlayerStatueEntity extends LivingEntity {
     @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
-        this.setSlim(compound.getBoolean("Slim"));
         this.setYOffset(compound.getFloat("yOffset"));
         if (compound.contains("ArmorItems", 9)) {
             ListNBT listnbt = compound.getList("ArmorItems", 10);
@@ -397,10 +395,12 @@ public class PlayerStatueEntity extends LivingEntity {
     /**
      * Returns true if this entity should push and be pushed by other entities when colliding.
      */
+    @Override
     public boolean canBePushed() {
         return false;
     }
 
+    @Override
     protected void collideWithEntity(Entity entityIn) {
 
     }
@@ -419,6 +419,7 @@ public class PlayerStatueEntity extends LivingEntity {
     /**
      * Applies the given player interaction to this Entity.
      */
+    @Override
     public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         if(player.isSneaking()) {
@@ -868,6 +869,7 @@ public class PlayerStatueEntity extends LivingEntity {
     /**
      * Returns true if other Entities should be prevented from moving through this Entity.
      */
+    @Override
     public boolean canBeCollidedWith() {
         return true;
     }
@@ -875,23 +877,30 @@ public class PlayerStatueEntity extends LivingEntity {
     /**
      * Called when a player attacks an entity. If this returns true the attack will not happen.
      */
+    @Override
     public boolean hitByEntity(Entity entityIn) {
         return entityIn instanceof PlayerEntity && !this.world.isBlockModifiable((PlayerEntity)entityIn, this.getPosition());
     }
 
+    @Override
+    @Nonnull
     public HandSide getPrimaryHand() {
         return HandSide.RIGHT;
     }
 
+    @Override
+    @Nonnull
     protected SoundEvent getFallSound(int heightIn) {
         return SoundEvents.ENTITY_ARMOR_STAND_FALL;
     }
 
+    @Override
     @Nullable
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return SoundEvents.ENTITY_ARMOR_STAND_HIT;
     }
 
+    @Override
     @Nullable
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_ARMOR_STAND_BREAK;
@@ -903,14 +912,28 @@ public class PlayerStatueEntity extends LivingEntity {
     /**
      * Returns false if the entity is an armor stand. Returns true for all other entity living bases.
      */
+    @Override
     public boolean canBeHitWithPotion() {
         return false;
     }
 
+    @Override
     public void notifyDataManagerChange(DataParameter<?> key) {
         if (STATUS.equals(key)) {
             this.recalculateSize();
             this.preventEntitySpawning = !this.removed;
+        } else if(GAMEPROFILE.equals(key)) {
+            if(this.world.isRemote()) {
+                GameProfile gameprofile = this.getGameProfile().get();
+                if(gameprofile != null) {
+                    Minecraft.getInstance().getSkinManager().loadProfileTextures(gameprofile, (textureType, textureLocation, profileTexture) -> {
+                        if (textureType.equals(MinecraftProfileTexture.Type.SKIN))  {
+                            String metadata = profileTexture.getMetadata("model");
+                            this.setSlim(metadata != null && metadata.equals("slim"));
+                        }
+                    }, true);
+                }
+            }
         }
 
         super.notifyDataManagerChange(key);

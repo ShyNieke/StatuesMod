@@ -2,12 +2,14 @@ package com.shynieke.statues.tiles;
 
 import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.Property;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTiles;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.network.NetworkManager;
@@ -28,6 +30,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     private static MinecraftSessionService sessionService;
 
     private GameProfile playerProfile;
+    private boolean isSlim = false;
     private boolean comparatorApplied;
     private boolean OnlineChecking;
     private int checkerCooldown;
@@ -101,7 +104,19 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         return this.playerProfile;
     }
 
+    public boolean isSlim() {
+        return this.isSlim;
+    }
+
     public void setPlayerProfile(@Nullable GameProfile profile) {
+        if (this.world != null && this.world.isRemote() && profile != null) {
+            Minecraft.getInstance().getSkinManager().loadProfileTextures(profile, (textureType, textureLocation, profileTexture) -> {
+                if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
+                    String metadata = profileTexture.getMetadata("model");
+                    this.isSlim = metadata != null && metadata.equals("slim");
+                }
+            }, true);
+        }
         this.playerProfile = profile;
         this.updatePlayerProfile();
     }
