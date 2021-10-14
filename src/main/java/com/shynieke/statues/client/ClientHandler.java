@@ -69,6 +69,7 @@ public class ClientHandler {
         MinecraftSessionService minecraftsessionservice = yggdrasilauthenticationservice.createMinecraftSessionService();
         GameProfileRepository gameprofilerepository = yggdrasilauthenticationservice.createProfileRepository();
         GameProfileCache gameProfileCache = new GameProfileCache(gameprofilerepository, new File(mc.gameDirectory, MinecraftServer.USERID_CACHE_FILE.getName()));
+        gameProfileCache.setExecutor(mc);
         PlayerBlockEntity.setProfileCache(gameProfileCache);
         PlayerBlockEntity.setSessionService(minecraftsessionservice);
         PlayerBlockEntity.setMainThreadExecutor(mc);

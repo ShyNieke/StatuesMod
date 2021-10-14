@@ -52,6 +52,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -137,6 +138,25 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public ItemStack pickupBlock(LevelAccessor level, BlockPos pos, BlockState state) {
+		BlockEntity tileentity = level.getBlockEntity(pos);
+		if (tileentity instanceof PlayerBlockEntity) {
+			return getStatueWithName(level, pos, state);
+		} else {
+			return new ItemStack(state.getBlock());
+		}
+	}
+
+	@Override
+	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+		BlockEntity tileentity = level.getBlockEntity(pos);
+		if (tileentity instanceof PlayerBlockEntity) {
+			return getStatueWithName(level, pos, state);
+		} else {
+			return super.getPickBlock(state, target, level, pos, player);
+		}
+	}
+
+	private ItemStack getStatueWithName(BlockGetter level, BlockPos pos, BlockState state) {
 		BlockEntity tileentity = level.getBlockEntity(pos);
 		if (tileentity instanceof PlayerBlockEntity) {
 			PlayerBlockEntity playerTile = (PlayerBlockEntity)tileentity;
@@ -313,6 +333,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						if (level instanceof ServerLevel) {
 							ServerLevel serverworld = (ServerLevel) level;
 							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), tile.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
+							playerStatueEntity.setGameProfile(tile.getPlayerProfile());
 							if (playerStatueEntity == null) {
 								return InteractionResult.FAIL;
 							}
@@ -321,7 +342,6 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							float f = (float) Mth.floor((Mth.wrapDegrees(playerIn.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 							playerStatueEntity.moveTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
 							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.random);
-							playerStatueEntity.setGameProfile(tile.getPlayerProfile());
 							level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 							level.addFreshEntity(playerStatueEntity);
 							level.playSound((Player)null, playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundSource.BLOCKS, 0.75F, 0.8F);
