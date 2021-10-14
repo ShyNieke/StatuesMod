@@ -333,13 +333,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						if (level instanceof ServerLevel) {
 							ServerLevel serverworld = (ServerLevel) level;
 							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), tile.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
-							playerStatueEntity.setGameProfile(tile.getPlayerProfile());
 							if (playerStatueEntity == null) {
 								return InteractionResult.FAIL;
 							}
-
 							serverworld.addFreshEntityWithPassengers(playerStatueEntity);
 							float f = (float) Mth.floor((Mth.wrapDegrees(playerIn.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+							playerStatueEntity.setGameProfile(tile.getPlayerProfile());
 							playerStatueEntity.moveTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
 							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.random);
 							level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
