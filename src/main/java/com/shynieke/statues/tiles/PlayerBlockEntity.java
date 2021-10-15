@@ -129,7 +129,7 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
     public void setPlayerProfile(@Nullable GameProfile profile) {
         synchronized(this) {
             this.playerProfile = profile;
-            if (this.level != null && this.level.isClientSide && this.playerProfile != null) {
+            if (this.level != null && this.level.isClientSide && this.playerProfile != null && this.playerProfile.isComplete() ) {
                 Minecraft.getInstance().getSkinManager().registerSkins(this.playerProfile, (textureType, textureLocation, profileTexture) -> {
                     if (textureType.equals(MinecraftProfileTexture.Type.SKIN))  {
                         String metadata = profileTexture.getMetadata("model");
@@ -143,8 +143,8 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
     }
 
     private void updateOwnerProfile() {
-        updateGameprofile(this.playerProfile, (p_155747_) -> {
-            this.playerProfile = p_155747_;
+        updateGameprofile(this.playerProfile, (profile) -> {
+            this.playerProfile = profile;
             this.setChanged();
         });
     }
@@ -152,15 +152,15 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
     @Nullable
     public static void updateGameprofile(@Nullable GameProfile profile, Consumer<GameProfile> profileConsumer) {
         if (profile != null && !StringUtil.isNullOrEmpty(profile.getName()) && (!profile.isComplete() || !profile.getProperties().containsKey("textures")) && profileCache != null && sessionService != null) {
-            profileCache.getAsync(profile.getName(), (p_182470_) -> {
+            profileCache.getAsync(profile.getName(), (gameProfile) -> {
                 Util.backgroundExecutor().execute(() -> {
-                    Util.ifElse(p_182470_, (p_182479_) -> {
-                        Property property = Iterables.getFirst(p_182479_.getProperties().get("textures"), (Property)null);
+                    Util.ifElse(gameProfile, (gameProfile1) -> {
+                        Property property = Iterables.getFirst(gameProfile1.getProperties().get("textures"), (Property)null);
                         if (property == null) {
-                            p_182479_ = sessionService.fillProfileProperties(p_182479_, true);
+                            gameProfile1 = sessionService.fillProfileProperties(gameProfile1, true);
                         }
 
-                        GameProfile gameprofile = p_182479_;
+                        GameProfile gameprofile = gameProfile1;
                         mainThreadExecutor.execute(() -> {
                             profileCache.add(gameprofile);
                             profileConsumer.accept(gameprofile);

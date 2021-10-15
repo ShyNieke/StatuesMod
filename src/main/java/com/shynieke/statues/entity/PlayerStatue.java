@@ -232,7 +232,6 @@ public class PlayerStatue extends LivingEntity {
         if (getGameProfile().isPresent()) {
             compound.put("gameProfile", NbtUtils.writeGameProfile(new CompoundTag(), entityData.get(GAMEPROFILE).get()));
         }
-        compound.putBoolean("Slim", isSlim());
 
         compound.putFloat("yOffset", getYOffsetData());
 
@@ -285,7 +284,6 @@ public class PlayerStatue extends LivingEntity {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setSlim(compound.getBoolean("Slim"));
         this.setYOffset(compound.getFloat("yOffset"));
         if (compound.contains("ArmorItems", 9)) {
             ListTag listnbt = compound.getList("ArmorItems", 10);
@@ -891,12 +889,14 @@ public class PlayerStatue extends LivingEntity {
         } else if(GAMEPROFILE.equals(key)) {
             if (this.level.isClientSide) {
                 this.getGameProfile().ifPresent(gameProfile -> {
-                    Minecraft.getInstance().getSkinManager().registerSkins(gameProfile, (textureType, textureLocation, profileTexture) -> {
-                        if (textureType.equals(MinecraftProfileTexture.Type.SKIN))  {
-                            String metadata = profileTexture.getMetadata("model");
-                            this.setSlim(metadata != null && metadata.equals("slim"));
-                        }
-                    }, true);
+                    if(gameProfile.isComplete()) {
+                        Minecraft.getInstance().getSkinManager().registerSkins(gameProfile, (textureType, textureLocation, profileTexture) -> {
+                            if (textureType.equals(MinecraftProfileTexture.Type.SKIN))  {
+                                String metadata = profileTexture.getMetadata("model");
+                                this.setSlim(metadata != null && metadata.equals("slim"));
+                            }
+                        }, true);
+                    }
                 });
             }
         }
