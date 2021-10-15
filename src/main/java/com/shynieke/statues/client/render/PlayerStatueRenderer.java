@@ -36,7 +36,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
     public PlayerStatueRenderer(EntityRendererProvider.Context context, boolean slim) {
         super(context, new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER), slim), 0.0F);
         this.playerModel = new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER), false);
-        this.slimPlayerModel = new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER), false);
+        this.slimPlayerModel = new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER_SLIM), true);
 
         this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_INNER_ARMOR :
                 ModelLayers.PLAYER_INNER_ARMOR)), new HumanoidModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_OUTER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR))));

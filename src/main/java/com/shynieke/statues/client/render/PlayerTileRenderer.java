@@ -10,7 +10,6 @@ import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
 import com.shynieke.statues.tiles.PlayerBlockEntity;
-import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -37,7 +36,7 @@ public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity
 
     public PlayerTileRenderer(BlockEntityRendererProvider.Context context) {
         this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
-        this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
+        this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), true);
     }
 
     @Override
@@ -47,10 +46,10 @@ public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity
         Direction direction = flag ? blockstate.getValue(PlayerStatueBlock.FACING) : Direction.UP;
         GameProfile profile = blockEntity.getPlayerProfile();
 
-        render(direction, profile, poseStack, bufferSource, combinedLightIn);
+        render(direction, profile, blockEntity.isSlim(), poseStack, bufferSource, combinedLightIn);
     }
 
-    public void render(@Nullable Direction direction, @Nullable GameProfile profile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
+    public void render(@Nullable Direction direction, @Nullable GameProfile profile, boolean isSlim, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
         poseStack.translate(0.5D, 0.25D, 0.5D);
         poseStack.pushPose();
         if (direction != null) {
@@ -69,10 +68,9 @@ public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity
         }
         poseStack.scale(-1.0F, -1.0F, 1.0F);
         poseStack.translate(0.0D, -1.25D, 0.0D);
-        boolean flag = profile != null && profile.isComplete() && SkinUtil.isSlimSkin(profile.getId());
 
         VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
-        if(flag) {
+        if(isSlim) {
             slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         } else {
             model.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
