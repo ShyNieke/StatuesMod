@@ -911,7 +911,7 @@ public class PlayerStatueEntity extends LivingEntity {
         return SoundEvents.ENTITY_ARMOR_STAND_BREAK;
     }
 
-    public void func_241841_a(ServerWorld p_241841_1_, LightningBoltEntity p_241841_2_) {
+    public void causeLightningStrike(ServerWorld world, LightningBoltEntity lightning) {
     }
 
     /**
