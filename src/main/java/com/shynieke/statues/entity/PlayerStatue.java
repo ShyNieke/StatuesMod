@@ -1,12 +1,14 @@
 package com.shynieke.statues.entity;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueSerializers;
 import com.shynieke.statues.packets.PlayerStatueScreenMessage;
 import com.shynieke.statues.packets.StatuesNetworking;
 import com.shynieke.statues.tiles.PlayerBlockEntity;
 import com.shynieke.statues.util.SkinUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Rotations;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -64,7 +66,6 @@ public class PlayerStatue extends LivingEntity {
     private static final Rotations DEFAULT_LEFTLEG_ROTATION = new Rotations(-1.0F, 0.0F, -1.0F);
     private static final Rotations DEFAULT_RIGHTLEG_ROTATION = new Rotations(1.0F, 0.0F, 1.0F);
     private static final EntityDataAccessor<Optional<GameProfile>> GAMEPROFILE = SynchedEntityData.defineId(PlayerStatue.class, StatueSerializers.OPTIONAL_GAME_PROFILE);
-    public static final EntityDataAccessor<Boolean> SLIM = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Byte> STATUS = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.BYTE);
     public static final EntityDataAccessor<Float> Y_OFFSET = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Rotations> HEAD_ROTATION = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.ROTATIONS);
@@ -80,6 +81,7 @@ public class PlayerStatue extends LivingEntity {
     /** After punching the stand, the cooldown before you can punch it again without breaking it. */
     public long punchCooldown;
     private int disabledSlots;
+    private boolean isSlim = false;
     private Rotations headRotation = DEFAULT_HEAD_ROTATION;
     private Rotations bodyRotation = DEFAULT_BODY_ROTATION;
     private Rotations leftArmRotation = DEFAULT_LEFTARM_ROTATION;
@@ -129,7 +131,6 @@ public class PlayerStatue extends LivingEntity {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(GAMEPROFILE, Optional.empty());
-        this.entityData.define(SLIM, false);
         this.entityData.define(STATUS, (byte)0);
         this.entityData.define(Y_OFFSET, 0F);
         this.entityData.define(HEAD_ROTATION, DEFAULT_HEAD_ROTATION);
@@ -171,11 +172,11 @@ public class PlayerStatue extends LivingEntity {
     }
 
     public void setSlim(boolean slim) {
-        entityData.set(SLIM, slim);
+        this.isSlim = slim;
     }
 
     public boolean isSlim() {
-        return entityData.get(SLIM);
+        return this.isSlim;
     }
 
     public void setYOffset(float yOffset) {
@@ -887,6 +888,17 @@ public class PlayerStatue extends LivingEntity {
         if (STATUS.equals(key)) {
             this.refreshDimensions();
             this.blocksBuilding = !this.isRemoved();
+        } else if(GAMEPROFILE.equals(key)) {
+            if (this.level.isClientSide) {
+                this.getGameProfile().ifPresent(gameProfile -> {
+                    Minecraft.getInstance().getSkinManager().registerSkins(gameProfile, (textureType, textureLocation, profileTexture) -> {
+                        if (textureType.equals(MinecraftProfileTexture.Type.SKIN))  {
+                            String metadata = profileTexture.getMetadata("model");
+                            this.setSlim(metadata != null && metadata.equals("slim"));
+                        }
+                    }, true);
+                });
+            }
         }
 
         super.onSyncedDataUpdated(key);
