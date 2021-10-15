@@ -86,10 +86,10 @@ repositories {
         name = "Progwml6 maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
-    maven {
-        name = "Heh"
-        url 'https://maven.latmod.com/'
-    }
+//    maven {
+//        name = "Heh"
+//        url 'https://maven.latmod.com/'
+//    }
 //    maven {
 //        url "http://maven.blamejared.com"
 //    }
