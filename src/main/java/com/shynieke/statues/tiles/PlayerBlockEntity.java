@@ -2,14 +2,14 @@ package com.shynieke.statues.tiles;
 
 import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.properties.Property;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -18,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.Nameable;
@@ -30,6 +31,7 @@ import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
 public class PlayerBlockEntity extends BlockEntity implements Nameable {
+
     @Nullable
     private static GameProfileCache profileCache;
     @Nullable
@@ -38,7 +40,7 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
     private static Executor mainThreadExecutor;
 
     private GameProfile playerProfile;
-    private boolean isSlim = false;
+    private SkinUtil.SkinRenderData currentSkinRenderData;
     private boolean comparatorApplied;
     private boolean onlineChecking;
     private int checkerCooldown;
@@ -123,19 +125,14 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
     }
 
     public boolean isSlim() {
-        return this.isSlim;
+        return this.currentSkinRenderData != null && this.currentSkinRenderData.isSlim;
     }
 
     public void setPlayerProfile(@Nullable GameProfile profile) {
         synchronized(this) {
             this.playerProfile = profile;
-            if (this.level != null && this.level.isClientSide && this.playerProfile != null && this.playerProfile.isComplete() ) {
-                Minecraft.getInstance().getSkinManager().registerSkins(this.playerProfile, (textureType, textureLocation, profileTexture) -> {
-                    if (textureType.equals(MinecraftProfileTexture.Type.SKIN))  {
-                        String metadata = profileTexture.getMetadata("model");
-                        this.isSlim = metadata != null && metadata.equals("slim");
-                    }
-                }, true);
+            if (this.level != null && this.level.isClientSide && this.playerProfile != null) {
+                this.currentSkinRenderData = SkinUtil.getSkinRenderData(profile);
             }
         }
 
@@ -243,5 +240,9 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
                 }
             }
         }
+    }
+
+    public ResourceLocation getSkinLocation() {
+        return this.currentSkinRenderData != null ? this.currentSkinRenderData.skinLocation : DefaultPlayerSkin.getDefaultSkin();
     }
 }
