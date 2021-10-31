@@ -22,7 +22,13 @@ public class SkinUtil {
             skinLocation = DefaultPlayerSkin.getDefaultSkin(tempUUID);
             isSlim = DefaultPlayerSkin.getSkinModelName(tempUUID).equals("slim");
         }
+
+        SkinRenderData(ResourceLocation skinLocation) {
+            this.skinLocation = skinLocation;
+        }
     }
+
+    private static final SkinRenderData NULL_PROFILE_DATA = new SkinRenderData(DefaultPlayerSkin.getDefaultSkin());
 
     private static final Map<UUID, SkinRenderData> SKINRENDER_CACHE = new HashMap<>();
 
@@ -31,10 +37,15 @@ public class SkinUtil {
      *
      * As it is a reference for things like entities and tile entities you can keep a copy.
      *
+     * May want to possibly store when the object was created or if the return timed to check when things come online.
+     *
      * @param playerProfile
      * @return
      */
     public static SkinRenderData getSkinRenderData(GameProfile playerProfile) {
+        if(playerProfile == null) {
+            return NULL_PROFILE_DATA;
+        }
         UUID playerId = playerProfile.getId();
         if(!SKINRENDER_CACHE.containsKey(playerId)) {
             SkinRenderData newRenderData = new SkinRenderData(playerProfile);

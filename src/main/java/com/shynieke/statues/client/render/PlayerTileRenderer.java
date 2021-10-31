@@ -1,8 +1,6 @@
 package com.shynieke.statues.client.render;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Vector3f;
@@ -10,7 +8,7 @@ import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
 import com.shynieke.statues.tiles.PlayerBlockEntity;
-import net.minecraft.client.Minecraft;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -19,13 +17,11 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity> {
@@ -82,13 +78,8 @@ public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity
         if (gameProfileIn == null || !gameProfileIn.isComplete()) {
             return RenderType.entityCutoutNoCull(defaultTexture);
         } else {
-            final Minecraft minecraft = Minecraft.getInstance();
-            final Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().getInsecureSkinInformation(gameProfileIn);
-            if (map.containsKey(Type.SKIN)) {
-                return RenderType.entityTranslucent(minecraft.getSkinManager().registerTexture((MinecraftProfileTexture)map.get(Type.SKIN), Type.SKIN));
-            } else {
-                return RenderType.entityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(Player.createPlayerUUID(gameProfileIn)));
-            }
+            SkinUtil.SkinRenderData skinRenderData = SkinUtil.getSkinRenderData(gameProfileIn);
+            return RenderType.entityTranslucent(skinRenderData.skinLocation);
         }
     }
 }

@@ -9,7 +9,6 @@ import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.Util;
-import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -18,7 +17,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.Nameable;
@@ -240,9 +238,5 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
                 }
             }
         }
-    }
-
-    public ResourceLocation getSkinLocation() {
-        return this.currentSkinRenderData != null ? this.currentSkinRenderData.skinLocation : DefaultPlayerSkin.getDefaultSkin();
     }
 }
