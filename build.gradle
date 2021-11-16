@@ -43,9 +43,9 @@ repositories {
 	maven {
         url "http://maven.blamejared.com"
 	}
-	maven { 
-		url "http://tehnut.info/maven" 
-	}
+    maven {
+        url "https://maven.tehnut.info"
+    }
 	maven {
         name = "thiakil"
         url = "http://maven.thiakil.com"
