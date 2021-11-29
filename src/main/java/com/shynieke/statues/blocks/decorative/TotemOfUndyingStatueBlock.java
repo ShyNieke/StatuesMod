@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockReader;
 
 public class TotemOfUndyingStatueBlock extends AbstractStatueBase {
 
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 14, 12);
+    private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 
     public TotemOfUndyingStatueBlock(Properties properties) {
         super(properties.sound(SoundType.STONE));

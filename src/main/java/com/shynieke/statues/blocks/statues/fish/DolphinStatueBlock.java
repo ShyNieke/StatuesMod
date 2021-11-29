@@ -18,7 +18,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class DolphinStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.5D, 2.0D, 14.0D, 7.0D, 14.0D);
+	private static final VoxelShape SHAPE = Block.box(2.0D, 0.5D, 2.0D, 14.0D, 7.0D, 14.0D);
 
 	public DolphinStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -41,6 +41,6 @@ public class DolphinStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_DOLPHIN_AMBIENT;
+		return SoundEvents.DOLPHIN_AMBIENT;
 	}
 }

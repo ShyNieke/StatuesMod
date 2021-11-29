@@ -31,7 +31,7 @@ public class StatueTiles {
 	@SubscribeEvent
 	public static void registerTiles(RegistryEvent.Register<TileEntityType<?>> event) {
 		ArrayList<Block> statueList = new ArrayList<>();
-		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) StatueTile::new, StatueRegistry.ANGRY_BEE_STATUE.get(),
+		event.getRegistry().register(TileEntityType.Builder.of((Supplier<TileEntity>) StatueTile::new, StatueRegistry.ANGRY_BEE_STATUE.get(),
 				StatueRegistry.BABY_ZOMBIE_STATUE.get(), StatueRegistry.BEE_STATUE.get(), StatueRegistry.BLAZE_STATUE.get(), StatueRegistry.BROWN_MOOSHROOM_STATUE.get(),
 				StatueRegistry.CAMPFIRE_STATUE.get(), StatueRegistry.CAT_BLACK_STATUE.get(), StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get(), StatueRegistry.CAT_CALICO_STATUE.get(),
 				StatueRegistry.CAT_JELLIE_STATUE.get(), StatueRegistry.CAT_PERSIAN_STATUE.get(), StatueRegistry.CAT_RAGDOLL_STATUE.get(), StatueRegistry.CAT_RED_STATUE.get(),
@@ -60,12 +60,12 @@ public class StatueTiles {
 				StatueRegistry.WASTELAND_STATUE.get(), StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get()).build(null)
 				.setRegistryName(Reference.MOD_ID + "statue_tile"));
 
-		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) TropicalFishTile::new, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
+		event.getRegistry().register(TileEntityType.Builder.of((Supplier<TileEntity>) TropicalFishTile::new, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
 				StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
 				StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(),
 				StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()).build(null)
 				.setRegistryName(Reference.MOD_ID + "tropical_tile"));
 
-		event.getRegistry().register(TileEntityType.Builder.create((Supplier<TileEntity>) PlayerTile::new, StatueRegistry.PLAYER_STATUE.get()).build(null).setRegistryName(Reference.MOD_ID + "player_tile"));
+		event.getRegistry().register(TileEntityType.Builder.of((Supplier<TileEntity>) PlayerTile::new, StatueRegistry.PLAYER_STATUE.get()).build(null).setRegistryName(Reference.MOD_ID + "player_tile"));
 	}
 }

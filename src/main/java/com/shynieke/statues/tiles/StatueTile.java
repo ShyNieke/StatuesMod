@@ -40,33 +40,33 @@ public class StatueTile extends AbstractStatueTile{
 
 	public void playSound(SoundEvent sound, BlockPos pos, float pitch) {
 		if(makesSounds()) {
-			world.playSound(null, pos, sound, SoundCategory.NEUTRAL, 1F, pitch);
+			level.playSound(null, pos, sound, SoundCategory.NEUTRAL, 1F, pitch);
 		}
 	}
 
 	public void giveItem(LootInfo loot, PlayerEntity playerIn) {
-		if(world != null && isStatueAble()) {
-			int random = world.rand.nextInt(100);
+		if(level != null && isStatueAble()) {
+			int random = level.random.nextInt(100);
 			if(!isDecorative() && loot.hasLoot()) {
 				ItemStack stack1 = loot.getStack1();
 				ItemStack stack2 = loot.getStack2();
 				ItemStack stack3 = loot.getStack3();
 
 				if (stack1 != null && stack1 != ItemStack.EMPTY) {
-					playerIn.dropItem(stack1, true);
+					playerIn.drop(stack1, true);
 				}
 
 				if(stack2 != null && stack2 != ItemStack.EMPTY){
 					if(random <= 50)
 					{
-						playerIn.dropItem(stack2, true);
+						playerIn.drop(stack2, true);
 					}
 				}
 
 				if(stack3 != null && stack3 != ItemStack.EMPTY){
 					if(random <= 10)
 					{
-						playerIn.dropItem(stack3, true);
+						playerIn.drop(stack3, true);
 					}
 				}
 				setStatueAble(false);
@@ -75,30 +75,30 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void summonMob(LivingEntity entityIn) {
-		if(world != null && canSpawnMobs()) {
-			int random = world.rand.nextInt(100);
+		if(level != null && canSpawnMobs()) {
+			int random = level.random.nextInt(100);
 
 			if (random < 1) {
 				if(entityIn instanceof RabbitEntity) {
 					RabbitEntity rabbit = (RabbitEntity) entityIn;
 					rabbit.setRabbitType(99);
-					rabbit.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
+					rabbit.teleportTo(worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ());
 
-					world.addEntity(rabbit);
+					level.addFreshEntity(rabbit);
 				} else if(entityIn instanceof CreeperEntity) {
 					CreeperEntity creeper = (CreeperEntity) entityIn;
-					creeper.setLocationAndAngles((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, 0.0F, 0.0F);
+					creeper.moveTo((double)worldPosition.getX() + 0.5D, (double)worldPosition.getY(), (double)worldPosition.getZ() + 0.5D, 0.0F, 0.0F);
 					CompoundNBT tag = new CompoundNBT();
-					creeper.writeAdditional(tag);
+					creeper.addAdditionalSaveData(tag);
 
 					tag.putShort("ExplosionRadius", (short)0);
 
-					creeper.readAdditional(tag);
-					world.addEntity(creeper);
-					creeper.spawnExplosionParticle();
+					creeper.readAdditionalSaveData(tag);
+					level.addFreshEntity(creeper);
+					creeper.spawnAnim();
 				} else {
-					entityIn.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
-					world.addEntity(entityIn);
+					entityIn.teleportTo(worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ());
+					level.addFreshEntity(entityIn);
 				}
 			}
 			setStatueAble(false);
@@ -106,71 +106,71 @@ public class StatueTile extends AbstractStatueTile{
 	}
 
 	public void floodBehavior(PlayerEntity playerIn, BlockPos pos, Hand hand, float hitX, float hitY, float hitZ) {
-		if(world != null && !world.isRemote) {
-			ItemStack stack = playerIn.getHeldItem(hand);
-			int random = world.rand.nextInt(100);
-			if (stack.getItem() == Items.BUCKET && !playerIn.abilities.isCreativeMode) {
-				world.playSound(null, pos, SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
+		if(level != null && !level.isClientSide) {
+			ItemStack stack = playerIn.getItemInHand(hand);
+			int random = level.random.nextInt(100);
+			if (stack.getItem() == Items.BUCKET && !playerIn.abilities.instabuild) {
+				level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundCategory.NEUTRAL, 1F, 1F);
 				stack.shrink(1);
 
 				ItemStack floodbucket = StatueLootList.getFloodBucket();
 
 				if (stack.isEmpty()) {
-					playerIn.setHeldItem(hand, floodbucket);
+					playerIn.setItemInHand(hand, floodbucket);
 				}
-				else if (!playerIn.inventory.addItemStackToInventory(floodbucket)) {
-					playerIn.dropItem(floodbucket, false);
+				else if (!playerIn.inventory.add(floodbucket)) {
+					playerIn.drop(floodbucket, false);
 				}
 			}
 
 			if (random < 50) {
-				FireworkRocketEntity firework = new FireworkRocketEntity(world, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), getFirework(world.rand));
-				world.addEntity(firework);
+				FireworkRocketEntity firework = new FireworkRocketEntity(level, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), getFirework(level.random));
+				level.addFreshEntity(firework);
 			}
 		}
 	}
 
 	public void mooshroomBehavior(PlayerEntity playerIn, BlockPos pos, Hand hand) {
-		if(world != null && !world.isRemote) {
-			ItemStack stack = playerIn.getHeldItem(hand);
-			if (stack.getItem() == Items.BOWL && !playerIn.abilities.isCreativeMode) {
-				world.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
+		if(level != null && !level.isClientSide) {
+			ItemStack stack = playerIn.getItemInHand(hand);
+			if (stack.getItem() == Items.BOWL && !playerIn.abilities.instabuild) {
+				level.playSound(null, pos, SoundEvents.COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
 				stack.shrink(1);
 
 				ItemStack soupStack = new ItemStack(StatueRegistry.SOUP.get());
 				if (stack.isEmpty()) {
-					playerIn.setHeldItem(hand, soupStack);
-				} else if (!playerIn.inventory.addItemStackToInventory(soupStack)) {
-					playerIn.dropItem(soupStack, false);
+					playerIn.setItemInHand(hand, soupStack);
+				} else if (!playerIn.inventory.add(soupStack)) {
+					playerIn.drop(soupStack, false);
 				}
 			}
 		}
 	}
 
 	public void cowBehavior(PlayerEntity playerIn, BlockPos pos, Hand hand) {
-		if(world != null && !world.isRemote) {
-			ItemStack stack = playerIn.getHeldItem(hand);
-			if (stack.getItem() == Items.BUCKET && !playerIn.abilities.isCreativeMode) {
-				world.playSound(null, pos, SoundEvents.ENTITY_COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
+		if(level != null && !level.isClientSide) {
+			ItemStack stack = playerIn.getItemInHand(hand);
+			if (stack.getItem() == Items.BUCKET && !playerIn.abilities.instabuild) {
+				level.playSound(null, pos, SoundEvents.COW_MILK, SoundCategory.NEUTRAL, 1F, 1F);
 				stack.shrink(1);
 
 				if (stack.isEmpty()) {
-					playerIn.setHeldItem(hand, new ItemStack(Items.MILK_BUCKET));
-				} else if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.MILK_BUCKET))) {
-					playerIn.dropItem(new ItemStack(Items.MILK_BUCKET), false);
+					playerIn.setItemInHand(hand, new ItemStack(Items.MILK_BUCKET));
+				} else if (!playerIn.inventory.add(new ItemStack(Items.MILK_BUCKET))) {
+					playerIn.drop(new ItemStack(Items.MILK_BUCKET), false);
 				}
 			}
 		}
 	}
 
 	public void giveEffect(BlockPos pos, PlayerEntity player, Effect effect) {
-		if(isStatueAble() && world != null) {
-			int random = world.rand.nextInt(100);
+		if(isStatueAble() && level != null) {
+			int random = level.random.nextInt(100);
 			if(hasExternalUse()) {
 				if(random < 10) {
-					if (!world.isRemote) {
-						if (player.getActivePotionEffect(effect) == null) {
-							player.addPotionEffect(new EffectInstance(effect, 20 * 20, 1, true, true));
+					if (!level.isClientSide) {
+						if (player.getEffect(effect) == null) {
+							player.addEffect(new EffectInstance(effect, 20 * 20, 1, true, true));
 						}
 					}
 				}

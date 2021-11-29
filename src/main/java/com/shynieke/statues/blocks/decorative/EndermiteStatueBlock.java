@@ -14,10 +14,10 @@ import net.minecraft.world.IBlockReader;
 
 public class EndermiteStatueBlock extends AbstractStatueBase {
 
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(0.1, 0, 0.1, 16, 4, 16);
+    private static final VoxelShape SHAPE = Block.box(0.1, 0, 0.1, 16, 4, 16);
 
     public EndermiteStatueBlock(Properties properties) {
-        super(properties.sound(SoundType.STONE).setOpaque(EndermiteStatueBlock::isntSolid));
+        super(properties.sound(SoundType.STONE).isRedstoneConductor(EndermiteStatueBlock::isntSolid));
     }
 
     @Override
@@ -27,7 +27,7 @@ public class EndermiteStatueBlock extends AbstractStatueBase {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_ENDERMITE_AMBIENT;
+        return SoundEvents.ENDERMITE_AMBIENT;
     }
 
     @Override

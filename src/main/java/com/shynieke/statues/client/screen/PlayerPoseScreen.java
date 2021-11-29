@@ -40,21 +40,21 @@ public class PlayerPoseScreen extends Screen {
     private Button cancelButton;
 
     public PlayerPoseScreen(PlayerStatueEntity playerStatue) {
-        super(NarratorChatListener.EMPTY);
+        super(NarratorChatListener.NO_TITLE);
 
         this.playerStatueEntity = playerStatue;
 
         this.playerStatueData = new PlayerStatueData();
-        this.playerStatueData.readNBT(playerStatueEntity.writeWithoutTypeId(new CompoundNBT()));
+        this.playerStatueData.readNBT(playerStatueEntity.saveWithoutId(new CompoundNBT()));
 
         for (int i = 0; i < this.buttonLabels.length; i++)
-            this.buttonLabels[i] = I18n.format(String.format("%s.playerstatue.gui.label." + this.buttonLabels[i], Reference.MOD_ID));
+            this.buttonLabels[i] = I18n.get(String.format("%s.playerstatue.gui.label." + this.buttonLabels[i], Reference.MOD_ID));
         for (int i = 0; i < this.sliderLabels.length; i++)
-            this.sliderLabels[i] = I18n.format(String.format("%s.playerstatue.gui.label." + this.sliderLabels[i], Reference.MOD_ID));
+            this.sliderLabels[i] = I18n.get(String.format("%s.playerstatue.gui.label." + this.sliderLabels[i], Reference.MOD_ID));
     }
 
     public static void openScreen(PlayerStatueEntity playerStatue) {
-        Minecraft.getInstance().displayGuiScreen(new PlayerPoseScreen(playerStatue));
+        Minecraft.getInstance().setScreen(new PlayerPoseScreen(playerStatue));
     }
 
     @Override
@@ -87,15 +87,15 @@ public class PlayerPoseScreen extends Screen {
 
         // rotation textbox
         this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (22), 38, 17, new StringTextComponent("field.rotation"));
-        this.rotationTextField.setText(String.valueOf((int)this.playerStatueData.rotation));
-        this.rotationTextField.setMaxStringLength(3);
-        this.addListener(this.rotationTextField);
+        this.rotationTextField.setValue(String.valueOf((int)this.playerStatueData.rotation));
+        this.rotationTextField.setMaxLength(3);
+        this.addWidget(this.rotationTextField);
 
         // Y Offset textbox
         this.YOffsetTextField = new DecimalNumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (44), 38, 17, new StringTextComponent("field.yOffset"));
-        this.YOffsetTextField.setText(String.valueOf((float) MathHelper.clamp(this.playerStatueData.yOffset, -1, 1)));
-        this.YOffsetTextField.setMaxStringLength(5);
-        this.addListener(this.YOffsetTextField);
+        this.YOffsetTextField.setValue(String.valueOf((float) MathHelper.clamp(this.playerStatueData.yOffset, -1, 1)));
+        this.YOffsetTextField.setMaxLength(5);
+        this.addWidget(this.YOffsetTextField);
 
         // pose textboxes
         offsetX = this.width - 20 - 100;
@@ -107,9 +107,9 @@ public class PlayerPoseScreen extends Screen {
             String value = String.valueOf((int)this.playerStatueData.pose[i]);
 
             this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, new StringTextComponent(String.format("field.%s", i)));
-            this.poseTextFields[i].setText(value);
-            this.poseTextFields[i].setMaxStringLength(3);
-            this.addListener(this.poseTextFields[i]);
+            this.poseTextFields[i].setValue(value);
+            this.poseTextFields[i].setMaxLength(3);
+            this.addWidget(this.poseTextFields[i]);
         }
 
         offsetY = this.height / 4 + 120 + 12;
@@ -118,11 +118,11 @@ public class PlayerPoseScreen extends Screen {
         offsetX = this.width - 20;
         this.addButton(this.doneButton = new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslationTextComponent("gui.done"), (button) -> {
             this.updateEntity(this.writeFieldsToNBT());
-            this.minecraft.displayGuiScreen((Screen) null);
+            this.minecraft.setScreen((Screen) null);
         }));
         this.addButton(this.cancelButton = new Button(offsetX - 96, offsetY, 96, 20, new TranslationTextComponent("gui.cancel"), (button) -> {
             this.updateEntity(this.playerStatueData.writeNBT());
-            this.minecraft.displayGuiScreen((Screen) null);
+            this.minecraft.setScreen((Screen) null);
         }));
     }
 
@@ -131,7 +131,7 @@ public class PlayerPoseScreen extends Screen {
         this.renderBackground(matrixStack);
 
         // gui title
-        drawCenteredString(matrixStack, this.font, I18n.format(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)), this.width / 2, 20, 0xFFFFFF);
+        drawCenteredString(matrixStack, this.font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)), this.width / 2, 20, 0xFFFFFF);
 
         // textboxes
         this.rotationTextField.render(matrixStack, mouseX, mouseY, partialTicks);
@@ -145,7 +145,7 @@ public class PlayerPoseScreen extends Screen {
         int offsetX = 20;
         for (int i = 0; i < this.buttonLabels.length; i++) {
             int x = offsetX;
-            int y = offsetY + (i * 22) + (10 - (this.font.FONT_HEIGHT / 2));
+            int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
             drawString(matrixStack, this.font, this.buttonLabels[i], x, y, 0xA0A0A0);
         }
 
@@ -157,8 +157,8 @@ public class PlayerPoseScreen extends Screen {
         drawString(matrixStack, this.font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0);
         // pose textboxes
         for (int i = 0; i < this.sliderLabels.length; i++) {
-            int x = offsetX - this.font.getStringWidth(this.sliderLabels[i]) - 10;
-            int y = offsetY + (i * 22) + (10 - (this.font.FONT_HEIGHT / 2));
+            int x = offsetX - this.font.width(this.sliderLabels[i]) - 10;
+            int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
             drawString(matrixStack, this.font, this.sliderLabels[i], x, y, 0xA0A0A0);
         }
 
@@ -189,13 +189,13 @@ public class PlayerPoseScreen extends Screen {
             for (int i = 0; i < this.poseTextFields.length; i++) {
                 if (this.poseTextFields[i].isFocused()) {
                     this.textFieldUpdated();
-                    this.poseTextFields[i].setCursorPositionEnd();
+                    this.poseTextFields[i].moveCursorToEnd();
                     this.poseTextFields[i].setFocused(false);
 
                     int j = (!Screen.hasShiftDown() ? (i == this.poseTextFields.length - 1 ? 0 : i + 1) : (i == 0 ? this.poseTextFields.length - 1 : i - 1));
                     this.poseTextFields[j].setFocused(true);
-                    this.poseTextFields[j].setCursorPosition(0);
-                    this.poseTextFields[j].setSelectionPos(this.poseTextFields[j].getText().length());
+                    this.poseTextFields[j].moveCursorTo(0);
+                    this.poseTextFields[j].setHighlightPos(this.poseTextFields[j].getValue().length());
                 }
             }
         } else {
@@ -288,11 +288,11 @@ public class PlayerPoseScreen extends Screen {
     }
     
     private void updateEntity(CompoundNBT compound) {
-        CompoundNBT CompoundNBT = this.playerStatueEntity.writeWithoutTypeId(new CompoundNBT()).copy();
+        CompoundNBT CompoundNBT = this.playerStatueEntity.saveWithoutId(new CompoundNBT()).copy();
         CompoundNBT.merge(compound);
-        this.playerStatueEntity.read(CompoundNBT);
+        this.playerStatueEntity.load(CompoundNBT);
 
-        Statues.CHANNEL.send(PacketDistributor.SERVER.noArg(), new PlayerStatueSyncMessage(playerStatueEntity.getUniqueID(), compound));
+        Statues.CHANNEL.send(PacketDistributor.SERVER.noArg(), new PlayerStatueSyncMessage(playerStatueEntity.getUUID(), compound));
     }
 
     @Override

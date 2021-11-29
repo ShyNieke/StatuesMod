@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class FoxStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 6.5D, 10.0D);
+	private static final VoxelShape SHAPE = Block.box(6.0D, 0.0D, 6.0D, 10.0D, 6.5D, 10.0D);
 
 	public FoxStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -42,7 +42,7 @@ public class FoxStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_FOX_AMBIENT;
+		return SoundEvents.FOX_AMBIENT;
 	}
 
 	@Override

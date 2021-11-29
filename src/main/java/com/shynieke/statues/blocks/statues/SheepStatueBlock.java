@@ -24,8 +24,8 @@ import net.minecraft.world.World;
 import java.util.Map;
 
 public class SheepStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SOUTH_EAST_SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 3.5D, 12.0D, 8.5D, 12.5D);
-	private static final VoxelShape NORTH_WEST_SHAPE = Block.makeCuboidShape(3.5D, 0.0D, 4.0D, 12.5D, 8.5D, 12.0D);
+	private static final VoxelShape SOUTH_EAST_SHAPE = Block.box(4.0D, 0.0D, 3.5D, 12.0D, 8.5D, 12.5D);
+	private static final VoxelShape NORTH_WEST_SHAPE = Block.box(3.5D, 0.0D, 4.0D, 12.5D, 8.5D, 12.0D);
 	private static final Map<DyeColor, SheepStatueBlock> COLOR_DYE_STATUE_MAP = Maps.newEnumMap(DyeColor.class);
 	private final DyeColor COLOR;
 
@@ -42,7 +42,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public String getLootName() {
-		return "sheep_" + COLOR.getString();
+		return "sheep_" + COLOR.getSerializedName();
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_SHEEP_AMBIENT;
+		return SoundEvents.SHEEP_AMBIENT;
 	}
 
 	public DyeColor getColor() {
@@ -65,7 +65,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		Direction direction = state.get(HORIZONTAL_FACING);
+		Direction direction = state.getValue(FACING);
 		return direction.getAxis() == Direction.Axis.X ? NORTH_WEST_SHAPE : SOUTH_EAST_SHAPE;
 	}
 }

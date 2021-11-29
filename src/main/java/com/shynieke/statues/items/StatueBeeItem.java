@@ -14,13 +14,13 @@ public class StatueBeeItem extends StatueBlockItem {
 
     @Override
     public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-        if (stack.hasDisplayName() && !worldIn.isRemote) {
-            final String name = stack.getDisplayName().getUnformattedComponentText();
+        if (stack.hasCustomHoverName() && !worldIn.isClientSide) {
+            final String name = stack.getHoverName().getContents();
             if (entityIn instanceof PlayerEntity) {
                 if(name.equalsIgnoreCase("Trans Bee")) {
-                    ((PlayerEntity) entityIn).inventory.setInventorySlotContents(itemSlot, new ItemStack(StatueRegistry.TRANS_BEE.get(), stack.getCount(), stack.getTag()));
+                    ((PlayerEntity) entityIn).inventory.setItem(itemSlot, new ItemStack(StatueRegistry.TRANS_BEE.get(), stack.getCount(), stack.getTag()));
                 } else if (name.equalsIgnoreCase("Tropibee")) {
-                    ((PlayerEntity) entityIn).inventory.setInventorySlotContents(itemSlot, new ItemStack(StatueRegistry.TROPIBEE.get(), stack.getCount(), stack.getTag()));
+                    ((PlayerEntity) entityIn).inventory.setItem(itemSlot, new ItemStack(StatueRegistry.TROPIBEE.get(), stack.getCount(), stack.getTag()));
                 }
             }
         }

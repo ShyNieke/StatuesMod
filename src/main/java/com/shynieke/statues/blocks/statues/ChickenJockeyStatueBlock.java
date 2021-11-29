@@ -21,7 +21,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class ChickenJockeyStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 8.0D, 10.0D);
+	private static final VoxelShape SHAPE = Block.box(6.0D, 0.0D, 6.0D, 10.0D, 8.0D, 10.0D);
 
 	public ChickenJockeyStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -37,7 +37,7 @@ public class ChickenJockeyStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
+		return SoundEvents.ZOMBIE_AMBIENT;
 	}
 
 	@Override

@@ -19,10 +19,10 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class BlazeStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 1.0D, 4.0D, 12.0D, 9.5D, 12.0D);
+	private static final VoxelShape SHAPE = Block.box(4.0D, 1.0D, 4.0D, 12.0D, 9.5D, 12.0D);
 
 	public BlazeStatueBlock(Properties builder) {
-		super(builder.sound(SoundType.STONE).setLightLevel((p_235418_0_) -> 8));
+		super(builder.sound(SoundType.STONE).lightLevel((p_235418_0_) -> 8));
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class BlazeStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_BLAZE_AMBIENT;
+		return SoundEvents.BLAZE_AMBIENT;
 	}
 
 	@Override

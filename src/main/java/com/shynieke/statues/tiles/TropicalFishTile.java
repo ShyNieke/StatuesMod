@@ -15,26 +15,26 @@ public class TropicalFishTile extends StatueTile {
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT nbt) {
-        super.read(state, nbt);
+    public void load(BlockState state, CompoundNBT nbt) {
+        super.load(state, nbt);
         this.MAIN_COLOR = nbt.getInt("MainColor");
         this.SECONDARY_COLOR = nbt.getInt("SecondaryColor");
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
+    public CompoundNBT save(CompoundNBT compound) {
         compound.putInt("MainColor", MAIN_COLOR);
         compound.putInt("SecondaryColor", SECONDARY_COLOR);
 
-        return super.write(compound);
+        return super.save(compound);
     }
 
     public void scrambleColors() {
-        if(world != null) {
-            this.MAIN_COLOR = world.rand.nextInt(16);
-            this.SECONDARY_COLOR = world.rand.nextInt(16);
+        if(level != null) {
+            this.MAIN_COLOR = level.random.nextInt(16);
+            this.SECONDARY_COLOR = level.random.nextInt(16);
         }
-        markDirty();
+        setChanged();
     }
 
     public int getMainColor() {

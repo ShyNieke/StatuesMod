@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class CatStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 10.0D, 6.5D, 10.0D);
+	private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 10.0D, 6.5D, 10.0D);
 
 	public CatStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -42,7 +42,7 @@ public class CatStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_CAT_AMBIENT;
+		return SoundEvents.CAT_AMBIENT;
 	}
 
 	@Override

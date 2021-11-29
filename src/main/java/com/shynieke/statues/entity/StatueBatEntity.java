@@ -29,37 +29,37 @@ public class StatueBatEntity extends BatEntity {
     }
 
     public static AttributeModifierMap.MutableAttribute registerAttributes() {
-        return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 12.0D);
+        return MobEntity.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D);
     }
 
     @Nullable
     @Override
-    public ILivingEntityData onInitialSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-        int random = getRNG().nextInt(10);
+    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+        int random = getRandom().nextInt(10);
         if(random < 5) {
-            addPotionEffect(new EffectInstance(Effects.SPEED, 2000 * 20, 2, true, false));
+            addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 2000 * 20, 2, true, false));
         }
-        return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
     }
 
     @Override
-    public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (!source.isMagicDamage() && source.getImmediateSource() instanceof LivingEntity) {
-            LivingEntity entitylivingbase = (LivingEntity)source.getImmediateSource();
+    public boolean hurt(DamageSource source, float amount) {
+        if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity) {
+            LivingEntity entitylivingbase = (LivingEntity)source.getDirectEntity();
 
             if (!source.isExplosion()) {
-                entitylivingbase.attackEntityFrom(DamageSource.causeThornsDamage(this), 2.0F);
+                entitylivingbase.hurt(DamageSource.thorns(this), 2.0F);
             }
         }
 
-        return super.attackEntityFrom(source, amount);
+        return super.hurt(source, amount);
     }
 
     public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, IWorld worldIn, SpawnReason reason, BlockPos pos, Random randomIn) {
         if (pos.getY() >= worldIn.getSeaLevel()) {
             return false;
         } else {
-            int i = worldIn.getLight(pos);
+            int i = worldIn.getMaxLocalRawBrightness(pos);
             int j = 4;
             if (isNearHalloween()) {
                 j = 7;
@@ -67,7 +67,7 @@ public class StatueBatEntity extends BatEntity {
                 return false;
             }
 
-            return i > randomIn.nextInt(j) ? false : canSpawnOn(batIn, worldIn, reason, pos, randomIn);
+            return i > randomIn.nextInt(j) ? false : checkMobSpawnRules(batIn, worldIn, reason, pos, randomIn);
         }
     }
 

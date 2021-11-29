@@ -32,7 +32,7 @@ public class EndermanStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_ENDERMAN_AMBIENT;
+		return SoundEvents.ENDERMAN_AMBIENT;
 	}
 
 	@Override

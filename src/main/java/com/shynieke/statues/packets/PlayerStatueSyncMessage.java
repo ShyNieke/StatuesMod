@@ -17,8 +17,8 @@ public class PlayerStatueSyncMessage {
     private CompoundNBT data;
 
     private PlayerStatueSyncMessage(PacketBuffer buf) {
-        this.entityUUID = buf.readUniqueId();
-        this.data = buf.readCompoundTag();
+        this.entityUUID = buf.readUUID();
+        this.data = buf.readNbt();
     }
 
     public PlayerStatueSyncMessage(UUID playerUUID, CompoundNBT tag) {
@@ -27,12 +27,12 @@ public class PlayerStatueSyncMessage {
     }
 
     public void encode(PacketBuffer buf) {
-        buf.writeUniqueId(entityUUID);
-        buf.writeCompoundTag(data);
+        buf.writeUUID(entityUUID);
+        buf.writeNbt(data);
     }
 
     public static PlayerStatueSyncMessage decode(final PacketBuffer packetBuffer) {
-        return new PlayerStatueSyncMessage(packetBuffer.readUniqueId(), packetBuffer.readCompoundTag());
+        return new PlayerStatueSyncMessage(packetBuffer.readUUID(), packetBuffer.readNbt());
     }
 
     public void handle(Supplier<Context> context) {
@@ -40,19 +40,19 @@ public class PlayerStatueSyncMessage {
         ctx.enqueueWork(() -> {
             if (ctx.getDirection().getReceptionSide().isServer()) {
                 final ServerPlayerEntity player = ctx.getSender();
-                final ServerWorld world = ctx.getSender().getServerWorld();
-                Entity entity = world.getEntityByUuid(this.entityUUID);
+                final ServerWorld world = ctx.getSender().getLevel();
+                Entity entity = world.getEntity(this.entityUUID);
                 if (entity instanceof PlayerStatueEntity && player != null) {
                     PlayerStatueEntity playerStatue = (PlayerStatueEntity)entity;
-                    if(!playerStatue.isLocked() || (playerStatue.getLockedBy().equals(player.getUniqueID()))) {
-                        CompoundNBT entityTag = playerStatue.writeWithoutTypeId(new CompoundNBT());
+                    if(!playerStatue.isLocked() || (playerStatue.getLockedBy().equals(player.getUUID()))) {
+                        CompoundNBT entityTag = playerStatue.saveWithoutId(new CompoundNBT());
                         CompoundNBT entityTagCopy = entityTag.copy();
 
                         if(!this.data.isEmpty()) {
                             entityTagCopy.merge(this.data);
-                            UUID uuid = playerStatue.getUniqueID();
-                            playerStatue.read(entityTagCopy);
-                            playerStatue.setUniqueId(uuid);
+                            UUID uuid = playerStatue.getUUID();
+                            playerStatue.load(entityTagCopy);
+                            playerStatue.setUUID(uuid);
                         }
 
                         float YOffset = data.getFloat("yOffset");
@@ -61,7 +61,7 @@ public class PlayerStatueSyncMessage {
                         boolean lockFlag = data.getBoolean("Locked");
                         if(lockFlag) {
                             if(!playerStatue.isLocked()) {
-                                playerStatue.setLockedBy(player.getUniqueID());
+                                playerStatue.setLockedBy(player.getUUID());
                             }
                         } else {
                             if(playerStatue.isLocked()) {

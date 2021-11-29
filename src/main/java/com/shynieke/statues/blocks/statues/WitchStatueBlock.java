@@ -37,6 +37,6 @@ public class WitchStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_WITCH_AMBIENT;
+		return SoundEvents.WITCH_AMBIENT;
 	}
 }

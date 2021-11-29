@@ -52,37 +52,37 @@ public class ClientHandler {
         RenderingRegistry.registerEntityRenderingHandler(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
         RenderingRegistry.registerEntityRenderingHandler(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
 
-        RenderTypeLookup.setRenderLayer(StatueRegistry.CAMPFIRE_STATUE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueRegistry.HUSK_STATUE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueRegistry.ZOMBIE_STATUE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueRegistry.ENDERMAN_STATUE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueRegistry.INFO_STATUE.get(), RenderType.getCutout());
-        RenderTypeLookup.setRenderLayer(StatueRegistry.WASTELAND_STATUE.get(), RenderType.getCutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.CAMPFIRE_STATUE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.HUSK_STATUE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.ZOMBIE_STATUE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.ENDERMAN_STATUE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.INFO_STATUE.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.WASTELAND_STATUE.get(), RenderType.cutout());
 
-        RenderTypeLookup.setRenderLayer(StatueRegistry.ENDERMITE_STATUE.get(), RenderType.getTranslucent());
-        RenderTypeLookup.setRenderLayer(StatueRegistry.SLIME_STATUE.get(), RenderType.getTranslucent());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.ENDERMITE_STATUE.get(), RenderType.translucent());
+        RenderTypeLookup.setRenderLayer(StatueRegistry.SLIME_STATUE.get(), RenderType.translucent());
 
         Minecraft mc = Minecraft.getInstance();
         YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(mc.getProxy(), UUID.randomUUID().toString());
         MinecraftSessionService minecraftsessionservice = yggdrasilauthenticationservice.createMinecraftSessionService();
         GameProfileRepository gameprofilerepository = yggdrasilauthenticationservice.createProfileRepository();
-        PlayerProfileCache playerprofilecache = new PlayerProfileCache(gameprofilerepository, new File(mc.gameDir, MinecraftServer.USER_CACHE_FILE.getName()));
+        PlayerProfileCache playerprofilecache = new PlayerProfileCache(gameprofilerepository, new File(mc.gameDirectory, MinecraftServer.USERID_CACHE_FILE.getName()));
         PlayerTile.setProfileCache(playerprofilecache);
         PlayerTile.setSessionService(minecraftsessionservice);
-        PlayerProfileCache.setOnlineMode(false);
+        PlayerProfileCache.setUsesAuthentication(false);
 
-        ItemModelsProperties.registerProperty(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new IItemPropertyGetter() {
+        ItemModelsProperties.register(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new IItemPropertyGetter() {
             private final ClientHandler.Angle rotation = new ClientHandler.Angle();
             private final ClientHandler.Angle rota = new ClientHandler.Angle();
 
             public float call(ItemStack stack, @Nullable ClientWorld worldIn, @Nullable LivingEntity entityIn) {
-                Entity entity = (Entity)(entityIn != null ? entityIn : stack.getAttachedEntity());
+                Entity entity = (Entity)(entityIn != null ? entityIn : stack.getEntityRepresentation());
                 if (entity == null) {
                     return 0.0F;
                 } else {
-                    if (entity != null && entity.world instanceof ClientWorld) {
-                        worldIn = (ClientWorld)entity.world;
+                    if (entity != null && entity.level instanceof ClientWorld) {
+                        worldIn = (ClientWorld)entity.level;
                     }
                     if(worldIn != null) {
                         BlockPos blockpos = this.getWorldPos(worldIn);
@@ -91,84 +91,84 @@ public class ClientHandler {
                         CompoundNBT tag = stack.getTag();
                         if (tag != null && tag.contains("lastPlayerLocation")) {
                             long location = tag.getLong("lastPlayerLocation");
-                            if (location != 0L) { blockpos = BlockPos.fromLong(location); }
+                            if (location != 0L) { blockpos = BlockPos.of(location); }
                         }
 
-                        if (blockpos != null && !(entity.getPositionVec().squareDistanceTo((double)blockpos.getX() + 0.5D, entity.getPositionVec().getY(), (double)blockpos.getZ() + 0.5D) < (double)1.0E-5F)) {
-                            boolean flag = entity instanceof PlayerEntity && ((PlayerEntity)entityIn).isUser();
+                        if (blockpos != null && !(entity.position().distanceToSqr((double)blockpos.getX() + 0.5D, entity.position().y(), (double)blockpos.getZ() + 0.5D) < (double)1.0E-5F)) {
+                            boolean flag = entity instanceof PlayerEntity && ((PlayerEntity)entityIn).isLocalPlayer();
                             double d1 = 0.0D;
                             if (flag) {
-                                d1 = (double)entityIn.rotationYaw;
+                                d1 = (double)entityIn.yRot;
                             } else if (entity instanceof ItemFrameEntity) {
                                 d1 = this.getFrameRotation((ItemFrameEntity)entity);
                             } else if (entity instanceof ItemEntity) {
-                                d1 = (double)(180.0F - ((ItemEntity)entity).getItemHover(0.5F) / ((float)Math.PI * 2F) * 360.0F);
+                                d1 = (double)(180.0F - ((ItemEntity)entity).getSpin(0.5F) / ((float)Math.PI * 2F) * 360.0F);
                             } else if (entityIn != null) {
-                                d1 = (double)entityIn.renderYawOffset;
+                                d1 = (double)entityIn.yBodyRot;
                             }
 
                             d1 = MathHelper.positiveModulo(d1 / 360.0D, 1.0D);
-                            double d2 = this.getLocationToAngle(Vector3d.copyCentered(blockpos), entity) / (double)((float)Math.PI * 2F);
+                            double d2 = this.getLocationToAngle(Vector3d.atCenterOf(blockpos), entity) / (double)((float)Math.PI * 2F);
                             double d3;
                             if (flag) {
-                                if (this.rotation.func_239448_a_(gameTime)) { this.rotation.func_239449_a_(gameTime, 0.5D - (d1 - 0.25D)); }
-                                d3 = d2 + this.rotation.field_239445_a_;
+                                if (this.rotation.shouldUpdate(gameTime)) { this.rotation.update(gameTime, 0.5D - (d1 - 0.25D)); }
+                                d3 = d2 + this.rotation.rotation;
                             } else {
                                 d3 = 0.5D - (d1 - 0.25D - d2);
                             }
 
                             return MathHelper.positiveModulo((float)d3, 1.0F);
                         } else {
-                            if (this.rota.func_239448_a_(gameTime)) {
-                                this.rota.func_239449_a_(gameTime, Math.random());
+                            if (this.rota.shouldUpdate(gameTime)) {
+                                this.rota.update(gameTime, Math.random());
                             }
 
-                            double d0 = this.rota.field_239445_a_ + (double)((float)stack.hashCode() / 2.14748365E9F);
+                            double d0 = this.rota.rotation + (double)((float)stack.hashCode() / 2.14748365E9F);
                             return MathHelper.positiveModulo((float)d0, 1.0F);
                         }
                     }
-                    double d0 = this.rota.field_239445_a_ + (double)((float)stack.hashCode() / 2.14748365E9F);
+                    double d0 = this.rota.rotation + (double)((float)stack.hashCode() / 2.14748365E9F);
                     return MathHelper.positiveModulo((float)d0, 1.0F);
                 }
             }
 
             @Nullable
             private BlockPos getWorldPos(ClientWorld world) {
-                return world.getDimensionType().isNatural() ? world.func_239140_u_() : null;
+                return world.dimensionType().natural() ? world.getSharedSpawnPos() : null;
             }
 
             private double getFrameRotation(ItemFrameEntity itemFrameIn) {
-                Direction direction = itemFrameIn.getHorizontalFacing();
-                int i = direction.getAxis().isVertical() ? 90 * direction.getAxisDirection().getOffset() : 0;
-                return (double)MathHelper.wrapDegrees(180 + direction.getHorizontalIndex() * 90 + itemFrameIn.getRotation() * 45 + i);
+                Direction direction = itemFrameIn.getDirection();
+                int i = direction.getAxis().isVertical() ? 90 * direction.getAxisDirection().getStep() : 0;
+                return (double)MathHelper.wrapDegrees(180 + direction.get2DDataValue() * 90 + itemFrameIn.getRotation() * 45 + i);
             }
 
             private double getLocationToAngle(Vector3d location, Entity entityIn) {
-                return Math.atan2(location.getZ() - entityIn.getPosZ(), location.getX() - entityIn.getPosX());
+                return Math.atan2(location.z() - entityIn.getZ(), location.x() - entityIn.getX());
             }
         });
     }
 
     @OnlyIn(Dist.CLIENT)
     static class Angle {
-        private double field_239445_a_;
-        private double field_239446_b_;
-        private long field_239447_c_;
+        private double rotation;
+        private double deltaRotation;
+        private long lastUpdateTick;
 
         private Angle() {
         }
 
-        private boolean func_239448_a_(long p_239448_1_) {
-            return this.field_239447_c_ != p_239448_1_;
+        private boolean shouldUpdate(long p_239448_1_) {
+            return this.lastUpdateTick != p_239448_1_;
         }
 
-        private void func_239449_a_(long p_239449_1_, double p_239449_3_) {
-            this.field_239447_c_ = p_239449_1_;
-            double d0 = p_239449_3_ - this.field_239445_a_;
+        private void update(long p_239449_1_, double p_239449_3_) {
+            this.lastUpdateTick = p_239449_1_;
+            double d0 = p_239449_3_ - this.rotation;
             d0 = MathHelper.positiveModulo(d0 + 0.5D, 1.0D) - 0.5D;
-            this.field_239446_b_ += d0 * 0.1D;
-            this.field_239446_b_ *= 0.8D;
-            this.field_239445_a_ = MathHelper.positiveModulo(this.field_239445_a_ + this.field_239446_b_, 1.0D);
+            this.deltaRotation += d0 * 0.1D;
+            this.deltaRotation *= 0.8D;
+            this.rotation = MathHelper.positiveModulo(this.rotation + this.deltaRotation, 1.0D);
         }
     }
 

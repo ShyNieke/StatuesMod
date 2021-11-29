@@ -41,10 +41,10 @@ public class DropHandler {
     @SubscribeEvent
     public void onLivingDrop(LivingDropsEvent event) {
         Entity entity = event.getEntity();
-        Entity source = event.getSource().getTrueSource();
+        Entity source = event.getSource().getEntity();
 
         if (entity instanceof VillagerEntity) {
-            switch(entity.world.rand.nextInt(4)) {
+            switch(entity.level.random.nextInt(4)) {
                 default:
                     dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
                     break;
@@ -68,20 +68,20 @@ public class DropHandler {
         } else if(entity instanceof SheepEntity) {
             SheepEntity sheep = (SheepEntity) entity;
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.SHEEP_SHAVEN_STATUE.get());
-            if (!sheep.getSheared()) {
-                itemStackToDrop = new ItemStack(SheepStatueBlock.getStatue(sheep.getFleeceColor()));
+            if (!sheep.isSheared()) {
+                itemStackToDrop = new ItemStack(SheepStatueBlock.getStatue(sheep.getColor()));
             }
             dropLootStatues(entity, itemStackToDrop, source, event);
         } else if(entity instanceof BeeEntity) {
             BeeEntity bee = (BeeEntity)entity;
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.BEE_STATUE.get());
-            if (entity.world.rand.nextBoolean()) {
+            if (entity.level.random.nextBoolean()) {
                 itemStackToDrop = new ItemStack(StatueRegistry.ANGRY_BEE_STATUE.get());
             }
             String trans = "Trans Bee";
-            if(bee.getDisplayName().getUnformattedComponentText().equalsIgnoreCase(trans)) {
+            if(bee.getDisplayName().getContents().equalsIgnoreCase(trans)) {
                 itemStackToDrop = new ItemStack(StatueRegistry.BEE_STATUE.get());
-                itemStackToDrop.setDisplayName(new StringTextComponent(trans));
+                itemStackToDrop.setHoverName(new StringTextComponent(trans));
             }
             dropLootStatues(entity, itemStackToDrop, source, event);
         } else if(entity instanceof RabbitEntity) {
@@ -176,14 +176,14 @@ public class DropHandler {
         } else if(entity instanceof MooshroomEntity) {
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.MOOSHROOM_STATUE.get());
             MooshroomEntity mooshroom = (MooshroomEntity)entity;
-            if(mooshroom.getMooshroomType() == MooshroomEntity.Type.BROWN) {
+            if(mooshroom.getMushroomType() == MooshroomEntity.Type.BROWN) {
                 itemStackToDrop = new ItemStack(StatueRegistry.BROWN_MOOSHROOM_STATUE.get());
             }
             dropLootStatues(entity, itemStackToDrop, source, event);
         } else if(entity instanceof FoxEntity) {
             FoxEntity fox = (FoxEntity)entity;
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.FOX_STATUE.get());
-            if(fox.getVariantType() == Type.SNOW) {
+            if(fox.getFoxType() == Type.SNOW) {
                 itemStackToDrop = new ItemStack(StatueRegistry.FOX_SNOW_STATUE.get());
             }
             dropLootStatues(entity, itemStackToDrop, source, event);
@@ -202,7 +202,7 @@ public class DropHandler {
                 AbstractStatueBase statue = (AbstractStatueBase) block.get();
                 ItemStack itemStackToDrop = new ItemStack(statue);
                 if (entity instanceof MobEntity) {
-                    if (((MobEntity) entity).isChild() == statue.isBaby()) {
+                    if (((MobEntity) entity).isBaby() == statue.isBaby()) {
                         dropLootStatues(entity, itemStackToDrop, source, event);
                     }
                 } else {
@@ -213,10 +213,10 @@ public class DropHandler {
 
         if(StatuesConfig.COMMON.playerDropsStatue.get() && entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity)entity;
-            ItemStack playerStatueStack = new ItemStack(StatueRegistry.PLAYER_STATUE.get()).setDisplayName(player.getName());
+            ItemStack playerStatueStack = new ItemStack(StatueRegistry.PLAYER_STATUE.get()).setHoverName(player.getName());
             double random_drop = Math.random();
             double playerDropChance = StatuesConfig.COMMON.playerStatueDropChance.get();
-            BlockPos entityPos = entity.getPosition();
+            BlockPos entityPos = entity.blockPosition();
 
             switch (StatuesConfig.COMMON.playerStatueKillSource.get()) {
                 default:
@@ -225,7 +225,7 @@ public class DropHandler {
                         List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                         if (!luckyPlayers.isEmpty()) {
                             for (String luckyName : luckyPlayers) {
-                                String user = sourcePlayer.getName().getUnformattedComponentText();
+                                String user = sourcePlayer.getName().getContents();
 
                                 if (!luckyName.isEmpty() && user.equals(luckyName)) {
                                     playerDropChance = StatuesConfig.COMMON.playerStatueDropChance.get() / 4;
@@ -247,7 +247,7 @@ public class DropHandler {
 //                    else
 //                    {
                         if (random_drop <= playerDropChance) {
-                            event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+                            event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
                         }
 //                    }
                     }
@@ -255,13 +255,13 @@ public class DropHandler {
                 case PLAYER_FAKEPLAYER:
                     if (source instanceof ServerPlayerEntity) {
                         if (random_drop <= playerDropChance) {
-                            event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+                            event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
                         }
                     }
                     break;
                 case ALL:
                     if (random_drop <= playerDropChance) {
-                        event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+                        event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
                     }
                     break;
             }
@@ -269,21 +269,21 @@ public class DropHandler {
     }
 
     public void dropBossStatue(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
-        BlockPos entityPos = entity.getPosition();
+        BlockPos entityPos = entity.blockPosition();
 
         switch (StatuesConfig.COMMON.statueKillSource.get()) {
             default:
                 if (source instanceof ServerPlayerEntity && !(source instanceof FakePlayer)) {
-                    event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+                    event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                 }
                 break;
             case PLAYER_FAKEPLAYER:
                 if (source instanceof ServerPlayerEntity) {
-                    event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+                    event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                 }
                 break;
             case ALL:
-                event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+                event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                 break;
         }
     }
@@ -291,7 +291,7 @@ public class DropHandler {
     public void dropLootStatues(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
         double random_drop = Math.random();
         double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
-        BlockPos entityPos = entity.getPosition();
+        BlockPos entityPos = entity.blockPosition();
 
         switch (StatuesConfig.COMMON.statueKillSource.get()) {
             default:
@@ -300,7 +300,7 @@ public class DropHandler {
                     List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
                         for (String luckyName : luckyPlayers) {
-                            String user = player.getName().getUnformattedComponentText();
+                            String user = player.getName().getContents();
 
                             if (!luckyName.isEmpty() && user.equals(luckyName)) {
                                 default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;
@@ -322,7 +322,7 @@ public class DropHandler {
 //                    else
 //                    {
                     if (random_drop <= default_drop_chance) {
-                        event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+                        event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                     }
 //                    }
                 }
@@ -330,13 +330,13 @@ public class DropHandler {
             case PLAYER_FAKEPLAYER:
                 if (source instanceof ServerPlayerEntity) {
                     if (random_drop <= default_drop_chance) {
-                        event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+                        event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                     }
                 }
                 break;
             case ALL:
                 if (random_drop <= default_drop_chance) {
-                    event.getDrops().add(new ItemEntity(entity.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+                    event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
                 }
                 break;
         }

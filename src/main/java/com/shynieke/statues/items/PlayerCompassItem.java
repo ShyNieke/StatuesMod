@@ -22,25 +22,25 @@ import java.util.List;
 public class PlayerCompassItem extends Item {
 
     public PlayerCompassItem(Item.Properties builder) {
-        super(builder.group(StatueTabs.STATUES_ITEMS));
+        super(builder.tab(StatueTabs.STATUES_ITEMS));
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        World worldIn = context.getWorld();
-        BlockPos pos = context.getPos();
+    public ActionResultType useOn(ItemUseContext context) {
+        World worldIn = context.getLevel();
+        BlockPos pos = context.getClickedPos();
         PlayerEntity playerIn = context.getPlayer();
-        if(!worldIn.isRemote && playerIn != null && playerIn.isSneaking() && worldIn.getBlockState(pos).getBlock() instanceof PlayerStatueBlock) {
-            playerIn.setHeldItem(context.getHand(), new ItemStack(Items.COMPASS));
+        if(!worldIn.isClientSide && playerIn != null && playerIn.isShiftKeyDown() && worldIn.getBlockState(pos).getBlock() instanceof PlayerStatueBlock) {
+            playerIn.setItemInHand(context.getHand(), new ItemStack(Items.COMPASS));
         }
-        return super.onItemUse(context);
+        return super.useOn(context);
     }
 
     @Override
-    public void addInformation(ItemStack stack, @Nullable World reader, List<ITextComponent> tooltip, ITooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, @Nullable World reader, List<ITextComponent> tooltip, ITooltipFlag flag) {
         CompoundNBT tag = stack.hasTag() ? stack.getTag() : new CompoundNBT();
         if (tag != null && !tag.getString("playerTracking").isEmpty()) {
-            tooltip.add(new TranslationTextComponent("statues.last.known.location", tag.getString("playerTracking")).mergeStyle(TextFormatting.GOLD));
+            tooltip.add(new TranslationTextComponent("statues.last.known.location", tag.getString("playerTracking")).withStyle(TextFormatting.GOLD));
         }
     }
 }

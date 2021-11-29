@@ -14,27 +14,27 @@ import net.minecraft.world.World;
 public class StatueTeaItem extends Item {
 
     public StatueTeaItem(Properties builder, Food food) {
-        super(builder.food(food).maxStackSize(8));
+        super(builder.food(food).stacksTo(8));
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityIn) {
+    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityIn) {
         if(entityIn instanceof PlayerEntity) {
             PlayerEntity playerIn = entityIn instanceof PlayerEntity ? (PlayerEntity)entityIn : null;
-            playerIn.onFoodEaten(worldIn, stack);
+            playerIn.eat(worldIn, stack);
 
             if (playerIn instanceof ServerPlayerEntity) {
                 CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)playerIn, stack);
             }
 
-            playerIn.addStat(Stats.ITEM_USED.get(this));
+            playerIn.awardStat(Stats.ITEM_USED.get(this));
 
-            if (!playerIn.abilities.isCreativeMode) {
+            if (!playerIn.abilities.instabuild) {
                 if (stack.isEmpty()) {
                     return new ItemStack(StatueRegistry.CUP.get());
                 }
 
-                playerIn.inventory.addItemStackToInventory(new ItemStack(StatueRegistry.CUP.get()));
+                playerIn.inventory.add(new ItemStack(StatueRegistry.CUP.get()));
             }
         }
 

@@ -29,14 +29,14 @@ public class StatueCurioCapability implements ICurio {
 
     @Override
     public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        matrixStack.push();
+        matrixStack.pushPose();
 
-        Minecraft.getInstance().getRenderManager().getSkinMap().get("default").getEntityModel().getModelHead().translateRotate(matrixStack);
+        Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap().get("default").getModel().getHead().translateAndRotate(matrixStack);
         matrixStack.translate(0.0D, -0.25D, 0.0D);
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(180.0F));
+        matrixStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
         matrixStack.scale(0.65F, -0.65F, -0.65F);
 
-        Minecraft.getInstance().getItemRenderer().renderItem(this.displayedItem, ItemCameraTransforms.TransformType.HEAD, light, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
-        matrixStack.pop();
+        Minecraft.getInstance().getItemRenderer().renderStatic(this.displayedItem, ItemCameraTransforms.TransformType.HEAD, light, OverlayTexture.NO_OVERLAY, matrixStack, renderTypeBuffer);
+        matrixStack.popPose();
     }
 }

@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SlimeStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
+	private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
 
 	public SlimeStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -50,11 +50,11 @@ public class SlimeStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_SLIME_SQUISH;
+		return SoundEvents.SLIME_SQUISH;
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public boolean isSideInvisible(BlockState state, BlockState state2, Direction direction) {
-		return state2.getBlock() == this || super.isSideInvisible(state, state2, direction);
+	public boolean skipRendering(BlockState state, BlockState state2, Direction direction) {
+		return state2.getBlock() == this || super.skipRendering(state, state2, direction);
 	}
 }

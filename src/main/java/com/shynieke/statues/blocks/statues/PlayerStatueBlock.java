@@ -59,12 +59,12 @@ import java.util.UUID;
 
 public class PlayerStatueBlock extends AbstractBaseBlock {
 
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
+	private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 	public static final BooleanProperty ONLINE = BooleanProperty.create("online");
 
 	public PlayerStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
-		this.setDefaultState(this.getDefaultState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(ONLINE, false));
+		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE).setValue(ONLINE, false));
 	}
 
 	@Override
@@ -78,29 +78,29 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	private PlayerTile getTE(World world, BlockPos pos) {
-		return (PlayerTile) world.getTileEntity(pos);
+		return (PlayerTile) world.getBlockEntity(pos);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public BlockRenderType getRenderType(BlockState p_149645_1_) {
+	public BlockRenderType getRenderShape(BlockState p_149645_1_) {
 		return BlockRenderType.ENTITYBLOCK_ANIMATED;
 	}
 
 	@Override
-	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
+	public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, TileEntity te, ItemStack stack) {
 		if (te instanceof PlayerTile && ((INameable)te).hasCustomName()) {
 			PlayerTile tile = (PlayerTile)te;
-			player.addExhaustion(0.005F);
+			player.causeFoodExhaustion(0.005F);
 
-			if (worldIn.isRemote)
+			if (worldIn.isClientSide)
 				return;
 
 			if (this == Blocks.AIR)
 				return;
 
 			ItemStack itemstack = new ItemStack(this);
-			itemstack.setDisplayName(((INameable)tile).getName());
+			itemstack.setHoverName(((INameable)tile).getName());
 
 			if (tile.getPlayerProfile() != null) {
 				CompoundNBT stackTag = itemstack.getTag() != null ? itemstack.getTag() : new CompoundNBT();
@@ -108,29 +108,29 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				NBTUtil.writeGameProfile(nbttagcompound, tile.getPlayerProfile());
 				stackTag.put("PlayerProfile", nbttagcompound);
 				itemstack.setTag(stackTag);
-				itemstack.setDisplayName(((INameable)tile).getName());
+				itemstack.setHoverName(((INameable)tile).getName());
 			}
 
-			spawnAsEntity(worldIn, pos, itemstack);
+			popResource(worldIn, pos, itemstack);
 
 			if(tile.getComparatorApplied()) {
-				spawnAsEntity(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
+				popResource(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
 		} else {
-			super.harvestBlock(worldIn, player, pos, state, null, stack);
+			super.playerDestroy(worldIn, player, pos, state, null, stack);
 		}
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean p_196243_5_) {
+	public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean p_196243_5_) {
 		if (state.hasTileEntity() && newState.getBlock() != StatueRegistry.PLAYER_STATUE.get()) {
-			worldIn.removeTileEntity(pos);
+			worldIn.removeBlockEntity(pos);
 		}
 	}
 
 	@Override
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		TileEntity tileentity = world.getTileEntity(pos);
+		TileEntity tileentity = world.getBlockEntity(pos);
 		if (tileentity instanceof PlayerTile) {
 			PlayerTile playerTile = (PlayerTile)tileentity;
 			ItemStack stack = new ItemStack(state.getBlock());
@@ -147,20 +147,20 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				stack.setTag(tag);
 			}
 
-			return stack.setDisplayName(playerTile.getName());
+			return stack.setHoverName(playerTile.getName());
 		} else {
 			return new ItemStack(state.getBlock());
 		}
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		super.onBlockPlacedBy(worldIn, pos, state.with(ONLINE, false), placer, stack);
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		super.setPlacedBy(worldIn, pos, state.setValue(ONLINE, false), placer, stack);
 
-		if(!worldIn.isRemote && getTE(worldIn, pos) != null) {
+		if(!worldIn.isClientSide && getTE(worldIn, pos) != null) {
 			PlayerTile tile = getTE(worldIn, pos);
-			if(stack.hasDisplayName()) {
-				String stackName = stack.getDisplayName().getUnformattedComponentText();
+			if(stack.hasCustomHoverName()) {
+				String stackName = stack.getHoverName().getContents();
 				boolean spaceFlag = stackName.contains(" ");
 				boolean emptyFlag = stackName.isEmpty();
 
@@ -191,12 +191,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if(Screen.hasShiftDown()){
 			if(stack.hasTag()) {
 				CompoundNBT tag = stack.getTag();
-				IFormattableTextComponent userComponent = new StringTextComponent("Username: ").mergeStyle(TextFormatting.GOLD);
-				userComponent.appendSibling(stack.getDisplayName().copyRaw().mergeStyle(TextFormatting.WHITE));
+				IFormattableTextComponent userComponent = new StringTextComponent("Username: ").withStyle(TextFormatting.GOLD);
+				userComponent.append(stack.getHoverName().plainCopy().withStyle(TextFormatting.WHITE));
 				tooltip.add(userComponent);
 
 				if(tag != null && tag.contains("PlayerProfile")) {
@@ -205,32 +205,33 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						GameProfile gameprofile = NBTUtil.readGameProfile(profileTag);
 
 						if(gameprofile != null && gameprofile.isComplete()) {
-							IFormattableTextComponent UUIDComponent = new StringTextComponent("UUID: ").mergeStyle(TextFormatting.GOLD);
-							UUIDComponent.appendSibling(new StringTextComponent(gameprofile.getId().toString()).mergeStyle(TextFormatting.WHITE));
+							IFormattableTextComponent UUIDComponent = new StringTextComponent("UUID: ").withStyle(TextFormatting.GOLD);
+							UUIDComponent.append(new StringTextComponent(gameprofile.getId().toString()).withStyle(TextFormatting.WHITE));
 							tooltip.add(UUIDComponent);
 						}
 					}
 				}
 			}
 		}
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
-	public int getWeakPower(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-		if (blockState.get(ONLINE))
+	public int getSignal(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
+		if (blockState.getValue(ONLINE))
 			return 15;
 		return 0;
 	}
 
 	@Override
-	public boolean canProvidePower(BlockState state)
+	public boolean isSignalSource(BlockState state)
 	{
 		return true;
 	}
 
 	@Override
 	public boolean canConnectRedstone(BlockState blockState, IBlockReader blockAccess, BlockPos pos, Direction side) {
-		return blockState.get(ONLINE);
+		return blockState.getValue(ONLINE);
 	}
 
 	@Override
@@ -239,25 +240,25 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	protected void fillStateContainer(net.minecraft.state.StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(HORIZONTAL_FACING, WATERLOGGED, ONLINE);
+	protected void createBlockStateDefinition(net.minecraft.state.StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(FACING, WATERLOGGED, ONLINE);
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult result) {
-		ItemStack stack = playerIn.getHeldItem(hand);
+	public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand hand, BlockRayTraceResult result) {
+		ItemStack stack = playerIn.getItemInHand(hand);
 		GameProfile tileProfile = getTE(worldIn, pos).getPlayerProfile();
 		PlayerTile tile = getTE(worldIn, pos);
-		if(!worldIn.isRemote && tile != null && tileProfile != null) {
+		if(!worldIn.isClientSide && tile != null && tileProfile != null) {
 			String playerName = tileProfile.getName();
-			boolean onlineFlag = worldIn.getPlayerByUuid(tileProfile.getId()) != null;
+			boolean onlineFlag = worldIn.getPlayerByUUID(tileProfile.getId()) != null;
 
-			if(playerIn.isSneaking()) {
+			if(playerIn.isShiftKeyDown()) {
 				if(tile.getComparatorApplied()) {
 					tile.setComparatorApplied(false);
 					ItemStack comparatorStack = new ItemStack(Items.COMPARATOR);
-					if(!playerIn.addItemStackToInventory(comparatorStack)) {
-						worldIn.addEntity(new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
+					if(!playerIn.addItem(comparatorStack)) {
+						worldIn.addFreshEntity(new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
 					}
 				}
 				return ActionResultType.SUCCESS;
@@ -269,36 +270,36 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							ItemStack playerCompass = isPlayerCompass ? stack : new ItemStack(StatueRegistry.PLAYER_COMPASS.get());
 							CompoundNBT locationTag = new CompoundNBT();
 
-							PlayerEntity player = worldIn.getPlayerByUuid(tileProfile.getId());
-							if(player != null && player.world.getDimensionKey().getLocation().equals(playerIn.world.getDimensionKey().getLocation())) {
-								BlockPos playerPos = player.getPosition();
-								locationTag.putLong("lastPlayerLocation", playerPos.toLong());
+							PlayerEntity player = worldIn.getPlayerByUUID(tileProfile.getId());
+							if(player != null && player.level.dimension().location().equals(playerIn.level.dimension().location())) {
+								BlockPos playerPos = player.blockPosition();
+								locationTag.putLong("lastPlayerLocation", playerPos.asLong());
 								locationTag.putString("playerTracking", tileProfile.getName());
 
 								playerCompass.setTag(locationTag);
 
 								if(!isPlayerCompass) {
-									if(!playerIn.abilities.isCreativeMode) {
+									if(!playerIn.abilities.instabuild) {
 										stack.shrink(1);
 									}
 									if (stack.isEmpty()) {
-										playerIn.setHeldItem(hand, playerCompass);
-									} else if (!playerIn.inventory.addItemStackToInventory(playerCompass)) {
-										playerIn.dropItem(playerCompass, false);
+										playerIn.setItemInHand(hand, playerCompass);
+									} else if (!playerIn.inventory.add(playerCompass)) {
+										playerIn.drop(playerCompass, false);
 									}
 								}
 							} else {
-								playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
+								playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.dimension.failure", TextFormatting.GOLD + playerName), Util.NIL_UUID);
 							}
 
 						} else {
-							playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", TextFormatting.GOLD + playerName), Util.DUMMY_UUID);
+							playerIn.sendMessage(new TranslationTextComponent("statues:player.compass.offline", TextFormatting.GOLD + playerName), Util.NIL_UUID);
 						}
 						return ActionResultType.SUCCESS;
 					}
 					if(stack.getItem() == Items.COMPARATOR) {
 						if(!tile.getComparatorApplied()) {
-							if(!playerIn.abilities.isCreativeMode) {
+							if(!playerIn.abilities.instabuild) {
 								stack.shrink(1);
 							}
 							tile.setComparatorApplied(true);
@@ -306,7 +307,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							return ActionResultType.SUCCESS;
 						}
 					}
-					if(stack.getItem().isIn(StatueTags.PLAYER_UPGRADE_ITEM)) {
+					if(stack.getItem().is(StatueTags.PLAYER_UPGRADE_ITEM)) {
 						if (worldIn instanceof ServerWorld) {
 							ServerWorld serverworld = (ServerWorld)worldIn;
 							PlayerStatueEntity playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), tile.getName(), playerIn, pos, SpawnReason.SPAWN_EGG, true, true);
@@ -314,16 +315,16 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 								return ActionResultType.FAIL;
 							}
 
-							serverworld.func_242417_l(playerStatueEntity);
-							float f = (float) MathHelper.floor((MathHelper.wrapDegrees(playerIn.rotationYaw - 180.0F) + 22.5F) / 45.0F) * 45.0F;
-							playerStatueEntity.setLocationAndAngles(playerStatueEntity.getPosX(), playerStatueEntity.getPosY(), playerStatueEntity.getPosZ(), f, 0.0F);
-							PlayerStatueItem.applyRandomRotations(playerStatueEntity, worldIn.rand);
+							serverworld.addFreshEntityWithPassengers(playerStatueEntity);
+							float f = (float) MathHelper.floor((MathHelper.wrapDegrees(playerIn.yRot - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+							playerStatueEntity.moveTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
+							PlayerStatueItem.applyRandomRotations(playerStatueEntity, worldIn.random);
 							playerStatueEntity.setGameProfile(tile.getPlayerProfile());
-							worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
-							worldIn.addEntity(playerStatueEntity);
-							worldIn.playSound((PlayerEntity)null, playerStatueEntity.getPosX(), playerStatueEntity.getPosY(), playerStatueEntity.getPosZ(), SoundEvents.ENTITY_ARMOR_STAND_PLACE, SoundCategory.BLOCKS, 0.75F, 0.8F);
+							worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+							worldIn.addFreshEntity(playerStatueEntity);
+							worldIn.playSound((PlayerEntity)null, playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundCategory.BLOCKS, 0.75F, 0.8F);
 
-							if(!playerIn.abilities.isCreativeMode) {
+							if(!playerIn.abilities.instabuild) {
 								stack.shrink(1);
 							}
 						}
@@ -336,12 +337,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.with(HORIZONTAL_FACING, rot.rotate(state.get(HORIZONTAL_FACING))).with(ONLINE, false);
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING))).setValue(ONLINE, false);
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.rotate(mirrorIn.toRotation(state.get(HORIZONTAL_FACING))).with(ONLINE, false);
+		return state.rotate(mirrorIn.getRotation(state.getValue(FACING))).setValue(ONLINE, false);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class GhastStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
+	private static final VoxelShape SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
 
 	public GhastStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -42,7 +42,7 @@ public class GhastStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_GHAST_AMBIENT;
+		return SoundEvents.GHAST_AMBIENT;
 	}
 
 	@Override

@@ -20,9 +20,9 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class PufferfishStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
-	private static final VoxelShape SHAPE_MEDIUM = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 6.0D, 12.0D);
-	private static final VoxelShape SHAPE_BIG = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 10D, 13.0D);
+	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
+	private static final VoxelShape SHAPE_MEDIUM = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 6.0D, 12.0D);
+	private static final VoxelShape SHAPE_BIG = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 10D, 13.0D);
 	private final int size;
 
 	public PufferfishStatueBlock(Properties builder, int size) {
@@ -60,6 +60,6 @@ public class PufferfishStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_PUFFER_FISH_BLOW_UP;
+		return SoundEvents.PUFFER_FISH_BLOW_UP;
 	}
 }

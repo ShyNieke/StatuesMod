@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class DrownedStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 15.0D, 11.0D);
+	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 15.0D, 11.0D);
 
 	public DrownedStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -47,6 +47,6 @@ public class DrownedStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_DROWNED_AMBIENT;
+		return SoundEvents.DROWNED_AMBIENT;
 	}
 }

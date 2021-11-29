@@ -37,6 +37,6 @@ public class VillagerStatue extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_VILLAGER_AMBIENT;
+		return SoundEvents.VILLAGER_AMBIENT;
 	}
 }

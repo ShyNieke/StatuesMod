@@ -32,7 +32,7 @@ public class EvokerStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_EVOKER_AMBIENT;
+		return SoundEvents.EVOKER_AMBIENT;
 	}
 
 	@Override

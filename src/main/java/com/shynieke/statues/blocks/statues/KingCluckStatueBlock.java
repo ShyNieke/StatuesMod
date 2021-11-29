@@ -21,7 +21,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class KingCluckStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D);
+	private static final VoxelShape SHAPE = Block.box(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D);
 
 	public KingCluckStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -48,6 +48,6 @@ public class KingCluckStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_CHICKEN_AMBIENT;
+		return SoundEvents.CHICKEN_AMBIENT;
 	}
 }

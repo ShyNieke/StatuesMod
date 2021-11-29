@@ -17,7 +17,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class CodStatueBlock extends FishStatueBlock {
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
+    private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
 
     public CodStatueBlock(Properties builder) {
         super(builder.sound(SoundType.STONE), 1);
@@ -35,7 +35,7 @@ public class CodStatueBlock extends FishStatueBlock {
 
     @Override
     public boolean hasTileEntity(BlockState state) {
-        return state.get(INTERACTIVE).booleanValue();
+        return state.getValue(INTERACTIVE).booleanValue();
     }
 
     @Override
@@ -45,6 +45,6 @@ public class CodStatueBlock extends FishStatueBlock {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_COD_FLOP;
+        return SoundEvents.COD_FLOP;
     }
 }

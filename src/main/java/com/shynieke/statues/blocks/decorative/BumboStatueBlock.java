@@ -13,7 +13,7 @@ import net.minecraft.world.IBlockReader;
 
 public class BumboStatueBlock extends AbstractStatueBase {
 
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 16, 12);
+    private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 16, 12);
 
     public BumboStatueBlock(Properties properties) {
         super(properties.sound(SoundType.STONE));
@@ -31,6 +31,6 @@ public class BumboStatueBlock extends AbstractStatueBase {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.BLOCK_WOOL_BREAK;
+        return SoundEvents.WOOL_BREAK;
     }
 }

@@ -20,8 +20,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class MooshroomStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SOUTH_EAST_SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 3.0D, 11.0D, 12D, 13.0D);
-	private static final VoxelShape NORTH_WEST_SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 5.0D, 13.0D, 12D, 11.0D);
+	private static final VoxelShape SOUTH_EAST_SHAPE = Block.box(5.0D, 0.0D, 3.0D, 11.0D, 12D, 13.0D);
+	private static final VoxelShape NORTH_WEST_SHAPE = Block.box(3.0D, 0.0D, 5.0D, 13.0D, 12D, 11.0D);
 
 	public MooshroomStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -45,12 +45,12 @@ public class MooshroomStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		Direction direction = state.get(HORIZONTAL_FACING);
+		Direction direction = state.getValue(FACING);
 		return direction.getAxis() == Direction.Axis.X ? NORTH_WEST_SHAPE : SOUTH_EAST_SHAPE;
 	}
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_COW_AMBIENT;
+		return SoundEvents.COW_AMBIENT;
 	}
 }

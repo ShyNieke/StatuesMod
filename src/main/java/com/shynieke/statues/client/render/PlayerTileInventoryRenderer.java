@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 
 public class PlayerTileInventoryRenderer extends ItemStackTileEntityRenderer {
     @Override
-    public void func_239207_a_(ItemStack stack, TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
+    public void renderByItem(ItemStack stack, TransformType p_239207_2_, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
         PlayerTileRenderer.renderPlayerItem(stack, matrixStack, buffer, combinedLight);
     }
 }

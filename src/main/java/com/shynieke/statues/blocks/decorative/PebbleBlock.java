@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class PebbleBlock extends FallingBlock {
     public PebbleBlock(Properties properties) {
-        super(properties.hardnessAndResistance(0.6F).sound(SoundType.GROUND));
+        super(properties.strength(0.6F).sound(SoundType.GRAVEL));
     }
 
     @OnlyIn(Dist.CLIENT)

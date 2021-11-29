@@ -30,8 +30,8 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 	}
 
 	@Override
-	public void read(BlockState state, CompoundNBT compound) {
-		super.read(state, compound);
+	public void load(BlockState state, CompoundNBT compound) {
+		super.load(state, compound);
 		cooldown = compound.getInt("StatueCooldown");
 		cooldownMax = compound.getInt("StatueMaxcooldown");
 		statueAble = compound.getBoolean("StatueAble");
@@ -39,8 +39,8 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		super.write(compound);
+	public CompoundNBT save(CompoundNBT compound) {
+		super.save(compound);
 		compound.putInt("StatueCooldown", cooldown);
 		compound.putInt("StatueMaxcooldown", cooldownMax);
 		compound.putBoolean("StatueAble", statueAble);
@@ -50,10 +50,10 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 
 	@Override
 	public void tick() {
-		if(getBlockState().getBlock() instanceof AbstractStatueBase && getBlockState().get(AbstractStatueBase.INTERACTIVE)) {
+		if(getBlockState().getBlock() instanceof AbstractStatueBase && getBlockState().getValue(AbstractStatueBase.INTERACTIVE)) {
 			if (!this.statueAble) {
 				++this.cooldown;
-				this.markDirty();
+				this.setChanged();
 
 				if(this.cooldown >= this.cooldownMax) {
 					this.cooldown = 0;
@@ -66,20 +66,20 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		read(this.getBlockState(), pkt.getNbtCompound());
+		load(this.getBlockState(), pkt.getTag());
 
-		BlockState state = world.getBlockState(getPos());
-		world.notifyBlockUpdate(getPos(), state, state, 3);
+		BlockState state = level.getBlockState(getBlockPos());
+		level.sendBlockUpdated(getBlockPos(), state, state, 3);
 	}
 
 	@Override
 	public CompoundNBT getUpdateTag() {
-		return this.write(new CompoundNBT());
+		return this.save(new CompoundNBT());
 	}
 
 	@Override
 	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
+		return new SUpdateTileEntityPacket(this.worldPosition, 0, this.getUpdateTag());
 	}
 
 	public int getCooldown() {
@@ -104,7 +104,7 @@ public abstract class AbstractStatueTile extends TileEntity implements ITickable
 
 	public void setStatueAble(boolean statueAble) {
 		this.statueAble = statueAble;
-		this.markDirty();
+		this.setChanged();
 	}
 
 	public void loadFromNbt(CompoundNBT compound) {

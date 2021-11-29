@@ -6,5 +6,5 @@ import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 
 public class StatueTags {
-    public static final ITag.INamedTag<Item> PLAYER_UPGRADE_ITEM = ItemTags.makeWrapperTag(Reference.MOD_ID + ":player_upgrade_item");
+    public static final ITag.INamedTag<Item> PLAYER_UPGRADE_ITEM = ItemTags.bind(Reference.MOD_ID + ":player_upgrade_item");
 }

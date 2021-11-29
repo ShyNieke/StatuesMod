@@ -33,20 +33,20 @@ public class PlayerStatueItem extends Item {
     }
 
     @Override
-    public ActionResultType onItemUse(ItemUseContext context) {
-        Direction direction = context.getFace();
+    public ActionResultType useOn(ItemUseContext context) {
+        Direction direction = context.getClickedFace();
         if (direction == Direction.DOWN) {
             return ActionResultType.FAIL;
         } else {
-            World world = context.getWorld();
+            World world = context.getLevel();
             BlockItemUseContext blockitemusecontext = new BlockItemUseContext(context);
-            BlockPos blockpos = blockitemusecontext.getPos();
-            ItemStack itemstack = context.getItem();
-            Vector3d vector3d = Vector3d.copyCenteredHorizontally(blockpos);
-            AxisAlignedBB axisalignedbb = StatueRegistry.PLAYER_STATUE_ENTITY.get().getSize().func_242285_a(vector3d.getX(), vector3d.getY(), vector3d.getZ());
-            if (world.hasNoCollisions((Entity)null, axisalignedbb, (entity) -> {
+            BlockPos blockpos = blockitemusecontext.getClickedPos();
+            ItemStack itemstack = context.getItemInHand();
+            Vector3d vector3d = Vector3d.atBottomCenterOf(blockpos);
+            AxisAlignedBB axisalignedbb = StatueRegistry.PLAYER_STATUE_ENTITY.get().getDimensions().makeBoundingBox(vector3d.x(), vector3d.y(), vector3d.z());
+            if (world.noCollision((Entity)null, axisalignedbb, (entity) -> {
                 return true;
-            }) && world.getEntitiesWithinAABBExcludingEntity((Entity)null, axisalignedbb).isEmpty()) {
+            }) && world.getEntities((Entity)null, axisalignedbb).isEmpty()) {
                  if (world instanceof ServerWorld) {
                     ServerWorld serverworld = (ServerWorld)world;
                     PlayerStatueEntity playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, itemstack.getTag(), context.getPlayer() != null ? context.getPlayer().getName() : new StringTextComponent("player statue"), context.getPlayer(), blockpos, SpawnReason.SPAWN_EGG, true, true);
@@ -54,21 +54,21 @@ public class PlayerStatueItem extends Item {
                         return ActionResultType.FAIL;
                     }
 
-                    serverworld.func_242417_l(playerStatueEntity);
-                    float f = (float) MathHelper.floor((MathHelper.wrapDegrees(context.getPlacementYaw() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
-                    playerStatueEntity.setLocationAndAngles(playerStatueEntity.getPosX(), playerStatueEntity.getPosY(), playerStatueEntity.getPosZ(), f, 0.0F);
-                    this.applyRandomRotations(playerStatueEntity, world.rand);
+                    serverworld.addFreshEntityWithPassengers(playerStatueEntity);
+                    float f = (float) MathHelper.floor((MathHelper.wrapDegrees(context.getRotation() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+                    playerStatueEntity.moveTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
+                    this.applyRandomRotations(playerStatueEntity, world.random);
                     if(context.getPlayer() != null) {
                         playerStatueEntity.setGameProfile(context.getPlayer().getGameProfile());
                     } else {
                         playerStatueEntity.setGameProfile(new GameProfile((UUID)null, "steve"));
                     }
-                    world.addEntity(playerStatueEntity);
-                    world.playSound((PlayerEntity)null, playerStatueEntity.getPosX(), playerStatueEntity.getPosY(), playerStatueEntity.getPosZ(), SoundEvents.ENTITY_ARMOR_STAND_PLACE, SoundCategory.BLOCKS, 0.75F, 0.8F);
+                    world.addFreshEntity(playerStatueEntity);
+                    world.playSound((PlayerEntity)null, playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundCategory.BLOCKS, 0.75F, 0.8F);
                 }
 
                 itemstack.shrink(1);
-                return ActionResultType.func_233537_a_(world.isRemote);
+                return ActionResultType.sidedSuccess(world.isClientSide);
             } else {
                 return ActionResultType.FAIL;
             }

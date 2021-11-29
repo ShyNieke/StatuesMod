@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 public class SpiderStatueBlock extends AbstractStatueBase {
 
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 5.5D, 14.0D);
+	private static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 5.5D, 14.0D);
 
 	public SpiderStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -43,7 +43,7 @@ public class SpiderStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_SPIDER_AMBIENT;
+		return SoundEvents.SPIDER_AMBIENT;
 	}
 
 	@Override

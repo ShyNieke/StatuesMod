@@ -24,7 +24,7 @@ import net.minecraft.util.math.vector.Vector3f;
 import java.util.Map;
 
 public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, PlayerStatueModel> {
-    public static final PlayerStatueModel model = new PlayerStatueModel(0.03125F, false);
+    public static final PlayerStatueModel playerModel = new PlayerStatueModel(0.03125F, false);
     public static final PlayerStatueModel slimModel = new PlayerStatueModel(0.03125F, true);
 
     public PlayerStatueRenderer(EntityRendererManager renderManager) {
@@ -40,7 +40,7 @@ public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, Pla
     }
 
     @Override
-    public ResourceLocation getEntityTexture(PlayerStatueEntity playerStatue) {
+    public ResourceLocation getTextureLocation(PlayerStatueEntity playerStatue) {
         return playerStatue.getGameProfile()
                 .map(this::getSkin)
                 .orElseGet(() -> new ResourceLocation("minecraft:textures/entity/steve.png"));
@@ -53,9 +53,9 @@ public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, Pla
         else {
             final Minecraft minecraft = Minecraft.getInstance();
             SkinManager skinManager = minecraft.getSkinManager();
-            final Map<Type, MinecraftProfileTexture> loadSkinFromCache = skinManager.loadSkinFromCache(gameProfile); // returned map may or may not be typed
+            final Map<Type, MinecraftProfileTexture> loadSkinFromCache = skinManager.getInsecureSkinInformation(gameProfile); // returned map may or may not be typed
             if (loadSkinFromCache.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-                return skinManager.loadSkin(loadSkinFromCache.get(Type.SKIN), Type.SKIN);
+                return skinManager.registerTexture(loadSkinFromCache.get(Type.SKIN), Type.SKIN);
             }
             else {
                 return DefaultPlayerSkin.getDefaultSkin(gameProfile.getId());
@@ -65,28 +65,28 @@ public class PlayerStatueRenderer extends LivingRenderer<PlayerStatueEntity, Pla
 
     @Override
     public void render(PlayerStatueEntity playerStatue, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-        this.entityModel = model;
-        if(playerStatue.isSlim() && this.entityModel != slimModel) {
-            this.entityModel = slimModel;
+        this.model = playerModel;
+        if(playerStatue.isSlim() && this.playerModel != slimModel) {
+            this.model = slimModel;
         }
         matrixStackIn.translate(0, playerStatue.getYOffsetData(), 0);
         super.render(playerStatue, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
     }
 
     @Override
-    protected boolean canRenderName(PlayerStatueEntity playerStatue) {
+    protected boolean shouldShowName(PlayerStatueEntity playerStatue) {
         return playerStatue.isCustomNameVisible();
     }
 
-    protected void applyRotations(PlayerStatueEntity playerStatue, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
-        matrixStackIn.rotate(Vector3f.YP.rotationDegrees(180.0F - rotationYaw));
-        float f = (float)(playerStatue.world.getGameTime() - playerStatue.punchCooldown) + partialTicks;
+    protected void setupRotations(PlayerStatueEntity playerStatue, MatrixStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
+        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotationYaw));
+        float f = (float)(playerStatue.level.getGameTime() - playerStatue.punchCooldown) + partialTicks;
         if (f < 5.0F) {
-            matrixStackIn.rotate(Vector3f.YP.rotationDegrees(MathHelper.sin(f / 1.5F * (float)Math.PI) * 3.0F));
+            matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(MathHelper.sin(f / 1.5F * (float)Math.PI) * 3.0F));
         }
     }
 
-    protected void preRenderCallback(PlayerStatueEntity playerStatue, MatrixStack matrixStackIn, float partialTickTime) {
+    protected void scale(PlayerStatueEntity playerStatue, MatrixStack matrixStackIn, float partialTickTime) {
         float f = 0.9375F;
         matrixStackIn.scale(f, f, f);
     }

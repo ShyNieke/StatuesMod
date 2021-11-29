@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class AngryBeeStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 6.0D, 4.0D, 12.0D, 11D, 12.0D);
+	private static final VoxelShape SHAPE = Block.box(4.0D, 6.0D, 4.0D, 12.0D, 11D, 12.0D);
 
 	public AngryBeeStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -43,7 +43,7 @@ public class AngryBeeStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_BEE_LOOP;
+		return SoundEvents.BEE_LOOP;
 	}
 
 	@Override

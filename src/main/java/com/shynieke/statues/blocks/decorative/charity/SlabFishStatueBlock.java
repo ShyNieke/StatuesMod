@@ -12,7 +12,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 public class SlabFishStatueBlock extends AbstractStatueBase {
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
+    private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
 
     public SlabFishStatueBlock(Properties properties) {
         super(properties.sound(SoundType.STONE));
@@ -30,6 +30,6 @@ public class SlabFishStatueBlock extends AbstractStatueBase {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_ELDER_GUARDIAN_FLOP;
+        return SoundEvents.ELDER_GUARDIAN_FLOP;
     }
 }

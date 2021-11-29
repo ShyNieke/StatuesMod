@@ -19,28 +19,28 @@ public class StatueGoldenMarshmallow extends Item {
     }
 
     @Override
-    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityIn) {
-        if(this.isFood()) {
-            if (!worldIn.isRemote) {
+    public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityIn) {
+        if(this.isEdible()) {
+            if (!worldIn.isClientSide) {
                 if (this == StatueRegistry.MARSHMALLOW_GOLDEN.get()) {
                     ArrayList<Effect> potionList = new ArrayList<>(ForgeRegistries.POTIONS.getValues());
-                    potionList.remove(Effects.NAUSEA);
+                    potionList.remove(Effects.CONFUSION);
 
                     int i = random.nextInt(potionList.size());
                     int amplifier = random.nextInt(2);
                     Effect randomPotion = potionList.get(i);
                     EffectInstance randomEffect = new EffectInstance(randomPotion, 200, amplifier);
-                    entityIn.addPotionEffect(randomEffect);
+                    entityIn.addEffect(randomEffect);
                 }
             }
-            return entityIn.onFoodEaten(worldIn, stack);
+            return entityIn.eat(worldIn, stack);
         }
 
         return stack;
     }
 
     @Override
-    public boolean hasEffect(ItemStack p_77636_1_) {
+    public boolean isFoil(ItemStack p_77636_1_) {
         return true;
     }
 }

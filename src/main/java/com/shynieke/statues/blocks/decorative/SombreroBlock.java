@@ -26,29 +26,29 @@ import javax.annotation.Nullable;
 
 public class SombreroBlock extends AbstractBaseBlock {
 
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(4, 0, 4, 12, 8, 12);
+    private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 8, 12);
 
     public SombreroBlock(Properties properties) {
         super(properties.sound(SoundType.STONE));
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        Block block = worldIn.getBlockState(pos.down()).getBlock();
+    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        Block block = worldIn.getBlockState(pos.below()).getBlock();
         if (block == Blocks.CACTUS && placer != null) {
-            BlockPos downPos = pos.down();
+            BlockPos downPos = pos.below();
             worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
-            worldIn.setBlockState(pos.down(), StatueRegistry.BUMBO_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
-            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+            worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.BUMBO_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+            worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
         }
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+        super.setPlacedBy(worldIn, pos, state, placer, stack);
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-        if(!worldIn.isRemote && handIn == Hand.MAIN_HAND) {
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+        if(!worldIn.isClientSide && handIn == Hand.MAIN_HAND) {
             if (canPlaySound(worldIn, pos, state)) {
-                worldIn.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.NEUTRAL, 1F, getPitch());
+                worldIn.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundCategory.NEUTRAL, 1F, getPitch());
             }
         }
         return ActionResultType.SUCCESS;
@@ -59,7 +59,7 @@ public class SombreroBlock extends AbstractBaseBlock {
     }
 
     public boolean canPlaySound(World worldIn, BlockPos pos, BlockState state) {
-        return worldIn.getBlockState(pos.down()).getBlock() instanceof NoteBlock;
+        return worldIn.getBlockState(pos.below()).getBlock() instanceof NoteBlock;
     }
 
     @Override

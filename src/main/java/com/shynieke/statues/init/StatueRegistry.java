@@ -90,11 +90,11 @@ public class StatueRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Reference.MOD_ID);
 
     public static final RegistryObject<EntityType<PlayerStatueEntity>> PLAYER_STATUE_ENTITY = ENTITIES.register("player_statue",
-            () -> register("player_statue", EntityType.Builder.<PlayerStatueEntity>create(PlayerStatueEntity::new, EntityClassification.MISC)
-                    .size(0.6F, 1.8F).trackingRange(10)));
+            () -> register("player_statue", EntityType.Builder.<PlayerStatueEntity>of(PlayerStatueEntity::new, EntityClassification.MISC)
+                    .sized(0.6F, 1.8F).clientTrackingRange(10)));
     public static final RegistryObject<EntityType<StatueBatEntity>> STATUE_BAT = ENTITIES.register("statue_bat",
-            () -> register("statue_bat", EntityType.Builder.<StatueBatEntity>create(StatueBatEntity::new, EntityClassification.AMBIENT)
-                    .size(0.5F, 0.9F).trackingRange(5)));
+            () -> register("statue_bat", EntityType.Builder.<StatueBatEntity>of(StatueBatEntity::new, EntityClassification.AMBIENT)
+                    .sized(0.5F, 0.9F).clientTrackingRange(5)));
 
     public static final RegistryObject<Block> ANGRY_BEE_STATUE = registerStatue("angry_bee_statue", () -> new AngryBeeStatueBlock(blockBuilder()), blockItemBuilder());
     public static final RegistryObject<Block> BABY_ZOMBIE_STATUE = registerStatue("baby_zombie_statue", () -> new BabyZombieStatueBlock(blockBuilder()), blockItemBuilder());
@@ -250,14 +250,14 @@ public class StatueRegistry {
     }
 
     private static Item.Properties blockItemBuilder() {
-        return new Item.Properties().group(StatueTabs.STATUES_BLOCKS);
+        return new Item.Properties().tab(StatueTabs.STATUES_BLOCKS);
     }
 
     private static Item.Properties itemBuilder() {
-        return new Item.Properties().group(StatueTabs.STATUES_ITEMS);
+        return new Item.Properties().tab(StatueTabs.STATUES_ITEMS);
     }
 
-    private static Block.Properties blockBuilder() { return Block.Properties.create(Material.SHULKER); }
+    private static Block.Properties blockBuilder() { return Block.Properties.of(Material.SHULKER_SHELL); }
 
     public static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder) {
         return builder.build(id);

@@ -32,7 +32,7 @@ public class VindicatorStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_VINDICATOR_AMBIENT;
+		return SoundEvents.VINDICATOR_AMBIENT;
 	}
 
 	@Override

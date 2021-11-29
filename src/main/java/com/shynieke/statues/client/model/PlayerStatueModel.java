@@ -11,38 +11,35 @@ public class PlayerStatueModel extends PlayerModel<PlayerStatueEntity> {
         super(modelSize, smallArmsIn);
     }
 
-    public void setRotationAngles(PlayerStatueEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        this.bipedHead.rotateAngleX = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getX();
-        this.bipedHead.rotateAngleY = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getY();
-        this.bipedHead.rotateAngleZ = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getZ();
-        this.bipedHead.setRotationPoint(0.0F, 1.0F, 0.0F);
-        this.bipedBody.rotateAngleX = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getX();
-        this.bipedBody.rotateAngleY = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getY();
-        this.bipedBody.rotateAngleZ = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getZ();
-        this.bipedLeftArm.rotateAngleX = ((float)Math.PI / 180F) * entityIn.getLeftArmRotation().getX();
-        this.bipedLeftArm.rotateAngleY = ((float)Math.PI / 180F) * entityIn.getLeftArmRotation().getY();
-        this.bipedLeftArm.rotateAngleZ = ((float)Math.PI / 180F) * entityIn.getLeftArmRotation().getZ();
-        this.bipedRightArm.rotateAngleX = ((float)Math.PI / 180F) * entityIn.getRightArmRotation().getX();
-        this.bipedRightArm.rotateAngleY = ((float)Math.PI / 180F) * entityIn.getRightArmRotation().getY();
-        this.bipedRightArm.rotateAngleZ = ((float)Math.PI / 180F) * entityIn.getRightArmRotation().getZ();
-        this.bipedLeftLeg.rotateAngleX = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getX();
-        this.bipedLeftLeg.rotateAngleY = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getY();
-        this.bipedLeftLeg.rotateAngleZ = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getZ();
-        this.bipedLeftLeg.setRotationPoint(1.9F, 11.0F, 0.0F);
-        this.bipedRightLeg.rotateAngleX = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getX();
-        this.bipedRightLeg.rotateAngleY = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getY();
-        this.bipedRightLeg.rotateAngleZ = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getZ();
-        this.bipedRightLeg.setRotationPoint(-1.9F, 11.0F, 0.0F);
-        this.bipedHeadwear.copyModelAngles(this.bipedHead);
-        this.bipedBodyWear.copyModelAngles(this.bipedBody);
-        this.bipedLeftArmwear.copyModelAngles(this.bipedLeftArm);
-        this.bipedRightArmwear.copyModelAngles(this.bipedRightArm);
-        this.bipedLeftLegwear.copyModelAngles(this.bipedLeftLeg);
-        this.bipedRightLegwear.copyModelAngles(this.bipedRightLeg);
+    public void setupAnim(PlayerStatueEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.head.xRot = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getX();
+        this.head.yRot = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getY();
+        this.head.zRot = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getZ();
+        this.body.xRot = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getX();
+        this.body.yRot = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getY();
+        this.body.zRot = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getZ();
+        this.leftArm.xRot = ((float)Math.PI / 180F) * entityIn.getLeftArmRotation().getX();
+        this.leftArm.yRot = ((float)Math.PI / 180F) * entityIn.getLeftArmRotation().getY();
+        this.leftArm.zRot = ((float)Math.PI / 180F) * entityIn.getLeftArmRotation().getZ();
+        this.rightArm.xRot = ((float)Math.PI / 180F) * entityIn.getRightArmRotation().getX();
+        this.rightArm.yRot = ((float)Math.PI / 180F) * entityIn.getRightArmRotation().getY();
+        this.rightArm.zRot = ((float)Math.PI / 180F) * entityIn.getRightArmRotation().getZ();
+        this.leftLeg.xRot = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getX();
+        this.leftLeg.yRot = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getY();
+        this.leftLeg.zRot = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getZ();
+        this.rightLeg.xRot = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getX();
+        this.rightLeg.yRot = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getY();
+        this.rightLeg.zRot = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getZ();
+        this.hat.copyFrom(this.head);
+        this.jacket.copyFrom(this.body);
+        this.leftSleeve.copyFrom(this.leftArm);
+        this.rightSleeve.copyFrom(this.rightArm);
+        this.leftPants.copyFrom(this.leftLeg);
+        this.rightPants.copyFrom(this.rightLeg);
     }
 
     @Override
-    protected Iterable<ModelRenderer> getHeadParts() {
-        return ImmutableList.of(this.bipedHead, this.bipedHeadwear);
+    protected Iterable<ModelRenderer> headParts() {
+        return ImmutableList.of(this.head, this.hat);
     }
 }

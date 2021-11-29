@@ -27,28 +27,28 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class ChickenStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D);
+	private static final VoxelShape SHAPE = Block.box(6.0D, 0.0D, 6.0D, 10.0D, 4.0D, 10.0D);
 
 	public ChickenStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if(this.isDecorative(state) && placer != null) {
-			Block block = worldIn.getBlockState(pos.down()).getBlock();
+			Block block = worldIn.getBlockState(pos.below()).getBlock();
 			if (block == Blocks.GOLD_BLOCK) {
-				BlockPos downPos = pos.down();
+				BlockPos downPos = pos.below();
 				worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
-				worldIn.setBlockState(pos.down(), StatueRegistry.KING_CLUCK_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
-				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
+				worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.KING_CLUCK_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+				worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			}
 		}
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+		super.setPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
 	public boolean isDecorative(BlockState state) {
-		return !state.get(INTERACTIVE).booleanValue();
+		return !state.getValue(INTERACTIVE).booleanValue();
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_CHICKEN_AMBIENT;
+		return SoundEvents.CHICKEN_AMBIENT;
 	}
 
 	@Override

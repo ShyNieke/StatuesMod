@@ -21,14 +21,14 @@ import java.util.List;
 public class InventoryHandler {
     @SubscribeEvent
     public void onLivingDrop(LivingDeathEvent event) {
-        Entity source = event.getSource().getTrueSource();
+        Entity source = event.getSource().getEntity();
 
         if(source instanceof PlayerEntity && !(source instanceof FakePlayer)) {
             PlayerEntity player = (PlayerEntity) source;
             LivingEntity killedEntity = event.getEntityLiving();
             PlayerInventory inventory = player.inventory;
-            for(int i = 0; i < inventory.getSizeInventory(); i++) {
-                ItemStack stack = inventory.getStackInSlot(i);
+            for(int i = 0; i < inventory.getContainerSize(); i++) {
+                ItemStack stack = inventory.getItem(i);
                 Statues.LOGGER.info(stack.getItem());
                 if(stack.getItem() instanceof StatueBlockItem) {
                     AbstractStatueBase statue = (AbstractStatueBase) ((StatueBlockItem) stack.getItem()).getBlock();
@@ -36,8 +36,8 @@ public class InventoryHandler {
                     Statues.LOGGER.info(killedEntity.getType().getRegistryName());
                     if(killedEntity.getType().getRegistryName().equals(statue.getEntity().getRegistryName())) {
                         Statues.LOGGER.info("Statue isChild: " + statue.isBaby());
-                        Statues.LOGGER.info("isChild: " + killedEntity.isChild());
-                        if(statue.isBaby() == killedEntity.isChild()) {
+                        Statues.LOGGER.info("isChild: " + killedEntity.isBaby());
+                        if(statue.isBaby() == killedEntity.isBaby()) {
                             Statues.LOGGER.info("Has tag: " + stack.hasTag());
                             if(stack.hasTag()) {
                                 CompoundNBT tag = stack.getTag();

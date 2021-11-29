@@ -27,35 +27,35 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class BabyZombieStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(6.5D, 0.0D, 6.5D, 9.5D, 8.5D, 9.5D);
+	private static final VoxelShape SHAPE = Block.box(6.5D, 0.0D, 6.5D, 9.5D, 8.5D, 9.5D);
 
 	public BabyZombieStatueBlock(Block.Properties builder) {
 		super(builder.sound(SoundType.STONE));
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if(this.isDecorative(state))
 		{
-			BlockState blockState = worldIn.getBlockState(pos.down());
+			BlockState blockState = worldIn.getBlockState(pos.below());
 			if (blockState.getBlock() == Blocks.LAPIS_BLOCK) {
-				worldIn.addParticle(ParticleTypes.EXPLOSION, pos.down().getX(), pos.down().getY(), pos.down().getZ(), 0.0D, 0.0D, 0.0D);
-				worldIn.setBlockState(pos.down(), StatueRegistry.FLOOD_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
-				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
-				worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.ENTITY_VILLAGER_YES, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+				worldIn.addParticle(ParticleTypes.EXPLOSION, pos.below().getX(), pos.below().getY(), pos.below().getZ(), 0.0D, 0.0D, 0.0D);
+				worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.FLOOD_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+				worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+				worldIn.playLocalSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.VILLAGER_YES, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
 			if (blockState.getBlock() == StatueRegistry.CHICKEN_STATUE.get() && isDecorative(blockState)) {
-				worldIn.addParticle(ParticleTypes.EXPLOSION, pos.down().getX(), pos.down().getY(), pos.down().getZ(), 0.0D, 0.0D, 0.0D);
-				worldIn.setBlockState(pos.down(), StatueRegistry.CHICKEN_JOCKEY_STATUE.get().getDefaultState().with(HORIZONTAL_FACING, placer.getHorizontalFacing().getOpposite()));
-				worldIn.setBlockState(pos, Blocks.AIR.getDefaultState());
-				worldIn.playSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.ENTITY_VILLAGER_YES, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
+				worldIn.addParticle(ParticleTypes.EXPLOSION, pos.below().getX(), pos.below().getY(), pos.below().getZ(), 0.0D, 0.0D, 0.0D);
+				worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.CHICKEN_JOCKEY_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+				worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+				worldIn.playLocalSound((double)pos.getX() + 0.5D, (double)pos.getY(), (double)pos.getZ() + 0.5D, SoundEvents.VILLAGER_YES, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 			}
 		}
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+		super.setPlacedBy(worldIn, pos, state, placer, stack);
 	}
 
 	public boolean isDecorative(BlockState state) {
-		return !state.get(INTERACTIVE).booleanValue();
+		return !state.getValue(INTERACTIVE).booleanValue();
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class BabyZombieStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_ZOMBIE_AMBIENT;
+		return SoundEvents.ZOMBIE_AMBIENT;
 	}
 
 	@Override

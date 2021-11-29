@@ -12,6 +12,7 @@ import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueSerializers;
 import com.shynieke.statues.packets.PlayerStatueScreenMessage;
 import com.shynieke.statues.packets.PlayerStatueSyncMessage;
+import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.PlayerTile;
 import net.minecraft.network.datasync.DataSerializers;
@@ -57,6 +58,7 @@ public class Statues {
 		StatueRegistry.ENTITIES.register(eventBus);
 		StatueRegistry.BLOCKS.register(eventBus);
 		StatueRegistry.ITEMS.register(eventBus);
+		StatuesRecipes.RECIPE_SERIALIZERS.register(eventBus);
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 
@@ -89,8 +91,8 @@ public class Statues {
 
 	public void serverAboutToStart(final FMLServerAboutToStartEvent event) {
 		MinecraftServer server = event.getServer();
-		PlayerTile.setProfileCache(server.getPlayerProfileCache());
-		PlayerTile.setSessionService(server.getMinecraftSessionService());
-		PlayerProfileCache.setOnlineMode(server.isServerInOnlineMode());
+		PlayerTile.setProfileCache(server.getProfileCache());
+		PlayerTile.setSessionService(server.getSessionService());
+		PlayerProfileCache.setUsesAuthentication(server.usesAuthentication());
 	}
 }

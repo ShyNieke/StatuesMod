@@ -28,15 +28,16 @@ public class StatueCoreItem extends Item {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, @Nullable World WorldIn, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		CompoundNBT tag = stack.hasTag() ? stack.getTag() : new CompoundNBT();
 		if (tag != null && !tag.getString(entityTag).isEmpty()) {
-			tooltip.add(new TranslationTextComponent("statues.core.info,", tag.getString(entityTag)).mergeStyle(TextFormatting.GOLD));
+			tooltip.add(new TranslationTextComponent("statues.core.info,", tag.getString(entityTag)).withStyle(TextFormatting.GOLD));
 		}
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
-	public ActionResultType itemInteractionForEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entityIn, Hand handIn) {
+	public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity playerIn, LivingEntity entityIn, Hand handIn) {
 		if (!(entityIn instanceof PlayerEntity) && !isLocked) {
 			CompoundNBT tag = stack.hasTag() ? stack.getTag() : new CompoundNBT();
 			if(tag != null) {

@@ -8,59 +8,77 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class SpecialHandler {
+    @SubscribeEvent
+    public void onCrafted(ItemCraftedEvent event) {
+        ItemStack resultStack = event.getCrafting();
+        if(resultStack.getItem() == StatueRegistry.PLAYER_STATUE.get().asItem()) {
+            PlayerEntity player = event.getPlayer();
+            if(player == null || player instanceof FakePlayer) {
+                event.setCanceled(true);
+            }
+
+            player.hurt(DamageSource.MAGIC, player.getMaxHealth() / 2);
+            resultStack.setHoverName(player.getName());
+        }
+    }
+
     @SubscribeEvent
     public void playerTick(PlayerTickEvent event) {
         if(event.phase == TickEvent.Phase.START)
             return;
 
-        if(!event.player.world.isRemote) {
+        if(!event.player.level.isClientSide) {
             final PlayerEntity player = event.player;
-            World world = player.world;
-            BlockPos pos = player.getPosition();
+            World world = player.level;
+            BlockPos pos = player.blockPosition();
             AxisAlignedBB hitbox = new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
-                    .expand(-3, -3, -3).expand(3, 3, 3);
+                    .expandTowards(-3, -3, -3).expandTowards(3, 3, 3);
 
-            for(ItemEntity itemE : player.world.getEntitiesWithinAABB(ItemEntity.class, hitbox)) {
+            for(ItemEntity itemE : player.level.getEntitiesOfClass(ItemEntity.class, hitbox)) {
                 if(itemE != null) {
                     if (itemE.getItem().getItem().equals(Items.DIAMOND)) {
                         AxisAlignedBB bb = itemE.getBoundingBox().contract(0.1, 0.1, 0.1);
-                        BlockPos lavaPos = itemE.getPosition();
+                        BlockPos lavaPos = itemE.blockPosition();
 
                         boolean lavaFound;
                         boolean requirementsFound;
 
-                        if (world.getBlockState(itemE.getPosition()).getBlock() == Blocks.LAVA) {
+                        if (world.getBlockState(itemE.blockPosition()).getBlock() == Blocks.LAVA) {
                             lavaFound = true;
-                            lavaPos = itemE.getPosition();
-                        } else if (world.getBlockState(itemE.getPosition().down()).getBlock() == Blocks.LAVA) {
+                            lavaPos = itemE.blockPosition();
+                        } else if (world.getBlockState(itemE.blockPosition().below()).getBlock() == Blocks.LAVA) {
                             lavaFound = true;
-                            lavaPos = itemE.getPosition().down();
+                            lavaPos = itemE.blockPosition().below();
                         } else {
                             lavaFound = false;
                         }
 
-                        CampfireData data = properStatuesFound(world, lavaPos.up(), StatueRegistry.PLAYER_STATUE.get(), StatueRegistry.CREEPER_STATUE.get());
+                        CampfireData data = properStatuesFound(world, lavaPos.above(), StatueRegistry.PLAYER_STATUE.get(), StatueRegistry.CREEPER_STATUE.get());
 
                         requirementsFound = data.getBool() && lavaFound;
 
                         if (requirementsFound) {
-                            world.setBlockState(lavaPos, Blocks.AIR.getDefaultState());
-                            world.setBlockState(data.getPos1(), Blocks.AIR.getDefaultState());
-                            world.setBlockState(data.getPos2(), Blocks.AIR.getDefaultState());
+                            world.setBlockAndUpdate(lavaPos, Blocks.AIR.defaultBlockState());
+                            world.setBlockAndUpdate(data.getPos1(), Blocks.AIR.defaultBlockState());
+                            world.setBlockAndUpdate(data.getPos2(), Blocks.AIR.defaultBlockState());
 
-                            world.setBlockState(lavaPos, StatueRegistry.CAMPFIRE_STATUE.get().getDefaultState().with(AbstractStatueBase.INTERACTIVE, false));
-                            world.addParticle(ParticleTypes.FLAME, lavaPos.down().getX(), lavaPos.down().getY(), lavaPos.down().getZ(), 0.0D, 0.0D, 0.0D);
+                            world.setBlockAndUpdate(lavaPos, StatueRegistry.CAMPFIRE_STATUE.get().defaultBlockState().setValue(AbstractStatueBase.INTERACTIVE, false));
+                            world.addParticle(ParticleTypes.FLAME, lavaPos.below().getX(), lavaPos.below().getY(), lavaPos.below().getZ(), 0.0D, 0.0D, 0.0D);
                             itemE.remove();
                         }
                     }
@@ -72,19 +90,19 @@ public class SpecialHandler {
     public CampfireData properStatuesFound(World worldIn, BlockPos pos, Block block, Block block1) {
         CampfireData data = new CampfireData(false, pos, pos);
 
-        BlockState northBlock = worldIn.getBlockState(pos.offset(Direction.NORTH));
-        BlockState eastBlock = worldIn.getBlockState(pos.offset(Direction.EAST));
-        BlockState southBlock = worldIn.getBlockState(pos.offset(Direction.SOUTH));
-        BlockState westBlock = worldIn.getBlockState(pos.offset(Direction.WEST));
+        BlockState northBlock = worldIn.getBlockState(pos.relative(Direction.NORTH));
+        BlockState eastBlock = worldIn.getBlockState(pos.relative(Direction.EAST));
+        BlockState southBlock = worldIn.getBlockState(pos.relative(Direction.SOUTH));
+        BlockState westBlock = worldIn.getBlockState(pos.relative(Direction.WEST));
 
         if(isValidBlock(northBlock, block) && isValidBlock(southBlock, block1)) {
-            data = new CampfireData(true, pos.offset(Direction.NORTH), pos.offset(Direction.SOUTH));
+            data = new CampfireData(true, pos.relative(Direction.NORTH), pos.relative(Direction.SOUTH));
         } else if(isValidBlock(northBlock, block1) && isValidBlock(southBlock, block)) {
-            data = new CampfireData(true, pos.offset(Direction.NORTH), pos.offset(Direction.SOUTH));
+            data = new CampfireData(true, pos.relative(Direction.NORTH), pos.relative(Direction.SOUTH));
         } else if(isValidBlock(westBlock, block) && isValidBlock(eastBlock, block1)) {
-            data = new CampfireData(true, pos.offset(Direction.WEST), pos.offset(Direction.EAST));
+            data = new CampfireData(true, pos.relative(Direction.WEST), pos.relative(Direction.EAST));
         } else if(isValidBlock(westBlock, block1) && isValidBlock(eastBlock, block)) {
-            data = new CampfireData(true, pos.offset(Direction.WEST), pos.offset(Direction.EAST));
+            data = new CampfireData(true, pos.relative(Direction.WEST), pos.relative(Direction.EAST));
         }
 
         return data;
@@ -92,7 +110,7 @@ public class SpecialHandler {
 
     public boolean isValidBlock(BlockState state, Block block) {
         if(state.getBlock() == block && state.getBlock() instanceof AbstractStatueBase) {
-            return !state.get(AbstractStatueBase.INTERACTIVE);
+            return !state.getValue(AbstractStatueBase.INTERACTIVE);
         } else {
             return state.getBlock() instanceof PlayerStatueBlock;
         }

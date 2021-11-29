@@ -38,7 +38,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
     public static final StatuePlayerModel model = new StatuePlayerModel(0.03125F, false);
     public static final StatuePlayerModel slimModel = new StatuePlayerModel(0.03125F, true);
 
-    public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkinLegacy();
+    public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkin();
 
     public PlayerTileRenderer(TileEntityRendererDispatcher p_i226006_1_) {
         super(p_i226006_1_);
@@ -48,7 +48,7 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
     public void render(PlayerTile te, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn) {
         BlockState blockstate = te.getBlockState();
         boolean flag = blockstate.getBlock() instanceof PlayerStatueBlock;
-        Direction direction = flag ? blockstate.get(PlayerStatueBlock.HORIZONTAL_FACING) : Direction.UP;
+        Direction direction = flag ? blockstate.getValue(PlayerStatueBlock.FACING) : Direction.UP;
         GameProfile profile = te.getPlayerProfile();
 
         render(direction, profile, te.isSlim(), matrixStackIn, bufferIn, combinedLightIn);
@@ -58,19 +58,19 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         StatuePlayerModel playerModel = model;
 
         matrix.translate(0.5D, 0.25D, 0.5D);
-        matrix.push();
+        matrix.pushPose();
         if (direction != null) {
            switch(direction) {
                 case NORTH:
                     break;
                 case SOUTH:
-                    matrix.rotate(Vector3f.YP.rotationDegrees(180));
+                    matrix.mulPose(Vector3f.YP.rotationDegrees(180));
                     break;
                 case WEST:
-                    matrix.rotate(Vector3f.YP.rotationDegrees(90));
+                    matrix.mulPose(Vector3f.YP.rotationDegrees(90));
                     break;
                 default:
-                    matrix.rotate(Vector3f.YP.rotationDegrees(270));
+                    matrix.mulPose(Vector3f.YP.rotationDegrees(270));
             }
         }
         matrix.scale(-1.0F, -1.0F, 1.0F);
@@ -80,20 +80,20 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
         }
 
         IVertexBuilder ivertexbuilder = typeBuffer.getBuffer(getRenderType(profile));
-        playerModel.render(matrix, ivertexbuilder, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-        matrix.pop();
+        playerModel.renderToBuffer(matrix, ivertexbuilder, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+        matrix.popPose();
     }
 
     private static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
 
     public static void renderPlayerItem(ItemStack stack, MatrixStack matrix, IRenderTypeBuffer typeBuffer, int combinedLight) {
-        matrix.push();
+        matrix.pushPose();
 
         if(stack != null) {
             GameProfile gameprofile = null;
 
-            if(stack.hasDisplayName()) {
-                String stackName = stack.getDisplayName().getUnformattedComponentText().toLowerCase();
+            if(stack.hasCustomHoverName()) {
+                String stackName = stack.getHoverName().getContents().toLowerCase();
                 boolean spaceFlag = stackName.contains(" ");
                 boolean emptyFlag = stackName.isEmpty();
 
@@ -157,21 +157,21 @@ public class PlayerTileRenderer extends TileEntityRenderer<PlayerTile>{
             }
 
             IVertexBuilder ivertexbuilder = typeBuffer.getBuffer(getRenderType(gameprofile));
-            playerModel.render(matrix, ivertexbuilder, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            playerModel.renderToBuffer(matrix, ivertexbuilder, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
         }
-        matrix.pop();
+        matrix.popPose();
     }
 
     private static RenderType getRenderType(@Nullable GameProfile gameProfileIn) {
         if (gameProfileIn == null || !gameProfileIn.isComplete()) {
-            return RenderType.getEntityCutoutNoCull(defaultTexture);
+            return RenderType.entityCutoutNoCull(defaultTexture);
         } else {
             final Minecraft minecraft = Minecraft.getInstance();
-            final Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(gameProfileIn);
+            final Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().getInsecureSkinInformation(gameProfileIn);
             if (map.containsKey(Type.SKIN)) {
-                return RenderType.getEntityTranslucent(minecraft.getSkinManager().loadSkin((MinecraftProfileTexture)map.get(Type.SKIN), Type.SKIN));
+                return RenderType.entityTranslucent(minecraft.getSkinManager().registerTexture((MinecraftProfileTexture)map.get(Type.SKIN), Type.SKIN));
             } else {
-                return RenderType.getEntityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.getUUID(gameProfileIn)));
+                return RenderType.entityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(PlayerEntity.createPlayerUUID(gameProfileIn)));
             }
         }
     }

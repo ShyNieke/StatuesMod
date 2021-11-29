@@ -27,13 +27,13 @@ public class StatueEntities {
     }
 
     public static void registerEntityAttributes(EntityAttributeCreationEvent event) {
-        event.put(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueEntity.registerAttributes().create());
-        event.put(StatueRegistry.STATUE_BAT.get(), StatueBatEntity.registerAttributes().create());
+        event.put(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueEntity.createLivingAttributes().build());
+        event.put(StatueRegistry.STATUE_BAT.get(), StatueBatEntity.registerAttributes().build());
     }
 
     @SubscribeEvent(priority =  EventPriority.HIGH)
     public static void addSpawn(BiomeLoadingEvent event) {
-        RegistryKey<Biome> biomeKey = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, event.getName());
+        RegistryKey<Biome> biomeKey = RegistryKey.create(Registry.BIOME_REGISTRY, event.getName());
         if(StatuesConfig.COMMON.statueBatSpawning.get() && !BiomeDictionary.hasType(biomeKey, Type.END)) {
             if(event.getCategory() == Category.NETHER) {
                 if(event.getName().getPath().equals("basalt_deltas")) {

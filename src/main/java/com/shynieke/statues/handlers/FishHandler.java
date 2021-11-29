@@ -17,8 +17,8 @@ public class FishHandler {
     @SubscribeEvent
     public void onItemFished(ItemFishedEvent event) {
         PlayerEntity player = event.getPlayer();
-        World world = player.world;
-        if(!world.isRemote){
+        World world = player.level;
+        if(!world.isClientSide){
             ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EAGLE_RAY.get());
             dropFishedStatue(itemStackToDrop, player, event);
         }
@@ -35,7 +35,7 @@ public class FishHandler {
                     List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
                     if (!luckyPlayers.isEmpty()) {
                         for (String luckyName : luckyPlayers) {
-                            String user = player.getName().getUnformattedComponentText();
+                            String user = player.getName().getContents();
 
                             if (!luckyName.isEmpty() && user.equals(luckyName)) {
                                 default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;

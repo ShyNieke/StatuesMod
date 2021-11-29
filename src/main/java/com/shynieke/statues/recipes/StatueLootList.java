@@ -70,8 +70,8 @@ public class StatueLootList {
     }
 
     public static ItemStack getWastelandBlock() {
-        ItemStack wasteland = new ItemStack(Blocks.SAND).setDisplayName(new StringTextComponent("Wasteland Block").mergeStyle(TextFormatting.LIGHT_PURPLE));
-        wasteland.addEnchantment(Enchantments.VANISHING_CURSE, 1);
+        ItemStack wasteland = new ItemStack(Blocks.SAND).setHoverName(new StringTextComponent("Wasteland Block").withStyle(TextFormatting.LIGHT_PURPLE));
+        wasteland.enchant(Enchantments.VANISHING_CURSE, 1);
         CompoundNBT nbt = wasteland.hasTag() ? wasteland.getTag() : new CompoundNBT();
         if(nbt != null) {
             nbt.putInt("HideFlags", 1);
@@ -82,7 +82,7 @@ public class StatueLootList {
 
     public static ItemStack getFloodBucket() {
         ItemStack floodBucket = new ItemStack(Items.WATER_BUCKET);
-        floodBucket.setDisplayName(new StringTextComponent("The Flood").mergeStyle(TextFormatting.BLUE));
+        floodBucket.setHoverName(new StringTextComponent("The Flood").withStyle(TextFormatting.BLUE));
 
         return floodBucket;
     }
@@ -153,7 +153,7 @@ public class StatueLootList {
 
         for(RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries())
         {
-            String blockName = block.get().getTranslationKey();
+            String blockName = block.get().getDescriptionId();
             if(!blockName.isEmpty() && blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4"))) {
                 if (!blockList.contains(block.get())) {
                     blockList.add(block.get());

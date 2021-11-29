@@ -49,38 +49,38 @@ public class CustomSpawnEggItem extends Item {
         EGGS.put(type, this);
     }
 
-    public ActionResultType onItemUse(ItemUseContext context) {
-        World worldIn = context.getWorld();
-        if (worldIn.isRemote) {
+    public ActionResultType useOn(ItemUseContext context) {
+        World worldIn = context.getLevel();
+        if (worldIn.isClientSide) {
             return ActionResultType.SUCCESS;
         } else {
-            ItemStack stack = context.getItem();
-            BlockPos pos = context.getPos();
-            Direction dir = context.getFace();
+            ItemStack stack = context.getItemInHand();
+            BlockPos pos = context.getClickedPos();
+            Direction dir = context.getClickedFace();
             BlockState state = worldIn.getBlockState(pos);
             Block block = state.getBlock();
             if (block == Blocks.SPAWNER) {
-                TileEntity tile = worldIn.getTileEntity(pos);
+                TileEntity tile = worldIn.getBlockEntity(pos);
                 if (tile instanceof MobSpawnerTileEntity) {
-                    AbstractSpawner spawner = ((MobSpawnerTileEntity)tile).getSpawnerBaseLogic();
+                    AbstractSpawner spawner = ((MobSpawnerTileEntity)tile).getSpawner();
                     EntityType<?> type = this.getType(stack.getTag());
-                    spawner.setEntityType(type);
-                    tile.markDirty();
-                    worldIn.notifyBlockUpdate(pos, state, state, 3);
+                    spawner.setEntityId(type);
+                    tile.setChanged();
+                    worldIn.sendBlockUpdated(pos, state, state, 3);
                     stack.shrink(1);
                     return ActionResultType.SUCCESS;
                 }
             }
 
             BlockPos pos2;
-            if (state.getCollisionShape(worldIn, pos).isEmpty()) {
+            if (state.getBlockSupportShape(worldIn, pos).isEmpty()) {
                 pos2 = pos;
             } else {
-                pos2 = pos.offset(dir);
+                pos2 = pos.relative(dir);
             }
 
             EntityType<?> type = this.getType(stack.getTag());
-            if (!worldIn.isRemote && type.spawn((ServerWorld)worldIn, stack, context.getPlayer(), pos2, SpawnReason.SPAWN_EGG, true, !Objects.equals(pos, pos2) && dir == Direction.UP) != null) {
+            if (!worldIn.isClientSide && type.spawn((ServerWorld)worldIn, stack, context.getPlayer(), pos2, SpawnReason.SPAWN_EGG, true, !Objects.equals(pos, pos2) && dir == Direction.UP) != null) {
                 stack.shrink(1);
             }
 
@@ -88,32 +88,32 @@ public class CustomSpawnEggItem extends Item {
         }
     }
 
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack itemstack = playerIn.getHeldItem(handIn);
-        RayTraceResult raytraceresult = rayTrace(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
+    public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+        ItemStack itemstack = playerIn.getItemInHand(handIn);
+        RayTraceResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, RayTraceContext.FluidMode.SOURCE_ONLY);
         if (raytraceresult.getType() != RayTraceResult.Type.BLOCK) {
-            return ActionResult.resultPass(itemstack);
-        } else if (worldIn.isRemote) {
-            return ActionResult.resultSuccess(itemstack);
+            return ActionResult.pass(itemstack);
+        } else if (worldIn.isClientSide) {
+            return ActionResult.success(itemstack);
         } else {
             BlockRayTraceResult blockraytraceresult = (BlockRayTraceResult)raytraceresult;
-            BlockPos blockpos = blockraytraceresult.getPos();
+            BlockPos blockpos = blockraytraceresult.getBlockPos();
             if (!(worldIn.getBlockState(blockpos).getBlock() instanceof FlowingFluidBlock)) {
-                return ActionResult.resultPass(itemstack);
-            } else if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, blockraytraceresult.getFace(), itemstack)) {
+                return ActionResult.pass(itemstack);
+            } else if (worldIn.mayInteract(playerIn, blockpos) && playerIn.mayUseItemAt(blockpos, blockraytraceresult.getDirection(), itemstack)) {
                 EntityType<?> entitytype = this.getType(itemstack.getTag());
-                if (!worldIn.isRemote && entitytype.spawn((ServerWorld)worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false) == null) {
-                    return ActionResult.resultPass(itemstack);
+                if (!worldIn.isClientSide && entitytype.spawn((ServerWorld)worldIn, itemstack, playerIn, blockpos, SpawnReason.SPAWN_EGG, false, false) == null) {
+                    return ActionResult.pass(itemstack);
                 } else {
-                    if (!playerIn.abilities.isCreativeMode) {
+                    if (!playerIn.abilities.instabuild) {
                         itemstack.shrink(1);
                     }
 
-                    playerIn.addStat(Stats.ITEM_USED.get(this));
-                    return ActionResult.resultSuccess(itemstack);
+                    playerIn.awardStat(Stats.ITEM_USED.get(this));
+                    return ActionResult.success(itemstack);
                 }
             } else {
-                return ActionResult.resultFail(itemstack);
+                return ActionResult.fail(itemstack);
             }
         }
     }
@@ -131,7 +131,7 @@ public class CustomSpawnEggItem extends Item {
         if (compound != null && compound.contains("EntityTag", 10)) {
             CompoundNBT lvt_2_1_ = compound.getCompound("EntityTag");
             if (lvt_2_1_.contains("id", 8)) {
-                return (EntityType)EntityType.byKey(lvt_2_1_.getString("id")).orElse(this.typeIn.get());
+                return (EntityType)EntityType.byString(lvt_2_1_.getString("id")).orElse(this.typeIn.get());
             }
         }
 

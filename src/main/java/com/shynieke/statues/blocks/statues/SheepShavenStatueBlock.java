@@ -20,8 +20,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class SheepShavenStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SOUTH_EAST_SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 3.5D, 11.0D, 8.0D, 12.5D);
-	private static final VoxelShape NORTH_WEST_SHAPE = Block.makeCuboidShape(3.5D, 0.0D, 5.0D, 12.5D, 8.0D, 11.0D);
+	private static final VoxelShape SOUTH_EAST_SHAPE = Block.box(5.0D, 0.0D, 3.5D, 11.0D, 8.0D, 12.5D);
+	private static final VoxelShape NORTH_WEST_SHAPE = Block.box(3.5D, 0.0D, 5.0D, 12.5D, 8.0D, 11.0D);
 
 	public SheepShavenStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -44,12 +44,12 @@ public class SheepShavenStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_SHEEP_AMBIENT;
+		return SoundEvents.SHEEP_AMBIENT;
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		Direction direction = state.get(HORIZONTAL_FACING);
+		Direction direction = state.getValue(FACING);
 		return direction.getAxis() == Direction.Axis.X ? NORTH_WEST_SHAPE : SOUTH_EAST_SHAPE;
 	}
 }

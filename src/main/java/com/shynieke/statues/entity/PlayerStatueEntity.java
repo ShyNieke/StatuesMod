@@ -65,16 +65,16 @@ public class PlayerStatueEntity extends LivingEntity {
     private static final Rotations DEFAULT_RIGHTARM_ROTATION = new Rotations(-15.0F, 0.0F, 10.0F);
     private static final Rotations DEFAULT_LEFTLEG_ROTATION = new Rotations(-1.0F, 0.0F, -1.0F);
     private static final Rotations DEFAULT_RIGHTLEG_ROTATION = new Rotations(1.0F, 0.0F, 1.0F);
-    private static final DataParameter<Optional<GameProfile>> GAMEPROFILE = EntityDataManager.createKey(PlayerStatueEntity.class, StatueSerializers.OPTIONAL_GAME_PROFILE);
-    public static final DataParameter<Byte> STATUS = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.BYTE);
-    public static final DataParameter<Float> Y_OFFSET = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.FLOAT);
-    public static final DataParameter<Rotations> HEAD_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
-    public static final DataParameter<Rotations> BODY_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
-    public static final DataParameter<Rotations> LEFT_ARM_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
-    public static final DataParameter<Rotations> RIGHT_ARM_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
-    public static final DataParameter<Rotations> LEFT_LEG_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
-    public static final DataParameter<Rotations> RIGHT_LEG_ROTATION = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
-    public static final DataParameter<Optional<UUID>> LOCKED_BY_UUID = EntityDataManager.createKey(PlayerStatueEntity.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    private static final DataParameter<Optional<GameProfile>> GAMEPROFILE = EntityDataManager.defineId(PlayerStatueEntity.class, StatueSerializers.OPTIONAL_GAME_PROFILE);
+    public static final DataParameter<Byte> STATUS = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.BYTE);
+    public static final DataParameter<Float> Y_OFFSET = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.FLOAT);
+    public static final DataParameter<Rotations> HEAD_ROTATION = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
+    public static final DataParameter<Rotations> BODY_ROTATION = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
+    public static final DataParameter<Rotations> LEFT_ARM_ROTATION = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
+    public static final DataParameter<Rotations> RIGHT_ARM_ROTATION = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
+    public static final DataParameter<Rotations> LEFT_LEG_ROTATION = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
+    public static final DataParameter<Rotations> RIGHT_LEG_ROTATION = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.ROTATIONS);
+    public static final DataParameter<Optional<UUID>> LOCKED_BY_UUID = EntityDataManager.defineId(PlayerStatueEntity.class, DataSerializers.OPTIONAL_UUID);
 
     private final NonNullList<ItemStack> handItems = NonNullList.withSize(2, ItemStack.EMPTY);
     private final NonNullList<ItemStack> armorItems = NonNullList.withSize(4, ItemStack.EMPTY);
@@ -91,81 +91,81 @@ public class PlayerStatueEntity extends LivingEntity {
 
     public PlayerStatueEntity(EntityType<? extends PlayerStatueEntity> entityType, World world) {
         super(entityType, world);
-        this.stepHeight = 0.0F;
+        this.maxUpStep = 0.0F;
     }
 
     public PlayerStatueEntity(World worldIn, double posX, double posY, double posZ) {
         this(StatueRegistry.PLAYER_STATUE_ENTITY.get(), worldIn);
-        this.setPosition(posX, posY, posZ);
+        this.setPos(posX, posY, posZ);
     }
 
     @Override
-    public IPacket<?> createSpawnPacket() {
+    public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
 
-    public void recalculateSize() {
-        double d0 = this.getPosX();
-        double d1 = this.getPosY();
-        double d2 = this.getPosZ();
-        super.recalculateSize();
-        this.setPosition(d0, d1, d2);
+    public void refreshDimensions() {
+        double d0 = this.getX();
+        double d1 = this.getY();
+        double d2 = this.getZ();
+        super.refreshDimensions();
+        this.setPos(d0, d1, d2);
     }
 
-    private boolean func_213814_A() {
-        return !this.hasNoGravity();
+    private boolean hasPhysics() {
+        return !this.isNoGravity();
     }
 
     @Override
-    public boolean hasNoGravity() {
-        return this.ticksExisted > 200 && super.hasNoGravity();
+    public boolean isNoGravity() {
+        return this.tickCount > 200 && super.isNoGravity();
     }
 
     /**
      * Returns whether the entity is in a server world
      */
-    public boolean isServerWorld() {
-        return super.isServerWorld() && this.func_213814_A();
+    public boolean isEffectiveAi() {
+        return super.isEffectiveAi() && this.hasPhysics();
     }
 
-    protected void registerData() {
-        super.registerData();
-        this.dataManager.register(GAMEPROFILE, Optional.empty());
-        this.dataManager.register(STATUS, (byte)0);
-        this.dataManager.register(Y_OFFSET, 0F);
-        this.dataManager.register(HEAD_ROTATION, DEFAULT_HEAD_ROTATION);
-        this.dataManager.register(BODY_ROTATION, DEFAULT_BODY_ROTATION);
-        this.dataManager.register(LEFT_ARM_ROTATION, DEFAULT_LEFTARM_ROTATION);
-        this.dataManager.register(RIGHT_ARM_ROTATION, DEFAULT_RIGHTARM_ROTATION);
-        this.dataManager.register(LEFT_LEG_ROTATION, DEFAULT_LEFTLEG_ROTATION);
-        this.dataManager.register(RIGHT_LEG_ROTATION, DEFAULT_RIGHTLEG_ROTATION);
-        this.dataManager.register(LOCKED_BY_UUID, Optional.empty());
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(GAMEPROFILE, Optional.empty());
+        this.entityData.define(STATUS, (byte)0);
+        this.entityData.define(Y_OFFSET, 0F);
+        this.entityData.define(HEAD_ROTATION, DEFAULT_HEAD_ROTATION);
+        this.entityData.define(BODY_ROTATION, DEFAULT_BODY_ROTATION);
+        this.entityData.define(LEFT_ARM_ROTATION, DEFAULT_LEFTARM_ROTATION);
+        this.entityData.define(RIGHT_ARM_ROTATION, DEFAULT_RIGHTARM_ROTATION);
+        this.entityData.define(LEFT_LEG_ROTATION, DEFAULT_LEFTLEG_ROTATION);
+        this.entityData.define(RIGHT_LEG_ROTATION, DEFAULT_RIGHTLEG_ROTATION);
+        this.entityData.define(LOCKED_BY_UUID, Optional.empty());
     }
 
     public Optional<GameProfile> getGameProfile() {
-        return dataManager.get(GAMEPROFILE);
+        return entityData.get(GAMEPROFILE);
     }
 
     public void setGameProfile(GameProfile playerProfile) {
         GameProfile profile = PlayerTile.updateGameProfile(playerProfile);
-        dataManager.set(GAMEPROFILE, Optional.of(profile));
+        entityData.set(GAMEPROFILE, Optional.of(profile));
     }
 
     public boolean isLocked() {
-        return this.dataManager.get(LOCKED_BY_UUID).isPresent();
+        return this.entityData.get(LOCKED_BY_UUID).isPresent();
     }
 
     @Nullable
     public UUID getLockedBy() {
-        return this.dataManager.get(LOCKED_BY_UUID).orElse((UUID)null);
+        return this.entityData.get(LOCKED_BY_UUID).orElse((UUID)null);
     }
 
     public void setLockedBy(@Nullable UUID uuid) {
-        this.dataManager.set(LOCKED_BY_UUID, Optional.ofNullable(uuid));
+        this.entityData.set(LOCKED_BY_UUID, Optional.ofNullable(uuid));
     }
 
     public void setUnlocked() {
-        this.dataManager.set(LOCKED_BY_UUID, Optional.empty());
+        this.entityData.set(LOCKED_BY_UUID, Optional.empty());
     }
 
     public void setSlim(boolean slim) {
@@ -177,29 +177,29 @@ public class PlayerStatueEntity extends LivingEntity {
     }
 
     public void setYOffset(float yOffset) {
-        dataManager.set(Y_OFFSET, MathHelper.clamp(yOffset, -1, 1));
+        entityData.set(Y_OFFSET, MathHelper.clamp(yOffset, -1, 1));
     }
 
     public float getYOffsetData() {
-        return dataManager.get(Y_OFFSET);
+        return entityData.get(Y_OFFSET);
     }
 
     @Override
     @Nonnull
-    public Iterable<ItemStack> getHeldEquipment() {
+    public Iterable<ItemStack> getHandSlots() {
         return this.handItems;
     }
 
     @Override
     @Nonnull
-    public Iterable<ItemStack> getArmorInventoryList() {
+    public Iterable<ItemStack> getArmorSlots() {
         return this.armorItems;
     }
 
     @Override
     @Nonnull
-    public ItemStack getItemStackFromSlot(EquipmentSlotType slotIn) {
-        switch(slotIn.getSlotType()) {
+    public ItemStack getItemBySlot(EquipmentSlotType slotIn) {
+        switch(slotIn.getType()) {
             case HAND:
                 return this.handItems.get(slotIn.getIndex());
             case ARMOR:
@@ -209,8 +209,8 @@ public class PlayerStatueEntity extends LivingEntity {
         }
     }
 
-    public void setItemStackToSlot(EquipmentSlotType slotIn, ItemStack stack) {
-        switch(slotIn.getSlotType()) {
+    public void setItemSlot(EquipmentSlotType slotIn, ItemStack stack) {
+        switch(slotIn.getType()) {
             case HAND:
                 this.playEquipSound(stack);
                 this.handItems.set(slotIn.getIndex(), stack);
@@ -222,7 +222,7 @@ public class PlayerStatueEntity extends LivingEntity {
 
     }
 
-    public boolean replaceItemInInventory(int inventorySlot, ItemStack itemStackIn) {
+    public boolean setSlot(int inventorySlot, ItemStack itemStackIn) {
         EquipmentSlotType equipmentslottype;
         if (inventorySlot == 98) {
             equipmentslottype = EquipmentSlotType.MAINHAND;
@@ -242,26 +242,26 @@ public class PlayerStatueEntity extends LivingEntity {
             equipmentslottype = EquipmentSlotType.FEET;
         }
 
-        if (!itemStackIn.isEmpty() && !MobEntity.isItemStackInSlot(equipmentslottype, itemStackIn) && equipmentslottype != EquipmentSlotType.HEAD) {
+        if (!itemStackIn.isEmpty() && !MobEntity.isValidSlotForItem(equipmentslottype, itemStackIn) && equipmentslottype != EquipmentSlotType.HEAD) {
             return false;
         } else {
-            this.setItemStackToSlot(equipmentslottype, itemStackIn);
+            this.setItemSlot(equipmentslottype, itemStackIn);
             return true;
         }
     }
 
     @Override
-    public boolean canPickUpItem(ItemStack itemstackIn) {
-        EquipmentSlotType equipmentslottype = MobEntity.getSlotForItemStack(itemstackIn);
-        return this.getItemStackFromSlot(equipmentslottype).isEmpty() && !this.isDisabled(equipmentslottype);
+    public boolean canTakeItem(ItemStack itemstackIn) {
+        EquipmentSlotType equipmentslottype = MobEntity.getEquipmentSlotForItem(itemstackIn);
+        return this.getItemBySlot(equipmentslottype).isEmpty() && !this.isDisabled(equipmentslottype);
     }
 
     @Override
-    public void writeAdditional(CompoundNBT compound) {
-        super.writeAdditional(compound);
-        compound.putBoolean("gameProfileExists", dataManager.get(GAMEPROFILE).isPresent());
+    public void addAdditionalSaveData(CompoundNBT compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putBoolean("gameProfileExists", entityData.get(GAMEPROFILE).isPresent());
         if (getGameProfile().isPresent()) {
-            compound.put("gameProfile", NBTUtil.writeGameProfile(new CompoundNBT(), dataManager.get(GAMEPROFILE).get()));
+            compound.put("gameProfile", NBTUtil.writeGameProfile(new CompoundNBT(), entityData.get(GAMEPROFILE).get()));
         }
 
         compound.putFloat("yOffset", getYOffsetData());
@@ -271,7 +271,7 @@ public class PlayerStatueEntity extends LivingEntity {
         for(ItemStack itemstack : this.armorItems) {
             CompoundNBT compoundnbt = new CompoundNBT();
             if (!itemstack.isEmpty()) {
-                itemstack.write(compoundnbt);
+                itemstack.save(compoundnbt);
             }
 
             listnbt.add(compoundnbt);
@@ -283,7 +283,7 @@ public class PlayerStatueEntity extends LivingEntity {
         for(ItemStack itemstack1 : this.handItems) {
             CompoundNBT compoundnbt1 = new CompoundNBT();
             if (!itemstack1.isEmpty()) {
-                itemstack1.write(compoundnbt1);
+                itemstack1.save(compoundnbt1);
             }
 
             listnbt1.add(compoundnbt1);
@@ -291,7 +291,7 @@ public class PlayerStatueEntity extends LivingEntity {
 
         compound.putBoolean("Locked", this.isLocked());
         if (this.isLocked() && this.getLockedBy() != null) {
-            compound.putUniqueId("LockedBy", this.getLockedBy());
+            compound.putUUID("LockedBy", this.getLockedBy());
         }
 
         compound.put("HandItems", listnbt1);
@@ -302,35 +302,35 @@ public class PlayerStatueEntity extends LivingEntity {
     }
 
     @Override
-    public CompoundNBT writeWithoutTypeId(CompoundNBT compound) {
-        return super.writeWithoutTypeId(compound);
+    public CompoundNBT saveWithoutId(CompoundNBT compound) {
+        return super.saveWithoutId(compound);
     }
 
     @Override
-    public void read(CompoundNBT compound) {
-        super.read(compound);
-        dataManager.set(GAMEPROFILE, !compound.getBoolean("gameProfileExists") ? Optional.empty() : Optional.ofNullable(NBTUtil.readGameProfile(compound.getCompound("gameProfile"))));
+    public void load(CompoundNBT compound) {
+        super.load(compound);
+        entityData.set(GAMEPROFILE, !compound.getBoolean("gameProfileExists") ? Optional.empty() : Optional.ofNullable(NBTUtil.readGameProfile(compound.getCompound("gameProfile"))));
     }
 
     @Override
-    public void readAdditional(CompoundNBT compound) {
-        super.readAdditional(compound);
+    public void readAdditionalSaveData(CompoundNBT compound) {
+        super.readAdditionalSaveData(compound);
         this.setYOffset(compound.getFloat("yOffset"));
         if (compound.contains("ArmorItems", 9)) {
             ListNBT listnbt = compound.getList("ArmorItems", 10);
 
             for(int i = 0; i < this.armorItems.size(); ++i) {
-                this.armorItems.set(i, ItemStack.read(listnbt.getCompound(i)));
+                this.armorItems.set(i, ItemStack.of(listnbt.getCompound(i)));
             }
         }
 
         if(compound.getBoolean("Locked")) {
             UUID uuid;
-            if (compound.hasUniqueId("LockedBy")) {
-                uuid = compound.getUniqueId("LockedBy");
+            if (compound.hasUUID("LockedBy")) {
+                uuid = compound.getUUID("LockedBy");
             } else {
                 String s = compound.getString("LockedBy");
-                uuid = PreYggdrasilConverter.convertMobOwnerIfNeeded(this.getServer(), s);
+                uuid = PreYggdrasilConverter.convertMobOwnerIfNecessary(this.getServer(), s);
             }
 
             if (uuid != null) {
@@ -342,13 +342,13 @@ public class PlayerStatueEntity extends LivingEntity {
             ListNBT listnbt1 = compound.getList("HandItems", 10);
 
             for(int j = 0; j < this.handItems.size(); ++j) {
-                this.handItems.set(j, ItemStack.read(listnbt1.getCompound(j)));
+                this.handItems.set(j, ItemStack.of(listnbt1.getCompound(j)));
             }
         }
 
         this.setSmall(compound.getBoolean("Small"));
         this.disabledSlots = compound.getInt("DisabledSlots");
-        this.noClip = !this.func_213814_A();
+        this.noPhysics = !this.hasPhysics();
         CompoundNBT compoundnbt = compound.getCompound("Pose");
         this.readPose(compoundnbt);
     }
@@ -371,27 +371,27 @@ public class PlayerStatueEntity extends LivingEntity {
     private CompoundNBT writePose() {
         CompoundNBT compoundnbt = new CompoundNBT();
         if (!DEFAULT_HEAD_ROTATION.equals(this.headRotation)) {
-            compoundnbt.put("Head", this.headRotation.writeToNBT());
+            compoundnbt.put("Head", this.headRotation.save());
         }
 
         if (!DEFAULT_BODY_ROTATION.equals(this.bodyRotation)) {
-            compoundnbt.put("Body", this.bodyRotation.writeToNBT());
+            compoundnbt.put("Body", this.bodyRotation.save());
         }
 
         if (!DEFAULT_LEFTARM_ROTATION.equals(this.leftArmRotation)) {
-            compoundnbt.put("LeftArm", this.leftArmRotation.writeToNBT());
+            compoundnbt.put("LeftArm", this.leftArmRotation.save());
         }
 
         if (!DEFAULT_RIGHTARM_ROTATION.equals(this.rightArmRotation)) {
-            compoundnbt.put("RightArm", this.rightArmRotation.writeToNBT());
+            compoundnbt.put("RightArm", this.rightArmRotation.save());
         }
 
         if (!DEFAULT_LEFTLEG_ROTATION.equals(this.leftLegRotation)) {
-            compoundnbt.put("LeftLeg", this.leftLegRotation.writeToNBT());
+            compoundnbt.put("LeftLeg", this.leftLegRotation.save());
         }
 
         if (!DEFAULT_RIGHTLEG_ROTATION.equals(this.rightLegRotation)) {
-            compoundnbt.put("RightLeg", this.rightLegRotation.writeToNBT());
+            compoundnbt.put("RightLeg", this.rightLegRotation.save());
         }
 
         return compoundnbt;
@@ -401,12 +401,12 @@ public class PlayerStatueEntity extends LivingEntity {
      * Returns true if this entity should push and be pushed by other entities when colliding.
      */
     @Override
-    public boolean canBePushed() {
+    public boolean isPushable() {
         return false;
     }
 
     @Override
-    protected void collideWithEntity(Entity entityIn) {
+    protected void doPush(Entity entityIn) {
 
     }
 
@@ -416,7 +416,7 @@ public class PlayerStatueEntity extends LivingEntity {
             if(!isLocked()) {
                 super.setCustomName(name);
 
-                this.setGameProfile(new GameProfile((UUID)null, name.getUnformattedComponentText().toLowerCase(Locale.ROOT)));
+                this.setGameProfile(new GameProfile((UUID)null, name.getContents().toLowerCase(Locale.ROOT)));
             }
         }
     }
@@ -425,27 +425,27 @@ public class PlayerStatueEntity extends LivingEntity {
      * Applies the given player interaction to this Entity.
      */
     @Override
-    public ActionResultType applyPlayerInteraction(PlayerEntity player, Vector3d vec, Hand hand) {
-        ItemStack itemstack = player.getHeldItem(hand);
-        if(player.isSneaking()) {
-            if(!world.isRemote && player != null) {
+    public ActionResultType interactAt(PlayerEntity player, Vector3d vec, Hand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
+        if(player.isShiftKeyDown()) {
+            if(!level.isClientSide && player != null) {
                 if(isLocked() && getLockedBy() != null) {
-                    if(player.getUniqueID().equals(getLockedBy())) {
-                        Statues.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PlayerStatueScreenMessage(getEntityId()));
+                    if(player.getUUID().equals(getLockedBy())) {
+                        Statues.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PlayerStatueScreenMessage(getId()));
                     }
                 } else {
-                    Statues.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PlayerStatueScreenMessage(getEntityId()));
+                    Statues.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PlayerStatueScreenMessage(getId()));
                 }
             }
         } else {
             if (itemstack.getItem() != Items.NAME_TAG) {
                 if (player.isSpectator()) {
                     return ActionResultType.SUCCESS;
-                } else if (player.world.isRemote) {
+                } else if (player.level.isClientSide) {
                     return ActionResultType.CONSUME;
                 } else {
                     if(!isLocked()) {
-                        EquipmentSlotType equipmentslottype = MobEntity.getSlotForItemStack(itemstack);
+                        EquipmentSlotType equipmentslottype = MobEntity.getEquipmentSlotForItem(itemstack);
                         if (itemstack.isEmpty()) {
                             EquipmentSlotType equipmentslottype1 = this.getClickedSlot(vec);
                             EquipmentSlotType equipmentslottype2 = this.isDisabled(equipmentslottype1) ? equipmentslottype : equipmentslottype1;
@@ -491,19 +491,19 @@ public class PlayerStatueEntity extends LivingEntity {
     }
 
     private boolean isDisabled(EquipmentSlotType slotIn) {
-        return (this.disabledSlots & 1 << slotIn.getSlotIndex()) != 0;
+        return (this.disabledSlots & 1 << slotIn.getFilterFlag()) != 0;
     }
 
     private boolean equipOrSwap(PlayerEntity player, EquipmentSlotType slot, ItemStack stack, Hand hand) {
-        ItemStack itemstack = this.getItemStackFromSlot(slot);
-        if (!itemstack.isEmpty() && (this.disabledSlots & 1 << slot.getSlotIndex() + 8) != 0) {
+        ItemStack itemstack = this.getItemBySlot(slot);
+        if (!itemstack.isEmpty() && (this.disabledSlots & 1 << slot.getFilterFlag() + 8) != 0) {
             return false;
-        } else if (itemstack.isEmpty() && (this.disabledSlots & 1 << slot.getSlotIndex() + 16) != 0) {
+        } else if (itemstack.isEmpty() && (this.disabledSlots & 1 << slot.getFilterFlag() + 16) != 0) {
             return false;
-        } else if (player.abilities.isCreativeMode && itemstack.isEmpty() && !stack.isEmpty()) {
+        } else if (player.abilities.instabuild && itemstack.isEmpty() && !stack.isEmpty()) {
             ItemStack itemstack2 = stack.copy();
             itemstack2.setCount(1);
-            this.setItemStackToSlot(slot, itemstack2);
+            this.setItemSlot(slot, itemstack2);
             return true;
         } else if (!stack.isEmpty() && stack.getCount() > 1) {
             if (!itemstack.isEmpty()) {
@@ -511,13 +511,13 @@ public class PlayerStatueEntity extends LivingEntity {
             } else {
                 ItemStack itemstack1 = stack.copy();
                 itemstack1.setCount(1);
-                this.setItemStackToSlot(slot, itemstack1);
+                this.setItemSlot(slot, itemstack1);
                 stack.shrink(1);
                 return true;
             }
         } else {
-            this.setItemStackToSlot(slot, stack);
-            player.setHeldItem(hand, itemstack);
+            this.setItemSlot(slot, stack);
+            player.setItemInHand(hand, itemstack);
             return true;
         }
     }
@@ -539,21 +539,21 @@ public class PlayerStatueEntity extends LivingEntity {
     /**
      * Called when the entity is attacked.
      */
-    public boolean attackEntityFrom(DamageSource source, float amount) {
-        if (!this.world.isRemote && !this.removed) {
+    public boolean hurt(DamageSource source, float amount) {
+        if (!this.level.isClientSide && !this.removed) {
             if (DamageSource.OUT_OF_WORLD.equals(source)) {
                 this.remove();
                 return false;
             } else if (!this.isInvulnerableTo(source)) {
                 if (source.isExplosion()) {
-                    this.func_213816_g(source);
+                    this.brokenByAnything(source);
                     this.remove();
                     return false;
                 } else if (DamageSource.IN_FIRE.equals(source)) {
-                    if (this.isBurning()) {
+                    if (this.isOnFire()) {
                         this.damageArmorStand(source, 0.15F);
                     } else {
-                        this.setFire(5);
+                        this.setSecondsOnFire(5);
                     }
 
                     return false;
@@ -561,12 +561,12 @@ public class PlayerStatueEntity extends LivingEntity {
                     this.damageArmorStand(source, 4.0F);
                     return false;
                 } else {
-                    boolean flag = source.getImmediateSource() instanceof AbstractArrowEntity;
-                    boolean flag1 = flag && ((AbstractArrowEntity)source.getImmediateSource()).getPierceLevel() > 0;
-                    boolean flag2 = "player".equals(source.getDamageType());
+                    boolean flag = source.getDirectEntity() instanceof AbstractArrowEntity;
+                    boolean flag1 = flag && ((AbstractArrowEntity)source.getDirectEntity()).getPierceLevel() > 0;
+                    boolean flag2 = "player".equals(source.getMsgId());
                     if (!flag2 && !flag) {
                         return false;
-                    } else if (source.getTrueSource() instanceof PlayerEntity && !((PlayerEntity)source.getTrueSource()).abilities.allowEdit) {
+                    } else if (source.getEntity() instanceof PlayerEntity && !((PlayerEntity)source.getEntity()).abilities.mayBuild) {
                         return false;
                     } else if (source.isCreativePlayer()) {
                         this.playBrokenSound();
@@ -574,9 +574,9 @@ public class PlayerStatueEntity extends LivingEntity {
                         this.remove();
                         return flag1;
                     } else {
-                        long i = this.world.getGameTime();
+                        long i = this.level.getGameTime();
                         if (i - this.punchCooldown > 5L && !flag) {
-                            this.world.setEntityState(this, (byte)32);
+                            this.level.broadcastEntityEvent(this, (byte)32);
                             this.punchCooldown = i;
                         } else {
                             this.breakPlayerStatue(source);
@@ -599,14 +599,14 @@ public class PlayerStatueEntity extends LivingEntity {
      * Handler for {@link World#setEntityState}
      */
     @OnlyIn(Dist.CLIENT)
-    public void handleStatusUpdate(byte id) {
+    public void handleEntityEvent(byte id) {
         if (id == 32) {
-            if (this.world.isRemote) {
-                this.world.playSound(this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ENTITY_ARMOR_STAND_HIT, this.getSoundCategory(), 0.3F, 1.0F, false);
-                this.punchCooldown = this.world.getGameTime();
+            if (this.level.isClientSide) {
+                this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_HIT, this.getSoundSource(), 0.3F, 1.0F, false);
+                this.punchCooldown = this.level.getGameTime();
             }
         } else {
-            super.handleStatusUpdate(id);
+            super.handleEntityEvent(id);
         }
 
     }
@@ -615,8 +615,8 @@ public class PlayerStatueEntity extends LivingEntity {
      * Checks if the entity is in range to render.
      */
     @OnlyIn(Dist.CLIENT)
-    public boolean isInRangeToRenderDist(double distance) {
-        double d0 = this.getBoundingBox().getAverageEdgeLength() * 4.0D;
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d0 = this.getBoundingBox().getSize() * 4.0D;
         if (Double.isNaN(d0) || d0 == 0.0D) {
             d0 = 4.0D;
         }
@@ -626,8 +626,8 @@ public class PlayerStatueEntity extends LivingEntity {
     }
 
     private void playParticles() {
-        if (this.world instanceof ServerWorld) {
-            ((ServerWorld)this.world).spawnParticle(new BlockParticleData(ParticleTypes.BLOCK, StatueRegistry.PLAYER_STATUE.get().getDefaultState()), this.getPosX(), this.getPosYHeight(0.6666666666666666D), this.getPosZ(), 10, (double)(this.getWidth() / 4.0F), (double)(this.getHeight() / 4.0F), (double)(this.getWidth() / 4.0F), 0.05D);
+        if (this.level instanceof ServerWorld) {
+            ((ServerWorld)this.level).sendParticles(new BlockParticleData(ParticleTypes.BLOCK, StatueRegistry.PLAYER_STATUE.get().defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 10, (double)(this.getBbWidth() / 4.0F), (double)(this.getBbHeight() / 4.0F), (double)(this.getBbWidth() / 4.0F), 0.05D);
         }
 
     }
@@ -636,7 +636,7 @@ public class PlayerStatueEntity extends LivingEntity {
         float f = this.getHealth();
         f = f - p_213817_2_;
         if (f <= 0.5F) {
-            this.func_213816_g(source);
+            this.brokenByAnything(source);
             this.remove();
         } else {
             this.setHealth(f);
@@ -654,12 +654,12 @@ public class PlayerStatueEntity extends LivingEntity {
                 NBTUtil.writeGameProfile(nbttagcompound, profile);
                 stackTag.put("PlayerProfile", nbttagcompound);
                 stack.setTag(stackTag);
-                stack.setDisplayName(new StringTextComponent(profile.getName()));
+                stack.setHoverName(new StringTextComponent(profile.getName()));
             }
         }
 
-        Block.spawnAsEntity(this.world, this.getPosition(), stack);
-        this.func_213816_g(source);
+        Block.popResource(this.level, this.blockPosition(), stack);
+        this.brokenByAnything(source);
     }
 
     @Override
@@ -673,21 +673,21 @@ public class PlayerStatueEntity extends LivingEntity {
                 NBTUtil.writeGameProfile(nbttagcompound, profile);
                 stackTag.put("PlayerProfile", nbttagcompound);
                 stack.setTag(stackTag);
-                stack.setDisplayName(new StringTextComponent(profile.getName()));
+                stack.setHoverName(new StringTextComponent(profile.getName()));
             }
         }
 
         return stack;
     }
 
-    private void func_213816_g(DamageSource source) {
+    private void brokenByAnything(DamageSource source) {
         this.playBrokenSound();
-        this.spawnDrops(source);
+        this.dropAllDeathLoot(source);
 
         for(int i = 0; i < this.handItems.size(); ++i) {
             ItemStack itemstack = this.handItems.get(i);
             if (!itemstack.isEmpty()) {
-                Block.spawnAsEntity(this.world, this.getPosition().up(), itemstack);
+                Block.popResource(this.level, this.blockPosition().above(), itemstack);
                 this.handItems.set(i, ItemStack.EMPTY);
             }
         }
@@ -695,7 +695,7 @@ public class PlayerStatueEntity extends LivingEntity {
         for(int j = 0; j < this.armorItems.size(); ++j) {
             ItemStack itemstack1 = this.armorItems.get(j);
             if (!itemstack1.isEmpty()) {
-                Block.spawnAsEntity(this.world, this.getPosition().up(), itemstack1);
+                Block.popResource(this.level, this.blockPosition().above(), itemstack1);
                 this.armorItems.set(j, ItemStack.EMPTY);
             }
         }
@@ -703,28 +703,28 @@ public class PlayerStatueEntity extends LivingEntity {
     }
 
     private void playBrokenSound() {
-        this.world.playSound((PlayerEntity)null, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ENTITY_ARMOR_STAND_BREAK, this.getSoundCategory(), 1.0F, 1.0F);
+        this.level.playSound((PlayerEntity)null, this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_BREAK, this.getSoundSource(), 1.0F, 1.0F);
     }
 
-    protected float updateDistance(float p_110146_1_, float p_110146_2_) {
-        this.prevRenderYawOffset = this.prevRotationYaw;
-        this.renderYawOffset = this.rotationYaw;
+    protected float tickHeadTurn(float p_110146_1_, float p_110146_2_) {
+        this.yBodyRotO = this.yRotO;
+        this.yBodyRot = this.yRot;
         return 0.0F;
     }
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return sizeIn.height * (this.isChild() ? 0.5F : 0.9F);
+        return sizeIn.height * (this.isBaby() ? 0.5F : 0.9F);
     }
 
     /**
      * Returns the Y Offset of this entity.
      */
-    public double getYOffset() {
+    public double getMyRidingOffset() {
         return (double)0.1F + getYOffsetData(); //TODO: what does this do?
     }
 
     public void travel(Vector3d travelVector) {
-        if (this.func_213814_A()) {
+        if (this.hasPhysics()) {
             super.travel(travelVector);
         }
     }
@@ -732,17 +732,17 @@ public class PlayerStatueEntity extends LivingEntity {
     /**
      * Set the render yaw offset
      */
-    public void setRenderYawOffset(float offset) {
-        this.prevRenderYawOffset = this.prevRotationYaw = offset;
-        this.prevRotationYawHead = this.rotationYawHead = offset;
+    public void setYBodyRot(float offset) {
+        this.yBodyRotO = this.yRotO = offset;
+        this.yHeadRotO = this.yHeadRot = offset;
     }
 
     /**
      * Sets the head's yaw rotation of the entity.
      */
-    public void setRotationYawHead(float rotation) {
-        this.prevRenderYawOffset = this.prevRotationYaw = rotation;
-        this.prevRotationYawHead = this.rotationYawHead = rotation;
+    public void setYHeadRot(float rotation) {
+        this.yBodyRotO = this.yRotO = rotation;
+        this.yHeadRotO = this.yHeadRot = rotation;
     }
 
     /**
@@ -750,32 +750,32 @@ public class PlayerStatueEntity extends LivingEntity {
      */
     public void tick() {
         super.tick();
-        Rotations rotations = this.dataManager.get(HEAD_ROTATION);
+        Rotations rotations = this.entityData.get(HEAD_ROTATION);
         if (!this.headRotation.equals(rotations)) {
             this.setHeadRotation(rotations);
         }
 
-        Rotations rotations1 = this.dataManager.get(BODY_ROTATION);
+        Rotations rotations1 = this.entityData.get(BODY_ROTATION);
         if (!this.bodyRotation.equals(rotations1)) {
             this.setBodyRotation(rotations1);
         }
 
-        Rotations rotations2 = this.dataManager.get(LEFT_ARM_ROTATION);
+        Rotations rotations2 = this.entityData.get(LEFT_ARM_ROTATION);
         if (!this.leftArmRotation.equals(rotations2)) {
             this.setLeftArmRotation(rotations2);
         }
 
-        Rotations rotations3 = this.dataManager.get(RIGHT_ARM_ROTATION);
+        Rotations rotations3 = this.entityData.get(RIGHT_ARM_ROTATION);
         if (!this.rightArmRotation.equals(rotations3)) {
             this.setRightArmRotation(rotations3);
         }
 
-        Rotations rotations4 = this.dataManager.get(LEFT_LEG_ROTATION);
+        Rotations rotations4 = this.entityData.get(LEFT_LEG_ROTATION);
         if (!this.leftLegRotation.equals(rotations4)) {
             this.setLeftLegRotation(rotations4);
         }
 
-        Rotations rotations5 = this.dataManager.get(RIGHT_LEG_ROTATION);
+        Rotations rotations5 = this.entityData.get(RIGHT_LEG_ROTATION);
         if (!this.rightLegRotation.equals(rotations5)) {
             this.setRightLegRotation(rotations5);
         }
@@ -784,23 +784,23 @@ public class PlayerStatueEntity extends LivingEntity {
     /**
      * If Animal, checks if the age timer is negative
      */
-    public boolean isChild() {
+    public boolean isBaby() {
         return this.isSmall();
     }
 
     /**
      * Called by the /kill command.
      */
-    public void onKillCommand() {
+    public void kill() {
         this.remove();
     }
 
     private void setSmall(boolean small) {
-        this.dataManager.set(STATUS, this.setBit(this.dataManager.get(STATUS), 1, small));
+        this.entityData.set(STATUS, this.setBit(this.entityData.get(STATUS), 1, small));
     }
 
     public boolean isSmall() {
-        return (this.dataManager.get(STATUS) & 1) != 0;
+        return (this.entityData.get(STATUS) & 1) != 0;
     }
 
     private byte setBit(byte p_184797_1_, int p_184797_2_, boolean p_184797_3_) {
@@ -815,32 +815,32 @@ public class PlayerStatueEntity extends LivingEntity {
 
     public void setHeadRotation(Rotations vec) {
         this.headRotation = vec;
-        this.dataManager.set(HEAD_ROTATION, vec);
+        this.entityData.set(HEAD_ROTATION, vec);
     }
 
     public void setBodyRotation(Rotations vec) {
         this.bodyRotation = vec;
-        this.dataManager.set(BODY_ROTATION, vec);
+        this.entityData.set(BODY_ROTATION, vec);
     }
 
     public void setLeftArmRotation(Rotations vec) {
         this.leftArmRotation = vec;
-        this.dataManager.set(LEFT_ARM_ROTATION, vec);
+        this.entityData.set(LEFT_ARM_ROTATION, vec);
     }
 
     public void setRightArmRotation(Rotations vec) {
         this.rightArmRotation = vec;
-        this.dataManager.set(RIGHT_ARM_ROTATION, vec);
+        this.entityData.set(RIGHT_ARM_ROTATION, vec);
     }
 
     public void setLeftLegRotation(Rotations vec) {
         this.leftLegRotation = vec;
-        this.dataManager.set(LEFT_LEG_ROTATION, vec);
+        this.entityData.set(LEFT_LEG_ROTATION, vec);
     }
 
     public void setRightLegRotation(Rotations vec) {
         this.rightLegRotation = vec;
-        this.dataManager.set(RIGHT_LEG_ROTATION, vec);
+        this.entityData.set(RIGHT_LEG_ROTATION, vec);
     }
 
     public Rotations getHeadRotation() {
@@ -875,7 +875,7 @@ public class PlayerStatueEntity extends LivingEntity {
      * Returns true if other Entities should be prevented from moving through this Entity.
      */
     @Override
-    public boolean canBeCollidedWith() {
+    public boolean isPickable() {
         return true;
     }
 
@@ -883,55 +883,55 @@ public class PlayerStatueEntity extends LivingEntity {
      * Called when a player attacks an entity. If this returns true the attack will not happen.
      */
     @Override
-    public boolean hitByEntity(Entity entityIn) {
-        return entityIn instanceof PlayerEntity && !this.world.isBlockModifiable((PlayerEntity)entityIn, this.getPosition());
+    public boolean skipAttackInteraction(Entity entityIn) {
+        return entityIn instanceof PlayerEntity && !this.level.mayInteract((PlayerEntity)entityIn, this.blockPosition());
     }
 
     @Override
     @Nonnull
-    public HandSide getPrimaryHand() {
+    public HandSide getMainArm() {
         return HandSide.RIGHT;
     }
 
     @Override
     @Nonnull
-    protected SoundEvent getFallSound(int heightIn) {
-        return SoundEvents.ENTITY_ARMOR_STAND_FALL;
+    protected SoundEvent getFallDamageSound(int heightIn) {
+        return SoundEvents.ARMOR_STAND_FALL;
     }
 
     @Override
     @Nullable
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.ENTITY_ARMOR_STAND_HIT;
+        return SoundEvents.ARMOR_STAND_HIT;
     }
 
     @Override
     @Nullable
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_ARMOR_STAND_BREAK;
+        return SoundEvents.ARMOR_STAND_BREAK;
     }
 
-    public void causeLightningStrike(ServerWorld world, LightningBoltEntity lightning) {
+    public void thunderHit(ServerWorld world, LightningBoltEntity lightning) {
     }
 
     /**
      * Returns false if the entity is an armor stand. Returns true for all other entity living bases.
      */
     @Override
-    public boolean canBeHitWithPotion() {
+    public boolean isAffectedByPotions() {
         return false;
     }
 
     @Override
-    public void notifyDataManagerChange(DataParameter<?> key) {
+    public void onSyncedDataUpdated(DataParameter<?> key) {
         if (STATUS.equals(key)) {
-            this.recalculateSize();
-            this.preventEntitySpawning = !this.removed;
+            this.refreshDimensions();
+            this.blocksBuilding = !this.removed;
         } else if(GAMEPROFILE.equals(key)) {
-            if(this.world.isRemote()) {
+            if(this.level.isClientSide()) {
                 GameProfile gameprofile = this.getGameProfile().get();
                 if(gameprofile != null) {
-                    Minecraft.getInstance().getSkinManager().loadProfileTextures(gameprofile, (textureType, textureLocation, profileTexture) -> {
+                    Minecraft.getInstance().getSkinManager().registerSkins(gameprofile, (textureType, textureLocation, profileTexture) -> {
                         if (textureType.equals(MinecraftProfileTexture.Type.SKIN))  {
                             String metadata = profileTexture.getMetadata("model");
                             this.setSlim(metadata != null && metadata.equals("slim"));
@@ -941,7 +941,7 @@ public class PlayerStatueEntity extends LivingEntity {
             }
         }
 
-        super.notifyDataManagerChange(key);
+        super.onSyncedDataUpdated(key);
     }
 
     public boolean attackable() {

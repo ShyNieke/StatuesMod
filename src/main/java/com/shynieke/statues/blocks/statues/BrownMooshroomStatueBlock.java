@@ -30,6 +30,6 @@ public class BrownMooshroomStatueBlock extends MooshroomStatueBlock {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_COW_AMBIENT;
+		return SoundEvents.COW_AMBIENT;
 	}
 }

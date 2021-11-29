@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 public class SquidStatueBlock extends AbstractStatueBase {
 
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 8.0D, 11.0D);
+	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 8.0D, 11.0D);
 
 	public SquidStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -48,6 +48,6 @@ public class SquidStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_SQUID_AMBIENT;
+		return SoundEvents.SQUID_AMBIENT;
 	}
 }

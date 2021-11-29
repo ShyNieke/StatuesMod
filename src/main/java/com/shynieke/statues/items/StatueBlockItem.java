@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 public class StatueBlockItem extends BlockItem {
 
 	public StatueBlockItem(Block blockIn, Item.Properties builder) {
-		super(blockIn, builder.group(StatueTabs.STATUES_BLOCKS));
+		super(blockIn, builder.tab(StatueTabs.STATUES_BLOCKS));
 	}
 
 	@Nullable
@@ -47,12 +47,12 @@ public class StatueBlockItem extends BlockItem {
 
 	@Nullable
 	@Override
-	protected BlockState getStateForPlacement(BlockItemUseContext context) {
-		BlockState state = super.getStateForPlacement(context);
-		ItemStack stack = context.getItem();
-		if(Block.getBlockFromItem(stack.getItem()) instanceof AbstractStatueBase) {
+	protected BlockState getPlacementState(BlockItemUseContext context) {
+		BlockState state = super.getPlacementState(context);
+		ItemStack stack = context.getItemInHand();
+		if(Block.byItem(stack.getItem()) instanceof AbstractStatueBase) {
 			if(stack.hasTag() && stack.getTag().get("Traits") != null) {
-				state = state.with(AbstractStatueBase.INTERACTIVE, true);
+				state = state.setValue(AbstractStatueBase.INTERACTIVE, true);
 			}
 		}
 		return state;

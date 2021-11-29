@@ -32,7 +32,7 @@ public class PillagerStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_PILLAGER_AMBIENT;
+		return SoundEvents.PILLAGER_AMBIENT;
 	}
 
 	@Override

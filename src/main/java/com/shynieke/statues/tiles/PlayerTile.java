@@ -51,8 +51,8 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     }
 
     @Override
-    public void read(BlockState state, CompoundNBT compound) {
-        super.read(state, compound);
+    public void load(BlockState state, CompoundNBT compound) {
+        super.load(state, compound);
 
         if (compound.contains("PlayerProfile", 10)) {
             this.setPlayerProfile(NBTUtil.readGameProfile(compound.getCompound("PlayerProfile")));
@@ -64,8 +64,8 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     }
 
     @Override
-    public CompoundNBT write(CompoundNBT compound) {
-        super.write(compound);
+    public CompoundNBT save(CompoundNBT compound) {
+        super.save(compound);
         if (this.playerProfile != null) {
             CompoundNBT compoundnbt = new CompoundNBT();
             NBTUtil.writeGameProfile(compoundnbt, this.playerProfile);
@@ -79,19 +79,19 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-        CompoundNBT compoundNBT = pkt.getNbtCompound();
+        CompoundNBT compoundNBT = pkt.getTag();
         handleUpdateTag(getBlockState(), compoundNBT);
     }
 
     @Override
     public SUpdateTileEntityPacket getUpdatePacket() {
-        return new SUpdateTileEntityPacket(pos, 4, this.getUpdateTag());
+        return new SUpdateTileEntityPacket(worldPosition, 4, this.getUpdateTag());
     }
 
     @Override
     public CompoundNBT getUpdateTag()
     {
-        return this.write(new CompoundNBT());
+        return this.save(new CompoundNBT());
     }
 
     @Override
@@ -109,8 +109,8 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
     }
 
     public void setPlayerProfile(@Nullable GameProfile profile) {
-        if (this.world != null && this.world.isRemote() && profile != null) {
-            Minecraft.getInstance().getSkinManager().loadProfileTextures(profile, (textureType, textureLocation, profileTexture) -> {
+        if (this.level != null && this.level.isClientSide() && profile != null) {
+            Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
                 if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
                     String metadata = profileTexture.getMetadata("model");
                     this.isSlim = metadata != null && metadata.equals("slim");
@@ -123,7 +123,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     private void updatePlayerProfile() {
         this.playerProfile = updateGameProfile(this.playerProfile);
-        this.markDirty();
+        this.setChanged();
     }
 
     @Nullable
@@ -132,7 +132,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
             if (input.isComplete() && input.getProperties().containsKey("textures")) {
                 return input;
             } else if (profileCache != null && sessionService != null) {
-                GameProfile gameprofile = profileCache.getGameProfileForUsername(input.getName());
+                GameProfile gameprofile = profileCache.get(input.getName());
                 if (gameprofile == null) {
                     return input;
                 } else {
@@ -153,12 +153,12 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public void tick() {
-        if(this.world != null && !this.world.isRemote) {
+        if(this.level != null && !this.level.isClientSide) {
             BlockState state = getBlockState();
             if(state.getBlock() == StatueRegistry.PLAYER_STATUE.get() && comparatorApplied) {
                 if(!OnlineChecking) {
                     ++this.checkerCooldown;
-                    markDirty();
+                    setChanged();
                     if(this.checkerCooldown == 0)
                         this.checkerCooldown = 200;
 
@@ -176,12 +176,12 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     public void updateOnline() {
         BlockState state = getBlockState();
-        boolean isStateOnline = state.get(PlayerStatueBlock.ONLINE);
-        boolean checkAnswer = world.getPlayerByUuid(this.playerProfile.getId()) != null;
+        boolean isStateOnline = state.getValue(PlayerStatueBlock.ONLINE);
+        boolean checkAnswer = level.getPlayerByUUID(this.playerProfile.getId()) != null;
         if(isStateOnline != checkAnswer) {
-            BlockState newState = state.with(PlayerStatueBlock.ONLINE, checkAnswer);
-            world.setBlockState(getPos(), newState);
-            world.notifyBlockUpdate(getPos(), state, newState, 3);
+            BlockState newState = state.setValue(PlayerStatueBlock.ONLINE, checkAnswer);
+            level.setBlockAndUpdate(getBlockPos(), newState);
+            level.sendBlockUpdated(getBlockPos(), state, newState, 3);
         }
     }
 
@@ -190,11 +190,11 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
         this.comparatorApplied = comparatorApplied;
         if(!comparatorApplied) {
             BlockState state = getBlockState();
-            BlockState newState = state.with(PlayerStatueBlock.ONLINE, false);
-            world.setBlockState(getPos(), newState);
-            world.notifyBlockUpdate(getPos(), state, newState, 3);
+            BlockState newState = state.setValue(PlayerStatueBlock.ONLINE, false);
+            level.setBlockAndUpdate(getBlockPos(), newState);
+            level.sendBlockUpdated(getBlockPos(), state, newState, 3);
         }
-        this.markDirty();
+        this.setChanged();
     }
 
     public boolean getComparatorApplied() {
@@ -207,7 +207,7 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     public void setOnlineChecking(boolean onlineChecking) {
         this.OnlineChecking = onlineChecking;
-        this.markDirty();
+        this.setChanged();
     }
 
     @Override

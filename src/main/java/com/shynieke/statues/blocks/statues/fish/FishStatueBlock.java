@@ -31,8 +31,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 public class FishStatueBlock extends AbstractStatueBase {
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
-    private static final VoxelShape SHAPE_BIG = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 9.0D, 11.0D);
+    private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
+    private static final VoxelShape SHAPE_BIG = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 9.0D, 11.0D);
     private final int size;
 
     public FishStatueBlock(Properties builder, int size) {
@@ -49,23 +49,23 @@ public class FishStatueBlock extends AbstractStatueBase {
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
-        ItemStack stack = playerIn.getHeldItem(Hand.MAIN_HAND);
+    public ActionResultType use(BlockState state, World worldIn, BlockPos pos, PlayerEntity playerIn, Hand handIn, BlockRayTraceResult result) {
+        ItemStack stack = playerIn.getItemInHand(Hand.MAIN_HAND);
         if(stack.getItem() == Items.WET_SPONGE) {
             TropicalFishTile tile = getFishTE(worldIn, pos);
             tile.scrambleColors();
-            worldIn.notifyBlockUpdate(pos, state, state, 6);
-            worldIn.playSound(null, pos, SoundEvents.ENTITY_SLIME_SQUISH_SMALL, SoundCategory.NEUTRAL, 1F, 1.0F);
-            if(!playerIn.abilities.isCreativeMode) {
+            worldIn.sendBlockUpdated(pos, state, state, 6);
+            worldIn.playSound(null, pos, SoundEvents.SLIME_SQUISH_SMALL, SoundCategory.NEUTRAL, 1F, 1.0F);
+            if(!playerIn.abilities.instabuild) {
                 stack.shrink(1);
-                if(!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.SPONGE))) {
+                if(!playerIn.inventory.add(new ItemStack(Items.SPONGE))) {
                     ItemEntity itemEntity = new ItemEntity(worldIn, pos.getX(), pos.getY() + 0.5, pos.getZ());
                     itemEntity.setItem(stack);
-                    worldIn.addEntity(itemEntity);
+                    worldIn.addFreshEntity(itemEntity);
                 }
             }
         }
-        return super.onBlockActivated(state, worldIn, pos, playerIn, handIn, result);
+        return super.use(state, worldIn, pos, playerIn, handIn, result);
     }
 
     @Override
@@ -90,16 +90,16 @@ public class FishStatueBlock extends AbstractStatueBase {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
+        return SoundEvents.TROPICAL_FISH_FLOP;
     }
 
     public TropicalFishTile getFishTE(IBlockReader world, BlockPos pos) {
-        return world.getTileEntity(pos) instanceof TropicalFishTile ? (TropicalFishTile) world.getTileEntity(pos): null;
+        return world.getBlockEntity(pos) instanceof TropicalFishTile ? (TropicalFishTile) world.getBlockEntity(pos): null;
     }
 
     @Override
-    public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+    public void setPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+        super.setPlacedBy(worldIn, pos, state, placer, stack);
         TropicalFishTile tile = getFishTE(worldIn, pos);
         if(tile != null) {
             tile.scrambleColors();
@@ -109,7 +109,7 @@ public class FishStatueBlock extends AbstractStatueBase {
     @OnlyIn(Dist.CLIENT)
     public static int getColor(BlockState state, IBlockReader world, BlockPos pos, int tintIndex) {
         if(pos != null) {
-            TileEntity tile = world.getTileEntity(pos);
+            TileEntity tile = world.getBlockEntity(pos);
             if(tile instanceof TropicalFishTile) {
                 TropicalFishTile fishTile = (TropicalFishTile) tile;
                 return tintIndex == 1 ? fromColor(fishTile.getMainColor()) : tintIndex == 2 ? fromColor(fishTile.getSecondaryColor()) : -1;

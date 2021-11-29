@@ -12,7 +12,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 
 public class EagleRayStatueBlock extends AbstractStatueBase {
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(1.0D, 0, 1.0D, 15.0D, 6.0D, 15.0D);
+    private static final VoxelShape SHAPE = Block.box(1.0D, 0, 1.0D, 15.0D, 6.0D, 15.0D);
 
     public EagleRayStatueBlock(Properties properties) {
         super(properties.sound(SoundType.STONE));
@@ -30,6 +30,6 @@ public class EagleRayStatueBlock extends AbstractStatueBase {
 
     @Override
     public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENTITY_SQUID_AMBIENT;
+        return SoundEvents.SQUID_AMBIENT;
     }
 }

@@ -19,7 +19,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 public class RavagerStatueBlock extends AbstractStatueBase {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(0.5D, 0.0D, 0.5D, 15.5D, 16.0D, 15.5D);
+	private static final VoxelShape SHAPE = Block.box(0.5D, 0.0D, 0.5D, 15.5D, 16.0D, 15.5D);
 
 	public RavagerStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
@@ -42,7 +42,7 @@ public class RavagerStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.ENTITY_RAVAGER_AMBIENT;
+		return SoundEvents.RAVAGER_AMBIENT;
 	}
 
 	@Override
