@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "statues:player_statue"
+  },
+  "pattern": [
+    "ECE",
+    "LZL",
+    "ELE"
+  ],
+  "type": "statues:hardcore_shaped",
+  "key": {
+    "E": {
+      "item": "minecraft:experience_bottle"
+    },
+    "C": {
+      "item": "statues:statue_core"
+    },
+    "L": {
+      "tag": "forge:storage_blocks/lapis"
+    },
+    "Z": {
+      "item": "statues:zombie_statue"
+    }
+  }
+}

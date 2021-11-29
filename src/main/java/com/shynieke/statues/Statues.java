@@ -13,6 +13,7 @@ import com.shynieke.statues.init.StatueSerializers;
 import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.items.CustomSpawnEggItem;
 import com.shynieke.statues.packets.StatuesNetworking;
+import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.PlayerBlockEntity;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -51,6 +52,7 @@ public class Statues {
 		StatueRegistry.ITEMS.register(eventBus);
 		StatueBlockEntities.BLOCK_ENTITIES.register(eventBus);
 		StatueSounds.SOUND_EVENTS.register(eventBus);
+		StatuesRecipes.RECIPE_SERIALIZERS.register(eventBus);
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 

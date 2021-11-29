@@ -33,6 +33,7 @@ public class StatueCoreItem extends Item {
 		if (tag != null && !tag.getString(entityTag).isEmpty()) {
 			tooltips.add(new TranslatableComponent("statues.core.info,", tag.getString(entityTag)).withStyle(ChatFormatting.GOLD));
 		}
+		super.appendHoverText(stack, level, tooltips, flag);
 	}
 
 	@Override

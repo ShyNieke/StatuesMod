@@ -1,6 +1,8 @@
 package com.shynieke.statues.client.model;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -38,7 +40,6 @@ public class PlayerStatueModel extends PlayerModel<PlayerStatue> {
         this.head.xRot = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getX();
         this.head.yRot = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getY();
         this.head.zRot = ((float)Math.PI / 180F) * entityIn.getHeadRotation().getZ();
-        this.head.setPos(0.0F, 1.0F, 0.0F);
         this.body.xRot = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getX();
         this.body.yRot = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getY();
         this.body.zRot = ((float)Math.PI / 180F) * entityIn.getBodyRotation().getZ();
@@ -51,11 +52,9 @@ public class PlayerStatueModel extends PlayerModel<PlayerStatue> {
         this.leftLeg.xRot = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getX();
         this.leftLeg.yRot = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getY();
         this.leftLeg.zRot = ((float)Math.PI / 180F) * entityIn.getLeftLegRotation().getZ();
-        this.leftLeg.setPos(1.9F, 11.0F, 0.0F);
         this.rightLeg.xRot = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getX();
         this.rightLeg.yRot = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getY();
         this.rightLeg.zRot = ((float)Math.PI / 180F) * entityIn.getRightLegRotation().getZ();
-        this.rightLeg.setPos(-1.9F, 11.0F, 0.0F);
         this.hat.copyFrom(this.head);
         this.jacket.copyFrom(this.body);
         this.leftSleeve.copyFrom(this.leftArm);

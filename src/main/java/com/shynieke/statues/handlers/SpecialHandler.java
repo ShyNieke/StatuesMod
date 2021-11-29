@@ -6,9 +6,12 @@ import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -16,11 +19,29 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.Locale;
+
 public class SpecialHandler {
+    @SubscribeEvent
+    public void onCrafted(ItemCraftedEvent event) {
+        ItemStack resultStack = event.getCrafting();
+        if(resultStack.getItem() == StatueRegistry.PLAYER_STATUE.get().asItem()) {
+            Player player = event.getPlayer();
+            if(player == null || player instanceof FakePlayer) {
+                event.setCanceled(true);
+            }
+
+            player.hurt(DamageSource.MAGIC, player.getMaxHealth() / 2);
+            resultStack.setHoverName(player.getName());
+        }
+    }
+
     @SubscribeEvent
     public void playerTick(PlayerTickEvent event) {
         if(event.phase == TickEvent.Phase.START)

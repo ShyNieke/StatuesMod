@@ -241,6 +241,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				}
 			}
 		}
+		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
