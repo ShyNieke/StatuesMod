@@ -50,9 +50,8 @@ public class HardcoreRecipe extends ShapedRecipe {
 	@Override
 	public ItemStack getResultItem() {
 		ItemStack resultStack = super.getResultItem();
-		CompoundTag display = resultStack.getTagElement("display");
-		if(display != null) {
-			display = new CompoundTag();
+		CompoundTag display = resultStack.getOrCreateTagElement("display");
+		if(!display.contains("lore")) {
 			ListTag nbtTagList = new ListTag();
 			nbtTagList.add(StringTag.valueOf(Component.Serializer.toJson(
 					new TextComponent("Only craftable in Hardcore Mode").withStyle(ChatFormatting.DARK_PURPLE))));
