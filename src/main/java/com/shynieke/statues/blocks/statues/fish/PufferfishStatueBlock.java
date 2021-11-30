@@ -32,14 +32,11 @@ public class PufferfishStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-		switch(size) {
-			default:
-				return SHAPE;
-			case 1:
-				return SHAPE_MEDIUM;
-			case 2:
-				return SHAPE_BIG;
-		}
+		return switch (size) {
+			default -> SHAPE;
+			case 1 -> SHAPE_MEDIUM;
+			case 2 -> SHAPE_BIG;
+		};
 	}
 
 	@Override

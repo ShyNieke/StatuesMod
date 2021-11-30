@@ -1,5 +1,7 @@
 package com.shynieke.statues.blocks.decorative;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -12,8 +14,8 @@ public class PebbleBlock extends FallingBlock {
         super(properties.strength(0.6F).sound(SoundType.GRAVEL));
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public int getDustColor(BlockState blockState) {
+    @Override
+    public int getDustColor(BlockState state, BlockGetter getter, BlockPos pos) {
         return -8356741;
     }
 }

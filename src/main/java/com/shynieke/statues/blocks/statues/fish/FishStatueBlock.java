@@ -109,8 +109,7 @@ public class FishStatueBlock extends AbstractStatueBase {
     public static int getColor(BlockState state, BlockGetter world, BlockPos pos, int tintIndex) {
         if(pos != null) {
             BlockEntity tile = world.getBlockEntity(pos);
-            if(tile instanceof TropicalFishBlockEntity) {
-                TropicalFishBlockEntity fishTile = (TropicalFishBlockEntity) tile;
+            if(tile instanceof TropicalFishBlockEntity fishTile) {
                 return tintIndex == 1 ? fromColor(fishTile.getMainColor()) : tintIndex == 2 ? fromColor(fishTile.getSecondaryColor()) : -1;
             }
         }

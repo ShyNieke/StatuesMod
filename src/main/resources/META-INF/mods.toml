@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[37,)"
+loaderVersion="[38,)"
 issueTrackerURL="https://github.com/ShyNieke/StatuesMod/issues"
 license="MIT"
 
@@ -15,6 +15,6 @@ Just a little functional decoration.
 [[dependencies.statues]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.17.1,1.18)"
+versionRange="[1.8,1.19)"
 ordering="NONE"
 side="BOTH"

@@ -11,17 +11,15 @@ import com.shynieke.statues.init.StatueEntities;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueSerializers;
 import com.shynieke.statues.init.StatueSounds;
-import com.shynieke.statues.items.CustomSpawnEggItem;
 import com.shynieke.statues.packets.StatuesNetworking;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipes.StatueLootList;
 import com.shynieke.statues.tiles.PlayerBlockEntity;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
@@ -30,8 +28,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fmllegacy.RegistryObject;
-import net.minecraftforge.fmlserverevents.FMLServerAboutToStartEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -81,18 +77,9 @@ public class Statues {
 		StatueEntities.setupEntities();
 
 		StatuesNetworking.init();
-
-		event.enqueueWork(() -> {
-				for(RegistryObject<Item> registryObject : StatueRegistry.ITEMS.getEntries()) {
-					if(registryObject.get() instanceof CustomSpawnEggItem spawnEgg) {
-						SpawnEggItem.BY_ID.put(spawnEgg.entityType.get(), spawnEgg);
-					}
-				}
-			}
-		);
 	}
 
-	public void serverAboutToStart(final FMLServerAboutToStartEvent event) {
+	public void serverAboutToStart(final ServerAboutToStartEvent event) {
 		MinecraftServer server = event.getServer();
 		PlayerBlockEntity.setProfileCache(server.getProfileCache());
 		PlayerBlockEntity.setSessionService(server.getSessionService());

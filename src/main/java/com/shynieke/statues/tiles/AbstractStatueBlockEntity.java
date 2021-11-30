@@ -14,17 +14,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import javax.annotation.Nullable;
 
 public abstract class AbstractStatueBlockEntity extends BlockEntity {
-	public static int cooldown;
-	public static int cooldownMax = 200; //TODO: Set cooldownMax with config
-	public static boolean statueAble;
+	public int cooldown;
+	public int cooldownMax = 200; //TODO: Set cooldownMax with config
+	public boolean statueAble;
 
-	private static int mobKilled;
-	private static int statueLevel;
-	private static boolean dropsItems;
-	private static float dropMultiplier;
-	private static boolean spawnsMobs;
-	private static boolean makesSounds;
-	private static boolean hasExternalUse;
+	private int mobKilled;
+	private int statueLevel;
+	private boolean dropsItems;
+	private float dropMultiplier;
+	private boolean spawnsMobs;
+	private boolean makesSounds;
+	private boolean hasExternalUse;
 
 	protected AbstractStatueBlockEntity(BlockEntityType<?> tileType, BlockPos pos, BlockState state) {
 		super(tileType, pos, state);
@@ -67,7 +67,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	@Nullable
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return new ClientboundBlockEntityDataPacket(this.worldPosition, 0, this.getUpdateTag());
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
 	public int getCooldown() {

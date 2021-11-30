@@ -52,7 +52,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -96,9 +95,8 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void playerDestroy(Level worldIn, Player player, BlockPos pos, BlockState state, BlockEntity te, ItemStack stack) {
-		if (te instanceof PlayerBlockEntity && ((Nameable)te).hasCustomName()) {
-			PlayerBlockEntity tile = (PlayerBlockEntity)te;
+	public void playerDestroy(Level worldIn, Player player, BlockPos pos, BlockState state, BlockEntity be, ItemStack stack) {
+		if (be instanceof PlayerBlockEntity blockEntity && ((Nameable)be).hasCustomName()) {
 			player.causeFoodExhaustion(0.005F);
 
 			if (worldIn.isClientSide)
@@ -108,20 +106,20 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				return;
 
 			ItemStack itemstack = new ItemStack(this);
-			itemstack.setHoverName(((Nameable)tile).getName());
+			itemstack.setHoverName(((Nameable)blockEntity).getName());
 
-			if (tile.getPlayerProfile() != null) {
+			if (blockEntity.getPlayerProfile() != null) {
 				CompoundTag stackTag = itemstack.getTag() != null ? itemstack.getTag() : new CompoundTag();
-				CompoundTag nbttagcompound = new CompoundTag();
-				NbtUtils.writeGameProfile(nbttagcompound, tile.getPlayerProfile());
-				stackTag.put("PlayerProfile", nbttagcompound);
+				CompoundTag tag = new CompoundTag();
+				NbtUtils.writeGameProfile(tag, blockEntity.getPlayerProfile());
+				stackTag.put("PlayerProfile", tag);
 				itemstack.setTag(stackTag);
-				itemstack.setHoverName(((Nameable)tile).getName());
+				itemstack.setHoverName(((Nameable)blockEntity).getName());
 			}
 
 			popResource(worldIn, pos, itemstack);
 
-			if(tile.getComparatorApplied()) {
+			if(blockEntity.getComparatorApplied()) {
 				popResource(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
 		} else {
@@ -138,28 +136,18 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public ItemStack pickupBlock(LevelAccessor level, BlockPos pos, BlockState state) {
-		BlockEntity tileentity = level.getBlockEntity(pos);
-		if (tileentity instanceof PlayerBlockEntity) {
+		BlockEntity blockEntity = level.getBlockEntity(pos);
+		if (blockEntity instanceof PlayerBlockEntity) {
 			return getStatueWithName(level, pos, state);
 		} else {
 			return new ItemStack(state.getBlock());
 		}
 	}
 
-	@Override
-	public ItemStack getPickBlock(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
-		BlockEntity tileentity = level.getBlockEntity(pos);
-		if (tileentity instanceof PlayerBlockEntity) {
-			return getStatueWithName(level, pos, state);
-		} else {
-			return super.getPickBlock(state, target, level, pos, player);
-		}
-	}
-
 	private ItemStack getStatueWithName(BlockGetter level, BlockPos pos, BlockState state) {
-		BlockEntity tileentity = level.getBlockEntity(pos);
-		if (tileentity instanceof PlayerBlockEntity) {
-			PlayerBlockEntity playerTile = (PlayerBlockEntity)tileentity;
+		BlockEntity blockEntity = level.getBlockEntity(pos);
+		if (blockEntity instanceof PlayerBlockEntity) {
+			PlayerBlockEntity playerTile = (PlayerBlockEntity)blockEntity;
 			ItemStack stack = new ItemStack(state.getBlock());
 
 			GameProfile profile = playerTile.getPlayerProfile();

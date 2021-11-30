@@ -6,8 +6,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class TropicalFishBlockEntity extends StatueBlockEntity {
-    private static int MAIN_COLOR;
-    private static int SECONDARY_COLOR;
+    private int MAIN_COLOR;
+    private int SECONDARY_COLOR;
 
     public TropicalFishBlockEntity(BlockPos pos, BlockState state) {
         super(StatueBlockEntities.TROPICAL_FISH.get(), pos, state);

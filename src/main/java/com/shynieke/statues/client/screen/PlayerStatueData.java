@@ -3,7 +3,7 @@ package com.shynieke.statues.client.screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraftforge.common.util.Constants.NBT;
+import net.minecraft.nbt.Tag;
 
 public class PlayerStatueData {
     public boolean small = false;
@@ -40,7 +40,7 @@ public class PlayerStatueData {
         this.yOffset = compound.getFloat("yOffset");
 
         if (compound.contains("Rotation")) {
-            this.rotation = compound.getList("Rotation", NBT.TAG_FLOAT).getFloat(0);
+            this.rotation = compound.getList("Rotation", Tag.TAG_FLOAT).getFloat(0);
         }
         if (compound.contains("Pose")) {
             CompoundTag poseTag = (CompoundTag)compound.get("Pose");
@@ -49,7 +49,7 @@ public class PlayerStatueData {
             for (int i = 0; i < keys.length; i++) {
                 String key = keys[i];
                 if (poseTag.contains(key)) {
-                    ListTag tagList = poseTag.getList(key, NBT.TAG_FLOAT);
+                    ListTag tagList = poseTag.getList(key, Tag.TAG_FLOAT);
                     for (int j = 0; j <= 2; j++) {
                         int k = (i * 3) + j;
                         this.pose[k] = tagList.getFloat(j);

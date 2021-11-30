@@ -61,7 +61,6 @@ import com.shynieke.statues.blocks.statues.fish.SquidStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.TurtleStatueBlock;
 import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.entity.StatueBatEntity;
-import com.shynieke.statues.items.CustomSpawnEggItem;
 import com.shynieke.statues.items.PlayerCompassItem;
 import com.shynieke.statues.items.PlayerStatueBlockItem;
 import com.shynieke.statues.items.PlayerStatueSpawnItem;
@@ -79,9 +78,10 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.fmllegacy.RegistryObject;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
@@ -224,7 +224,7 @@ public class StatueRegistry {
     public static final RegistryObject<Item> TEA = ITEMS.register("tea", () -> new StatueTeaItem(itemBuilder(), StatueFoods.TEA));
 
     public static final RegistryObject<Item> PLAYER_STATUE_SPAWN_EGG = ITEMS.register("player_statue_spawn_egg", () -> new PlayerStatueSpawnItem(itemBuilder()));
-    public static final RegistryObject<Item> STATUE_BAT_SPANW_EGG = ITEMS.register("statue_bat_spawn_egg", () -> new CustomSpawnEggItem(() -> StatueRegistry.STATUE_BAT.get(), 3421236, 3556687, itemBuilder()));
+    public static final RegistryObject<Item> STATUE_BAT_SPANW_EGG = ITEMS.register("statue_bat_spawn_egg", () -> new ForgeSpawnEggItem(StatueRegistry.STATUE_BAT::get, 3421236, 3556687, itemBuilder()));
 
     public static <B extends Block> RegistryObject<B> registerStatue(String name, Supplier<? extends B> supplier, Item.Properties properties) {
         RegistryObject<B> block = StatueRegistry.BLOCKS.register(name, supplier);

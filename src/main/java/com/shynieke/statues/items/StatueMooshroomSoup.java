@@ -19,9 +19,8 @@ public class StatueMooshroomSoup extends Item {
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityIn) {
-        if(entityIn instanceof Player && !((Player) entityIn).getAbilities().instabuild) {
+        if(entityIn instanceof Player playerIn && !((Player) entityIn).getAbilities().instabuild) {
             ItemStack bowlStack = new ItemStack(Items.BOWL);
-            Player playerIn = (Player)entityIn;
             Inventory playerInv = playerIn.getInventory();
             playerIn.eat(worldIn, stack);
 

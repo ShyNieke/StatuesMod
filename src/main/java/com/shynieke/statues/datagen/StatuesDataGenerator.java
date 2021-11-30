@@ -34,16 +34,16 @@ import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmllegacy.RegistryObject;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import static com.shynieke.statues.init.StatueRegistry.*;
 
@@ -90,7 +90,7 @@ public class StatuesDataGenerator {
 					TROPICAL_FISH_BB.get(), TROPICAL_FISH_BE.get(), TROPICAL_FISH_BM.get(), TROPICAL_FISH_BMB.get(), TROPICAL_FISH_BMS.get(), TROPICAL_FISH_E.get(),
 					TROPICAL_FISH_ES.get(), TROPICAL_FISH_HB.get(), TROPICAL_FISH_SB.get(), TROPICAL_FISH_SD.get(), TROPICAL_FISH_SS.get(), TURTLE_STATUE.get(),
 					VILLAGER_BR_STATUE.get(), VILLAGER_GR_STATUE.get(), VILLAGER_PU_STATUE.get(), VILLAGER_WH_STATUE.get(), VINDICATOR_STATUE.get(), WASTELAND_STATUE.get(),
-					WITCH_STATUE.get(), ZOMBIE_STATUE.get(), BUMBO_STATUE.get(), DISPLAY_STAND.get(), TROPIBEE.get(), EAGLE_RAY.get(), SLABFISH.get());
+					WITCH_STATUE.get(), ZOMBIE_STATUE.get(), BUMBO_STATUE.get(), TROPIBEE.get(), EAGLE_RAY.get(), SLABFISH.get());
 		}
 	}
 
@@ -161,7 +161,8 @@ public class StatuesDataGenerator {
 
 			@Override
 			protected Iterable<EntityType<?>> getKnownEntities() {
-				return (Iterable<EntityType<?>>) StatueRegistry.ENTITIES.getEntries().stream().map(RegistryObject::get)::iterator;
+				Stream<EntityType<?>> entityTypeStream = StatueRegistry.ENTITIES.getEntries().stream().map(RegistryObject::get);
+				return entityTypeStream::iterator;
 			}
 		}
 	}

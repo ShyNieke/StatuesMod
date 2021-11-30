@@ -18,7 +18,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerPoseScreen extends Screen {
@@ -131,7 +131,7 @@ public class PlayerPoseScreen extends Screen {
         this.renderBackground(matrixStack);
 
         // Draw gui title
-        this.drawCenteredString(matrixStack, this.font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)), this.width / 2, 20, 0xFFFFFF);
+        drawCenteredString(matrixStack, this.font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)), this.width / 2, 20, 0xFFFFFF);
 
         // Draw textboxes
         this.rotationTextField.render(matrixStack, mouseX, mouseY, partialTicks);

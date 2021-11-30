@@ -17,8 +17,8 @@ version = "${version}"
 group = 'com.shynieke.statues' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "Statues-${mc_version}"
 
-// Mojang ships Java 16 to end users in 1.17+ instead of Java 8 in 1.16 or lower, so your mod should target Java 16.
-java.toolchain.languageVersion = JavaLanguageVersion.of(16)
+// Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -81,32 +81,25 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-//    maven {
-//        name = "Heh"
-//        url 'https://maven.latmod.com/'
+//    maven { TODO: Bring back once JEI and TOP are updated
+//        // location of the maven that hosts JEI files
+//        name = "Progwml6 maven"
+//        url = "https://dvs1.progwml6.com/files/maven/"
 //    }
 //    maven {
-//        url "http://maven.blamejared.com"
+//        url = "https://maven.theillusivec4.top/"
 //    }
-    maven {
-        url = "https://maven.theillusivec4.top/"
-    }
 }
 
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
-
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${version_curios}")
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${version_curios}")
+//    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
+//    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
+//
+//    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${version_curios}")
+//    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${version_curios}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
