@@ -1,6 +1,7 @@
 package com.shynieke.statues.blocks.statues;
 
 import com.mojang.authlib.GameProfile;
+import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.entity.PlayerStatue;
@@ -8,7 +9,6 @@ import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTags;
 import com.shynieke.statues.items.PlayerStatueSpawnItem;
-import com.shynieke.statues.tiles.PlayerBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;

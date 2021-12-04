@@ -1,4 +1,4 @@
-package com.shynieke.statues.tiles;
+package com.shynieke.statues.blockentities;
 
 import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;

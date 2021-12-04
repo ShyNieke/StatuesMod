@@ -1,7 +1,7 @@
 package com.shynieke.statues.blocks.statues;
 
+import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.recipes.StatueLootList;
-import com.shynieke.statues.tiles.StatueBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;

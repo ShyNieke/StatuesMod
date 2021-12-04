@@ -14,7 +14,7 @@ import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.packets.StatuesNetworking;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipes.StatueLootList;
-import com.shynieke.statues.tiles.PlayerBlockEntity;
+import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.api.distmarker.Dist;

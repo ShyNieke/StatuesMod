@@ -9,7 +9,7 @@ import com.mojang.math.Vector3f;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
-import com.shynieke.statues.tiles.PlayerBlockEntity;
+import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

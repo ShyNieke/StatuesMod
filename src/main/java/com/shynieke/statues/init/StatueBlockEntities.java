@@ -1,9 +1,9 @@
 package com.shynieke.statues.init;
 
 import com.shynieke.statues.Reference;
-import com.shynieke.statues.tiles.PlayerBlockEntity;
-import com.shynieke.statues.tiles.StatueBlockEntity;
-import com.shynieke.statues.tiles.TropicalFishBlockEntity;
+import com.shynieke.statues.blockentities.PlayerBlockEntity;
+import com.shynieke.statues.blockentities.StatueBlockEntity;
+import com.shynieke.statues.blockentities.TropicalFishBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

@@ -11,7 +11,7 @@ import com.shynieke.statues.client.render.PlayerTileRenderer;
 import com.shynieke.statues.client.render.StatueBatRenderer;
 import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueRegistry;
-import com.shynieke.statues.tiles.PlayerBlockEntity;
+import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.geom.ModelLayerLocation;

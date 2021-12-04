@@ -1,4 +1,4 @@
-package com.shynieke.statues.tiles;
+package com.shynieke.statues.blockentities;
 
 import com.shynieke.statues.init.StatueBlockEntities;
 import net.minecraft.core.BlockPos;

@@ -1,10 +1,10 @@
 package com.shynieke.statues.blocks.statues;
 
 import com.google.common.collect.ImmutableList;
+import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.recipes.StatueLootList;
-import com.shynieke.statues.tiles.StatueBlockEntity;
 import com.shynieke.statues.util.ListHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

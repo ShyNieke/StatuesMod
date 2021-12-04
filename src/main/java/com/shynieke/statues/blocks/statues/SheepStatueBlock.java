@@ -1,9 +1,9 @@
 package com.shynieke.statues.blocks.statues;
 
 import com.google.common.collect.Maps;
+import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.recipes.StatueLootList;
-import com.shynieke.statues.tiles.StatueBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;

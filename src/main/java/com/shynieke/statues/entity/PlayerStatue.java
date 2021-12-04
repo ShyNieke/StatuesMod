@@ -6,7 +6,7 @@ import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueSerializers;
 import com.shynieke.statues.packets.PlayerStatueScreenMessage;
 import com.shynieke.statues.packets.StatuesNetworking;
-import com.shynieke.statues.tiles.PlayerBlockEntity;
+import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;

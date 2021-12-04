@@ -1,8 +1,8 @@
 package com.shynieke.statues.blocks.statues.fish;
 
+import com.shynieke.statues.blockentities.StatueBlockEntity;
+import com.shynieke.statues.blockentities.TropicalFishBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.tiles.StatueBlockEntity;
-import com.shynieke.statues.tiles.TropicalFishBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;

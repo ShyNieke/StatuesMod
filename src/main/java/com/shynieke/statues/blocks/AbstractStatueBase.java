@@ -1,8 +1,8 @@
 package com.shynieke.statues.blocks;
 
+import com.shynieke.statues.blockentities.AbstractStatueBlockEntity;
+import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.init.StatueBlockEntities;
-import com.shynieke.statues.tiles.AbstractStatueBlockEntity;
-import com.shynieke.statues.tiles.StatueBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
