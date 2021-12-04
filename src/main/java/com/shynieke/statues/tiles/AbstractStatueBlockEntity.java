@@ -43,12 +43,16 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 
 	@Override
 	public CompoundTag save(CompoundTag compound) {
-		super.save(compound);
+		saveAdditional(compound);
+		return super.save(compound);
+	}
+
+	@Override
+	public void saveAdditional(CompoundTag compound) {
+		super.saveAdditional(compound);
 		compound.putInt("StatueCooldown", cooldown);
 		compound.putInt("StatueMaxcooldown", cooldownMax);
 		compound.putBoolean("StatueAble", statueAble);
-
-		return this.saveToNbt(compound);
 	}
 
 	@Override

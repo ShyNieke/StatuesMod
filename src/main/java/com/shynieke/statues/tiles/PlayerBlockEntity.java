@@ -77,16 +77,21 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 
     @Override
     public CompoundTag save(CompoundTag compound) {
-        super.save(compound);
+        saveAdditional(compound);
+        return super.save(compound);
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         if (this.playerProfile != null) {
-            CompoundTag compoundnbt = new CompoundTag();
-            NbtUtils.writeGameProfile(compoundnbt, this.playerProfile);
-            compound.put("PlayerProfile", compoundnbt);
+            CompoundTag tag = new CompoundTag();
+            NbtUtils.writeGameProfile(tag, this.playerProfile);
+            compound.put("PlayerProfile", tag);
         }
         compound.putBoolean("comparatorApplied", comparatorApplied);
         compound.putBoolean("OnlineChecking", onlineChecking);
         compound.putInt("checkerCooldown", checkerCooldown);
-        return compound;
     }
 
     @Override

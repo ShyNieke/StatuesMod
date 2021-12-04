@@ -23,11 +23,10 @@ public class TropicalFishBlockEntity extends StatueBlockEntity {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
+    public void saveAdditional(CompoundTag compound) {
+        super.saveAdditional(compound);
         compound.putInt("MainColor", MAIN_COLOR);
         compound.putInt("SecondaryColor", SECONDARY_COLOR);
-
-        return super.save(compound);
     }
 
     public void scrambleColors() {
