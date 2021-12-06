@@ -12,6 +12,7 @@ import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
@@ -28,25 +29,10 @@ public class PlayerTileInventoryRenderer extends BlockEntityWithoutLevelRenderer
     private StatuePlayerTileModel model;
     private StatuePlayerTileModel slimModel;
 
-    public PlayerTileInventoryRenderer() {
-        super(null, null);
-        Minecraft minecraft = Minecraft.getInstance();
-        if(minecraft != null) {
-            ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
-            if (resourceManager instanceof ReloadableResourceManager) {
-                ((ReloadableResourceManager) resourceManager).registerReloadListener(this);
-            }
-        }
-    }
-
-    @Override
-    public void onResourceManagerReload(ResourceManager manager) {
-        EntityModelSet modelSet = Minecraft.getInstance().getEntityModels();
-        modelSet.onResourceManagerReload(manager);
-        if(modelSet != null) {
-            this.model = new StatuePlayerTileModel(modelSet.bakeLayer(ClientHandler.PLAYER_STATUE), false);
-            this.slimModel = new StatuePlayerTileModel(modelSet.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
-        }
+    public PlayerTileInventoryRenderer(BlockEntityRendererProvider.Context context) {
+        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+        this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
+        this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
     }
 
     @Override

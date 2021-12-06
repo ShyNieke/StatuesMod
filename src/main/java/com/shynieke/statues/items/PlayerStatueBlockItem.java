@@ -1,7 +1,9 @@
 package com.shynieke.statues.items;
 
 import com.shynieke.statues.client.render.PlayerTileInventoryRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.IItemRenderProperties;
 
@@ -16,11 +18,14 @@ public class PlayerStatueBlockItem extends StatueBlockItem {
 	@Override
 	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
 		consumer.accept(new IItemRenderProperties() {
-			final BlockEntityWithoutLevelRenderer renderer = new PlayerTileInventoryRenderer();
-
 			@Override
 			public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
-				return renderer;
+				return new PlayerTileInventoryRenderer(new BlockEntityRendererProvider.Context(
+						Minecraft.getInstance().getBlockEntityRenderDispatcher(),
+						Minecraft.getInstance().getBlockRenderer(),
+						Minecraft.getInstance().getEntityModels(),
+						Minecraft.getInstance().font
+				));
 			}
 		});
 	}
