@@ -52,6 +52,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -141,6 +142,16 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			return getStatueWithName(level, pos, state);
 		} else {
 			return new ItemStack(state.getBlock());
+		}
+	}
+
+	@Override
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+		BlockEntity blockEntity = level.getBlockEntity(pos);
+		if (blockEntity instanceof PlayerBlockEntity) {
+			return getStatueWithName(level, pos, state);
+		} else {
+			return super.getCloneItemStack(state, target, level, pos, player);
 		}
 	}
 
