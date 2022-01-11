@@ -6,7 +6,7 @@
 Expanding the idea of OpenBlocks Trophies.
 
 ## License ##
-* Statues is licensed under the MIT License
+* Statues is licensed under the MIT License (The textures are All Rights Reserved)
   - (c) 2021 ShyNieke
   - [![License](https://img.shields.io/badge/License-MIT-red.svg?style=flat)](http://opensource.org/licenses/MIT)
 
