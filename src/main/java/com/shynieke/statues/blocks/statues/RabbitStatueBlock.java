@@ -27,9 +27,9 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
-		tile.summonMob(getKillerRabbit(worldIn));
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
+		blockEntity.summonMob(getKillerRabbit(worldIn));
 	}
 
 	@Override

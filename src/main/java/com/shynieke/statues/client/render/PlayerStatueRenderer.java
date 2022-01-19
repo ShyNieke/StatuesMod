@@ -82,16 +82,16 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
         return playerStatue.isCustomNameVisible();
     }
 
-    protected void setupRotations(PlayerStatue playerStatue, PoseStack matrixStackIn, float ageInTicks, float rotationYaw, float partialTicks) {
-        matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotationYaw));
+    protected void setupRotations(PlayerStatue playerStatue, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotationYaw));
         float f = (float)(playerStatue.level.getGameTime() - playerStatue.punchCooldown) + partialTicks;
         if (f < 5.0F) {
-            matrixStackIn.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(f / 1.5F * (float)Math.PI) * 3.0F));
+            poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(f / 1.5F * (float)Math.PI) * 3.0F));
         }
     }
 
-    protected void scale(PlayerStatue playerStatue, PoseStack matrixStackIn, float partialTickTime) {
+    protected void scale(PlayerStatue playerStatue, PoseStack poseStack, float partialTickTime) {
         float f = 0.9375F;
-        matrixStackIn.scale(f, f, f);
+        poseStack.scale(f, f, f);
     }
 }

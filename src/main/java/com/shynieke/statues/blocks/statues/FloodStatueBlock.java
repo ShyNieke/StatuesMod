@@ -33,11 +33,11 @@ public class FloodStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		Vec3 hitPos = result.getLocation();
 
-		tile.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
-		tile.floodBehavior(playerIn, pos, handIn, (float)hitPos.x, (float)hitPos.y, (float)hitPos.z);
+		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
+		blockEntity.floodBehavior(playerIn, pos, handIn, (float)hitPos.x, (float)hitPos.y, (float)hitPos.z);
 	}
 
 	@Override

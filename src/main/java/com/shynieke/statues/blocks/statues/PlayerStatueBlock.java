@@ -158,10 +158,10 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	private ItemStack getStatueWithName(BlockGetter level, BlockPos pos, BlockState state) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (blockEntity instanceof PlayerBlockEntity) {
-			PlayerBlockEntity playerTile = (PlayerBlockEntity)blockEntity;
+			PlayerBlockEntity playerBlockEntity = (PlayerBlockEntity)blockEntity;
 			ItemStack stack = new ItemStack(state.getBlock());
 
-			GameProfile profile = playerTile.getPlayerProfile();
+			GameProfile profile = playerBlockEntity.getPlayerProfile();
 			if (profile != null) {
 				CompoundTag tag = new CompoundTag();
 
@@ -174,7 +174,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				stack.setTag(tag);
 			}
 
-			return stack.setHoverName(playerTile.getName());
+			return stack.setHoverName(playerBlockEntity.getName());
 		} else {
 			return new ItemStack(state.getBlock());
 		}
@@ -185,7 +185,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		super.setPlacedBy(worldIn, pos, state.setValue(ONLINE, false), placer, stack);
 
 		if(!worldIn.isClientSide && getBE(worldIn, pos) != null) {
-			PlayerBlockEntity tile = getBE(worldIn, pos);
+			PlayerBlockEntity playerBlockEntity = getBE(worldIn, pos);
 			if(stack.hasCustomHoverName()) {
 				String stackName = stack.getHoverName().getContents();
 				boolean spaceFlag = stackName.contains(" ");
@@ -204,14 +204,14 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						}
 					}
 
-					tile.setPlayerProfile(newProfile);
+					playerBlockEntity.setPlayerProfile(newProfile);
 				}
 			} else {
 				if(placer instanceof Player) {
 					Player player = (Player) placer;
-					tile.setPlayerProfile(player.getGameProfile());
+					playerBlockEntity.setPlayerProfile(player.getGameProfile());
 				} else {
-					tile.setPlayerProfile(new GameProfile((UUID)null, "steve"));
+					playerBlockEntity.setPlayerProfile(new GameProfile((UUID)null, "steve"));
 				}
 			}
 		}
@@ -270,14 +270,14 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult result) {
 		ItemStack stack = playerIn.getItemInHand(hand);
 		GameProfile tileProfile = getBE(level, pos).getPlayerProfile();
-		PlayerBlockEntity tile = getBE(level, pos);
-		if(!level.isClientSide && tile != null && tileProfile != null) {
+		PlayerBlockEntity playerBlockEntity = getBE(level, pos);
+		if(!level.isClientSide && playerBlockEntity != null && tileProfile != null) {
 			String playerName = tileProfile.getName();
 			boolean onlineFlag = level.getPlayerByUUID(tileProfile.getId()) != null;
 
 			if(playerIn.isShiftKeyDown()) {
-				if(tile.getComparatorApplied()) {
-					tile.setComparatorApplied(false);
+				if(playerBlockEntity.getComparatorApplied()) {
+					playerBlockEntity.setComparatorApplied(false);
 					ItemStack comparatorStack = new ItemStack(Items.COMPARATOR);
 					if(!playerIn.addItem(comparatorStack)) {
 						level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
@@ -320,25 +320,25 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						return InteractionResult.SUCCESS;
 					}
 					if(stack.getItem() == Items.COMPARATOR) {
-						if(!tile.getComparatorApplied()) {
+						if(!playerBlockEntity.getComparatorApplied()) {
 							if(!playerIn.getAbilities().instabuild) {
 								stack.shrink(1);
 							}
-							tile.setComparatorApplied(true);
-							tile.updateOnline();
+							playerBlockEntity.setComparatorApplied(true);
+							playerBlockEntity.updateOnline();
 							return InteractionResult.SUCCESS;
 						}
 					}
 					if(stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
 						if (level instanceof ServerLevel) {
 							ServerLevel serverworld = (ServerLevel) level;
-							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), tile.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
+							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), playerBlockEntity.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
 							if (playerStatueEntity == null) {
 								return InteractionResult.FAIL;
 							}
 							serverworld.addFreshEntityWithPassengers(playerStatueEntity);
 							float f = (float) Mth.floor((Mth.wrapDegrees(playerIn.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
-							playerStatueEntity.setGameProfile(tile.getPlayerProfile());
+							playerStatueEntity.setGameProfile(playerBlockEntity.getPlayerProfile());
 							playerStatueEntity.moveTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
 							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.random);
 							level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());

@@ -127,17 +127,17 @@ public class PlayerPoseScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-        this.renderBackground(matrixStack);
+    public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+        this.renderBackground(poseStack);
 
         // Draw gui title
-        drawCenteredString(matrixStack, this.font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)), this.width / 2, 20, 0xFFFFFF);
+        drawCenteredString(poseStack, this.font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)), this.width / 2, 20, 0xFFFFFF);
 
         // Draw textboxes
-        this.rotationTextField.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.YOffsetTextField.render(matrixStack, mouseX, mouseY, partialTicks);
+        this.rotationTextField.render(poseStack, mouseX, mouseY, partialTicks);
+        this.YOffsetTextField.render(poseStack, mouseX, mouseY, partialTicks);
         for (NumberFieldBox textField : this.poseTextFields)
-            textField.render(matrixStack, mouseX, mouseY, partialTicks);
+            textField.render(poseStack, mouseX, mouseY, partialTicks);
 
         int offsetY = 50;
 
@@ -146,23 +146,23 @@ public class PlayerPoseScreen extends Screen {
         for (int i = 0; i < this.buttonLabels.length; i++) {
             int x = offsetX;
             int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-            drawString(matrixStack, this.font, this.buttonLabels[i], x, y, 0xA0A0A0);
+            drawString(poseStack, this.font, this.buttonLabels[i], x, y, 0xA0A0A0);
         }
 
         // right column labels
         offsetX = this.width - 20 - 100;
         // x, y, z
-        drawString(matrixStack, this.font, "X", offsetX, 37, 0xA0A0A0);
-        drawString(matrixStack, this.font, "Y", offsetX + (35), 37, 0xA0A0A0);
-        drawString(matrixStack, this.font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0);
+        drawString(poseStack, this.font, "X", offsetX, 37, 0xA0A0A0);
+        drawString(poseStack, this.font, "Y", offsetX + (35), 37, 0xA0A0A0);
+        drawString(poseStack, this.font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0);
         // pose textboxes
         for (int i = 0; i < this.sliderLabels.length; i++) {
             int x = offsetX - this.font.width(this.sliderLabels[i]) - 10;
             int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-            drawString(matrixStack, this.font, this.sliderLabels[i], x, y, 0xA0A0A0);
+            drawString(poseStack, this.font, this.sliderLabels[i], x, y, 0xA0A0A0);
         }
 
-        super.render(matrixStack, mouseX, mouseY, partialTicks);
+        super.render(poseStack, mouseX, mouseY, partialTicks);
     }
 
     @Override

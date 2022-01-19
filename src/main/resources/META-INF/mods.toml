@@ -15,6 +15,12 @@ Just a little functional decoration.
 [[dependencies.statues]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.8,1.19)"
+versionRange="[1.18.1,1.19)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.statues]]
+modId="forge"
+mandatory=true
+versionRange="[39.0.45,)"
 ordering="NONE"
 side="BOTH"

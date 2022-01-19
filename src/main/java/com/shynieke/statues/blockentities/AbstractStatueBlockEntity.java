@@ -42,12 +42,6 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public CompoundTag save(CompoundTag compound) {
-		saveAdditional(compound);
-		return super.save(compound);
-	}
-
-	@Override
 	public void saveAdditional(CompoundTag compound) {
 		super.saveAdditional(compound);
 		compound.putInt("StatueCooldown", cooldown);
@@ -65,7 +59,16 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 
 	@Override
 	public CompoundTag getUpdateTag() {
-		return this.save(new CompoundTag());
+		CompoundTag nbt = new CompoundTag();
+		this.saveAdditional(nbt);
+		return nbt;
+	}
+
+	@Override
+	public CompoundTag getTileData() {
+		CompoundTag nbt = new CompoundTag();
+		this.saveAdditional(nbt);
+		return nbt;
 	}
 
 	@Nullable
@@ -169,6 +172,5 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 				}
 			}
 		}
-
 	}
 }

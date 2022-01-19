@@ -52,8 +52,8 @@ public class FishStatueBlock extends AbstractStatueBase {
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
         ItemStack stack = playerIn.getItemInHand(InteractionHand.MAIN_HAND);
         if(stack.getItem() == Items.WET_SPONGE) {
-            TropicalFishBlockEntity tile = getFishTE(level, pos);
-            tile.scrambleColors();
+            TropicalFishBlockEntity fishBlockEntity = getFishTE(level, pos);
+            fishBlockEntity.scrambleColors();
             level.sendBlockUpdated(pos, state, state, 6);
             level.playSound(null, pos, SoundEvents.SLIME_SQUISH_SMALL, SoundSource.NEUTRAL, 1F, 1.0F);
             if(!playerIn.getAbilities().instabuild) {
@@ -68,7 +68,7 @@ public class FishStatueBlock extends AbstractStatueBase {
     }
 
     @Override
-    public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+    public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
         //TODO: Fish stuff? What should it do.
     }
 
@@ -99,18 +99,18 @@ public class FishStatueBlock extends AbstractStatueBase {
     @Override
     public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
         super.setPlacedBy(worldIn, pos, state, placer, stack);
-        TropicalFishBlockEntity tile = getFishTE(worldIn, pos);
-        if(tile != null) {
-            tile.scrambleColors();
+        TropicalFishBlockEntity fishBlockEntity = getFishTE(worldIn, pos);
+        if(fishBlockEntity != null) {
+            fishBlockEntity.scrambleColors();
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static int getColor(BlockState state, BlockGetter world, BlockPos pos, int tintIndex) {
         if(pos != null) {
-            BlockEntity tile = world.getBlockEntity(pos);
-            if(tile instanceof TropicalFishBlockEntity fishTile) {
-                return tintIndex == 1 ? fromColor(fishTile.getMainColor()) : tintIndex == 2 ? fromColor(fishTile.getSecondaryColor()) : -1;
+            BlockEntity blockEntity = world.getBlockEntity(pos);
+            if(blockEntity instanceof TropicalFishBlockEntity tropicalFishBlockEntity) {
+                return tintIndex == 1 ? fromColor(tropicalFishBlockEntity.getMainColor()) : tintIndex == 2 ? fromColor(tropicalFishBlockEntity.getSecondaryColor()) : -1;
             }
         }
         return -1;

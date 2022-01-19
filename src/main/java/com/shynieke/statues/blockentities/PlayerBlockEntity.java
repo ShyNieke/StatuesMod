@@ -76,12 +76,6 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
     }
 
     @Override
-    public CompoundTag save(CompoundTag compound) {
-        saveAdditional(compound);
-        return super.save(compound);
-    }
-
-    @Override
     public void saveAdditional(CompoundTag compound) {
         super.saveAdditional(compound);
         if (this.playerProfile != null) {
@@ -105,16 +99,24 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
         super.handleUpdateTag(tag);
     }
 
+    @Override
+    public CompoundTag getUpdateTag() {
+        CompoundTag nbt = new CompoundTag();
+        this.saveAdditional(nbt);
+        return nbt;
+    }
+
+    @Override
+    public CompoundTag getTileData() {
+        CompoundTag nbt = new CompoundTag();
+        this.saveAdditional(nbt);
+        return nbt;
+    }
+
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
-    }
-
-    @Override
-    public CompoundTag getUpdateTag()
-    {
-        return this.save(new CompoundTag());
     }
 
     @Override

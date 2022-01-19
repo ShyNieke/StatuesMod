@@ -48,10 +48,12 @@ public class PlayerStatueSpawnItem extends Item {
             EntityType<?> type = StatueRegistry.PLAYER_STATUE_ENTITY.get();
             if (type.spawn((ServerLevel)level, stack, context.getPlayer(), relativePos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, relativePos) && direction == Direction.UP) instanceof PlayerStatue playerStatue) {
                 applyRandomRotations(playerStatue, level.random);
-                if(context.getPlayer() != null) {
-                    playerStatue.setGameProfile(context.getPlayer().getGameProfile());
-                } else {
-                    playerStatue.setGameProfile(new GameProfile((UUID) null, "steve"));
+                if(!stack.hasCustomHoverName()) {
+                    if(context.getPlayer() != null) {
+                        playerStatue.setGameProfile(context.getPlayer().getGameProfile());
+                    } else {
+                        playerStatue.setGameProfile(new GameProfile((UUID) null, "steve"));
+                    }
                 }
                 stack.shrink(1);
                 level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, pos);

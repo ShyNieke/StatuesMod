@@ -28,12 +28,12 @@ public class KingCluckStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		tile.giveItem(StatueLootList.getLootInfo("king_cluck").getLoot(), playerIn);
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+		blockEntity.giveItem(StatueLootList.getLootInfo("king_cluck").getLoot(), playerIn);
 
 		Chicken cluck = new Chicken(EntityType.CHICKEN, worldIn);
 		cluck.setCustomName(new TextComponent("King Cluck"));
-		tile.summonMob(cluck);
+		blockEntity.summonMob(cluck);
 	}
 
 	@Override

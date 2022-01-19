@@ -60,7 +60,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		return getter.getBlockEntity(pos) instanceof StatueBlockEntity ? (StatueBlockEntity) getter.getBlockEntity(pos): null;
 	}
 
-	public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 
 	}
 
@@ -148,8 +148,8 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	public boolean canPlaySound(Level worldIn, BlockPos pos, BlockState state) {
-		BlockEntity tile = worldIn.getBlockEntity(pos);
-		boolean flag = state.getValue(INTERACTIVE) && (tile instanceof StatueBlockEntity && ((StatueBlockEntity) tile).makesSounds());
+		BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+		boolean flag = state.getValue(INTERACTIVE) && (blockEntity instanceof StatueBlockEntity statueBlockEntity && statueBlockEntity.makesSounds());
 		boolean flag2 = worldIn.getBlockState(pos.below()).getBlock() instanceof NoteBlock;
 		return flag || flag2;
 	}

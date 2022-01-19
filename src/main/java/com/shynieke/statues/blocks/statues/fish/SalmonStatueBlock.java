@@ -29,7 +29,7 @@ public class SalmonStatueBlock extends FishStatueBlock {
     }
 
     @Override
-    public void executeStatueBehavior(StatueBlockEntity tile, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+    public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
         //TODO: Fish stuff? What should it do.
     }
 
