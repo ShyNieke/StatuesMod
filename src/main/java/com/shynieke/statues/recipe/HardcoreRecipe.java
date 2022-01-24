@@ -44,7 +44,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 
 	@Override
 	public boolean matches(CraftingContainer container, Level level) {
-		return super.matches(container, level) && level.getLevelData().isHardcore();
+		return super.matches(container, level) && level != null && level.getLevelData().isHardcore();
 	}
 
 	@Override
