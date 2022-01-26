@@ -1,6 +1,5 @@
 package com.shynieke.statues.handlers;
 
-import com.shynieke.statues.Statues;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.blocks.statues.SheepStatueBlock;
 import com.shynieke.statues.config.StatuesConfig;
@@ -240,7 +239,6 @@ public class DropHandler {
     public void dropLootStatues(Entity entity, ItemStack itemStackToDrop, Entity source, LivingDropsEvent event) {
         double random_drop = Math.random();
         double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
-        Statues.LOGGER.info(itemStackToDrop);
         BlockPos entityPos = entity.blockPosition();
 
         switch (StatuesConfig.COMMON.statueKillSource.get()) {
