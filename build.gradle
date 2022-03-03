@@ -8,10 +8,11 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
+//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+plugins {
+    id 'maven-publish'
+}
 apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
-apply plugin: 'maven-publish'
-apply plugin: 'eclipse'
 
 version = "${version}"
 group = 'com.shynieke.statues' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -95,8 +96,8 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    implementation fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
-    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${version_curios}")
+    implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
+    implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

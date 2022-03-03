@@ -43,7 +43,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	@SuppressWarnings("deprecation")
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		if(!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+		if (!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
 			if (canPlaySound(level, pos, state)) {
 				level.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F, getPitch());
 			}
@@ -57,7 +57,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	public StatueBlockEntity getTE(BlockGetter getter, BlockPos pos) {
-		return getter.getBlockEntity(pos) instanceof StatueBlockEntity ? (StatueBlockEntity) getter.getBlockEntity(pos): null;
+		return getter.getBlockEntity(pos) instanceof StatueBlockEntity ? (StatueBlockEntity) getter.getBlockEntity(pos) : null;
 	}
 
 	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
@@ -92,7 +92,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	public ItemStack getCloneItemStack(BlockGetter getter, BlockPos pos, BlockState state) {
 		ItemStack itemstack = super.getCloneItemStack(getter, pos, state);
 		StatueBlockEntity statueBlockEntity = getTE(getter, pos);
-		if(statueBlockEntity != null && state.getValue(INTERACTIVE)) {
+		if (statueBlockEntity != null && state.getValue(INTERACTIVE)) {
 			CompoundTag compoundnbt = statueBlockEntity.saveToNbt(new CompoundTag());
 			if (!compoundnbt.isEmpty()) {
 				itemstack.addTagElement("BlockEntityTag", compoundnbt);
@@ -121,7 +121,9 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		}
 	}
 
-	public boolean canBeUpgraded() { return true; }
+	public boolean canBeUpgraded() {
+		return true;
+	}
 
 	public boolean isHiddenStatue() {
 		return false;

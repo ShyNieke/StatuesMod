@@ -23,99 +23,99 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PlayerBlockEntityInventoryRenderer extends BlockEntityWithoutLevelRenderer {
-    private StatuePlayerTileModel model;
-    private StatuePlayerTileModel slimModel;
+	private StatuePlayerTileModel model;
+	private StatuePlayerTileModel slimModel;
 
-    public PlayerBlockEntityInventoryRenderer(BlockEntityRendererProvider.Context context) {
-        super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
-        this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
-        this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
-    }
+	public PlayerBlockEntityInventoryRenderer(BlockEntityRendererProvider.Context context) {
+		super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
+		this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
+		this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
+	}
 
-    @Override
-    public void renderByItem(ItemStack stack, TransformType transformType, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
-        renderPlayerItem(stack, poseStack, bufferSource, combinedLight);
-    }
+	@Override
+	public void renderByItem(ItemStack stack, TransformType transformType, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay) {
+		renderPlayerItem(stack, poseStack, bufferSource, combinedLight);
+	}
 
-    private static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
+	private static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
 
-    public void renderPlayerItem(ItemStack stack, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
-        poseStack.pushPose();
-        if(stack != null) {
-            GameProfile gameprofile = null;
+	public void renderPlayerItem(ItemStack stack, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
+		poseStack.pushPose();
+		if (stack != null) {
+			GameProfile gameprofile = null;
 
-            if(stack.hasCustomHoverName()) {
-                String stackName = stack.getHoverName().getContents().toLowerCase();
-                boolean validFlag = !stackName.isEmpty() && !stackName.contains(" ");
+			if (stack.hasCustomHoverName()) {
+				String stackName = stack.getHoverName().getContents().toLowerCase();
+				boolean validFlag = !stackName.isEmpty() && !stackName.contains(" ");
 
-                if (validFlag) {
-                    if (GAMEPROFILE_CACHE.containsKey(stackName))
-                        gameprofile = GAMEPROFILE_CACHE.get(stackName);
+				if (validFlag) {
+					if (GAMEPROFILE_CACHE.containsKey(stackName))
+						gameprofile = GAMEPROFILE_CACHE.get(stackName);
 
-                    if (stack.hasTag() && gameprofile == null) {
-                        CompoundTag compoundtag = stack.getTag();
-                        if (compoundtag.contains("PlayerProfile", 10)) {
-                            GameProfile foundProfile = NbtUtils.readGameProfile(compoundtag.getCompound("PlayerProfile"));
-                            if(foundProfile != null) {
-                                GAMEPROFILE_CACHE.put(foundProfile.getName().toLowerCase(), foundProfile);
-                            }
-                            if(foundProfile.getName().equalsIgnoreCase(stackName)) {
-                                gameprofile = foundProfile;
-                            }
-                        } else if (compoundtag.contains("PlayerProfile", 8) && !StringUtils.isBlank(compoundtag.getString("PlayerProfile"))) {
-                            GameProfile gameprofile1 = new GameProfile((UUID)null, compoundtag.getString("PlayerProfile"));
-                            compoundtag.remove("PlayerProfile");
-                            PlayerBlockEntity.updateGameprofile(gameprofile1, (profile) -> {
-                                compoundtag.put("PlayerProfile", NbtUtils.writeGameProfile(new CompoundTag(), profile));
-                                if(profile != null) {
-                                    GAMEPROFILE_CACHE.put(profile.getName().toLowerCase(), profile);
-                                }
-                            });
-                            gameprofile = GAMEPROFILE_CACHE.get(stackName);
-                        }
-                    }
+					if (stack.hasTag() && gameprofile == null) {
+						CompoundTag compoundtag = stack.getTag();
+						if (compoundtag.contains("PlayerProfile", 10)) {
+							GameProfile foundProfile = NbtUtils.readGameProfile(compoundtag.getCompound("PlayerProfile"));
+							if (foundProfile != null) {
+								GAMEPROFILE_CACHE.put(foundProfile.getName().toLowerCase(), foundProfile);
+							}
+							if (foundProfile.getName().equalsIgnoreCase(stackName)) {
+								gameprofile = foundProfile;
+							}
+						} else if (compoundtag.contains("PlayerProfile", 8) && !StringUtils.isBlank(compoundtag.getString("PlayerProfile"))) {
+							GameProfile gameprofile1 = new GameProfile((UUID) null, compoundtag.getString("PlayerProfile"));
+							compoundtag.remove("PlayerProfile");
+							PlayerBlockEntity.updateGameprofile(gameprofile1, (profile) -> {
+								compoundtag.put("PlayerProfile", NbtUtils.writeGameProfile(new CompoundTag(), profile));
+								if (profile != null) {
+									GAMEPROFILE_CACHE.put(profile.getName().toLowerCase(), profile);
+								}
+							});
+							gameprofile = GAMEPROFILE_CACHE.get(stackName);
+						}
+					}
 
-                    if(gameprofile == null) {
-                        GameProfile gameprofile1 = new GameProfile((UUID)null, stackName);
-                        PlayerBlockEntity.updateGameprofile(gameprofile1, (profile) -> {
-                            if(profile != null) {
-                                GAMEPROFILE_CACHE.put(profile.getName().toLowerCase(), profile);
-                            }
-                        });
-                    }
-                } else {
-                    if (GAMEPROFILE_CACHE.containsKey("steve"))
-                        gameprofile = GAMEPROFILE_CACHE.get("steve");
+					if (gameprofile == null) {
+						GameProfile gameprofile1 = new GameProfile((UUID) null, stackName);
+						PlayerBlockEntity.updateGameprofile(gameprofile1, (profile) -> {
+							if (profile != null) {
+								GAMEPROFILE_CACHE.put(profile.getName().toLowerCase(), profile);
+							}
+						});
+					}
+				} else {
+					if (GAMEPROFILE_CACHE.containsKey("steve"))
+						gameprofile = GAMEPROFILE_CACHE.get("steve");
 
-                    if(gameprofile == null) {
-                        GameProfile gameprofile1 = new GameProfile((UUID)null, "steve");
-                        PlayerBlockEntity.updateGameprofile(gameprofile1, (profile) -> {
-                            if(profile != null) {
-                                GAMEPROFILE_CACHE.put(profile.getName(), profile);
-                            }
-                        });
-                    }
-                }
-            }
+					if (gameprofile == null) {
+						GameProfile gameprofile1 = new GameProfile((UUID) null, "steve");
+						PlayerBlockEntity.updateGameprofile(gameprofile1, (profile) -> {
+							if (profile != null) {
+								GAMEPROFILE_CACHE.put(profile.getName(), profile);
+							}
+						});
+					}
+				}
+			}
 
-            poseStack.translate(0.5D, 1.4D, 0.5D);
-            poseStack.scale(-1.0F, -1.0F, 1.0F);
-            renderItem(gameprofile, poseStack, bufferSource, combinedLight);
-        }
-        poseStack.popPose();
-    }
+			poseStack.translate(0.5D, 1.4D, 0.5D);
+			poseStack.scale(-1.0F, -1.0F, 1.0F);
+			renderItem(gameprofile, poseStack, bufferSource, combinedLight);
+		}
+		poseStack.popPose();
+	}
 
-    public void renderItem(GameProfile gameprofile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
-        boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerTileRenderer.getRenderType(gameprofile));
-        if(flag) {
-            if(slimModel != null) {
-                slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-            }
-        } else {
-            if(model != null) {
-                model.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-            }
-        }
-    }
+	public void renderItem(GameProfile gameprofile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
+		boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
+		VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerTileRenderer.getRenderType(gameprofile));
+		if (flag) {
+			if (slimModel != null) {
+				slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+			}
+		} else {
+			if (model != null) {
+				model.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+			}
+		}
+	}
 }

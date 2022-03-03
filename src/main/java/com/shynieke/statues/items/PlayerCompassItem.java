@@ -21,26 +21,26 @@ import java.util.List;
 
 public class PlayerCompassItem extends Item {
 
-    public PlayerCompassItem(Item.Properties builder) {
-        super(builder.tab(StatueTabs.STATUES_ITEMS));
-    }
+	public PlayerCompassItem(Item.Properties builder) {
+		super(builder.tab(StatueTabs.STATUES_ITEMS));
+	}
 
-    @Override
-    public InteractionResult useOn(UseOnContext context) {
-        Level level = context.getLevel();
-        BlockPos pos = context.getClickedPos();
-        Player playerIn = context.getPlayer();
-        if(!level.isClientSide && playerIn != null && playerIn.isShiftKeyDown() && level.getBlockState(pos).getBlock() instanceof PlayerStatueBlock) {
-            playerIn.setItemInHand(context.getHand(), new ItemStack(Items.COMPASS));
-        }
-        return super.useOn(context);
-    }
+	@Override
+	public InteractionResult useOn(UseOnContext context) {
+		Level level = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+		Player playerIn = context.getPlayer();
+		if (!level.isClientSide && playerIn != null && playerIn.isShiftKeyDown() && level.getBlockState(pos).getBlock() instanceof PlayerStatueBlock) {
+			playerIn.setItemInHand(context.getHand(), new ItemStack(Items.COMPASS));
+		}
+		return super.useOn(context);
+	}
 
-    @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level reader, List<Component> tooltip, TooltipFlag flag) {
-        CompoundTag tag = stack.hasTag() ? stack.getTag() : new CompoundTag();
-        if (tag != null && !tag.getString("playerTracking").isEmpty()) {
-            tooltip.add(new TranslatableComponent("statues.last.known.location", tag.getString("playerTracking")).withStyle(ChatFormatting.GOLD));
-        }
-    }
+	@Override
+	public void appendHoverText(ItemStack stack, @Nullable Level reader, List<Component> tooltip, TooltipFlag flag) {
+		CompoundTag tag = stack.hasTag() ? stack.getTag() : new CompoundTag();
+		if (tag != null && !tag.getString("playerTracking").isEmpty()) {
+			tooltip.add(new TranslatableComponent("statues.last.known.location", tag.getString("playerTracking")).withStyle(ChatFormatting.GOLD));
+		}
+	}
 }

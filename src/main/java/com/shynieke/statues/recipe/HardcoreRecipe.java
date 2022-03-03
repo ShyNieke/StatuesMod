@@ -51,7 +51,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 	public ItemStack getResultItem() {
 		ItemStack resultStack = super.getResultItem();
 		CompoundTag display = resultStack.getOrCreateTagElement("display");
-		if(!display.contains("lore")) {
+		if (!display.contains("lore")) {
 			ListTag nbtTagList = new ListTag();
 			nbtTagList.add(StringTag.valueOf(Component.Serializer.toJson(
 					new TextComponent("Only craftable in Hardcore Mode").withStyle(ChatFormatting.DARK_PURPLE))));
@@ -71,8 +71,8 @@ public class HardcoreRecipe extends ShapedRecipe {
 		Set<String> set = Sets.newHashSet(p_44204_.keySet());
 		set.remove(" ");
 
-		for(int i = 0; i < p_44203_.length; ++i) {
-			for(int j = 0; j < p_44203_[i].length(); ++j) {
+		for (int i = 0; i < p_44203_.length; ++i) {
+			for (int j = 0; j < p_44203_[i].length(); ++j) {
 				String s = p_44203_[i].substring(j, j + 1);
 				Ingredient ingredient = p_44204_.get(s);
 				if (ingredient == null) {
@@ -98,7 +98,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 		int k = 0;
 		int l = 0;
 
-		for(int i1 = 0; i1 < p_44187_.length; ++i1) {
+		for (int i1 = 0; i1 < p_44187_.length; ++i1) {
 			String s = p_44187_[i1];
 			i = Math.min(i, firstNonSpace(s));
 			int j1 = lastNonSpace(s);
@@ -119,7 +119,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 		} else {
 			String[] astring = new String[p_44187_.length - l - k];
 
-			for(int k1 = 0; k1 < astring.length; ++k1) {
+			for (int k1 = 0; k1 < astring.length; ++k1) {
 				astring[k1] = p_44187_[k1 + k].substring(i, j + 1);
 			}
 
@@ -129,7 +129,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 
 	private static int firstNonSpace(String p_44185_) {
 		int i;
-		for(i = 0; i < p_44185_.length() && p_44185_.charAt(i) == ' '; ++i) {
+		for (i = 0; i < p_44185_.length() && p_44185_.charAt(i) == ' '; ++i) {
 		}
 
 		return i;
@@ -137,7 +137,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 
 	private static int lastNonSpace(String p_44201_) {
 		int i;
-		for(i = p_44201_.length() - 1; i >= 0 && p_44201_.charAt(i) == ' '; --i) {
+		for (i = p_44201_.length() - 1; i >= 0 && p_44201_.charAt(i) == ' '; --i) {
 		}
 
 		return i;
@@ -146,9 +146,9 @@ public class HardcoreRecipe extends ShapedRecipe {
 	static Map<String, Ingredient> keyFromJson(JsonObject jsonObject) {
 		Map<String, Ingredient> map = Maps.newHashMap();
 
-		for(Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+		for (Entry<String, JsonElement> entry : jsonObject.entrySet()) {
 			if (entry.getKey().length() != 1) {
-				throw new JsonSyntaxException("Invalid key entry: '" + (String)entry.getKey() + "' is an invalid symbol (must be 1 character only).");
+				throw new JsonSyntaxException("Invalid key entry: '" + (String) entry.getKey() + "' is an invalid symbol (must be 1 character only).");
 			}
 
 			if (" ".equals(entry.getKey())) {
@@ -169,7 +169,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 		} else if (astring.length == 0) {
 			throw new JsonSyntaxException("Invalid pattern: empty pattern not allowed");
 		} else {
-			for(int i = 0; i < astring.length; ++i) {
+			for (int i = 0; i < astring.length; ++i) {
 				String s = GsonHelper.convertToString(array.get(i), "pattern[" + i + "]");
 				if (s.length() > MAX_WIDTH) {
 					throw new JsonSyntaxException("Invalid pattern: too many columns, " + MAX_WIDTH + " is maximum");
@@ -205,7 +205,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 			String s = byteBuf.readUtf();
 			NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i * j, Ingredient.EMPTY);
 
-			for(int k = 0; k < nonnulllist.size(); ++k) {
+			for (int k = 0; k < nonnulllist.size(); ++k) {
 				nonnulllist.set(k, Ingredient.fromNetwork(byteBuf));
 			}
 
@@ -218,7 +218,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 			byteBuf.writeVarInt(recipe.getHeight());
 			byteBuf.writeUtf(recipe.getGroup());
 
-			for(Ingredient ingredient : recipe.getIngredients()) {
+			for (Ingredient ingredient : recipe.getIngredients()) {
 				ingredient.toNetwork(byteBuf);
 			}
 

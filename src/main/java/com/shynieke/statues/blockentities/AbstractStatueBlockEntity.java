@@ -161,12 +161,12 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	public static void serverTick(Level level, BlockPos pos, BlockState state, AbstractStatueBlockEntity blockEntity) {
-		if(state.getBlock() instanceof AbstractStatueBase && state.getValue(AbstractStatueBase.INTERACTIVE)) {
+		if (state.getBlock() instanceof AbstractStatueBase && state.getValue(AbstractStatueBase.INTERACTIVE)) {
 			if (!blockEntity.statueAble) {
 				blockEntity.cooldown++;
 				blockEntity.setChanged();
 
-				if(blockEntity.cooldown >= blockEntity.cooldownMax) {
+				if (blockEntity.cooldown >= blockEntity.cooldownMax) {
 					blockEntity.cooldown = 0;
 					blockEntity.setStatueAble(true);
 				}

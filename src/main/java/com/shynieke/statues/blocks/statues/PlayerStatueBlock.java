@@ -97,7 +97,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public void playerDestroy(Level worldIn, Player player, BlockPos pos, BlockState state, BlockEntity be, ItemStack stack) {
-		if (be instanceof PlayerBlockEntity blockEntity && ((Nameable)be).hasCustomName()) {
+		if (be instanceof PlayerBlockEntity blockEntity && ((Nameable) be).hasCustomName()) {
 			player.causeFoodExhaustion(0.005F);
 
 			if (worldIn.isClientSide)
@@ -107,7 +107,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				return;
 
 			ItemStack itemstack = new ItemStack(this);
-			itemstack.setHoverName(((Nameable)blockEntity).getName());
+			itemstack.setHoverName(((Nameable) blockEntity).getName());
 
 			if (blockEntity.getPlayerProfile() != null) {
 				CompoundTag stackTag = itemstack.getTag() != null ? itemstack.getTag() : new CompoundTag();
@@ -115,12 +115,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				NbtUtils.writeGameProfile(tag, blockEntity.getPlayerProfile());
 				stackTag.put("PlayerProfile", tag);
 				itemstack.setTag(stackTag);
-				itemstack.setHoverName(((Nameable)blockEntity).getName());
+				itemstack.setHoverName(((Nameable) blockEntity).getName());
 			}
 
 			popResource(worldIn, pos, itemstack);
 
-			if(blockEntity.getComparatorApplied()) {
+			if (blockEntity.getComparatorApplied()) {
 				popResource(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
 		} else {
@@ -158,7 +158,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	private ItemStack getStatueWithName(BlockGetter level, BlockPos pos, BlockState state) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (blockEntity instanceof PlayerBlockEntity) {
-			PlayerBlockEntity playerBlockEntity = (PlayerBlockEntity)blockEntity;
+			PlayerBlockEntity playerBlockEntity = (PlayerBlockEntity) blockEntity;
 			ItemStack stack = new ItemStack(state.getBlock());
 
 			GameProfile profile = playerBlockEntity.getPlayerProfile();
@@ -166,7 +166,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				CompoundTag tag = new CompoundTag();
 
 				if (!StringUtil.isNullOrEmpty(profile.getName())) {
-					GameProfile gameprofile = new GameProfile((UUID)null, profile.getName());
+					GameProfile gameprofile = new GameProfile((UUID) null, profile.getName());
 					PlayerBlockEntity.updateGameprofile(gameprofile, (newProfile) -> {
 						tag.put("PlayerProfile", NbtUtils.writeGameProfile(new CompoundTag(), newProfile));
 					});
@@ -184,21 +184,21 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(worldIn, pos, state.setValue(ONLINE, false), placer, stack);
 
-		if(!worldIn.isClientSide && getBE(worldIn, pos) != null) {
+		if (!worldIn.isClientSide && getBE(worldIn, pos) != null) {
 			PlayerBlockEntity playerBlockEntity = getBE(worldIn, pos);
-			if(stack.hasCustomHoverName()) {
+			if (stack.hasCustomHoverName()) {
 				String stackName = stack.getHoverName().getContents();
 				boolean spaceFlag = stackName.contains(" ");
 				boolean emptyFlag = stackName.isEmpty();
 
-				if(!spaceFlag && !emptyFlag) {
-					GameProfile newProfile = new GameProfile((UUID)null, stackName);
+				if (!spaceFlag && !emptyFlag) {
+					GameProfile newProfile = new GameProfile((UUID) null, stackName);
 
 					if (stack.hasTag() && stack.getTag() != null) {
 						CompoundTag tag = stack.getTag();
 						if (tag.contains("PlayerProfile")) {
 							GameProfile foundProfile = NbtUtils.readGameProfile(tag.getCompound("PlayerProfile"));
-							if(foundProfile != null && foundProfile.getName().equalsIgnoreCase(stackName)) {
+							if (foundProfile != null && foundProfile.getName().equalsIgnoreCase(stackName)) {
 								newProfile = foundProfile;
 							}
 						}
@@ -207,11 +207,11 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					playerBlockEntity.setPlayerProfile(newProfile);
 				}
 			} else {
-				if(placer instanceof Player) {
+				if (placer instanceof Player) {
 					Player player = (Player) placer;
 					playerBlockEntity.setPlayerProfile(player.getGameProfile());
 				} else {
-					playerBlockEntity.setPlayerProfile(new GameProfile((UUID)null, "steve"));
+					playerBlockEntity.setPlayerProfile(new GameProfile((UUID) null, "steve"));
 				}
 			}
 		}
@@ -219,19 +219,19 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		if(Screen.hasShiftDown()){
-			if(stack.hasTag()) {
+		if (Screen.hasShiftDown()) {
+			if (stack.hasTag()) {
 				CompoundTag tag = stack.getTag();
 				MutableComponent userComponent = new TextComponent("Username: ").withStyle(ChatFormatting.GOLD);
 				userComponent.append(stack.getHoverName().plainCopy().withStyle(ChatFormatting.WHITE));
 				tooltip.add(userComponent);
 
-				if(tag != null && tag.contains("PlayerProfile")) {
-					CompoundTag profileTag = (CompoundTag)tag.get("PlayerProfile");
-					if(profileTag != null) {
+				if (tag != null && tag.contains("PlayerProfile")) {
+					CompoundTag profileTag = (CompoundTag) tag.get("PlayerProfile");
+					if (profileTag != null) {
 						GameProfile gameprofile = NbtUtils.readGameProfile(profileTag);
 
-						if(gameprofile != null && gameprofile.isComplete()) {
+						if (gameprofile != null && gameprofile.isComplete()) {
 							MutableComponent UUIDComponent = new TextComponent("UUID: ").withStyle(ChatFormatting.GOLD);
 							UUIDComponent.append(new TextComponent(gameprofile.getId().toString()).withStyle(ChatFormatting.WHITE));
 							tooltip.add(UUIDComponent);
@@ -251,8 +251,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public boolean isSignalSource(BlockState state)
-	{
+	public boolean isSignalSource(BlockState state) {
 		return state.getValue(ONLINE);
 	}
 
@@ -271,37 +270,37 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		ItemStack stack = playerIn.getItemInHand(hand);
 		GameProfile tileProfile = getBE(level, pos).getPlayerProfile();
 		PlayerBlockEntity playerBlockEntity = getBE(level, pos);
-		if(!level.isClientSide && playerBlockEntity != null && tileProfile != null) {
+		if (!level.isClientSide && playerBlockEntity != null && tileProfile != null) {
 			String playerName = tileProfile.getName();
 			boolean onlineFlag = level.getPlayerByUUID(tileProfile.getId()) != null;
 
-			if(playerIn.isShiftKeyDown()) {
-				if(playerBlockEntity.getComparatorApplied()) {
+			if (playerIn.isShiftKeyDown()) {
+				if (playerBlockEntity.getComparatorApplied()) {
 					playerBlockEntity.setComparatorApplied(false);
 					ItemStack comparatorStack = new ItemStack(Items.COMPARATOR);
-					if(!playerIn.addItem(comparatorStack)) {
+					if (!playerIn.addItem(comparatorStack)) {
 						level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
 					}
 				}
 				return InteractionResult.SUCCESS;
 			} else {
-				if(StatuesConfig.COMMON.playerCompass.get()) {
-					if(stack.getItem() == Items.COMPASS || stack.getItem() == StatueRegistry.PLAYER_COMPASS.get()) {
+				if (StatuesConfig.COMMON.playerCompass.get()) {
+					if (stack.getItem() == Items.COMPASS || stack.getItem() == StatueRegistry.PLAYER_COMPASS.get()) {
 						boolean isPlayerCompass = stack.getItem() == StatueRegistry.PLAYER_COMPASS.get();
-						if(onlineFlag) {
+						if (onlineFlag) {
 							ItemStack playerCompass = isPlayerCompass ? stack : new ItemStack(StatueRegistry.PLAYER_COMPASS.get());
 							CompoundTag locationTag = new CompoundTag();
 
 							Player player = level.getPlayerByUUID(tileProfile.getId());
-							if(player != null && player.level.dimension().location().equals(playerIn.level.dimension().location())) {
+							if (player != null && player.level.dimension().location().equals(playerIn.level.dimension().location())) {
 								BlockPos playerPos = player.blockPosition();
 								locationTag.putLong("lastPlayerLocation", playerPos.asLong());
 								locationTag.putString("playerTracking", tileProfile.getName());
 
 								playerCompass.setTag(locationTag);
 
-								if(!isPlayerCompass) {
-									if(!playerIn.getAbilities().instabuild) {
+								if (!isPlayerCompass) {
+									if (!playerIn.getAbilities().instabuild) {
 										stack.shrink(1);
 									}
 									if (stack.isEmpty()) {
@@ -319,9 +318,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						}
 						return InteractionResult.SUCCESS;
 					}
-					if(stack.getItem() == Items.COMPARATOR) {
-						if(!playerBlockEntity.getComparatorApplied()) {
-							if(!playerIn.getAbilities().instabuild) {
+					if (stack.getItem() == Items.COMPARATOR) {
+						if (!playerBlockEntity.getComparatorApplied()) {
+							if (!playerIn.getAbilities().instabuild) {
 								stack.shrink(1);
 							}
 							playerBlockEntity.setComparatorApplied(true);
@@ -329,7 +328,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							return InteractionResult.SUCCESS;
 						}
 					}
-					if(stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
+					if (stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
 						if (level instanceof ServerLevel) {
 							ServerLevel serverworld = (ServerLevel) level;
 							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), playerBlockEntity.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
@@ -343,9 +342,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.random);
 							level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 							level.addFreshEntity(playerStatueEntity);
-							level.playSound((Player)null, playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundSource.BLOCKS, 0.75F, 0.8F);
+							level.playSound((Player) null, playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundSource.BLOCKS, 0.75F, 0.8F);
 
-							if(!playerIn.getAbilities().instabuild) {
+							if (!playerIn.getAbilities().instabuild) {
 								stack.shrink(1);
 							}
 						}

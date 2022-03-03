@@ -14,52 +14,52 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.List;
 
 public class FishHandler {
-    @SubscribeEvent
-    public void onItemFished(ItemFishedEvent event) {
-        Player player = event.getPlayer();
-        Level level = player.level;
-        if(!level.isClientSide){
-            ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EAGLE_RAY.get());
-            dropFishedStatue(itemStackToDrop, player, event);
-        }
-    }
+	@SubscribeEvent
+	public void onItemFished(ItemFishedEvent event) {
+		Player player = event.getPlayer();
+		Level level = player.level;
+		if (!level.isClientSide) {
+			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EAGLE_RAY.get());
+			dropFishedStatue(itemStackToDrop, player, event);
+		}
+	}
 
-    public void dropFishedStatue(ItemStack itemStackToDrop, Entity source, ItemFishedEvent event) {
-        double random_drop = Math.random();
-        double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
+	public void dropFishedStatue(ItemStack itemStackToDrop, Entity source, ItemFishedEvent event) {
+		double random_drop = Math.random();
+		double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
 
-        switch (StatuesConfig.COMMON.statueKillSource.get()) {
-            default:
-                if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
-                    ServerPlayer player = (ServerPlayer) source;
-                    List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
-                    if (!luckyPlayers.isEmpty()) {
-                        for (String luckyName : luckyPlayers) {
-                            String user = player.getName().getContents();
+		switch (StatuesConfig.COMMON.statueKillSource.get()) {
+			default:
+				if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
+					ServerPlayer player = (ServerPlayer) source;
+					List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
+					if (!luckyPlayers.isEmpty()) {
+						for (String luckyName : luckyPlayers) {
+							String user = player.getName().getContents();
 
-                            if (!luckyName.isEmpty() && user.equals(luckyName)) {
-                                default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;
-                            }
-                        }
-                    }
+							if (!luckyName.isEmpty() && user.equals(luckyName)) {
+								default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;
+							}
+						}
+					}
 
-                    if (random_drop <= default_drop_chance) {
-                        event.getDrops().add(itemStackToDrop);
-                    }
-                }
-                break;
-            case PLAYER_FAKEPLAYER:
-                if (source instanceof ServerPlayer) {
-                    if (random_drop <= default_drop_chance) {
-                        event.getDrops().add(itemStackToDrop);
-                    }
-                }
-                break;
-            case ALL:
-                if (random_drop <= default_drop_chance) {
-                    event.getDrops().add(itemStackToDrop);
-                }
-                break;
-        }
-    }
+					if (random_drop <= default_drop_chance) {
+						event.getDrops().add(itemStackToDrop);
+					}
+				}
+				break;
+			case PLAYER_FAKEPLAYER:
+				if (source instanceof ServerPlayer) {
+					if (random_drop <= default_drop_chance) {
+						event.getDrops().add(itemStackToDrop);
+					}
+				}
+				break;
+			case ALL:
+				if (random_drop <= default_drop_chance) {
+					event.getDrops().add(itemStackToDrop);
+				}
+				break;
+		}
+	}
 }

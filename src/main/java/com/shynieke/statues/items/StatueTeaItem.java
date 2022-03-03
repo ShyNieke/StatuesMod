@@ -13,31 +13,31 @@ import net.minecraft.world.level.Level;
 
 public class StatueTeaItem extends Item {
 
-    public StatueTeaItem(Properties builder, FoodProperties food) {
-        super(builder.food(food).stacksTo(8));
-    }
+	public StatueTeaItem(Properties builder, FoodProperties food) {
+		super(builder.food(food).stacksTo(8));
+	}
 
-    @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityIn) {
-        if(entityIn instanceof Player) {
-            Player playerIn = entityIn instanceof Player ? (Player)entityIn : null;
-            playerIn.eat(worldIn, stack);
+	@Override
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityIn) {
+		if (entityIn instanceof Player) {
+			Player playerIn = entityIn instanceof Player ? (Player) entityIn : null;
+			playerIn.eat(worldIn, stack);
 
-            if (playerIn instanceof ServerPlayer) {
-                CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer)playerIn, stack);
-            }
+			if (playerIn instanceof ServerPlayer) {
+				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) playerIn, stack);
+			}
 
-            playerIn.awardStat(Stats.ITEM_USED.get(this));
+			playerIn.awardStat(Stats.ITEM_USED.get(this));
 
-            if (!playerIn.getAbilities().instabuild) {
-                if (stack.isEmpty()) {
-                    return new ItemStack(StatueRegistry.CUP.get());
-                }
+			if (!playerIn.getAbilities().instabuild) {
+				if (stack.isEmpty()) {
+					return new ItemStack(StatueRegistry.CUP.get());
+				}
 
-                playerIn.getInventory().add(new ItemStack(StatueRegistry.CUP.get()));
-            }
-        }
+				playerIn.getInventory().add(new ItemStack(StatueRegistry.CUP.get()));
+			}
+		}
 
-        return stack;
-    }
+		return stack;
+	}
 }

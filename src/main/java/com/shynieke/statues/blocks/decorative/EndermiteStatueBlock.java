@@ -14,33 +14,33 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class EndermiteStatueBlock extends AbstractStatueBase {
 
-    private static final VoxelShape SHAPE = Block.box(0.1, 0, 0.1, 16, 4, 16);
+	private static final VoxelShape SHAPE = Block.box(0.1, 0, 0.1, 16, 4, 16);
 
-    public EndermiteStatueBlock(Properties properties) {
-        super(properties.sound(SoundType.STONE).isRedstoneConductor(EndermiteStatueBlock::isntSolid));
-    }
+	public EndermiteStatueBlock(Properties properties) {
+		super(properties.sound(SoundType.STONE).isRedstoneConductor(EndermiteStatueBlock::isntSolid));
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    @Override
-    public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ENDERMITE_AMBIENT;
-    }
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ENDERMITE_AMBIENT;
+	}
 
-    @Override
-    public boolean canBeUpgraded() {
-        return false;
-    }
+	@Override
+	public boolean canBeUpgraded() {
+		return false;
+	}
 
-    @Override
-    public EntityType<?> getEntity() {
-        return EntityType.ENDERMITE;
-    }
+	@Override
+	public EntityType<?> getEntity() {
+		return EntityType.ENDERMITE;
+	}
 
-    private static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
-        return false;
-    }
+	private static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
+		return false;
+	}
 }

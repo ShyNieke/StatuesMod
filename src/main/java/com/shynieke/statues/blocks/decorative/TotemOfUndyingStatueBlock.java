@@ -11,24 +11,24 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class TotemOfUndyingStatueBlock extends AbstractStatueBase {
 
-    private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
+	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 14, 12);
 
-    public TotemOfUndyingStatueBlock(Properties properties) {
-        super(properties.sound(SoundType.STONE));
-    }
+	public TotemOfUndyingStatueBlock(Properties properties) {
+		super(properties.sound(SoundType.STONE));
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    @Override
-    public boolean canBeUpgraded() {
-        return false;
-    }
+	@Override
+	public boolean canBeUpgraded() {
+		return false;
+	}
 
-    @Override
-    public boolean isHiddenStatue() {
-        return true;
-    }
+	@Override
+	public boolean isHiddenStatue() {
+		return true;
+	}
 }

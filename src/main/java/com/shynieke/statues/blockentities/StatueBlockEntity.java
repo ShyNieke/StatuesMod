@@ -40,15 +40,15 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	public void playSound(SoundEvent sound, BlockPos pos, float pitch) {
-		if(makesSounds()) {
+		if (makesSounds()) {
 			level.playSound(null, pos, sound, SoundSource.NEUTRAL, 1F, pitch);
 		}
 	}
 
 	public void giveItem(LootInfo loot, Player playerIn) {
-		if(level != null && isStatueAble()) {
+		if (level != null && isStatueAble()) {
 			int random = level.random.nextInt(100);
-			if(!isDecorative() && loot.hasLoot()) {
+			if (!isDecorative() && loot.hasLoot()) {
 				ItemStack stack1 = loot.getStack1();
 				ItemStack stack2 = loot.getStack2();
 				ItemStack stack3 = loot.getStack3();
@@ -57,14 +57,14 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 					playerIn.drop(stack1, true);
 				}
 
-				if(stack2 != null && stack2 != ItemStack.EMPTY){
-					if(random <= 50) {
+				if (stack2 != null && stack2 != ItemStack.EMPTY) {
+					if (random <= 50) {
 						playerIn.drop(stack2, true);
 					}
 				}
 
-				if(stack3 != null && stack3 != ItemStack.EMPTY){
-					if(random <= 10) {
+				if (stack3 != null && stack3 != ItemStack.EMPTY) {
+					if (random <= 10) {
 						playerIn.drop(stack3, true);
 					}
 				}
@@ -74,23 +74,23 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	public void summonMob(LivingEntity entityIn) {
-		if(level != null && canSpawnMobs()) {
+		if (level != null && canSpawnMobs()) {
 			int random = level.random.nextInt(100);
 
 			if (random < 1) {
-				if(entityIn instanceof Rabbit) {
+				if (entityIn instanceof Rabbit) {
 					Rabbit rabbit = (Rabbit) entityIn;
 					rabbit.setRabbitType(99);
 					rabbit.teleportTo(worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ());
 
 					level.addFreshEntity(rabbit);
-				} else if(entityIn instanceof Creeper) {
+				} else if (entityIn instanceof Creeper) {
 					Creeper creeper = (Creeper) entityIn;
-					creeper.moveTo((double)worldPosition.getX() + 0.5D, (double)worldPosition.getY(), (double)worldPosition.getZ() + 0.5D, 0.0F, 0.0F);
+					creeper.moveTo((double) worldPosition.getX() + 0.5D, (double) worldPosition.getY(), (double) worldPosition.getZ() + 0.5D, 0.0F, 0.0F);
 					CompoundTag tag = new CompoundTag();
 					creeper.addAdditionalSaveData(tag);
 
-					tag.putShort("ExplosionRadius", (short)0);
+					tag.putShort("ExplosionRadius", (short) 0);
 
 					creeper.readAdditionalSaveData(tag);
 					level.addFreshEntity(creeper);
@@ -105,7 +105,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	public void floodBehavior(Player playerIn, BlockPos pos, InteractionHand hand, float hitX, float hitY, float hitZ) {
-		if(level != null && !level.isClientSide) {
+		if (level != null && !level.isClientSide) {
 			ItemStack stack = playerIn.getItemInHand(hand);
 			int random = level.random.nextInt(100);
 			if (stack.getItem() == Items.BUCKET && !playerIn.getAbilities().instabuild) {
@@ -116,21 +116,20 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 
 				if (stack.isEmpty()) {
 					playerIn.setItemInHand(hand, floodbucket);
-				}
-				else if (!playerIn.getInventory().add(floodbucket)) {
+				} else if (!playerIn.getInventory().add(floodbucket)) {
 					playerIn.drop(floodbucket, false);
 				}
 			}
 
 			if (random < 50) {
-				FireworkRocketEntity firework = new FireworkRocketEntity(level, (double)((float)pos.getX() + hitX), (double)((float)pos.getY() + hitY), (double)((float)pos.getZ() + hitZ), getFirework(level.random));
+				FireworkRocketEntity firework = new FireworkRocketEntity(level, (double) ((float) pos.getX() + hitX), (double) ((float) pos.getY() + hitY), (double) ((float) pos.getZ() + hitZ), getFirework(level.random));
 				level.addFreshEntity(firework);
 			}
 		}
 	}
 
 	public void mooshroomBehavior(Player playerIn, BlockPos pos, InteractionHand hand) {
-		if(level != null && !level.isClientSide) {
+		if (level != null && !level.isClientSide) {
 			ItemStack stack = playerIn.getItemInHand(hand);
 			if (stack.getItem() == Items.BOWL && !playerIn.getAbilities().instabuild) {
 				level.playSound(null, pos, SoundEvents.COW_MILK, SoundSource.NEUTRAL, 1F, 1F);
@@ -147,7 +146,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	public void cowBehavior(Player playerIn, BlockPos pos, InteractionHand hand) {
-		if(level != null && !level.isClientSide) {
+		if (level != null && !level.isClientSide) {
 			ItemStack stack = playerIn.getItemInHand(hand);
 			if (stack.getItem() == Items.BUCKET && !playerIn.getAbilities().instabuild) {
 				level.playSound(null, pos, SoundEvents.COW_MILK, SoundSource.NEUTRAL, 1F, 1F);
@@ -163,10 +162,10 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	public void giveEffect(BlockPos pos, Player player, MobEffect effect) {
-		if(isStatueAble() && level != null) {
+		if (isStatueAble() && level != null) {
 			int random = level.random.nextInt(100);
-			if(hasExternalUse()) {
-				if(random < 10) {
+			if (hasExternalUse()) {
+				if (random < 10) {
 					if (!level.isClientSide) {
 						if (player.getEffect(effect) == null) {
 							player.addEffect(new MobEffectInstance(effect, 20 * 20, 1, true, true));
@@ -177,7 +176,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		}
 	}
 
-	public static final int[] DYE_COLORS = new int[] {1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
+	public static final int[] DYE_COLORS = new int[]{1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
 
 	public ItemStack getFirework(Random rand) {
 		ItemStack firework = new ItemStack(Items.FIREWORK_ROCKET);

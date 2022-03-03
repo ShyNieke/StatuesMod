@@ -23,8 +23,8 @@ import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class StatueCurioRenderer implements ICurioRenderer {
 	public static void setupRenderer(FMLClientSetupEvent event) {
-		for(RegistryObject<Item> itemObject : StatueRegistry.ITEMS.getEntries()) {
-			if(itemObject.isPresent() && itemObject.get() instanceof StatueBlockItem) {
+		for (RegistryObject<Item> itemObject : StatueRegistry.ITEMS.getEntries()) {
+			if (itemObject.isPresent() && itemObject.get() instanceof StatueBlockItem) {
 				CuriosRendererRegistry.register(itemObject.get(), () -> new StatueCurioRenderer());
 			}
 		}
@@ -35,7 +35,7 @@ public class StatueCurioRenderer implements ICurioRenderer {
 		poseStack.pushPose();
 
 		Minecraft mc = Minecraft.getInstance();
-		PlayerRenderer playerrenderer = (PlayerRenderer)mc.getEntityRenderDispatcher().<AbstractClientPlayer>getRenderer(mc.player);
+		PlayerRenderer playerrenderer = (PlayerRenderer) mc.getEntityRenderDispatcher().<AbstractClientPlayer>getRenderer(mc.player);
 		playerrenderer.getModel().getHead().translateAndRotate(poseStack);
 		poseStack.translate(0.0D, -0.25D, 0.0D);
 		poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));

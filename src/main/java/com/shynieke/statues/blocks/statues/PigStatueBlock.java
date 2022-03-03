@@ -35,7 +35,7 @@ public class PigStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		if(this.isDecorative(state) && placer != null) {
+		if (this.isDecorative(state) && placer != null) {
 			if (worldIn.getBlockState(pos.below()).is(Tags.Blocks.SAND)) {
 				BlockPos downPos = pos.below();
 				worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);

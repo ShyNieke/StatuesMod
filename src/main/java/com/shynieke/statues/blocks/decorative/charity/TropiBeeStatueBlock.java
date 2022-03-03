@@ -12,24 +12,24 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class TropiBeeStatueBlock extends AbstractStatueBase {
-    private static final VoxelShape SHAPE = Block.box(4.0D, 6.0D, 4.0D, 12.0D, 11D, 12.0D);
+	private static final VoxelShape SHAPE = Block.box(4.0D, 6.0D, 4.0D, 12.0D, 11D, 12.0D);
 
-    public TropiBeeStatueBlock(Properties properties) {
-        super(properties.sound(SoundType.STONE));
-    }
+	public TropiBeeStatueBlock(Properties properties) {
+		super(properties.sound(SoundType.STONE));
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    @Override
-    public boolean canBeUpgraded() {
-        return false;
-    }
+	@Override
+	public boolean canBeUpgraded() {
+		return false;
+	}
 
-    @Override
-    public SoundEvent getSound(BlockState state) {
-        return SoundEvents.BEE_LOOP;
-    }
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.BEE_LOOP;
+	}
 }

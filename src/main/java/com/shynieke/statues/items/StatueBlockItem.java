@@ -26,7 +26,7 @@ public class StatueBlockItem extends BlockItem {
 	}
 
 	public boolean isBaby() {
-		if(this.getBlock() instanceof AbstractStatueBase) {
+		if (this.getBlock() instanceof AbstractStatueBase) {
 			return (((AbstractStatueBase) this.getBlock())).isBaby();
 		} else {
 			return false;
@@ -34,7 +34,7 @@ public class StatueBlockItem extends BlockItem {
 	}
 
 	public EntityType<?> getEntity() {
-		if(this.getBlock() instanceof AbstractStatueBase) {
+		if (this.getBlock() instanceof AbstractStatueBase) {
 			return (((AbstractStatueBase) this.getBlock())).getEntity();
 		} else {
 			return EntityType.BAT;
@@ -46,19 +46,11 @@ public class StatueBlockItem extends BlockItem {
 	protected BlockState getPlacementState(BlockPlaceContext context) {
 		BlockState state = super.getPlacementState(context);
 		ItemStack stack = context.getItemInHand();
-		if(Block.byItem(stack.getItem()) instanceof AbstractStatueBase) {
-			if(stack.hasTag() && stack.getTag().get("Traits") != null) {
+		if (Block.byItem(stack.getItem()) instanceof AbstractStatueBase) {
+			if (stack.hasTag() && stack.getTag().get("Traits") != null) {
 				state = state.setValue(AbstractStatueBase.INTERACTIVE, true);
 			}
 		}
 		return state;
 	}
-
-//	@Override
-//	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-//		if(ModList.get().isLoaded("curios"))
-//			return new StatueCurioCapabilityProvider(stack);
-//		else
-//			return null;
-//	}
 }

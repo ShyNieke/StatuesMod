@@ -31,93 +31,93 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 
 public class FishStatueBlock extends AbstractStatueBase {
-    private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
-    private static final VoxelShape SHAPE_BIG = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 9.0D, 11.0D);
-    private final int size;
+	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
+	private static final VoxelShape SHAPE_BIG = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 9.0D, 11.0D);
+	private final int size;
 
-    public FishStatueBlock(Properties builder, int size) {
-        super(builder.sound(SoundType.STONE));
-        this.size = size;
-    }
+	public FishStatueBlock(Properties builder, int size) {
+		super(builder.sound(SoundType.STONE));
+		this.size = size;
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        if (size == 1) {
-            return SHAPE_BIG;
-        }
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		if (size == 1) {
+			return SHAPE_BIG;
+		}
+		return SHAPE;
+	}
 
-    @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-        ItemStack stack = playerIn.getItemInHand(InteractionHand.MAIN_HAND);
-        if(stack.getItem() == Items.WET_SPONGE) {
-            TropicalFishBlockEntity fishBlockEntity = getFishTE(level, pos);
-            fishBlockEntity.scrambleColors();
-            level.sendBlockUpdated(pos, state, state, 6);
-            level.playSound(null, pos, SoundEvents.SLIME_SQUISH_SMALL, SoundSource.NEUTRAL, 1F, 1.0F);
-            if(!playerIn.getAbilities().instabuild) {
-                stack.shrink(1);
-                if(!playerIn.getInventory().add(new ItemStack(Items.SPONGE))) {
-                    ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
-                    level.addFreshEntity(itemEntity);
-                }
-            }
-        }
-        return super.use(state, level, pos, playerIn, handIn, result);
-    }
+	@Override
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+		ItemStack stack = playerIn.getItemInHand(InteractionHand.MAIN_HAND);
+		if (stack.getItem() == Items.WET_SPONGE) {
+			TropicalFishBlockEntity fishBlockEntity = getFishTE(level, pos);
+			fishBlockEntity.scrambleColors();
+			level.sendBlockUpdated(pos, state, state, 6);
+			level.playSound(null, pos, SoundEvents.SLIME_SQUISH_SMALL, SoundSource.NEUTRAL, 1F, 1.0F);
+			if (!playerIn.getAbilities().instabuild) {
+				stack.shrink(1);
+				if (!playerIn.getInventory().add(new ItemStack(Items.SPONGE))) {
+					ItemEntity itemEntity = new ItemEntity(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), stack);
+					level.addFreshEntity(itemEntity);
+				}
+			}
+		}
+		return super.use(state, level, pos, playerIn, handIn, result);
+	}
 
-    @Override
-    public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-        //TODO: Fish stuff? What should it do.
-    }
+	@Override
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+		//TODO: Fish stuff? What should it do.
+	}
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return hasTileEntity(state) ? new TropicalFishBlockEntity(pos, state) : null;
-    }
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return hasTileEntity(state) ? new TropicalFishBlockEntity(pos, state) : null;
+	}
 
-    public boolean hasTileEntity(BlockState state) {
-        return true;
-    }
+	public boolean hasTileEntity(BlockState state) {
+		return true;
+	}
 
-    @Override
-    public EntityType<?> getEntity() {
-        return EntityType.TROPICAL_FISH;
-    }
+	@Override
+	public EntityType<?> getEntity() {
+		return EntityType.TROPICAL_FISH;
+	}
 
-    @Override
-    public SoundEvent getSound(BlockState state) {
-        return SoundEvents.TROPICAL_FISH_FLOP;
-    }
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.TROPICAL_FISH_FLOP;
+	}
 
-    public TropicalFishBlockEntity getFishTE(BlockGetter world, BlockPos pos) {
-        return world.getBlockEntity(pos) instanceof TropicalFishBlockEntity ? (TropicalFishBlockEntity) world.getBlockEntity(pos): null;
-    }
+	public TropicalFishBlockEntity getFishTE(BlockGetter world, BlockPos pos) {
+		return world.getBlockEntity(pos) instanceof TropicalFishBlockEntity ? (TropicalFishBlockEntity) world.getBlockEntity(pos) : null;
+	}
 
-    @Override
-    public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        super.setPlacedBy(worldIn, pos, state, placer, stack);
-        TropicalFishBlockEntity fishBlockEntity = getFishTE(worldIn, pos);
-        if(fishBlockEntity != null) {
-            fishBlockEntity.scrambleColors();
-        }
-    }
+	@Override
+	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		super.setPlacedBy(worldIn, pos, state, placer, stack);
+		TropicalFishBlockEntity fishBlockEntity = getFishTE(worldIn, pos);
+		if (fishBlockEntity != null) {
+			fishBlockEntity.scrambleColors();
+		}
+	}
 
-    @OnlyIn(Dist.CLIENT)
-    public static int getColor(BlockState state, BlockGetter world, BlockPos pos, int tintIndex) {
-        if(pos != null) {
-            BlockEntity blockEntity = world.getBlockEntity(pos);
-            if(blockEntity instanceof TropicalFishBlockEntity tropicalFishBlockEntity) {
-                return tintIndex == 1 ? fromColor(tropicalFishBlockEntity.getMainColor()) : tintIndex == 2 ? fromColor(tropicalFishBlockEntity.getSecondaryColor()) : -1;
-            }
-        }
-        return -1;
-    }
+	@OnlyIn(Dist.CLIENT)
+	public static int getColor(BlockState state, BlockGetter world, BlockPos pos, int tintIndex) {
+		if (pos != null) {
+			BlockEntity blockEntity = world.getBlockEntity(pos);
+			if (blockEntity instanceof TropicalFishBlockEntity tropicalFishBlockEntity) {
+				return tintIndex == 1 ? fromColor(tropicalFishBlockEntity.getMainColor()) : tintIndex == 2 ? fromColor(tropicalFishBlockEntity.getSecondaryColor()) : -1;
+			}
+		}
+		return -1;
+	}
 
-    @OnlyIn(Dist.CLIENT)
-    public static int fromColor(int color) {
-        return DyeColor.byId(color).getTextColor();
-    }
+	@OnlyIn(Dist.CLIENT)
+	public static int fromColor(int color) {
+		return DyeColor.byId(color).getTextColor();
+	}
 }

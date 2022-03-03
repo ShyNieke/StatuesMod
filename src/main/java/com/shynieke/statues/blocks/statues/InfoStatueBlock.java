@@ -53,17 +53,17 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 			List<String> messages = new ArrayList<>(StatuesConfig.COMMON.info_messages.get());
 			List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 
-			if(ModList.get().isLoaded("veinminer")) {
+			if (ModList.get().isLoaded("veinminer")) {
 				messages.add("Did you know we have veinminer");
 			}
-			if(ModList.get().isLoaded("curios")) {
+			if (ModList.get().isLoaded("curios")) {
 				messages.add("Did you know we have curios support");
 			}
 
 			int idx = new Random().nextInt(messages.size());
 			Component randomMessage = new TextComponent(messages.get(idx));
 
-			if(!luckyPlayers.isEmpty() && random < 20) {
+			if (!luckyPlayers.isEmpty() && random < 20) {
 				for (String luckyPlayer : luckyPlayers) {
 					if (!luckyPlayer.isEmpty()) {
 						String luckyUser = luckyPlayer.trim();
@@ -77,7 +77,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 				int i = localdate.get(ChronoField.DAY_OF_MONTH);
 				int j = localdate.get(ChronoField.MONTH_OF_YEAR);
 
-				if(worldIn.random.nextDouble() <= 0.3D && j == 11 && i <= 20) {
+				if (worldIn.random.nextDouble() <= 0.3D && j == 11 && i <= 20) {
 					randomMessage = new TextComponent("Please check out our friends over at ")
 							.withStyle(ChatFormatting.YELLOW).append(ForgeHooks.newChatWithLinks("https://lovetropics.com/"));
 				} else {

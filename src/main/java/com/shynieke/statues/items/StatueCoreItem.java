@@ -40,8 +40,8 @@ public class StatueCoreItem extends Item {
 	public InteractionResult interactLivingEntity(ItemStack stack, Player playerIn, LivingEntity entityIn, InteractionHand handIn) {
 		if (!(entityIn instanceof Player) && !isLocked) {
 			CompoundTag tag = stack.hasTag() ? stack.getTag() : new CompoundTag();
-			if(tag != null) {
-				if(!tag.getString(entityTag).isEmpty()) {
+			if (tag != null) {
+				if (!tag.getString(entityTag).isEmpty()) {
 					this.isLocked = true;
 					return InteractionResult.FAIL;
 				} else {

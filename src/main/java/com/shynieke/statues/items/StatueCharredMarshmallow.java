@@ -7,12 +7,12 @@ import net.minecraft.world.item.crafting.RecipeType;
 import javax.annotation.Nullable;
 
 public class StatueCharredMarshmallow extends Item {
-    public StatueCharredMarshmallow(Properties builder) {
-        super(builder);
-    }
+	public StatueCharredMarshmallow(Properties builder) {
+		super(builder);
+	}
 
-    @Override
-    public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
-        return 500;
-    }
+	@Override
+	public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+		return 500;
+	}
 }

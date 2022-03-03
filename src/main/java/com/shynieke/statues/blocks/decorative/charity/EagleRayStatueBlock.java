@@ -12,24 +12,24 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class EagleRayStatueBlock extends AbstractStatueBase {
-    private static final VoxelShape SHAPE = Block.box(1.0D, 0, 1.0D, 15.0D, 6.0D, 15.0D);
+	private static final VoxelShape SHAPE = Block.box(1.0D, 0, 1.0D, 15.0D, 6.0D, 15.0D);
 
-    public EagleRayStatueBlock(Properties properties) {
-        super(properties.sound(SoundType.STONE));
-    }
+	public EagleRayStatueBlock(Properties properties) {
+		super(properties.sound(SoundType.STONE));
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    @Override
-    public boolean canBeUpgraded() {
-        return false;
-    }
+	@Override
+	public boolean canBeUpgraded() {
+		return false;
+	}
 
-    @Override
-    public SoundEvent getSound(BlockState state) {
-        return SoundEvents.SQUID_AMBIENT;
-    }
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.SQUID_AMBIENT;
+	}
 }

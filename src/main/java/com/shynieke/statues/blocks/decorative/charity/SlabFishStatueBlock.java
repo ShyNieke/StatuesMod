@@ -12,24 +12,24 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SlabFishStatueBlock extends AbstractStatueBase {
-    private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
+	private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 8.0D, 12.0D);
 
-    public SlabFishStatueBlock(Properties properties) {
-        super(properties.sound(SoundType.STONE));
-    }
+	public SlabFishStatueBlock(Properties properties) {
+		super(properties.sound(SoundType.STONE));
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    @Override
-    public boolean canBeUpgraded() {
-        return false;
-    }
+	@Override
+	public boolean canBeUpgraded() {
+		return false;
+	}
 
-    @Override
-    public SoundEvent getSound(BlockState state) {
-        return SoundEvents.ELDER_GUARDIAN_FLOP;
-    }
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.ELDER_GUARDIAN_FLOP;
+	}
 }

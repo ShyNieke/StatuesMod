@@ -17,33 +17,33 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CodStatueBlock extends FishStatueBlock {
-    private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
+	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 4.0D, 11.0D);
 
-    public CodStatueBlock(Properties builder) {
-        super(builder.sound(SoundType.STONE), 1);
-    }
+	public CodStatueBlock(Properties builder) {
+		super(builder.sound(SoundType.STONE), 1);
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    @Override
-    public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-        //TODO: Fish stuff? What should it do.
-    }
+	@Override
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+		//TODO: Fish stuff? What should it do.
+	}
 
-    public boolean hasTileEntity(BlockState state) {
-        return state.getValue(INTERACTIVE).booleanValue();
-    }
+	public boolean hasTileEntity(BlockState state) {
+		return state.getValue(INTERACTIVE).booleanValue();
+	}
 
-    @Override
-    public EntityType<?> getEntity() {
-        return EntityType.COD;
-    }
+	@Override
+	public EntityType<?> getEntity() {
+		return EntityType.COD;
+	}
 
-    @Override
-    public SoundEvent getSound(BlockState state) {
-        return SoundEvents.COD_FLOP;
-    }
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.COD_FLOP;
+	}
 }

@@ -102,6 +102,8 @@ public class StatuesDataGenerator {
 		@Override
 		protected void addTags() {
 			this.copy(StatueTags.STATUE_BLOCKS, StatueTags.STATUES_ITEMS);
+			this.tag(StatueTags.CURIOS_STATUE).addTag(StatueTags.STATUES_ITEMS).add(DISPLAY_STAND.get().asItem(), SOMBRERO.get().asItem());
+			this.tag(StatueTags.PLAYER_UPGRADE_ITEM).add(STATUE_CORE.get());
 		}
 	}
 
@@ -128,10 +130,10 @@ public class StatuesDataGenerator {
 				this.dropSelf(SOMBRERO.get());
 				this.dropSelf(INFO_STATUE.get());
 				this.add(PLAYER_STATUE.get(), createNameableBlockEntityTable(PLAYER_STATUE.get()));
-				for(RegistryObject<Block> blockObject : BLOCKS.getEntries()) {
-					if(blockObject.get() instanceof AbstractStatueBase) {
-						AbstractStatueBase base = (AbstractStatueBase)blockObject.get();
-						if(base.canBeUpgraded()) {
+				for (RegistryObject<Block> blockObject : BLOCKS.getEntries()) {
+					if (blockObject.get() instanceof AbstractStatueBase) {
+						AbstractStatueBase base = (AbstractStatueBase) blockObject.get();
+						if (base.canBeUpgraded()) {
 							this.add(blockObject.get(), createNameableBlockEntityTable(blockObject.get()));
 						} else {
 							this.dropSelf(blockObject.get());

@@ -35,7 +35,7 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		if(this.isDecorative(state) && placer != null) {
+		if (this.isDecorative(state) && placer != null) {
 			Block block = worldIn.getBlockState(pos.below()).getBlock();
 			if (block == Blocks.GOLD_BLOCK) {
 				BlockPos downPos = pos.below();

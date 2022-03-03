@@ -26,6 +26,7 @@ public class FloodStatueBlock extends AbstractStatueBase {
 	public FloodStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
 	}
+
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		Direction direction = state.getValue(FACING);
@@ -37,7 +38,7 @@ public class FloodStatueBlock extends AbstractStatueBase {
 		Vec3 hitPos = result.getLocation();
 
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
-		blockEntity.floodBehavior(playerIn, pos, handIn, (float)hitPos.x, (float)hitPos.y, (float)hitPos.z);
+		blockEntity.floodBehavior(playerIn, pos, handIn, (float) hitPos.x, (float) hitPos.y, (float) hitPos.z);
 	}
 
 	@Override

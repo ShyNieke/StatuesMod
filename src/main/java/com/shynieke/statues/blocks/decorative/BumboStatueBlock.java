@@ -19,36 +19,36 @@ import javax.annotation.Nullable;
 
 public class BumboStatueBlock extends AbstractStatueBase {
 
-    private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 16, 12);
+	private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 16, 12);
 
-    public BumboStatueBlock(Properties properties) {
-        super(properties.sound(SoundType.STONE));
-    }
+	public BumboStatueBlock(Properties properties) {
+		super(properties.sound(SoundType.STONE));
+	}
 
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
+	@Override
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return SHAPE;
+	}
 
-    @Override
-    public boolean canBeUpgraded() {
-        return false;
-    }
+	@Override
+	public boolean canBeUpgraded() {
+		return false;
+	}
 
-    @Override
-    public SoundEvent getSound(BlockState state) {
-        return SoundEvents.WOOL_BREAK;
-    }
+	@Override
+	public SoundEvent getSound(BlockState state) {
+		return SoundEvents.WOOL_BREAK;
+	}
 
-    @Nullable
-    @Override
-    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+		return null;
+	}
 
-    @Nullable
-    @Override
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return null;
-    }
+	@Nullable
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+		return null;
+	}
 }

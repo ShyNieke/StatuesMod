@@ -23,57 +23,57 @@ import java.time.temporal.ChronoField;
 import java.util.Random;
 
 public class StatueBatEntity extends Bat {
-    public StatueBatEntity(EntityType<? extends StatueBatEntity> type, Level level) {
-        super(type, level);
-    }
+	public StatueBatEntity(EntityType<? extends StatueBatEntity> type, Level level) {
+		super(type, level);
+	}
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return Bat.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D);
-    }
+	public static AttributeSupplier.Builder createAttributes() {
+		return Bat.createMobAttributes().add(Attributes.MAX_HEALTH, 12.0D);
+	}
 
-    @Nullable
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        int random = getRandom().nextInt(10);
-        if(random < 5) {
-            addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2000 * 20, 2, true, false));
-        }
-        return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
-    }
+	@Nullable
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+		int random = getRandom().nextInt(10);
+		if (random < 5) {
+			addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2000 * 20, 2, true, false));
+		}
+		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	}
 
-    @Override
-    public boolean hurt(DamageSource source, float amount) {
-        if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity) {
-            LivingEntity entitylivingbase = (LivingEntity)source.getDirectEntity();
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity) {
+			LivingEntity entitylivingbase = (LivingEntity) source.getDirectEntity();
 
-            if (!source.isExplosion()) {
-                entitylivingbase.hurt(DamageSource.thorns(this), 2.0F);
-            }
-        }
+			if (!source.isExplosion()) {
+				entitylivingbase.hurt(DamageSource.thorns(this), 2.0F);
+			}
+		}
 
-        return super.hurt(source, amount);
-    }
+		return super.hurt(source, amount);
+	}
 
-    public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
-        if (pos.getY() >= worldIn.getSeaLevel()) {
-            return false;
-        } else {
-            int i = worldIn.getMaxLocalRawBrightness(pos);
-            int j = 4;
-            if (isNearHalloween()) {
-                j = 7;
-            } else if (randomIn.nextBoolean()) {
-                return false;
-            }
+	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
+		if (pos.getY() >= worldIn.getSeaLevel()) {
+			return false;
+		} else {
+			int i = worldIn.getMaxLocalRawBrightness(pos);
+			int j = 4;
+			if (isNearHalloween()) {
+				j = 7;
+			} else if (randomIn.nextBoolean()) {
+				return false;
+			}
 
-            return i > randomIn.nextInt(j) ? false : checkMobSpawnRules(batIn, worldIn, reason, pos, randomIn);
-        }
-    }
+			return i > randomIn.nextInt(j) ? false : checkMobSpawnRules(batIn, worldIn, reason, pos, randomIn);
+		}
+	}
 
-    private static boolean isNearHalloween() {
-        LocalDate localdate = LocalDate.now();
-        int i = localdate.get(ChronoField.DAY_OF_MONTH);
-        int j = localdate.get(ChronoField.MONTH_OF_YEAR);
-        return j == 10 && i >= 20 || j == 11 && i <= 3;
-    }
+	private static boolean isNearHalloween() {
+		LocalDate localdate = LocalDate.now();
+		int i = localdate.get(ChronoField.DAY_OF_MONTH);
+		int j = localdate.get(ChronoField.MONTH_OF_YEAR);
+		return j == 10 && i >= 20 || j == 11 && i <= 3;
+	}
 }

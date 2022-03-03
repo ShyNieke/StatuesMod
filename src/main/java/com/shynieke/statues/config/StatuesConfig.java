@@ -157,6 +157,6 @@ public class StatuesConfig {
 
 	@SubscribeEvent
 	public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
-		Statues.LOGGER.fatal("Statues' config just got changed on the file system!");
+		Statues.LOGGER.warn("Statues' config just got changed on the file system!");
 	}
 }
