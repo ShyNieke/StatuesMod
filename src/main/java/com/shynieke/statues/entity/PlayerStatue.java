@@ -2,11 +2,11 @@ package com.shynieke.statues.entity;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
+import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueSerializers;
 import com.shynieke.statues.packets.PlayerStatueScreenMessage;
 import com.shynieke.statues.packets.StatuesNetworking;
-import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.NonNullList;

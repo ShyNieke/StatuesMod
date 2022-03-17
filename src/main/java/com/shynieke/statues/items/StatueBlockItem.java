@@ -2,6 +2,7 @@ package com.shynieke.statues.items;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.init.StatueTabs;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.BlockItem;
@@ -10,6 +11,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nullable;
 
@@ -52,5 +55,14 @@ public class StatueBlockItem extends BlockItem {
 			}
 		}
 		return state;
+	}
+
+	@Nullable
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
+		if (ModList.get().isLoaded("curios")) {
+			return com.shynieke.statues.compat.curios.CuriosCompat.getCapability(stack);
+		}
+		return super.initCapabilities(stack, nbt);
 	}
 }
