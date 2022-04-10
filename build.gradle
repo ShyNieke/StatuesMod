@@ -94,16 +94,24 @@ repositories {
     maven {
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
-    compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
-    runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
+    implementation fg.deobf("mezz.jei:jei-${mc_version}:${version_jei}")
 
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}")
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${version_curios}:api")
+
+    implementation fg.deobf("curse.maven:jade-324717:3597364") //Jade (WAILA)
+    implementation fg.deobf("curse.maven:TheOneProbe-245211:3665853") //The One probe (TOP)
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -147,4 +155,8 @@ publishing {
             }
         }
     }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }

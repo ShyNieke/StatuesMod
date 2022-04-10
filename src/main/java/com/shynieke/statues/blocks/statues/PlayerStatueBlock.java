@@ -8,6 +8,7 @@ import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTags;
 import com.shynieke.statues.items.PlayerStatueItem;
 import com.shynieke.statues.tiles.PlayerTile;
+import io.netty.util.internal.StringUtil;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -129,17 +130,36 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
-		TileEntity tileentity = world.getBlockEntity(pos);
-		if (tileentity instanceof PlayerTile) {
-			PlayerTile playerTile = (PlayerTile)tileentity;
+	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader level, BlockPos pos, PlayerEntity player) {
+		TileEntity blockEntity = level.getBlockEntity(pos);
+		if (blockEntity instanceof PlayerTile) {
+			return getStatueWithName(level, pos, state);
+		} else {
+			return new ItemStack(state.getBlock());
+		}
+	}
+
+	@Override
+	public ItemStack getCloneItemStack(IBlockReader level, BlockPos pos, BlockState state) {
+		TileEntity blockEntity = level.getBlockEntity(pos);
+		if (blockEntity instanceof PlayerTile) {
+			return getStatueWithName(level, pos, state);
+		} else {
+			return super.getCloneItemStack(level, pos, state);
+		}
+	}
+
+	private ItemStack getStatueWithName(IBlockReader level, BlockPos pos, BlockState state) {
+		TileEntity blockEntity = level.getBlockEntity(pos);
+		if (blockEntity instanceof PlayerTile) {
+			PlayerTile playerBlockEntity = (PlayerTile) blockEntity;
 			ItemStack stack = new ItemStack(state.getBlock());
 
-			GameProfile profile = playerTile.getPlayerProfile();
+			GameProfile profile = playerBlockEntity.getPlayerProfile();
 			if (profile != null) {
 				CompoundNBT tag = new CompoundNBT();
 
-				if (!StringUtils.isNullOrEmpty(profile.getName())) {
+				if (!StringUtil.isNullOrEmpty(profile.getName())) {
 					GameProfile gameprofile = new GameProfile((UUID)null, profile.getName());
 					gameprofile = PlayerTile.updateGameProfile(gameprofile);
 					tag.put("PlayerProfile", NBTUtil.writeGameProfile(new CompoundNBT(), gameprofile));
@@ -147,7 +167,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				stack.setTag(tag);
 			}
 
-			return stack.setHoverName(playerTile.getName());
+			return stack.setHoverName(playerBlockEntity.getName());
 		} else {
 			return new ItemStack(state.getBlock());
 		}
