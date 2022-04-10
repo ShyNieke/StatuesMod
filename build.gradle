@@ -90,6 +90,12 @@ repositories {
     maven {
         url = "https://maven.theillusivec4.top/"
     }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 
@@ -98,6 +104,9 @@ dependencies {
 
     implementation fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
+
+    implementation fg.deobf("curse.maven:jade-324717:3681449") //Jade (WAILA)
+    implementation fg.deobf("curse.maven:TheOneProbe-245211:3671753") //The One probe (TOP)
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
