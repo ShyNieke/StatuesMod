@@ -212,11 +212,11 @@ public class PlayerTile extends TileEntity implements INameable, ITickableTileEn
 
     @Override
     public ITextComponent getName() {
-        return this.hasCustomName() ? new StringTextComponent(this.playerProfile != null ? playerProfile.getName() : "") : new TranslationTextComponent("statue.player");
+        return this.hasCustomName() ? getCustomName() : new TranslationTextComponent("statue.player");
     }
 
     @Override
     public ITextComponent getCustomName() {
-        return null;
+        return new StringTextComponent(this.playerProfile != null ? playerProfile.getName() : "");
     }
 }
