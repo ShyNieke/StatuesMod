@@ -1,5 +1,6 @@
 package com.shynieke.statues.client;
 
+import com.mojang.authlib.AuthenticationService;
 import com.mojang.authlib.GameProfileRepository;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
@@ -38,6 +39,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.fml.ModList;
@@ -45,7 +47,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import javax.annotation.Nullable;
 import java.io.File;
-import java.util.UUID;
 
 public class ClientHandler {
 	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue"), "player_statue");
@@ -64,15 +65,7 @@ public class ClientHandler {
 		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.ENDERMITE_STATUE.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.SLIME_STATUE.get(), RenderType.translucent());
 
-		Minecraft mc = Minecraft.getInstance();
-		YggdrasilAuthenticationService yggdrasilauthenticationservice = new YggdrasilAuthenticationService(mc.getProxy(), UUID.randomUUID().toString());
-		MinecraftSessionService minecraftsessionservice = yggdrasilauthenticationservice.createMinecraftSessionService();
-		GameProfileRepository gameprofilerepository = yggdrasilauthenticationservice.createProfileRepository();
-		GameProfileCache gameProfileCache = new GameProfileCache(gameprofilerepository, new File(mc.gameDirectory, MinecraftServer.USERID_CACHE_FILE.getName()));
-		gameProfileCache.setExecutor(mc);
-		PlayerBlockEntity.setProfileCache(gameProfileCache);
-		PlayerBlockEntity.setSessionService(minecraftsessionservice);
-		PlayerBlockEntity.setMainThreadExecutor(mc);
+		setPlayerCache(Minecraft.getInstance());
 
 		ItemProperties.register(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new ClampedItemPropertyFunction() {
 			private final ClientHandler.Angle rotation = new ClientHandler.Angle();
@@ -201,5 +194,29 @@ public class ClientHandler {
 				StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
 				StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(),
 				StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get());
+	}
+
+	public static void onLogin(ClientPlayerNetworkEvent.LoggedInEvent event) {
+		Minecraft mc = Minecraft.getInstance();
+		if (!mc.isLocalServer()) {
+			setPlayerCache(mc);
+		}
+	}
+
+	public static void onRespawn(ClientPlayerNetworkEvent.RespawnEvent event) {
+		Minecraft mc = Minecraft.getInstance();
+		if (!mc.isLocalServer()) {
+			setPlayerCache(mc);
+		}
+	}
+
+	private static void setPlayerCache(Minecraft mc) {
+		AuthenticationService authenticationService = new YggdrasilAuthenticationService(mc.getProxy());
+		MinecraftSessionService sessionService = authenticationService.createMinecraftSessionService();
+		GameProfileRepository profileRepository = authenticationService.createProfileRepository();
+		GameProfileCache profileCache = new GameProfileCache(profileRepository, new File(mc.gameDirectory, MinecraftServer.USERID_CACHE_FILE.getName()));
+		profileCache.setExecutor(mc);
+		PlayerBlockEntity.setup(profileCache, sessionService, mc);
+		GameProfileCache.setUsesAuthentication(false);
 	}
 }

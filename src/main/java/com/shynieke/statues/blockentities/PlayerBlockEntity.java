@@ -50,16 +50,16 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		this.onlineChecking = false;
 	}
 
-	public static void setProfileCache(GameProfileCache cache) {
+	public static void setup(GameProfileCache cache, MinecraftSessionService session, Executor executor) {
 		profileCache = cache;
-	}
-
-	public static void setSessionService(MinecraftSessionService session) {
 		sessionService = session;
+		mainThreadExecutor = executor;
 	}
 
-	public static void setMainThreadExecutor(Executor executor) {
-		mainThreadExecutor = executor;
+	public static void clear() {
+		profileCache = null;
+		sessionService = null;
+		mainThreadExecutor = null;
 	}
 
 	@Override

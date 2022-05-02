@@ -45,10 +45,14 @@ public class DropHandler {
 
 		if (entity instanceof Villager) {
 			switch (entity.level.random.nextInt(4)) {
-				default -> dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
-				case 1 -> dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_WH_STATUE.get()), source, event);
-				case 2 -> dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_PU_STATUE.get()), source, event);
-				case 3 -> dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_GR_STATUE.get()), source, event);
+				default ->
+						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
+				case 1 ->
+						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_WH_STATUE.get()), source, event);
+				case 2 ->
+						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_PU_STATUE.get()), source, event);
+				case 3 ->
+						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_GR_STATUE.get()), source, event);
 			}
 		} else if (entity instanceof Evoker) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EVOKER_STATUE.get());

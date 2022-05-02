@@ -18,6 +18,8 @@ import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipes.StatueLootList;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.players.GameProfileCache;
+import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -67,6 +69,8 @@ public class Statues {
 			eventBus.addListener(ClientHandler::registerEntityRenders);
 			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 			eventBus.addListener(ClientHandler::registerBlockColors);
+			MinecraftForge.EVENT_BUS.addListener(ClientHandler::onLogin);
+			MinecraftForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
 		});
 
 	}
@@ -81,8 +85,7 @@ public class Statues {
 
 	public void serverAboutToStart(final ServerAboutToStartEvent event) {
 		MinecraftServer server = event.getServer();
-		PlayerBlockEntity.setProfileCache(server.getProfileCache());
-		PlayerBlockEntity.setSessionService(server.getSessionService());
-		PlayerBlockEntity.setMainThreadExecutor(event.getServer());
+		PlayerBlockEntity.setup(server.getProfileCache(), server.getSessionService(), server);
+		GameProfileCache.setUsesAuthentication(server.usesAuthentication());
 	}
 }
