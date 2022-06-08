@@ -35,6 +35,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,6 +43,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -207,6 +209,12 @@ public class ClientHandler {
 		Minecraft mc = Minecraft.getInstance();
 		if (!mc.isLocalServer()) {
 			setPlayerCache(mc);
+		}
+	}
+
+	public static void preStitchEvent(TextureStitchEvent.Pre event) {
+		if (ModList.get().isLoaded("curios") && event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
+			event.addSprite(new ResourceLocation(Reference.MOD_ID, "curios/core"));
 		}
 	}
 

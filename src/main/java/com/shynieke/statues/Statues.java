@@ -19,7 +19,6 @@ import com.shynieke.statues.recipes.StatueLootList;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
-import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -69,6 +68,7 @@ public class Statues {
 			eventBus.addListener(ClientHandler::registerEntityRenders);
 			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 			eventBus.addListener(ClientHandler::registerBlockColors);
+			eventBus.addListener(ClientHandler::preStitchEvent);
 			MinecraftForge.EVENT_BUS.addListener(ClientHandler::onLogin);
 			MinecraftForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
 		});

@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 public class CuriosCompat {
 	public static void sendImc(InterModEnqueueEvent event) {
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("statue")
-				.icon(new ResourceLocation(Reference.MOD_ID, "item/statuecore")).size(1).build());
+				.icon(new ResourceLocation(Reference.MOD_ID, "curios/core")).size(1).build());
 	}
 
 	public static boolean isStackInCuriosSlot(ItemStack stack, LivingEntity player) {
