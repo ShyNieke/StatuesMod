@@ -5,7 +5,7 @@ import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.recipes.StatueLootList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -27,7 +27,7 @@ public class WastelandStatueBlock extends AbstractStatueBase {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
 		Pig pig = new Pig(EntityType.PIG, worldIn);
-		pig.setCustomName(new TextComponent("Wasteland Pig"));
+		pig.setCustomName(Component.literal("Wasteland Pig"));
 		blockEntity.summonMob(pig);
 	}
 

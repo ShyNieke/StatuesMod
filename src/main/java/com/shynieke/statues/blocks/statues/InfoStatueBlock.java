@@ -3,10 +3,8 @@ package com.shynieke.statues.blocks.statues;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.config.StatuesConfig;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -61,14 +59,14 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 			}
 
 			int idx = new Random().nextInt(messages.size());
-			Component randomMessage = new TextComponent(messages.get(idx));
+			Component randomMessage = Component.literal(messages.get(idx));
 
 			if (!luckyPlayers.isEmpty() && random < 20) {
 				for (String luckyPlayer : luckyPlayers) {
 					if (!luckyPlayer.isEmpty()) {
 						String luckyUser = luckyPlayer.trim();
-						if (player.getDisplayName().getContents().equalsIgnoreCase(luckyUser)) {
-							randomMessage = new TextComponent("Luck is not on your side today");
+						if (player.getDisplayName().getString().equalsIgnoreCase(luckyUser)) {
+							randomMessage = Component.literal("Luck is not on your side today");
 						}
 					}
 				}
@@ -78,14 +76,14 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 				int j = localdate.get(ChronoField.MONTH_OF_YEAR);
 
 				if (worldIn.random.nextDouble() <= 0.3D && j == 11 && i <= 20) {
-					randomMessage = new TextComponent("Please check out our friends over at ")
+					randomMessage = Component.literal("Please check out our friends over at ")
 							.withStyle(ChatFormatting.YELLOW).append(ForgeHooks.newChatWithLinks("https://lovetropics.com/"));
 				} else {
-					randomMessage = new TextComponent(messages.get(idx));
+					randomMessage = Component.literal(messages.get(idx));
 				}
 			}
 
-			player.sendMessage(randomMessage, Util.NIL_UUID);
+			player.sendSystemMessage(randomMessage);
 			worldIn.playSound(null, pos, SoundEvents.DISPENSER_FAIL, SoundSource.NEUTRAL, 0.5F, 1.0F);
 		}
 	}

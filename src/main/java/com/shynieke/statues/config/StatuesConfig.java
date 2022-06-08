@@ -6,6 +6,7 @@ import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.minecraftforge.common.ForgeConfigSpec.EnumValue;
+import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
@@ -32,6 +33,8 @@ public class StatuesConfig {
 		public final BooleanValue playerCompass;
 
 		public final BooleanValue statueBatSpawning;
+		public final BooleanValue ancientCityLoot;
+		public final DoubleValue ancientCityLootChance;
 
 		//Lucky Players
 		public final ConfigValue<List<? extends String>> lucky_players;
@@ -47,6 +50,14 @@ public class StatuesConfig {
 			statueBatSpawning = builder
 					.comment("Setting this to false disables the statue bat from spawning naturally (Default: true)")
 					.define("statueBatSpawning", true);
+
+			ancientCityLoot = builder
+					.comment("When enabled this will allow Ancient City loot to contain statues (Default: true)")
+					.define("ancientCityLoot", true);
+
+			ancientCityLootChance = builder
+					.comment("The chance of a statue appearing in ancient City loot (Default: 0.1)")
+					.defineInRange("ancientCityLootChance", 0.1, 0, 1.0);
 
 			builder.pop();
 

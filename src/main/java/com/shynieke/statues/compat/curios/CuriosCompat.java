@@ -10,14 +10,13 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.type.capability.ICurio;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class CuriosCompat {
 	public static void sendImc(InterModEnqueueEvent event) {
@@ -44,9 +43,9 @@ public class CuriosCompat {
 		ICapabilityProvider provider = new ICapabilityProvider() {
 			private final LazyOptional<ICurio> curioOpt = LazyOptional.of(() -> curio);
 
-			@Nonnull
+			@NotNull
 			@Override
-			public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap,
+			public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap,
 													 @Nullable Direction side) {
 				return CuriosCapability.ITEM.orEmpty(cap, curioOpt);
 			}

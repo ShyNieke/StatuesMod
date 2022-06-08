@@ -10,6 +10,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,8 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Random;
 
 public class StatueBlockEntity extends AbstractStatueBlockEntity {
 
@@ -122,7 +121,8 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			}
 
 			if (random < 50) {
-				FireworkRocketEntity firework = new FireworkRocketEntity(level, (double) ((float) pos.getX() + hitX), (double) ((float) pos.getY() + hitY), (double) ((float) pos.getZ() + hitZ), getFirework(level.random));
+				FireworkRocketEntity firework = new FireworkRocketEntity(level, (double) ((float) pos.getX() + hitX), (double) ((float) pos.getY() + hitY), (double) ((float) pos.getZ() + hitZ),
+						getFirework(level.random));
 				level.addFreshEntity(firework);
 			}
 		}
@@ -178,7 +178,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 
 	public static final int[] DYE_COLORS = new int[]{1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
 
-	public ItemStack getFirework(Random rand) {
+	public ItemStack getFirework(RandomSource rand) {
 		ItemStack firework = new ItemStack(Items.FIREWORK_ROCKET);
 		firework.getOrCreateTag();
 		CompoundTag nbt = new CompoundTag();

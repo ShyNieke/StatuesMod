@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Rotations;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
 
 public class PlayerStatueSpawnItem extends Item {
@@ -63,7 +63,7 @@ public class PlayerStatueSpawnItem extends Item {
 		}
 	}
 
-	public static void applyRandomRotations(PlayerStatue playerStatueEntity, Random rand) {
+	public static void applyRandomRotations(PlayerStatue playerStatueEntity, RandomSource rand) {
 		Rotations rotations = playerStatueEntity.getHeadRotation();
 		float f = rand.nextFloat() * 5.0F;
 		float f1 = rand.nextFloat() * 20.0F - 10.0F;

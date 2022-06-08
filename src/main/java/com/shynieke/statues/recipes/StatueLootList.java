@@ -3,7 +3,7 @@ package com.shynieke.statues.recipes;
 import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -70,7 +70,7 @@ public class StatueLootList {
 	}
 
 	public static ItemStack getWastelandBlock() {
-		ItemStack wasteland = new ItemStack(Blocks.SAND).setHoverName(new TextComponent("Wasteland Block").withStyle(ChatFormatting.LIGHT_PURPLE));
+		ItemStack wasteland = new ItemStack(Blocks.SAND).setHoverName(Component.literal("Wasteland Block").withStyle(ChatFormatting.LIGHT_PURPLE));
 		wasteland.enchant(Enchantments.VANISHING_CURSE, 1);
 		CompoundTag nbt = wasteland.hasTag() ? wasteland.getTag() : new CompoundTag();
 		if (nbt != null) {
@@ -82,7 +82,7 @@ public class StatueLootList {
 
 	public static ItemStack getFloodBucket() {
 		ItemStack floodBucket = new ItemStack(Items.WATER_BUCKET);
-		floodBucket.setHoverName(new TextComponent("The Flood").withStyle(ChatFormatting.BLUE));
+		floodBucket.setHoverName(Component.literal("The Flood").withStyle(ChatFormatting.BLUE));
 
 		return floodBucket;
 	}

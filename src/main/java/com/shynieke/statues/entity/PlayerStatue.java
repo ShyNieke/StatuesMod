@@ -17,7 +17,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -212,12 +211,11 @@ public class PlayerStatue extends LivingEntity {
 		this.verifyEquippedItem(stack);
 		switch (slotIn.getType()) {
 			case HAND:
-				this.equipEventAndSound(stack);
-				this.handItems.set(slotIn.getIndex(), stack);
+				this.onEquipItem(slotIn, this.handItems.set(slotIn.getIndex(), stack), stack);
 				break;
 			case ARMOR:
-				this.equipEventAndSound(stack);
-				this.armorItems.set(slotIn.getIndex(), stack);
+				this.onEquipItem(slotIn, this.armorItems.set(slotIn.getIndex(), stack), stack);
+				break;
 		}
 
 	}
@@ -385,7 +383,7 @@ public class PlayerStatue extends LivingEntity {
 			if (!isLocked()) {
 				super.setCustomName(name);
 
-				this.setGameProfile(new GameProfile((UUID) null, name.getContents().toLowerCase(Locale.ROOT)));
+				this.setGameProfile(new GameProfile((UUID) null, name.getString().toLowerCase(Locale.ROOT)));
 			}
 		}
 	}
@@ -619,7 +617,7 @@ public class PlayerStatue extends LivingEntity {
 				NbtUtils.writeGameProfile(nbttagcompound, profile);
 				stackTag.put("PlayerProfile", nbttagcompound);
 				stack.setTag(stackTag);
-				stack.setHoverName(new TextComponent(profile.getName()));
+				stack.setHoverName(Component.literal(profile.getName()));
 			}
 		}
 
@@ -639,7 +637,7 @@ public class PlayerStatue extends LivingEntity {
 				NbtUtils.writeGameProfile(nbttagcompound, profile);
 				stackTag.put("PlayerProfile", nbttagcompound);
 				stack.setTag(stackTag);
-				stack.setHoverName(new TextComponent(profile.getName()));
+				stack.setHoverName(Component.literal(profile.getName()));
 			}
 		}
 

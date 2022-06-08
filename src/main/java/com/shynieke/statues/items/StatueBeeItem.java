@@ -15,7 +15,7 @@ public class StatueBeeItem extends StatueBlockItem {
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (stack.hasCustomHoverName() && !level.isClientSide) {
-			final String name = stack.getHoverName().getContents();
+			final String name = stack.getHoverName().getString();
 			if (entityIn instanceof Player) {
 				if (name.equalsIgnoreCase("Trans Bee")) {
 					((Player) entityIn).getInventory().setItem(itemSlot, new ItemStack(StatueRegistry.TRANS_BEE.get(), stack.getCount(), stack.getTag()));

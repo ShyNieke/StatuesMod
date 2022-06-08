@@ -5,12 +5,13 @@ import com.shynieke.statues.blocks.statues.SheepStatueBlock;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.CatVariant;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Fox.Type;
 import net.minecraft.world.entity.animal.MushroomCow;
@@ -72,14 +73,14 @@ public class DropHandler {
 				itemStackToDrop = new ItemStack(StatueRegistry.ANGRY_BEE_STATUE.get());
 			}
 			String trans = "Trans Bee";
-			if (bee.getDisplayName().getContents().equalsIgnoreCase(trans)) {
+			if (bee.getDisplayName().getString().equalsIgnoreCase(trans)) {
 				itemStackToDrop = new ItemStack(StatueRegistry.BEE_STATUE.get());
-				itemStackToDrop.setHoverName(new TextComponent(trans));
+				itemStackToDrop.setHoverName(Component.literal(trans));
 			}
 			String tropi = "Tropibee";
-			if (bee.getDisplayName().getContents().equalsIgnoreCase(trans)) {
+			if (bee.getDisplayName().getString().equalsIgnoreCase(trans)) {
 				itemStackToDrop = new ItemStack(StatueRegistry.BEE_STATUE.get());
-				itemStackToDrop.setHoverName(new TextComponent(tropi));
+				itemStackToDrop.setHoverName(Component.literal(tropi));
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Rabbit rabbit) {
@@ -106,20 +107,34 @@ public class DropHandler {
 			};
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Cat cat) {
-			new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
-			ItemStack itemStackToDrop = switch (cat.getCatType()) {
-				case 1 -> new ItemStack(StatueRegistry.CAT_TUXEDO_STATUE.get());
-				case 2 -> new ItemStack(StatueRegistry.CAT_RED_STATUE.get());
-				case 3 -> new ItemStack(StatueRegistry.CAT_SIAMESE_STATUE.get());
-				case 4 -> new ItemStack(StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get());
-				case 5 -> new ItemStack(StatueRegistry.CAT_CALICO_STATUE.get());
-				case 6 -> new ItemStack(StatueRegistry.CAT_PERSIAN_STATUE.get());
-				case 7 -> new ItemStack(StatueRegistry.CAT_RAGDOLL_STATUE.get());
-				case 8 -> new ItemStack(StatueRegistry.CAT_WHITE_STATUE.get());
-				case 9 -> new ItemStack(StatueRegistry.CAT_JELLIE_STATUE.get());
-				case 10 -> new ItemStack(StatueRegistry.CAT_BLACK_STATUE.get());
-				default -> new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
-			};
+			ItemStack itemStackToDrop = ItemStack.EMPTY;
+			CatVariant variant = cat.getCatVariant();
+			if (variant == CatVariant.TABBY) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
+			} else if (variant == CatVariant.BLACK) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_TUXEDO_STATUE.get());
+			} else if (variant == CatVariant.RED) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_RED_STATUE.get());
+			} else if (variant == CatVariant.SIAMESE) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_SIAMESE_STATUE.get());
+			} else if (variant == CatVariant.BRITISH_SHORTHAIR) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get());
+			} else if (variant == CatVariant.CALICO) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_CALICO_STATUE.get());
+			} else if (variant == CatVariant.PERSIAN) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_PERSIAN_STATUE.get());
+			} else if (variant == CatVariant.RAGDOLL) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_RAGDOLL_STATUE.get());
+			} else if (variant == CatVariant.WHITE) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_WHITE_STATUE.get());
+			} else if (variant == CatVariant.JELLIE) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_JELLIE_STATUE.get());
+			} else if (variant == CatVariant.ALL_BLACK) {
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_BLACK_STATUE.get());
+			} else {
+				//Fallback to tabby
+				itemStackToDrop = new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
+			}
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof ElderGuardian) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.ELDER_GUARDIAN_STATUE.get());
@@ -176,7 +191,7 @@ public class DropHandler {
 						List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 						if (!luckyPlayers.isEmpty()) {
 							for (String luckyName : luckyPlayers) {
-								String user = sourcePlayer.getName().getContents();
+								String user = sourcePlayer.getName().getString();
 
 								if (!luckyName.isEmpty() && user.equals(luckyName)) {
 									playerDropChance = StatuesConfig.COMMON.playerStatueDropChance.get() / 4;
@@ -250,7 +265,7 @@ public class DropHandler {
 					List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 					if (!luckyPlayers.isEmpty()) {
 						for (String luckyName : luckyPlayers) {
-							String user = player.getName().getContents();
+							String user = player.getName().getString();
 
 							if (!luckyName.isEmpty() && user.equals(luckyName)) {
 								default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;

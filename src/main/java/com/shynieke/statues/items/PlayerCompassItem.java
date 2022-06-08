@@ -6,7 +6,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -40,7 +39,7 @@ public class PlayerCompassItem extends Item {
 	public void appendHoverText(ItemStack stack, @Nullable Level reader, List<Component> tooltip, TooltipFlag flag) {
 		CompoundTag tag = stack.hasTag() ? stack.getTag() : new CompoundTag();
 		if (tag != null && !tag.getString("playerTracking").isEmpty()) {
-			tooltip.add(new TranslatableComponent("statues.last.known.location", tag.getString("playerTracking")).withStyle(ChatFormatting.GOLD));
+			tooltip.add(Component.translatable("statues.last.known.location", tag.getString("playerTracking")).withStyle(ChatFormatting.GOLD));
 		}
 	}
 }

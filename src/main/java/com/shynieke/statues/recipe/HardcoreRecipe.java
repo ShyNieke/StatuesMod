@@ -14,7 +14,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -54,7 +53,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 		if (!display.contains("lore")) {
 			ListTag nbtTagList = new ListTag();
 			nbtTagList.add(StringTag.valueOf(Component.Serializer.toJson(
-					new TextComponent("Only craftable in Hardcore Mode").withStyle(ChatFormatting.DARK_PURPLE))));
+					Component.literal("Only craftable in Hardcore Mode").withStyle(ChatFormatting.DARK_PURPLE))));
 			display.put("Lore", nbtTagList);
 		}
 
@@ -186,7 +185,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 		}
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<HardcoreRecipe> {
+	public static class Serializer implements RecipeSerializer<HardcoreRecipe> {
 
 		public HardcoreRecipe fromJson(ResourceLocation location, JsonObject jsonObject) {
 			String s = GsonHelper.getAsString(jsonObject, "group", "");

@@ -36,7 +36,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	public static final BooleanProperty INTERACTIVE = BooleanProperty.create("interactive");
 
 	public AbstractStatueBase(Block.Properties builder) {
-		super(builder.strength(0.6F)); // Resistance 0.6F
+		super(builder.strength(0.6F));
 		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(INTERACTIVE, false));
 	}
 

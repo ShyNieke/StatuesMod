@@ -4,7 +4,7 @@ import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.recipes.StatueLootList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -32,7 +32,7 @@ public class KingCluckStatueBlock extends AbstractStatueBase {
 		blockEntity.giveItem(StatueLootList.getLootInfo("king_cluck").getLoot(), playerIn);
 
 		Chicken cluck = new Chicken(EntityType.CHICKEN, worldIn);
-		cluck.setCustomName(new TextComponent("King Cluck"));
+		cluck.setCustomName(Component.literal("King Cluck"));
 		blockEntity.summonMob(cluck);
 	}
 

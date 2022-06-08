@@ -2,6 +2,7 @@ package com.shynieke.statues.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.material.Fluids;
 import javax.annotation.Nullable;
 
 public class AbstractBaseBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
+	protected static final RandomSource RANDOM = RandomSource.create();
 	public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 

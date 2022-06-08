@@ -13,8 +13,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -86,13 +85,13 @@ public class PlayerPoseScreen extends Screen {
 		}));
 
 		// rotation textbox
-		this.rotationTextField = new NumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (22), 38, 17, new TextComponent("field.rotation"));
+		this.rotationTextField = new NumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (22), 38, 17, Component.literal("field.rotation"));
 		this.rotationTextField.setValue(String.valueOf((int) this.playerStatueData.rotation));
 		this.rotationTextField.setMaxLength(3);
 		this.addWidget(this.rotationTextField);
 
 		// Y Offset textbox
-		this.YOffsetTextField = new DecimalNumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (44), 38, 17, new TextComponent("field.yOffset"));
+		this.YOffsetTextField = new DecimalNumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (44), 38, 17, Component.literal("field.yOffset"));
 		this.YOffsetTextField.setValue(String.valueOf((float) Mth.clamp(this.playerStatueData.yOffset, -1, 1)));
 		this.YOffsetTextField.setMaxLength(5);
 		this.addWidget(this.YOffsetTextField);
@@ -106,7 +105,7 @@ public class PlayerPoseScreen extends Screen {
 			int height = 17;
 			String value = String.valueOf((int) this.playerStatueData.pose[i]);
 
-			this.poseTextFields[i] = new NumberFieldBox(this.font, x, y, width, height, new TextComponent(String.format("field.%s", i)));
+			this.poseTextFields[i] = new NumberFieldBox(this.font, x, y, width, height, Component.literal(String.format("field.%s", i)));
 			this.poseTextFields[i].setValue(value);
 			this.poseTextFields[i].setMaxLength(3);
 			this.addWidget(this.poseTextFields[i]);
@@ -116,11 +115,11 @@ public class PlayerPoseScreen extends Screen {
 
 		// done & cancel buttons
 		offsetX = this.width - 20;
-		this.doneButton = this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslatableComponent("gui.done"), (button) -> {
+		this.doneButton = this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, Component.translatable("gui.done"), (button) -> {
 			this.updateEntity(this.writeFieldsToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}));
-		this.cancelButton = this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, new TranslatableComponent("gui.cancel"), (button) -> {
+		this.cancelButton = this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, Component.translatable("gui.cancel"), (button) -> {
 			this.updateEntity(this.playerStatueData.writeNBT());
 			this.minecraft.setScreen((Screen) null);
 		}));

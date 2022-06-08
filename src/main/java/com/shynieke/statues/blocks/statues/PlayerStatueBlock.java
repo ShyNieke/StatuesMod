@@ -10,7 +10,6 @@ import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTags;
 import com.shynieke.statues.items.PlayerStatueSpawnItem;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,8 +17,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -187,7 +184,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		if (!worldIn.isClientSide && getBE(worldIn, pos) != null) {
 			PlayerBlockEntity playerBlockEntity = getBE(worldIn, pos);
 			if (stack.hasCustomHoverName()) {
-				String stackName = stack.getHoverName().getContents();
+				String stackName = stack.getHoverName().getString();
 				boolean spaceFlag = stackName.contains(" ");
 				boolean emptyFlag = stackName.isEmpty();
 
@@ -222,7 +219,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		if (Screen.hasShiftDown()) {
 			if (stack.hasTag()) {
 				CompoundTag tag = stack.getTag();
-				MutableComponent userComponent = new TextComponent("Username: ").withStyle(ChatFormatting.GOLD);
+				MutableComponent userComponent = Component.literal("Username: ").withStyle(ChatFormatting.GOLD);
 				userComponent.append(stack.getHoverName().plainCopy().withStyle(ChatFormatting.WHITE));
 				tooltip.add(userComponent);
 
@@ -232,8 +229,8 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						GameProfile gameprofile = NbtUtils.readGameProfile(profileTag);
 
 						if (gameprofile != null && gameprofile.isComplete()) {
-							MutableComponent UUIDComponent = new TextComponent("UUID: ").withStyle(ChatFormatting.GOLD);
-							UUIDComponent.append(new TextComponent(gameprofile.getId().toString()).withStyle(ChatFormatting.WHITE));
+							MutableComponent UUIDComponent = Component.literal("UUID: ").withStyle(ChatFormatting.GOLD);
+							UUIDComponent.append(Component.literal(gameprofile.getId().toString()).withStyle(ChatFormatting.WHITE));
 							tooltip.add(UUIDComponent);
 						}
 					}
@@ -310,11 +307,11 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 									}
 								}
 							} else {
-								playerIn.sendMessage(new TranslatableComponent("statues:player.compass.dimension.failure", ChatFormatting.GOLD + playerName), Util.NIL_UUID);
+								playerIn.sendSystemMessage(Component.translatable("statues:player.compass.dimension.failure", ChatFormatting.GOLD + playerName));
 							}
 
 						} else {
-							playerIn.sendMessage(new TranslatableComponent("statues:player.compass.offline", ChatFormatting.GOLD + playerName), Util.NIL_UUID);
+							playerIn.sendSystemMessage(Component.translatable("statues:player.compass.offline", ChatFormatting.GOLD + playerName));
 						}
 						return InteractionResult.SUCCESS;
 					}

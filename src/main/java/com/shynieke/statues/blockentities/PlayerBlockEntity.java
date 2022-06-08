@@ -15,9 +15,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.Services;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.Nameable;
@@ -50,10 +49,14 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		this.onlineChecking = false;
 	}
 
-	public static void setup(GameProfileCache cache, MinecraftSessionService session, Executor executor) {
-		profileCache = cache;
-		sessionService = session;
+	public static void setup(GameProfileCache gameProfileCache, MinecraftSessionService service, Executor executor) {
+		profileCache = gameProfileCache;
+		sessionService = service;
 		mainThreadExecutor = executor;
+	}
+
+	public static void setup(Services services, Executor executor) {
+		setup(services.profileCache(), services.sessionService(), executor);
 	}
 
 	public static void clear() {
@@ -222,7 +225,7 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 
 	@Override
 	public Component getName() {
-		return this.hasCustomName() ? new TextComponent(this.playerProfile != null ? playerProfile.getName() : "") : new TranslatableComponent("statue.player");
+		return this.hasCustomName() ? Component.literal(this.playerProfile != null ? playerProfile.getName() : "") : Component.translatable("statue.player");
 	}
 
 	@Nullable

@@ -2,6 +2,7 @@ package com.shynieke.statues.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -20,7 +21,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import javax.annotation.Nullable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
-import java.util.Random;
 
 public class StatueBatEntity extends Bat {
 	public StatueBatEntity(EntityType<? extends StatueBatEntity> type, Level level) {
@@ -54,11 +54,11 @@ public class StatueBatEntity extends Bat {
 		return super.hurt(source, amount);
 	}
 
-	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
-		if (pos.getY() >= worldIn.getSeaLevel()) {
+	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor levelAccessor, MobSpawnType reason, BlockPos pos, RandomSource randomIn) {
+		if (pos.getY() >= levelAccessor.getSeaLevel()) {
 			return false;
 		} else {
-			int i = worldIn.getMaxLocalRawBrightness(pos);
+			int i = levelAccessor.getMaxLocalRawBrightness(pos);
 			int j = 4;
 			if (isNearHalloween()) {
 				j = 7;
@@ -66,7 +66,7 @@ public class StatueBatEntity extends Bat {
 				return false;
 			}
 
-			return i > randomIn.nextInt(j) ? false : checkMobSpawnRules(batIn, worldIn, reason, pos, randomIn);
+			return i > randomIn.nextInt(j) ? false : checkMobSpawnRules(batIn, levelAccessor, reason, pos, randomIn);
 		}
 	}
 

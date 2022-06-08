@@ -3,7 +3,6 @@ package com.shynieke.statues.items;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,7 +30,7 @@ public class StatueCoreItem extends Item {
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltips, TooltipFlag flag) {
 		CompoundTag tag = stack.hasTag() ? stack.getTag() : new CompoundTag();
 		if (tag != null && !tag.getString(entityTag).isEmpty()) {
-			tooltips.add(new TranslatableComponent("statues.core.info,", tag.getString(entityTag)).withStyle(ChatFormatting.GOLD));
+			tooltips.add(Component.translatable("statues.core.info,", tag.getString(entityTag)).withStyle(ChatFormatting.GOLD));
 		}
 		super.appendHoverText(stack, level, tooltips, flag);
 	}

@@ -9,7 +9,7 @@ import com.shynieke.statues.util.ListHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -55,7 +55,7 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 
 	public Creeper getGeneral(Level worldIn) {
 		Creeper general = new Creeper(EntityType.CREEPER, worldIn);
-		general.setCustomName(new TextComponent("General Spazz"));
+		general.setCustomName(Component.literal("General Spazz"));
 		CompoundTag tag = new CompoundTag();
 		tag.putByte("ExplosionRadius", (byte) 0);
 		general.addAdditionalSaveData(tag);

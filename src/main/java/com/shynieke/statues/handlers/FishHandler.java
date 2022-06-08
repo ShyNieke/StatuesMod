@@ -35,8 +35,7 @@ public class FishHandler {
 					List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 					if (!luckyPlayers.isEmpty()) {
 						for (String luckyName : luckyPlayers) {
-							String user = player.getName().getContents();
-
+							String user = player.getName().getString();
 							if (!luckyName.isEmpty() && user.equals(luckyName)) {
 								default_drop_chance = StatuesConfig.COMMON.statueDropChance.get() / 4;
 							}

@@ -1,15 +1,12 @@
 package com.shynieke.statues.client;
 
-import com.mojang.authlib.AuthenticationService;
-import com.mojang.authlib.GameProfileRepository;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
 import com.shynieke.statues.client.model.PlayerStatueModel;
+import com.shynieke.statues.client.render.PlayerBER;
 import com.shynieke.statues.client.render.PlayerStatueRenderer;
-import com.shynieke.statues.client.render.PlayerTileRenderer;
 import com.shynieke.statues.client.render.StatueBatRenderer;
 import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueRegistry;
@@ -27,7 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.Services;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -48,7 +45,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import javax.annotation.Nullable;
-import java.io.File;
 
 public class ClientHandler {
 	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue"), "player_statue");
@@ -178,7 +174,7 @@ public class ClientHandler {
 	}
 
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerBlockEntityRenderer(StatueBlockEntities.PLAYER.get(), PlayerTileRenderer::new);
+		event.registerBlockEntityRenderer(StatueBlockEntities.PLAYER.get(), PlayerBER::new);
 
 		event.registerEntityRenderer(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
 		event.registerEntityRenderer(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
@@ -219,12 +215,10 @@ public class ClientHandler {
 	}
 
 	private static void setPlayerCache(Minecraft mc) {
-		AuthenticationService authenticationService = new YggdrasilAuthenticationService(mc.getProxy());
-		MinecraftSessionService sessionService = authenticationService.createMinecraftSessionService();
-		GameProfileRepository profileRepository = authenticationService.createProfileRepository();
-		GameProfileCache profileCache = new GameProfileCache(profileRepository, new File(mc.gameDirectory, MinecraftServer.USERID_CACHE_FILE.getName()));
-		profileCache.setExecutor(mc);
-		PlayerBlockEntity.setup(profileCache, sessionService, mc);
+		YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(mc.getProxy());
+		Services services = Services.create(authenticationService, mc.gameDirectory);
+		services.profileCache().setExecutor(mc);
+		PlayerBlockEntity.setup(services, mc);
 		GameProfileCache.setUsesAuthentication(false);
 	}
 }

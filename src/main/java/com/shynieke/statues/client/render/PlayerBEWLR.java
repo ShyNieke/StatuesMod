@@ -19,14 +19,15 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerBlockEntityInventoryRenderer extends BlockEntityWithoutLevelRenderer {
+public class PlayerBEWLR extends BlockEntityWithoutLevelRenderer {
 	private StatuePlayerTileModel model;
 	private StatuePlayerTileModel slimModel;
 
-	public PlayerBlockEntityInventoryRenderer(BlockEntityRendererProvider.Context context) {
+	public PlayerBEWLR(BlockEntityRendererProvider.Context context) {
 		super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
 		this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
 		this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
@@ -45,7 +46,7 @@ public class PlayerBlockEntityInventoryRenderer extends BlockEntityWithoutLevelR
 			GameProfile gameprofile = null;
 
 			if (stack.hasCustomHoverName()) {
-				String stackName = stack.getHoverName().getContents().toLowerCase();
+				String stackName = stack.getHoverName().getString().toLowerCase(Locale.ROOT);
 				boolean validFlag = !stackName.isEmpty() && !stackName.contains(" ");
 
 				if (validFlag) {
@@ -107,7 +108,7 @@ public class PlayerBlockEntityInventoryRenderer extends BlockEntityWithoutLevelR
 
 	public void renderItem(GameProfile gameprofile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
 		boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
-		VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerTileRenderer.getRenderType(gameprofile));
+		VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerBER.getRenderType(gameprofile));
 		if (flag) {
 			if (slimModel != null) {
 				slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

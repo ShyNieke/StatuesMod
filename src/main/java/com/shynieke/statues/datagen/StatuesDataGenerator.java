@@ -4,8 +4,10 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractStatueBase;
+import com.shynieke.statues.init.StatueLootModifiers;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTags;
+import com.shynieke.statues.lootmodifiers.StatuesLootModifier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.EntityLoot;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
@@ -27,11 +30,14 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import net.minecraftforge.common.loot.LootTableIdCondition;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
@@ -45,7 +51,122 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import static com.shynieke.statues.init.StatueRegistry.*;
+import static com.shynieke.statues.init.StatueRegistry.ANGRY_BEE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.BABY_ZOMBIE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.BEE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.BLAZE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.BLOCKS;
+import static com.shynieke.statues.init.StatueRegistry.BROWN_MOOSHROOM_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.BUMBO_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAMPFIRE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_BLACK_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_CALICO_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_JELLIE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_PERSIAN_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_RAGDOLL_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_RED_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_SIAMESE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_TABBY_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_TUXEDO_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CAT_WHITE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CHICKEN_JOCKEY_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CHICKEN_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.COD_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.COW_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.CREEPER_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.DETECTIVE_PLATYPUS;
+import static com.shynieke.statues.init.StatueRegistry.DISPLAY_STAND;
+import static com.shynieke.statues.init.StatueRegistry.DOLPHIN_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.DROWNED_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.EAGLE_RAY;
+import static com.shynieke.statues.init.StatueRegistry.ELDER_GUARDIAN_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.ENDERMAN_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.ENDERMITE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.EVOKER_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.FLOOD_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.FOX_SNOW_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.FOX_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.GHAST_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.GUARDIAN_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.HUSK_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.INFO_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.KING_CLUCK_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.MAGMA_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.MOOSHROOM_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PANDA_ANGRY_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PANDA_BROWN_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PANDA_LAZY_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PANDA_NORMAL_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PANDA_PLAYFUL_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PANDA_WEAK_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PANDA_WORRIED_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PEBBLE;
+import static com.shynieke.statues.init.StatueRegistry.PIG_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PILLAGER_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PLAYER_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PLAYER_STATUE_ENTITY;
+import static com.shynieke.statues.init.StatueRegistry.PUFFERFISH_MEDIUM_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PUFFERFISH_SMALL_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.PUFFERFISH_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.RABBIT_BR_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.RABBIT_BS_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.RABBIT_BW_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.RABBIT_GO_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.RABBIT_WH_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.RABBIT_WS_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.RAVAGER_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.SALMON_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_SHAVEN_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_BLACK;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_BLUE;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_BROWN;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_CYAN;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_GRAY;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_GREEN;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_LIGHT_BLUE;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_LIGHT_GRAY;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_LIME;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_MAGENTA;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_ORANGE;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_PINK;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_PURPLE;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_RED;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_WHITE;
+import static com.shynieke.statues.init.StatueRegistry.SHEEP_STATUE_YELLOW;
+import static com.shynieke.statues.init.StatueRegistry.SHULKER_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.SLABFISH;
+import static com.shynieke.statues.init.StatueRegistry.SLIME_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.SNOW_GOLEM_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.SOMBRERO;
+import static com.shynieke.statues.init.StatueRegistry.SPIDER_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.SQUID_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.STATUE_BAT;
+import static com.shynieke.statues.init.StatueRegistry.STATUE_CORE;
+import static com.shynieke.statues.init.StatueRegistry.TOTEM_OF_UNDYING_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.TRANS_BEE;
+import static com.shynieke.statues.init.StatueRegistry.TROPIBEE;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_B;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_BB;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_BE;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_BM;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_BMB;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_BMS;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_E;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_ES;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_HB;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_SB;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_SD;
+import static com.shynieke.statues.init.StatueRegistry.TROPICAL_FISH_SS;
+import static com.shynieke.statues.init.StatueRegistry.TURTLE_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.VILLAGER_BR_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.VILLAGER_GR_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.VILLAGER_PU_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.VILLAGER_WH_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.VINDICATOR_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.WASTELAND_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.WITCH_STATUE;
+import static com.shynieke.statues.init.StatueRegistry.ZOMBIE_STATUE;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class StatuesDataGenerator {
@@ -55,13 +176,14 @@ public class StatuesDataGenerator {
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-			generator.addProvider(new StatueLoot(generator));
+			generator.addProvider(event.includeServer(), new StatueLoot(generator));
 			StatueBlockTags blockTags = new StatueBlockTags(generator, event.getExistingFileHelper());
-			generator.addProvider(blockTags);
-			generator.addProvider(new StatueItemTags(generator, blockTags, event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), blockTags);
+			generator.addProvider(event.includeServer(), new StatueItemTags(generator, blockTags, event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), new StatueModifiers(generator));
 		}
 		if (event.includeClient()) {
-			generator.addProvider(new StatueItemModels(generator, helper));
+			generator.addProvider(event.includeClient(), new StatueItemModels(generator, helper));
 		}
 	}
 
@@ -182,6 +304,20 @@ public class StatuesDataGenerator {
 		@Override
 		public String getName() {
 			return "Item Models";
+		}
+	}
+
+	public static class StatueModifiers extends GlobalLootModifierProvider {
+		public StatueModifiers(DataGenerator generator) {
+			super(generator, Reference.MOD_ID);
+		}
+
+		@Override
+		protected void start() {
+			this.add("statues_loot", StatueLootModifiers.STATUES_LOOT.get(), new StatuesLootModifier(
+					new LootItemCondition[]{
+							LootTableIdCondition.builder(BuiltInLootTables.ANCIENT_CITY).build()
+					}));
 		}
 	}
 }
