@@ -2,8 +2,8 @@ package com.shynieke.statues.world.biome_modifier;
 
 import com.mojang.serialization.Codec;
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueBiomeModifierSerializers;
+import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.MobCategory;
@@ -27,7 +27,7 @@ public class StatueBatBiomeModifier implements BiomeModifier {
 		if (phase == Phase.ADD) {
 			if (StatuesConfig.COMMON.statueBatSpawning.get()) {
 				MobSpawnSettingsBuilder mobSpawnSettings = builder.getMobSpawnSettings();
-				if (!biome.is(Tags.Biomes.IS_END) && biome.is(Biomes.DEEP_DARK)) {
+				if (!biome.is(BiomeTags.IS_END) && !biome.is(Biomes.DEEP_DARK)) {
 					if (biome.is(BiomeTags.IS_NETHER)) {
 						if (biome.is(Biomes.BASALT_DELTAS)) {
 							mobSpawnSettings.getSpawner(MobCategory.AMBIENT).add(new SpawnerData(StatueRegistry.STATUE_BAT.get(), 1, 1, 1));

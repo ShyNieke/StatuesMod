@@ -21,6 +21,12 @@ side="BOTH"
 [[dependencies.statues]]
 modId="forge"
 mandatory=true
-versionRange="[40.0.2,)"
+versionRange="[41.0.94,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.statues]]
+modId="curios"
+mandatory=false
+versionRange="[1.19-5.1.0.4,)"
 ordering="NONE"
 side="BOTH"

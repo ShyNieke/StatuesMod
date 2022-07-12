@@ -65,7 +65,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public CompoundTag getTileData() {
+	public CompoundTag getPersistentData() {
 		CompoundTag nbt = new CompoundTag();
 		this.saveAdditional(nbt);
 		return nbt;

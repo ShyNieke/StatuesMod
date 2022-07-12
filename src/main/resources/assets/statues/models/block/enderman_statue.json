@@ -5,6 +5,7 @@
 		"texture": "statues:block/enderman",
 		"texture1": "statues:block/pebble"
 	},
+  	"render_type": "minecraft:cutout",
 	"elements": [ 	 
 		{
 			"__comment": "Box1",

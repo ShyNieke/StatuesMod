@@ -110,7 +110,7 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 	}
 
 	@Override
-	public CompoundTag getTileData() {
+	public CompoundTag getPersistentData() {
 		CompoundTag nbt = new CompoundTag();
 		this.saveAdditional(nbt);
 		return nbt;

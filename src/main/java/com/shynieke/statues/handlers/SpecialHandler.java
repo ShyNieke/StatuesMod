@@ -29,7 +29,7 @@ public class SpecialHandler {
 	public void onCrafted(ItemCraftedEvent event) {
 		ItemStack resultStack = event.getCrafting();
 		if (resultStack.getItem() == StatueRegistry.PLAYER_STATUE.get().asItem()) {
-			Player player = event.getPlayer();
+			Player player = event.getEntity();
 			if (player == null || player instanceof FakePlayer) {
 				event.setCanceled(true);
 			}

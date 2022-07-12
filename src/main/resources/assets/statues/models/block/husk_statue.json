@@ -4,6 +4,7 @@
 		"particle": "statues:block/husk",
 		"texture": "statues:block/husk"
 	},
+  	"render_type": "minecraft:cutout",
 	"elements": [ 	 
 		{
 			"__comment": "Box5",

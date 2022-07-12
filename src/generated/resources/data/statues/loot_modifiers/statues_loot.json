@@ -1,5 +1,5 @@
 {
-  "type": "statues:statues_loot",
+  "type": "statues:statues_city_loot",
   "conditions": [
     {
       "condition": "forge:loot_table_id",

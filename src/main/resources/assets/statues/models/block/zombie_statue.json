@@ -4,6 +4,7 @@
 		"particle": "statues:block/zombie_statue",
 		"texture": "statues:block/zombie_statue"
 	},
+  	"render_type": "minecraft:cutout",
 	"elements": [ 	 
 		{
 			"__comment": "Box5",

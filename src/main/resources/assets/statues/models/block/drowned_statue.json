@@ -4,6 +4,7 @@
 		"particle": "statues:block/drowned",
 		"texture": "statues:block/drowned"
 	},
+  	"render_type": "minecraft:cutout",
 	"elements": [ 	 
 		{
 			"__comment": "Box5",

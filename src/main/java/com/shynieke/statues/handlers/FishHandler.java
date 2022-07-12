@@ -16,7 +16,7 @@ import java.util.List;
 public class FishHandler {
 	@SubscribeEvent
 	public void onItemFished(ItemFishedEvent event) {
-		Player player = event.getPlayer();
+		Player player = event.getEntity();
 		Level level = player.level;
 		if (!level.isClientSide) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EAGLE_RAY.get());

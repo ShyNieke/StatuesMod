@@ -6,6 +6,7 @@
 		"texture2": "block/enchanting_table_top",
 		"texture3": "block/gold_block"
 	},
+  	"render_type": "minecraft:cutout",
 	"elements": [ 	 
 		{
 			"__comment": "Cube1",

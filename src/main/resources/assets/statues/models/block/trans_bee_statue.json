@@ -4,6 +4,7 @@
 		"1": "statues:block/trans_bee",
 		"particle": "statues:block/trans_bee"
 	},
+  	"render_type": "minecraft:cutout",
 	"elements": [
 		{
 			"from": [6, 7, 6],

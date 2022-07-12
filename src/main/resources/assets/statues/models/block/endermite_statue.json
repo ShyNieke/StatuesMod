@@ -4,6 +4,7 @@
 		"particle": "statues:block/endermite",
 		"texture": "statues:block/endermite"
 	},
+  	"render_type": "minecraft:translucent",
 	"elements": [ 	 
 		{
 			"__comment": "Box1",

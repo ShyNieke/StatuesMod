@@ -7,6 +7,7 @@
 		"texture3": "statues:block/happytenyearethofromshynieke",
 		"fire_0": "statues:block/blue_fire"
 	},
+  	"render_type": "minecraft:cutout",
 	"elements": [ 	 
 		{
 			"__comment": "Etho_layer1_1",

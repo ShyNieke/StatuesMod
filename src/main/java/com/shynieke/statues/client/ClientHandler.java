@@ -11,13 +11,10 @@ import com.shynieke.statues.client.render.StatueBatRenderer;
 import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.color.block.BlockColors;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
@@ -38,8 +35,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -51,18 +48,6 @@ public class ClientHandler {
 	public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue_slim"), "player_statue_slim");
 
 	public static void doClientStuff(final FMLClientSetupEvent event) {
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.CAMPFIRE_STATUE.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.DROWNED_STATUE.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.HUSK_STATUE.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.ZOMBIE_STATUE.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.ENDERMAN_STATUE.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.INFO_STATUE.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.WASTELAND_STATUE.get(), RenderType.cutout());
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.TRANS_BEE.get(), RenderType.cutout());
-
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.ENDERMITE_STATUE.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(StatueRegistry.SLIME_STATUE.get(), RenderType.translucent());
-
 		setPlayerCache(Minecraft.getInstance());
 
 		ItemProperties.register(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new ClampedItemPropertyFunction() {
@@ -185,23 +170,21 @@ public class ClientHandler {
 		event.registerLayerDefinition(PLAYER_STATUE_SLIM, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, true), 64, 64));
 	}
 
-	public static void registerBlockColors(final ColorHandlerEvent.Block event) {
-		BlockColors colors = event.getBlockColors();
-
-		colors.register(FishStatueBlock::getColor, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
+	public static void registerBlockColors(final RegisterColorHandlersEvent.Block event) {
+		event.register(FishStatueBlock::getColor, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
 				StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
 				StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(),
 				StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get());
 	}
 
-	public static void onLogin(ClientPlayerNetworkEvent.LoggedInEvent event) {
+	public static void onLogin(ClientPlayerNetworkEvent.LoggingIn event) {
 		Minecraft mc = Minecraft.getInstance();
 		if (!mc.isLocalServer()) {
 			setPlayerCache(mc);
 		}
 	}
 
-	public static void onRespawn(ClientPlayerNetworkEvent.RespawnEvent event) {
+	public static void onRespawn(ClientPlayerNetworkEvent.Clone event) {
 		Minecraft mc = Minecraft.getInstance();
 		if (!mc.isLocalServer()) {
 			setPlayerCache(mc);

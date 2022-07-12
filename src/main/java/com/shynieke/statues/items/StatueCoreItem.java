@@ -46,7 +46,7 @@ public class StatueCoreItem extends Item {
 				} else {
 					if (entityIn.isAlive()) {
 						if (entityIn instanceof Mob) {
-							tag.putString(entityTag, String.valueOf(ForgeRegistries.ENTITIES.getKey(entityIn.getType())));
+							tag.putString(entityTag, String.valueOf(ForgeRegistries.ENTITY_TYPES.getKey(entityIn.getType())));
 							stack.setTag(tag);
 						}
 					}
