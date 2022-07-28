@@ -2,7 +2,7 @@ package com.shynieke.statues.init;
 
 import com.mojang.serialization.Codec;
 import com.shynieke.statues.Reference;
-import com.shynieke.statues.world.biome_modifier.StatueBatBiomeModifier;
+import com.shynieke.statues.biome_modifier.StatueBatBiomeModifier;
 import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

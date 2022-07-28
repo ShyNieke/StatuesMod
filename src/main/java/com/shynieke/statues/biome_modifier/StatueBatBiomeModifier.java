@@ -1,4 +1,4 @@
-package com.shynieke.statues.world.biome_modifier;
+package com.shynieke.statues.biome_modifier;
 
 import com.mojang.serialization.Codec;
 import com.shynieke.statues.config.StatuesConfig;
