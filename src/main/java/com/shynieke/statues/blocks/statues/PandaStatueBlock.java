@@ -28,7 +28,7 @@ public class PandaStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 	}
 
@@ -48,7 +48,7 @@ public class PandaStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		Direction direction = state.getValue(FACING);
 		return direction.getAxis() == Direction.Axis.X ? NORTH_WEST_SHAPE : SOUTH_EAST_SHAPE;
 	}

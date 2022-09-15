@@ -46,6 +46,7 @@ public class Statues {
 		eventBus.addListener(this::setup);
 		MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
 
+		StatueSerializers.ENTITY_DATA_SERIALIZER.register(eventBus);
 		StatueRegistry.ENTITIES.register(eventBus);
 		StatueRegistry.BLOCKS.register(eventBus);
 		StatueRegistry.ITEMS.register(eventBus);
@@ -82,7 +83,6 @@ public class Statues {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		StatueLootList.initializeStatueLoot();
-		EntityDataSerializers.registerSerializer(StatueSerializers.OPTIONAL_GAME_PROFILE);
 		StatueEntities.setupEntities();
 
 		StatuesNetworking.init();

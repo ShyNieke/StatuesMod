@@ -64,7 +64,7 @@ public class PlayerStatue extends LivingEntity {
 	private static final Rotations DEFAULT_RIGHTARM_ROTATION = new Rotations(-15.0F, 0.0F, 10.0F);
 	private static final Rotations DEFAULT_LEFTLEG_ROTATION = new Rotations(-1.0F, 0.0F, -1.0F);
 	private static final Rotations DEFAULT_RIGHTLEG_ROTATION = new Rotations(1.0F, 0.0F, 1.0F);
-	private static final EntityDataAccessor<Optional<GameProfile>> GAMEPROFILE = SynchedEntityData.defineId(PlayerStatue.class, StatueSerializers.OPTIONAL_GAME_PROFILE);
+	private static final EntityDataAccessor<Optional<GameProfile>> GAMEPROFILE = SynchedEntityData.defineId(PlayerStatue.class, StatueSerializers.OPTIONAL_GAME_PROFILE.get());
 	public static final EntityDataAccessor<Byte> STATUS = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.BYTE);
 	public static final EntityDataAccessor<Float> Y_OFFSET = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.FLOAT);
 	public static final EntityDataAccessor<Rotations> HEAD_ROTATION = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.ROTATIONS);
@@ -92,7 +92,11 @@ public class PlayerStatue extends LivingEntity {
 
 	public PlayerStatue(EntityType<? extends PlayerStatue> entityType, Level level) {
 		super(entityType, level);
-		this.maxUpStep = 0.0F;
+	}
+
+	@Override
+	public float getStepHeight() {
+		return 0.0F;
 	}
 
 	public PlayerStatue(Level level, double posX, double posY, double posZ) {
@@ -197,25 +201,17 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	public ItemStack getItemBySlot(EquipmentSlot slotIn) {
-		switch (slotIn.getType()) {
-			case HAND:
-				return this.handItems.get(slotIn.getIndex());
-			case ARMOR:
-				return this.armorItems.get(slotIn.getIndex());
-			default:
-				return ItemStack.EMPTY;
-		}
+		return switch (slotIn.getType()) {
+			case HAND -> this.handItems.get(slotIn.getIndex());
+			case ARMOR -> this.armorItems.get(slotIn.getIndex());
+		};
 	}
 
 	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
 		this.verifyEquippedItem(stack);
 		switch (slotIn.getType()) {
-			case HAND:
-				this.onEquipItem(slotIn, this.handItems.set(slotIn.getIndex(), stack), stack);
-				break;
-			case ARMOR:
-				this.onEquipItem(slotIn, this.armorItems.set(slotIn.getIndex(), stack), stack);
-				break;
+			case HAND -> this.onEquipItem(slotIn, this.handItems.set(slotIn.getIndex(), stack), stack);
+			case ARMOR -> this.onEquipItem(slotIn, this.armorItems.set(slotIn.getIndex(), stack), stack);
 		}
 
 	}
@@ -852,10 +848,6 @@ public class PlayerStatue extends LivingEntity {
 	 */
 	public boolean skipAttackInteraction(Entity entityIn) {
 		return entityIn instanceof Player && !this.level.mayInteract((Player) entityIn, this.blockPosition());
-	}
-
-	public HumanoidArm getdMainArm() {
-		return HumanoidArm.RIGHT;
 	}
 
 	protected SoundEvent getFallDamageSound(int heightIn) {

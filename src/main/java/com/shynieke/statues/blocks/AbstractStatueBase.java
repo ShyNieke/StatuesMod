@@ -149,25 +149,25 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		return this.isBaby() ? (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.5F : (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.0F;
 	}
 
-	public boolean canPlaySound(Level worldIn, BlockPos pos, BlockState state) {
-		BlockEntity blockEntity = worldIn.getBlockEntity(pos);
+	public boolean canPlaySound(Level level, BlockPos pos, BlockState state) {
+		BlockEntity blockEntity = level.getBlockEntity(pos);
 		boolean flag = state.getValue(INTERACTIVE) && (blockEntity instanceof StatueBlockEntity statueBlockEntity && statueBlockEntity.makesSounds());
-		boolean flag2 = worldIn.getBlockState(pos.below()).getBlock() instanceof NoteBlock;
+		boolean flag2 = level.getBlockState(pos.below()).getBlock() instanceof NoteBlock;
 		return flag || flag2;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, Level worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if (!worldIn.isClientSide) {
-			if (canPlaySound(worldIn, pos, state) && worldIn.hasNeighborSignal(pos)) {
-				worldIn.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F, (worldIn.random.nextFloat() - worldIn.random.nextFloat()) * 0.2F + 1.5F);
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if (!level.isClientSide) {
+			if (canPlaySound(level, pos, state) && level.hasNeighborSignal(pos)) {
+				level.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.5F);
 			}
 		}
-		super.neighborChanged(state, worldIn, pos, blockIn, fromPos, isMoving);
+		super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
 	}
 }

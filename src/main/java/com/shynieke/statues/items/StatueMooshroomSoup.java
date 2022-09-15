@@ -18,17 +18,17 @@ public class StatueMooshroomSoup extends Item {
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityIn) {
+	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityIn) {
 		if (entityIn instanceof Player playerIn && !((Player) entityIn).getAbilities().instabuild) {
 			ItemStack bowlStack = new ItemStack(Items.BOWL);
 			Inventory playerInv = playerIn.getInventory();
-			playerIn.eat(worldIn, stack);
+			playerIn.eat(level, stack);
 
 			if (playerIn instanceof ServerPlayer) {
 				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) playerIn, stack);
 			}
 
-			if (!worldIn.isClientSide) {
+			if (!level.isClientSide) {
 				if (playerInv.getFreeSlot() == -1) {
 					playerIn.spawnAtLocation(bowlStack, 0F);
 				} else {

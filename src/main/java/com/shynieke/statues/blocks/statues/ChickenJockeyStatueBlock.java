@@ -28,11 +28,11 @@ public class ChickenJockeyStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
-		blockEntity.summonMob(new Chicken(EntityType.CHICKEN, worldIn));
-		blockEntity.summonMob(new Zombie(EntityType.ZOMBIE, worldIn));
+		blockEntity.summonMob(new Chicken(EntityType.CHICKEN, level));
+		blockEntity.summonMob(new Zombie(EntityType.ZOMBIE, level));
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class ChickenJockeyStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

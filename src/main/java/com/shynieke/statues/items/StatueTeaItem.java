@@ -18,10 +18,10 @@ public class StatueTeaItem extends Item {
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityIn) {
+	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityIn) {
 		if (entityIn instanceof Player) {
 			Player playerIn = entityIn instanceof Player ? (Player) entityIn : null;
-			playerIn.eat(worldIn, stack);
+			playerIn.eat(level, stack);
 
 			if (playerIn instanceof ServerPlayer) {
 				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) playerIn, stack);

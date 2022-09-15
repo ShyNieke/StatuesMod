@@ -162,7 +162,7 @@ public class StatuesDataGenerator {
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 				this.add(StatueRegistry.STATUE_BAT.get(), LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-								.add(LootItem.lootTableItem(StatueRegistry.STATUE_CORE.get()).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 1.0F))))
+								.add(LootItem.lootTableItem(StatueRegistry.STATUE_CORE.get()).apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 			}
 

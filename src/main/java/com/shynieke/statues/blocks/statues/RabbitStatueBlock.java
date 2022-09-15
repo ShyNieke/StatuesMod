@@ -27,9 +27,9 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
-		blockEntity.summonMob(getKillerRabbit(worldIn));
+		blockEntity.summonMob(getKillerRabbit(level));
 	}
 
 	@Override
@@ -47,15 +47,15 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 		return SoundEvents.RABBIT_AMBIENT;
 	}
 
-	public Rabbit getKillerRabbit(Level worldIn) {
-		Rabbit evilRabbit = new Rabbit(EntityType.RABBIT, worldIn);
+	public Rabbit getKillerRabbit(Level level) {
+		Rabbit evilRabbit = new Rabbit(EntityType.RABBIT, level);
 		evilRabbit.setRabbitType(99);
 
 		return evilRabbit;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

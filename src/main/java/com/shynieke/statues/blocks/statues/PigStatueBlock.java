@@ -34,16 +34,16 @@ public class PigStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (this.isDecorative(state) && placer != null) {
-			if (worldIn.getBlockState(pos.below()).is(Tags.Blocks.SAND)) {
+			if (level.getBlockState(pos.below()).is(Tags.Blocks.SAND)) {
 				BlockPos downPos = pos.below();
-				worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
-				worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.WASTELAND_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
-				worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+				level.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
+				level.setBlockAndUpdate(pos.below(), StatueRegistry.WASTELAND_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			}
 		}
-		super.setPlacedBy(worldIn, pos, state, placer, stack);
+		super.setPlacedBy(level, pos, state, placer, stack);
 	}
 
 	public boolean isDecorative(BlockState state) {
@@ -51,7 +51,7 @@ public class PigStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 	}
 
@@ -66,7 +66,7 @@ public class PigStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 

@@ -33,22 +33,22 @@ public class SombreroBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		Block block = worldIn.getBlockState(pos.below()).getBlock();
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		Block block = level.getBlockState(pos.below()).getBlock();
 		if (block == Blocks.CACTUS && placer != null) {
 			BlockPos downPos = pos.below();
-			worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
-			worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.BUMBO_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
-			worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+			level.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
+			level.setBlockAndUpdate(pos.below(), StatueRegistry.BUMBO_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+			level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
-		super.setPlacedBy(worldIn, pos, state, placer, stack);
+		super.setPlacedBy(level, pos, state, placer, stack);
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		if (!worldIn.isClientSide && handIn == InteractionHand.MAIN_HAND) {
-			if (canPlaySound(worldIn, pos, state)) {
-				worldIn.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.NEUTRAL, 1F, getPitch());
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+		if (!level.isClientSide && handIn == InteractionHand.MAIN_HAND) {
+			if (canPlaySound(level, pos, state)) {
+				level.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.NEUTRAL, 1F, getPitch());
 			}
 		}
 		return InteractionResult.SUCCESS;
@@ -58,12 +58,12 @@ public class SombreroBlock extends AbstractBaseBlock {
 		return (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.0F;
 	}
 
-	public boolean canPlaySound(Level worldIn, BlockPos pos, BlockState state) {
-		return worldIn.getBlockState(pos.below()).getBlock() instanceof NoteBlock;
+	public boolean canPlaySound(Level level, BlockPos pos, BlockState state) {
+		return level.getBlockState(pos.below()).getBlock() instanceof NoteBlock;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

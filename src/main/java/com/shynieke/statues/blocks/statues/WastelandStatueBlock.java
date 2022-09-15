@@ -23,10 +23,10 @@ public class WastelandStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
-		Pig pig = new Pig(EntityType.PIG, worldIn);
+		Pig pig = new Pig(EntityType.PIG, level);
 		pig.setCustomName(Component.literal("Wasteland Pig"));
 		blockEntity.summonMob(pig);
 	}

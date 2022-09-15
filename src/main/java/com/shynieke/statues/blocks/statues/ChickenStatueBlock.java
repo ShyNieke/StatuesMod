@@ -34,17 +34,17 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (this.isDecorative(state) && placer != null) {
-			Block block = worldIn.getBlockState(pos.below()).getBlock();
+			Block block = level.getBlockState(pos.below()).getBlock();
 			if (block == Blocks.GOLD_BLOCK) {
 				BlockPos downPos = pos.below();
-				worldIn.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
-				worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.KING_CLUCK_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
-				worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+				level.addParticle(ParticleTypes.EXPLOSION, downPos.getX(), downPos.getY(), downPos.getZ(), 1.0D, 0.0D, 0.0D);
+				level.setBlockAndUpdate(pos.below(), StatueRegistry.KING_CLUCK_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 			}
 		}
-		super.setPlacedBy(worldIn, pos, state, placer, stack);
+		super.setPlacedBy(level, pos, state, placer, stack);
 	}
 
 	public boolean isDecorative(BlockState state) {
@@ -52,10 +52,10 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
-		blockEntity.summonMob(new Chicken(EntityType.CHICKEN, worldIn));
+		blockEntity.summonMob(new Chicken(EntityType.CHICKEN, level));
 	}
 
 	@Override
@@ -74,7 +74,7 @@ public class ChickenStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

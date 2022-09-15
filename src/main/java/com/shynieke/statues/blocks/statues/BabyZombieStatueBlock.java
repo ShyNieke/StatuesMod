@@ -34,23 +34,23 @@ public class BabyZombieStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (this.isDecorative(state)) {
-			BlockState blockState = worldIn.getBlockState(pos.below());
+			BlockState blockState = level.getBlockState(pos.below());
 			if (blockState.getBlock() == Blocks.LAPIS_BLOCK) {
-				worldIn.addParticle(ParticleTypes.EXPLOSION, pos.below().getX(), pos.below().getY(), pos.below().getZ(), 0.0D, 0.0D, 0.0D);
-				worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.FLOOD_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
-				worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-				worldIn.playLocalSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, SoundEvents.VILLAGER_YES, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+				level.addParticle(ParticleTypes.EXPLOSION, pos.below().getX(), pos.below().getY(), pos.below().getZ(), 0.0D, 0.0D, 0.0D);
+				level.setBlockAndUpdate(pos.below(), StatueRegistry.FLOOD_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+				level.playLocalSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, SoundEvents.VILLAGER_YES, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
 			if (blockState.getBlock() == StatueRegistry.CHICKEN_STATUE.get() && isDecorative(blockState)) {
-				worldIn.addParticle(ParticleTypes.EXPLOSION, pos.below().getX(), pos.below().getY(), pos.below().getZ(), 0.0D, 0.0D, 0.0D);
-				worldIn.setBlockAndUpdate(pos.below(), StatueRegistry.CHICKEN_JOCKEY_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
-				worldIn.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-				worldIn.playLocalSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, SoundEvents.VILLAGER_YES, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+				level.addParticle(ParticleTypes.EXPLOSION, pos.below().getX(), pos.below().getY(), pos.below().getZ(), 0.0D, 0.0D, 0.0D);
+				level.setBlockAndUpdate(pos.below(), StatueRegistry.CHICKEN_JOCKEY_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
+				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+				level.playLocalSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, SoundEvents.VILLAGER_YES, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
 		}
-		super.setPlacedBy(worldIn, pos, state, placer, stack);
+		super.setPlacedBy(level, pos, state, placer, stack);
 	}
 
 	public boolean isDecorative(BlockState state) {
@@ -58,10 +58,10 @@ public class BabyZombieStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
-//		blockEntity.FakeMobs(new FakeZombie(worldIn), worldIn, pos, true);
+//		blockEntity.FakeMobs(new FakeZombie(level), level, pos, true);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class BabyZombieStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

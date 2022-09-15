@@ -1,4 +1,4 @@
-// 1.19	2022-06-09T00:21:00.0940385	LootTables
+// 1.19.2	2022-09-11T03:32:05.1828072	LootTables
 b2b69bfd57a0ea25341b0c932cfef03ac5e358a8 data/statues/loot_tables/blocks/angry_bee_statue.json
 b22b649117c076c550da381ad85fc9865b5d2518 data/statues/loot_tables/blocks/baby_zombie_statue.json
 265a345e37447272d6b17623a8c7a517f8f66a58 data/statues/loot_tables/blocks/bee_statue.json
@@ -112,4 +112,4 @@ c668456f6cbdd3b6e8498c7ca89a05d530f98cbe data/statues/loot_tables/blocks/wastela
 8d0394fefe489e380bbdda3a323897c48981edae data/statues/loot_tables/blocks/witch_statue.json
 3bf5d916e5cf6af04cb162bf87db1163bd4dd203 data/statues/loot_tables/blocks/zombie_statue.json
 4f8c3805fe6295af64a4aa474c04d530b16385f7 data/statues/loot_tables/entities/player_statue.json
-804f2e2ec7cecb053d6eeb6f25380be5b997994e data/statues/loot_tables/entities/statue_bat.json
+b68b05425b28be6dae278b9739a2b518e45929dc data/statues/loot_tables/entities/statue_bat.json

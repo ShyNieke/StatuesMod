@@ -36,16 +36,16 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		Direction direction = state.getValue(FACING);
 		return direction.getAxis() == Direction.Axis.X ? NORTH_WEST_SHAPE : SOUTH_EAST_SHAPE;
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
 
-		blockEntity.summonMob(getGeneral(worldIn));
+		blockEntity.summonMob(getGeneral(level));
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 		return getRandomCampfire();
 	}
 
-	public Creeper getGeneral(Level worldIn) {
-		Creeper general = new Creeper(EntityType.CREEPER, worldIn);
+	public Creeper getGeneral(Level level) {
+		Creeper general = new Creeper(EntityType.CREEPER, level);
 		general.setCustomName(Component.literal("General Spazz"));
 		CompoundTag tag = new CompoundTag();
 		tag.putByte("ExplosionRadius", (byte) 0);

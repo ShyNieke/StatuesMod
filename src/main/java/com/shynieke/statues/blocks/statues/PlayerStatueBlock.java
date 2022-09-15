@@ -83,8 +83,8 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, PlayerBlockEntity::serverTick);
 	}
 
-	private PlayerBlockEntity getBE(Level world, BlockPos pos) {
-		return (PlayerBlockEntity) world.getBlockEntity(pos);
+	private PlayerBlockEntity getBE(Level level, BlockPos pos) {
+		return (PlayerBlockEntity) level.getBlockEntity(pos);
 	}
 
 	@Override
@@ -93,11 +93,11 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void playerDestroy(Level worldIn, Player player, BlockPos pos, BlockState state, BlockEntity be, ItemStack stack) {
+	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity be, ItemStack stack) {
 		if (be instanceof PlayerBlockEntity blockEntity && ((Nameable) be).hasCustomName()) {
 			player.causeFoodExhaustion(0.005F);
 
-			if (worldIn.isClientSide)
+			if (level.isClientSide)
 				return;
 
 			if (this == Blocks.AIR)
@@ -115,20 +115,20 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				itemstack.setHoverName(((Nameable) blockEntity).getName());
 			}
 
-			popResource(worldIn, pos, itemstack);
+			popResource(level, pos, itemstack);
 
 			if (blockEntity.getComparatorApplied()) {
-				popResource(worldIn, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
+				popResource(level, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
 		} else {
-			super.playerDestroy(worldIn, player, pos, state, null, stack);
+			super.playerDestroy(level, player, pos, state, null, stack);
 		}
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean p_196243_5_) {
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean p_196243_5_) {
 		if (state.hasBlockEntity() && newState.getBlock() != StatueRegistry.PLAYER_STATUE.get()) {
-			worldIn.removeBlockEntity(pos);
+			level.removeBlockEntity(pos);
 		}
 	}
 
@@ -178,11 +178,11 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		super.setPlacedBy(worldIn, pos, state.setValue(ONLINE, false), placer, stack);
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		super.setPlacedBy(level, pos, state.setValue(ONLINE, false), placer, stack);
 
-		if (!worldIn.isClientSide && getBE(worldIn, pos) != null) {
-			PlayerBlockEntity playerBlockEntity = getBE(worldIn, pos);
+		if (!level.isClientSide && getBE(level, pos) != null) {
+			PlayerBlockEntity playerBlockEntity = getBE(level, pos);
 			if (stack.hasCustomHoverName()) {
 				String stackName = stack.getHoverName().getString();
 				boolean spaceFlag = stackName.contains(" ");
@@ -215,7 +215,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable BlockGetter worldIn, List<Component> tooltip, TooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			if (stack.hasTag()) {
 				CompoundTag tag = stack.getTag();
@@ -237,7 +237,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				}
 			}
 		}
-		super.appendHoverText(stack, worldIn, tooltip, flagIn);
+		super.appendHoverText(stack, level, tooltip, flagIn);
 	}
 
 	@Override
@@ -363,7 +363,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

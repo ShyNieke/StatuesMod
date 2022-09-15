@@ -39,14 +39,14 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		sendInfoMessage(playerIn, worldIn, pos);
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+		sendInfoMessage(playerIn, level, pos);
 		return InteractionResult.SUCCESS;
 	}
 
-	public void sendInfoMessage(Player player, Level worldIn, BlockPos pos) {
-		if (!worldIn.isClientSide) {
-			int random = worldIn.random.nextInt(100);
+	public void sendInfoMessage(Player player, Level level, BlockPos pos) {
+		if (!level.isClientSide) {
+			int random = level.random.nextInt(100);
 
 			List<String> messages = new ArrayList<>(StatuesConfig.COMMON.info_messages.get());
 			List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
@@ -75,7 +75,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 				int i = localdate.get(ChronoField.DAY_OF_MONTH);
 				int j = localdate.get(ChronoField.MONTH_OF_YEAR);
 
-				if (worldIn.random.nextDouble() <= 0.3D && j == 11 && i <= 20) {
+				if (level.random.nextDouble() <= 0.3D && j == 11 && i <= 20) {
 					randomMessage = Component.literal("Please check out our friends over at ")
 							.withStyle(ChatFormatting.YELLOW).append(ForgeHooks.newChatWithLinks("https://lovetropics.com/"));
 				} else {
@@ -84,12 +84,12 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 			}
 
 			player.sendSystemMessage(randomMessage);
-			worldIn.playSound(null, pos, SoundEvents.DISPENSER_FAIL, SoundSource.NEUTRAL, 0.5F, 1.0F);
+			level.playSound(null, pos, SoundEvents.DISPENSER_FAIL, SoundSource.NEUTRAL, 0.5F, 1.0F);
 		}
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 }

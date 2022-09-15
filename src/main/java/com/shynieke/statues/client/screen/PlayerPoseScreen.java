@@ -5,8 +5,8 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.packets.PlayerStatueSyncMessage;
 import com.shynieke.statues.packets.StatuesNetworking;
+import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -39,7 +39,7 @@ public class PlayerPoseScreen extends Screen {
 	private Button cancelButton;
 
 	public PlayerPoseScreen(PlayerStatue playerStatue) {
-		super(NarratorChatListener.NO_TITLE);
+		super(GameNarrator.NO_TITLE);
 
 		this.playerStatueEntity = playerStatue;
 

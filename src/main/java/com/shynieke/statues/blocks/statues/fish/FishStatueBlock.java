@@ -41,7 +41,7 @@ public class FishStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		if (size == 1) {
 			return SHAPE_BIG;
 		}
@@ -68,7 +68,7 @@ public class FishStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level worldIn, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
+	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		//TODO: Fish stuff? What should it do.
 	}
 
@@ -97,9 +97,9 @@ public class FishStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		super.setPlacedBy(worldIn, pos, state, placer, stack);
-		TropicalFishBlockEntity fishBlockEntity = getFishTE(worldIn, pos);
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		super.setPlacedBy(level, pos, state, placer, stack);
+		TropicalFishBlockEntity fishBlockEntity = getFishTE(level, pos);
 		if (fishBlockEntity != null) {
 			fishBlockEntity.scrambleColors();
 		}
