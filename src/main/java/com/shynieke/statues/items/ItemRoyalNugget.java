@@ -20,10 +20,9 @@ public class ItemRoyalNugget extends ItemFood {
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
 	}
-	
+
 	@Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
-    {
-        tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "royalnugget.info"));
-    }
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
+		tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "royalnugget.info"));
+	}
 }

@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BaseTranslucent extends BlockHorizontal{
+public class BaseTranslucent extends BlockHorizontal {
 
 	public float hardness = (float) StatuesConfigGen.othersettings.StatueHardness;
 
@@ -32,77 +32,67 @@ public class BaseTranslucent extends BlockHorizontal{
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
-	
-	@Override
-	public boolean isOpaqueCube(IBlockState state)
-    {
-        return false;
-    }
-	
-	@SideOnly(Side.CLIENT)
-    public BlockRenderLayer getRenderLayer()
-    {
-        return BlockRenderLayer.TRANSLUCENT;
-    }
-	
-	@Override
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-    {
-        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
-    }
 
 	@Override
-    public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-    {
-        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
-    }
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.TRANSLUCENT;
+	}
+
+	@Override
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
+		return state.withProperty(FACING, rot.rotate((EnumFacing) state.getValue(FACING)));
+	}
+
+	@Override
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+		return state.withRotation(mirrorIn.toRotation((EnumFacing) state.getValue(FACING)));
+	}
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
+								ItemStack stack) {
 		this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 
 	@Override
-    public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer)
-    {
-        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
-    }
-	
-    @Override
-    public IBlockState getStateFromMeta(int meta)
-    {
-        EnumFacing enumfacing = EnumFacing.byIndex(meta);
+	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
+		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+	}
 
-        if (enumfacing.getAxis() == EnumFacing.Axis.Y)
-        {
-            enumfacing = EnumFacing.NORTH;
-        }
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		EnumFacing enumfacing = EnumFacing.byIndex(meta);
 
-        return this.getDefaultState().withProperty(FACING, enumfacing);
-    }
+		if (enumfacing.getAxis() == EnumFacing.Axis.Y) {
+			enumfacing = EnumFacing.NORTH;
+		}
 
-    @Override
-    public int getMetaFromState(IBlockState state)
-    {
-        return ((EnumFacing)state.getValue(FACING)).getIndex();
-    }
-    
-    @Override
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {FACING});
-    }
-    
-    @Override
+		return this.getDefaultState().withProperty(FACING, enumfacing);
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return ((EnumFacing) state.getValue(FACING)).getIndex();
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[]{FACING});
+	}
+
+	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		super.breakBlock(worldIn, pos, state);
-        worldIn.removeTileEntity(pos);
+		worldIn.removeTileEntity(pos);
 	}
-    
-    @Override
-    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face)
-    {
-        return BlockFaceShape.UNDEFINED;
-    }
+
+	@Override
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+		return BlockFaceShape.UNDEFINED;
+	}
 }

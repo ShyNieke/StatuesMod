@@ -28,64 +28,53 @@ public class ItemTea extends ItemFood {
 		setCreativeTab(Statues.tabStatues);
 		setMaxStackSize(1);
 	}
-	
+
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entity)
-    {
-		if(entity instanceof EntityPlayer)
-		{
-			EntityPlayer entityplayer = entity instanceof EntityPlayer ? (EntityPlayer)entity : null;
-	
-			
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entity) {
+		if (entity instanceof EntityPlayer) {
+			EntityPlayer entityplayer = entity instanceof EntityPlayer ? (EntityPlayer) entity : null;
+
+
 			entityplayer.getFoodStats().addStats(this, stack);
 			this.onFoodEaten(stack, worldIn, entityplayer);
-	        if (entityplayer == null || !entityplayer.capabilities.isCreativeMode)
-	        {
-	            stack.shrink(1);
-	        }
-	        
-	        if (entityplayer instanceof EntityPlayerMP)
-	        {
-	            CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
-	        }
-		    
-	        if (entityplayer != null)
-	        {
-	            entityplayer.addStat(StatList.getObjectUseStats(this));
-	        }
-	        
-	        if (entityplayer == null || !entityplayer.capabilities.isCreativeMode)
-	        {
-	            if (stack.isEmpty())
-	            {
-	                return new ItemStack(StatuesItems.cup);
-	            }
-	
-	            if (entityplayer != null)
-	            {
-	                entityplayer.inventory.addItemStackToInventory(new ItemStack(StatuesItems.cup));
-	            }
-	        }
+			if (entityplayer == null || !entityplayer.capabilities.isCreativeMode) {
+				stack.shrink(1);
+			}
+
+			if (entityplayer instanceof EntityPlayerMP) {
+				CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entityplayer, stack);
+			}
+
+			if (entityplayer != null) {
+				entityplayer.addStat(StatList.getObjectUseStats(this));
+			}
+
+			if (entityplayer == null || !entityplayer.capabilities.isCreativeMode) {
+				if (stack.isEmpty()) {
+					return new ItemStack(StatuesItems.cup);
+				}
+
+				if (entityplayer != null) {
+					entityplayer.inventory.addItemStackToInventory(new ItemStack(StatuesItems.cup));
+				}
+			}
 		}
 
-        return stack;
-    }
-	
+		return stack;
+	}
+
 	@Override
-	public int getMaxItemUseDuration(ItemStack stack)
-    {
-        return 32;
-    }
-	
+	public int getMaxItemUseDuration(ItemStack stack) {
+		return 32;
+	}
+
 	@Override
-	public EnumAction getItemUseAction(ItemStack stack)
-    {
-        return EnumAction.DRINK;
-    }
-	
+	public EnumAction getItemUseAction(ItemStack stack) {
+		return EnumAction.DRINK;
+	}
+
 	@Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
-    {
-        tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "tea.info"));
-    }
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
+		tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "tea.info"));
+	}
 }

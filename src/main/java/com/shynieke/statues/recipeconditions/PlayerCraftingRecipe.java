@@ -7,7 +7,7 @@ import net.minecraftforge.common.crafting.JsonContext;
 
 import java.util.function.BooleanSupplier;
 
-public class PlayerCraftingRecipe implements IConditionFactory{
+public class PlayerCraftingRecipe implements IConditionFactory {
 
 	@Override
 	public BooleanSupplier parse(JsonContext context, JsonObject json) {

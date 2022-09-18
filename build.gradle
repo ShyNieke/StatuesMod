@@ -1,93 +1,182 @@
 buildscript {
     repositories {
-        jcenter()
-        maven { url = "http://files.minecraftforge.net/maven" }
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
     }
 }
-apply plugin: 'net.minecraftforge.gradle.forge'
-//Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'net.minecraftforge.gradle'
+// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
+apply plugin: 'maven-publish'
 
-
-version = "0.8.9.2"
+version = "${version}"
 group= "com.shynieke.statues" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "statues-1.12.X"
+archivesBaseName = "statues-${mc_version}"
 
-sourceCompatibility = targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
-compileJava {
-    sourceCompatibility = targetCompatibility = '1.8'
-}
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
 minecraft {
-    version = "1.12.2-14.23.5.2768"
-    runDir = "run"
-    mappings = "stable_39"
-    
-    replace '@VERSION@', project.version
-    replaceIn 'Reference.java'
+    mappings  channel: "${mcp_channel}", version: "${mcp_mappings}"
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                EXAMPLE {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            // property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                EXAMPLE {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
 }
 
 repositories {
 	maven {
 		// location of the maven that hosts JEI files
 		name = "Progwml6 maven"
-		url = "http://dvs1.progwml6.com/files/maven"
+		url = "https://dvs1.progwml6.com/files/maven"
 	}
 	maven {
 		// location of a maven mirror for JEI files, as a fallback
 		name = "ModMaven"
-		url = "modmaven.k-4u.nl"
+		url = "https://modmaven.dev/"
 	}
 	maven {
-        url "http://maven.blamejared.com"
-	}
-	maven { 
-		url "http://tehnut.info/maven" 
+        url "https://maven.blamejared.com"
 	}
 	maven {
         name = "thiakil"
-        url = "http://maven.thiakil.com"
+        url = "https://maven.thiakil.com"
 	}
     maven {
         name = "TOP Maven"
-        url = "http://maven.tterrag.com"
+        url = "https://maven.tterrag.com"
     }
     maven {
-        name = "CurseForge"
-        url = "https://minecraft.curseforge.com/api/maven/"
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
     }
 }
 
 dependencies {
-	deobfCompile "com.azanor.baubles:Baubles:1.12-1.5.2"
-	deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.5.+"
-	
-	deobfCompile "mezz.jei:jei_1.12.2:4.11.0.+"
-	deobfCompile "mcp.mobius.waila:Hwyla:1.8.26-B41_1.12.2"
-    deobfCompile("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.12-6") {
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+
+	compile "com.azanor.baubles:Baubles:1.12-1.5.2"
+    compile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.5.+"
+
+    compile "mezz.jei:jei_1.12.2:4.11.0.+"
+    compile "curse.maven:hwyla-253449:2568751"
+//	deobfCompile "mcp.mobius.waila:Hwyla:1.8.26-B41_1.12.2"
+    compile("mcjty.theoneprobe:TheOneProbe-1.12:1.12-1.4.12-6") {
         transitive = false
     }
-	
-	compile files("lib/The-Cactus-Mod-1.3.2.jar")
+
+    compile "curse.maven:cactusmod-291433:2865393"
+//	compile files("lib/The-Cactus-Mod-1.3.2.jar")
 }
+
+// Example for how to get properties into the manifest for reading by the runtime..
+jar {
+    manifest {
+        attributes([
+                "Specification-Title": "Statues",
+                "Specification-Vendor": "ShyNieke",
+                "Specification-Version": "1", // We are version 1 of ourselves
+                "Implementation-Title": project.name,
+                "Implementation-Version": "${version}",
+                "Implementation-Vendor" :"ShyNieke",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
 
 processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
 
     // replace stuff in mcmod.info, nothing else
     from(sourceSets.main.resources.srcDirs) {
         include 'mcmod.info'
-                
+
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': project.version, 'mcversion': "1.12.2"
     }
-        
+
     // copy everything else except the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
+    }
+}
+
+// workaround for userdev bug
+tasks.create("copyResourceToClasses", Copy.class) {
+    tasks.classes.dependsOn(it)
+    dependsOn(tasks.processResources)
+    onlyIf { gradle.taskGraph.hasTask(tasks.prepareRuns) }
+
+    into("$buildDir/classes/java/main")
+    // if you write @Mod class in kotlin, please use code below
+    // into("$buildDir/classes/kotlin/main")
+    from(tasks.processResources.destinationDir)
+}
+
+def reobfFile = file("$buildDir/reobfJar/output.jar")
+def reobfArtifact = artifacts.add('default', reobfFile) {
+    type 'jar'
+    builtBy 'reobfJar'
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact(reobfArtifact) {
+                builtBy reobfArtifact
+                artifactId = archivesBaseName
+                classifier null
+            }
+        }
+    }
+    repositories {
+        if (System.getenv().SAP_SECRET) {
+            maven {
+                url "https://maven.saps.dev/minecraft"
+                credentials {
+                    username = "mrbysco2"
+                    password = "${System.getenv().SAP_SECRET}"
+                }
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ public class ItemCharredMarshmallow extends Item {
 		setRegistryName("item" + unlocalised);
 		setCreativeTab(Statues.tabStatues);
 	}
-	
+
 	@Override
 	public int getItemBurnTime(ItemStack itemStack) {
 		return 500;

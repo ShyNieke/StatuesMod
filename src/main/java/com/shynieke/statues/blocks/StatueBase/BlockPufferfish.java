@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockPufferfish extends BaseTranslucent {
-	
+
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6, 0.0625 * 9.5, 0.0625 * 4.5, 0.0625 * 9);
 	private final int size; //TODO change hitbox depending on size
 
@@ -25,16 +25,14 @@ public class BlockPufferfish extends BaseTranslucent {
 		this.setSoundType(SoundType.CLOTH);
 		this.size = size;
 	}
-	
+
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return BOUNDING_BOX;
-    }
-	
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-    {
-    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-    }
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BOUNDING_BOX;
+	}
+
+	@Override
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
+	}
 }

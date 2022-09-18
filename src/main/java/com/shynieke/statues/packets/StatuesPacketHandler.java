@@ -7,14 +7,13 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class StatuesPacketHandler {
 	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("statues");
-	
+
 	public static void registerWailaUpdatePacket() {
-		if(Loader.isModLoaded("waila"))
-		{
+		if (Loader.isModLoaded("waila")) {
 			INSTANCE.registerMessage(StatuesProgressMessage.PacketHandler.class, StatuesProgressMessage.class, 0, Side.CLIENT);
 		}
 	}
-	
+
 	public static void registerPackets() {
 		INSTANCE.registerMessage(StatuesAFKPacket.PacketHandler.class, StatuesAFKPacket.class, 1, Side.SERVER);
 	}

@@ -10,18 +10,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class DespawnHandler {
 	@SubscribeEvent
-	public void worldTick(PlayerInteractEvent.EntityInteract event)
-	{
-		if(!event.getWorld().isRemote)
-		{
+	public void worldTick(PlayerInteractEvent.EntityInteract event) {
+		if (!event.getWorld().isRemote) {
 			Entity entity = event.getEntity();
-			if(entity instanceof EntityCreature && entity instanceof IFakeEntity)
-			{
-				EntityCreature entityC = (EntityCreature)entity;
+			if (entity instanceof EntityCreature && entity instanceof IFakeEntity) {
+				EntityCreature entityC = (EntityCreature) entity;
 				ItemStack stack = event.getItemStack();
-				
-				if(stack.getItem() == StatuesItems.core)
-				{
+
+				if (stack.getItem() == StatuesItems.core) {
 					entityC.enablePersistence();
 					stack.shrink(1);
 				}

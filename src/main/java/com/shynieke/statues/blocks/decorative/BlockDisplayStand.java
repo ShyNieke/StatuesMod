@@ -6,7 +6,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 
-public class BlockDisplayStand extends Block{
+public class BlockDisplayStand extends Block {
 
 	public BlockDisplayStand(String unlocalised, String registry) {
 		super(Material.ROCK);
@@ -16,15 +16,14 @@ public class BlockDisplayStand extends Block{
 		setSoundType(SoundType.STONE);
 		this.setCreativeTab(Statues.instance.tabStatues);
 	}
-	
+
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
 	}
-	
+
 	@Override
-	public boolean isOpaqueCube(IBlockState state)
-    {
-        return false;
-    }
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
 }

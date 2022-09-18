@@ -4,8 +4,8 @@ import com.shynieke.statues.init.StatuesItems;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
-public class StatuesTab extends CreativeTabs{
-	
+public class StatuesTab extends CreativeTabs {
+
 	public StatuesTab() {
 		super(Reference.MOD_ID);
 	}

@@ -23,16 +23,14 @@ public class BlockDolphin extends BaseCutout {
 		this.setCreativeTab(Statues.instance.tabStatues);
 		this.setSoundType(SoundType.CLOTH);
 	}
-	
+
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return BOUNDING_BOX;
-    }
-	
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-    {
-    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-    }
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BOUNDING_BOX;
+	}
+
+	@Override
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
+	}
 }

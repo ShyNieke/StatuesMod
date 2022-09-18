@@ -32,45 +32,36 @@ public class FishHandler {
 	public void onItemFished(ItemFishedEvent event) {
 		EntityPlayer player = event.getEntityPlayer();
 		World world = player.world;
-		if(!world.isRemote)
-		{
-			if(StatuesConfigGen.general.AquaticFishing) { //Check if aquatic fishing is enabled otherwise do nothing
+		if (!world.isRemote) {
+			if (StatuesConfigGen.general.AquaticFishing) { //Check if aquatic fishing is enabled otherwise do nothing
 				double default_drop_chance = StatuesConfigGen.general.OldDropChance;
-				if(!(player instanceof FakePlayer))
-				{
-					EntityPlayerMP realPlayer = (EntityPlayerMP)event.getEntityPlayer();
+				if (!(player instanceof FakePlayer)) {
+					EntityPlayerMP realPlayer = (EntityPlayerMP) event.getEntityPlayer();
 					String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
-					if(StatuesConfigGen.othersettings.antiAfk)
-					{
-						if(!realPlayer.getEntityData().getBoolean(afkKey))
-						{
-							if(LuckyPlayers.length != 0)
-							{
+					if (StatuesConfigGen.othersettings.antiAfk) {
+						if (!realPlayer.getEntityData().getBoolean(afkKey)) {
+							if (LuckyPlayers.length != 0) {
 								for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
-									if(realPlayer.getName().equals(LuckyPlayers[i]));
+									if (realPlayer.getName().equals(LuckyPlayers[i])) ;
 									{
 										default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
 									}
 								}
-							}
-							else
-							{
+							} else {
 								default_drop_chance = StatuesConfigGen.general.OldDropChance;
 							}
 
-							if ( Math.random() < default_drop_chance )
-							{
+							if (Math.random() < default_drop_chance) {
 								EntityFishHook hook = event.getHookEntity();
-								if(hook != null)
-								{
+								if (hook != null) {
 									EntityItem entityitem = new EntityItem(hook.world, hook.posX, hook.posY, hook.posZ, new ItemStack(StatuesBlocks.pufferfish_statue[0]));
 									double d0 = hook.getAngler().posX - hook.posX;
 									double d1 = hook.getAngler().posY - hook.posY;
 									double d2 = hook.getAngler().posZ - hook.posZ;
-									double d3 = (double)MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+									double d3 = (double) MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 									double d4 = 0.1D;
 									entityitem.motionX = d0 * 0.1D;
-									entityitem.motionY = d1 * 0.1D + (double)MathHelper.sqrt(d3) * 0.08D;
+									entityitem.motionY = d1 * 0.1D + (double) MathHelper.sqrt(d3) * 0.08D;
 									entityitem.motionZ = d2 * 0.1D;
 									hook.world.spawnEntity(entityitem);
 								}
@@ -78,36 +69,29 @@ public class FishHandler {
 								event.setCanceled(true);
 							}
 						}
-					}
-					else
-					{
-						if(LuckyPlayers.length != 0)
-						{
+					} else {
+						if (LuckyPlayers.length != 0) {
 							for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
-								if(realPlayer.getName().equals(LuckyPlayers[i]));
+								if (realPlayer.getName().equals(LuckyPlayers[i])) ;
 								{
 									default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
 								}
 							}
-						}
-						else
-						{
+						} else {
 							default_drop_chance = StatuesConfigGen.general.OldDropChance;
 						}
 
-						if ( Math.random() < default_drop_chance )
-						{
+						if (Math.random() < default_drop_chance) {
 							EntityFishHook hook = event.getHookEntity();
-							if(hook != null)
-							{
+							if (hook != null) {
 								EntityItem entityitem = getFishedStatue(hook.world, hook.posX, hook.posY, hook.posZ);
 								double d0 = hook.getAngler().posX - hook.posX;
 								double d1 = hook.getAngler().posY - hook.posY;
 								double d2 = hook.getAngler().posZ - hook.posZ;
-								double d3 = (double)MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
+								double d3 = (double) MathHelper.sqrt(d0 * d0 + d1 * d1 + d2 * d2);
 								double d4 = 0.1D;
 								entityitem.motionX = d0 * 0.1D;
-								entityitem.motionY = d1 * 0.1D + (double)MathHelper.sqrt(d3) * 0.08D;
+								entityitem.motionY = d1 * 0.1D + (double) MathHelper.sqrt(d3) * 0.08D;
 								entityitem.motionZ = d2 * 0.1D;
 								hook.world.spawnEntity(entityitem);
 							}
@@ -142,16 +126,16 @@ public class FishHandler {
 		}
 		return new EntityItem(world, x, y, z, fishedStack);
 	}
-	
+
 	public static final int maxTime = 2400;
 	private int timeSinceKeyPressed;
 	public static String afkKey = Reference.MOD_PREFIX + "afk";
 
 	public static void updateAfk(EntityPlayer player, boolean afk) {
-		if(player.world.playerEntities.size() != 1) {
-			if(afk)
+		if (player.world.playerEntities.size() != 1) {
+			if (afk)
 				player.getEntityData().setBoolean(afkKey, true);
-			else 
+			else
 				player.getEntityData().setBoolean(afkKey, false);
 		}
 	}
@@ -160,23 +144,23 @@ public class FishHandler {
 	public void onPlayerLogout(PlayerLoggedOutEvent event) {
 		World world = event.player.world;
 		List<EntityPlayer> players = world.playerEntities;
-		
-        if(players.size() == 1) {
-            EntityPlayer lastPlayer = players.get(0);
-            lastPlayer.getEntityData().setBoolean(afkKey, false);
-        }
+
+		if (players.size() == 1) {
+			EntityPlayer lastPlayer = players.get(0);
+			lastPlayer.getEntityData().setBoolean(afkKey, false);
+		}
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onClientTick(ClientTickEvent event) {
-		if(event.phase == Phase.END) {
+		if (event.phase == Phase.END) {
 			timeSinceKeyPressed++;
-			if(timeSinceKeyPressed >= maxTime)
+			if (timeSinceKeyPressed >= maxTime)
 				StatuesPacketHandler.INSTANCE.sendToServer(new StatuesAFKPacket(true));
 		}
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onKeystroke(KeyInputEvent event) {
@@ -192,21 +176,21 @@ public class FishHandler {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onMousePress(MouseInputEvent event) {
-		if(Mouse.getEventButtonState())
+		if (Mouse.getEventButtonState())
 			onPress();
 	}
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onMousePress(GuiScreenEvent.MouseInputEvent.Pre event) {
-		if(Mouse.getEventButtonState() && event.getGui() != null)
+		if (Mouse.getEventButtonState() && event.getGui() != null)
 			onPress();
 	}
 
 	private void onPress() {
-		if(timeSinceKeyPressed >= maxTime)
+		if (timeSinceKeyPressed >= maxTime)
 			StatuesPacketHandler.INSTANCE.sendToServer(new StatuesAFKPacket(false));
-		
+
 		timeSinceKeyPressed = 0;
 	}
 }

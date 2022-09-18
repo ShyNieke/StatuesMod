@@ -17,13 +17,12 @@ public class StatuesSounds {
 	public static SoundEvent campfire_snacks, campfire_snacks2, campfire_snacks3, campfire_snacks4, campfire_snacks_random;
 	public static SoundEvent campfire_marshmallow, campfire_marshmallow2, campfire_marshmallow3, campfire_marshmallow4, campfire_marshmallow5, campfire_marshmallow6, campfire_marshmallow7, campfire_marshmallow8, campfire_marshmallow9, campfire_marshmallow_random;
 
-	
-	public static void registerSounds() 
-	{
+
+	public static void registerSounds() {
 		wasteland_hello = registerSound("wasteland.hello");
 		wasteland_onwards = registerSound("wasteland.onwards");
 		wasteland_tea = registerSound("wasteland.tea");
-		
+
 		campfire_hello = registerSound("campfire.hello");
 		campfire_hello2 = registerSound("campfire.hello2");
 		campfire_hello3 = registerSound("campfire.hello3");
@@ -61,9 +60,8 @@ public class StatuesSounds {
 		campfire_marshmallow9 = registerSound("campfire.marshmallow9");
 		campfire_marshmallow_random = registerSound("campfire.marshmallow.random");
 	}
-	
-	private static SoundEvent registerSound(String soundName)
-	{
+
+	private static SoundEvent registerSound(String soundName) {
 		ResourceLocation location = new ResourceLocation(Reference.MOD_ID, soundName);
 		SoundEvent event = new SoundEvent(location);
 		event.setRegistryName(location);

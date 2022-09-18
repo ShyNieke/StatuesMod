@@ -33,20 +33,20 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
-@Mod(modid = Reference.MOD_ID, 
-	name = Reference.MOD_NAME, 
-	version = Reference.VERSION, 
-	acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS,
-	dependencies = Reference.DEPENDENCIES)
+@Mod(modid = Reference.MOD_ID,
+		name = Reference.MOD_NAME,
+		version = Reference.VERSION,
+		acceptedMinecraftVersions = Reference.ACCEPTED_VERSIONS,
+		dependencies = Reference.DEPENDENCIES)
 
 public class Statues {
 
 	@Instance(Reference.MOD_ID)
 	public static Statues instance;
-	
+
 	@SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
 	public static CommonProxy proxy;
-	
+
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 
 	public static StatuesTab tabStatues = new StatuesTab();
@@ -54,50 +54,47 @@ public class Statues {
 	public static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
 
 	@EventHandler
-	public void PreInit(FMLPreInitializationEvent event)
-	{
+	public void PreInit(FMLPreInitializationEvent event) {
 		logger.info("Registering Statues Config");
 		MinecraftForge.EVENT_BUS.register(new StatuesConfigGen());
 
 		logger.info("Registering Statues Sounds");
 		StatuesSounds.registerSounds();
-		
+
 		logger.info("Registering Statues Entities");
 		StatuesEntity.register();
-		
+
 		//Register Update Packets for waila if installed
 		StatuesPacketHandler.registerWailaUpdatePacket();
-		
+
 		logger.info("Registering Statues Packets");
 		StatuesPacketHandler.registerPackets();
-		
+
 		proxy.Preinit();
 	}
-	
+
 	@EventHandler
-    public void init(FMLInitializationEvent event)
-	{
-		if(StatuesConfigGen.general.StatueBatSpawning) {
+	public void init(FMLInitializationEvent event) {
+		if (StatuesConfigGen.general.StatueBatSpawning) {
 			for (Biome biome : Biome.REGISTRY) {
 				biome.getSpawnableList(EnumCreatureType.AMBIENT).add(new SpawnListEntry(EntityStatueBat.class, 4, 1, 2));
 			}
 			logger.info("Registered Statues Bat Spawn");
 		}
-		
+
 		logger.info("Registering Statues Gui Handler");
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new StatuesGuiHandler());
-		
-		if(StatuesConfigGen.events.halloweenSpawning)
-		{
+
+		if (StatuesConfigGen.events.halloweenSpawning) {
 			StatuesHoliday.registerSpawning();
 		}
-		
+
 		TOPCompat.register();
-		
+
 		//Initialize loot
 		logger.info("Initialize Statues Loot");
 		StatueLootList.initializeStatueLoot();
-		
+
 		logger.info("Registering Statues Event Handlers");
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
 		MinecraftForge.EVENT_BUS.register(new FishHandler());
@@ -105,11 +102,10 @@ public class Statues {
 		MinecraftForge.EVENT_BUS.register(new MagicHandler());
 
 		proxy.Init();
-    }
-	
+	}
+
 	@EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
+	public void postInit(FMLPostInitializationEvent event) {
 		proxy.PostInit();
-    }
+	}
 }

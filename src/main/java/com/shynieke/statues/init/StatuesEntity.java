@@ -32,12 +32,12 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class StatuesEntity {
-	
+
 	static int ID = 0;
-	
-	public static void register() {		
+
+	public static void register() {
 		registerEntity("statue_bat", EntityStatueBat.class, "StatueBat", 80, 3, true, 3421236, 3556687);
-		
+
 		registerEntity("fake_zombie", FakeZombie.class, "FakeZombie", 80, 3, true);
 		registerEntity("fake_husk", FakeHusk.class, "FakeHusk", 80, 3, true);
 		registerEntity("fake_skeleton", FakeSkeleton.class, "FakeSkeleton", 80, 3, true);
@@ -57,22 +57,22 @@ public class StatuesEntity {
 		registerEntity("fake_stray", FakeStray.class, "FakeStray", 80, 3, true);
 		registerEntity("fake_zombie_pigman", FakeZombiePigman.class, "FakeZombiePigman", 80, 3, true);
 		registerEntity("fake_wither_skeleton", FakeWitherSkeleton.class, "FakeWitherSkeleton", 80, 3, true);
-		
+
 		registerTileEntity(StatueTileEntity.class, "_tileentity");
 		registerTileEntity(PlayerStatueTileEntity.class, "_playertileentity");
 		registerTileEntity(ShulkerStatueTileEntity.class, "_shulkerstatue");
 	}
-	
+
 	public static void registerEntity(String registryName, Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates, int eggPrimary, int eggSecondary) {
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID, registryName), entityClass, Reference.MOD_PREFIX + entityName, ID, Statues.instance, trackingRange, updateFrequency, sendsVelocityUpdates, eggPrimary, eggSecondary);
 		ID++;
 	}
-	
+
 	public static void registerEntity(String registryName, Class<? extends Entity> entityClass, String entityName, int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
 		EntityRegistry.registerModEntity(new ResourceLocation(Reference.MOD_ID, registryName), entityClass, Reference.MOD_PREFIX + entityName, ID, Statues.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 		ID++;
 	}
-	
+
 	public static void registerTileEntity(Class<? extends TileEntity> tileentityClass, String tilename) {
 		GameRegistry.registerTileEntity(tileentityClass, Reference.MOD_ID + tilename);
 	}

@@ -14,25 +14,23 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockSpider extends BaseNormal{
-	
+public class BlockSpider extends BaseNormal {
+
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D);
-	
+
 	public BlockSpider() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
 		this.setSoundType(SoundType.CLOTH);
 	}
-	
+
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return BOUNDING_BOX;
-    }
-	
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-    {
-    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-    }
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BOUNDING_BOX;
+	}
+
+	@Override
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
+	}
 }

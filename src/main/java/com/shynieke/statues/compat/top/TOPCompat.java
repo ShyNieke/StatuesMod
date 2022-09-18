@@ -22,23 +22,23 @@ import net.minecraftforge.fml.common.event.FMLInterModComms;
 public class TOPCompat {
 	private static boolean registered;
 
-    public static void register() {
-        if (registered)
-            return;
-        registered = true;
-        FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.shynieke.statues.compat.top.TOPCompat$GetTheOneProbe");
-    }
-    
-    public static final class GetTheOneProbe implements Function<ITheOneProbe, Void> {
+	public static void register() {
+		if (registered)
+			return;
+		registered = true;
+		FMLInterModComms.sendFunctionMessage("theoneprobe", "getTheOneProbe", "com.shynieke.statues.compat.top.TOPCompat$GetTheOneProbe");
+	}
+
+	public static final class GetTheOneProbe implements Function<ITheOneProbe, Void> {
 
 		@Override
 		public Void apply(ITheOneProbe input) {
 			input.registerProvider(new TOPCompat.StatuesInfo());
 			return null;
 		}
-    }
-    
-    public static final class StatuesInfo implements IProbeInfoProvider {
+	}
+
+	public static final class StatuesInfo implements IProbeInfoProvider {
 
 		@Override
 		public String getID() {
@@ -47,37 +47,33 @@ public class TOPCompat {
 
 		@Override
 		public void addProbeInfo(ProbeMode mode, IProbeInfo probeInfo, EntityPlayer player, World world,
-				IBlockState blockState, IProbeHitData data) {
+								 IBlockState blockState, IProbeHitData data) {
 			final TileEntity te = world.getTileEntity(data.getPos());
 			final Block block = world.getBlockState(data.getPos()).getBlock();
-			if(te != null){
-				if(te instanceof StatueTileEntity)
-				{
+			if (te != null) {
+				if (te instanceof StatueTileEntity) {
 					StatueTileEntity tile = (StatueTileEntity) te;
 					String blockName = block.getRegistryName().toString();
-		            if(blockName.contains("t3") || blockName.contains("t4") || blockName.contains("t5"))
-		            {
-			            int cooldown = tile.getCooldown();
-			            int cooldownMax = tile.getCooldownMax();
-	                	boolean able = tile.isStatueAble();
-	                	
-	                	int cooldownProgress = (int) ((cooldown * 100.0f) / cooldownMax);
+					if (blockName.contains("t3") || blockName.contains("t4") || blockName.contains("t5")) {
+						int cooldown = tile.getCooldown();
+						int cooldownMax = tile.getCooldownMax();
+						boolean able = tile.isStatueAble();
 
-	                	if(able == true)
-	                		probeInfo.text(I18n.format("tooldown.statues.timer.finished"));
-	                	if(able == false)
-	                		probeInfo.text(I18n.format("tooltip.statues.timer") + cooldownProgress + "%");
-		            }
-				}
-				else if(te instanceof PlayerStatueTileEntity)
-				{
+						int cooldownProgress = (int) ((cooldown * 100.0f) / cooldownMax);
+
+						if (able == true)
+							probeInfo.text(I18n.format("tooldown.statues.timer.finished"));
+						if (able == false)
+							probeInfo.text(I18n.format("tooltip.statues.timer") + cooldownProgress + "%");
+					}
+				} else if (te instanceof PlayerStatueTileEntity) {
 					PlayerStatueTileEntity tile = (PlayerStatueTileEntity) te;
-		            
-		            GameProfile profile = tile.playerProfile;
-		            String name = tile.getName();
-		            probeInfo.text(TextFormatting.GRAY + I18n.format("tooltip.statues.player.info") + TextFormatting.GOLD + name);
+
+					GameProfile profile = tile.playerProfile;
+					String name = tile.getName();
+					probeInfo.text(TextFormatting.GRAY + I18n.format("tooltip.statues.player.info") + TextFormatting.GOLD + name);
 				}
 			}
 		}
-    }
+	}
 }

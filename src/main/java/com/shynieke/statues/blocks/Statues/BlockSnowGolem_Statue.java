@@ -20,70 +20,62 @@ import net.minecraft.world.World;
 import java.util.ArrayList;
 
 public class BlockSnowGolem_Statue extends BlockSnowGolem implements ITileEntityProvider, IStatue {
-	
+
 	private int TIER;
-	
+
 	public BlockSnowGolem_Statue(String unlocalised) {
 		super();
 		setTranslationKey(unlocalised);
 	}
-	
+
 	@Override
-	public Block setTier(int tier)
-	{
+	public Block setTier(int tier) {
 		this.TIER = tier;
 		setTranslationKey(super.getTranslationKey().replace("tile.", "") + (tier > 1 ? "t" + tier : ""));
 		setRegistryName("block" + super.getTranslationKey().replace("tile.", ""));
 		return this;
 	}
-	
+
 	@Override
-	public int getTier()
-	{
+	public int getTier() {
 		return this.TIER;
 	}
-	
+
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		if (this.TIER >= 2)
-		{
+		if (this.TIER >= 2) {
 			return new StatueTileEntity(this.TIER);
-		}
-		else
-		return null;
+		} else
+			return null;
 	}
-	
+
 	private StatueTileEntity getTE(World world, BlockPos pos) {
-        return (StatueTileEntity) world.getTileEntity(pos);
-    }
-	
+		return (StatueTileEntity) world.getTileEntity(pos);
+	}
+
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	{
-		if(this.TIER >= 2)
-		{
-	        if (!worldIn.isRemote) {
-	        	StatueTileEntity tile = getTE(worldIn, pos);
-	        	
-	        	int statuetier = tile.getTier();
-	        	if(statuetier != this.TIER)
-	        	{
-	        		tile.setTier(this.TIER);
-	        	}
-	        	
-	        	ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("snowgolem"));
-	        	ItemStack stack1 = stackList.get(0);
-        		ItemStack stack2 = stackList.get(1);
-        		ItemStack stack3 = stackList.get(2);
-        		
-	        	tile.PlaySound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, pos, worldIn);
-	        	tile.GiveItem(stack1, stack2, stack3, playerIn);
-	        	
-	        	tile.SpawnMob(new EntitySnowman(worldIn), worldIn);
-	        }
-	        return true;
-		}
-		else
-		return false;
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (this.TIER >= 2) {
+			if (!worldIn.isRemote) {
+				StatueTileEntity tile = getTE(worldIn, pos);
+
+				int statuetier = tile.getTier();
+				if (statuetier != this.TIER) {
+					tile.setTier(this.TIER);
+				}
+
+				ArrayList<ItemStack> stackList = new ArrayList<>(StatueLootList.getStacksForStatue("snowgolem"));
+				ItemStack stack1 = stackList.get(0);
+				ItemStack stack2 = stackList.get(1);
+				ItemStack stack3 = stackList.get(2);
+
+				tile.PlaySound(SoundEvents.ENTITY_SNOWMAN_AMBIENT, pos, worldIn);
+				tile.GiveItem(stack1, stack2, stack3, playerIn);
+
+				tile.SpawnMob(new EntitySnowman(worldIn), worldIn);
+			}
+			return true;
+		} else
+			return false;
 	}
 }

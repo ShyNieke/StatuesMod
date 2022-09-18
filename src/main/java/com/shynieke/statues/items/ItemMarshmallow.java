@@ -23,17 +23,16 @@ public class ItemMarshmallow extends ItemFood {
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
 	}
-	
+
 	@Override
 	protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
 		super.onFoodEaten(stack, worldIn, player);
-		
-		if(!worldIn.isRemote)
-		{
-			if(this == StatuesItems.marshmallow_golden) {
+
+		if (!worldIn.isRemote) {
+			if (this == StatuesItems.marshmallow_golden) {
 				ArrayList<Potion> potionList = new ArrayList<>(ForgeRegistries.POTIONS.getValuesCollection());
 				potionList.remove(MobEffects.NAUSEA);
-				
+
 				int i = itemRand.nextInt(potionList.size());
 				int amplifier = itemRand.nextInt(2);
 				Potion randomPotion = potionList.get(i);
@@ -42,14 +41,12 @@ public class ItemMarshmallow extends ItemFood {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean hasEffect(ItemStack stack) {
-		if(this == StatuesItems.marshmallow_golden) {
+		if (this == StatuesItems.marshmallow_golden) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return super.hasEffect(stack);
 		}
 	}

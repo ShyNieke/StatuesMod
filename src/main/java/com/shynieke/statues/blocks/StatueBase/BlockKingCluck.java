@@ -19,10 +19,10 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockKingCluck extends BaseCutout{
-	
+public class BlockKingCluck extends BaseCutout {
+
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 6.5, 0, 0.0625 * 6, 0.0625 * 9.5, 0.0625 * 4.5, 0.0625 * 9);
-	
+
 	public BlockKingCluck() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
@@ -30,20 +30,17 @@ public class BlockKingCluck extends BaseCutout{
 	}
 
 	@Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
-        return BOUNDING_BOX;
-    }
-    
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-    {
-    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-    }
-    
-    @Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
-    {
-        	tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "cluckington.info"));
-    }
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BOUNDING_BOX;
+	}
+
+	@Override
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
+		tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "cluckington.info"));
+	}
 }

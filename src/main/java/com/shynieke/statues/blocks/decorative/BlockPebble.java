@@ -11,7 +11,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockPebble extends BlockFalling{
+public class BlockPebble extends BlockFalling {
 
 	public BlockPebble(String unlocalised, String registry) {
 		super(Material.SAND);
@@ -24,15 +24,13 @@ public class BlockPebble extends BlockFalling{
 	}
 
 	@Override
-	public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
-    {
-        return MapColor.STONE;
-    }
-	
+	public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		return MapColor.STONE;
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
-    public int getDustColor(IBlockState state)
-    {
-        return -8356741;
-    }
+	public int getDustColor(IBlockState state) {
+		return -8356741;
+	}
 }

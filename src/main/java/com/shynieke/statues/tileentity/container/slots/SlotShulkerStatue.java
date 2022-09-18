@@ -11,10 +11,10 @@ public class SlotShulkerStatue extends Slot {
 	public SlotShulkerStatue(IInventory inventoryIn, int index, int xPosition, int yPosition) {
 		super(inventoryIn, index, xPosition, yPosition);
 	}
-	
+
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-        return !(Block.getBlockFromItem(stack.getItem()) instanceof BlockShulker_Statue);
+		return !(Block.getBlockFromItem(stack.getItem()) instanceof BlockShulker_Statue);
 	}
 
 }

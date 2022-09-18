@@ -45,12 +45,10 @@ import java.time.Month;
 import java.util.ArrayList;
 
 public class StatuesHoliday {
-	
-	public static void registerSpawning() 
-	{
+
+	public static void registerSpawning() {
 		LocalDateTime now = LocalDateTime.now();
-		if(now.getMonth() == Month.OCTOBER)
-		{
+		if (now.getMonth() == Month.OCTOBER) {
 			for (Biome biome : Biome.REGISTRY) {
 				for (Biome.SpawnListEntry entry : new ArrayList<>(biome.getSpawnableList(EnumCreatureType.MONSTER))) {
 					registerSpawn(entry, biome, EntityBlaze.class, FakeBlaze.class);
@@ -70,15 +68,14 @@ public class StatuesHoliday {
 					registerSpawn(entry, biome, EntityZombie.class, FakeZombie.class);
 					registerSpawn(entry, biome, EntityPigZombie.class, FakeZombiePigman.class);
 
-	            }
+				}
 			}
 			Statues.logger.debug("Registered Holiday Mobs");
 		}
 	}
-	public static void registerSpawn(Biome.SpawnListEntry entry, Biome biome, Class<? extends Entity> oldEntity, Class<? extends EntityLiving> newEntity)
-	{
-		if(entry.entityClass == oldEntity)
-		{
+
+	public static void registerSpawn(Biome.SpawnListEntry entry, Biome biome, Class<? extends Entity> oldEntity, Class<? extends EntityLiving> newEntity) {
+		if (entry.entityClass == oldEntity) {
 			EntityRegistry.addSpawn(newEntity, entry.itemWeight / StatuesConfigGen.events.fakeSpawningWeigth, entry.minGroupCount, entry.maxGroupCount, EnumCreatureType.MONSTER, biome);
 		}
 	}

@@ -25,50 +25,41 @@ public class ItemMooshroomSoup extends ItemFood {
 		setCreativeTab(CreativeTabs.FOOD);
 		setCreativeTab(Statues.tabStatues);
 	}
-	
+
 	@Override
 	public Item setMaxStackSize(int maxStackSize) {
 		int size = StatuesConfigGen.othersettings.SoupStack;
-		
-		if(size != 0)
-		{
+
+		if (size != 0) {
 			return super.setMaxStackSize(size);
-		}
-		else
-		{
+		} else {
 			return super.setMaxStackSize(1);
 		}
 	}
-	
+
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entity)
-    {
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entity) {
 		if (entity instanceof EntityPlayer && !((EntityPlayer) entity).capabilities.isCreativeMode) {
 			ItemStack bowlstack = new ItemStack(Items.BOWL);
-			EntityPlayer entityplayer = (EntityPlayer)entity;
+			EntityPlayer entityplayer = (EntityPlayer) entity;
 			InventoryPlayer playerInv = entityplayer.inventory;
 			entityplayer.getFoodStats().addStats(this, stack);
-		    worldIn.playSound((EntityPlayer)null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
-		    this.onFoodEaten(stack, worldIn, entityplayer);
-			
-		    if (entityplayer instanceof EntityPlayerMP)
-		    {
-		        CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP)entityplayer, stack);
-		    }
-		    
-			if(!worldIn.isRemote)
-			{
-				if(playerInv.getFirstEmptyStack() == -1)
-				{
+			worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ, SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F, worldIn.rand.nextFloat() * 0.1F + 0.9F);
+			this.onFoodEaten(stack, worldIn, entityplayer);
+
+			if (entityplayer instanceof EntityPlayerMP) {
+				CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entityplayer, stack);
+			}
+
+			if (!worldIn.isRemote) {
+				if (playerInv.getFirstEmptyStack() == -1) {
 					entityplayer.entityDropItem(bowlstack, 0F);
-				}
-				else
-				{
+				} else {
 					playerInv.addItemStackToInventory(bowlstack);
 				}
 			}
 			stack.shrink(1);
 		}
 		return stack;
-    }
+	}
 }

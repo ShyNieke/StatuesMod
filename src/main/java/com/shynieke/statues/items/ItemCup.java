@@ -21,10 +21,9 @@ public class ItemCup extends ItemFood {
 		setCreativeTab(Statues.tabStatues);
 		setAlwaysEdible();
 	}
-	
+
 	@Override
-	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced)
-    {
-        tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "cup.info"));
-    }
+	public void addInformation(ItemStack stack, World player, List<String> tooltip, ITooltipFlag advanced) {
+		tooltip.add(TextFormatting.GOLD + I18n.format(Reference.MOD_PREFIX + "cup.info"));
+	}
 }

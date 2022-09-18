@@ -149,14 +149,13 @@ public class StatuesBlocks {
 	public static Block display_stand;
 	public static Block sombrero;
 	public static Block bumbo_statue;
-	
+
 	public static ArrayList<Block> BLOCKS = new ArrayList<>();
-	
+
 	@SubscribeEvent
-    public static void registerBlocks(RegistryEvent.Register<Block> event)
-	{
+	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> registry = event.getRegistry();
-		
+
 		baby_zombie_statue = registerStatue(new BlockBabyZombie_Statue("babyzombiestatue"), MAX_TIERS);
 		blaze_statue = registerStatue(new BlockBlaze_Statue("blazestatue"), MAX_TIERS);
 		chicken_statue = registerStatue(new BlockChicken_Statue("chickenstatue"), MAX_TIERS);
@@ -173,7 +172,7 @@ public class StatuesBlocks {
 		rabbit_ws_statue = registerStatue(new BlockRabbit_Statue("rabbitwhitespotstatue"), MAX_TIERS);
 		rabbit_wh_statue = registerStatue(new BlockRabbit_Statue("rabbitwhitestatue"), MAX_TIERS);
 		rabbit_go_statue = registerStatue(new BlockRabbit_Statue("rabbityellowstatue"), MAX_TIERS);
-		
+
 		sheepshaven_statue = registerStatue(new BlockSheepShaven_Statue("sheepshavenstatue"), MAX_TIERS);
 		sheep_statue_white = registerStatue(new BlockSheep_Statue("sheepstatue").setColor(EnumDyeColor.WHITE), MAX_TIERS);
 		sheep_statue_orange = registerStatue(new BlockSheep_Statue("sheepstatueorange").setColor(EnumDyeColor.ORANGE), MAX_TIERS);
@@ -216,10 +215,10 @@ public class StatuesBlocks {
 		wasteland_statue = registerStatue(new BlockWastelandPig_Statue("wastelandpigstatue"), MAX_TIERS);
 		evoker_statue = registerStatue(new BlockEvoker_Statue("evokerstatue"), MAX_TIERS);
 		spider_statue = registerStatue(new BlockSpider_Statue("spiderstatue"), MAX_TIERS);
-		
+
 		info_statue = registerBlock(new BlockInfo_Statue("infostatue", "blockinfostatue", 1));
 		player_statue = registerBlock(new BlockPlayer_Statue("playerstatue", "blockplayerstatue", ""));
-		
+
 		endermite_statue = registerBlock(new BlockEndermite_Statue("endermitestatue", "blockendermitestatue"));
 
 		pebble = registerBlock(new BlockPebble("pebble", "blockpebble"));
@@ -228,7 +227,7 @@ public class StatuesBlocks {
 		sombrero = registerBlock(new BlockSombrero_Statue("sombrero", "blocksombrero"));
 		bumbo_statue = registerBlock(new BlockBumbo_Statue("bumbostatue", "blockbumbostatue"));
 		totemofundying_statue = registerBlock(new BlockTotemOfUndying_Statue("totemofundyingstatue", "blocktotemofundyingstatue"));
-		
+
 		campfire_statue = registerStatue(new BlockEtho_Statue("campfirestatue"), MAX_TIERS);
 		drowned_statue = registerStatue(new BlockDrowned_Statue("drownedstatue"), 1);
 		turtle_statue = registerStatue(new BlockTurtle_Statue("turtlestatue"), 1);
@@ -252,38 +251,34 @@ public class StatuesBlocks {
 		registry.registerAll(BLOCKS.toArray(new Block[0]));
 	}
 
-	public static <T extends Block> Block[] registerStatue(T block, int tiers)
-	{
+	public static <T extends Block> Block[] registerStatue(T block, int tiers) {
 		int maxTiers = (tiers >= 2 && StatuesConfigGen.general.nonFunctional) ? 2 : tiers;
-	    Block[] allBlocks = new Block[maxTiers];
+		Block[] allBlocks = new Block[maxTiers];
 
-	    for(int i = 0; i < maxTiers; i++)
-	    {
-	        IStatue statue;
-	        try {
-	            statue = ((IStatue)block.getClass().getConstructor(String.class).newInstance(block.getTranslationKey().replace("tile.", "")));
-	            statue.setTier(i+1);
-	            statue.setColor(statue.getColor());
-	            allBlocks[i] = registerBlock((Block)statue, new ItemBlockStatue((Block)statue));
-	        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-	                | InvocationTargetException | NoSuchMethodException | SecurityException e) {
-	            e.printStackTrace();
-	        }
-	    }
+		for (int i = 0; i < maxTiers; i++) {
+			IStatue statue;
+			try {
+				statue = ((IStatue) block.getClass().getConstructor(String.class).newInstance(block.getTranslationKey().replace("tile.", "")));
+				statue.setTier(i + 1);
+				statue.setColor(statue.getColor());
+				allBlocks[i] = registerBlock((Block) statue, new ItemBlockStatue((Block) statue));
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					 | InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			}
+		}
 
-	    return allBlocks;
+		return allBlocks;
 	}
-	
-	public static <T extends Block> T registerBlock(T block)
-    {
-        return registerBlock(block, new ItemBlockStatue(block));
-    }
-    
-    public static <T extends Block> T registerBlock(T block, ItemBlock item)
-    {
-    	item.setRegistryName(block.getRegistryName());
-    	StatuesItems.ITEMS.add(item);
-        BLOCKS.add(block);
-        return block;
-    }
+
+	public static <T extends Block> T registerBlock(T block) {
+		return registerBlock(block, new ItemBlockStatue(block));
+	}
+
+	public static <T extends Block> T registerBlock(T block, ItemBlock item) {
+		item.setRegistryName(block.getRegistryName());
+		StatuesItems.ITEMS.add(item);
+		BLOCKS.add(block);
+		return block;
+	}
 }

@@ -14,25 +14,23 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class BlockZombie extends BaseCutout{
-	
+public class BlockZombie extends BaseCutout {
+
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.0625 * 4, 0, 0.0625 * 4, 0.0625 * 12, 0.0625 * 16, 0.0625 * 12);
-	
+
 	public BlockZombie() {
 		super(Material.TNT);
 		this.setCreativeTab(Statues.instance.tabStatues);
 		this.setSoundType(SoundType.PLANT);
 	}
-	
+
 	@Override
-    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
-    {
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return BOUNDING_BOX;
-    }
-	
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_)
-    {
-    	addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
-    }
+	}
+
+	@Override
+	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean p_185477_7_) {
+		addCollisionBoxToList(pos, entityBox, collidingBoxes, BOUNDING_BOX);
+	}
 }

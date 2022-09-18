@@ -14,7 +14,7 @@ public class StatuesCrafting {
 	public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
 		addFurnaceRecipes();
 	}
-	
+
 	public static void addFurnaceRecipes() {
 		GameRegistry.addSmelting(StatuesItems.marshmallow, new ItemStack(StatuesItems.marshmallow_cooked), 0.1F);
 		GameRegistry.addSmelting(StatuesItems.marshmallow_cooked, new ItemStack(StatuesItems.marshmallow_charred), 0.1F);

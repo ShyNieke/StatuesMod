@@ -59,15 +59,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(Side.CLIENT)
-public class ClientProxy extends ServerProxy{
+public class ClientProxy extends ServerProxy {
 
 	@Override
 	public void Preinit() {
 		registerRender();
-		
+
 		ClientRegistry.bindTileEntitySpecialRenderer(PlayerStatueTileEntity.class, new PlayerStatueRenderer());
 	}
-	
+
 	public static void registerRender() {
 		RenderingRegistry.registerEntityRenderingHandler(EntityStatueBat.class, StatueBatRenderer.FACTORY);
 		RenderingRegistry.registerEntityRenderingHandler(FakeZombie.class, renderManager -> new RenderZombie(renderManager));
@@ -90,58 +90,45 @@ public class ClientProxy extends ServerProxy{
 		RenderingRegistry.registerEntityRenderingHandler(FakeZombiePigman.class, renderManager -> new RenderPigZombie(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeWitherSkeleton.class, renderManager -> new RenderWitherSkeleton(renderManager));
 	}
-	
+
 	@Override
 	public void Init() {
-		
+
 	}
-	
+
 	@Override
 	public void PostInit() {
-		for(Item item : StatuesItems.ITEMS)
-        {
-        	if(item == Item.getItemFromBlock(StatuesBlocks.player_statue))
-        	{
-        		item.setTileEntityItemStackRenderer(new PlayerInventoryRender());
-        	}
-        }
+		for (Item item : StatuesItems.ITEMS) {
+			if (item == Item.getItemFromBlock(StatuesBlocks.player_statue)) {
+				item.setTileEntityItemStackRenderer(new PlayerInventoryRender());
+			}
+		}
 	}
-	
+
 	@SubscribeEvent
-    public static void registerRenders(ModelRegistryEvent event)
-    {
-        for(Item item : StatuesItems.ITEMS)
-        {
-            ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(item.getRegistryName().getPath()), "inventory"));
-        }
-        
-        for(Block block : StatuesBlocks.BLOCKS)
-        {
-        	Item item = Item.getItemFromBlock(block);
-        	if(isTiered(block.getRegistryName().getPath()))
-        	{
-        		ModelLoader.setCustomStateMapper(block, new StatuesState(ResourceTiersAreCool(block.getRegistryName().getPath())));
-        	}
-        	else
-        	{
-                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(block.getRegistryName().getPath()), "inventory"));
-        	}
-        }
-    }
-	
-	public static ResourceLocation ResourceTiersAreCool(String statue)
-	{
+	public static void registerRenders(ModelRegistryEvent event) {
+		for (Item item : StatuesItems.ITEMS) {
+			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(item.getRegistryName().getPath()), "inventory"));
+		}
+
+		for (Block block : StatuesBlocks.BLOCKS) {
+			Item item = Item.getItemFromBlock(block);
+			if (isTiered(block.getRegistryName().getPath())) {
+				ModelLoader.setCustomStateMapper(block, new StatuesState(ResourceTiersAreCool(block.getRegistryName().getPath())));
+			} else {
+				ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(ResourceTiersAreCool(block.getRegistryName().getPath()), "inventory"));
+			}
+		}
+	}
+
+	public static ResourceLocation ResourceTiersAreCool(String statue) {
 		return new ResourceLocation(Reference.MOD_ID, statue.replace("t2", "").replace("t3", "").replace("t4", "").replace("t5", ""));
 	}
-	
-	public static boolean isTiered(String statue)
-	{
-		if(statue.contains("t2") || statue.contains("t3") || statue.contains("t4") || statue.contains("t5"))
-		{
+
+	public static boolean isTiered(String statue) {
+		if (statue.contains("t2") || statue.contains("t3") || statue.contains("t4") || statue.contains("t5")) {
 			return true;
-		}
-		else
-		{
+		} else {
 			return false;
 		}
 	}

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class StatueLootList {
 	public static ArrayList<LootInfo> lootList = new ArrayList<>();
 	public static LootInfo loot_info;
-	
+
 	public static void initializeStatueLoot() {
 		addLoot("baby_zombie", new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.IRON_NUGGET), ItemStack.EMPTY);
 		addLoot("blaze", new ItemStack(Items.BLAZE_POWDER), new ItemStack(Items.BLAZE_ROD), ItemStack.EMPTY);
@@ -47,9 +47,8 @@ public class StatueLootList {
 		addLoot("evoker", ItemStack.EMPTY, ItemStack.EMPTY, new ItemStack(Items.TOTEM_OF_UNDYING));
 		addLoot("etho", new ItemStack(StatuesItems.marshmallow), ItemStack.EMPTY, ItemStack.EMPTY);
 	}
-	
-	public static ItemStack getWastelandBlock()
-	{
+
+	public static ItemStack getWastelandBlock() {
 		ItemStack wasteland = new ItemStack(Blocks.SAND).setStackDisplayName("§dWasteland Block§r");
 		wasteland.addEnchantment(Enchantments.VANISHING_CURSE, 1);
 		NBTTagCompound nbt = wasteland.getTagCompound();
@@ -57,73 +56,59 @@ public class StatueLootList {
 		wasteland.setTagCompound(nbt);
 		return wasteland;
 	}
-	
-	public static ItemStack getFloodBucket()
-	{
-		ItemStack floodbucket = new ItemStack(Items.WATER_BUCKET); 
-        floodbucket.setStackDisplayName("§9The Flood§r");
-		
+
+	public static ItemStack getFloodBucket() {
+		ItemStack floodbucket = new ItemStack(Items.WATER_BUCKET);
+		floodbucket.setStackDisplayName("§9The Flood§r");
+
 		return floodbucket;
 	}
-	
-	public static void addLoot(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3)
-	{
+
+	public static void addLoot(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3) {
 		loot_info = new LootInfo(stack1, stack2, stack3, statue);
-		if(lootList.contains(loot_info))
-			return;
-		else
+		if (!lootList.contains(loot_info))
 			lootList.add(loot_info);
 	}
-	
-		
-	public static void changeLoot(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3)
-	{
-		for(LootInfo info : lootList)
-		{
-			if(info.getStatue().equals(statue))
-			{
+
+
+	public static void changeLoot(String statue, ItemStack stack1, ItemStack stack2, ItemStack stack3) {
+		for (LootInfo info : lootList) {
+			if (info.getStatue().equals(statue)) {
 				info.setStack1(stack1);
 				info.setStack2(stack2);
 				info.setStack3(stack3);
 			}
 		}
 	}
-	
-	public static ArrayList<ItemStack> getStacksForStatue(String statue)
-	{
+
+	public static ArrayList<ItemStack> getStacksForStatue(String statue) {
 		ArrayList<ItemStack> stacks = new ArrayList<>();
-		
-		for(LootInfo info : lootList)
-		{
-			if(info.getStatue() == statue)
-			{
+
+		for (LootInfo info : lootList) {
+			if (info.getStatue() == statue) {
 				stacks.add(0, info.getStack1());
 				stacks.add(1, info.getStack2());
 				stacks.add(2, info.getStack2());
-				
-				if(stacks.get(0) != info.getStack1())
+
+				if (stacks.get(0) != info.getStack1())
 					stacks.set(0, info.getStack1());
-				if(stacks.get(1) != info.getStack2())
+				if (stacks.get(1) != info.getStack2())
 					stacks.set(1, info.getStack2());
-				if(stacks.get(2) != info.getStack3())
+				if (stacks.get(2) != info.getStack3())
 					stacks.set(2, info.getStack3());
 			}
 		}
-		
+
 		return stacks;
 	}
-	
-	public static ArrayList<Block> getBlockForStatue(String statue)
-	{
+
+	public static ArrayList<Block> getBlockForStatue(String statue) {
 		ArrayList<Block> blockList = new ArrayList<>();
-		
-		for(Block blocks : StatuesBlocks.BLOCKS)
-		{
+
+		for (Block blocks : StatuesBlocks.BLOCKS) {
 			String blockName = blocks.getTranslationKey();
-			if(blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4")))
-			{
-				if (!blockList.contains(blocks))
-				{
+			if (blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4"))) {
+				if (!blockList.contains(blocks)) {
 					blockList.add(blocks);
 				}
 			}

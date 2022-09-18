@@ -18,29 +18,26 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.PlayerTickEvent;
 public class MagicHandler {
 
 	@SubscribeEvent
-	public void playerTick(PlayerTickEvent event)
-	{
-		if(event.phase == TickEvent.Phase.START)
+	public void playerTick(PlayerTickEvent event) {
+		if (event.phase == TickEvent.Phase.START)
 			return;
 
-		if(!event.player.world.isRemote)
-		{
+		if (!event.player.world.isRemote) {
 			final EntityPlayer player = event.player;
 			World world = player.world;
 			BlockPos pos = player.getPosition();
 			AxisAlignedBB hitbox = new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
 					.expand(-5, -5, -5).expand(5, 5, 5);
 
-			for(EntityItem entity : player.world.getEntitiesWithinAABB(EntityItem.class, hitbox)) {
-				if(entity instanceof EntityItem) {
+			for (EntityItem entity : player.world.getEntitiesWithinAABB(EntityItem.class, hitbox)) {
+				if (entity instanceof EntityItem) {
 					EntityItem itemE = (EntityItem) entity;
 
 					if (itemE.getItem().getItem().equals(Items.DIAMOND)) {
-						AxisAlignedBB bb = itemE.getEntityBoundingBox().contract(0.1, 0.1, 0.1);
 						BlockPos lavaPos = itemE.getPosition();
 
-						Boolean lavaFound = false;
-						Boolean requirementsFound = false;
+						boolean lavaFound = false;
+						boolean requirementsFound = false;
 
 						if (world.getBlockState(itemE.getPosition()).getBlock() == Blocks.LAVA) {
 							lavaFound = true;
@@ -75,32 +72,26 @@ public class MagicHandler {
 		}
 	}
 
-	public CampfireData properStatuesFound(World worldIn, BlockPos pos, Block block, Block block1)
-	{
+	public CampfireData properStatuesFound(World worldIn, BlockPos pos, Block block, Block block1) {
 		CampfireData data = new CampfireData(false, pos, pos);
 
-		if(worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == block && worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() == block1)
-		{
+		if (worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == block && worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() == block1) {
 			data = new CampfireData(true, pos.offset(EnumFacing.NORTH), pos.offset(EnumFacing.SOUTH));
 		}
-		if(worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == block1 && worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() == block)
-		{
+		if (worldIn.getBlockState(pos.offset(EnumFacing.NORTH)).getBlock() == block1 && worldIn.getBlockState(pos.offset(EnumFacing.SOUTH)).getBlock() == block) {
 			data = new CampfireData(true, pos.offset(EnumFacing.NORTH), pos.offset(EnumFacing.SOUTH));
 		}
-		if(worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == block && worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() == block1)
-		{
+		if (worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == block && worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() == block1) {
 			data = new CampfireData(true, pos.offset(EnumFacing.WEST), pos.offset(EnumFacing.EAST));
 		}
-		if(worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == block1 && worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() == block)
-		{
+		if (worldIn.getBlockState(pos.offset(EnumFacing.WEST)).getBlock() == block1 && worldIn.getBlockState(pos.offset(EnumFacing.EAST)).getBlock() == block) {
 			data = new CampfireData(true, pos.offset(EnumFacing.WEST), pos.offset(EnumFacing.EAST));
 		}
 
 		return data;
 	}
 
-	public class CampfireData
-	{
+	public static class CampfireData {
 		private final Boolean bool;
 		private final BlockPos pos1;
 		private final BlockPos pos2;

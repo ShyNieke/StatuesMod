@@ -6,7 +6,7 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.ingredients.Ingredients;
 import net.minecraft.item.ItemStack;
 
-public class StatueLootHandler implements IRecipeHandler<StatueLootWrapper>{
+public class StatueLootHandler implements IRecipeHandler<StatueLootWrapper> {
 
 	@Override
 	public Class<StatueLootWrapper> getRecipeClass() {
@@ -26,8 +26,8 @@ public class StatueLootHandler implements IRecipeHandler<StatueLootWrapper>{
 	@Override
 	public boolean isRecipeValid(StatueLootWrapper recipe) {
 		IIngredients ingredients = new Ingredients();
-        recipe.getIngredients(ingredients);
-        return ingredients.getInputs(ItemStack.class).size() > 0 && ingredients.getOutputs(ItemStack.class).size() > 0;
+		recipe.getIngredients(ingredients);
+		return ingredients.getInputs(ItemStack.class).size() > 0 && ingredients.getOutputs(ItemStack.class).size() > 0;
 	}
 
 }

@@ -5,7 +5,6 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.shynieke.statues.blocks.Statues.BlockPlayer_Statue;
 import com.shynieke.statues.tileentity.PlayerStatueTileEntity;
-import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelPlayer;
@@ -24,116 +23,111 @@ import java.util.Map;
 import java.util.UUID;
 
 @SideOnly(Side.CLIENT)
-public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity>{
-    public static PlayerStatueRenderer instance;
+public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatueTileEntity> {
+	public static PlayerStatueRenderer instance;
 
-    public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
-    public static final ModelPlayer slimModel = new ModelPlayer(0.03125F, true);
+	public static final ModelPlayer model = new ModelPlayer(0.03125F, false);
+	public static final ModelPlayer slimModel = new ModelPlayer(0.03125F, true);
 
-    @Override
-    public void setRendererDispatcher(TileEntityRendererDispatcher rendererDispatcherIn)
-    {
-        rendererDispatcher = rendererDispatcherIn;
-        instance = this;
-    }
+	@Override
+	public void setRendererDispatcher(TileEntityRendererDispatcher rendererDispatcherIn) {
+		rendererDispatcher = rendererDispatcherIn;
+		instance = this;
+	}
 
-    @Override
-    public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha)
-    {
-        IBlockState state = te.getWorld().getBlockState(te.getPos());
-        EnumFacing facing = (te == null || !(state.getBlock() instanceof BlockPlayer_Statue)) ? EnumFacing.UP : state.getValue(BlockPlayer_Statue.FACING);
-        this.renderPlayer(x, y, z, te.getPlayerProfile(), destroyStage, facing);
-    }
+	@Override
+	public void render(PlayerStatueTileEntity te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+		IBlockState state = te.getWorld().getBlockState(te.getPos());
+		EnumFacing facing = (te == null || !(state.getBlock() instanceof BlockPlayer_Statue)) ? EnumFacing.UP : state.getValue(BlockPlayer_Statue.FACING);
+		this.renderPlayer(x, y, z, te.getPlayerProfile(), te.isSlim(), destroyStage, facing);
+	}
 
-    public void renderPlayer(double x, double y, double z, @Nullable GameProfile profile, int destroyStage, EnumFacing enumfacing)
-    {
-        ResourceLocation skinlocation = DefaultPlayerSkin.getDefaultSkinLegacy();
+	public void renderPlayer(double x, double y, double z, @Nullable GameProfile profile, boolean isSlim, int destroyStage, EnumFacing enumfacing) {
+		ResourceLocation skinLocation = DefaultPlayerSkin.getDefaultSkinLegacy();
+		ModelPlayer theModel = this.model;
 
-        ModelPlayer theModel = this.model;
+		if (destroyStage >= 0) {
+			this.bindTexture(DESTROY_STAGES[destroyStage]);
+			GlStateManager.matrixMode(5890);
+			GlStateManager.pushMatrix();
+			GlStateManager.scale(4.0F, 4.0F, 1.0F);
+			GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
+			GlStateManager.matrixMode(5888);
+		} else {
+			if (profile != null) {
+				skinLocation = getPlayerSkin(profile);
+				if (isSlim && theModel != slimModel) {
+					theModel = slimModel;
+				}
+			}
 
-        if (destroyStage >= 0)
-        {
-            this.bindTexture(DESTROY_STAGES[destroyStage]);
-            GlStateManager.matrixMode(5890);
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(4.0F, 4.0F, 1.0F);
-            GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
-            GlStateManager.matrixMode(5888);
-        } else {
-            if (profile != null)
-            {
-                Minecraft minecraft = Minecraft.getMinecraft();
-                Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+			this.bindTexture(skinLocation);
+		}
+		GlStateManager.pushMatrix();
+		GlStateManager.disableCull();
 
-                if (map.containsKey(Type.SKIN))
-                {
-                    skinlocation = minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
-                }
-                else
-                {
-                    UUID uuid = EntityPlayer.getUUID(profile);
-                    skinlocation = DefaultPlayerSkin.getDefaultSkin(uuid);
-                }
+		GlStateManager.translate((float) x + 0.5F, (float) y, (float) z + 0.5F);
+		GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
 
-                if (SkinUtil.isSlimSkin(profile.getId())) {
-                    theModel = this.slimModel;
-                }
-            }
+		switch (enumfacing) {
+			default:
+				GlStateManager.translate(0F, 0.75F, 0F);
+				GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
+				break;
+			case SOUTH:
+				GlStateManager.translate(0F, 0.75F, 0F);
+				GlStateManager.rotate(0.0F, 0.0F, 90.0F, 0.0F);
+				break;
+			case WEST:
+				GlStateManager.translate(0F, 0.75F, 0F);
+				GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
+				break;
+			case EAST:
+				GlStateManager.translate(0F, 0.75F, 0F);
+				GlStateManager.rotate(-90.0F, 0.0F, -90.0F, 0.0F);
+				break;
+		}
 
-            this.bindTexture(skinlocation);
-        }
-        GlStateManager.pushMatrix();
-        GlStateManager.disableCull();
+		GlStateManager.enableRescaleNormal();
+		GlStateManager.scale(-1.0F, -1.0F, 1.0F);
+		GlStateManager.enableAlpha();
+		GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
 
-        GlStateManager.translate((float)x + 0.5F, (float)y, (float)z + 0.5F);
-        GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
+		theModel.bipedBody.render(0.03125F);
+		theModel.bipedHead.render(0.03125F);
+		theModel.bipedLeftArm.render(0.03125F);
+		theModel.bipedRightArm.render(0.03125F);
+		theModel.bipedLeftLeg.render(0.03125F);
+		theModel.bipedRightLeg.render(0.03125F);
 
-        switch (enumfacing)
-        {
-            default:
-                GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-180.0F, 0.0F, 180.0F, 0.0F);
-                break;
-            case SOUTH:
-                GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(0.0F, 0.0F, 90.0F, 0.0F);
-                break;
-            case WEST:
-                GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-90.0F, 0.0F, 90.0F, 0.0F);
-                break;
-            case EAST:
-                GlStateManager.translate(0F, 0.75F, 0F);
-                GlStateManager.rotate(-90.0F, 0.0F, -90.0F, 0.0F);
-                break;
-        }
+		theModel.bipedBodyWear.render(0.03125F);
+		theModel.bipedHeadwear.render(0.03125F);
+		theModel.bipedLeftArmwear.render(0.03125F);
+		theModel.bipedRightArmwear.offsetZ = -0.3125F;
+		theModel.bipedRightArmwear.render(0.03125F);
+		theModel.bipedLeftLegwear.render(0.03125F);
+		theModel.bipedRightLegwear.render(0.03125F);
+		GlStateManager.popMatrix();
 
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-        GlStateManager.enableAlpha();
-        GlStateManager.enableBlendProfile(GlStateManager.Profile.PLAYER_SKIN);
+		if (destroyStage >= 0) {
+			GlStateManager.matrixMode(5890);
+			GlStateManager.popMatrix();
+			GlStateManager.matrixMode(5888);
+		}
+	}
 
-        theModel.bipedBody.render(0.03125F);
-        theModel.bipedHead.render(0.03125F);
-        theModel.bipedLeftArm.render(0.03125F);
-        theModel.bipedRightArm.render(0.03125F);
-        theModel.bipedLeftLeg.render(0.03125F);
-        theModel.bipedRightLeg.render(0.03125F);
-
-        theModel.bipedBodyWear.render(0.03125F);
-        theModel.bipedHeadwear.render(0.03125F);
-        theModel.bipedLeftArmwear.render(0.03125F);
-        theModel.bipedRightArmwear.offsetZ = -0.3125F;
-        theModel.bipedRightArmwear.render(0.03125F);
-        theModel.bipedLeftLegwear.render(0.03125F);
-        theModel.bipedRightLegwear.render(0.03125F);
-        GlStateManager.popMatrix();
-
-        if (destroyStage >= 0)
-        {
-            GlStateManager.matrixMode(5890);
-            GlStateManager.popMatrix();
-            GlStateManager.matrixMode(5888);
-        }
-    }
+	private static ResourceLocation getPlayerSkin(@Nullable GameProfile profile) {
+		if (profile == null || !profile.isComplete()) {
+			return DefaultPlayerSkin.getDefaultSkinLegacy();
+		} else {
+			final Minecraft minecraft = Minecraft.getMinecraft();
+			final Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().loadSkinFromCache(profile);
+			if (map.containsKey(Type.SKIN)) {
+				return minecraft.getSkinManager().loadSkin(map.get(Type.SKIN), Type.SKIN);
+			} else {
+				UUID uuid = EntityPlayer.getUUID(profile);
+				return DefaultPlayerSkin.getDefaultSkin(uuid);
+			}
+		}
+	}
 }
