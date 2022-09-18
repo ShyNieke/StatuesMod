@@ -18,7 +18,6 @@ import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.packets.StatuesNetworking;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipes.StatueLootList;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraftforge.api.distmarker.Dist;
@@ -41,6 +40,7 @@ public class Statues {
 	public Statues() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec);
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, StatuesConfig.clientSpec);
 		eventBus.register(StatuesConfig.class);
 
 		eventBus.addListener(this::setup);

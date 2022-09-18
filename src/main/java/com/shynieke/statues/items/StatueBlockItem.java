@@ -1,6 +1,5 @@
 package com.shynieke.statues.items;
 
-import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.init.StatueTabs;
 import net.minecraft.nbt.CompoundTag;

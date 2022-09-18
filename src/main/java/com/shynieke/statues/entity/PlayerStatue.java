@@ -156,6 +156,19 @@ public class PlayerStatue extends LivingEntity {
 			entityData.set(GAMEPROFILE, Optional.of(profile));
 			this.setSlim(profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId()));
 		});
+
+		synchronized (this) {
+			getGameProfile().ifPresent(profile -> {
+				if (this.level != null && this.level.isClientSide && profile != null && profile.isComplete()) {
+					Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
+						if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
+							String metadata = profileTexture.getMetadata("model");
+							this.setSlim(metadata != null && metadata.equals("slim"));
+						}
+					}, true);
+				}
+			});
+		}
 	}
 
 	@Nullable
@@ -878,19 +891,6 @@ public class PlayerStatue extends LivingEntity {
 		if (STATUS.equals(key)) {
 			this.refreshDimensions();
 			this.blocksBuilding = !this.isRemoved();
-		} else if (GAMEPROFILE.equals(key)) {
-			if (this.level.isClientSide) {
-				this.getGameProfile().ifPresent(gameProfile -> {
-					if (gameProfile.isComplete()) {
-						Minecraft.getInstance().getSkinManager().registerSkins(gameProfile, (textureType, textureLocation, profileTexture) -> {
-							if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
-								String metadata = profileTexture.getMetadata("model");
-								this.setSlim(metadata != null && metadata.equals("slim"));
-							}
-						}, true);
-					}
-				});
-			}
 		}
 
 		super.onSyncedDataUpdated(key);

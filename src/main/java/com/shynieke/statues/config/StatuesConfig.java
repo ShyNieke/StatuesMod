@@ -151,6 +151,21 @@ public class StatuesConfig {
 		}
 	}
 
+	public static class Client {
+		public final BooleanValue allowScrolling;
+
+		Client(ForgeConfigSpec.Builder builder) {
+			builder.comment("Client settings")
+					.push("Client");
+
+			allowScrolling = builder
+					.comment("Allow scrolling to increase / decrease an angle value in the posing screen")
+					.define("allowScrolling", true);
+
+			builder.pop();
+		}
+	}
+
 	public static final ForgeConfigSpec commonSpec;
 	public static final Common COMMON;
 
@@ -158,6 +173,16 @@ public class StatuesConfig {
 		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
 		commonSpec = specPair.getRight();
 		COMMON = specPair.getLeft();
+	}
+
+
+	public static final ForgeConfigSpec clientSpec;
+	public static final Client CLIENT;
+
+	static {
+		final Pair<Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
+		clientSpec = specPair.getRight();
+		CLIENT = specPair.getLeft();
 	}
 
 	@SubscribeEvent

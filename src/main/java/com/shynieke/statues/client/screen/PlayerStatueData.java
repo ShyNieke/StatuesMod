@@ -32,7 +32,7 @@ public class PlayerStatueData {
 		return noGravity;
 	}
 
-	public void readNBT(CompoundTag compound) {
+	public void readFromNBT(CompoundTag compound) {
 		this.small = compound.getBoolean("Small");
 		this.locked = compound.getBoolean("Locked");
 		this.nameVisible = compound.getBoolean("CustomNameVisible");
@@ -59,7 +59,7 @@ public class PlayerStatueData {
 		}
 	}
 
-	public CompoundTag writeNBT() {
+	public CompoundTag writeToNBT() {
 		CompoundTag compound = new CompoundTag();
 		compound.putBoolean("Small", this.small);
 		compound.putBoolean("Locked", this.locked);
