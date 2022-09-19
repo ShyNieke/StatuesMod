@@ -1,8 +1,7 @@
 plugins {
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '5.+'
+    id 'net.minecraftforge.gradle' version '5.1.+'
 }
-apply from: 'https://raw.githubusercontent.com/SizableShrimp/ForgeUpdatesRemapper/main/remapper.gradle'
 
 version = "${version}"
 group = 'com.shynieke.statues' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
