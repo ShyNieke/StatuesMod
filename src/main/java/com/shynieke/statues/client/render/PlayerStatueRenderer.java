@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.entity.PlayerStatue;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -21,6 +22,8 @@ import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.Map;
 
@@ -87,10 +90,26 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		if (f < 5.0F) {
 			poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(f / 1.5F * (float) Math.PI) * 3.0F));
 		}
+
+		if (isPlayerUpsideDown(playerStatue)) {
+			poseStack.translate(0.0D, (double)(playerStatue.getBbHeight() + 0.1F), 0.0D);
+			poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+		}
 	}
 
 	protected void scale(PlayerStatue playerStatue, PoseStack poseStack, float partialTickTime) {
 		float f = 0.9375F;
 		poseStack.scale(f, f, f);
+	}
+
+	public static boolean isPlayerUpsideDown(LivingEntity livingEntity) {
+		if (livingEntity instanceof Player || livingEntity.hasCustomName()) {
+			String s = ChatFormatting.stripFormatting(livingEntity.getName().getString());
+			if ("Dinnerbone".equals(s) || "Grumm".equals(s)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }

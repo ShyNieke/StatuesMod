@@ -3,6 +3,7 @@ package com.shynieke.statues.client.render;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
@@ -109,6 +110,13 @@ public class PlayerBEWLR extends BlockEntityWithoutLevelRenderer {
 	public void renderItem(GameProfile gameprofile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
 		boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerBER.getRenderType(gameprofile));
+		if (gameprofile != null) {
+			final String s = gameprofile.getName();
+			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
+				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
+				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+			}
+		}
 		if (flag) {
 			if (slimModel != null) {
 				slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

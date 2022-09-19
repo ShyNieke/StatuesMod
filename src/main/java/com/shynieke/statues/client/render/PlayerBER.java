@@ -69,6 +69,14 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
 		poseStack.translate(0.0D, -1.25D, 0.0D);
 
+		if (profile != null) {
+			final String s = profile.getName();
+			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
+				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
+				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+			}
+		}
+
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
 		if (isSlim) {
 			slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
