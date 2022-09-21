@@ -10,6 +10,7 @@ import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -69,19 +70,22 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
 		poseStack.translate(0.0D, -1.25D, 0.0D);
 
+		boolean isPatreon = false;
 		if (profile != null) {
-			final String s = profile.getName();
+			final String s = ChatFormatting.stripFormatting(profile.getName());
 			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
 				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
 				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
 			}
+			isPatreon = ClientHandler.PATREONS.contains(profile.getId());
 		}
 
+		int light = isPatreon ? 15728880 : combinedLight;
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
 		if (isSlim) {
-			slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+			slimModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 		} else {
-			model.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+			model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 		}
 		poseStack.popPose();
 	}
@@ -98,5 +102,9 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 				return RenderType.entityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(UUIDUtil.getOrCreatePlayerUUID(gameProfileIn)));
 			}
 		}
+	}
+
+	public static boolean isPatreon(GameProfile profile) {
+		return ClientHandler.PATREONS.contains(profile.getId());
 	}
 }

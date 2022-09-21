@@ -181,8 +181,17 @@ public class PlayerStatue extends LivingEntity {
 		return this.entityData.get(LOCKED_BY_UUID).orElse((UUID) null);
 	}
 
+	public boolean canOpenUI(Player player) {
+		final UUID lockedBy = this.getLockedBy();
+		return lockedBy == null || (lockedBy != null && lockedBy.equals(player.getUUID()));
+	}
+
 	public void setLockedBy(@Nullable UUID uuid) {
-		this.entityData.set(LOCKED_BY_UUID, Optional.ofNullable(uuid));
+		if (uuid == null) {
+			this.setUnlocked();
+		} else {
+			this.entityData.set(LOCKED_BY_UUID, Optional.ofNullable(uuid));
+		}
 	}
 
 	public void setUnlocked() {
@@ -287,7 +296,8 @@ public class PlayerStatue extends LivingEntity {
 	@Override
 	public void load(CompoundTag compound) {
 		super.load(compound);
-		entityData.set(GAMEPROFILE, !compound.getBoolean("gameProfileExists") ? Optional.empty() : Optional.ofNullable(NbtUtils.readGameProfile(compound.getCompound("gameProfile"))));
+		entityData.set(GAMEPROFILE, !compound.getBoolean("gameProfileExists") ? Optional.empty() :
+				Optional.ofNullable(NbtUtils.readGameProfile(compound.getCompound("gameProfile"))));
 	}
 
 	@Override
@@ -404,11 +414,7 @@ public class PlayerStatue extends LivingEntity {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
 			if (!level.isClientSide && player != null) {
-				if (isLocked() && getLockedBy() != null) {
-					if (player.getUUID().equals(getLockedBy())) {
-						StatuesNetworking.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PlayerStatueScreenMessage(getId()));
-					}
-				} else {
+				if (canOpenUI(player)) {
 					StatuesNetworking.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PlayerStatueScreenMessage(getId()));
 				}
 			}

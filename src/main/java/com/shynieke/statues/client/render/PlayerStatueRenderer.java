@@ -5,6 +5,7 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.ChatFormatting;
@@ -22,8 +23,6 @@ import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 
 import java.util.Map;
 
@@ -72,11 +71,9 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 
 	@Override
 	public void render(PlayerStatue playerStatue, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
-		if (playerStatue.isSlim() && this.playerModel != slimPlayerModel) {
-			this.model = slimPlayerModel;
-		}
+		this.model = playerStatue.isSlim() ? this.slimPlayerModel : playerModel;
 		poseStack.translate(0, playerStatue.getYOffsetData(), 0);
-		super.render(playerStatue, entityYaw, partialTicks, poseStack, bufferSource, packedLightIn);
+		super.render(playerStatue, entityYaw, partialTicks, poseStack, bufferSource, isPatreon(playerStatue) ? 15728880 : packedLightIn);
 	}
 
 	@Override
@@ -92,7 +89,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		}
 
 		if (isPlayerUpsideDown(playerStatue)) {
-			poseStack.translate(0.0D, (double)(playerStatue.getBbHeight() + 0.1F), 0.0D);
+			poseStack.translate(0.0D, (double) (playerStatue.getBbHeight() + 0.1F), 0.0D);
 			poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
 		}
 	}
@@ -102,12 +99,22 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		poseStack.scale(f, f, f);
 	}
 
-	public static boolean isPlayerUpsideDown(LivingEntity livingEntity) {
-		if (livingEntity instanceof Player || livingEntity.hasCustomName()) {
-			String s = ChatFormatting.stripFormatting(livingEntity.getName().getString());
+	public static boolean isPlayerUpsideDown(PlayerStatue playerStatue) {
+		if (playerStatue.getGameProfile().isPresent()) {
+			GameProfile profile = playerStatue.getGameProfile().get();
+			String s = ChatFormatting.stripFormatting(profile.getName());
 			if ("Dinnerbone".equals(s) || "Grumm".equals(s)) {
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	public static boolean isPatreon(PlayerStatue playerStatue) {
+		if (playerStatue.getGameProfile().isPresent()) {
+			GameProfile profile = playerStatue.getGameProfile().get();
+			return ClientHandler.PATREONS.contains(profile.getId());
 		}
 
 		return false;

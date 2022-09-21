@@ -2,6 +2,7 @@ package com.shynieke.statues.client;
 
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
 import com.shynieke.statues.client.model.PlayerStatueModel;
@@ -42,10 +43,18 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import javax.annotation.Nullable;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class ClientHandler {
 	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue"), "player_statue");
 	public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue_slim"), "player_statue_slim");
+	public static final List<UUID> PATREONS = new ArrayList<>();
 
 	public static void doClientStuff(final FMLClientSetupEvent event) {
 		setPlayerCache(Minecraft.getInstance());
@@ -131,6 +140,27 @@ public class ClientHandler {
 				}
 			});
 		});
+
+		new Thread(() -> {
+			Statues.LOGGER.info("Loading Statues patreon data...");
+			try {
+				URL url = new URL("https://raw.githubusercontent.com/ShyNieke/StatuesMod/1.19.x/Patreons.txt");
+				try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
+					String s;
+					while ((s = reader.readLine()) != null) {
+						String stripped = s.strip();
+						PATREONS.add(UUID.fromString(stripped));
+					}
+					reader.close();
+				} catch (IOException ex) {
+					Statues.LOGGER.error("Exception loading patreon data!");
+					ex.printStackTrace();
+				}
+			} catch (Exception k) {
+				//not possible
+			}
+			Statues.LOGGER.info("Loaded {} Statues patreons.", PATREONS.size());
+		}, "Statues Patreon Data Loader").start();
 
 		if (ModList.get().isLoaded("curios")) {
 			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);

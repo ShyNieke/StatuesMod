@@ -8,6 +8,7 @@ import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
 import com.shynieke.statues.util.SkinUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -110,20 +111,24 @@ public class PlayerBEWLR extends BlockEntityWithoutLevelRenderer {
 	public void renderItem(GameProfile gameprofile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
 		boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerBER.getRenderType(gameprofile));
+		boolean isPatreon = false;
 		if (gameprofile != null) {
-			final String s = gameprofile.getName();
+			final String s = ChatFormatting.stripFormatting(gameprofile.getName());
 			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
 				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
 				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
 			}
+			isPatreon = ClientHandler.PATREONS.contains(gameprofile.getId());
 		}
+
+		int light = isPatreon ? 15728880 : combinedLight;
 		if (flag) {
 			if (slimModel != null) {
-				slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+				slimModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			}
 		} else {
 			if (model != null) {
-				model.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+				model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			}
 		}
 	}
