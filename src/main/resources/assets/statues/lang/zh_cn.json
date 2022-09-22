@@ -120,6 +120,7 @@
 	"block.statues.eagle_ray": "Eagle Ray Statue",
 	"block.statues.slabfish": "Slabfish Statue",
 
+  
 	"_comment": "Item names",
 	"item.statues.royal_nugget": "皇家珍品",
 	"item.statues.mooshroom_soup": "哞菇汤",
@@ -174,7 +175,7 @@
 	"statues:container.shulkerStatue": "Shulker Statue",
 	"statues:container.shulker_statue.more": "and %s more...",
 
-	"_comment": "messages",
+	"_comment": "gui",
 	"statues.playerstatue.gui.title": "Player Statue",
 	"statues.playerstatue.gui.label.small": "Small",
 	"statues.playerstatue.gui.label.locked": "Locked",
@@ -191,6 +192,7 @@
 	"statues.playerstatue.gui.label.copy": "Copy",
 	"statues.playerstatue.gui.label.paste": "Paste",
 
+	"_comment": "messages",
 	"statues:player.compass.dimension.failure": "%s is in another dimension.",
 	"statues:player.compass.offline": "%s can not be found, perhaps the player isn't online.",
 
@@ -214,25 +216,5 @@
 	"gui.statue.fill": "Filling Interactions",
 
 	"_comment": "curios",
-	"curios.identifier.statue": "Statue",
-	"entity.statues.fake_blaze.name": "Blaze",
-	"entity.statues.fake_creeper.name": "Creeper",
-	"entity.statues.fake_enderman.name": "Enderman",
-	"entity.statues.fake_fireball.name": "Fireball",
-	"entity.statues.fake_ghast.name": "Ghast",
-	"entity.statues.fake_guardian.name": "Guardian",
-	"entity.statues.fake_husk.name": "Husk",
-	"entity.statues.fake_large_fireball.name": "Large Fireball",
-	"entity.statues.fake_magmacube.name": "Magma Cube",
-	"entity.statues.fake_shulker.name": "Shulker",
-	"entity.statues.fake_shulker_bullet.name": "Shulker Bullet",
-	"entity.statues.fake_skeleton.name": "Skeleton",
-	"entity.statues.fake_slime.name": "Slime",
-	"entity.statues.fake_spider.name": "Spider",
-	"entity.statues.fake_stray.name": "Stray",
-	"entity.statues.fake_witch.name": "Witch",
-	"entity.statues.fake_wither_skeleton.name": "Wither Skeleton",
-	"entity.statues.fake_zombie.name": "Zombie",
-	"entity.statues.fake_zombie_pigman.name": "Zombie Pigman",
-	"entity.statues.statue_bat.name": "Statue Bat"
+	"curios.identifier.statue": "Statue"
 }
