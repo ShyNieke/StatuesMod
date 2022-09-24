@@ -20,7 +20,7 @@ public class BlockSquid extends BaseNormal {
 
 	public BlockSquid() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.SLIME);
 	}
 

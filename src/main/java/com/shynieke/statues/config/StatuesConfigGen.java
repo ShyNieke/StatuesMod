@@ -12,22 +12,22 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class StatuesConfigGen {
 
 	@Config.Comment({"General settings"})
-	public static General general = new General();
+	public static final General general = new General();
 
 	@Config.Comment({"Player Statue Settings"})
-	public static Player player = new Player();
+	public static final Player player = new Player();
 
 	@Config.Comment({"Other settings"})
-	public static OtherStuff othersettings = new OtherStuff();
+	public static final OtherStuff othersettings = new OtherStuff();
 
 	@Config.Comment({"Other settings"})
-	public static TextMessages messages = new TextMessages();
+	public static final TextMessages messages = new TextMessages();
 
 	@Config.Comment({"Lucky Players"})
-	public static LuckyPlayers luckyplayers = new LuckyPlayers();
+	public static final LuckyPlayers luckyplayers = new LuckyPlayers();
 
 	@Config.Comment({"Seasonal Events"})
-	public static Events events = new Events();
+	public static final Events events = new Events();
 
 	public enum EnumDeathSource {
 		ALL,
@@ -39,59 +39,59 @@ public class StatuesConfigGen {
 
 		@Config.RequiresMcRestart
 		@Config.Comment("Disables all functional statue tiers (tiers that usually drop items) [Default: false]")
-		public boolean nonFunctional = false;
+		public final boolean nonFunctional = false;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("Tier 1 needs to be crafted with Statue Core (Default: true)" +
 				" Disabling this makes tier1 statues drop from mobs.")
-		public boolean Tier1Crafting = true;
+		public final boolean Tier1Crafting = true;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("Setting this to true enables a recipe where the core is replaced by a diamond [ideal for singleplayer when tier 1 crafting is turned off] (Default: false)")
-		public boolean PlayerStatueAlternateRecipe = false;
+		public final boolean PlayerStatueAlternateRecipe = false;
 
 		@Config.Comment("Setting this to true allows for aquatic statues to be fished up (Default: false)")
-		public boolean AquaticFishing = false;
+		public final boolean AquaticFishing = false;
 
 		@Config.Comment("The drop chance of statues when statue drops is true (Default: 0.01)" +
 				" [This option only takes effect when Tier1Crafting is false]")
-		public double OldDropChance = 0.01;
+		public final double OldDropChance = 0.01;
 
 		@Config.Comment("The amount of time [in seconds] that you have to wait before being able to interact with the statues (tier 2 and higher)" +
 				"(Default: 60)")
-		public int InteractionTimer = 60;
+		public final int InteractionTimer = 60;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("Setting this to false disables the tier 3,4 and 5 recipes. (Default: true)")
-		public boolean CraftableInteraction = true;
+		public final boolean CraftableInteraction = true;
 
 		@Config.Comment("Source of death that determines how the Statues drop [player statue has it's own config option] (Default: PLAYER)")
-		public EnumDeathSource StatueKillSource = EnumDeathSource.PLAYER;
+		public final EnumDeathSource StatueKillSource = EnumDeathSource.PLAYER;
 
 
 		@Config.RequiresMcRestart
 		@Config.Comment("Setting this to false disables the statue bat from spawning naturally. (Default: true)")
-		public boolean StatueBatSpawning = true;
+		public final boolean StatueBatSpawning = true;
 	}
 
 	public static class Player {
 
 		@Config.Comment("Players drop their players Player Statue")
-		public boolean PlayersDropStatue = true;
+		public final boolean PlayersDropStatue = true;
 
 		@Config.Comment("Changing this will change the chance a player has of dropping a Player Statue when killed by a player [1 in a x chance] (Default: 1)")
-		public int PlayerDropChance = 1;
+		public final int PlayerDropChance = 1;
 
 		@Config.Comment("Source of death that determines how the Player Statue drops (Default: PLAYER)")
-		public EnumDeathSource PlayerStatueKillSource = EnumDeathSource.PLAYER;
+		public final EnumDeathSource PlayerStatueKillSource = EnumDeathSource.PLAYER;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("Player Statue Crafting (Default: true)")
-		public boolean PlayerCrafting = true;
+		public final boolean PlayerCrafting = true;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("When true statues will add a player compass (Default: true)")
-		public boolean PlayerCompass = true;
+		public final boolean PlayerCompass = true;
 	}
 
 	public static class OtherStuff {
@@ -99,19 +99,19 @@ public class StatuesConfigGen {
 		@Config.RequiresMcRestart
 		@Config.Comment("Changing this changes the amount of time needed to harvest a statue, Higher = more time needed. Lower = faster harvested " +
 				"(Default: 0.6) [0.6 is the same as vanilla grass]")
-		public double StatueHardness = 0.6;
+		public final double StatueHardness = 0.6;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("Changing this changes the stacksize of the mushroom soup (Default: 8)")
-		public int SoupStack = 8;
+		public final int SoupStack = 8;
 
 		@Config.Comment("This either disables or enables the anti-afk system that's in place (Default: true)")
-		public boolean antiAfk = true;
+		public final boolean antiAfk = true;
 	}
 
 	public static class TextMessages {
 		@Config.Comment("Adding lines / removing lines specifies what the informative statue can say")
-		public String[] info_messages = new String[]
+		public final String[] info_messages = new String[]
 				{
 						"Statues is still in beta not all mobs have a statue yet",
 						"Chickens are not royal, prove me wrong by placing the right statue on a royal looking block",
@@ -136,7 +136,7 @@ public class StatuesConfigGen {
 
 	public static class LuckyPlayers {
 		@Config.Comment("Adding usernames will make these users have less luck with getting statues")
-		public String[] lucky_players = new String[]
+		public final String[] lucky_players = new String[]
 				{
 						"iskall85"
 				};
@@ -146,12 +146,12 @@ public class StatuesConfigGen {
 	public static class Events {
 		@Config.RequiresMcRestart
 		@Config.Comment("When enabled makes the fake mobs spawn during the month of October as a halloween event (Default: true)")
-		public boolean halloweenSpawning = true;
+		public final boolean halloweenSpawning = true;
 
 		@Config.RequiresMcRestart
 		@Config.Comment("The weigth of the fake mobs is divided by this number. (Default: 4)")
 		@Config.RangeInt(min = 1)
-		public int fakeSpawningWeigth = 4;
+		public final int fakeSpawningWeigth = 4;
 	}
 
 	@Mod.EventBusSubscriber(modid = Reference.MOD_ID)

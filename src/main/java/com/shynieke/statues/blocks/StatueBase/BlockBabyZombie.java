@@ -20,7 +20,7 @@ public class BlockBabyZombie extends BaseNormal {
 
 	public BlockBabyZombie() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.PLANT);
 	}
 

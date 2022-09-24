@@ -150,7 +150,7 @@ public class StatuesBlocks {
 	public static Block sombrero;
 	public static Block bumbo_statue;
 
-	public static ArrayList<Block> BLOCKS = new ArrayList<>();
+	public static final ArrayList<Block> BLOCKS = new ArrayList<>();
 
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {

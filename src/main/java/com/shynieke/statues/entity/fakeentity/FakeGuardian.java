@@ -29,7 +29,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -74,7 +73,7 @@ public class FakeGuardian extends EntityGuardian implements IFakeEntity {
 		this.tasks.addTask(9, new EntityAILookIdle(this));
 		this.wander.setMutexBits(3);
 		entityaimovetowardsrestriction.setMutexBits(3);
-		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, 10, true, false, new FakeGuardian.GuardianTargetSelector(this)));
+		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget<>(this, EntityLivingBase.class, 10, true, false, new FakeGuardian.GuardianTargetSelector(this)));
 	}
 
 	protected void entityInit() {
@@ -407,16 +406,6 @@ public class FakeGuardian extends EntityGuardian implements IFakeEntity {
 					this.guardian.setTargetedEntity(this.guardian.getAttackTarget().getEntityId());
 					this.guardian.world.setEntityState(this.guardian, (byte) 21);
 				} else if (this.tickCounter >= this.guardian.getAttackDuration()) {
-					float f = 1.0F;
-
-					if (this.guardian.world.getDifficulty() == EnumDifficulty.HARD) {
-						f += 2.0F;
-					}
-
-					if (this.isElder) {
-						f += 2.0F;
-					}
-
 					this.guardian.setAttackTarget((EntityLivingBase) null);
 				}
 

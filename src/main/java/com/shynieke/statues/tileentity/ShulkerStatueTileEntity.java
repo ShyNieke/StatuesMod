@@ -242,7 +242,7 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 				int random = world.rand.nextInt(100);
 
 				if (random < 1) {
-					if (isChild == true && entity instanceof EntityMob) {
+					if (isChild && entity instanceof EntityMob) {
 						EntityMob mob = (EntityMob) entity;
 						mob.isChild();
 						mob.setPositionAndUpdate(pos.getX(), pos.getY() + 1, pos.getZ());
@@ -263,8 +263,7 @@ public class ShulkerStatueTileEntity extends TileEntityLockableLoot implements I
 		return fakeStatue;
 	}
 
-	public void ShootBullet(BlockPos pos, World worldIn, EntityPlayer entity, EnumFacing.Axis facing) {
-		EntityPlayer player = (EntityPlayer) entity;
+	public void ShootBullet(BlockPos pos, World worldIn, EntityPlayer player, EnumFacing.Axis facing) {
 		FakePlayer fakePlayer = getFakePlayer();
 
 		int random = worldIn.rand.nextInt(100);

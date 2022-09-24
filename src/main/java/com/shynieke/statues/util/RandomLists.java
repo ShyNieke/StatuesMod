@@ -14,7 +14,7 @@ public class RandomLists {
 
 	public static final Random rand = new Random();
 
-	public static List<PotionType> throwablePotions = ImmutableList.of(
+	public static final List<PotionType> throwablePotions = ImmutableList.of(
 			PotionTypes.HARMING,
 			PotionTypes.SLOWNESS,
 			PotionTypes.POISON,
@@ -23,11 +23,11 @@ public class RandomLists {
 			PotionTypes.HEALING,
 			PotionTypes.REGENERATION);
 
-	public static List<SoundEvent> wasteland_sounds = ImmutableList.of(
+	public static final List<SoundEvent> wasteland_sounds = ImmutableList.of(
 			StatuesSounds.wasteland_hello,
 			StatuesSounds.wasteland_onwards);
 
-	public static List<SoundEvent> campfire_sounds = ImmutableList.of(
+	public static final List<SoundEvent> campfire_sounds = ImmutableList.of(
 			StatuesSounds.campfire_bye_random,
 			StatuesSounds.campfire_cold_random,
 			StatuesSounds.campfire_greetings_random,

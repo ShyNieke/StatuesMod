@@ -20,7 +20,7 @@ public class BlockPlayer extends BaseCutout {
 
 	public BlockPlayer() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.CLOTH);
 	}
 

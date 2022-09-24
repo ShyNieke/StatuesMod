@@ -20,7 +20,7 @@ public class BlockShulker extends BaseNormal {
 
 	public BlockShulker() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.PLANT);
 	}
 

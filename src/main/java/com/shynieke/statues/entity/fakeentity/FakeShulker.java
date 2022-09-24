@@ -121,7 +121,7 @@ public class FakeShulker extends EntityShulker implements IFakeEntity {
 		 * Returns whether the EntityAIBase should begin execution.
 		 */
 		public boolean shouldExecute() {
-			return FakeShulker.this.world.getDifficulty() == EnumDifficulty.PEACEFUL ? false : super.shouldExecute();
+			return FakeShulker.this.world.getDifficulty() != EnumDifficulty.PEACEFUL && super.shouldExecute();
 		}
 
 		protected AxisAlignedBB getTargetableArea(double targetDistance) {
@@ -148,7 +148,7 @@ public class FakeShulker extends EntityShulker implements IFakeEntity {
 		 * Returns whether the EntityAIBase should begin execution.
 		 */
 		public boolean shouldExecute() {
-			return this.taskOwner.getTeam() == null ? false : super.shouldExecute();
+			return this.taskOwner.getTeam() != null && super.shouldExecute();
 		}
 
 		protected AxisAlignedBB getTargetableArea(double targetDistance) {

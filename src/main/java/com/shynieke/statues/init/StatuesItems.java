@@ -25,7 +25,7 @@ public class StatuesItems {
 	public static Item core, player_compass, marshmallow_charred;
 	public static ItemFood marshmallow, marshmallow_cooked, marshmallow_golden;
 
-	public static ArrayList<Item> ITEMS = new ArrayList<>();
+	public static final ArrayList<Item> ITEMS = new ArrayList<>();
 
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {

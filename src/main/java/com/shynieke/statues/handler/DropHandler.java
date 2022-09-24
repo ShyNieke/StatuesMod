@@ -49,17 +49,17 @@ public class DropHandler {
 		Entity entity = event.getEntity();
 		Entity source = event.getSource().getTrueSource();
 
-		if (StatuesConfigGen.general.Tier1Crafting == false) {
+		if (!StatuesConfigGen.general.Tier1Crafting) {
 			addSombrero(entity, source, event);
 
 			if (entity instanceof EntitySlime) {
+				ItemStack itemStackToDrop;
 				if (entity instanceof EntityMagmaCube) {
-					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.magma_statue[0], 1);
-					DropLootStatues(entity, itemStackToDrop, source, event);
+					itemStackToDrop = new ItemStack(StatuesBlocks.magma_statue[0], 1);
 				} else {
-					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue[0], 1);
-					DropLootStatues(entity, itemStackToDrop, source, event);
+					itemStackToDrop = new ItemStack(StatuesBlocks.slime_statue[0], 1);
 				}
+				DropLootStatues(entity, itemStackToDrop, source, event);
 			}
 
 			if (entity instanceof EntityBlaze) {
@@ -122,7 +122,7 @@ public class DropHandler {
 			}
 
 			if (entity instanceof EntitySheep) {
-				if (((EntitySheep) entity).getSheared() == true) {
+				if (((EntitySheep) entity).getSheared()) {
 					ItemStack itemStackToDrop = new ItemStack(StatuesBlocks.sheepshaven_statue[0], 1);
 					DropLootStatues(entity, itemStackToDrop, source, event);
 				}
@@ -276,7 +276,7 @@ public class DropHandler {
 			}
 		}
 
-		if (StatuesConfigGen.player.PlayersDropStatue == true) {
+		if (StatuesConfigGen.player.PlayersDropStatue) {
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
 				ItemStack playerstatuestack = new ItemStack(StatuesBlocks.player_statue, 1).setStackDisplayName(player.getName());
@@ -334,11 +334,10 @@ public class DropHandler {
 					EntityPlayerMP player = (EntityPlayerMP) source;
 					String[] LuckyPlayers = StatuesConfigGen.luckyplayers.lucky_players;
 					if (LuckyPlayers.length > 0) {
-						for (int i = 0; i < LuckyPlayers.length; i++) {
-							String luckyName = LuckyPlayers[i];
+						for (String luckyName : LuckyPlayers) {
 							String user = player.getName();
 
-							if (!luckyName.isEmpty() && user.equals(luckyName) == true) {
+							if (!luckyName.isEmpty() && user.equals(luckyName)) {
 								default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
 							} else {
 								default_drop_chance = StatuesConfigGen.general.OldDropChance;
@@ -394,8 +393,7 @@ public class DropHandler {
 
 					if (LuckyPlayers.length != 0) {
 						for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
-							if (player.getName().equals(LuckyPlayers[i])) ;
-							{
+							if (player.getName().equals(LuckyPlayers[i])) {
 								default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
 							}
 						}

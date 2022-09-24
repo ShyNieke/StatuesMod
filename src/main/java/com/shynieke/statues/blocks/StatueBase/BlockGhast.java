@@ -20,7 +20,7 @@ public class BlockGhast extends BaseNormal {
 
 	public BlockGhast() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.SLIME);
 	}
 

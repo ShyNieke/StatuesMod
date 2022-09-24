@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BaseTranslucent extends BlockHorizontal {
 
-	public float hardness = (float) StatuesConfigGen.othersettings.StatueHardness;
+	public final float hardness = (float) StatuesConfigGen.othersettings.StatueHardness;
 
 	protected BaseTranslucent(Material materialIn) {
 		super(materialIn);

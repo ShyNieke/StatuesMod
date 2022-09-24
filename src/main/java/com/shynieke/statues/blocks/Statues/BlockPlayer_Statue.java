@@ -129,7 +129,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 		String stackname = stack.getDisplayName();
 		String tilename = tile.getName();
 
-		if (tilename != stackname) {
+		if (!tilename.equals(stackname)) {
 			this.playername = stackname;
 			if ((this.playername.contains(" ") || this.playername.isEmpty()) && placer instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) placer;
@@ -164,7 +164,7 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 						tile.setPlayerProfile(newProfile);
 					} else {
 						if (gameprofile != null && playerName != null) {
-							if (gameprofile.getName() != this.playername) {
+							if (!gameprofile.getName().equals(this.playername)) {
 								tile.setName(this.playername);
 								tile.setPlayerProfile(gameprofile);
 							} else {
@@ -282,7 +282,6 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 						}
 					}
 
-					return true;
 				} else {
 					playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.offline", new Object[]{TextFormatting.GOLD + playerName}));
 					stack.shrink(1);
@@ -292,8 +291,8 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 						playerIn.dropItem(new ItemStack(Items.COMPASS), false);
 					}
 
-					return true;
 				}
+				return true;
 			} else if (!playerIn.isSneaking() && stack.getItem() == StatuesItems.player_compass && StatuesConfigGen.player.PlayerCompass) {
 				if (tile.getPlayerProfile() != null &&
 						worldIn.getPlayerEntityByUUID(tile.getPlayerProfile().getId()) != null &&
@@ -317,7 +316,6 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 						}
 					}
 
-					return true;
 				} else {
 					playerIn.sendMessage(new TextComponentTranslation("statues:player.compass.offline", new Object[]{TextFormatting.GOLD + playerName}));
 					stack.shrink(1);
@@ -327,8 +325,8 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 						playerIn.dropItem(new ItemStack(Items.COMPASS), false);
 					}
 
-					return true;
 				}
+				return true;
 			} else if (!playerIn.isSneaking() && stack.getItem() == Items.COMPARATOR) {
 				if (!tile.getComparatorApplied()) {
 					stack.shrink(1);
@@ -348,9 +346,8 @@ public class BlockPlayer_Statue extends BlockPlayer implements ITileEntityProvid
 				}
 				return true;
 			}
-			return false;
-		} else
-			return false;
+		}
+		return false;
 	}
 
 	@Override

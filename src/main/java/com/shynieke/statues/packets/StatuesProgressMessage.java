@@ -55,7 +55,7 @@ public class StatuesProgressMessage implements IMessage {
 	public static void addData(int c, int cm, boolean a, BlockPos p) {
 		StatueProgressInfo progress = new StatueProgressInfo(c, cm, a, p);
 
-		if (StatueTimerProvider.info != progress)
+		if (StatueTimerProvider.info == null || !StatueTimerProvider.info.equals(progress))
 			StatueTimerProvider.info = progress;
 	}
 }

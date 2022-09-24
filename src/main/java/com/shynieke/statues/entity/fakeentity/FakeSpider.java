@@ -60,8 +60,8 @@ public class FakeSpider extends EntitySpider implements IFakeEntity {
 		this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(6, new EntityAILookIdle(this));
 		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
-		this.targetTasks.addTask(2, new FakeSpider.AISpiderTarget(this, EntityPlayer.class));
-		this.targetTasks.addTask(3, new FakeSpider.AISpiderTarget(this, EntityIronGolem.class));
+		this.targetTasks.addTask(2, new FakeSpider.AISpiderTarget<>(this, EntityPlayer.class));
+		this.targetTasks.addTask(3, new FakeSpider.AISpiderTarget<>(this, EntityIronGolem.class));
 	}
 
 	/**
@@ -143,7 +143,7 @@ public class FakeSpider extends EntitySpider implements IFakeEntity {
 	}
 
 	public boolean isPotionApplicable(PotionEffect potioneffectIn) {
-		return potioneffectIn.getPotion() == MobEffects.POISON ? false : super.isPotionApplicable(potioneffectIn);
+		return potioneffectIn.getPotion() != MobEffects.POISON && super.isPotionApplicable(potioneffectIn);
 	}
 
 	/**
@@ -219,7 +219,7 @@ public class FakeSpider extends EntitySpider implements IFakeEntity {
 		 */
 		public boolean shouldExecute() {
 			float f = this.taskOwner.getBrightness();
-			return f >= 0.5F ? false : super.shouldExecute();
+			return !(f >= 0.5F) && super.shouldExecute();
 		}
 	}
 

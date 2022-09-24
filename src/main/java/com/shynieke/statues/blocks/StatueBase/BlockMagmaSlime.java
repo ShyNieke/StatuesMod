@@ -21,7 +21,7 @@ public class BlockMagmaSlime extends BaseNormal {
 
 	public BlockMagmaSlime() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.SLIME);
 		this.slipperiness = 0.8F;
 	}

@@ -10,9 +10,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class StatueLootList {
-	public static ArrayList<LootInfo> lootList = new ArrayList<>();
+	public static final ArrayList<LootInfo> lootList = new ArrayList<>();
 	public static LootInfo loot_info;
 
 	public static void initializeStatueLoot() {
@@ -85,7 +86,7 @@ public class StatueLootList {
 		ArrayList<ItemStack> stacks = new ArrayList<>();
 
 		for (LootInfo info : lootList) {
-			if (info.getStatue() == statue) {
+			if (info.getStatue().equals(statue.toLowerCase(Locale.ROOT))) {
 				stacks.add(0, info.getStack1());
 				stacks.add(1, info.getStack2());
 				stacks.add(2, info.getStack2());
@@ -105,11 +106,11 @@ public class StatueLootList {
 	public static ArrayList<Block> getBlockForStatue(String statue) {
 		ArrayList<Block> blockList = new ArrayList<>();
 
-		for (Block blocks : StatuesBlocks.BLOCKS) {
-			String blockName = blocks.getTranslationKey();
+		for (Block block : StatuesBlocks.BLOCKS) {
+			String blockName = block.getTranslationKey();
 			if (blockName.contains(statue.replace("_", "")) && (blockName.contains("t3") || blockName.contains("t4"))) {
-				if (!blockList.contains(blocks)) {
-					blockList.add(blocks);
+				if (!blockList.contains(block)) {
+					blockList.add(block);
 				}
 			}
 		}

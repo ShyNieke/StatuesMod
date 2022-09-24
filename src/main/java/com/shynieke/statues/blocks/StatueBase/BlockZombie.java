@@ -20,7 +20,7 @@ public class BlockZombie extends BaseCutout {
 
 	public BlockZombie() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.PLANT);
 	}
 

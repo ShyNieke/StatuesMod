@@ -34,8 +34,7 @@ public class BlockBumbo_Statue extends BlockBumbo {
 
 				return true;
 			}
-			return false;
-		} else
-			return false;
+		}
+		return false;
 	}
 }

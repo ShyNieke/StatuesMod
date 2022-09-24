@@ -5,19 +5,15 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 
 public interface IStatue {
-	public <T extends Block> T setTier(int tier);
+	<T extends Block> T setTier(int tier);
 
-	public int getTier();
+	int getTier();
 
-	default public Block setColor(EnumDyeColor color) {
+	default Block setColor(EnumDyeColor color) {
 		return Blocks.AIR;
 	}
 
-	;
-
-	default public EnumDyeColor getColor() {
+	default EnumDyeColor getColor() {
 		return EnumDyeColor.WHITE;
 	}
-
-	;
 }

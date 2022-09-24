@@ -20,7 +20,7 @@ public class BlockDrowned extends BaseCutout {
 
 	public BlockDrowned() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.SLIME);
 	}
 

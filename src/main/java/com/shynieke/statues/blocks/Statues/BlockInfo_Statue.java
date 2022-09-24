@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class BlockInfo_Statue extends BlockInfo implements ITileEntityProvider {
 
-	private int TIER;
+	private final int TIER;
 
 	public BlockInfo_Statue(String unlocalised, String registry, int tier) {
 		super();

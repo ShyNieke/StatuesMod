@@ -20,7 +20,7 @@ public class BlockEtho extends BaseCutout {
 
 	public BlockEtho() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.PLANT);
 		this.setLightLevel(0.25F);
 	}

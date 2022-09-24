@@ -20,7 +20,7 @@ public class BlockSnowGolem extends BaseCutout {
 
 	public BlockSnowGolem() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.SNOW);
 	}
 

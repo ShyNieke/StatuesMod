@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.util.ResourceLocation;
 
 public class StatuesState extends StateMapperBase {
-	private ResourceLocation resourceLocation;
+	private final ResourceLocation resourceLocation;
 
 	public StatuesState(ResourceLocation resource) {
 		resourceLocation = resource;

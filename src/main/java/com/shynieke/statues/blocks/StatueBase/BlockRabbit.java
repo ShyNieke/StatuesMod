@@ -20,7 +20,7 @@ public class BlockRabbit extends BaseCutout {
 
 	public BlockRabbit() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.GLASS);
 	}
 

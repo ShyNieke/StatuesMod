@@ -19,7 +19,7 @@ public class BlockPebble extends BlockFalling {
 		setRegistryName(registry);
 		setHardness(0.6F);
 		setSoundType(SoundType.GROUND);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 
 	}
 

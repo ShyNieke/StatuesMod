@@ -153,7 +153,7 @@ public class BlockSheep_Statue extends BlockSheep implements ITileEntityProvider
 		return stack1;
 	}
 
-	public EnumDyeColor getCOLOR() {
+	public EnumDyeColor getColor() {
 		return COLOR;
 	}
 

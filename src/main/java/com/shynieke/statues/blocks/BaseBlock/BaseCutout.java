@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BaseCutout extends BlockHorizontal {
 
-	public float hardness = (float) StatuesConfigGen.othersettings.StatueHardness;
+	public final float hardness = (float) StatuesConfigGen.othersettings.StatueHardness;
 
 	protected BaseCutout(Material materialIn) {
 		super(materialIn);

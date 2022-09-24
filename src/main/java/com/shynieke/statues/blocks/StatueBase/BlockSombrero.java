@@ -20,7 +20,7 @@ public class BlockSombrero extends BaseNormal {
 
 	public BlockSombrero() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.STONE);
 	}
 

@@ -29,10 +29,8 @@ public class MagicHandler {
 			AxisAlignedBB hitbox = new AxisAlignedBB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
 					.expand(-5, -5, -5).expand(5, 5, 5);
 
-			for (EntityItem entity : player.world.getEntitiesWithinAABB(EntityItem.class, hitbox)) {
-				if (entity instanceof EntityItem) {
-					EntityItem itemE = (EntityItem) entity;
-
+			for (EntityItem itemE : player.world.getEntitiesWithinAABB(EntityItem.class, hitbox)) {
+				if (itemE != null) {
 					if (itemE.getItem().getItem().equals(Items.DIAMOND)) {
 						BlockPos lavaPos = itemE.getPosition();
 
@@ -51,11 +49,7 @@ public class MagicHandler {
 
 						CampfireData data = properStatuesFound(world, lavaPos.up(), StatuesBlocks.player_statue, StatuesBlocks.creeper_statue[0]);
 
-						if (data.getBool() && lavaFound) {
-							requirementsFound = true;
-						} else {
-							requirementsFound = false;
-						}
+						requirementsFound = data.getBool() && lavaFound;
 
 						if (requirementsFound) {
 							world.setBlockState(lavaPos, Blocks.AIR.getDefaultState());

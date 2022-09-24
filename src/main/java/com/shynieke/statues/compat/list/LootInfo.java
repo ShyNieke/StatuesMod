@@ -6,7 +6,7 @@ public class LootInfo {
 	private ItemStack stack1;
 	private ItemStack stack2;
 	private ItemStack stack3;
-	private String statue;
+	private final String statue;
 
 	public LootInfo(ItemStack stack1, ItemStack stack2, ItemStack stack3, String statue) {
 		this.stack1 = stack1;
@@ -16,7 +16,7 @@ public class LootInfo {
 	}
 
 	public ItemStack getStack1() {
-		return stack1;
+		return stack1.copy();
 	}
 
 	public void setStack1(ItemStack stack1) {
@@ -24,7 +24,7 @@ public class LootInfo {
 	}
 
 	public ItemStack getStack2() {
-		return stack2;
+		return stack2.copy();
 	}
 
 	public void setStack2(ItemStack stack2) {
@@ -32,7 +32,7 @@ public class LootInfo {
 	}
 
 	public ItemStack getStack3() {
-		return stack3;
+		return stack3.copy();
 	}
 
 	public void setStack3(ItemStack stack3) {

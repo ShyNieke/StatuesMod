@@ -163,9 +163,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		}
 	}
 
-	public void SendInfoMessage(EntityPlayer entity, World worldIn, BlockPos pos) {
-		EntityPlayer player = (EntityPlayer) entity;
-
+	public void SendInfoMessage(EntityPlayer player, World worldIn, BlockPos pos) {
 		if (!world.isRemote) {
 			int random = world.rand.nextInt(100);
 
@@ -175,7 +173,7 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 			int idx = new Random().nextInt(messages.length);
 			String randommessage = (messages[idx]);
 
-			if (Loader.isModLoaded("veinminer") == true && random < 20) {
+			if (Loader.isModLoaded("veinminer") && random < 20) {
 				randommessage = ("Did you know we have veinminer");
 			} else if (LuckyPlayers.length != 0 && random < 20) {
 				for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
@@ -189,9 +187,8 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 		}
 	}
 
-	public void GiveEffect(BlockPos pos, World worldIn, EntityPlayer entity, Potion effect) {
+	public void GiveEffect(BlockPos pos, World worldIn, EntityPlayer player, Potion effect) {
 		if (isStatueAble()) {
-			EntityPlayer player = (EntityPlayer) entity;
 			int random = world.rand.nextInt(100);
 			if (tier >= 3) {
 				if (random < 10) {
@@ -207,8 +204,6 @@ public class StatueTileEntity extends TileEntity implements ITickable, iStatueBe
 
 	public void ThrowPotion(BlockPos pos, World worldIn, EntityPlayer entity) {
 		if (isStatueAble()) {
-			EntityPlayer player = (EntityPlayer) entity;
-
 			int random = world.rand.nextInt(100);
 			if (tier >= 3) {
 				if (random < 10) {

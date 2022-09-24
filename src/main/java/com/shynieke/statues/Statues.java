@@ -49,7 +49,7 @@ public class Statues {
 
 	public static final Logger logger = LogManager.getLogger(Reference.MOD_ID);
 
-	public static StatuesTab tabStatues = new StatuesTab();
+	public static final StatuesTab tabStatues = new StatuesTab();
 
 	public static final Map<String, GameProfile> GAMEPROFILE_CACHE = new HashMap<>();
 

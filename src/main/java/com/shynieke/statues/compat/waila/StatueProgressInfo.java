@@ -7,7 +7,7 @@ public class StatueProgressInfo {
 	private int cooldown;
 	private int cooldownMax;
 	private boolean able;
-	private BlockPos position;
+	private final BlockPos position;
 
 	public StatueProgressInfo(int c, int cm, boolean a, BlockPos p) {
 		this.cooldown = c;

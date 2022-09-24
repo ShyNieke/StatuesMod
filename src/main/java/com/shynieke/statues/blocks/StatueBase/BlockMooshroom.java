@@ -20,7 +20,7 @@ public class BlockMooshroom extends BaseNormal {
 
 	public BlockMooshroom() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.GLASS);
 	}
 

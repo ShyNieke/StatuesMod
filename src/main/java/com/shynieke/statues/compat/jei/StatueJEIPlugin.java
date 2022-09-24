@@ -78,7 +78,7 @@ public class StatueJEIPlugin implements IModPlugin {
 	}
 
 	private List<StatueLootWrapper> getStatueRecipes() {
-		List<StatueLootWrapper> result = new ArrayList<StatueLootWrapper>();
+		List<StatueLootWrapper> result = new ArrayList<>();
 
 		for (Block block : StatuesBlocks.BLOCKS) {
 			String blockName = block.getTranslationKey();
@@ -207,7 +207,7 @@ public class StatueJEIPlugin implements IModPlugin {
 	}
 
 	private List<StatueFillingWrapper> getFillingRecipes() {
-		List<StatueFillingWrapper> result = new ArrayList<StatueFillingWrapper>();
+		List<StatueFillingWrapper> result = new ArrayList<>();
 
 		result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.cow_statue[2]), new ItemStack(Items.BUCKET), new ItemStack(Items.MILK_BUCKET)));
 		result.add(new StatueFillingWrapper(new ItemStack(StatuesBlocks.cow_statue[3]), new ItemStack(Items.BUCKET), new ItemStack(Items.MILK_BUCKET)));

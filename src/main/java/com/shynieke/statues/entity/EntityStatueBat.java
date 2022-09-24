@@ -75,12 +75,12 @@ public class EntityStatueBat extends EntityBat {
 				return false;
 			}
 
-			return i > this.rand.nextInt(j) ? false : super.getCanSpawnHere() && dimension == DimensionType.OVERWORLD.getId();
+			return i <= this.rand.nextInt(j) && super.getCanSpawnHere() && dimension == DimensionType.OVERWORLD.getId();
 		}
 	}
 
 	private boolean isDateAroundHalloween(Calendar p_175569_1_) {
-		return p_175569_1_.get(2) + 1 == 10 && p_175569_1_.get(5) >= 20 || p_175569_1_.get(2) + 1 == 11 && p_175569_1_.get(5) <= 3;
+		return p_175569_1_.get(Calendar.MONTH) + 1 == 10 && p_175569_1_.get(Calendar.DATE) >= 20 || p_175569_1_.get(Calendar.MONTH) + 1 == 11 && p_175569_1_.get(Calendar.DATE) <= 3;
 	}
 
 	@Override

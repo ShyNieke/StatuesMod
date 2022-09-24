@@ -20,7 +20,7 @@ public class BlockBlaze extends BaseNormal {
 
 	public BlockBlaze() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.GLASS);
 		this.setLightLevel(0.5F);
 	}

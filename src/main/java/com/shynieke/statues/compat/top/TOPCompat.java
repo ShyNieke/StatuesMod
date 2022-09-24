@@ -61,10 +61,11 @@ public class TOPCompat {
 
 						int cooldownProgress = (int) ((cooldown * 100.0f) / cooldownMax);
 
-						if (able == true)
+						if (able) {
 							probeInfo.text(I18n.format("tooldown.statues.timer.finished"));
-						if (able == false)
+						} else {
 							probeInfo.text(I18n.format("tooltip.statues.timer") + cooldownProgress + "%");
+						}
 					}
 				} else if (te instanceof PlayerStatueTileEntity) {
 					PlayerStatueTileEntity tile = (PlayerStatueTileEntity) te;

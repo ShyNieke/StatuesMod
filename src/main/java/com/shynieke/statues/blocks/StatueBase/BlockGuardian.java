@@ -20,7 +20,7 @@ public class BlockGuardian extends BaseNormal {
 
 	public BlockGuardian() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.SLIME);
 	}
 

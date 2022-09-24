@@ -44,7 +44,7 @@ public class PlayerStatueRenderer extends TileEntitySpecialRenderer<PlayerStatue
 
 	public void renderPlayer(double x, double y, double z, @Nullable GameProfile profile, boolean isSlim, int destroyStage, EnumFacing enumfacing) {
 		ResourceLocation skinLocation = DefaultPlayerSkin.getDefaultSkinLegacy();
-		ModelPlayer theModel = this.model;
+		ModelPlayer theModel = model;
 
 		if (destroyStage >= 0) {
 			this.bindTexture(DESTROY_STAGES[destroyStage]);

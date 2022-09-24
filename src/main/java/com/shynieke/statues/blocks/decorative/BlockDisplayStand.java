@@ -14,7 +14,7 @@ public class BlockDisplayStand extends Block {
 		setRegistryName(registry);
 		setHardness(0.6F);
 		setSoundType(SoundType.STONE);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 	}
 
 	@Override

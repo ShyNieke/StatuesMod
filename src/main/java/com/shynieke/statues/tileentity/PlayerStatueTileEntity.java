@@ -105,7 +105,7 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
 
 	public void setPlayerProfile(GameProfile profile) {
 		this.playerProfile = profile;
-		if(profile != null) {
+		if (profile != null) {
 			this.playerProfile = TileEntitySkull.updateGameProfile(playerProfile);
 			if (this.world != null && this.world.isRemote && this.playerProfile.isComplete()) {
 				Minecraft.getMinecraft().getSkinManager().loadProfileTextures(this.playerProfile, (textureType, textureLocation, profileTexture) -> {
@@ -141,10 +141,7 @@ public class PlayerStatueTileEntity extends TileEntity implements IWorldNameable
 				}
 			} else {
 				boolean checkAnswer = false;
-				if (world.getPlayerEntityByUUID(this.playerProfile.getId()) != null)
-					checkAnswer = true;
-				else
-					checkAnswer = false;
+				checkAnswer = world.getPlayerEntityByUUID(this.playerProfile.getId()) != null;
 
 				IBlockState newState = state.withProperty(BlockPlayer_Statue.ONLINE, checkAnswer);
 

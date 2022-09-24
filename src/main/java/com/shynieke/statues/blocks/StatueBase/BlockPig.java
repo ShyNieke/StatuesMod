@@ -20,7 +20,7 @@ public class BlockPig extends BaseNormal {
 
 	public BlockPig() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.CLOTH);
 	}
 

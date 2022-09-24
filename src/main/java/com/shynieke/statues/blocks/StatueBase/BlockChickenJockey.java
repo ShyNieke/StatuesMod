@@ -20,7 +20,7 @@ public class BlockChickenJockey extends BaseNormal {
 
 	public BlockChickenJockey() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.PLANT);
 	}
 

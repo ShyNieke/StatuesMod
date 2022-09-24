@@ -85,7 +85,7 @@ public class ClientProxy extends ServerProxy {
 		RenderingRegistry.registerEntityRenderingHandler(FakeShulker.class, renderManager -> new RenderShulker(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeShulkerBullet.class, renderManager -> new RenderShulkerBullet(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeWitch.class, renderManager -> new RenderWitch(renderManager));
-		RenderingRegistry.registerEntityRenderingHandler(FakeSpider.class, renderManager -> new RenderSpider(renderManager));
+		RenderingRegistry.registerEntityRenderingHandler(FakeSpider.class, renderManager -> new RenderSpider<>(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeStray.class, renderManager -> new RenderStray(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeZombiePigman.class, renderManager -> new RenderPigZombie(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(FakeWitherSkeleton.class, renderManager -> new RenderWitherSkeleton(renderManager));
@@ -126,10 +126,6 @@ public class ClientProxy extends ServerProxy {
 	}
 
 	public static boolean isTiered(String statue) {
-		if (statue.contains("t2") || statue.contains("t3") || statue.contains("t4") || statue.contains("t5")) {
-			return true;
-		} else {
-			return false;
-		}
+		return statue.contains("t2") || statue.contains("t3") || statue.contains("t4") || statue.contains("t5");
 	}
 }

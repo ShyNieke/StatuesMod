@@ -21,7 +21,7 @@ public class BlockFish extends BaseCutout {
 
 	public BlockFish(int size) {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.CLOTH);
 		this.size = size;
 	}

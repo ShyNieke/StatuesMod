@@ -42,8 +42,7 @@ public class FishHandler {
 						if (!realPlayer.getEntityData().getBoolean(afkKey)) {
 							if (LuckyPlayers.length != 0) {
 								for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
-									if (realPlayer.getName().equals(LuckyPlayers[i])) ;
-									{
+									if (realPlayer.getName().equals(LuckyPlayers[i])) {
 										default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
 									}
 								}
@@ -72,8 +71,7 @@ public class FishHandler {
 					} else {
 						if (LuckyPlayers.length != 0) {
 							for (int i = 0; (i < LuckyPlayers.length) && (LuckyPlayers[i] != null); i++) {
-								if (realPlayer.getName().equals(LuckyPlayers[i])) ;
-								{
+								if (realPlayer.getName().equals(LuckyPlayers[i])) {
 									default_drop_chance = StatuesConfigGen.general.OldDropChance / 4;
 								}
 							}
@@ -109,34 +107,36 @@ public class FishHandler {
 		switch (world.rand.nextInt(8)) {
 			default:
 				fishedStack = new ItemStack(StatuesBlocks.pufferfish_statue[0]);
+				break;
 			case 1:
 				fishedStack = new ItemStack(StatuesBlocks.pufferfish_medium_statue[0]);
+				break;
 			case 2:
 				fishedStack = new ItemStack(StatuesBlocks.pufferfish_small_statue[0]);
+				break;
 			case 3:
 				fishedStack = new ItemStack(StatuesBlocks.drowned_statue[0]);
+				break;
 			case 4:
 				fishedStack = new ItemStack(StatuesBlocks.turtle_statue[0]);
+				break;
 			case 5:
 				fishedStack = new ItemStack(StatuesBlocks.cod_statue[0]);
+				break;
 			case 6:
 				fishedStack = new ItemStack(StatuesBlocks.salmon_statue[0]);
-			case 7:
-				fishedStack = new ItemStack(StatuesBlocks.pufferfish_statue[0]);
+				break;
 		}
 		return new EntityItem(world, x, y, z, fishedStack);
 	}
 
 	public static final int maxTime = 2400;
 	private int timeSinceKeyPressed;
-	public static String afkKey = Reference.MOD_PREFIX + "afk";
+	public static final String afkKey = Reference.MOD_PREFIX + "afk";
 
 	public static void updateAfk(EntityPlayer player, boolean afk) {
 		if (player.world.playerEntities.size() != 1) {
-			if (afk)
-				player.getEntityData().setBoolean(afkKey, true);
-			else
-				player.getEntityData().setBoolean(afkKey, false);
+			player.getEntityData().setBoolean(afkKey, afk);
 		}
 	}
 

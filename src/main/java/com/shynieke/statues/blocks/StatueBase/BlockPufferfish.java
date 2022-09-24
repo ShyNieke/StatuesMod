@@ -21,7 +21,7 @@ public class BlockPufferfish extends BaseTranslucent {
 
 	public BlockPufferfish(int size) {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.CLOTH);
 		this.size = size;
 	}

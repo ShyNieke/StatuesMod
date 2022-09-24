@@ -20,7 +20,7 @@ public class BlockDolphin extends BaseCutout {
 
 	public BlockDolphin() {
 		super(Material.TNT);
-		this.setCreativeTab(Statues.instance.tabStatues);
+		this.setCreativeTab(Statues.tabStatues);
 		this.setSoundType(SoundType.CLOTH);
 	}
 
