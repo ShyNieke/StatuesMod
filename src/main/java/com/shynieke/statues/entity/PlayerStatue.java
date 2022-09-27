@@ -93,7 +93,11 @@ public class PlayerStatue extends LivingEntity {
 
 	public PlayerStatue(EntityType<? extends PlayerStatue> entityType, Level level) {
 		super(entityType, level);
-		this.maxUpStep = 0.0F;
+	}
+
+	@Override
+	public float getStepHeight() {
+		return 0.0F;
 	}
 
 	public PlayerStatue(Level level, double posX, double posY, double posZ) {
@@ -153,6 +157,19 @@ public class PlayerStatue extends LivingEntity {
 			entityData.set(GAMEPROFILE, Optional.of(profile));
 			this.setSlim(profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId()));
 		});
+
+		synchronized (this) {
+			getGameProfile().ifPresent(profile -> {
+				if (this.level != null && this.level.isClientSide && profile != null && profile.isComplete()) {
+					Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
+						if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
+							String metadata = profileTexture.getMetadata("model");
+							this.setSlim(metadata != null && metadata.equals("slim"));
+						}
+					}, true);
+				}
+			});
+		}
 	}
 
 	@Nullable
@@ -165,8 +182,17 @@ public class PlayerStatue extends LivingEntity {
 		return this.entityData.get(LOCKED_BY_UUID).orElse((UUID) null);
 	}
 
+	public boolean canOpenUI(Player player) {
+		final UUID lockedBy = this.getLockedBy();
+		return lockedBy == null || (lockedBy != null && lockedBy.equals(player.getUUID()));
+	}
+
 	public void setLockedBy(@Nullable UUID uuid) {
-		this.entityData.set(LOCKED_BY_UUID, Optional.ofNullable(uuid));
+		if (uuid == null) {
+			this.setUnlocked();
+		} else {
+			this.entityData.set(LOCKED_BY_UUID, Optional.ofNullable(uuid));
+		}
 	}
 
 	public void setUnlocked() {
@@ -198,14 +224,10 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	public ItemStack getItemBySlot(EquipmentSlot slotIn) {
-		switch (slotIn.getType()) {
-			case HAND:
-				return this.handItems.get(slotIn.getIndex());
-			case ARMOR:
-				return this.armorItems.get(slotIn.getIndex());
-			default:
-				return ItemStack.EMPTY;
-		}
+		return switch (slotIn.getType()) {
+			case HAND -> this.handItems.get(slotIn.getIndex());
+			case ARMOR -> this.armorItems.get(slotIn.getIndex());
+		};
 	}
 
 	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
@@ -219,7 +241,6 @@ public class PlayerStatue extends LivingEntity {
 				this.equipEventAndSound(stack);
 				this.armorItems.set(slotIn.getIndex(), stack);
 		}
-
 	}
 
 	public boolean canTakeItem(ItemStack itemstackIn) {
@@ -280,7 +301,8 @@ public class PlayerStatue extends LivingEntity {
 	@Override
 	public void load(CompoundTag compound) {
 		super.load(compound);
-		entityData.set(GAMEPROFILE, !compound.getBoolean("gameProfileExists") ? Optional.empty() : Optional.ofNullable(NbtUtils.readGameProfile(compound.getCompound("gameProfile"))));
+		entityData.set(GAMEPROFILE, !compound.getBoolean("gameProfileExists") ? Optional.empty() :
+				Optional.ofNullable(NbtUtils.readGameProfile(compound.getCompound("gameProfile"))));
 	}
 
 	@Override
@@ -385,7 +407,7 @@ public class PlayerStatue extends LivingEntity {
 			if (!isLocked()) {
 				super.setCustomName(name);
 
-				this.setGameProfile(new GameProfile((UUID) null, name.getContents().toLowerCase(Locale.ROOT)));
+				this.setGameProfile(new GameProfile((UUID) null, name.getString().toLowerCase(Locale.ROOT)));
 			}
 		}
 	}
@@ -397,11 +419,7 @@ public class PlayerStatue extends LivingEntity {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
 			if (!level.isClientSide && player != null) {
-				if (isLocked() && getLockedBy() != null) {
-					if (player.getUUID().equals(getLockedBy())) {
-						StatuesNetworking.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PlayerStatueScreenMessage(getId()));
-					}
-				} else {
+				if (canOpenUI(player)) {
 					StatuesNetworking.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PlayerStatueScreenMessage(getId()));
 				}
 			}
@@ -856,10 +874,6 @@ public class PlayerStatue extends LivingEntity {
 		return entityIn instanceof Player && !this.level.mayInteract((Player) entityIn, this.blockPosition());
 	}
 
-	public HumanoidArm getdMainArm() {
-		return HumanoidArm.RIGHT;
-	}
-
 	protected SoundEvent getFallDamageSound(int heightIn) {
 		return SoundEvents.ARMOR_STAND_FALL;
 	}
@@ -888,11 +902,12 @@ public class PlayerStatue extends LivingEntity {
 		if (STATUS.equals(key)) {
 			this.refreshDimensions();
 			this.blocksBuilding = !this.isRemoved();
-		} else if (GAMEPROFILE.equals(key)) {
-			if (this.level.isClientSide) {
-				this.getGameProfile().ifPresent(gameProfile -> {
-					if (gameProfile.isComplete()) {
-						Minecraft.getInstance().getSkinManager().registerSkins(gameProfile, (textureType, textureLocation, profileTexture) -> {
+		}
+		if (GAMEPROFILE.equals(key)) {
+			synchronized (this) {
+				getGameProfile().ifPresent(profile -> {
+					if (this.level != null && this.level.isClientSide && profile != null && profile.isComplete()) {
+						Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
 							if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
 								String metadata = profileTexture.getMetadata("model");
 								this.setSlim(metadata != null && metadata.equals("slim"));

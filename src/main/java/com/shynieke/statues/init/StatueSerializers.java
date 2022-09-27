@@ -1,36 +1,41 @@
 package com.shynieke.statues.init;
 
 import com.mojang.authlib.GameProfile;
+import com.shynieke.statues.Reference;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataSerializer;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries.Keys;
 
-import javax.annotation.Nonnull;
 import java.util.Optional;
 
 public class StatueSerializers {
+	public static final DeferredRegister<EntityDataSerializer<?>> ENTITY_DATA_SERIALIZER = DeferredRegister.create(Keys.DATA_SERIALIZERS.location(), Reference.MOD_ID);
+
+
 	public static final EntityDataSerializer<Optional<GameProfile>> OPTIONAL_GAME_PROFILE = new EntityDataSerializer<Optional<GameProfile>>() {
-		@Override
-		public void write(@Nonnull FriendlyByteBuf packetBuffer, @Nonnull Optional<GameProfile> gameProfile) {
-			if (gameProfile.isPresent()) {
-				packetBuffer.writeBoolean(true);
-				packetBuffer.writeNbt(NbtUtils.writeGameProfile(new CompoundTag(), gameProfile.get()));
-			} else {
-				packetBuffer.writeBoolean(false);
+		public void write(FriendlyByteBuf friendlyByteBuf, Optional<GameProfile> optionalGameProfile) {
+			friendlyByteBuf.writeBoolean(optionalGameProfile.isPresent());
+			if (optionalGameProfile.isPresent()) {
+				friendlyByteBuf.writeNbt(NbtUtils.writeGameProfile(new CompoundTag(), optionalGameProfile.get()));
 			}
+
 		}
 
-		@Override
-		@Nonnull
-		public Optional<GameProfile> read(@Nonnull FriendlyByteBuf packetBuffer) {
-			return packetBuffer.readBoolean() ? Optional.of(NbtUtils.readGameProfile(packetBuffer.readNbt())) : Optional.empty();
+		public Optional<GameProfile> read(FriendlyByteBuf friendlyByteBuf) {
+			return !friendlyByteBuf.readBoolean() ? Optional.empty() : Optional.of(NbtUtils.readGameProfile(friendlyByteBuf.readNbt()));
 		}
 
-		@Override
-		@Nonnull
-		public Optional<GameProfile> copy(@Nonnull Optional<GameProfile> gameProfile) {
-			return gameProfile;
+		public Optional<GameProfile> copy(Optional<GameProfile> optionalGameProfile) {
+			return optionalGameProfile;
 		}
 	};
+
+
+	public static void init() {
+		EntityDataSerializers.registerSerializer(OPTIONAL_GAME_PROFILE);
+	}
 }

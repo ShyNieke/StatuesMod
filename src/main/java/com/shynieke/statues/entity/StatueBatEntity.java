@@ -33,12 +33,12 @@ public class StatueBatEntity extends Bat {
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
 		int random = getRandom().nextInt(10);
 		if (random < 5) {
 			addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2000 * 20, 2, true, false));
 		}
-		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
 	@Override
@@ -54,11 +54,11 @@ public class StatueBatEntity extends Bat {
 		return super.hurt(source, amount);
 	}
 
-	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor worldIn, MobSpawnType reason, BlockPos pos, Random randomIn) {
-		if (pos.getY() >= worldIn.getSeaLevel()) {
+	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor levelAccessor, MobSpawnType reason, BlockPos pos, Random randomIn) {
+		if (pos.getY() >= levelAccessor.getSeaLevel()) {
 			return false;
 		} else {
-			int i = worldIn.getMaxLocalRawBrightness(pos);
+			int i = levelAccessor.getMaxLocalRawBrightness(pos);
 			int j = 4;
 			if (isNearHalloween()) {
 				j = 7;
@@ -66,7 +66,7 @@ public class StatueBatEntity extends Bat {
 				return false;
 			}
 
-			return i > randomIn.nextInt(j) ? false : checkMobSpawnRules(batIn, worldIn, reason, pos, randomIn);
+			return i > randomIn.nextInt(j) ? false : checkMobSpawnRules(batIn, levelAccessor, reason, pos, randomIn);
 		}
 	}
 

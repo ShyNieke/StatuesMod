@@ -10,6 +10,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.BiomeCategory;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.BiomeDictionary;
@@ -34,15 +35,13 @@ public class StatueEntities {
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void addSpawn(BiomeLoadingEvent event) {
 		ResourceKey<Biome> biomeKey = ResourceKey.create(Registry.BIOME_REGISTRY, event.getName());
-		if (StatuesConfig.COMMON.statueBatSpawning.get() && !BiomeDictionary.hasType(biomeKey, Type.END)) {
-			if (event.getCategory() == BiomeCategory.NETHER) {
-				if (event.getName().getPath().equals("basalt_deltas")) {
-					event.getSpawns().getSpawner(MobCategory.AMBIENT).add(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), 1, 1, 1));
-				}
-			} else {
+		if (StatuesConfig.COMMON.statueBatSpawning.get()) {
+			if (!BiomeDictionary.hasType(biomeKey, Type.END) && BiomeDictionary.hasType(biomeKey, Type.OVERWORLD)) {
 				if (event.getCategory() != BiomeCategory.MUSHROOM && event.getCategory() != BiomeCategory.NONE) {
 					event.getSpawns().getSpawner(MobCategory.AMBIENT).add(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), 4, 1, 2));
 				}
+			} else if (BiomeDictionary.hasType(biomeKey, Type.NETHER) && biomeKey == Biomes.BASALT_DELTAS) {
+				event.getSpawns().getSpawner(MobCategory.AMBIENT).add(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), 1, 1, 1));
 			}
 		}
 	}

@@ -5,8 +5,10 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.entity.PlayerStatue;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -69,11 +71,9 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 
 	@Override
 	public void render(PlayerStatue playerStatue, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
-		if (playerStatue.isSlim() && this.playerModel != slimPlayerModel) {
-			this.model = slimPlayerModel;
-		}
+		this.model = playerStatue.isSlim() ? this.slimPlayerModel : playerModel;
 		poseStack.translate(0, playerStatue.getYOffsetData(), 0);
-		super.render(playerStatue, entityYaw, partialTicks, poseStack, bufferSource, packedLightIn);
+		super.render(playerStatue, entityYaw, partialTicks, poseStack, bufferSource, isSupporter(playerStatue) ? 15728880 : packedLightIn);
 	}
 
 	@Override
@@ -87,10 +87,36 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		if (f < 5.0F) {
 			poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(f / 1.5F * (float) Math.PI) * 3.0F));
 		}
+
+		if (isPlayerUpsideDown(playerStatue)) {
+			poseStack.translate(0.0D, (double) (playerStatue.getBbHeight() + 0.1F), 0.0D);
+			poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+		}
 	}
 
 	protected void scale(PlayerStatue playerStatue, PoseStack poseStack, float partialTickTime) {
 		float f = 0.9375F;
 		poseStack.scale(f, f, f);
+	}
+
+	public static boolean isPlayerUpsideDown(PlayerStatue playerStatue) {
+		if (playerStatue.getGameProfile().isPresent()) {
+			GameProfile profile = playerStatue.getGameProfile().get();
+			String s = ChatFormatting.stripFormatting(profile.getName());
+			if ("Dinnerbone".equals(s) || "Grumm".equals(s)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isSupporter(PlayerStatue playerStatue) {
+		if (playerStatue.getGameProfile().isPresent()) {
+			GameProfile profile = playerStatue.getGameProfile().get();
+			return ClientHandler.SUPPORTER.contains(profile.getId());
+		}
+
+		return false;
 	}
 }

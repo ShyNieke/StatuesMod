@@ -16,7 +16,6 @@ import com.shynieke.statues.init.StatueSounds;
 import com.shynieke.statues.packets.StatuesNetworking;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipes.StatueLootList;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraftforge.api.distmarker.Dist;
@@ -28,6 +27,7 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.config.ModConfig.Type;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
@@ -39,6 +39,7 @@ public class Statues {
 	public Statues() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec);
+		ModLoadingContext.get().registerConfig(Type.CLIENT, StatuesConfig.clientSpec);
 		eventBus.register(StatuesConfig.class);
 
 		eventBus.addListener(this::setup);
@@ -77,7 +78,7 @@ public class Statues {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		StatueLootList.initializeStatueLoot();
-		EntityDataSerializers.registerSerializer(StatueSerializers.OPTIONAL_GAME_PROFILE);
+		StatueSerializers.init();
 		StatueEntities.setupEntities();
 
 		StatuesNetworking.init();

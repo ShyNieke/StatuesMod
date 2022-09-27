@@ -18,6 +18,11 @@ public class NumberFieldBox extends EditBox {
 	@Override
 	public void insertText(String textToWrite) {
 		if (this.isNumeric(textToWrite)) super.insertText(textToWrite);
+
+		float currentValue = getFloat();
+		if (currentValue > 360 || currentValue < -360) {
+			this.setValue("0");
+		}
 	}
 
 	@Override

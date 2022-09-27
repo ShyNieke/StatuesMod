@@ -3,10 +3,12 @@ package com.shynieke.statues.client.render;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
 import com.shynieke.statues.util.SkinUtil;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -19,14 +21,15 @@ import net.minecraft.world.item.ItemStack;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerBlockEntityInventoryRenderer extends BlockEntityWithoutLevelRenderer {
+public class PlayerBEWLR extends BlockEntityWithoutLevelRenderer {
 	private StatuePlayerTileModel model;
 	private StatuePlayerTileModel slimModel;
 
-	public PlayerBlockEntityInventoryRenderer(BlockEntityRendererProvider.Context context) {
+	public PlayerBEWLR(BlockEntityRendererProvider.Context context) {
 		super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
 		this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
 		this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), false);
@@ -45,7 +48,7 @@ public class PlayerBlockEntityInventoryRenderer extends BlockEntityWithoutLevelR
 			GameProfile gameprofile = null;
 
 			if (stack.hasCustomHoverName()) {
-				String stackName = stack.getHoverName().getContents().toLowerCase();
+				String stackName = stack.getHoverName().getString().toLowerCase(Locale.ROOT);
 				boolean validFlag = !stackName.isEmpty() && !stackName.contains(" ");
 
 				if (validFlag) {
@@ -107,14 +110,25 @@ public class PlayerBlockEntityInventoryRenderer extends BlockEntityWithoutLevelR
 
 	public void renderItem(GameProfile gameprofile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
 		boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
-		VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerTileRenderer.getRenderType(gameprofile));
+		VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerBER.getRenderType(gameprofile));
+		boolean isSupporter = false;
+		if (gameprofile != null) {
+			final String s = ChatFormatting.stripFormatting(gameprofile.getName());
+			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
+				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
+				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+			}
+			isSupporter = ClientHandler.SUPPORTER.contains(gameprofile.getId());
+		}
+
+		int light = isSupporter ? 15728880 : combinedLight;
 		if (flag) {
 			if (slimModel != null) {
-				slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+				slimModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			}
 		} else {
 			if (model != null) {
-				model.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+				model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 			}
 		}
 	}

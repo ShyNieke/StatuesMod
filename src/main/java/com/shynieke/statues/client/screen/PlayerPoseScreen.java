@@ -2,6 +2,7 @@ package com.shynieke.statues.client.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.packets.PlayerStatueSyncMessage;
 import com.shynieke.statues.packets.StatuesNetworking;
@@ -13,7 +14,7 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,9 +36,7 @@ public class PlayerPoseScreen extends Screen {
 	private ToggleButton nameVisibleButton;
 	private ToggleButton noGravityButton;
 	private final NumberFieldBox[] poseTextFields = new NumberFieldBox[18];
-
-	private Button doneButton;
-	private Button cancelButton;
+	private final boolean allowScrolling;
 
 	public PlayerPoseScreen(PlayerStatue playerStatue) {
 		super(NarratorChatListener.NO_TITLE);
@@ -45,7 +44,9 @@ public class PlayerPoseScreen extends Screen {
 		this.playerStatueEntity = playerStatue;
 
 		this.playerStatueData = new PlayerStatueData();
-		this.playerStatueData.readNBT(playerStatueEntity.saveWithoutId(new CompoundTag()));
+		this.playerStatueData.readFromNBT(playerStatueEntity.saveWithoutId(new CompoundTag()));
+
+		this.allowScrolling = StatuesConfig.CLIENT.allowScrolling.get();
 
 		for (int i = 0; i < this.buttonLabels.length; i++)
 			this.buttonLabels[i] = I18n.get(String.format("%s.playerstatue.gui.label." + this.buttonLabels[i], Reference.MOD_ID));
@@ -86,13 +87,13 @@ public class PlayerPoseScreen extends Screen {
 		}));
 
 		// rotation textbox
-		this.rotationTextField = new NumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (22), 38, 17, new TextComponent("field.rotation"));
+		this.rotationTextField = new NumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (22), 38, 17, new TranslatableComponent("statues.playerstatue.gui.label.rotation"));
 		this.rotationTextField.setValue(String.valueOf((int) this.playerStatueData.rotation));
-		this.rotationTextField.setMaxLength(3);
+		this.rotationTextField.setMaxLength(4);
 		this.addWidget(this.rotationTextField);
 
 		// Y Offset textbox
-		this.YOffsetTextField = new DecimalNumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (44), 38, 17, new TextComponent("field.yOffset"));
+		this.YOffsetTextField = new DecimalNumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (44), 38, 17, new TranslatableComponent("statues.playerstatue.gui.label.y_offset"));
 		this.YOffsetTextField.setValue(String.valueOf((float) Mth.clamp(this.playerStatueData.yOffset, -1, 1)));
 		this.YOffsetTextField.setMaxLength(5);
 		this.addWidget(this.YOffsetTextField);
@@ -106,22 +107,44 @@ public class PlayerPoseScreen extends Screen {
 			int height = 17;
 			String value = String.valueOf((int) this.playerStatueData.pose[i]);
 
-			this.poseTextFields[i] = new NumberFieldBox(this.font, x, y, width, height, new TextComponent(String.format("field.%s", i)));
+			this.poseTextFields[i] = new NumberFieldBox(this.font, x, y, width, height, new TranslatableComponent(String.format("statues.playerstatue.gui.label.field.%s", i)));
 			this.poseTextFields[i].setValue(value);
-			this.poseTextFields[i].setMaxLength(3);
+			this.poseTextFields[i].setMaxLength(4);
 			this.addWidget(this.poseTextFields[i]);
 		}
 
+		// copy & paste buttons
+		offsetX = 20;
 		offsetY = this.height / 4 + 120 + 12;
+		this.addRenderableWidget(new Button(offsetX, offsetY, 64, 20, new TranslatableComponent("statues.playerstatue.gui.label.copy"), (button) -> {
+			CompoundTag compound = this.writeFieldsToNBT();
+			String clipboardData = compound.toString();
+			if (this.minecraft != null) {
+				this.minecraft.keyboardHandler.setClipboard(clipboardData);
+			}
+		}));
+		this.addRenderableWidget(new Button(offsetX + 66, offsetY, 64, 20, new TranslatableComponent("statues.playerstatue.gui.label.paste"), (button) -> {
+			try {
+				String clipboardData = null;
+				if (this.minecraft != null) {
+					clipboardData = this.minecraft.keyboardHandler.getClipboard();
+				}
+				CompoundTag compound = TagParser.parseTag(clipboardData);
+				this.readFieldsFromNBT(compound);
+				this.updateEntity(compound);
+			} catch (Exception e) {
+				//Nope
+			}
+		}));
 
 		// done & cancel buttons
 		offsetX = this.width - 20;
-		this.doneButton = this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslatableComponent("gui.done"), (button) -> {
+		this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslatableComponent("gui.done"), (button) -> {
 			this.updateEntity(this.writeFieldsToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}));
-		this.cancelButton = this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, new TranslatableComponent("gui.cancel"), (button) -> {
-			this.updateEntity(this.playerStatueData.writeNBT());
+		this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, new TranslatableComponent("gui.cancel"), (button) -> {
+			this.updateEntity(this.playerStatueData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}));
 	}
@@ -181,6 +204,44 @@ public class PlayerPoseScreen extends Screen {
 			this.textFieldUpdated();
 		}
 		return typed;
+	}
+
+	@Override
+	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+		if (allowScrolling && delta > 0) {
+			//Add 1 to the value
+			if (rotationTextField.isFocused()) {
+				int nextValue = (int) (rotationTextField.getFloat() + 1);
+				rotationTextField.setValue(String.valueOf(nextValue));
+				this.textFieldUpdated();
+				return true;
+			}
+			for (NumberFieldBox textField : this.poseTextFields) {
+				if (textField.isHoveredOrFocused()) {
+					int nextValue = (int) (textField.getFloat() + 1);
+					textField.setValue(String.valueOf(nextValue));
+					this.textFieldUpdated();
+					return true;
+				}
+			}
+		} else if (allowScrolling && delta < 0) {
+			//Remove 1 to the value
+			if (rotationTextField.isFocused()) {
+				int previousValue = (int) (rotationTextField.getFloat() - 1);
+				rotationTextField.setValue(String.valueOf(previousValue));
+				this.textFieldUpdated();
+				return true;
+			}
+			for (NumberFieldBox textField : this.poseTextFields) {
+				if (textField.isHoveredOrFocused()) {
+					int previousValue = (int) (textField.getFloat() - 1);
+					textField.setValue(String.valueOf(previousValue));
+					this.textFieldUpdated();
+					return true;
+				}
+			}
+		}
+		return super.mouseScrolled(mouseX, mouseY, delta);
 	}
 
 	@Override
@@ -285,6 +346,23 @@ public class PlayerPoseScreen extends Screen {
 
 		compound.put("Pose", poseTag);
 		return compound;
+	}
+
+	private void readFieldsFromNBT(CompoundTag compound) {
+		PlayerStatueData statueData = new PlayerStatueData();
+		statueData.readFromNBT(compound);
+
+		this.smallButton.setValue(statueData.small);
+		this.lockButton.setValue(statueData.locked);
+		this.nameVisibleButton.setValue(statueData.nameVisible);
+		this.noGravityButton.setValue(statueData.noGravity);
+
+		this.YOffsetTextField.setValue(String.valueOf((double) statueData.yOffset));
+		this.rotationTextField.setValue(String.valueOf((int) statueData.rotation));
+
+		for (int i = 0; i < this.poseTextFields.length; i++) {
+			this.poseTextFields[i].setValue(String.valueOf((int) statueData.pose[i]));
+		}
 	}
 
 	private void updateEntity(CompoundTag compound) {

@@ -10,6 +10,7 @@ import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -28,13 +29,13 @@ import javax.annotation.Nullable;
 import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
-public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity> {
+public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 	private final StatuePlayerTileModel model;
 	private final StatuePlayerTileModel slimModel;
 
 	public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkin();
 
-	public PlayerTileRenderer(BlockEntityRendererProvider.Context context) {
+	public PlayerBER(BlockEntityRendererProvider.Context context) {
 		this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
 		this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), true);
 	}
@@ -46,10 +47,10 @@ public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity
 		Direction direction = flag ? blockstate.getValue(PlayerStatueBlock.FACING) : Direction.UP;
 		GameProfile profile = blockEntity.getPlayerProfile();
 
-		render(direction, profile, blockEntity.isSlim(), poseStack, bufferSource, combinedLightIn);
+		render(direction, profile, blockEntity.isSlim(), poseStack, bufferSource, combinedLightIn, partialTicks);
 	}
 
-	public void render(@Nullable Direction direction, @Nullable GameProfile profile, boolean isSlim, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
+	public void render(@Nullable Direction direction, @Nullable GameProfile profile, boolean isSlim, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, float partialTicks) {
 		poseStack.translate(0.5D, 0.25D, 0.5D);
 		poseStack.pushPose();
 		if (direction != null) {
@@ -69,12 +70,26 @@ public class PlayerTileRenderer implements BlockEntityRenderer<PlayerBlockEntity
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
 		poseStack.translate(0.0D, -1.25D, 0.0D);
 
-		VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
-		if (isSlim) {
-			slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-		} else {
-			model.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		boolean isSupporter = false;
+//		boolean isTranslator = false;
+		if (profile != null) {
+			final String s = ChatFormatting.stripFormatting(profile.getName());
+			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
+				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
+				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+			}
+			isSupporter = ClientHandler.SUPPORTER.contains(profile.getId());
+//			isTranslator = ClientHandler.TRANSLATORS.contains(profile.getId());
 		}
+
+		int light = isSupporter ? 15728880 : combinedLight;
+		VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
+		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
+
+		//TODO: Implement Translator effect
+
+		playerModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+
 		poseStack.popPose();
 	}
 
