@@ -8,7 +8,6 @@ import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.FishHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
 import com.shynieke.statues.handlers.TraderHandler;
-import com.shynieke.statues.init.StatueBiomeModifierSerializers;
 import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueEntities;
 import com.shynieke.statues.init.StatueLootModifiers;
@@ -53,8 +52,6 @@ public class Statues {
 		StatueBlockEntities.BLOCK_ENTITIES.register(eventBus);
 		StatueSounds.SOUND_EVENTS.register(eventBus);
 		StatuesRecipes.RECIPE_SERIALIZERS.register(eventBus);
-		StatueBiomeModifierSerializers.BIOME_MODIFIER_SERIALIZERS.register(eventBus);
-		StatueBiomeModifierSerializers.BIOME_MODIFIERS.register(eventBus);
 		StatueLootModifiers.GLM.register(eventBus);
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);

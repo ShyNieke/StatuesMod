@@ -1,22 +1,34 @@
 package com.shynieke.statues.datagen;
 
 import com.google.common.collect.ImmutableList;
+import com.google.gson.JsonElement;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.JsonOps;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTags;
 import com.shynieke.statues.lootmodifiers.StatuesLootModifier;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
+import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -36,10 +48,14 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.GlobalLootModifierProvider;
+import net.minecraftforge.common.data.JsonCodecProvider;
 import net.minecraftforge.common.loot.LootTableIdCondition;
+import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.common.world.ForgeBiomeModifiers.AddSpawnsBiomeModifier;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
@@ -54,6 +70,7 @@ import java.util.stream.Stream;
 public class StatuesDataGenerator {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event) {
+		final RegistryOps<JsonElement> ops = RegistryOps.create(JsonOps.INSTANCE, RegistryAccess.builtinCopy());
 		DataGenerator generator = event.getGenerator();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
@@ -62,7 +79,25 @@ public class StatuesDataGenerator {
 			StatueBlockTags blockTags = new StatueBlockTags(generator, event.getExistingFileHelper());
 			generator.addProvider(event.includeServer(), blockTags);
 			generator.addProvider(event.includeServer(), new StatueItemTags(generator, blockTags, event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), new StatueBiomeTags(generator, event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new StatueModifiers(generator));
+
+			final HolderSet.Named<Biome> spawnBiomesTag = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), StatueTags.CAN_SPAWN_STATUE_BAT);
+			final BiomeModifier addSpawn = AddSpawnsBiomeModifier.singleSpawn(
+					spawnBiomesTag,
+					new SpawnerData(StatueRegistry.STATUE_BAT.get(), 4, 1, 2));
+
+			final HolderSet.Named<Biome> spawnLessBiomesTag = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), StatueTags.CAN_SPAWN_FEWER_STATUE_BAT);
+			final BiomeModifier addFewerSpawn = AddSpawnsBiomeModifier.singleSpawn(
+					spawnLessBiomesTag,
+					new SpawnerData(StatueRegistry.STATUE_BAT.get(), 1, 1, 1));
+
+			generator.addProvider(event.includeServer(), JsonCodecProvider.forDatapackRegistry(
+					generator, helper, Reference.MOD_ID, ops, ForgeRegistries.Keys.BIOME_MODIFIERS,
+					Map.of(new ResourceLocation(Reference.MOD_ID, "add_statue_bat_spawn"), addSpawn,
+							new ResourceLocation(Reference.MOD_ID, "add_fewer_statue_bat_spawn"), addFewerSpawn
+					)
+			));
 		}
 		if (event.includeClient()) {
 			generator.addProvider(event.includeClient(), new StatueItemModels(generator, helper));
@@ -108,6 +143,23 @@ public class StatuesDataGenerator {
 			this.copy(StatueTags.STATUE_BLOCKS, StatueTags.STATUES_ITEMS);
 			this.tag(StatueTags.CURIOS_STATUE).addTag(StatueTags.STATUES_ITEMS).add(StatueRegistry.DISPLAY_STAND.get().asItem(), StatueRegistry.SOMBRERO.get().asItem());
 			this.tag(StatueTags.PLAYER_UPGRADE_ITEM).add(StatueRegistry.STATUE_CORE.get());
+		}
+	}
+
+	private static class StatueBiomeTags extends BiomeTagsProvider {
+
+		public StatueBiomeTags(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
+			super(generator, Reference.MOD_ID, existingFileHelper);
+		}
+
+		@Override
+		protected void addTags() {
+			TagsProvider.TagAppender<Biome> tagappender1 = this.tag(StatueTags.CAN_SPAWN_STATUE_BAT);
+			MultiNoiseBiomeSource.Preset.OVERWORLD.possibleBiomes().forEach((resourceKey) -> {
+				if (!resourceKey.equals(Biomes.DEEP_DARK) && !resourceKey.equals(Biomes.MUSHROOM_FIELDS))
+					tagappender1.add(resourceKey);
+			});
+			this.tag(StatueTags.CAN_SPAWN_FEWER_STATUE_BAT).add(Biomes.BASALT_DELTAS);
 		}
 	}
 

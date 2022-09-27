@@ -898,6 +898,20 @@ public class PlayerStatue extends LivingEntity {
 			this.refreshDimensions();
 			this.blocksBuilding = !this.isRemoved();
 		}
+		if(GAMEPROFILE.equals(key)) {
+			synchronized (this) {
+				getGameProfile().ifPresent(profile -> {
+					if (this.level != null && this.level.isClientSide && profile != null && profile.isComplete()) {
+						Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
+							if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
+								String metadata = profileTexture.getMetadata("model");
+								this.setSlim(metadata != null && metadata.equals("slim"));
+							}
+						}, true);
+					}
+				});
+			}
+		}
 
 		super.onSyncedDataUpdated(key);
 	}
