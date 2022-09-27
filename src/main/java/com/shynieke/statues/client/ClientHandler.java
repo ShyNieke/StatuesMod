@@ -54,7 +54,8 @@ import java.util.UUID;
 public class ClientHandler {
 	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue"), "player_statue");
 	public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue_slim"), "player_statue_slim");
-	public static final List<UUID> PATREONS = new ArrayList<>();
+	public static final List<UUID> SUPPORTER = new ArrayList<>();
+	public static final List<UUID> TRANSLATORS = new ArrayList<>();
 
 	public static void doClientStuff(final FMLClientSetupEvent event) {
 		setPlayerCache(Minecraft.getInstance());
@@ -142,25 +143,35 @@ public class ClientHandler {
 		});
 
 		new Thread(() -> {
-			Statues.LOGGER.info("Loading Statues patreon data...");
+			Statues.LOGGER.info("Loading Statues supporter data...");
 			try {
-				URL url = new URL("https://raw.githubusercontent.com/ShyNieke/StatuesMod/1.19.x/Patreons.txt");
+				URL url = new URL("https://raw.githubusercontent.com/ShyNieke/StatuesMod/1.19.x/Supporters.txt");
 				try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
 					String s;
 					while ((s = reader.readLine()) != null) {
-						String stripped = s.strip();
-						PATREONS.add(UUID.fromString(stripped));
+						String[] split = s.split(" ", 2);
+						if (split.length != 2) {
+							Statues.LOGGER.error("Invalid entry {} will be ignored.", s);
+							continue;
+						}
+						SupporterType type = SupporterType.valueOf(split[1]);
+						if (type == SupporterType.SUPPORTER) {
+							SUPPORTER.add(UUID.fromString(split[0]));
+						} else {
+							TRANSLATORS.add(UUID.fromString(split[0]));
+						}
 					}
 					reader.close();
 				} catch (IOException ex) {
-					Statues.LOGGER.error("Exception loading patreon data!");
+					Statues.LOGGER.error("Exception loading supporter data!");
 					ex.printStackTrace();
 				}
 			} catch (Exception k) {
 				//not possible
 			}
-			Statues.LOGGER.info("Loaded {} Statues patreons.", PATREONS.size());
-		}, "Statues Patreon Data Loader").start();
+			Statues.LOGGER.info("Loaded {} supporters.", SUPPORTER.size());
+			Statues.LOGGER.info("Loaded {} translators.", TRANSLATORS.size());
+		}, "Statues Perks Data Loader").start();
 
 		if (ModList.get().isLoaded("curios")) {
 			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);

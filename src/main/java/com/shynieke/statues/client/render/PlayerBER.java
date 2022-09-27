@@ -47,10 +47,10 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 		Direction direction = flag ? blockstate.getValue(PlayerStatueBlock.FACING) : Direction.UP;
 		GameProfile profile = blockEntity.getPlayerProfile();
 
-		render(direction, profile, blockEntity.isSlim(), poseStack, bufferSource, combinedLightIn);
+		render(direction, profile, blockEntity.isSlim(), poseStack, bufferSource, combinedLightIn, partialTicks);
 	}
 
-	public void render(@Nullable Direction direction, @Nullable GameProfile profile, boolean isSlim, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
+	public void render(@Nullable Direction direction, @Nullable GameProfile profile, boolean isSlim, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, float partialTicks) {
 		poseStack.translate(0.5D, 0.25D, 0.5D);
 		poseStack.pushPose();
 		if (direction != null) {
@@ -70,23 +70,26 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
 		poseStack.translate(0.0D, -1.25D, 0.0D);
 
-		boolean isPatreon = false;
+		boolean isSupporter = false;
+//		boolean isTranslator = false;
 		if (profile != null) {
 			final String s = ChatFormatting.stripFormatting(profile.getName());
 			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
 				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
 				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
 			}
-			isPatreon = ClientHandler.PATREONS.contains(profile.getId());
+			isSupporter = ClientHandler.SUPPORTER.contains(profile.getId());
+//			isTranslator = ClientHandler.TRANSLATORS.contains(profile.getId());
 		}
 
-		int light = isPatreon ? 15728880 : combinedLight;
+		int light = isSupporter ? 15728880 : combinedLight;
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
-		if (isSlim) {
-			slimModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-		} else {
-			model.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-		}
+		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
+
+		//TODO: Implement Translator effect
+
+		playerModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+
 		poseStack.popPose();
 	}
 
@@ -102,9 +105,5 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 				return RenderType.entityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(UUIDUtil.getOrCreatePlayerUUID(gameProfileIn)));
 			}
 		}
-	}
-
-	public static boolean isPatreon(GameProfile profile) {
-		return ClientHandler.PATREONS.contains(profile.getId());
 	}
 }

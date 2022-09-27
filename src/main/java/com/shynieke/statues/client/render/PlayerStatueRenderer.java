@@ -73,7 +73,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	public void render(PlayerStatue playerStatue, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
 		this.model = playerStatue.isSlim() ? this.slimPlayerModel : playerModel;
 		poseStack.translate(0, playerStatue.getYOffsetData(), 0);
-		super.render(playerStatue, entityYaw, partialTicks, poseStack, bufferSource, isPatreon(playerStatue) ? 15728880 : packedLightIn);
+		super.render(playerStatue, entityYaw, partialTicks, poseStack, bufferSource, isSupporter(playerStatue) ? 15728880 : packedLightIn);
 	}
 
 	@Override
@@ -111,10 +111,10 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		return false;
 	}
 
-	public static boolean isPatreon(PlayerStatue playerStatue) {
+	public static boolean isSupporter(PlayerStatue playerStatue) {
 		if (playerStatue.getGameProfile().isPresent()) {
 			GameProfile profile = playerStatue.getGameProfile().get();
-			return ClientHandler.PATREONS.contains(profile.getId());
+			return ClientHandler.SUPPORTER.contains(profile.getId());
 		}
 
 		return false;

@@ -111,17 +111,17 @@ public class PlayerBEWLR extends BlockEntityWithoutLevelRenderer {
 	public void renderItem(GameProfile gameprofile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
 		boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerBER.getRenderType(gameprofile));
-		boolean isPatreon = false;
+		boolean isSupporter = false;
 		if (gameprofile != null) {
 			final String s = ChatFormatting.stripFormatting(gameprofile.getName());
 			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
 				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
 				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
 			}
-			isPatreon = ClientHandler.PATREONS.contains(gameprofile.getId());
+			isSupporter = ClientHandler.SUPPORTER.contains(gameprofile.getId());
 		}
 
-		int light = isPatreon ? 15728880 : combinedLight;
+		int light = isSupporter ? 15728880 : combinedLight;
 		if (flag) {
 			if (slimModel != null) {
 				slimModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
