@@ -1,4 +1,4 @@
-[![build](https://github.com/ShyNieke/StatuesMod/actions/workflows/build.yml/badge.svg)](https://github.com/ShyNieke/StatuesMod/actions/workflows/build.yml) [![](http://cf.way2muchnoise.eu/versions/253172_latest.svg)](https://www.curseforge.com/minecraft/mc-mods/statues)
+[![build](https://github.com/ShyNieke/StatuesMod/actions/workflows/build.yml/badge.svg)](https://github.com/ShyNieke/StatuesMod/actions/workflows/build.yml) [![](http://cf.way2muchnoise.eu/versions/253172.svg)](https://www.curseforge.com/minecraft/mc-mods/statues)
 
 # Statues Mod #
 
