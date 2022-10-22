@@ -13,8 +13,6 @@ import net.minecraftforge.registries.ForgeRegistries.Keys;
 import java.util.Optional;
 
 public class StatueSerializers {
-	public static final DeferredRegister<EntityDataSerializer<?>> ENTITY_DATA_SERIALIZER = DeferredRegister.create(Keys.DATA_SERIALIZERS.location(), Reference.MOD_ID);
-
 
 	public static final EntityDataSerializer<Optional<GameProfile>> OPTIONAL_GAME_PROFILE = new EntityDataSerializer<Optional<GameProfile>>() {
 		public void write(FriendlyByteBuf friendlyByteBuf, Optional<GameProfile> optionalGameProfile) {
