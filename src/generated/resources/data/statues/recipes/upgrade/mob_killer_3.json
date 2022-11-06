@@ -1,0 +1,13 @@
+{
+  "type": "statues:upgrade",
+  "catalysts": [
+    {
+      "item": "minecraft:experience_bottle"
+    }
+  ],
+  "center": {
+    "tag": "statues:statues/upgradeable"
+  },
+  "tier": 2,
+  "upgradeType": "mob_killer"
+}

@@ -6,17 +6,17 @@ import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.FishHandler;
+import com.shynieke.statues.handlers.InventoryHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
 import com.shynieke.statues.handlers.TraderHandler;
-import com.shynieke.statues.init.StatueBlockEntities;
-import com.shynieke.statues.init.StatueEntities;
-import com.shynieke.statues.init.StatueLootModifiers;
-import com.shynieke.statues.init.StatueRegistry;
-import com.shynieke.statues.init.StatueSerializers;
-import com.shynieke.statues.init.StatueSounds;
-import com.shynieke.statues.packets.StatuesNetworking;
+import com.shynieke.statues.network.StatuesNetworking;
 import com.shynieke.statues.recipe.StatuesRecipes;
-import com.shynieke.statues.recipes.StatueLootList;
+import com.shynieke.statues.registry.StatueBlockEntities;
+import com.shynieke.statues.registry.StatueEntities;
+import com.shynieke.statues.registry.StatueLootModifiers;
+import com.shynieke.statues.registry.StatueRegistry;
+import com.shynieke.statues.registry.StatueSerializers;
+import com.shynieke.statues.registry.StatueSounds;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,18 +49,21 @@ public class Statues {
 		StatueRegistry.ENTITIES.register(eventBus);
 		StatueRegistry.BLOCKS.register(eventBus);
 		StatueRegistry.ITEMS.register(eventBus);
+		StatueRegistry.MENU_TYPES.register(eventBus);
 		StatueBlockEntities.BLOCK_ENTITIES.register(eventBus);
 		StatueSounds.SOUND_EVENTS.register(eventBus);
+		StatuesRecipes.RECIPE_TYPES.register(eventBus);
 		StatuesRecipes.RECIPE_SERIALIZERS.register(eventBus);
 		StatueLootModifiers.GLM.register(eventBus);
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
+		eventBus.addListener(StatueEntities::registerSpawnPlacements);
 
 		if (ModList.get().isLoaded("curios")) {
 			eventBus.addListener(com.shynieke.statues.compat.curios.CuriosCompat::sendImc);
 		}
 
-//		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
+		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
 		MinecraftForge.EVENT_BUS.register(new FishHandler());
 		MinecraftForge.EVENT_BUS.register(new TraderHandler());
 		MinecraftForge.EVENT_BUS.register(new DropHandler());
@@ -79,9 +82,6 @@ public class Statues {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-		StatueLootList.initializeStatueLoot();
-		StatueEntities.setupEntities();
-
 		StatuesNetworking.init();
 	}
 

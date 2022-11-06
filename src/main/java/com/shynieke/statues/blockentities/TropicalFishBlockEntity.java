@@ -1,6 +1,6 @@
 package com.shynieke.statues.blockentities;
 
-import com.shynieke.statues.init.StatueBlockEntities;
+import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;

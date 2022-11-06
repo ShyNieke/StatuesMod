@@ -24,7 +24,6 @@ public class ShulkerStatueBlock extends AbstractStatueBase {
 		super(builder.sound(SoundType.STONE));
 	}
 
-	@Override
 	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		//TODO: Shulker stuff
 	}

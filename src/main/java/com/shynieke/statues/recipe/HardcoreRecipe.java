@@ -28,9 +28,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 public class HardcoreRecipe extends ShapedRecipe {
-	static int MAX_WIDTH = 3;
-	static int MAX_HEIGHT = 3;
-
+	static final int MAX_WIDTH = 3;
+	static final int MAX_HEIGHT = 3;
 
 	public HardcoreRecipe(ResourceLocation location, String group, int width, int height, NonNullList<Ingredient> recipeItems, ItemStack result) {
 		super(location, group, width, height, recipeItems, result);

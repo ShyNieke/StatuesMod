@@ -4,9 +4,11 @@ import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.shynieke.statues.Reference;
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.init.StatueTags;
+import com.shynieke.statues.registry.StatueTags;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,7 +37,10 @@ public class StatuesLootModifier extends LootModifier {
 			ITag<Item> statues = ForgeRegistries.ITEMS.tags().getTag(StatueTags.STATUES_ITEMS);
 			RandomSource random = context.getRandom();
 			ItemStack statueStack = new ItemStack(statues.getRandomElement(random).orElse(Items.EGG));
-			if (random.nextDouble() <= StatuesConfig.COMMON.ancientCityLootChance.get()) {
+			if (random.nextDouble() <= StatuesConfig.COMMON.ancientCityLootChance.get() && !statueStack.is(Items.EGG)) {
+				CompoundTag tag = statueStack.getOrCreateTag();
+				tag.putBoolean(Reference.BLOCKED, true);
+				statueStack.setTag(tag);
 				generatedLoot.add(statueStack);
 			}
 		}

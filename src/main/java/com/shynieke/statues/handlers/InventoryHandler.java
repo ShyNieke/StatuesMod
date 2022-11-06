@@ -20,7 +20,8 @@ public class InventoryHandler {
 			Inventory inventory = player.getInventory();
 			for (int i = 0; i < inventory.getContainerSize(); i++) {
 				ItemStack stack = inventory.getItem(i);
-				if (stack.getItem() instanceof StatueBlockItem statue && statue.matchesEntity(target)) {
+				if (stack.getCount() == 1 && stack.getItem() instanceof StatueBlockItem statue &&
+						upgraded(stack) && statue.matchesEntity(target)) {
 					increaseKillCounter(stack);
 					break;
 				}
@@ -28,20 +29,35 @@ public class InventoryHandler {
 		}
 	}
 
+	private boolean upgraded(ItemStack stack) {
+		return stack.getTag() != null && stack.getTag().getBoolean(Reference.UPGRADED);
+	}
+
 	private void increaseKillCounter(ItemStack stack) {
-		CompoundTag tag = stack.getOrCreateTag();
+		CompoundTag tag = new CompoundTag();
 		tag.putInt(Reference.KILL_COUNT, tag.getInt(Reference.KILL_COUNT) + 1);
-		tag.putInt(Reference.LEVEL, getLevel(tag.getInt(Reference.KILL_COUNT)));
-		stack.setTag(tag);
+		int level = getLevel(tag.getInt(Reference.KILL_COUNT));
+		if (tag.getInt(Reference.LEVEL) != level) {
+			tag.putInt(Reference.LEVEL, level);
+			tag.putInt(Reference.UPGRADE_SLOTS, tag.getInt(Reference.UPGRADE_SLOTS) + 1);
+		}
+		stack.addTagElement("BlockEntityTag", tag);
+
 	}
 
 	public int getLevel(int killedMobs) {
-		if (killedMobs >= 0 && killedMobs <= 9) {
+		if (killedMobs >= 6 && killedMobs <= 16) {
 			return 1;
-		} else if (killedMobs >= 10 && killedMobs <= 29) {
+		} else if (killedMobs >= 16 && killedMobs <= 28) {
 			return 2;
-		} else if (killedMobs >= 30 && killedMobs <= 49) {
+		} else if (killedMobs >= 28 && killedMobs <= 44) {
 			return 3;
+		} else if (killedMobs >= 44 && killedMobs <= 58) {
+			return 4;
+		} else if (killedMobs >= 58 && killedMobs <= 76) {
+			return 5;
+		} else if (killedMobs >= 76 && killedMobs <= 96) {
+			return 6;
 		}
 
 		return 0;

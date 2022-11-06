@@ -1,0 +1,15 @@
+{
+  "type": "statues:upgrade",
+  "catalysts": [
+    {
+      "item": "minecraft:hopper"
+    },
+    {
+      "item": "minecraft:observer"
+    }
+  ],
+  "center": {
+    "tag": "statues:statues/upgradeable"
+  },
+  "upgradeType": "automation"
+}

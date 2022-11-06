@@ -1,13 +1,10 @@
 {
-  "result": {
-    "item": "statues:info_statue"
-  },
+  "type": "minecraft:crafting_shaped",
   "pattern": [
     " R ",
     "BCB",
     "CCC"
   ],
-  "type": "minecraft:crafting_shaped",
   "key": {
     "C": {
       "tag": "forge:cobblestone"
@@ -18,5 +15,8 @@
     "R": {
       "tag": "forge:dyes/red"
     }
+  },
+  "result": {
+    "item": "statues:info_statue"
   }
 }

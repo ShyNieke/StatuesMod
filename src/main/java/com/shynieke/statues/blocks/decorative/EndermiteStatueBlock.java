@@ -31,11 +31,6 @@ public class EndermiteStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public boolean canBeUpgraded() {
-		return false;
-	}
-
-	@Override
 	public EntityType<?> getEntity() {
 		return EntityType.ENDERMITE;
 	}

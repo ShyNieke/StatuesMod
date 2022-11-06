@@ -1,7 +1,7 @@
 package com.shynieke.statues.handlers;
 
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;

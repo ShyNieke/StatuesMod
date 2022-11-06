@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "statues:block/salmon_statue",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "statues:block/salmon_statue"
+    },
+    "facing=south": {
+      "model": "statues:block/salmon_statue",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "statues:block/salmon_statue",
+      "y": 270
+    }
+  }
+}

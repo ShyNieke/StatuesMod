@@ -19,6 +19,8 @@ minecraft {
     runs {
         client {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'REGISTRIES'
@@ -34,6 +36,8 @@ minecraft {
         }
         server {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'REGISTRIES'
@@ -49,6 +53,8 @@ minecraft {
         }
         data {
             workingDirectory project.file('run')
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
             // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'REGISTRIES'
@@ -77,14 +83,17 @@ repositories {
         url = "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
+        url = "https://maven.blamejared.com"
+    }
+    maven {
         url = "https://maven.theillusivec4.top/"
     }
-//    maven {
-//        url "https://cursemaven.com"
-//        content {
-//            includeGroup "curse.maven"
-//        }
-//    }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 
@@ -95,10 +104,13 @@ dependencies {
     compileOnly fg.deobf("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
 
     runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+
+    implementation fg.deobf("com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}")
+
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
-//
-//    implementation fg.deobf("curse.maven:jade-324717:3681449") //Jade (WAILA)
-//    implementation fg.deobf("curse.maven:TheOneProbe-245211:3671753") //The One probe (TOP)
+
+    implementation fg.deobf("curse.maven:jade-324717:4054920") //Jade (WAILA)
+    implementation fg.deobf("curse.maven:TheOneProbe-245211:3965693") //The One probe (TOP)
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

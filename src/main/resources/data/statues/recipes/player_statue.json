@@ -1,13 +1,10 @@
 {
-  "result": {
-    "item": "statues:player_statue"
-  },
+  "type": "statues:hardcore_shaped",
   "pattern": [
     "ECE",
     "LZL",
     "ELE"
   ],
-  "type": "statues:hardcore_shaped",
   "key": {
     "E": {
       "item": "minecraft:experience_bottle"
@@ -21,5 +18,8 @@
     "Z": {
       "item": "statues:zombie_statue"
     }
+  },
+  "result": {
+    "item": "statues:player_statue"
   }
 }

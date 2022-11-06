@@ -1,21 +1,14 @@
 package com.shynieke.statues.blocks.statues;
 
-import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.recipes.StatueLootList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -34,21 +27,8 @@ public class FloodStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		Vec3 hitPos = result.getLocation();
-
-		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
-		blockEntity.floodBehavior(playerIn, pos, handIn, (float) hitPos.x, (float) hitPos.y, (float) hitPos.z);
-	}
-
-	@Override
 	public SoundEvent getSound(BlockState state) {
 		return SoundEvents.VILLAGER_AMBIENT;
-	}
-
-	@Override
-	public String getLootName() {
-		return "flood";
 	}
 
 	@Override

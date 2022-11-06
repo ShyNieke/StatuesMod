@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "statues:block/sombrero",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "statues:block/sombrero"
+    },
+    "facing=south": {
+      "model": "statues:block/sombrero",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "statues:block/sombrero",
+      "y": 270
+    }
+  }
+}

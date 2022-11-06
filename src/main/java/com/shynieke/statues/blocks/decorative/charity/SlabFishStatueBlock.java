@@ -24,11 +24,6 @@ public class SlabFishStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public boolean canBeUpgraded() {
-		return false;
-	}
-
-	@Override
 	public SoundEvent getSound(BlockState state) {
 		return SoundEvents.ELDER_GUARDIAN_FLOP;
 	}

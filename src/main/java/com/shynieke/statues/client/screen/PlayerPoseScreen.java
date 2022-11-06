@@ -2,10 +2,13 @@ package com.shynieke.statues.client.screen;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.client.screen.widget.DecimalNumberFieldBox;
+import com.shynieke.statues.client.screen.widget.NumberFieldBox;
+import com.shynieke.statues.client.screen.widget.ToggleButton;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.entity.PlayerStatue;
-import com.shynieke.statues.packets.PlayerStatueSyncMessage;
-import com.shynieke.statues.packets.StatuesNetworking;
+import com.shynieke.statues.network.message.PlayerStatueSyncMessage;
+import com.shynieke.statues.network.StatuesNetworking;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;

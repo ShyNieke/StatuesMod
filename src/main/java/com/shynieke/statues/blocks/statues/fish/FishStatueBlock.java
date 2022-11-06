@@ -1,6 +1,5 @@
 package com.shynieke.statues.blocks.statues.fish;
 
-import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blockentities.TropicalFishBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import net.minecraft.core.BlockPos;
@@ -67,11 +66,6 @@ public class FishStatueBlock extends AbstractStatueBase {
 		return super.use(state, level, pos, playerIn, handIn, result);
 	}
 
-	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		//TODO: Fish stuff? What should it do.
-	}
-
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
@@ -92,8 +86,8 @@ public class FishStatueBlock extends AbstractStatueBase {
 		return SoundEvents.TROPICAL_FISH_FLOP;
 	}
 
-	public TropicalFishBlockEntity getFishTE(BlockGetter world, BlockPos pos) {
-		return world.getBlockEntity(pos) instanceof TropicalFishBlockEntity ? (TropicalFishBlockEntity) world.getBlockEntity(pos) : null;
+	public TropicalFishBlockEntity getFishTE(BlockGetter getter, BlockPos pos) {
+		return getter.getBlockEntity(pos) instanceof TropicalFishBlockEntity ? (TropicalFishBlockEntity) getter.getBlockEntity(pos) : null;
 	}
 
 	@Override
@@ -106,9 +100,9 @@ public class FishStatueBlock extends AbstractStatueBase {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static int getColor(BlockState state, BlockGetter world, BlockPos pos, int tintIndex) {
+	public static int getColor(BlockState state, BlockGetter getter, BlockPos pos, int tintIndex) {
 		if (pos != null) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
+			BlockEntity blockEntity = getter.getBlockEntity(pos);
 			if (blockEntity instanceof TropicalFishBlockEntity tropicalFishBlockEntity) {
 				return tintIndex == 1 ? fromColor(tropicalFishBlockEntity.getMainColor()) : tintIndex == 2 ? fromColor(tropicalFishBlockEntity.getSecondaryColor()) : -1;
 			}

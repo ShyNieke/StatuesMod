@@ -5,13 +5,16 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.Statues;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
+import com.shynieke.statues.client.ber.StatueTableBER;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.client.render.PlayerBER;
 import com.shynieke.statues.client.render.PlayerStatueRenderer;
 import com.shynieke.statues.client.render.StatueBatRenderer;
-import com.shynieke.statues.init.StatueBlockEntities;
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.client.screen.StatueTableScreen;
+import com.shynieke.statues.registry.StatueBlockEntities;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -61,6 +64,8 @@ public class ClientHandler {
 		setPlayerCache(Minecraft.getInstance());
 
 		event.enqueueWork(() -> {
+			MenuScreens.register(StatueRegistry.STATUE_TABLE_MENU.get(), StatueTableScreen::new);
+
 			ItemProperties.register(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new ClampedItemPropertyFunction() {
 				private final ClientHandler.Angle rotation = new ClientHandler.Angle();
 				private final ClientHandler.Angle rota = new ClientHandler.Angle();
@@ -206,6 +211,8 @@ public class ClientHandler {
 
 		event.registerEntityRenderer(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
 		event.registerEntityRenderer(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
+
+		event.registerBlockEntityRenderer(StatueBlockEntities.STATUE_TABLE.get(), StatueTableBER::new);
 	}
 
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

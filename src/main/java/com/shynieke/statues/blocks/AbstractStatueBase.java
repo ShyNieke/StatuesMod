@@ -2,7 +2,7 @@ package com.shynieke.statues.blocks;
 
 import com.shynieke.statues.blockentities.AbstractStatueBlockEntity;
 import com.shynieke.statues.blockentities.StatueBlockEntity;
-import com.shynieke.statues.init.StatueBlockEntities;
+import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -11,7 +11,10 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -25,11 +28,14 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractStatueBase extends AbstractBaseBlock implements EntityBlock {
 	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
@@ -37,7 +43,10 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 
 	public AbstractStatueBase(Block.Properties builder) {
 		super(builder.strength(0.6F));
-		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.valueOf(false)).setValue(INTERACTIVE, false));
+		this.registerDefaultState(this.defaultBlockState()
+				.setValue(FACING, Direction.NORTH)
+				.setValue(WATERLOGGED, Boolean.valueOf(false))
+				.setValue(INTERACTIVE, false));
 	}
 
 	@SuppressWarnings("deprecation")
@@ -49,29 +58,21 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 			}
 		}
 		if (state.getValue(INTERACTIVE).booleanValue() && handIn == InteractionHand.MAIN_HAND) {
-			if (!level.isClientSide && (getTE(level, pos) != null)) {
-				executeStatueBehavior(getTE(level, pos), state, level, pos, playerIn, handIn, result);
+			if (!level.isClientSide && (getBE(level, pos) != null)) {
+				getBE(level, pos).interact(level, pos, state, playerIn, handIn, result);
 			}
 		}
 		return InteractionResult.SUCCESS;
 	}
 
-	public StatueBlockEntity getTE(BlockGetter getter, BlockPos pos) {
+	public StatueBlockEntity getBE(BlockGetter getter, BlockPos pos) {
 		return getter.getBlockEntity(pos) instanceof StatueBlockEntity ? (StatueBlockEntity) getter.getBlockEntity(pos) : null;
-	}
-
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-
 	}
 
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		if (state.getValue(INTERACTIVE).booleanValue()) {
-			return new StatueBlockEntity(pos, state);
-		} else {
-			return null;
-		}
+		return new StatueBlockEntity(pos, state);
 	}
 
 	@Nullable
@@ -91,15 +92,43 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	@Override
 	public ItemStack getCloneItemStack(BlockGetter getter, BlockPos pos, BlockState state) {
 		ItemStack itemstack = super.getCloneItemStack(getter, pos, state);
-		StatueBlockEntity statueBlockEntity = getTE(getter, pos);
+		StatueBlockEntity statueBlockEntity = getBE(getter, pos);
 		if (statueBlockEntity != null && state.getValue(INTERACTIVE)) {
-			CompoundTag compoundnbt = statueBlockEntity.saveToNbt(new CompoundTag());
-			if (!compoundnbt.isEmpty()) {
-				itemstack.addTagElement("BlockEntityTag", compoundnbt);
+			CompoundTag nbt = statueBlockEntity.saveToNbt(new CompoundTag());
+			if (!nbt.isEmpty()) {
+				itemstack.addTagElement("BlockEntityTag", nbt);
 			}
 		}
 
 		return itemstack;
+	}
+
+	@Override
+	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+		if (state.getValue(INTERACTIVE)) {
+			BlockEntity blockentity = level.getBlockEntity(pos);
+			if (blockentity instanceof AbstractStatueBlockEntity statueBlockEntity) {
+				if (!level.isClientSide) {
+					ItemStack itemstack = new ItemStack(this.asItem());
+					statueBlockEntity.saveToItem(itemstack);
+					blockentity.saveToItem(itemstack);
+
+					ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemstack);
+					itementity.setDefaultPickUpDelay();
+					level.addFreshEntity(itementity);
+				}
+			}
+		}
+
+		super.playerWillDestroy(level, pos, state, player);
+	}
+
+	@Override
+	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		if (state.getValue(INTERACTIVE)) {
+			return new ArrayList<>();
+		}
+		return super.getDrops(state, builder);
 	}
 
 	@Override
@@ -121,10 +150,6 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		}
 	}
 
-	public boolean canBeUpgraded() {
-		return true;
-	}
-
 	public boolean isHiddenStatue() {
 		return false;
 	}
@@ -137,8 +162,12 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		return EntityType.EGG;
 	}
 
-	public String getLootName() {
-		return "baby_zombie";
+	public LivingEntity getSpawnedEntity(Level level) {
+		Entity entity = getEntity().create(level);
+		if (entity instanceof LivingEntity livingEntity) {
+			return livingEntity;
+		}
+		return null;
 	}
 
 	public SoundEvent getSound(BlockState state) {

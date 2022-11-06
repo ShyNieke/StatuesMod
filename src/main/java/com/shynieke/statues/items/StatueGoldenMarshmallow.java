@@ -1,7 +1,7 @@
 package com.shynieke.statues.items;
 
-import com.shynieke.statues.init.StatueFoods;
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.registry.StatueFoods;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;

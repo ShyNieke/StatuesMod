@@ -31,11 +31,6 @@ public class BumboStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public boolean canBeUpgraded() {
-		return false;
-	}
-
-	@Override
 	public SoundEvent getSound(BlockState state) {
 		return SoundEvents.WOOL_BREAK;
 	}

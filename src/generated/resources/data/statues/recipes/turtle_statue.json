@@ -1,0 +1,18 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:turtle_statue"
+  },
+  "result1": {
+    "item": "minecraft:seagrass"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:bowl"
+  },
+  "result2Chance": 0.5,
+  "result3": {
+    "item": "minecraft:scute"
+  },
+  "result3Chance": 0.1
+}

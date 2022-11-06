@@ -1,4 +1,7 @@
-// 1.19.2	2022-09-11T03:32:05.1813061	Tags for minecraft:item
+// 1.19.2	2022-11-05T03:17:55.2421269	Tags for minecraft:item
 95e966c60ff996797cf399bd7d3288140ba8cc6e data/curios/tags/items/statue.json
-a75022c454865d8cbe520ecf02bb8feeabf59d5b data/statues/tags/items/player_upgrade_item.json
+a75022c454865d8cbe520ecf02bb8feeabf59d5b data/statues/tags/items/core.json
+e07ed81eb5155d98050f5996c68bbdaa8211b974 data/statues/tags/items/player_upgrade_item.json
 bf40838802737b7f6139e17b5946bec4c02ed87b data/statues/tags/items/statues.json
+a4958989d102ebed33d965eb7293d0e408290d98 data/statues/tags/items/statues/interactable.json
+90c92b505e755579f20e6af0a6c51ef702225ff8 data/statues/tags/items/statues/upgradeable.json

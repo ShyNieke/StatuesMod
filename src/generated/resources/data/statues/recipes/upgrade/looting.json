@@ -1,0 +1,21 @@
+{
+  "type": "statues:upgrade",
+  "catalysts": [
+    {
+      "tag": "forge:ender_pearls"
+    },
+    {
+      "tag": "forge:gunpowder"
+    },
+    {
+      "tag": "forge:bones"
+    },
+    {
+      "item": "minecraft:rotten_flesh"
+    }
+  ],
+  "center": {
+    "tag": "statues:statues/upgradeable"
+  },
+  "upgradeType": "looting"
+}

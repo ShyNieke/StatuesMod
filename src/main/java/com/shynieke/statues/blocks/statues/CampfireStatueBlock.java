@@ -1,26 +1,22 @@
 package com.shynieke.statues.blocks.statues;
 
 import com.google.common.collect.ImmutableList;
-import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.init.StatueSounds;
-import com.shynieke.statues.recipes.StatueLootList;
+import com.shynieke.statues.registry.StatueSounds;
 import com.shynieke.statues.util.ListHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -42,28 +38,21 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
-
-		blockEntity.summonMob(getGeneral(level));
-	}
-
-	@Override
 	public SoundEvent getSound(BlockState state) {
 		return getRandomCampfire();
 	}
 
-	public Creeper getGeneral(Level level) {
+	@Override
+	public LivingEntity getSpawnedEntity(Level level) {
 		Creeper general = new Creeper(EntityType.CREEPER, level);
 		general.setCustomName(Component.literal("General Spazz"));
 		CompoundTag tag = new CompoundTag();
 		tag.putByte("ExplosionRadius", (byte) 0);
 		general.addAdditionalSaveData(tag);
-
 		return general;
 	}
 
-	public static List<Supplier<SoundEvent>> campfire_sounds = ImmutableList.of(
+	public static final List<Supplier<SoundEvent>> campfire_sounds = ImmutableList.of(
 			StatueSounds.CAMPFIRE_BYE_RANDOM,
 			StatueSounds.CAMPFIRE_COLD_RANDOM,
 			StatueSounds.CAMPFIRE_GREETINGS_RANDOM,
@@ -72,11 +61,6 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 
 	public static SoundEvent getRandomCampfire() {
 		return ListHelper.getRandomFromList(campfire_sounds).get();
-	}
-
-	@Override
-	public String getLootName() {
-		return "etho";
 	}
 
 	@Override

@@ -24,11 +24,6 @@ public class EagleRayStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public boolean canBeUpgraded() {
-		return false;
-	}
-
-	@Override
 	public SoundEvent getSound(BlockState state) {
 		return SoundEvents.SQUID_AMBIENT;
 	}

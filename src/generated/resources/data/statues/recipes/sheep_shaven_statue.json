@@ -1,0 +1,11 @@
+{
+  "type": "statues:loot",
+  "group": "sheep",
+  "ingredient": {
+    "item": "statues:sheep_shaven_statue"
+  },
+  "result3": {
+    "item": "minecraft:mutton"
+  },
+  "result3Chance": 0.1
+}
