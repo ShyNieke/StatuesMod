@@ -1,17 +1,18 @@
 package com.shynieke.statues.blockentities;
 
+import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.recipe.LootRecipe;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.util.LootHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.Creeper;
@@ -19,8 +20,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 
 public class StatueBlockEntity extends AbstractStatueBlockEntity {
 
@@ -34,18 +38,68 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		super(tileType, pos, state);
 	}
 
-	public void playSound(SoundEvent sound, BlockPos pos) {
-		playSound(sound, pos, 1F);
+	public static void serverTick(Level level, BlockPos pos, BlockState state, AbstractStatueBlockEntity blockEntity) {
+		if (state.getValue(AbstractStatueBase.INTERACTIVE) && state.getBlock() instanceof AbstractStatueBase) {
+			if (!blockEntity.isStatueInteractable()) {
+				blockEntity.interactCooldown--;
+
+				if (blockEntity.interactCooldown == 0) {
+					blockEntity.interactCooldown = 200;
+					blockEntity.setStatueInteractable(true);
+				}
+			}
+			if (!blockEntity.isStatueAble()) {
+				blockEntity.cooldown--;
+
+				if (blockEntity.cooldown == 0) {
+					blockEntity.cooldown = 200;
+					blockEntity.setStatueAble(true);
+				}
+			} else {
+				//Insert spawner behavior
+				if (blockEntity.isSpawner()) {
+					
+				}
+			}
+
+			blockEntity.setChanged();
+		}
 	}
 
-	public void playSound(SoundEvent sound, BlockPos pos, float pitch) {
+	@Override
+	public void interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
+		AbstractStatueBase statueBase = getStatue();
+		if (statueBase == null)
+			return;
+
 		if (makesSounds()) {
-			level.playSound(null, pos, sound, SoundSource.NEUTRAL, 1F, pitch);
+			playSound(statueBase.getSound(state), pos);
+		}
+
+		if (isStatueInteractable()) {
+			if (canDropLoot()) {
+				giveItem(player);
+			}
+
+			setStatueInteractable(false);
+		}
+
+		if (hasSpecialInteraction()) {
+			Vec3 hitPos = result.getLocation();
+			if (state.is(StatueRegistry.FLOOD_STATUE.get())) {
+				floodBehavior(player, pos, handIn, (float) hitPos.x, (float) hitPos.y, (float) hitPos.z);
+			} else if (state.is(StatueRegistry.MOOSHROOM_STATUE.get()) || state.is(StatueRegistry.BROWN_MOOSHROOM_STATUE.get())) {
+				mooshroomBehavior(player, pos, handIn);
+			} else if (state.is(StatueRegistry.COW_STATUE.get())) {
+				cowBehavior(player, pos, handIn);
+			} else if (state.is(StatueRegistry.SPIDER_STATUE.get())) {
+				giveEffect(player, pos, MobEffects.POISON);
+			}
 		}
 	}
 
 	public void giveItem(Player playerIn) {
-		if (level != null && isStatueAble() && canDropLoot()) {
+		if (level != null) {
 			LootRecipe loot;
 			if (cachedLootRecipe != null) {
 				loot = cachedLootRecipe;
@@ -54,32 +108,22 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			}
 
 			double random = level.random.nextDouble();
-			if (!isDecorative()) {
-				ItemStack stack1 = loot.getResultItem();
-				float chance1 = loot.getChance1();
-				ItemStack stack2 = loot.getResultItem2();
-				float chance2 = loot.getChance2();
-				ItemStack stack3 = loot.getResultItem3();
-				float chance3 = loot.getChance3();
+			ItemStack stack1 = loot.getResultItem().copy();
+			float chance1 = loot.getChance1();
+			if (!stack1.isEmpty() && random <= chance1) {
+				playerIn.drop(stack1, true);
+			}
 
-				if (stack1 != null && stack1 != ItemStack.EMPTY) {
-					if (random <= chance1) {
-						playerIn.drop(stack1, true);
-					}
-				}
+			ItemStack stack2 = loot.getResultItem2().copy();
+			float chance2 = loot.getChance2();
+			if (!stack2.isEmpty() && random <= chance2) {
+				playerIn.drop(stack2, true);
+			}
 
-				if (stack2 != null && stack2 != ItemStack.EMPTY) {
-					if (random <= chance2) {
-						playerIn.drop(stack2, true);
-					}
-				}
-
-				if (stack3 != null && stack3 != ItemStack.EMPTY) {
-					if (random <= chance3) {
-						playerIn.drop(stack3, true);
-					}
-				}
-				setStatueAble(false);
+			ItemStack stack3 = loot.getResultItem3().copy();
+			float chance3 = loot.getChance3();
+			if (!stack3.isEmpty() && random <= chance3) {
+				playerIn.drop(stack3, true);
 			}
 		}
 	}
@@ -89,14 +133,12 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			int random = level.random.nextInt(100);
 
 			if (random < 1) {
-				if (entityIn instanceof Rabbit) {
-					Rabbit rabbit = (Rabbit) entityIn;
+				if (entityIn instanceof Rabbit rabbit) {
 					rabbit.setRabbitType(99);
 					rabbit.teleportTo(worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ());
 
 					level.addFreshEntity(rabbit);
-				} else if (entityIn instanceof Creeper) {
-					Creeper creeper = (Creeper) entityIn;
+				} else if (entityIn instanceof Creeper creeper) {
 					creeper.moveTo((double) worldPosition.getX() + 0.5D, (double) worldPosition.getY(), (double) worldPosition.getZ() + 0.5D, 0.0F, 0.0F);
 					CompoundTag tag = new CompoundTag();
 					creeper.addAdditionalSaveData(tag);
@@ -111,7 +153,6 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 					level.addFreshEntity(entityIn);
 				}
 			}
-			setStatueAble(false);
 		}
 	}
 
@@ -123,12 +164,12 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.NEUTRAL, 1F, 1F);
 				stack.shrink(1);
 
-				ItemStack floodbucket = LootHelper.getFloodBucket();
+				ItemStack floodBucket = LootHelper.getFloodBucket();
 
 				if (stack.isEmpty()) {
-					playerIn.setItemInHand(hand, floodbucket);
-				} else if (!playerIn.getInventory().add(floodbucket)) {
-					playerIn.drop(floodbucket, false);
+					playerIn.setItemInHand(hand, floodBucket);
+				} else if (!playerIn.getInventory().add(floodBucket)) {
+					playerIn.drop(floodBucket, false);
 				}
 			}
 
@@ -173,8 +214,8 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		}
 	}
 
-	public void giveEffect(BlockPos pos, Player player, MobEffect effect) {
-		if (hasSpecialInteraction() && isStatueAble() && level != null && !level.isClientSide) {
+	public void giveEffect(Player player, BlockPos pos, MobEffect effect) {
+		if (hasSpecialInteraction() && level != null && !level.isClientSide) {
 			if (level.random.nextDouble() <= 0.1F) {
 				if (player.getEffect(effect) == null) {
 					player.addEffect(new MobEffectInstance(effect, 20 * 20, 1, true, true));

@@ -8,6 +8,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -27,23 +29,27 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	private final Map<String, Short> upgradeMap = new HashMap<>();
 
 	public int cooldown;
-	public int cooldownMax = 200; //TODO: Set cooldownMax with config
+	public int interactCooldown;
 	public boolean statueAble;
+	public boolean statueInteractable;
 
 	private int mobKilled, statueLevel, upgradeSlots;
 
 	protected AbstractStatueBlockEntity(BlockEntityType<?> tileType, BlockPos pos, BlockState state) {
 		super(tileType, pos, state);
-		this.cooldown = 0;
+		this.cooldown = 200;
+		this.interactCooldown = 200;
 		this.statueAble = false;
+		this.statueInteractable = false;
 	}
 
 	@Override
 	public void load(CompoundTag compound) {
 		super.load(compound);
 		cooldown = compound.getInt("StatueCooldown");
-		cooldownMax = compound.getInt("StatueMaxcooldown");
+		interactCooldown = compound.getInt("InteractionCooldown");
 		statueAble = compound.getBoolean("StatueAble");
+		statueInteractable = compound.getBoolean("StatueInteractable");
 		this.loadFromNbt(compound);
 	}
 
@@ -51,8 +57,9 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	public void saveAdditional(CompoundTag compound) {
 		super.saveAdditional(compound);
 		compound.putInt("StatueCooldown", cooldown);
-		compound.putInt("StatueMaxcooldown", cooldownMax);
+		compound.putInt("InteractionCooldown", interactCooldown);
 		compound.putBoolean("StatueAble", statueAble);
+		compound.putBoolean("StatueInteractable", statueInteractable);
 	}
 
 	@Override
@@ -87,9 +94,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		return this.cooldown;
 	}
 
-	public int getCooldownMax() {
-		return this.cooldownMax;
-	}
+	public int getInteractCooldown() { return this.interactCooldown; }
 
 	public int getStatueLevel() {
 		return statueLevel;
@@ -101,6 +106,15 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 
 	public void setStatueAble(boolean statueAble) {
 		this.statueAble = statueAble;
+		this.setChanged();
+	}
+
+	public boolean isStatueInteractable() {
+		return this.statueInteractable;
+	}
+
+	public void setStatueInteractable(boolean interactable) {
+		this.statueInteractable = interactable;
 		this.setChanged();
 	}
 
@@ -161,24 +175,23 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		return hasUpgrade("looting");
 	}
 
-	public static void serverTick(Level level, BlockPos pos, BlockState state, AbstractStatueBlockEntity blockEntity) {
-		if (state.getBlock() instanceof AbstractStatueBase && state.getValue(AbstractStatueBase.INTERACTIVE)) {
-			if (!blockEntity.statueAble) {
-				blockEntity.cooldown--;
-				blockEntity.setChanged();
-
-				if (blockEntity.cooldown == 0) {
-					blockEntity.cooldown = blockEntity.cooldownMax;
-					blockEntity.setStatueAble(true);
-				}
-			}
-		}
-	}
-
 	public void interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
 
 	}
 
+	public AbstractStatueBase getStatue() {
+		if (getBlockState().getBlock() instanceof AbstractStatueBase statueBase)
+			return statueBase;
+		return null;
+	}
+
+	public void playSound(SoundEvent sound, BlockPos pos) {
+		playSound(sound, pos, 1F);
+	}
+
+	public void playSound(SoundEvent sound, BlockPos pos, float pitch) {
+		level.playSound(null, pos, sound, SoundSource.NEUTRAL, 1F, pitch);
+	}
 
 	public static final int[] DYE_COLORS = new int[]{1973019, 11743532, 3887386, 5320730, 2437522, 8073150, 2651799, 11250603, 4408131, 14188952, 4312372, 14602026, 6719955, 12801229, 15435844, 15790320};
 

@@ -1,6 +1,5 @@
 package com.shynieke.statues.blocks;
 
-import com.shynieke.statues.blockentities.AbstractStatueBlockEntity;
 import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -85,8 +84,8 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	@Nullable
-	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends AbstractStatueBlockEntity> blockEntityType1) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, AbstractStatueBlockEntity::serverTick);
+	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends StatueBlockEntity> blockEntityType1) {
+		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, StatueBlockEntity::serverTick);
 	}
 
 	@Override
@@ -107,7 +106,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (state.getValue(INTERACTIVE)) {
 			BlockEntity blockentity = level.getBlockEntity(pos);
-			if (blockentity instanceof AbstractStatueBlockEntity statueBlockEntity) {
+			if (blockentity instanceof StatueBlockEntity statueBlockEntity) {
 				if (!level.isClientSide) {
 					ItemStack itemstack = new ItemStack(this.asItem());
 					statueBlockEntity.saveToItem(itemstack);
