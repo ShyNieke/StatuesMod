@@ -46,7 +46,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	public static void serverTick(Level level, BlockPos pos, BlockState state, StatueBlockEntity blockEntity) {
-		if (state.getValue(AbstractStatueBase.INTERACTIVE) && state.getBlock() instanceof AbstractStatueBase statueBase) {
+		if (state.getValue(AbstractStatueBase.INTERACTIVE) && state.getBlock() instanceof AbstractStatueBase) {
 			if (!blockEntity.isStatueInteractable()) {
 				blockEntity.interactCooldown--;
 
@@ -66,6 +66,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				//Insert spawner behavior
 				if (blockEntity.isSpawner()) {
 					blockEntity.summonMob((ServerLevel) level);
+					blockEntity.setStatueAble(false);
 				}
 			}
 
