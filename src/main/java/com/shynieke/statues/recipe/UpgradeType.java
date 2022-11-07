@@ -16,7 +16,7 @@ public enum UpgradeType {
 	GLOWING(15), //Glow Ink
 	UNGLOWING(14), //Ink Sac
 	SPAWNER(10),
-	DESPAWNER(10),
+	DESPAWNER,
 	MOB_KILLER(3), //0 = Regular drops,1 = Player drops, 2 = XP too
 	LOOTING(5), //Drops the Loot Recipes (every upgrade increases chance of every drop by 10%
 	AUTOMATION,

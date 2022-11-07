@@ -2,6 +2,7 @@ package com.shynieke.statues.blockentities;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractStatueBase;
+import com.shynieke.statues.storage.StatueSavedData;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -63,6 +64,22 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	@Override
+	public void onLoad() {
+		super.onLoad();
+		if (level != null) {
+			StatueSavedData.get().addPosition(level.dimension(), getBlockPos());
+		}
+	}
+
+	@Override
+	public void setRemoved() {
+		super.setRemoved();
+		if (level != null) {
+			StatueSavedData.get().removePosition(level.dimension(), getBlockPos());
+		}
+	}
+
+	@Override
 	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt) {
 		load(pkt.getTag());
 
@@ -94,7 +111,9 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		return this.cooldown;
 	}
 
-	public int getInteractCooldown() { return this.interactCooldown; }
+	public int getInteractCooldown() {
+		return this.interactCooldown;
+	}
 
 	public int getStatueLevel() {
 		return statueLevel;
@@ -165,6 +184,10 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 
 	public boolean isSpawner() {
 		return hasUpgrade("spawner");
+	}
+
+	public int getSpawnerLevel() {
+		return getUpgradeLevel("spawner");
 	}
 
 	public boolean hasSpecialInteraction() {

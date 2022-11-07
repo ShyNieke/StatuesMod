@@ -1,7 +1,7 @@
 package com.shynieke.statues.compat.jei;
 
-import com.mrbysco.forcecraft.compat.jei.infuser.LootCategory;
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.compat.jei.category.LootCategory;
 import com.shynieke.statues.compat.jei.category.UpgradeCategory;
 import com.shynieke.statues.recipe.LootRecipe;
 import com.shynieke.statues.recipe.StatuesRecipes;

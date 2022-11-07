@@ -9,11 +9,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,13 +41,15 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public LivingEntity getSpawnedEntity(Level level) {
-		Creeper general = new Creeper(EntityType.CREEPER, level);
-		general.setCustomName(Component.literal("General Spazz"));
-		CompoundTag tag = new CompoundTag();
-		tag.putByte("ExplosionRadius", (byte) 0);
-		general.addAdditionalSaveData(tag);
-		return general;
+	public LivingEntity adjustSpawnedEntity(LivingEntity livingEntity) {
+		if (livingEntity instanceof Creeper general) {
+			general.setCustomName(Component.literal("General Spazz"));
+			CompoundTag tag = new CompoundTag();
+			tag.putByte("ExplosionRadius", (byte) 0);
+			general.addAdditionalSaveData(tag);
+			return general;
+		}
+		return livingEntity;
 	}
 
 	public static final List<Supplier<SoundEvent>> campfire_sounds = ImmutableList.of(

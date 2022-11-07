@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -161,12 +160,8 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		return EntityType.EGG;
 	}
 
-	public LivingEntity getSpawnedEntity(Level level) {
-		Entity entity = getEntity().create(level);
-		if (entity instanceof LivingEntity livingEntity) {
-			return livingEntity;
-		}
-		return null;
+	public LivingEntity adjustSpawnedEntity(LivingEntity livingEntity) {
+		return livingEntity;
 	}
 
 	public SoundEvent getSound(BlockState state) {

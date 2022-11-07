@@ -8,7 +8,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -33,12 +32,12 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public LivingEntity getSpawnedEntity(Level level) {
-		Rabbit evilRabbit = new Rabbit(EntityType.RABBIT, level);
-		if (level.random.nextDouble() < 0.2) {
-			evilRabbit.setRabbitType(99);
+	public LivingEntity adjustSpawnedEntity(LivingEntity livingEntity) {
+		if (livingEntity instanceof Rabbit rabbit && rabbit.level.random.nextDouble() < 0.2) {
+			rabbit.setRabbitType(99);
+			return rabbit;
 		}
-		return evilRabbit;
+		return livingEntity;
 	}
 
 	@Override

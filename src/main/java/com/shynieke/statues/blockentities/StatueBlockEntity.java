@@ -7,22 +7,29 @@ import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.util.LootHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
@@ -38,8 +45,8 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		super(tileType, pos, state);
 	}
 
-	public static void serverTick(Level level, BlockPos pos, BlockState state, AbstractStatueBlockEntity blockEntity) {
-		if (state.getValue(AbstractStatueBase.INTERACTIVE) && state.getBlock() instanceof AbstractStatueBase) {
+	public static void serverTick(Level level, BlockPos pos, BlockState state, StatueBlockEntity blockEntity) {
+		if (state.getValue(AbstractStatueBase.INTERACTIVE) && state.getBlock() instanceof AbstractStatueBase statueBase) {
 			if (!blockEntity.isStatueInteractable()) {
 				blockEntity.interactCooldown--;
 
@@ -58,7 +65,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			} else {
 				//Insert spawner behavior
 				if (blockEntity.isSpawner()) {
-					
+					blockEntity.summonMob((ServerLevel) level);
 				}
 			}
 
@@ -128,29 +135,61 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		}
 	}
 
-	public void summonMob(LivingEntity entityIn) {
-		if (level != null && isSpawner()) {
-			int random = level.random.nextInt(100);
+	public void summonMob(ServerLevel serverLevel) {
+		final BlockPos pos = getBlockPos();
+		final int spawnerLevel = getSpawnerLevel() + 1;
+		int spawnCount = serverLevel.random.nextInt(spawnerLevel) + 1;
+		EntityType<?> entityType = getStatue().getEntity();
 
-			if (random < 1) {
-				if (entityIn instanceof Rabbit rabbit) {
-					rabbit.setRabbitType(99);
-					rabbit.teleportTo(worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ());
+		for (int i = 0; i < spawnCount; i++) {
+			double d0 = (double) pos.getX() + (serverLevel.random.nextDouble() - serverLevel.random.nextDouble()) * (double) 4 + 0.5D;
+			double d1 = (double) (pos.getY() + serverLevel.random.nextInt(3) - 1);
+			double d2 = (double) pos.getZ() + (serverLevel.random.nextDouble() - serverLevel.random.nextDouble()) * (double) 4 + 0.5D;
+			if (serverLevel.noCollision(entityType.getAABB(d0, d1, d2))) {
+				BlockPos blockpos = new BlockPos(d0, d1, d2);
 
-					level.addFreshEntity(rabbit);
-				} else if (entityIn instanceof Creeper creeper) {
-					creeper.moveTo((double) worldPosition.getX() + 0.5D, (double) worldPosition.getY(), (double) worldPosition.getZ() + 0.5D, 0.0F, 0.0F);
-					CompoundTag tag = new CompoundTag();
-					creeper.addAdditionalSaveData(tag);
+				if (!SpawnPlacements.checkSpawnRules(entityType, serverLevel, MobSpawnType.SPAWNER, blockpos, serverLevel.getRandom())) {
+					continue;
+				}
 
-					tag.putShort("ExplosionRadius", (short) 0);
+				Entity entity = entityType.create(level);
+				if (entity == null) {
+					continue;
+				}
+				entity.moveTo(d0, d1, d2, entity.getYRot(), entity.getXRot());
 
-					creeper.readAdditionalSaveData(tag);
-					level.addFreshEntity(creeper);
-					creeper.spawnAnim();
-				} else {
-					entityIn.teleportTo(worldPosition.getX(), worldPosition.getY() + 1, worldPosition.getZ());
-					level.addFreshEntity(entityIn);
+				int k = serverLevel.getEntitiesOfClass(entity.getClass(), (new AABB((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), (double)
+						(pos.getX() + 1), (double) (pos.getY() + 1), (double) (pos.getZ() + 1))).inflate((double) 4)).size();
+				if (k >= 6 + spawnerLevel) {
+					continue;
+				}
+
+				entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), level.random.nextFloat() * 360.0F, 0.0F);
+				if (entity instanceof Mob mob) {
+					getStatue().adjustSpawnedEntity(mob);
+
+					net.minecraftforge.eventbus.api.Event.Result res = net.minecraftforge.event.ForgeEventFactory.canEntitySpawn(mob, serverLevel,
+							(float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), null, MobSpawnType.SPAWNER);
+					if (res == net.minecraftforge.eventbus.api.Event.Result.DENY) continue;
+					if (res == net.minecraftforge.eventbus.api.Event.Result.DEFAULT)
+						if (!mob.checkSpawnRules(serverLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
+							continue;
+						}
+
+					if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(mob, (LevelAccessor) serverLevel,
+							(float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), null, MobSpawnType.SPAWNER))
+						((Mob) entity).finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()),
+								MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
+				}
+
+				if (!serverLevel.tryAddFreshEntityWithPassengers(entity)) {
+					continue;
+				}
+
+				serverLevel.levelEvent(2004, pos, 0);
+				serverLevel.gameEvent(entity, GameEvent.ENTITY_PLACE, blockpos);
+				if (entity instanceof Mob) {
+					((Mob) entity).spawnAnim();
 				}
 			}
 		}

@@ -6,7 +6,7 @@ import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.FishHandler;
-import com.shynieke.statues.handlers.InventoryHandler;
+import com.shynieke.statues.handlers.StatueHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
 import com.shynieke.statues.handlers.TraderHandler;
 import com.shynieke.statues.network.StatuesNetworking;
@@ -63,7 +63,7 @@ public class Statues {
 			eventBus.addListener(com.shynieke.statues.compat.curios.CuriosCompat::sendImc);
 		}
 
-		MinecraftForge.EVENT_BUS.register(new InventoryHandler());
+		MinecraftForge.EVENT_BUS.register(new StatueHandler());
 		MinecraftForge.EVENT_BUS.register(new FishHandler());
 		MinecraftForge.EVENT_BUS.register(new TraderHandler());
 		MinecraftForge.EVENT_BUS.register(new DropHandler());

@@ -1,17 +1,23 @@
 package com.shynieke.statues.handlers;
 
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.items.StatueBlockItem;
+import com.shynieke.statues.storage.StatueSavedData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-public class InventoryHandler {
+public class StatueHandler {
 	@SubscribeEvent
 	public void onKill(LivingDeathEvent event) {
 		final LivingEntity target = event.getEntity();
@@ -61,5 +67,17 @@ public class InventoryHandler {
 		}
 
 		return 0;
+	}
+
+	@SubscribeEvent
+	public void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
+		MobSpawnType spawnReason = event.getSpawnReason();
+		if (spawnReason == MobSpawnType.NATURAL || spawnReason == MobSpawnType.REINFORCEMENT || spawnReason == MobSpawnType.EVENT) {
+			Mob mob = event.getEntity();
+			if (StatueSavedData.get().isDespawnerNearby(mob.level.dimension(), mob.blockPosition(), 32)) {
+				Statues.LOGGER.info(mob.blockPosition() + " Spawn cancelled by a Despawner upgraded Statue " + mob.getType());
+				event.setResult(Event.Result.DENY);
+			}
+		}
 	}
 }

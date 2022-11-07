@@ -1,4 +1,4 @@
-package com.mrbysco.forcecraft.compat.jei.infuser;
+package com.shynieke.statues.compat.jei.category;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.compat.jei.JEIPlugin;
