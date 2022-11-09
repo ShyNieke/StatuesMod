@@ -14,7 +14,7 @@ public class PlayerStatueData {
 
 	public float rotation = 0F;
 
-	public float[] pose = new float[18];
+	public final float[] pose = new float[18];
 
 	public boolean isSmall() {
 		return this.small;

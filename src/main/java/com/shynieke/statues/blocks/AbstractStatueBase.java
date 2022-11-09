@@ -64,7 +64,10 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	public StatueBlockEntity getBE(BlockGetter getter, BlockPos pos) {
-		return getter.getBlockEntity(pos) instanceof StatueBlockEntity ? (StatueBlockEntity) getter.getBlockEntity(pos) : null;
+		if (getter.getBlockEntity(pos) instanceof StatueBlockEntity statueBlockEntity) {
+			return statueBlockEntity;
+		}
+		return null;
 	}
 
 	@Nullable

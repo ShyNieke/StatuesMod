@@ -156,8 +156,8 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addEntityType(StatueRegistry.STATUE_BAT, "Statue Bat");
 		addEntityType(StatueRegistry.PLAYER_STATUE_ENTITY, "Player Statue");
 
-		add("statues:container.shulkerStatue", "Shulker Statue");
-		add("statues:container.shulker_statue.more", "and %s more...");
+		add("statues.container.shulker_statue", "Shulker Statue");
+		add("statues.container.statue_table", "S.T.A.T.U.E");
 
 		add("statues.playerstatue.gui.title", "Player Statue");
 		add("statues.playerstatue.gui.label.small", "Small");

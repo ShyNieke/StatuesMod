@@ -70,7 +70,8 @@ public class StatueItemTagProvider extends ItemTagsProvider {
 				StatueRegistry.WASTELAND_STATUE.get().asItem(), StatueRegistry.WITCH_STATUE.get().asItem(),
 				StatueRegistry.ZOMBIE_STATUE.get().asItem());
 		this.tag(StatueTags.STATUE_INTERACTABLE).add(StatueRegistry.FLOOD_STATUE.get().asItem(), StatueRegistry.MOOSHROOM_STATUE.get().asItem(),
-				StatueRegistry.BROWN_MOOSHROOM_STATUE.get().asItem(), StatueRegistry.COW_STATUE.get().asItem(), StatueRegistry.SPIDER_STATUE.get().asItem());
+				StatueRegistry.BROWN_MOOSHROOM_STATUE.get().asItem(), StatueRegistry.COW_STATUE.get().asItem(), StatueRegistry.SPIDER_STATUE.get().asItem(),
+				StatueRegistry.SHULKER_STATUE.get().asItem());
 
 
 		this.copy(StatueTags.STATUE_BLOCKS, StatueTags.STATUES_ITEMS);

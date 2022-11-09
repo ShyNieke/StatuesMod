@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 public class StatueTableMessage {
 
-	public boolean isButtonPressed;
+	public final boolean isButtonPressed;
 
 	public StatueTableMessage(boolean buttonPressed) {
 		this.isButtonPressed = buttonPressed;

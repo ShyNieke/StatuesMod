@@ -2,6 +2,7 @@ package com.shynieke.statues.registry;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
+import com.shynieke.statues.blockentities.ShulkerStatueBlockEntity;
 import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.blockentities.TropicalFishBlockEntity;
@@ -39,16 +40,18 @@ public class StatueBlockEntities {
 			StatueRegistry.SHEEP_STATUE_LIGHT_BLUE.get(), StatueRegistry.SHEEP_STATUE_LIGHT_GRAY.get(), StatueRegistry.SHEEP_STATUE_LIME.get(),
 			StatueRegistry.SHEEP_STATUE_MAGENTA.get(), StatueRegistry.SHEEP_STATUE_ORANGE.get(), StatueRegistry.SHEEP_STATUE_PINK.get(),
 			StatueRegistry.SHEEP_STATUE_PURPLE.get(), StatueRegistry.SHEEP_STATUE_RED.get(), StatueRegistry.SHEEP_STATUE_WHITE.get(),
-			StatueRegistry.SHEEP_STATUE_YELLOW.get(), StatueRegistry.SHULKER_STATUE.get(), StatueRegistry.SLIME_STATUE.get(),
-			StatueRegistry.SNOW_GOLEM_STATUE.get(), StatueRegistry.SPIDER_STATUE.get(), StatueRegistry.SQUID_STATUE.get(),
-			StatueRegistry.TOTEM_OF_UNDYING_STATUE.get(), StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
-			StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(),
-			StatueRegistry.TROPICAL_FISH_BMS.get(), StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(),
-			StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(),
-			StatueRegistry.TROPICAL_FISH_SS.get(), StatueRegistry.TURTLE_STATUE.get(), StatueRegistry.VILLAGER_BR_STATUE.get(),
-			StatueRegistry.VILLAGER_GR_STATUE.get(), StatueRegistry.VILLAGER_PU_STATUE.get(), StatueRegistry.VILLAGER_WH_STATUE.get(),
-			StatueRegistry.VINDICATOR_STATUE.get(), StatueRegistry.WASTELAND_STATUE.get(), StatueRegistry.WITCH_STATUE.get(),
-			StatueRegistry.ZOMBIE_STATUE.get()).build(null));
+			StatueRegistry.SHEEP_STATUE_YELLOW.get(), StatueRegistry.SLIME_STATUE.get(), StatueRegistry.SNOW_GOLEM_STATUE.get(),
+			StatueRegistry.SPIDER_STATUE.get(), StatueRegistry.SQUID_STATUE.get(), StatueRegistry.TOTEM_OF_UNDYING_STATUE.get(),
+			StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
+			StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
+			StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(),
+			StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get(),
+			StatueRegistry.TURTLE_STATUE.get(), StatueRegistry.VILLAGER_BR_STATUE.get(), StatueRegistry.VILLAGER_GR_STATUE.get(),
+			StatueRegistry.VILLAGER_PU_STATUE.get(), StatueRegistry.VILLAGER_WH_STATUE.get(), StatueRegistry.VINDICATOR_STATUE.get(),
+			StatueRegistry.WASTELAND_STATUE.get(), StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get()).build(null));
+
+	public static final RegistryObject<BlockEntityType<ShulkerStatueBlockEntity>> SHULKER_STATUE = BLOCK_ENTITIES.register("shulker_statue", () ->
+			BlockEntityType.Builder.of(ShulkerStatueBlockEntity::new, StatueRegistry.SHULKER_STATUE.get()).build(null));
 
 	public static final RegistryObject<BlockEntityType<TropicalFishBlockEntity>> TROPICAL_FISH = BLOCK_ENTITIES.register("tropical_fish", () ->
 			BlockEntityType.Builder.of(TropicalFishBlockEntity::new, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),

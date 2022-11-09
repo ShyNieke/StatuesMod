@@ -72,6 +72,7 @@ import com.shynieke.statues.items.StatueCoreItem;
 import com.shynieke.statues.items.StatueGoldenMarshmallow;
 import com.shynieke.statues.items.StatueMooshroomSoup;
 import com.shynieke.statues.items.StatueTeaItem;
+import com.shynieke.statues.menu.ShulkerStatueMenu;
 import com.shynieke.statues.menu.StatueTableMenu;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -96,6 +97,8 @@ public class StatueRegistry {
 
 	public static final RegistryObject<MenuType<StatueTableMenu>> STATUE_TABLE_MENU = MENU_TYPES.register("statue_table", () ->
 			IForgeMenuType.create(StatueTableMenu::new));
+	public static final RegistryObject<MenuType<ShulkerStatueMenu>> SHULKER_STATUE_MENU = MENU_TYPES.register("shulker_statue", () ->
+			IForgeMenuType.create(ShulkerStatueMenu::new));
 
 	public static final RegistryObject<EntityType<PlayerStatue>> PLAYER_STATUE_ENTITY = ENTITIES.register("player_statue",
 			() -> EntityType.Builder.<PlayerStatue>of(PlayerStatue::new, MobCategory.MISC)

@@ -1,6 +1,6 @@
 package com.shynieke.statues.menu;
 
-import com.shynieke.statues.blockentities.StatueTableBlockEntity;
+import com.shynieke.statues.blockentities.ShulkerStatueBlockEntity;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
@@ -17,47 +17,47 @@ import net.minecraftforge.items.SlotItemHandler;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
-public class StatueTableMenu extends AbstractContainerMenu {
-	private final StatueTableBlockEntity statueBE;
+public class ShulkerStatueMenu extends AbstractContainerMenu {
+	private final ShulkerStatueBlockEntity shulkerBE;
 	private final Player player;
 
-	public final int[] validRecipe = new int[1];
-
-	public StatueTableMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
+	public ShulkerStatueMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
 		this(windowId, playerInventory, getBlockEntity(playerInventory, data));
 	}
 
-	private static StatueTableBlockEntity getBlockEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
+	private static ShulkerStatueBlockEntity getBlockEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInventory, "playerInventory cannot be null!");
 		Objects.requireNonNull(data, "data cannot be null!");
 		final BlockEntity BlockEntityAtPos = playerInventory.player.level.getBlockEntity(data.readBlockPos());
 
-		if (BlockEntityAtPos instanceof StatueTableBlockEntity) {
-			return (StatueTableBlockEntity) BlockEntityAtPos;
+		if (BlockEntityAtPos instanceof ShulkerStatueBlockEntity) {
+			return (ShulkerStatueBlockEntity) BlockEntityAtPos;
 		}
 
 		throw new IllegalStateException("Block entity is not correct! " + BlockEntityAtPos);
 	}
 
-	public StatueTableMenu(int id, Inventory playerInventoryIn, StatueTableBlockEntity tableBlockEntity) {
-		super(StatueRegistry.STATUE_TABLE_MENU.get(), id);
+	public ShulkerStatueMenu(int id, Inventory playerInventoryIn, ShulkerStatueBlockEntity shulkerBlockEntity) {
+		super(StatueRegistry.SHULKER_STATUE_MENU.get(), id);
 		this.player = playerInventoryIn.player;
-		this.statueBE = tableBlockEntity;
+		this.shulkerBE = shulkerBlockEntity;
 
-		//Statue Block slot
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 0, 80, 30));
-		//Statue Core Slot
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 1, 8, 48));
+		int xPos = 8;
+		int yPos = 18;
 
-		//Catalyst slots [2, 5]
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 2, 62, 12));
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 3, 98, 12));
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 4, 62, 48));
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 5, 98, 48));
+		int index = 0;
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 9; x++) {
+				int middle = x - 4;
+				if (middle >= -1 && middle <= 1)
+					continue;
+
+				this.addSlot(new SlotItemHandler(shulkerBlockEntity.handler, index++, xPos + x * 18, yPos + y * 18));
+			}
+		}
 
 		//player inventory here
-		int xPos = 8;
-		int yPos = 75;
+		yPos = 84;
 		for (int y = 0; y < 3; ++y) {
 			for (int x = 0; x < 9; ++x) {
 				this.addSlot(new Slot(playerInventoryIn, x + y * 9 + 9, xPos + x * 18, yPos + y * 18));
@@ -67,14 +67,11 @@ public class StatueTableMenu extends AbstractContainerMenu {
 		for (int x = 0; x < 9; ++x) {
 			this.addSlot(new Slot(playerInventoryIn, x, xPos + x * 18, yPos + 58));
 		}
-
-		this.validRecipe[0] = statueBE.hasValidRecipe() ? 1 : 0;
-		this.addDataSlot(DataSlot.shared(this.validRecipe, 0));
 	}
 
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return this.statueBE.stillValid(playerIn) && !playerIn.isSpectator();
+		return this.shulkerBE.stillValid(playerIn) && !playerIn.isSpectator();
 	}
 
 	@Override
@@ -86,7 +83,7 @@ public class StatueTableMenu extends AbstractContainerMenu {
 		if (slot != null && slot.hasItem()) {
 			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
-			final int containerSize = 6;
+			final int containerSize = 18;
 
 			if (index < containerSize) {
 				if (!this.moveItemStackTo(itemstack1, containerSize, this.slots.size(), true)) {
@@ -109,35 +106,12 @@ public class StatueTableMenu extends AbstractContainerMenu {
 		return itemstack;
 	}
 
-	public StatueTableBlockEntity getStatueBE() {
-		return statueBE;
+	public ShulkerStatueBlockEntity getShulkerBE() {
+		return shulkerBE;
 	}
 
 	@Override
 	public void broadcastChanges() {
 		super.broadcastChanges();
-	}
-
-	@Override
-	public void slotsChanged(Container inventoryIn) {
-		if (inventoryIn != null) {
-			super.slotsChanged(inventoryIn);
-		}
-		getStatueBE().setChanged();
-		if (!player.level.isClientSide) {
-			this.validRecipe[0] = statueBE.hasValidRecipe() ? 1 : 0;
-		}
-	}
-
-	public class TableSlot extends SlotItemHandler {
-		public TableSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
-			super(itemHandler, index, xPosition, yPosition);
-		}
-
-		@Override
-		public void setChanged() {
-			super.setChanged();
-			slotsChanged(null);
-		}
 	}
 }

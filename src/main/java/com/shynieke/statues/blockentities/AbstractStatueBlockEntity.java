@@ -162,6 +162,12 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		return tag;
 	}
 
+	protected void refreshClient() {
+		setChanged();
+		BlockState state = level.getBlockState(worldPosition);
+		level.sendBlockUpdated(worldPosition, state, state, 2);
+	}
+
 	public Map<String, Short> getUpgradeMap() {
 		return upgradeMap;
 	}

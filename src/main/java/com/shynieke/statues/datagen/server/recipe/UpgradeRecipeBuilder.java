@@ -78,7 +78,7 @@ public class UpgradeRecipeBuilder {
 		private final ItemStack result;
 		private final boolean requireCore;
 		private final UpgradeType upgradeType;
-		private int tier;
+		private final int tier;
 
 		public Result(ResourceLocation idIn, String groupIn, Ingredient center, List<Ingredient> catalysts,
 					  ItemStack result, boolean requireCore, UpgradeType upgradeType, int tier) {

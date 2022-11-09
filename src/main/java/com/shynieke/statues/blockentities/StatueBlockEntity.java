@@ -93,16 +93,20 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		}
 
 		if (hasSpecialInteraction()) {
-			Vec3 hitPos = result.getLocation();
-			if (state.is(StatueRegistry.FLOOD_STATUE.get())) {
-				floodBehavior(player, pos, handIn, (float) hitPos.x, (float) hitPos.y, (float) hitPos.z);
-			} else if (state.is(StatueRegistry.MOOSHROOM_STATUE.get()) || state.is(StatueRegistry.BROWN_MOOSHROOM_STATUE.get())) {
-				mooshroomBehavior(player, pos, handIn);
-			} else if (state.is(StatueRegistry.COW_STATUE.get())) {
-				cowBehavior(player, pos, handIn);
-			} else if (state.is(StatueRegistry.SPIDER_STATUE.get())) {
-				giveEffect(player, pos, MobEffects.POISON);
-			}
+			onSpecialInteract(level, pos, state, player, handIn, result);
+		}
+	}
+
+	public void onSpecialInteract(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
+		Vec3 hitPos = result.getLocation();
+		if (state.is(StatueRegistry.FLOOD_STATUE.get())) {
+			floodBehavior(player, pos, handIn, (float) hitPos.x, (float) hitPos.y, (float) hitPos.z);
+		} else if (state.is(StatueRegistry.MOOSHROOM_STATUE.get()) || state.is(StatueRegistry.BROWN_MOOSHROOM_STATUE.get())) {
+			mooshroomBehavior(player, pos, handIn);
+		} else if (state.is(StatueRegistry.COW_STATUE.get())) {
+			cowBehavior(player, pos, handIn);
+		} else if (state.is(StatueRegistry.SPIDER_STATUE.get())) {
+			giveEffect(player, pos, MobEffects.POISON);
 		}
 	}
 

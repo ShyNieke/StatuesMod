@@ -10,7 +10,7 @@ import net.minecraftforge.network.NetworkEvent.Context;
 import java.util.function.Supplier;
 
 public class PlayerStatueScreenMessage {
-	private int entityID;
+	private final int entityID;
 
 	private PlayerStatueScreenMessage(FriendlyByteBuf buf) {
 		this.entityID = buf.readInt();

@@ -13,8 +13,8 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public class PlayerStatueSyncMessage {
-	private UUID entityUUID;
-	private CompoundTag data;
+	private final UUID entityUUID;
+	private final CompoundTag data;
 
 	private PlayerStatueSyncMessage(FriendlyByteBuf buf) {
 		this.entityUUID = buf.readUUID();

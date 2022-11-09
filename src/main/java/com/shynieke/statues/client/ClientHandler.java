@@ -10,6 +10,7 @@ import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.client.render.PlayerBER;
 import com.shynieke.statues.client.render.PlayerStatueRenderer;
 import com.shynieke.statues.client.render.StatueBatRenderer;
+import com.shynieke.statues.client.screen.ShulkerStatueScreen;
 import com.shynieke.statues.client.screen.StatueTableScreen;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
@@ -65,6 +66,7 @@ public class ClientHandler {
 
 		event.enqueueWork(() -> {
 			MenuScreens.register(StatueRegistry.STATUE_TABLE_MENU.get(), StatueTableScreen::new);
+			MenuScreens.register(StatueRegistry.SHULKER_STATUE_MENU.get(), ShulkerStatueScreen::new);
 
 			ItemProperties.register(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new ClampedItemPropertyFunction() {
 				private final ClientHandler.Angle rotation = new ClientHandler.Angle();

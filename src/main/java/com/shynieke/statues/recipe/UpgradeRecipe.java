@@ -92,7 +92,7 @@ public class UpgradeRecipe implements Recipe<Container> {
 					return false;
 			} else {
 				//Check if it has been upgraded
-				if (upgradeType == UpgradeType.UPGRADE && (compoundtag != null || compoundtag.contains(Reference.UPGRADED)))
+				if (upgradeType == UpgradeType.UPGRADE && compoundtag != null && compoundtag.contains(Reference.UPGRADED))
 					return false;
 			}
 		}
