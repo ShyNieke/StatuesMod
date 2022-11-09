@@ -2,7 +2,6 @@ package com.shynieke.statues.compat.jei.category;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
-import com.shynieke.statues.Statues;
 import com.shynieke.statues.compat.jei.JEIPlugin;
 import com.shynieke.statues.recipe.UpgradeRecipe;
 import com.shynieke.statues.recipe.UpgradeType;
@@ -84,7 +83,7 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 				} else {
 					setUpgradeSlots(outputStack, 1);
 				}
-				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStack(focusedStack);
+				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStack(outputStack);
 			} else {
 				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStack(recipe.getResultItem());
 			}

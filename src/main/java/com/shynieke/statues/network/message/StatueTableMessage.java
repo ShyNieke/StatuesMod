@@ -31,6 +31,7 @@ public class StatueTableMessage {
 				if (container instanceof StatueTableMenu menu) {
 					if (isButtonPressed) {
 						menu.getStatueBE().executeCraft();
+						menu.slotsChanged(null);
 					}
 				}
 			}

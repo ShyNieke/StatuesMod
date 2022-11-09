@@ -1,7 +1,6 @@
 package com.shynieke.statues.client.ber;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.blocks.AbstractBaseBlock;

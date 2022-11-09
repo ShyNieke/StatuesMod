@@ -84,10 +84,17 @@ public class UpgradeRecipe implements Recipe<Container> {
 		if (!center.test(statueStack)) {
 			return false;
 		}
-		if (upgradeType.requiresUpgrade() && statueStack.getItem() instanceof StatueBlockItem) {
+		if (statueStack.getItem() instanceof StatueBlockItem) {
 			CompoundTag compoundtag = statueStack.getTagElement("BlockEntityTag");
-			if (compoundtag == null || !compoundtag.contains(Reference.UPGRADED) || compoundtag.getInt(Reference.UPGRADE_SLOTS) < 1)
-				return false;
+			if (upgradeType.requiresUpgrade()) {
+				//Check if it hasn't been upgraded
+				if (compoundtag == null || !compoundtag.contains(Reference.UPGRADED) || compoundtag.getInt(Reference.UPGRADE_SLOTS) < 1)
+					return false;
+			} else {
+				//Check if it has been upgraded
+				if (upgradeType == UpgradeType.UPGRADE && (compoundtag != null || compoundtag.contains(Reference.UPGRADED)))
+					return false;
+			}
 		}
 		if (requireCore) {
 			ItemStack coreStack = container.getItem(1);

@@ -67,6 +67,7 @@ public enum UpgradeType {
 				stack.addTagElement("BlockEntityTag", entityTag);
 				return true;
 			} else {
+				//Already upgraded
 				return false;
 			}
 		} else {
@@ -74,27 +75,35 @@ public enum UpgradeType {
 				if (requiresUpgrade()) {
 					CompoundTag compoundtag = BlockItem.getBlockEntityData(stack);
 					if (compoundtag == null && (stack.getTag() == null || !stack.getTag().getBoolean(Reference.UPGRADED))) {
+						//Not upgraded
 						return false;
 					}
 
 					if (compoundtag != null) {
 						int upgradeSlots = compoundtag.getInt(Reference.UPGRADE_SLOTS);
 						if (!(upgradeSlots > 0)) {
+							//No upgrade slots
 							return false;
 						}
 						String id = this.name().toLowerCase(Locale.ROOT);
 						Map<String, Short> upgradeMap = UpgradeHelper.loadUpgradeMap(compoundtag);
-						if (level != -1) {
-							short currentLevel = upgradeMap.getOrDefault(id, (short) 0);
-							if (currentLevel == level) {
+						short currentLevel = upgradeMap.getOrDefault(id, (short) 0);
+						if ((currentLevel + 1) < cap) {
+							if (level != -1) {
+								if (currentLevel == level) {
+									UpgradeHelper.upgrade(upgradeMap, id);
+									compoundtag.putInt(Reference.UPGRADE_SLOTS, upgradeSlots - 1);
+								} else {
+									//Level doesn't match
+									return false;
+								}
+							} else {
 								UpgradeHelper.upgrade(upgradeMap, id);
 								compoundtag.putInt(Reference.UPGRADE_SLOTS, upgradeSlots - 1);
-							} else {
-								return false;
 							}
 						} else {
-							UpgradeHelper.upgrade(upgradeMap, id);
-							compoundtag.putInt(Reference.UPGRADE_SLOTS, upgradeSlots - 1);
+							//Next update would be over the cap
+							return false;
 						}
 						UpgradeHelper.saveUpgradeMap(compoundtag, upgradeMap);
 						stack.addTagElement("BlockEntityTag", compoundtag);

@@ -1,6 +1,7 @@
 package com.shynieke.statues.blockentities;
 
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.menu.StatueTableMenu;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipe.UpgradeRecipe;
@@ -104,12 +105,17 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 			ItemStack resultStack = currentRecipe.getResultItem().copy();
 			ItemStack centerStack = getCenterSlot();
 			if (resultStack.isEmpty()) {
-				currentRecipe.getUpgradeType().apply(centerStack, currentRecipe.getTier());
+				if (!currentRecipe.getUpgradeType().apply(centerStack, currentRecipe.getTier())) {
+					Statues.LOGGER.debug("Failed to apply upgrade {} to {}", currentRecipe.getId(), resultStack);
+					this.currentRecipe = null;
+					return;
+				}
 			} else {
 				centerStack.shrink(1);
 				handler.setStackInSlot(SLOT_CENTER, resultStack);
 			}
 		}
+		updateCachedRecipe();
 
 		refreshClient();
 	}

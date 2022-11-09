@@ -3,8 +3,8 @@ package com.shynieke.statues.entity;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
-import com.shynieke.statues.network.message.PlayerStatueScreenMessage;
 import com.shynieke.statues.network.StatuesNetworking;
+import com.shynieke.statues.network.message.PlayerStatueScreenMessage;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSerializers;
 import com.shynieke.statues.util.SkinUtil;
@@ -898,7 +898,7 @@ public class PlayerStatue extends LivingEntity {
 			this.refreshDimensions();
 			this.blocksBuilding = !this.isRemoved();
 		}
-		if(GAMEPROFILE.equals(key)) {
+		if (GAMEPROFILE.equals(key)) {
 			synchronized (this) {
 				getGameProfile().ifPresent(profile -> {
 					if (this.level != null && this.level.isClientSide && profile != null && profile.isComplete()) {

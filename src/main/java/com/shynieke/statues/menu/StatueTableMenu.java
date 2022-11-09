@@ -80,22 +80,20 @@ public class StatueTableMenu extends AbstractContainerMenu {
 	@Override
 	@Nonnull
 	public ItemStack quickMoveStack(Player playerIn, int index) {
-
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 
 		if (slot != null && slot.hasItem()) {
 			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
-			final int containerSize = 8;
+			final int containerSize = 6;
 
 			if (index < containerSize) {
 				if (!this.moveItemStackTo(itemstack1, containerSize, this.slots.size(), true)) {
 					return ItemStack.EMPTY;
 				}
 			} else {
-				// change to fix all the manual moving. and fix books going to book slots, etc
-				if (!this.moveItemStackTo(itemstack1, 0, containerSize, true)) {
+				if (!this.moveItemStackTo(itemstack1, 0, containerSize, false)) {
 					return ItemStack.EMPTY;
 				}
 			}

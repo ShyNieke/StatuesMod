@@ -36,11 +36,15 @@ public class StatueHandler {
 	}
 
 	private boolean upgraded(ItemStack stack) {
-		return stack.getTag() != null && stack.getTag().getBoolean(Reference.UPGRADED);
+		return stack.getTagElement("BlockEntityTag") != null && stack.getTagElement("BlockEntityTag").getBoolean(Reference.UPGRADED);
 	}
 
 	private void increaseKillCounter(ItemStack stack) {
-		CompoundTag tag = new CompoundTag();
+		CompoundTag tag = stack.getTagElement("BlockEntityTag");
+		if (tag == null) {
+			Statues.LOGGER.error("Statue was incorrectly upgraded {}", stack);
+			tag = new CompoundTag();
+		}
 		tag.putInt(Reference.KILL_COUNT, tag.getInt(Reference.KILL_COUNT) + 1);
 		int level = getLevel(tag.getInt(Reference.KILL_COUNT));
 		if (tag.getInt(Reference.LEVEL) != level) {

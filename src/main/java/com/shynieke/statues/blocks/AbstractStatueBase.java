@@ -135,7 +135,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter getter, BlockPos pos) {
 		return true;
 	}
 

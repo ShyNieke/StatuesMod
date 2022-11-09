@@ -39,7 +39,7 @@ public class UpgradeHelper {
 
 	public static void upgrade(Map<String, Short> upgradeMap, String id) {
 		short level = upgradeMap.getOrDefault(id, (short) 0);
-		upgradeMap.put(id, (short)(level + 1));
+		upgradeMap.put(id, (short) (level + 1));
 	}
 
 	public static Component getUpgradeName(String id, int level) {

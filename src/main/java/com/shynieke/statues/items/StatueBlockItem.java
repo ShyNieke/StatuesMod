@@ -90,7 +90,7 @@ public class StatueBlockItem extends BlockItem {
 						)
 				);
 			if (blockData.contains(Reference.KILL_COUNT))
-				components.add(Component.translatable("statues.info.kill").withStyle(ChatFormatting.GOLD)
+				components.add(Component.translatable("statues.info.kills").withStyle(ChatFormatting.GOLD)
 						.append(" ").append(
 								Component.literal(String.valueOf(blockData.getInt(Reference.KILL_COUNT))).withStyle(ChatFormatting.YELLOW)
 						)

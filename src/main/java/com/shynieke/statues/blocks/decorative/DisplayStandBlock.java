@@ -67,11 +67,11 @@ public class DisplayStandBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter getter, BlockPos pos) {
 		return false;
 	}
 
-	private static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
+	private static boolean isntSolid(BlockState state, BlockGetter getter, BlockPos pos) {
 		return false;
 	}
 

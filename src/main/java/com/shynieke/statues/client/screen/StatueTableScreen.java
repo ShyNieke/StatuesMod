@@ -1,10 +1,10 @@
 package com.shynieke.statues.client.screen;
 
-import com.blamejared.crafttweaker.impl.network.PacketHandler;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.menu.StatueTableMenu;
+import com.shynieke.statues.network.StatuesNetworking;
 import com.shynieke.statues.network.message.StatueTableMessage;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Button;
@@ -12,7 +12,6 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.DyeColor;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -38,14 +37,14 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 		buttonChisel = this.addRenderableWidget(new Button(leftPos + 130, topPos + 46, 38, 20, Component.literal("Chisel"), (button) -> {
 			boolean flag = getMenu().validRecipe[0] == 1;
 			if (flag) {
-				PacketHandler.CHANNEL.send(PacketDistributor.SERVER.noArg(), new StatueTableMessage(true));
+				StatuesNetworking.CHANNEL.send(PacketDistributor.SERVER.noArg(), new StatueTableMessage(true));
 			}
 		}) {
 			@Override
 			public void renderButton(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
 //				boolean flag = getMenu().validRecipe[0] == 1;
 //				if (flag) {
-					super.renderButton(ms, mouseX, mouseY, partialTicks);
+				super.renderButton(ms, mouseX, mouseY, partialTicks);
 //				}
 			}
 		});
