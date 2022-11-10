@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -43,6 +44,14 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.result2(Items.HONEYCOMB).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.BLAZE_STATUE.get()))
 				.result1(Items.BLAZE_POWDER).result2(Items.BLAZE_ROD).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.CAT_BLACK_STATUE.get(), StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get(),
+						StatueRegistry.CAT_CALICO_STATUE.get(), StatueRegistry.CAT_JELLIE_STATUE.get(),
+						StatueRegistry.CAT_PERSIAN_STATUE.get(), StatueRegistry.CAT_RAGDOLL_STATUE.get(),
+						StatueRegistry.CAT_RED_STATUE.get(), StatueRegistry.CAT_SIAMESE_STATUE.get(),
+						StatueRegistry.CAT_TABBY_STATUE.get(), StatueRegistry.CAT_TUXEDO_STATUE.get(),
+						StatueRegistry.CAT_WHITE_STATUE.get()))
+				.result1(Items.STRING).result3(getIOU()).build(consumer,
+						new ResourceLocation(Reference.MOD_ID, "loot/cat_statue")); //TODO: Allow the sleeping loot table
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.CHICKEN_STATUE.get()))
 				.result1(Items.FEATHER).result2(Items.CHICKEN).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.CHICKEN_JOCKEY_STATUE.get()))
@@ -53,9 +62,19 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.result1(Items.BEEF).result3(Items.LEATHER).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.CREEPER_STATUE.get()))
 				.result1(Items.GUNPOWDER).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.COD_STATUE.get()))
+				.result1(Items.COD).result2(Items.BONE_MEAL).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.DOLPHIN_STATUE.get()))
+				.result1(Items.COD).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.ENDERMAN_STATUE.get()))
 				.result1(new ItemStack(StatueRegistry.PEBBLE.get(), 16))
 				.result2(Items.ENDER_PEARL).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.ELDER_GUARDIAN_STATUE.get()))
+				.result1(Items.PRISMARINE_CRYSTALS, 0.75F).result2(Items.WET_SPONGE).result3(Items.PRISMARINE_CRYSTALS, 0.25F).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.FLOOD_STATUE.get()))
+				.result1(Items.FIREWORK_ROCKET).result2(Items.ROTTEN_FLESH).result3(Items.EMERALD).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.FOX_STATUE.get(), StatueRegistry.FOX_SNOW_STATUE.get()))
+				.result1(Items.SWEET_BERRIES).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.GHAST_STATUE.get()))
 				.result1(Items.GUNPOWDER).result3(Items.GHAST_TEAR).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.GUARDIAN_STATUE.get()))
@@ -68,11 +87,34 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.result1(Items.MAGMA_CREAM).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.PIG_STATUE.get()))
 				.result3(Items.PORKCHOP).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.PANDA_ANGRY_STATUE.get(),
+						StatueRegistry.PANDA_BROWN_STATUE.get(), StatueRegistry.PANDA_LAZY_STATUE.get(),
+						StatueRegistry.PANDA_NORMAL_STATUE.get(), StatueRegistry.PANDA_PLAYFUL_STATUE.get(),
+						StatueRegistry.PANDA_WEAK_STATUE.get(), StatueRegistry.PANDA_WORRIED_STATUE.get()))
+				.result1(Items.BAMBOO).build(consumer,
+						new ResourceLocation(Reference.MOD_ID, "loot/panda_statue"));
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.PILLAGER_STATUE.get()))
+				.result1(Items.ARROW).result2(Items.CROSSBOW, 0.25F).result3(Raid.getLeaderBannerInstance(), 0.05F).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.RABBIT_BR_STATUE.get(), StatueRegistry.RABBIT_BS_STATUE.get(),
 						StatueRegistry.RABBIT_BW_STATUE.get(), StatueRegistry.RABBIT_GO_STATUE.get(),
 						StatueRegistry.RABBIT_WH_STATUE.get(), StatueRegistry.RABBIT_WS_STATUE.get()
 				))
-				.result1(Items.RABBIT_HIDE).result1(Items.RABBIT).result1(Items.RABBIT_FOOT).build(consumer, new ResourceLocation(Reference.MOD_ID, "rabbit_statue"));
+				.result1(Items.RABBIT_HIDE).result1(Items.RABBIT).result1(Items.RABBIT_FOOT).build(consumer,
+						new ResourceLocation(Reference.MOD_ID, "loot/rabbit_statue"));
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.RAVAGER_STATUE.get()))
+				.result3(Items.SADDLE).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SALMON_STATUE.get()))
+				.result1(Items.SALMON).result2(Items.BONE_MEAL).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
+						StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(),
+						StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
+						StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(),
+						StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(),
+						StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()))
+				.result1(Items.TROPICAL_FISH).result2(Items.BONE_MEAL).build(consumer,
+						new ResourceLocation(Reference.MOD_ID, "loot/tropical_fish"));;
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHULKER_STATUE.get()))
+				.result3(Items.SHULKER_SHELL).build(consumer);
 
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_WHITE.get())).group("sheep")
 				.result1(Blocks.WHITE_WOOL).result3(Items.MUTTON).build(consumer);
@@ -117,7 +159,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.result2(Items.INK_SAC).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.VILLAGER_BR_STATUE.get(), StatueRegistry.VILLAGER_GR_STATUE.get(),
 						StatueRegistry.VILLAGER_PU_STATUE.get(), StatueRegistry.VILLAGER_WH_STATUE.get()))
-				.result3(Items.EMERALD).build(consumer, new ResourceLocation(Reference.MOD_ID, "villager_statue")); //TODO: Use trading in future
+				.result3(Items.EMERALD).build(consumer, new ResourceLocation(Reference.MOD_ID, "loot/villager_statue")); //TODO: Use trading in future
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.WITCH_STATUE.get()))
 				.result1(Items.GLOWSTONE_DUST).result2(Items.REDSTONE).result3(Items.GLASS_BOTTLE).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.WASTELAND_STATUE.get()))
@@ -161,7 +203,8 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.upgradeType(UpgradeType.MOB_KILLER).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/mob_killer"));
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), List.of(Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS),
-						Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS), Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS), PartialNBTIngredient.of(Items.ENCHANTED_BOOK, new CompoundTag()))).tier(1)
+						Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS), Ingredient.of(Tags.Items.STORAGE_BLOCKS_LAPIS),
+						PartialNBTIngredient.of(Items.ENCHANTED_BOOK, new CompoundTag()))).tier(1)
 				.upgradeType(UpgradeType.MOB_KILLER).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/mob_killer_2"));
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), List.of(Ingredient.of(Items.EXPERIENCE_BOTTLE))).tier(2)
@@ -186,6 +229,11 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.upgradeType(UpgradeType.INTERACTION).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/sound"));
 	}
 
+
+	private static ItemStack getIOU() {
+		ItemStack paperStack = new ItemStack(Items.PAPER).setHoverName(Component.literal("I.O.U").withStyle(ChatFormatting.LIGHT_PURPLE));
+		return paperStack;
+	}
 
 	private static ItemStack getWastelandBlock() {
 		ItemStack wasteland = new ItemStack(Blocks.SAND).setHoverName(Component.literal("Wasteland Block").withStyle(ChatFormatting.LIGHT_PURPLE));

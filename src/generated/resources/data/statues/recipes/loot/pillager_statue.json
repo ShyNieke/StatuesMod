@@ -1,0 +1,20 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:pillager_statue"
+  },
+  "result1": {
+    "item": "minecraft:arrow"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:crossbow",
+    "tag": "{Damage:0}"
+  },
+  "result2Chance": 0.25,
+  "result3": {
+    "item": "minecraft:white_banner",
+    "tag": "{BlockEntityTag:{Patterns:[{Color:9,Pattern:\"mr\"},{Color:8,Pattern:\"bs\"},{Color:7,Pattern:\"cs\"},{Color:8,Pattern:\"bo\"},{Color:15,Pattern:\"ms\"},{Color:8,Pattern:\"hh\"},{Color:8,Pattern:\"mc\"},{Color:15,Pattern:\"bo\"}],id:\"minecraft:banner\"},HideFlags:32,display:{Name:'{\"color\":\"gold\",\"translate\":\"block.minecraft.ominous_banner\"}'}}"
+  },
+  "result3Chance": 0.05
+}

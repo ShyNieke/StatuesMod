@@ -1,0 +1,10 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:ravager_statue"
+  },
+  "result3": {
+    "item": "minecraft:saddle"
+  },
+  "result3Chance": 0.1
+}

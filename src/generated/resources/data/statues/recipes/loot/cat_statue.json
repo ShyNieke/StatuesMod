@@ -1,0 +1,47 @@
+{
+  "type": "statues:loot",
+  "ingredient": [
+    {
+      "item": "statues:cat_black_statue"
+    },
+    {
+      "item": "statues:cat_british_shorthair_statue"
+    },
+    {
+      "item": "statues:cat_calico_statue"
+    },
+    {
+      "item": "statues:cat_jellie_statue"
+    },
+    {
+      "item": "statues:cat_persian_statue"
+    },
+    {
+      "item": "statues:cat_ragdoll_statue"
+    },
+    {
+      "item": "statues:cat_red_statue"
+    },
+    {
+      "item": "statues:cat_siamese_statue"
+    },
+    {
+      "item": "statues:cat_tabby_statue"
+    },
+    {
+      "item": "statues:cat_tuxedo_statue"
+    },
+    {
+      "item": "statues:cat_white_statue"
+    }
+  ],
+  "result1": {
+    "item": "minecraft:string"
+  },
+  "result1Chance": 1.0,
+  "result3": {
+    "item": "minecraft:paper",
+    "tag": "{display:{Name:'{\"color\":\"light_purple\",\"text\":\"I.O.U\"}'}}"
+  },
+  "result3Chance": 0.1
+}

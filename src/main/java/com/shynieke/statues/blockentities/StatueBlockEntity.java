@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -75,10 +76,10 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	@Override
-	public void interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
+	public InteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
 		AbstractStatueBase statueBase = getStatue();
 		if (statueBase == null)
-			return;
+			return InteractionResult.PASS;
 
 		if (makesSounds()) {
 			playSound(statueBase.getSound(state), pos);
@@ -95,6 +96,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		if (hasSpecialInteraction()) {
 			onSpecialInteract(level, pos, state, player, handIn, result);
 		}
+		return InteractionResult.CONSUME;
 	}
 
 	public void onSpecialInteract(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {

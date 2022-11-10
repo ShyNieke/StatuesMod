@@ -101,7 +101,8 @@ public class LootRecipeBuilder {
 	}
 
 	public void build(Consumer<FinishedRecipe> consumerIn) {
-		this.build(consumerIn, Registry.ITEM.getKey(this.statueIngredient.getItems()[0].getItem()));
+		ResourceLocation itemKey = Registry.ITEM.getKey(this.statueIngredient.getItems()[0].getItem());
+		this.build(consumerIn, new ResourceLocation(itemKey.getNamespace(), "loot/" + itemKey.getPath()));
 	}
 
 	public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {

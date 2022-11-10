@@ -1,0 +1,18 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:elder_guardian_statue"
+  },
+  "result1": {
+    "item": "minecraft:prismarine_crystals"
+  },
+  "result1Chance": 0.75,
+  "result2": {
+    "item": "minecraft:wet_sponge"
+  },
+  "result2Chance": 0.5,
+  "result3": {
+    "item": "minecraft:prismarine_crystals"
+  },
+  "result3Chance": 0.25
+}

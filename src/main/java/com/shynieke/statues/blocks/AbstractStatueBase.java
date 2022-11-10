@@ -57,7 +57,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		}
 		if (state.getValue(INTERACTIVE).booleanValue() && handIn == InteractionHand.MAIN_HAND) {
 			if (!level.isClientSide && (getBE(level, pos) != null)) {
-				getBE(level, pos).interact(level, pos, state, playerIn, handIn, result);
+				return getBE(level, pos).interact(level, pos, state, playerIn, handIn, result);
 			}
 		}
 		return InteractionResult.SUCCESS;

@@ -52,7 +52,7 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 
 	@Override
 	public void onSpecialInteract(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide && !player.isCrouching()) {
 			NetworkHooks.openScreen((ServerPlayer) player, this, pos);
 		}
 	}
