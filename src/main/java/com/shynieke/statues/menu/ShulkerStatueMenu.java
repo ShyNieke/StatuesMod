@@ -3,15 +3,11 @@ package com.shynieke.statues.menu;
 import com.shynieke.statues.blockentities.ShulkerStatueBlockEntity;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -19,7 +15,6 @@ import java.util.Objects;
 
 public class ShulkerStatueMenu extends AbstractContainerMenu {
 	private final ShulkerStatueBlockEntity shulkerBE;
-	private final Player player;
 
 	public ShulkerStatueMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
 		this(windowId, playerInventory, getBlockEntity(playerInventory, data));
@@ -39,7 +34,6 @@ public class ShulkerStatueMenu extends AbstractContainerMenu {
 
 	public ShulkerStatueMenu(int id, Inventory playerInventoryIn, ShulkerStatueBlockEntity shulkerBlockEntity) {
 		super(StatueRegistry.SHULKER_STATUE_MENU.get(), id);
-		this.player = playerInventoryIn.player;
 		this.shulkerBE = shulkerBlockEntity;
 
 		int xPos = 8;

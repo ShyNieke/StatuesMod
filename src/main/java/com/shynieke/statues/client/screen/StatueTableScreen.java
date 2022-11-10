@@ -19,14 +19,11 @@ import java.util.List;
 
 public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> {
 
-	private Inventory inventory;
 	private final ResourceLocation TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/gui/container/statue_table.png");
 	private Button buttonChisel;
 
 	public StatueTableScreen(StatueTableMenu screenContainer, Inventory inv, Component titleIn) {
 		super(screenContainer, inv, titleIn);
-
-		this.inventory = inv;
 		this.imageHeight = 159;
 	}
 

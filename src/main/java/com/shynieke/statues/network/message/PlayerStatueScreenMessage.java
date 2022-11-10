@@ -34,8 +34,7 @@ public class PlayerStatueScreenMessage {
 			if (ctx.getDirection().getReceptionSide().isClient()) {
 				Minecraft mc = Minecraft.getInstance();
 				Entity entity = mc.level.getEntity(entityID);
-				if (entity instanceof PlayerStatue) {
-					PlayerStatue playerStatue = (PlayerStatue) entity;
+				if (entity instanceof PlayerStatue playerStatue) {
 					com.shynieke.statues.client.screen.PlayerPoseScreen.openScreen(playerStatue);
 				}
 			}

@@ -112,7 +112,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 						StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(),
 						StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()))
 				.result1(Items.TROPICAL_FISH).result2(Items.BONE_MEAL).build(consumer,
-						new ResourceLocation(Reference.MOD_ID, "loot/tropical_fish"));;
+						new ResourceLocation(Reference.MOD_ID, "loot/tropical_fish"));
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHULKER_STATUE.get()))
 				.result3(Items.SHULKER_SHELL).build(consumer);
 

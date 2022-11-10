@@ -43,8 +43,7 @@ public class StatueBatEntity extends Bat {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity) {
-			LivingEntity entitylivingbase = (LivingEntity) source.getDirectEntity();
+		if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity entitylivingbase) {
 
 			if (!source.isExplosion()) {
 				entitylivingbase.hurt(DamageSource.thorns(this), 2.0F);

@@ -30,8 +30,7 @@ public class FishHandler {
 
 		switch (StatuesConfig.COMMON.statueKillSource.get()) {
 			default:
-				if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
-					ServerPlayer player = (ServerPlayer) source;
+				if (source instanceof ServerPlayer player && !(source instanceof FakePlayer)) {
 					List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 					if (!luckyPlayers.isEmpty()) {
 						for (String luckyName : luckyPlayers) {

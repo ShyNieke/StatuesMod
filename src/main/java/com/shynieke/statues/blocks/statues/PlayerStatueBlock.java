@@ -156,8 +156,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	private ItemStack getStatueWithName(BlockGetter level, BlockPos pos, BlockState state) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
-		if (blockEntity instanceof PlayerBlockEntity) {
-			PlayerBlockEntity playerBlockEntity = (PlayerBlockEntity) blockEntity;
+		if (blockEntity instanceof PlayerBlockEntity playerBlockEntity) {
 			ItemStack stack = new ItemStack(state.getBlock());
 
 			GameProfile profile = playerBlockEntity.getPlayerProfile();
@@ -206,8 +205,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					playerBlockEntity.setPlayerProfile(newProfile);
 				}
 			} else {
-				if (placer instanceof Player) {
-					Player player = (Player) placer;
+				if (placer instanceof Player player) {
 					playerBlockEntity.setPlayerProfile(player.getGameProfile());
 				} else {
 					playerBlockEntity.setPlayerProfile(new GameProfile((UUID) null, "steve"));
@@ -328,8 +326,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						}
 					}
 					if (stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
-						if (level instanceof ServerLevel) {
-							ServerLevel serverworld = (ServerLevel) level;
+						if (level instanceof ServerLevel serverworld) {
 							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), playerBlockEntity.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
 							if (playerStatueEntity == null) {
 								return InteractionResult.FAIL;

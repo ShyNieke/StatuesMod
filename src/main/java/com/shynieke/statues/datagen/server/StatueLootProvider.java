@@ -49,7 +49,7 @@ public class StatueLootProvider extends LootTableProvider {
 		map.forEach((name, table) -> LootTables.validate(validationtracker, name, table));
 	}
 
-	private class StatueBlocks extends BlockLoot {
+	private static class StatueBlocks extends BlockLoot {
 		@Override
 		protected void addTables() {
 			this.add(StatueRegistry.PEBBLE.get(), (block) -> createSilkTouchDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(Items.FLINT).when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.1F, 0.14285715F, 0.25F, 1.0F)).otherwise(LootItem.lootTableItem(block)))));
@@ -71,7 +71,7 @@ public class StatueLootProvider extends LootTableProvider {
 		}
 	}
 
-	private class StatueEntities extends EntityLoot {
+	private static class StatueEntities extends EntityLoot {
 		@Override
 		protected void addTables() {
 			this.add(StatueRegistry.PLAYER_STATUE_ENTITY.get(), LootTable.lootTable()
