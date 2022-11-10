@@ -7,6 +7,7 @@ import com.google.gson.JsonParseException;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.registry.StatueTags;
+import com.shynieke.statues.util.LootHelper;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
@@ -94,6 +95,12 @@ public class UpgradeRecipe implements Recipe<Container> {
 				//Check if it has been upgraded
 				if (upgradeType == UpgradeType.UPGRADE && compoundtag != null && compoundtag.contains(Reference.UPGRADED))
 					return false;
+			}
+
+			if (level != null && getUpgradeType() == UpgradeType.LOOTING) {
+				if (LootHelper.getMatchingLoot(level, statueStack) == null) {
+					return false;
+				}
 			}
 		}
 		if (requireCore) {

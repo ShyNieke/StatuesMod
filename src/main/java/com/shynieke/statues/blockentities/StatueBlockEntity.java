@@ -118,7 +118,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			if (cachedLootRecipe != null) {
 				loot = cachedLootRecipe;
 			} else {
-				loot = cachedLootRecipe = LootHelper.getMatchingLoot(level, getBlockState().getBlock());
+				loot = cachedLootRecipe = LootHelper.getMatchingLoot(level, new ItemStack(getBlockState().getBlock()));
 			}
 
 			double random = level.random.nextDouble();

@@ -19,7 +19,7 @@ public class LootHelper {
 		return floodBucket;
 	}
 
-	public static LootRecipe getMatchingLoot(Level level, Block block) {
-		return level.getRecipeManager().getRecipeFor(StatuesRecipes.LOOT_RECIPE.get(), new SimpleContainer(new ItemStack(block)), level).orElse(null);
+	public static LootRecipe getMatchingLoot(Level level, ItemStack stack) {
+		return level.getRecipeManager().getRecipeFor(StatuesRecipes.LOOT_RECIPE.get(), new SimpleContainer(stack), level).orElse(null);
 	}
 }
