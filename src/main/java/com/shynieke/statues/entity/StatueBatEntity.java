@@ -1,5 +1,6 @@
 package com.shynieke.statues.entity;
 
+import com.shynieke.statues.config.StatuesConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -54,6 +55,9 @@ public class StatueBatEntity extends Bat {
 	}
 
 	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor levelAccessor, MobSpawnType reason, BlockPos pos, RandomSource randomIn) {
+		if (!StatuesConfig.COMMON.statueBatSpawning.get()) {
+			return false;
+		}
 		if (pos.getY() >= levelAccessor.getSeaLevel()) {
 			return false;
 		} else {

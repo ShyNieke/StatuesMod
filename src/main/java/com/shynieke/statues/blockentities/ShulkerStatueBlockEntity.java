@@ -75,6 +75,8 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 	}
 
 	public boolean stillValid(Player player) {
+		if (!hasSpecialInteraction())
+			return false;
 		if (this.level.getBlockEntity(this.worldPosition) != this) {
 			return false;
 		} else {
