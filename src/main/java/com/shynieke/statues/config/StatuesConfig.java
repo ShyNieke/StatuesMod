@@ -10,7 +10,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class StatuesConfig {
@@ -130,7 +129,7 @@ public class StatuesConfig {
 
 			info_messages = builder
 					.comment("Adding lines / removing lines specifies what the informative statue can say")
-					.defineList("info_messages", Arrays.asList(messages), o -> (o instanceof String));
+					.defineListAllowEmpty(List.of("info_messages"), () -> List.of(messages), o -> (o instanceof String));
 
 			builder.pop();
 
@@ -145,7 +144,7 @@ public class StatuesConfig {
 
 			lucky_players = builder
 					.comment("Adding usernames will make these users have less luck with getting statues")
-					.defineList("lucky_players", Arrays.asList(luckyPlayers), o -> (o instanceof String));
+					.defineListAllowEmpty(List.of("lucky_players"), () -> List.of(luckyPlayers), o -> (o instanceof String));
 
 			builder.pop();
 		}
