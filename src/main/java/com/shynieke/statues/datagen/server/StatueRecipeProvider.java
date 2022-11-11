@@ -12,6 +12,8 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.SingleItemRecipeBuilder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -227,6 +229,28 @@ public class StatueRecipeProvider extends RecipeProvider {
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), List.of(Ingredient.of(Items.NOTE_BLOCK),
 						Ingredient.of(Items.AMETHYST_SHARD)))
 				.upgradeType(UpgradeType.INTERACTION).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/sound"));
+
+		ShapedRecipeBuilder.shaped(StatueRegistry.STATUE_TABLE.get())
+				.pattern(" P ")
+				.pattern("DCD")
+				.pattern("DDD")
+				.define('P', Items.PISTON)
+				.define('C', Tags.Items.CHESTS_WOODEN)
+				.define('D', Tags.Items.COBBLESTONE_DEEPSLATE)
+				.unlockedBy("has_wooden_chest", has(Tags.Items.CHESTS_WOODEN)).save(consumer);
+
+		ShapedRecipeBuilder.shaped(StatueRegistry.INFO_STATUE.get())
+				.pattern(" R ").pattern("BCB").pattern("CCC")
+				.define('C', Tags.Items.COBBLESTONE)
+				.define('B', Items.BOOK)
+				.define('R', Tags.Items.DYES_RED)
+				.unlockedBy("has_book", has(Items.BOOK)).save(consumer);
+
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(Items.QUARTZ_BLOCK),
+						StatueRegistry.DISPLAY_STAND.get(), 2)
+				.unlockedBy("has_quartz_block", has(Items.QUARTZ_BLOCK))
+				.save(consumer, new ResourceLocation(Reference.MOD_ID, "display_stand_from_quartz_block_stonecutting"));
+
 	}
 
 

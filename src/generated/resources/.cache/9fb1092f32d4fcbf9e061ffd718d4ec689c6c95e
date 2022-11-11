@@ -1,4 +1,6 @@
-// 1.19.2	2022-11-10T16:42:53.6803659	Recipes
+// 1.19.2	2022-11-12T00:07:00.7955041	Recipes
+28e80424f62a15d0cbd7d55cbc22050a9eca0ddb data/statues/recipes/display_stand_from_quartz_block_stonecutting.json
+1baafd38bc5544c8a883973e168fe929e0bdcf18 data/statues/recipes/info_statue.json
 f291cdd7cfc9f72c7302a3f0577f65094f2bc4ea data/statues/recipes/loot/baby_zombie_statue.json
 ef87450757e21bddeeb650ef6e3ef36d2454b5bb data/statues/recipes/loot/bee_statue.json
 df6875ca73f4488fae5cd3bac7196d20291494c6 data/statues/recipes/loot/blaze_statue.json
@@ -58,6 +60,7 @@ d431bab8fe301c90fb7d6ff70b2351c3ff95644a data/statues/recipes/loot/tropical_fish
 b76de5f88f36180b4ef05f494a84173fccc88a34 data/statues/recipes/loot/wasteland_statue.json
 8b46cc9c70a84aff4a9b4d9412a931e7a54a3137 data/statues/recipes/loot/witch_statue.json
 9539ad570a77fa8b1546ba1e32636b47b7ea4580 data/statues/recipes/loot/zombie_statue.json
+d7ae260b074c1931a52de42fff6089afb6584b6c data/statues/recipes/statue_table.json
 69a6830cebc6c924cb72fc508010beb4d3f6785b data/statues/recipes/upgrade/automation.json
 49fb646383dd1ff9223da6f7dd8714eab15c6651 data/statues/recipes/upgrade/despawner.json
 7d241d5bfba385cf630709c66608d002e2d72681 data/statues/recipes/upgrade/glowing.json

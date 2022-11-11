@@ -4,25 +4,24 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Locale;
 import java.util.Map;
 
 public enum UpgradeType {
-	CRAFTING(false),
-	UPGRADE(false),
+	CRAFTING(false), //Unused but packs can add crafting recipes using the S.T.A.T.U.E
+	UPGRADE(false), //Upgrades a statue to one that can level (Uses a statue core)
 	GLOWING(15), //Glow Ink
 	UNGLOWING(14), //Ink Sac
-	SPAWNER(10),
-	DESPAWNER,
+	SPAWNER(10), //Spawns the mob
+	DESPAWNER, //Stops the mob from spawning nearby
 	MOB_KILLER(3), //0 = Regular drops,1 = Player drops, 2 = XP too
 	LOOTING(5), //Drops the Loot Recipes (every upgrade increases chance of every drop by 10%
-	AUTOMATION,
-	SPEED(10),
+	AUTOMATION, //Allows exporting of the loot (Currently not implemented)
+	SPEED(10), //Speed up the interactions / mob spawn timer (Not implemented)
 	INTERACTION, //The special interactions for certain statues (like Mooshroom, and Etho)
-	SOUND;
+	SOUND; //Plays the mobs sound when redstone is applied or interacted
 
 	private final boolean upgraded;
 	private final int cap;
