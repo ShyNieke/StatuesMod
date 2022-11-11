@@ -13,6 +13,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -115,6 +117,7 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 				handler.setStackInSlot(SLOT_CENTER, resultStack);
 			}
 		}
+		level.playSound(null, getBlockPos(), SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
 		updateCachedRecipe();
 
 		refreshClient();

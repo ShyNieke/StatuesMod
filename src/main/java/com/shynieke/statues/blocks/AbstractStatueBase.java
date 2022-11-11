@@ -106,18 +106,16 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 
 	@Override
 	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
-		if (state.getValue(INTERACTIVE)) {
+		if (state.getValue(INTERACTIVE) && level.getBlockEntity(pos) instanceof StatueBlockEntity statueBlockEntity) {
 			BlockEntity blockentity = level.getBlockEntity(pos);
-			if (blockentity instanceof StatueBlockEntity statueBlockEntity) {
-				if (!level.isClientSide) {
-					ItemStack itemstack = new ItemStack(this.asItem());
-					statueBlockEntity.saveToItem(itemstack);
-					blockentity.saveToItem(itemstack);
+			if (!level.isClientSide) {
+				ItemStack itemstack = new ItemStack(this.asItem());
+				statueBlockEntity.saveToItem(itemstack);
+				blockentity.saveToItem(itemstack);
 
-					ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemstack);
-					itementity.setDefaultPickUpDelay();
-					level.addFreshEntity(itementity);
-				}
+				ItemEntity itementity = new ItemEntity(level, (double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, itemstack);
+				itementity.setDefaultPickUpDelay();
+				level.addFreshEntity(itementity);
 			}
 		}
 

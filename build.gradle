@@ -109,8 +109,8 @@ dependencies {
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 
-    implementation fg.deobf("curse.maven:jade-324717:4054920") //Jade (WAILA)
-    implementation fg.deobf("curse.maven:TheOneProbe-245211:3965693") //The One probe (TOP)
+//    implementation fg.deobf("curse.maven:jade-324717:4054920") //Jade (WAILA)
+//    implementation fg.deobf("curse.maven:TheOneProbe-245211:3965693") //The One probe (TOP)
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

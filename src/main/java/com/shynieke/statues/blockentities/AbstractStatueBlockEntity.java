@@ -15,6 +15,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -35,6 +36,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	public boolean statueAble;
 	public boolean statueInteractable;
 
+	public boolean statueUpgraded;
 	private int mobKilled, statueLevel, upgradeSlots;
 
 	protected AbstractStatueBlockEntity(BlockEntityType<?> tileType, BlockPos pos, BlockState state) {
@@ -62,6 +64,17 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		compound.putInt("InteractionCooldown", interactCooldown);
 		compound.putBoolean("StatueAble", statueAble);
 		compound.putBoolean("StatueInteractable", statueInteractable);
+		this.saveToNbt(compound);
+	}
+
+	@Override
+	public void saveToItem(ItemStack stack) {
+		CompoundTag compound = this.saveWithoutMetadata();
+		compound.remove("StatueCooldown");
+		compound.remove("InteractionCooldown");
+		compound.remove("StatueAble");
+		compound.remove("StatueInteractable");
+		BlockItem.setBlockEntityData(stack, this.getType(), compound);
 	}
 
 	@Override
@@ -139,6 +152,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	public void loadFromNbt(CompoundTag compound) {
+		statueUpgraded = compound.getBoolean(Reference.UPGRADED);
 		mobKilled = compound.getInt(Reference.KILL_COUNT);
 		statueLevel = compound.getInt(Reference.LEVEL);
 		upgradeSlots = compound.getInt(Reference.UPGRADE_SLOTS);
@@ -154,6 +168,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	public CompoundTag saveUpgrades(CompoundTag tag) {
+		tag.putBoolean(Reference.UPGRADED, statueUpgraded);
 		tag.putInt(Reference.KILL_COUNT, mobKilled);
 		tag.putInt(Reference.LEVEL, statueLevel);
 		tag.putInt(Reference.UPGRADE_SLOTS, upgradeSlots);

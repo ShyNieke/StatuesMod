@@ -73,7 +73,7 @@ public enum UpgradeType {
 		} else {
 			if (stack.getItem() instanceof StatueBlockItem) {
 				if (requiresUpgrade()) {
-					CompoundTag compoundtag = BlockItem.getBlockEntityData(stack);
+					CompoundTag compoundtag = stack.getTagElement("BlockEntityTag");
 					if (compoundtag == null && (stack.getTag() == null || !stack.getTag().getBoolean(Reference.UPGRADED))) {
 						//Not upgraded
 						return false;
