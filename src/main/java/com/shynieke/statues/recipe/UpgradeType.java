@@ -73,7 +73,7 @@ public enum UpgradeType {
 
 					if (compoundtag != null) {
 						int upgradeSlots = compoundtag.getInt(Reference.UPGRADE_SLOTS);
-						if (subsequentUsesSlot && !(upgradeSlots > 0)) {
+						if (isSubsequentUsesSlot() && !(upgradeSlots > 0)) {
 							//No upgrade slots
 							return false;
 						}
@@ -88,7 +88,7 @@ public enum UpgradeType {
 						}
 
 						short currentLevel = upgradeMap.getOrDefault(ID, (short) 0);
-						if ((currentLevel + 1) <= cap) {
+						if ((currentLevel + 1) <= getCap()) {
 							if (level != -1) {
 								if (currentLevel == level) {
 									if (this == UNGLOWING) {
@@ -104,7 +104,7 @@ public enum UpgradeType {
 									} else {
 										UpgradeHelper.upgrade(upgradeMap, ID);
 									}
-									if (subsequentUsesSlot)
+									if (isSubsequentUsesSlot())
 										compoundtag.putInt(Reference.UPGRADE_SLOTS, upgradeSlots - 1);
 								} else {
 									//Level doesn't match
@@ -124,7 +124,7 @@ public enum UpgradeType {
 								} else {
 									UpgradeHelper.upgrade(upgradeMap, ID);
 								}
-								if (subsequentUsesSlot)
+								if (isSubsequentUsesSlot())
 									compoundtag.putInt(Reference.UPGRADE_SLOTS, upgradeSlots - 1);
 							}
 						} else {
