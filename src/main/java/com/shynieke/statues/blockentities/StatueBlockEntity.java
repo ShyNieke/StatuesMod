@@ -6,7 +6,9 @@ import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.util.LootHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -27,12 +29,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class StatueBlockEntity extends AbstractStatueBlockEntity {
 
@@ -125,20 +136,56 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			ItemStack stack1 = loot.getResultItem().copy();
 			float chance1 = loot.getChance1();
 			if (!stack1.isEmpty() && random <= chance1) {
-				playerIn.drop(stack1, true);
+				exportItem(playerIn, stack1);
 			}
 
 			ItemStack stack2 = loot.getResultItem2().copy();
 			float chance2 = loot.getChance2();
 			if (!stack2.isEmpty() && random <= chance2) {
-				playerIn.drop(stack2, true);
+				exportItem(playerIn, stack2);
 			}
 
 			ItemStack stack3 = loot.getResultItem3().copy();
 			float chance3 = loot.getChance3();
 			if (!stack3.isEmpty() && random <= chance3) {
-				playerIn.drop(stack3, true);
+				exportItem(playerIn, stack3);
 			}
+		}
+	}
+
+	private void exportItem(Player player, ItemStack stack) {
+		if (canAutomate()) {
+			List<BiggestInventory> inventoryList = new ArrayList<>();
+			for (Direction dir : Direction.values()) {
+				BlockPos offPos = worldPosition.relative(dir);
+				if (this.level.isAreaLoaded(worldPosition, 1)) {
+					BlockEntity foundTile = this.level.getBlockEntity(offPos);
+					if (foundTile != null) {
+						ResourceLocation typeLocation = ForgeRegistries.BLOCK_ENTITY_TYPES.getKey(foundTile.getType());
+						boolean flag2 = typeLocation != null;
+						if (flag2 && !foundTile.isRemoved() && foundTile.hasLevel() && foundTile.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
+							IItemHandler itemHandler = foundTile.getCapability(ForgeCapabilities.ITEM_HANDLER, dir.getOpposite()).orElse(null);
+							if (itemHandler != null) {
+								inventoryList.add(new BiggestInventory(offPos, itemHandler.getSlots(), dir.getOpposite()));
+							}
+						}
+					}
+				}
+			}
+			inventoryList.sort(Collections.reverseOrder());
+			if (inventoryList.isEmpty()) {
+				player.drop(stack, true);
+			} else {
+				for (BiggestInventory inventory : inventoryList) {
+					IItemHandler itemHandler = inventory.getIItemHandler(this.level);
+					ItemStack rest = ItemHandlerHelper.insertItem(itemHandler, stack, false);
+					if (rest.isEmpty()) {
+						break;
+					}
+				}
+			}
+		} else {
+			player.drop(stack, true);
 		}
 	}
 

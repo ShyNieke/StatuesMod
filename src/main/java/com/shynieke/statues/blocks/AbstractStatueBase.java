@@ -70,6 +70,15 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		return null;
 	}
 
+	@Override
+	public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
+		StatueBlockEntity statueBlockEntity = getBE(level, pos);
+		if (statueBlockEntity != null && statueBlockEntity.getUpgradeLevel("glowing") > 0) {
+			return statueBlockEntity.getUpgradeLevel("glowing");
+		}
+		return super.getLightEmission(state, level, pos);
+	}
+
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {

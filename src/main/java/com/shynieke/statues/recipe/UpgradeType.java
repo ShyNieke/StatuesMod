@@ -12,13 +12,13 @@ import java.util.Map;
 public enum UpgradeType {
 	CRAFTING(false, false, 1), //Unused but packs can add crafting recipes using the S.T.A.T.U.E
 	UPGRADE(false, false, 1), //Upgrades a statue to one that can level (Uses a statue core)
-	GLOWING(true, false, 15), //Glow Ink
-	UNGLOWING(false, false, 14), //Ink Sac
+	GLOWING(true, false, 15), //Makes the statue emit light
+	UNGLOWING(false, false, 14), //Reduces the light emitted
 	SPAWNER(true, true, 10), //Spawns the mob
 	DESPAWNER(true, true, 1), //Stops the mob from spawning nearby
 	MOB_KILLER(true, true, 3), //0 = Regular drops,1 = Player drops, 2 = XP too
-	LOOTING(true, true, 5), //Drops the Loot Recipes (every upgrade increases chance of every drop by 10%
-	AUTOMATION(true, true, 1), //Allows exporting of the loot (Currently not implemented)
+	LOOTING(true, true, 5), //Allows dropping of Loot (every upgrade increases chance of every drop by 10%)
+	AUTOMATION(true, true, 1), //Allows exporting of the loot
 	SPEED(true, true, 10), //Speed up the interactions / mob spawn timer (Not implemented)
 	INTERACTION(true, true, 1), //The special interactions for certain statues (like Mooshroom, and Etho)
 	SOUND(true, true, 1); //Plays the mobs sound when redstone is applied or interacted

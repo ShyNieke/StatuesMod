@@ -5,6 +5,7 @@ import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.storage.StatueSavedData;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
@@ -23,6 +24,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -220,6 +223,10 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		return hasUpgrade("looting");
 	}
 
+	public boolean canAutomate() {
+		return hasUpgrade("automation");
+	}
+
 	public InteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
 		return InteractionResult.PASS;
 	}
@@ -267,5 +274,33 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		firework.setTag(stackTag);
 
 		return firework;
+	}
+
+	protected class BiggestInventory implements Comparable<BiggestInventory> {
+		private final int inventorySize;
+		private final BlockPos tilePos;
+		private final Direction direction;
+
+		public BiggestInventory(BlockPos pos, int size, Direction dir) {
+			this.tilePos = pos;
+			this.inventorySize = size;
+			this.direction = dir;
+		}
+
+		@SuppressWarnings("deprecation")
+		protected IItemHandler getIItemHandler(Level level) {
+			if (level.isAreaLoaded(worldPosition, 1)) {
+				BlockEntity blockEntity = level.getBlockEntity(tilePos);
+				if (!blockEntity.isRemoved() && blockEntity.hasLevel() && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
+					return blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, direction).orElse(null);
+				}
+			}
+			return null;
+		}
+
+		@Override
+		public int compareTo(BiggestInventory otherInventory) {
+			return Integer.compare(this.inventorySize, otherInventory.inventorySize);
+		}
 	}
 }
