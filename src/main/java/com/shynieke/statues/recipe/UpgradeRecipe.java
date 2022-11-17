@@ -8,7 +8,7 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.registry.StatueTags;
 import com.shynieke.statues.util.LootHelper;
-import it.unimi.dsi.fastutil.ints.IntList;
+import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -16,7 +16,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.Container;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -26,6 +25,8 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Locale;
+
 public class UpgradeRecipe implements Recipe<Container> {
 	protected final ResourceLocation id;
 	protected final String group;
@@ -33,7 +34,6 @@ public class UpgradeRecipe implements Recipe<Container> {
 	protected final NonNullList<Ingredient> catalysts;
 	protected final ItemStack result;
 	protected final boolean requireCore;
-	private final boolean isSimple;
 	private final UpgradeType upgradeType;
 	private final int tier;
 
@@ -47,7 +47,6 @@ public class UpgradeRecipe implements Recipe<Container> {
 		this.requireCore = requireCore;
 		this.upgradeType = upgradeType;
 		this.tier = tier;
-		this.isSimple = catalysts.stream().allMatch(Ingredient::isSimple);
 	}
 
 	public NonNullList<Ingredient> getIngredients() {
@@ -97,10 +96,12 @@ public class UpgradeRecipe implements Recipe<Container> {
 					return false;
 			}
 
-			if (level != null && getUpgradeType() == UpgradeType.LOOTING) {
-				if (LootHelper.getMatchingLoot(level, statueStack) == null) {
-					return false;
-				}
+			if (level != null && getUpgradeType() == UpgradeType.LOOTING && LootHelper.hasLoot(level, statueStack)) {
+				return false;
+			}
+
+			if (tier != -1 && tier != UpgradeHelper.getUpgradeLevel(statueStack, upgradeType.name().toLowerCase(Locale.ROOT))) {
+				return false;
 			}
 		}
 		if (requireCore) {
@@ -121,7 +122,6 @@ public class UpgradeRecipe implements Recipe<Container> {
 			return true;
 		}
 
-		StackedContents stackedcontents = new StackedContents();
 		java.util.List<ItemStack> inputs = new java.util.ArrayList<>();
 		int i = 0;
 
@@ -129,13 +129,11 @@ public class UpgradeRecipe implements Recipe<Container> {
 			ItemStack itemstack = container.getItem(j);
 			if (!itemstack.isEmpty()) {
 				++i;
-				if (isSimple)
-					stackedcontents.accountStack(itemstack, 1);
-				else inputs.add(itemstack);
+				inputs.add(itemstack);
 			}
 		}
 
-		return i == this.catalysts.size() && (isSimple ? stackedcontents.canCraft(this, (IntList) null) : net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs, this.catalysts) != null);
+		return i == this.catalysts.size() && net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs, this.catalysts) != null;
 	}
 
 	@Override

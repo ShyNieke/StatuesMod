@@ -21,4 +21,8 @@ public class LootHelper {
 	public static LootRecipe getMatchingLoot(Level level, ItemStack stack) {
 		return level.getRecipeManager().getRecipeFor(StatuesRecipes.LOOT_RECIPE.get(), new SimpleContainer(stack), level).orElse(null);
 	}
+
+	public static boolean hasLoot(Level level, ItemStack stack) {
+		return getMatchingLoot(level, stack) != null;
+	}
 }

@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -40,6 +41,26 @@ public class UpgradeHelper {
 	public static void upgrade(Map<String, Short> upgradeMap, String id) {
 		short level = upgradeMap.getOrDefault(id, (short) 0);
 		upgradeMap.put(id, (short) (level + 1));
+	}
+
+	public static void downgrade(Map<String, Short> upgradeMap, String id) {
+		short level = upgradeMap.getOrDefault(id, (short) 0);
+		if(level > 0) {
+			upgradeMap.put(id, (short) (level - 1));
+		}
+	}
+
+	public static Map<String, Short> getUpgradeMap(ItemStack stack) {
+		CompoundTag compoundtag = stack.getTagElement("BlockEntityTag");
+		if(compoundtag == null) {
+			return null;
+		}
+		return loadUpgradeMap(compoundtag);
+	}
+
+	public static int getUpgradeLevel(ItemStack stack, String id) {
+		Map<String, Short> upgradeMap = getUpgradeMap(stack);
+		return upgradeMap == null ? -1 : upgradeMap.getOrDefault(id, (short)0);
 	}
 
 	public static Component getUpgradeName(String id, int level) {

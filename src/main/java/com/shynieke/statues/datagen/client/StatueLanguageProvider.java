@@ -222,7 +222,6 @@ public class StatueLanguageProvider extends LanguageProvider {
 		add("statues.upgrade.level.10", "X");
 
 		add("statues.upgrade.glowing.name", "Glowing");
-		add("statues.upgrade.unglowing.name", "unglowing");
 		add("statues.upgrade.spawner.name", "Spawner");
 		add("statues.upgrade.despawner.name", "Despawner");
 		add("statues.upgrade.mob_killer.name", "Mob Killer");
