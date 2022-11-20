@@ -54,7 +54,7 @@ public class StatueBlockItem extends BlockItem {
 	protected BlockState getPlacementState(BlockPlaceContext context) {
 		BlockState state = super.getPlacementState(context);
 		ItemStack stack = context.getItemInHand();
-		if (state.getBlock() instanceof AbstractStatueBase) {
+		if (state != null && state.getBlock() instanceof AbstractStatueBase) {
 			if (stack.hasTag()) {
 				CompoundTag compoundtag = stack.getTagElement("BlockEntityTag");
 				if (compoundtag == null) {
