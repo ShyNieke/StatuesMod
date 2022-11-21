@@ -8,5 +8,4 @@ public class Reference {
 	public static final String LEVEL = "statueLevel";
 	public static final String UPGRADED = "statueUpgraded";
 	public static final String UPGRADE_SLOTS = "upgradeSlots";
-	public static final String BLOCKED = "upgradeBlocked";
 }

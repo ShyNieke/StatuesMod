@@ -38,14 +38,22 @@ public class StatuesLootModifier extends LootModifier {
 			RandomSource random = context.getRandom();
 			ItemStack statueStack = new ItemStack(statues.getRandomElement(random).orElse(Items.EGG));
 			if (random.nextDouble() <= StatuesConfig.COMMON.ancientCityLootChance.get() && !statueStack.is(Items.EGG)) {
-				CompoundTag tag = statueStack.getOrCreateTag();
-				tag.putBoolean(Reference.BLOCKED, true);
-				statueStack.setTag(tag);
+				CompoundTag entityTag = new CompoundTag();
+				entityTag.putInt(Reference.LEVEL, 1);
+				entityTag.putBoolean(Reference.UPGRADED, true);
+				entityTag.putInt(Reference.UPGRADE_SLOTS, 20);
+				entityTag.putInt(Reference.KILL_COUNT, getRandInRange(context.getRandom(), 6, 16));
+
+				statueStack.addTagElement("BlockEntityTag", entityTag);
 				generatedLoot.add(statueStack);
 			}
 		}
 
 		return generatedLoot;
+	}
+
+	public int getRandInRange(RandomSource random, int min, int max) {
+		return random.nextIntBetweenInclusive(min, max);
 	}
 
 	@Override
