@@ -79,7 +79,7 @@ public class StatueHandler {
 		if (spawnReason == MobSpawnType.NATURAL || spawnReason == MobSpawnType.REINFORCEMENT || spawnReason == MobSpawnType.EVENT) {
 			Mob mob = event.getEntity();
 			if (StatueSavedData.get().isDespawnerNearby(mob.level.dimension(), mob.blockPosition(), 32)) {
-				Statues.LOGGER.info(mob.blockPosition() + " Spawn cancelled by a Despawner upgraded Statue " + mob.getType());
+//				Statues.LOGGER.info(mob.blockPosition() + " Spawn cancelled by a Despawner upgraded Statue " + mob.getType());
 				event.setResult(Event.Result.DENY);
 			}
 		}
