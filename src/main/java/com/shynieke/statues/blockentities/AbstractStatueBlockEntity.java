@@ -83,7 +83,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	@Override
 	public void onLoad() {
 		super.onLoad();
-		if (level != null) {
+		if (level != null && isDespawner()) {
 			StatueSavedData.get().addPosition(level.dimension(), getBlockPos());
 		}
 	}
@@ -91,7 +91,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	@Override
 	public void setRemoved() {
 		super.setRemoved();
-		if (level != null) {
+		if (level != null && isDespawner()) {
 			StatueSavedData.get().removePosition(level.dimension(), getBlockPos());
 		}
 	}
@@ -209,6 +209,10 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 
 	public boolean isSpawner() {
 		return hasUpgrade("spawner");
+	}
+
+	public boolean isDespawner() {
+		return hasUpgrade("despawner");
 	}
 
 	public int getSpawnerLevel() {
