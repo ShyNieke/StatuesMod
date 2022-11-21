@@ -1,4 +1,4 @@
-// 1.19.2	2022-10-30T23:56:04.8903838	Item Models: statues
+// 1.19.2	2022-11-21T23:50:20.0210914	Item Models: statues
 7b1e7d4cd383ce69a71bdb343872386329321241 assets/statues/models/item/angry_bee_statue.json
 220dc7d6d76d1b849a3009cd36cd27574ba6c2cc assets/statues/models/item/baby_zombie_statue.json
 48fcacf895449438d3b4474f805367ae86c55b8f assets/statues/models/item/bee_statue.json
@@ -57,7 +57,7 @@ c78bac86a5b3e7fc8ca7027da9fc470cfb14e0ed assets/statues/models/item/panda_normal
 17e8988e931712b1f84e01a1d4b2222a392ec2e3 assets/statues/models/item/pebble.json
 caed455e64aa8a7d316d8f2a9ab729abd206e6a4 assets/statues/models/item/pig_statue.json
 68307932911b06106ad758f95b2e7ae1be2287b2 assets/statues/models/item/pillager_statue.json
-db25d64dfb5fabf23ba2bea7255fbef0dbfb952e assets/statues/models/item/player_compass.json
+f74fce5441724d9248d9d7e8f113849faa7c40c7 assets/statues/models/item/player_compass.json
 f2a6bbb4aa7df7e6d4ee4c37967cffde6cd97c9f assets/statues/models/item/player_statue.json
 2f97193100bda21982466751167f006cd4472014 assets/statues/models/item/player_statue_spawn_egg.json
 0e6a0f47badd469f739fc54781fc73107f124434 assets/statues/models/item/pufferfish_medium_statue.json
