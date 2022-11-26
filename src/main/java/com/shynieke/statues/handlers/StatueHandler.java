@@ -56,20 +56,9 @@ public class StatueHandler {
 	}
 
 	public int getLevel(int killedMobs) {
-		if (killedMobs >= 6 && killedMobs <= 16) {
-			return 1;
-		} else if (killedMobs >= 16 && killedMobs <= 28) {
-			return 2;
-		} else if (killedMobs >= 28 && killedMobs <= 44) {
-			return 3;
-		} else if (killedMobs >= 44 && killedMobs <= 58) {
-			return 4;
-		} else if (killedMobs >= 58 && killedMobs <= 76) {
-			return 5;
-		} else if (killedMobs >= 76 && killedMobs <= 96) {
-			return 6;
+		if (killedMobs > 0) {
+			return (int) Math.floor(killedMobs / 10.0D);
 		}
-
 		return 0;
 	}
 
