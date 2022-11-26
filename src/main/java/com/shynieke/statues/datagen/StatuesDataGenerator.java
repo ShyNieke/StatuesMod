@@ -13,6 +13,7 @@ import com.shynieke.statues.datagen.server.StatueGLMProvider;
 import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
+import com.shynieke.statues.datagen.server.patchouli.StatuePatchouliProvider;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.core.HolderSet;
@@ -50,6 +51,7 @@ public class StatuesDataGenerator {
 			generator.addProvider(event.includeServer(), new StatueItemTagProvider(generator, blockTags, event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(generator, event.getExistingFileHelper()));
 			generator.addProvider(event.includeServer(), new StatueGLMProvider(generator));
+			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(generator));
 
 			final HolderSet.Named<Biome> spawnBiomesTag = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), StatueTags.CAN_SPAWN_STATUE_BAT);
 			final BiomeModifier addSpawn = AddSpawnsBiomeModifier.singleSpawn(

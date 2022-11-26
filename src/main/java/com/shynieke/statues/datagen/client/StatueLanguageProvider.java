@@ -230,6 +230,22 @@ public class StatueLanguageProvider extends LanguageProvider {
 		add("statues.upgrade.speed.name", "Speed");
 		add("statues.upgrade.interaction.name", "Interaction");
 		add("statues.upgrade.sound.name", "Sound");
+
+		//Patchouli
+		add("info.statues.book.name", "Statues");
+		add("info.statues.book.subtitle", "Little functional mobs");
+		add("info.statues.book.landing", "A book to help figure out what statues can do for you.");
+
+		add("info.statues.book.info.name", "Information");
+		add("info.statues.book.info.desc", "General info about Statues and it's features.");
+
+		add("info.statues.book.statue_table.entry.name", "S.T.A.T.U.E.");
+		add("info.statues.book.statue_table.text1", "The S.T.A.T.U.E. or Statue Table for Applying Tiered Upgrade Enhancements is a worktable that can be used to upgrade Statues.");
+		add("info.statues.book.statue_table.text2", "To start out you upgrade a statue with a Statue Core. This will allow it to level from killing the mobs the statue is based on. Every 10 mobs will unlock an upgrade slot up to a max of 16.");
+		add("info.statues.book.statue_table.text3", "The following upgrades are available once have an upgrade slot:$(br)$(l)Glowing$() - Allows the statue to emit light$(br)$(l)Unglowing$() - Removes previously applied glowing$(br)$(l)Spawner$() - Allows the statue to spawn it's mob every so often$(br)$(l)Despawner$() - Disallows it's mob from spawning in the nearby area");
+		add("info.statues.book.statue_table.text4", "$(br)$(l)Mob Killer$() - Kills the mob if it gets nearby (1 = Regular drops, 2 = Player drops, 3 = Player drops + XP)$(br)$(l)Looting$() - Allows the statue to generate loot$(br)$(l)Automation$() - Allows exporting of loot$(br)$(l)Speed$() - Speeds up the interaction/spawning timer$(br)$(l)Interaction$() - Allows special interactions$(br)$(l)Sound$() - Allows the statue to make sound when right-clicked or powered");
+		add("info.statues.book.core.entry.name", "Statue Core");
+		add("info.statues.book.core.text1", "Statue Core's are dropped by the Statue Bat.$(br)The Statue bat just like the vanilla one can be found in dark areas but beware! It hurts you back if you try to kill it.");
 	}
 
 	public void addSubtitle(RegistryObject<SoundEvent> sound, String name) {
