@@ -13,9 +13,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class PatchouliCompat {
 	public static void convertBook(Player playerIn) {
-		playerIn.getMainHandItem().shrink(1);
 		Item guideBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
 		if (guideBook != null) {
+			playerIn.getMainHandItem().shrink(1);
 			ItemStack patchouliBook = new ItemStack(guideBook);
 			CompoundTag tag = patchouliBook.getOrCreateTag();
 			tag.putString("patchouli:book", "statues:statues");

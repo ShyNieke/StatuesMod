@@ -22,6 +22,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.ModList;
 
 import java.time.LocalDate;
@@ -29,6 +30,7 @@ import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 public class InfoStatueBlock extends AbstractBaseBlock {
 
@@ -42,11 +44,17 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		if (playerIn.getMainHandItem().is(Items.BOOK) && ModList.get().isLoaded("patchouli")) {
-			PatchouliCompat.convertBook(playerIn);
-			return InteractionResult.SUCCESS;
+		if(handIn == InteractionHand.MAIN_HAND) {
+			if (playerIn.getMainHandItem().is(Items.BOOK) && ModList.get().isLoaded("patchouli")) {
+				PatchouliCompat.convertBook(playerIn);
+				return InteractionResult.SUCCESS;
+			}
+			//Debug option specifically for Shy to know what version is being used
+			if (playerIn.getMainHandItem().is(Items.PAPER) && !(playerIn instanceof FakePlayer) &&
+					playerIn.getGameProfile().getId().equals(UUID.fromString("7135da42-d327-47bb-bb04-5ba4e212fb32")))
+				playerIn.sendSystemMessage(Component.literal("Statues version: ")
+						.append(Component.literal(ModList.get().getModFileById("statues").versionString())).withStyle(ChatFormatting.GOLD));
 		}
-		sendInfoMessage(playerIn, level, pos);
 		return InteractionResult.SUCCESS;
 	}
 
