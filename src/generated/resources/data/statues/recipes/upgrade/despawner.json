@@ -14,6 +14,5 @@
   "center": {
     "tag": "statues:statues/upgradeable"
   },
-  "requireCore": true,
   "upgradeType": "despawner"
 }

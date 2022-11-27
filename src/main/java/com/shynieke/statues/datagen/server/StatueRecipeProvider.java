@@ -198,7 +198,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.upgradeType(UpgradeType.SPAWNER).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/spawner"));
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), List.of(Ingredient.of(Tags.Items.HEADS),
-						Ingredient.of(Items.MYCELIUM), Ingredient.of(Items.LANTERN))).requiresCore()
+						Ingredient.of(Items.MYCELIUM), Ingredient.of(Items.LANTERN)))
 				.upgradeType(UpgradeType.DESPAWNER).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/despawner"));
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), List.of(Ingredient.of(Items.DIAMOND_SWORD))).tier(0)
