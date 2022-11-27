@@ -2,9 +2,11 @@ package com.shynieke.statues.handlers;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.Statues;
+import com.shynieke.statues.fakeplayer.StatueFakePlayer;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.storage.StatueSavedData;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -14,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -75,6 +78,14 @@ public class StatueHandler {
 //				Statues.LOGGER.info(mob.blockPosition() + " Spawn cancelled by a Despawner upgraded Statue " + mob.getType());
 				event.setResult(Event.Result.DENY);
 			}
+		}
+	}
+
+
+	@SubscribeEvent
+	public void onLevelUnload(final LevelEvent.Unload event) {
+		if (event.getLevel() instanceof ServerLevel serverLevel) {
+			StatueFakePlayer.unload(serverLevel);
 		}
 	}
 }

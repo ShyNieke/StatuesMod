@@ -1,6 +1,7 @@
 package com.shynieke.statues.blockentities;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
+import com.shynieke.statues.fakeplayer.StatueFakePlayer;
 import com.shynieke.statues.recipe.LootRecipe;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
@@ -14,15 +15,18 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
@@ -37,6 +41,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -46,7 +51,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class StatueBlockEntity extends AbstractStatueBlockEntity {
-
+	private AABB hitbox;
 	protected LootRecipe cachedLootRecipe;
 
 	public StatueBlockEntity(BlockPos pos, BlockState state) {
@@ -63,7 +68,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				blockEntity.interactCooldown--;
 
 				if (blockEntity.interactCooldown == 0) {
-					blockEntity.interactCooldown = 200;
+					blockEntity.interactCooldown = 200 - (blockEntity.getSpeed() * 10);
 					blockEntity.setStatueInteractable(true);
 				}
 			}
@@ -71,15 +76,19 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				blockEntity.cooldown--;
 
 				if (blockEntity.cooldown == 0) {
-					blockEntity.cooldown = 200;
+					blockEntity.cooldown = 200 - (blockEntity.getSpeed() * 10);
 					blockEntity.setStatueAble(true);
 				}
 			} else {
 				//Insert spawner behavior
 				if (blockEntity.isSpawner()) {
 					blockEntity.summonMob((ServerLevel) level);
-					blockEntity.setStatueAble(false);
 				}
+				if (blockEntity.isKiller()) {
+					blockEntity.killMob((ServerLevel) level);
+				}
+
+				blockEntity.setStatueAble(false);
 			}
 
 			blockEntity.setChanged();
@@ -186,6 +195,37 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			}
 		} else {
 			player.drop(stack, true);
+		}
+	}
+
+	public void killMob(ServerLevel serverLevel) {
+		BlockPos pos = getBlockPos();
+		if (hitbox == null) {
+			hitbox = new AABB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f,
+					pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
+					.inflate(-12, -12, -12).inflate(12, 12, 12);
+		}
+		List<LivingEntity> targetList = level.getEntitiesOfClass(LivingEntity.class, hitbox).stream()
+				.filter(entity -> entity.getType().equals(getStatue().getEntity()) && !(entity instanceof FakePlayer)).toList();
+
+		final int killerLevel = getUpgradeLevel("mob_killer");
+
+		for (LivingEntity target : targetList) {
+			if (killerLevel > 0) {
+				ItemStack tempSword = new ItemStack(Items.DIAMOND_SWORD, 1);
+				StatueFakePlayer.useFakePlayer(serverLevel, (fakePlayer -> {
+					fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, tempSword);
+					target.hurt(DamageSource.playerAttack(fakePlayer), (float) fakePlayer.getAttributeValue(Attributes.ATTACK_DAMAGE));
+					return true;
+				}));
+			} else {
+				target.hurt(DamageSource.GENERIC, 6);
+			}
+
+			if (target.isDeadOrDying()) {
+				if (killerLevel < 2)
+					target.skipDropExperience();
+			}
 		}
 	}
 

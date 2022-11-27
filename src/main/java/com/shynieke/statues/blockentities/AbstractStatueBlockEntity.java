@@ -211,6 +211,10 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		return hasUpgrade("spawner");
 	}
 
+	public boolean isKiller() {
+		return hasUpgrade("mob_killer");
+	}
+
 	public boolean isDespawner() {
 		return hasUpgrade("despawner");
 	}
@@ -229,6 +233,10 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 
 	public boolean canAutomate() {
 		return hasUpgrade("automation");
+	}
+
+	public int getSpeed() {
+		return hasUpgrade("speed") ? getUpgradeLevel("speed") + 1: 0;
 	}
 
 	public InteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {

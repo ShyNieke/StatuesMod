@@ -115,6 +115,7 @@
   "curios.identifier.statue": "Statue",
   "entity.statues.player_statue": "Player Statue",
   "entity.statues.statue_bat": "Statue Bat",
+  "fakeplayer.statue": "Statue",
   "gui.statue.fill": "Filling Interactions",
   "gui.statue.loot": "Statue Loot",
   "info.statues.book.core.entry.name": "Statue Core",

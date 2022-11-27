@@ -231,6 +231,9 @@ public class StatueLanguageProvider extends LanguageProvider {
 		add("statues.upgrade.interaction.name", "Interaction");
 		add("statues.upgrade.sound.name", "Sound");
 
+		//FakePlayer
+		add("fakeplayer.statue", "Statue");
+
 		//Patchouli
 		add("info.statues.book.name", "Statues");
 		add("info.statues.book.subtitle", "Little functional mobs");

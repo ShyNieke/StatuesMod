@@ -7,7 +7,6 @@ import com.google.gson.JsonParseException;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.registry.StatueTags;
-import com.shynieke.statues.util.LootHelper;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
@@ -96,10 +95,6 @@ public class UpgradeRecipe implements Recipe<Container> {
 					return false;
 			}
 
-			if (level != null && getUpgradeType() == UpgradeType.LOOTING && LootHelper.hasLoot(level, statueStack)) {
-				return false;
-			}
-
 			if (tier != -1 && tier != UpgradeHelper.getUpgradeLevel(statueStack, upgradeType.name().toLowerCase(Locale.ROOT))) {
 				return false;
 			}
@@ -123,17 +118,17 @@ public class UpgradeRecipe implements Recipe<Container> {
 		}
 
 		java.util.List<ItemStack> inputs = new java.util.ArrayList<>();
-		int i = 0;
+		int itemCount = 0;
 
 		for (int j = 2; j < 6; ++j) {
 			ItemStack itemstack = container.getItem(j);
 			if (!itemstack.isEmpty()) {
-				++i;
+				++itemCount;
 				inputs.add(itemstack);
 			}
 		}
 
-		return i == this.catalysts.size() && net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs, this.catalysts) != null;
+		return itemCount == this.catalysts.size() && net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs, this.catalysts) != null;
 	}
 
 	@Override
