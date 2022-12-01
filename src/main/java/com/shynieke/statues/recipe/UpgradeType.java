@@ -19,7 +19,7 @@ public enum UpgradeType {
 	MOB_KILLER(true, true, 3), //0 = Regular drops,1 = Player drops, 2 = XP too
 	LOOTING(true, true, 5), //Allows dropping of Loot (every upgrade increases chance of every drop by 10%)
 	AUTOMATION(true, true, 1), //Allows exporting of the loot
-	SPEED(true, true, 10), //Speed up the interactions / mob spawn timer (Not implemented)
+	SPEED(true, true, 10), //Speed up the interactions / mob spawn timer
 	INTERACTION(true, true, 1), //The special interactions for certain statues (like Mooshroom, and Etho)
 	SOUND(true, true, 1); //Plays the mobs sound when redstone is applied or interacted
 
