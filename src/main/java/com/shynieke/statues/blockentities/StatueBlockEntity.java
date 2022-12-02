@@ -211,7 +211,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		final int killerLevel = getUpgradeLevel("mob_killer");
 
 		for (LivingEntity target : targetList) {
-			if (killerLevel > 0) {
+			if (killerLevel > 1) {
 				ItemStack tempSword = new ItemStack(Items.DIAMOND_SWORD, 1);
 				StatueFakePlayer.useFakePlayer(serverLevel, (fakePlayer -> {
 					fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, tempSword);
@@ -220,11 +220,6 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				}));
 			} else {
 				target.hurt(DamageSource.GENERIC, 6);
-			}
-
-			if (target.isDeadOrDying()) {
-				if (killerLevel < 2)
-					target.skipDropExperience();
 			}
 		}
 	}

@@ -117,7 +117,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (state.getValue(INTERACTIVE) && level.getBlockEntity(pos) instanceof StatueBlockEntity statueBlockEntity) {
 			BlockEntity blockentity = level.getBlockEntity(pos);
-			if (!level.isClientSide) {
+			if (!level.isClientSide && !player.getAbilities().instabuild) {
 				ItemStack itemstack = new ItemStack(this.asItem());
 				statueBlockEntity.saveToItem(itemstack);
 				blockentity.saveToItem(itemstack);
