@@ -68,26 +68,26 @@ public class PlayerPoseScreen extends Screen {
 		int offsetX = 110;
 		int offsetY = 50;
 
-		this.smallButton = this.addRenderableWidget(new ToggleButton(offsetX, offsetY, 40, 20, this.playerStatueData.isSmall(), (button) -> {
+		this.addRenderableWidget(this.smallButton = new ToggleButton.Builder(this.playerStatueData.isSmall(), (button) -> {
 			ToggleButton toggleButton = ((ToggleButton) button);
 			toggleButton.setValue(!toggleButton.getValue());
 			this.textFieldUpdated();
-		}));
-		this.lockButton = this.addRenderableWidget(new ToggleButton(offsetX, offsetY + 66, 40, 20, this.playerStatueData.isLocked(), (button) -> {
+		}).bounds(offsetX, offsetY, 40, 20).build());
+		this.addRenderableWidget(this.lockButton = new ToggleButton.Builder(this.playerStatueData.isLocked(), (button) -> {
 			ToggleButton toggleButton = ((ToggleButton) button);
 			toggleButton.setValue(!toggleButton.getValue());
 			this.textFieldUpdated();
-		}));
-		this.nameVisibleButton = this.addRenderableWidget(new ToggleButton(offsetX, offsetY + 89, 40, 20, this.playerStatueData.getNameVisible(), (button) -> {
+		}).bounds(offsetX, offsetY + 66, 40, 20).build());
+		this.addRenderableWidget(this.nameVisibleButton = new ToggleButton.Builder(this.playerStatueData.getNameVisible(), (button) -> {
 			ToggleButton toggleButton = ((ToggleButton) button);
 			toggleButton.setValue(!toggleButton.getValue());
 			this.textFieldUpdated();
-		}));
-		this.noGravityButton = this.addRenderableWidget(new ToggleButton(offsetX, offsetY + 112, 40, 20, this.playerStatueData.hasNoGravity(), (button) -> {
+		}).bounds(offsetX, offsetY + 89, 40, 20).build());
+		this.addRenderableWidget(this.noGravityButton = new ToggleButton.Builder(this.playerStatueData.hasNoGravity(), (button) -> {
 			ToggleButton toggleButton = ((ToggleButton) button);
 			toggleButton.setValue(!toggleButton.getValue());
 			this.textFieldUpdated();
-		}));
+		}).bounds(offsetX, offsetY + 112, 40, 20).build());
 
 		// rotation textbox
 		this.rotationTextField = new NumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (22), 38, 17, Component.translatable("statues.playerstatue.gui.label.rotation"));
@@ -119,14 +119,16 @@ public class PlayerPoseScreen extends Screen {
 		// copy & paste buttons
 		offsetX = 20;
 		offsetY = this.height / 4 + 120 + 12;
-		this.addRenderableWidget(new Button(offsetX, offsetY, 64, 20, Component.translatable("statues.playerstatue.gui.label.copy"), (button) -> {
+
+		this.addRenderableWidget(Button.builder(Component.translatable("statues.playerstatue.gui.label.copy"), (button) -> {
 			CompoundTag compound = this.writeFieldsToNBT();
 			String clipboardData = compound.toString();
 			if (this.minecraft != null) {
 				this.minecraft.keyboardHandler.setClipboard(clipboardData);
 			}
-		}));
-		this.addRenderableWidget(new Button(offsetX + 66, offsetY, 64, 20, Component.translatable("statues.playerstatue.gui.label.paste"), (button) -> {
+		}).bounds(offsetX, offsetY, 64, 20).build());
+
+		this.addRenderableWidget(Button.builder(Component.translatable("statues.playerstatue.gui.label.paste"), (button) -> {
 			try {
 				String clipboardData = null;
 				if (this.minecraft != null) {
@@ -138,18 +140,18 @@ public class PlayerPoseScreen extends Screen {
 			} catch (Exception e) {
 				//Nope
 			}
-		}));
+		}).bounds(offsetX + 66, offsetY, 64, 20).build());
 
 		// done & cancel buttons
 		offsetX = this.width - 20;
-		this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, Component.translatable("gui.done"), (button) -> {
+		this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), (button) -> {
 			this.updateEntity(this.writeFieldsToNBT());
 			this.minecraft.setScreen((Screen) null);
-		}));
-		this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, Component.translatable("gui.cancel"), (button) -> {
+		}).bounds(offsetX - ((2 * 96) + 2), offsetY, 96, 20).build());
+		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), (button) -> {
 			this.updateEntity(this.playerStatueData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
-		}));
+		}).bounds(offsetX - 96, offsetY, 96, 20).build());
 	}
 
 	@Override

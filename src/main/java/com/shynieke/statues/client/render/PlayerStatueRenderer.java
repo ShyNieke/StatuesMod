@@ -4,7 +4,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.entity.PlayerStatue;
@@ -82,15 +82,15 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	}
 
 	protected void setupRotations(PlayerStatue playerStatue, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
-		poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F - rotationYaw));
+		poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - rotationYaw));
 		float f = (float) (playerStatue.level.getGameTime() - playerStatue.punchCooldown) + partialTicks;
 		if (f < 5.0F) {
-			poseStack.mulPose(Vector3f.YP.rotationDegrees(Mth.sin(f / 1.5F * (float) Math.PI) * 3.0F));
+			poseStack.mulPose(Axis.YP.rotationDegrees(Mth.sin(f / 1.5F * (float) Math.PI) * 3.0F));
 		}
 
 		if (isPlayerUpsideDown(playerStatue)) {
 			poseStack.translate(0.0D, (double) (playerStatue.getBbHeight() + 0.1F), 0.0D);
-			poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+			poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
 		}
 	}
 

@@ -2,13 +2,13 @@ package com.shynieke.statues.datagen.server.recipe;
 
 import com.google.gson.JsonObject;
 import com.shynieke.statues.recipe.StatuesRecipes;
-import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
@@ -101,7 +101,7 @@ public class LootRecipeBuilder {
 	}
 
 	public void build(Consumer<FinishedRecipe> consumerIn) {
-		ResourceLocation itemKey = Registry.ITEM.getKey(this.statueIngredient.getItems()[0].getItem());
+		ResourceLocation itemKey = ForgeRegistries.ITEMS.getKey(this.statueIngredient.getItems()[0].getItem());
 		this.build(consumerIn, new ResourceLocation(itemKey.getNamespace(), "loot/" + itemKey.getPath()));
 	}
 
@@ -148,7 +148,7 @@ public class LootRecipeBuilder {
 			if (stack != null && !stack.isEmpty()) {
 				JsonObject object = new JsonObject();
 
-				object.addProperty("item", Registry.ITEM.getKey(stack.getItem()).toString());
+				object.addProperty("item", ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
 				if (stack.getCount() != 1) {
 					object.addProperty("count", stack.getCount());
 				}

@@ -3,6 +3,8 @@ package com.shynieke.statues.storage;
 import com.shynieke.statues.Reference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -90,7 +92,7 @@ public class StatueSavedData extends SavedData {
 	}
 
 	private static ResourceKey<Level> getLevelKey(String location) {
-		return ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(location));
+		return ResourceKey.create(Registries.DIMENSION, new ResourceLocation(location));
 	}
 
 	public static StatueSavedData get() {

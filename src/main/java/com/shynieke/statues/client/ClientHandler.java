@@ -34,7 +34,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -181,7 +180,7 @@ public class ClientHandler {
 		}, "Statues Perks Data Loader").start();
 
 		if (ModList.get().isLoaded("curios")) {
-			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);
+//			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);
 		}
 	}
 
@@ -243,10 +242,10 @@ public class ClientHandler {
 		}
 	}
 
-	public static void preStitchEvent(TextureStitchEvent.Pre event) {
-		if (ModList.get().isLoaded("curios") && event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
-			event.addSprite(new ResourceLocation(Reference.MOD_ID, "curios/core"));
-		}
+	public static void preStitchEvent(TextureStitchEvent/*.Pre*/ event) {
+//		if (ModList.get().isLoaded("curios") && event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
+//			event.addSprite(new ResourceLocation(Reference.MOD_ID, "curios/core"));
+//		}
 	}
 
 	private static void setPlayerCache(Minecraft mc) {

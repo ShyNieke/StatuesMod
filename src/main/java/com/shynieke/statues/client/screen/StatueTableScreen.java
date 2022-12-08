@@ -31,20 +31,12 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 	protected void init() {
 		super.init();
 
-		buttonChisel = this.addRenderableWidget(new Button(leftPos + 130, topPos + 46, 38, 20, Component.literal("Chisel"), (button) -> {
+		this.buttonChisel = this.addRenderableWidget(Button.builder(Component.literal("Chisel"), (button) -> {
 			boolean flag = getMenu().validRecipe[0] == 1;
 			if (flag) {
 				StatuesNetworking.CHANNEL.send(PacketDistributor.SERVER.noArg(), new StatueTableMessage(true));
 			}
-		}) {
-			@Override
-			public void renderButton(PoseStack ms, int mouseX, int mouseY, float partialTicks) {
-//				boolean flag = getMenu().validRecipe[0] == 1;
-//				if (flag) {
-				super.renderButton(ms, mouseX, mouseY, partialTicks);
-//				}
-			}
-		});
+		}).bounds(leftPos + 130, topPos + 46, 38, 20).build());
 	}
 
 	@Override

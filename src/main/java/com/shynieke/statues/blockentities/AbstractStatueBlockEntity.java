@@ -236,7 +236,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	public int getSpeed() {
-		return hasUpgrade("speed") ? getUpgradeLevel("speed") + 1: 0;
+		return hasUpgrade("speed") ? getUpgradeLevel("speed") + 1 : 0;
 	}
 
 	public InteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {

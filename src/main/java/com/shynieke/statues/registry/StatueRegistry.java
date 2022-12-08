@@ -262,11 +262,11 @@ public class StatueRegistry {
 	}
 
 	private static Item.Properties blockItemBuilder() {
-		return new Item.Properties().tab(StatueTabs.STATUES_BLOCKS);
+		return new Item.Properties();
 	}
 
 	private static Item.Properties itemBuilder() {
-		return new Item.Properties().tab(StatueTabs.STATUES_ITEMS);
+		return new Item.Properties();
 	}
 
 	private static Block.Properties blockBuilder() {

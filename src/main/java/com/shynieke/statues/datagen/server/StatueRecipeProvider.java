@@ -9,8 +9,9 @@ import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
@@ -26,20 +27,21 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.crafting.PartialNBTIngredient;
+import org.jetbrains.annotations.Nullable;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class StatueRecipeProvider extends RecipeProvider {
 
-	public StatueRecipeProvider(DataGenerator generator) {
-		super(generator);
+	public StatueRecipeProvider(PackOutput packOutput) {
+		super(packOutput);
 	}
 
 	@Override
-	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
+	protected void buildRecipes(Consumer<FinishedRecipe> consumer) {
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.BABY_ZOMBIE_STATUE.get()))
 				.result1(Items.ROTTEN_FLESH).result2(Items.IRON_NUGGET).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.BEE_STATUE.get(), StatueRegistry.ANGRY_BEE_STATUE.get(), StatueRegistry.TRANS_BEE_STATUE.get()))
@@ -230,7 +232,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 						Ingredient.of(Items.AMETHYST_SHARD)))
 				.upgradeType(UpgradeType.INTERACTION).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/sound"));
 
-		ShapedRecipeBuilder.shaped(StatueRegistry.STATUE_TABLE.get())
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, StatueRegistry.STATUE_TABLE.get())
 				.pattern(" P ")
 				.pattern("DCD")
 				.pattern("DDD")
@@ -239,7 +241,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.define('D', Tags.Items.COBBLESTONE_DEEPSLATE)
 				.unlockedBy("has_wooden_chest", has(Tags.Items.CHESTS_WOODEN)).save(consumer);
 
-		ShapedRecipeBuilder.shaped(StatueRegistry.INFO_STATUE.get())
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, StatueRegistry.INFO_STATUE.get())
 				.pattern(" R ").pattern("BCB").pattern("CCC")
 				.define('C', Tags.Items.COBBLESTONE)
 				.define('B', Items.BOOK)
@@ -247,7 +249,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_book", has(Items.BOOK)).save(consumer);
 
 		SingleItemRecipeBuilder.stonecutting(Ingredient.of(Items.QUARTZ_BLOCK),
-						StatueRegistry.DISPLAY_STAND.get(), 2)
+						RecipeCategory.MISC, StatueRegistry.DISPLAY_STAND.get(), 2)
 				.unlockedBy("has_quartz_block", has(Items.QUARTZ_BLOCK))
 				.save(consumer, new ResourceLocation(Reference.MOD_ID, "display_stand_from_quartz_block_stonecutting"));
 
@@ -271,7 +273,9 @@ public class StatueRecipeProvider extends RecipeProvider {
 	}
 
 	@Override
-	protected void saveAdvancement(CachedOutput cache, JsonObject advancementJson, Path path) {
-		// Nope
+	protected @Nullable CompletableFuture<?> saveAdvancement(CachedOutput output, FinishedRecipe finishedRecipe, JsonObject advancementJson) {
+		return CompletableFuture.runAsync(() -> {
+			//Nope
+		});
 	}
 }

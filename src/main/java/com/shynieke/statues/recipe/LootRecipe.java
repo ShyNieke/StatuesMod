@@ -3,7 +3,7 @@ package com.shynieke.statues.recipe;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -143,7 +143,7 @@ public class LootRecipe implements Recipe<Container> {
 					else {
 						String s1 = GsonHelper.getAsString(jsonObject, resultName);
 						ResourceLocation resourcelocation = new ResourceLocation(s1);
-						stacks[i] = new ItemStack(Registry.ITEM.getOptional(resourcelocation).orElseThrow(() ->
+						stacks[i] = new ItemStack(BuiltInRegistries.ITEM.getOptional(resourcelocation).orElseThrow(() ->
 								new IllegalStateException("Item: " + s1 + " does not exist")));
 					}
 				} else {

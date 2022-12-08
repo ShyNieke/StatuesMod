@@ -44,7 +44,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		if(handIn == InteractionHand.MAIN_HAND) {
+		if (handIn == InteractionHand.MAIN_HAND) {
 			if (playerIn.getMainHandItem().is(Items.BOOK) && ModList.get().isLoaded("patchouli")) {
 				PatchouliCompat.convertBook(playerIn);
 				return InteractionResult.SUCCESS;

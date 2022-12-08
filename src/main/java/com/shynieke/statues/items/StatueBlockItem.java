@@ -2,7 +2,6 @@ package com.shynieke.statues.items;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.registry.StatueTabs;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +27,7 @@ import java.util.Map;
 public class StatueBlockItem extends BlockItem {
 
 	public StatueBlockItem(Block blockIn, Item.Properties builder) {
-		super(blockIn, builder.tab(StatueTabs.STATUES_BLOCKS));
+		super(blockIn, builder);
 	}
 
 	@Nullable
@@ -73,7 +72,7 @@ public class StatueBlockItem extends BlockItem {
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		if (ModList.get().isLoaded("curios")) {
-			return com.shynieke.statues.compat.curios.CuriosCompat.getCapability(stack);
+//			return com.shynieke.statues.compat.curios.CuriosCompat.getCapability(stack);
 		}
 		return super.initCapabilities(stack, nbt);
 	}

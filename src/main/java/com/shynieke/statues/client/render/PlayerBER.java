@@ -5,7 +5,7 @@ import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
@@ -58,13 +58,13 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 				case NORTH:
 					break;
 				case SOUTH:
-					poseStack.mulPose(Vector3f.YP.rotationDegrees(180));
+					poseStack.mulPose(Axis.YP.rotationDegrees(180));
 					break;
 				case WEST:
-					poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
+					poseStack.mulPose(Axis.YP.rotationDegrees(90));
 					break;
 				default:
-					poseStack.mulPose(Vector3f.YP.rotationDegrees(270));
+					poseStack.mulPose(Axis.YP.rotationDegrees(270));
 			}
 		}
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
@@ -76,7 +76,7 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 			final String s = ChatFormatting.stripFormatting(profile.getName());
 			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
 				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
-				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+				poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
 			}
 			isSupporter = ClientHandler.SUPPORTER.contains(profile.getId());
 //			isTranslator = ClientHandler.TRANSLATORS.contains(profile.getId());

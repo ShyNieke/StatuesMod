@@ -9,7 +9,7 @@ import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.registry.StatueTags;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -194,7 +194,7 @@ public class UpgradeRecipe implements Recipe<Container> {
 					else {
 						String s1 = GsonHelper.getAsString(jsonObject, "result");
 						ResourceLocation resourcelocation = new ResourceLocation(s1);
-						resultStack = new ItemStack(Registry.ITEM.getOptional(resourcelocation).orElseThrow(() ->
+						resultStack = new ItemStack(BuiltInRegistries.ITEM.getOptional(resourcelocation).orElseThrow(() ->
 								new IllegalStateException("Item: " + s1 + " does not exist")));
 					}
 				} else {

@@ -1,7 +1,6 @@
 package com.shynieke.statues.items;
 
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
-import com.shynieke.statues.registry.StatueTabs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +20,7 @@ import java.util.List;
 public class PlayerCompassItem extends Item {
 
 	public PlayerCompassItem(Item.Properties builder) {
-		super(builder.tab(StatueTabs.STATUES_ITEMS));
+		super(builder);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package com.shynieke.statues.client.ber;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import net.minecraft.client.Minecraft;
@@ -32,15 +32,15 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 				}
 				case EAST -> {
 					poseStack.translate(1, 0, 0);
-					poseStack.mulPose(Vector3f.YP.rotationDegrees(-90F));
+					poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
 				}
 				case SOUTH -> {
 					poseStack.translate(1, 0, 1);
-					poseStack.mulPose(Vector3f.YP.rotationDegrees(180F));
+					poseStack.mulPose(Axis.YP.rotationDegrees(180F));
 				}
 				case WEST -> {
 					poseStack.translate(0, 0, 1);
-					poseStack.mulPose(Vector3f.YP.rotationDegrees(90F));
+					poseStack.mulPose(Axis.YP.rotationDegrees(90F));
 				}
 			}
 

@@ -2,6 +2,7 @@ package com.shynieke.statues.registry;
 
 import com.shynieke.statues.Reference;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -22,7 +23,7 @@ public class StatueTags {
 	public static final TagKey<Item> PLAYER_UPGRADE_ITEM = ItemTags.create(new ResourceLocation(Reference.MOD_ID, "player_upgrade_item"));
 	public static final TagKey<Item> STATUE_CORE = ItemTags.create(new ResourceLocation(Reference.MOD_ID, "core"));
 
-	public static final TagKey<Biome> CAN_SPAWN_STATUE_BAT = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Reference.MOD_ID, "can_spawn_statue_bat"));
-	public static final TagKey<Biome> CAN_SPAWN_FEWER_STATUE_BAT = TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Reference.MOD_ID, "can_spawn_fewer_statue_bat"));
+	public static final TagKey<Biome> CAN_SPAWN_STATUE_BAT = TagKey.create(Registries.BIOME, new ResourceLocation(Reference.MOD_ID, "can_spawn_statue_bat"));
+	public static final TagKey<Biome> CAN_SPAWN_FEWER_STATUE_BAT = TagKey.create(Registries.BIOME, new ResourceLocation(Reference.MOD_ID, "can_spawn_fewer_statue_bat"));
 
 }

@@ -25,6 +25,7 @@ import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.Nameable;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -58,6 +59,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 public class PlayerStatueBlock extends AbstractBaseBlock {
 
@@ -326,12 +328,16 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						}
 					}
 					if (stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
-						if (level instanceof ServerLevel serverworld) {
-							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), playerBlockEntity.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
+						if (level instanceof ServerLevel serverLevel) {
+							ServerLevel serverlevel = (ServerLevel) level;
+							Consumer<PlayerStatue> consumer = EntityType.appendCustomEntityStackConfig((p_263581_) -> {
+							}, serverlevel, stack, playerIn);
+							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverlevel, stack.getTag(), consumer, pos, MobSpawnType.SPAWN_EGG, true, true);
 							if (playerStatueEntity == null) {
 								return InteractionResult.FAIL;
 							}
-							serverworld.addFreshEntityWithPassengers(playerStatueEntity);
+
+							serverLevel.addFreshEntityWithPassengers(playerStatueEntity);
 							float f = (float) Mth.floor((Mth.wrapDegrees(playerIn.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 							playerStatueEntity.setGameProfile(playerBlockEntity.getPlayerProfile());
 							playerStatueEntity.moveTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);

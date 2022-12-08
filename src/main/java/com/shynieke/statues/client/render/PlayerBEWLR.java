@@ -3,7 +3,7 @@ package com.shynieke.statues.client.render;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
@@ -116,7 +116,7 @@ public class PlayerBEWLR extends BlockEntityWithoutLevelRenderer {
 			final String s = ChatFormatting.stripFormatting(gameprofile.getName());
 			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
 				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
-				poseStack.mulPose(Vector3f.ZP.rotationDegrees(180.0F));
+				poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
 			}
 			isSupporter = ClientHandler.SUPPORTER.contains(gameprofile.getId());
 		}

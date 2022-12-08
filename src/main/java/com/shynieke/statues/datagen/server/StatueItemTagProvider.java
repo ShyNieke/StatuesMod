@@ -3,20 +3,24 @@ package com.shynieke.statues.datagen.server;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueTags;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
-import javax.annotation.Nullable;
+import java.util.concurrent.CompletableFuture;
 
 public class StatueItemTagProvider extends ItemTagsProvider {
-	public StatueItemTagProvider(DataGenerator generator, BlockTagsProvider tagsProvider, @Nullable ExistingFileHelper existingFileHelper) {
-		super(generator, tagsProvider, Reference.MOD_ID, existingFileHelper);
+
+	public StatueItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
+								 TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
+		super(output, lookupProvider, blockTagProvider, Reference.MOD_ID, existingFileHelper);
 	}
 
 	@Override
-	protected void addTags() {
+	public void addTags(HolderLookup.Provider lookupProvider) {
 		this.tag(StatueTags.UPGRADEABLE_STATUES).add(StatueRegistry.ANGRY_BEE_STATUE.get().asItem(),
 				StatueRegistry.BABY_ZOMBIE_STATUE.get().asItem(), StatueRegistry.BEE_STATUE.get().asItem(),
 				StatueRegistry.TRANS_BEE_STATUE.get().asItem(), StatueRegistry.BLAZE_STATUE.get().asItem(),

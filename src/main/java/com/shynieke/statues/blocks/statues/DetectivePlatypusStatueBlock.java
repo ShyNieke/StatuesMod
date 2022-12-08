@@ -20,7 +20,7 @@ public class DetectivePlatypusStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.UI_BUTTON_CLICK;
+		return SoundEvents.UI_BUTTON_CLICK.get();
 	}
 
 	@Override

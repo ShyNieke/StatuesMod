@@ -5,7 +5,9 @@ import com.shynieke.statues.blocks.statues.SheepStatueBlock;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -85,12 +87,12 @@ public class DropHandler {
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Rabbit rabbit) {
 			new ItemStack(StatueRegistry.RABBIT_BR_STATUE.get());
-			ItemStack itemStackToDrop = switch (rabbit.getRabbitType()) {
-				case 1 -> new ItemStack(StatueRegistry.RABBIT_WH_STATUE.get());
-				case 2 -> new ItemStack(StatueRegistry.RABBIT_WS_STATUE.get());
-				case 3 -> new ItemStack(StatueRegistry.RABBIT_BS_STATUE.get());
-				case 4 -> new ItemStack(StatueRegistry.RABBIT_GO_STATUE.get());
-				case 5 -> new ItemStack(StatueRegistry.RABBIT_BW_STATUE.get());
+			ItemStack itemStackToDrop = switch (rabbit.getVariant()) {
+				case WHITE -> new ItemStack(StatueRegistry.RABBIT_WH_STATUE.get());
+				case WHITE_SPLOTCHED -> new ItemStack(StatueRegistry.RABBIT_WS_STATUE.get());
+				case BLACK -> new ItemStack(StatueRegistry.RABBIT_BS_STATUE.get());
+				case GOLD -> new ItemStack(StatueRegistry.RABBIT_GO_STATUE.get());
+				case BROWN -> new ItemStack(StatueRegistry.RABBIT_BW_STATUE.get());
 				default -> new ItemStack(StatueRegistry.RABBIT_BR_STATUE.get());
 			};
 			dropLootStatues(entity, itemStackToDrop, source, event);
@@ -108,28 +110,29 @@ public class DropHandler {
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Cat cat) {
 			ItemStack itemStackToDrop = ItemStack.EMPTY;
-			CatVariant variant = cat.getCatVariant();
-			if (variant == CatVariant.TABBY) {
+			CatVariant variant = cat.getVariant();
+			ResourceKey<CatVariant> catKey = BuiltInRegistries.CAT_VARIANT.getResourceKey(variant).orElse(null);
+			if (catKey == CatVariant.TABBY) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
-			} else if (variant == CatVariant.BLACK) {
+			} else if (catKey == CatVariant.BLACK) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_TUXEDO_STATUE.get());
-			} else if (variant == CatVariant.RED) {
+			} else if (catKey == CatVariant.RED) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_RED_STATUE.get());
-			} else if (variant == CatVariant.SIAMESE) {
+			} else if (catKey == CatVariant.SIAMESE) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_SIAMESE_STATUE.get());
-			} else if (variant == CatVariant.BRITISH_SHORTHAIR) {
+			} else if (catKey == CatVariant.BRITISH_SHORTHAIR) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get());
-			} else if (variant == CatVariant.CALICO) {
+			} else if (catKey == CatVariant.CALICO) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_CALICO_STATUE.get());
-			} else if (variant == CatVariant.PERSIAN) {
+			} else if (catKey == CatVariant.PERSIAN) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_PERSIAN_STATUE.get());
-			} else if (variant == CatVariant.RAGDOLL) {
+			} else if (catKey == CatVariant.RAGDOLL) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_RAGDOLL_STATUE.get());
-			} else if (variant == CatVariant.WHITE) {
+			} else if (catKey == CatVariant.WHITE) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_WHITE_STATUE.get());
-			} else if (variant == CatVariant.JELLIE) {
+			} else if (catKey == CatVariant.JELLIE) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_JELLIE_STATUE.get());
-			} else if (variant == CatVariant.ALL_BLACK) {
+			} else if (catKey == CatVariant.ALL_BLACK) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_BLACK_STATUE.get());
 			} else {
 				//Fallback to tabby
@@ -146,13 +149,13 @@ public class DropHandler {
 			}
 		} else if (entity instanceof MushroomCow mooshroom) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.MOOSHROOM_STATUE.get());
-			if (mooshroom.getMushroomType() == MushroomCow.MushroomType.BROWN) {
+			if (mooshroom.getVariant() == MushroomCow.MushroomType.BROWN) {
 				itemStackToDrop = new ItemStack(StatueRegistry.BROWN_MOOSHROOM_STATUE.get());
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Fox fox) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.FOX_STATUE.get());
-			if (fox.getFoxType() == Type.SNOW) {
+			if (fox.getVariant() == Type.SNOW) {
 				itemStackToDrop = new ItemStack(StatueRegistry.FOX_SNOW_STATUE.get());
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);
