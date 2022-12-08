@@ -1,7 +1,7 @@
 package com.shynieke.statues.items;
 
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
-import com.shynieke.statues.init.StatueTabs;
+import com.shynieke.statues.registry.StatueTabs;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

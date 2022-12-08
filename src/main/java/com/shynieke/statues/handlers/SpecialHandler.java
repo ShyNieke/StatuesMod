@@ -2,7 +2,7 @@ package com.shynieke.statues.handlers;
 
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;

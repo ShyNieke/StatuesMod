@@ -1,7 +1,7 @@
 package com.shynieke.statues.blocks.decorative;
 
 import com.shynieke.statues.blocks.AbstractBaseBlock;
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;

@@ -2,8 +2,8 @@ package com.shynieke.statues.compat.curios.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.items.StatueBlockItem;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.player.AbstractClientPlayer;

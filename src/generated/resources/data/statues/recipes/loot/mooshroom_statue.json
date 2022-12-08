@@ -1,0 +1,18 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:mooshroom_statue"
+  },
+  "result1": {
+    "item": "minecraft:beef"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:red_mushroom"
+  },
+  "result2Chance": 0.5,
+  "result3": {
+    "item": "minecraft:red_mushroom_block"
+  },
+  "result3Chance": 0.1
+}

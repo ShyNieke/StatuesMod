@@ -1,0 +1,10 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:campfire_statue"
+  },
+  "result1": {
+    "item": "statues:marshmallow"
+  },
+  "result1Chance": 1.0
+}

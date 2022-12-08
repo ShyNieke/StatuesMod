@@ -1,0 +1,15 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:wasteland_statue"
+  },
+  "result1": {
+    "item": "statues:tea"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:sand",
+    "tag": "{Enchantments:[{id:\"minecraft:vanishing_curse\",lvl:1s}],HideFlags:1,display:{Name:'{\"color\":\"light_purple\",\"text\":\"Wasteland Block\"}'}}"
+  },
+  "result2Chance": 0.5
+}

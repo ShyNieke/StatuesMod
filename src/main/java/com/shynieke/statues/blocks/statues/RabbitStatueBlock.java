@@ -1,21 +1,16 @@
 package com.shynieke.statues.blocks.statues;
 
-import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.recipes.StatueLootList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -24,17 +19,6 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 
 	public RabbitStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
-	}
-
-	@Override
-	public void executeStatueBehavior(StatueBlockEntity blockEntity, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
-		blockEntity.giveItem(StatueLootList.getLootInfo(getLootName()).getLoot(), playerIn);
-		blockEntity.summonMob(getKillerRabbit(level));
-	}
-
-	@Override
-	public String getLootName() {
-		return "rabbit";
 	}
 
 	@Override
@@ -47,11 +31,13 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 		return SoundEvents.RABBIT_AMBIENT;
 	}
 
-	public Rabbit getKillerRabbit(Level level) {
-		Rabbit evilRabbit = new Rabbit(EntityType.RABBIT, level);
-		evilRabbit.setRabbitType(99);
-
-		return evilRabbit;
+	@Override
+	public LivingEntity adjustSpawnedEntity(LivingEntity livingEntity) {
+		if (livingEntity instanceof Rabbit rabbit && rabbit.level.random.nextDouble() < 0.2) {
+			rabbit.setRabbitType(99);
+			return rabbit;
+		}
+		return livingEntity;
 	}
 
 	@Override

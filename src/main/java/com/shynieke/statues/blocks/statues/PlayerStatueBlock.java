@@ -5,10 +5,10 @@ import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.entity.PlayerStatue;
-import com.shynieke.statues.init.StatueBlockEntities;
-import com.shynieke.statues.init.StatueRegistry;
-import com.shynieke.statues.init.StatueTags;
 import com.shynieke.statues.items.PlayerStatueSpawnItem;
+import com.shynieke.statues.registry.StatueBlockEntities;
+import com.shynieke.statues.registry.StatueRegistry;
+import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -156,8 +156,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	private ItemStack getStatueWithName(BlockGetter level, BlockPos pos, BlockState state) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
-		if (blockEntity instanceof PlayerBlockEntity) {
-			PlayerBlockEntity playerBlockEntity = (PlayerBlockEntity) blockEntity;
+		if (blockEntity instanceof PlayerBlockEntity playerBlockEntity) {
 			ItemStack stack = new ItemStack(state.getBlock());
 
 			GameProfile profile = playerBlockEntity.getPlayerProfile();
@@ -206,8 +205,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					playerBlockEntity.setPlayerProfile(newProfile);
 				}
 			} else {
-				if (placer instanceof Player) {
-					Player player = (Player) placer;
+				if (placer instanceof Player player) {
 					playerBlockEntity.setPlayerProfile(player.getGameProfile());
 				} else {
 					playerBlockEntity.setPlayerProfile(new GameProfile((UUID) null, "steve"));
@@ -255,7 +253,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public boolean shouldCheckWeakPower(BlockState state, LevelReader world, BlockPos pos, Direction side) {
+	public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction side) {
 		return false;
 	}
 
@@ -309,11 +307,11 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 									}
 								}
 							} else {
-								playerIn.sendSystemMessage(Component.translatable("statues:player.compass.dimension.failure", ChatFormatting.GOLD + playerName));
+								playerIn.sendSystemMessage(Component.translatable("statues.player.compass.dimension.failure", ChatFormatting.GOLD + playerName));
 							}
 
 						} else {
-							playerIn.sendSystemMessage(Component.translatable("statues:player.compass.offline", ChatFormatting.GOLD + playerName));
+							playerIn.sendSystemMessage(Component.translatable("statues.player.compass.offline", ChatFormatting.GOLD + playerName));
 						}
 						return InteractionResult.SUCCESS;
 					}
@@ -328,8 +326,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						}
 					}
 					if (stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
-						if (level instanceof ServerLevel) {
-							ServerLevel serverworld = (ServerLevel) level;
+						if (level instanceof ServerLevel serverworld) {
 							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverworld, stack.getTag(), playerBlockEntity.getName(), playerIn, pos, MobSpawnType.SPAWN_EGG, true, true);
 							if (playerStatueEntity == null) {
 								return InteractionResult.FAIL;

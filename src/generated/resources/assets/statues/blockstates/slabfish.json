@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "statues:block/slabfish",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "statues:block/slabfish"
+    },
+    "facing=south": {
+      "model": "statues:block/slabfish",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "statues:block/slabfish",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,260 @@
+{
+  "campfire.bye": {
+    "sounds": [
+      "statues:campfire/bye"
+    ],
+    "subtitle": "statues.subtitle.campfire.bye"
+  },
+  "campfire.bye.random": {
+    "sounds": [
+      "statues:campfire/bye",
+      "statues:campfire/bye2"
+    ],
+    "subtitle": "statues.subtitle.campfire.bye"
+  },
+  "campfire.bye2": {
+    "sounds": [
+      "statues:campfire/bye2"
+    ],
+    "subtitle": "statues.subtitle.campfire.bye"
+  },
+  "campfire.cold": {
+    "sounds": [
+      "statues:campfire/cold"
+    ],
+    "subtitle": "statues.subtitle.campfire.cold"
+  },
+  "campfire.cold.random": {
+    "sounds": [
+      "statues:campfire/cold",
+      "statues:campfire/cold2",
+      "statues:campfire/cold3"
+    ],
+    "subtitle": "statues.subtitle.campfire.cold"
+  },
+  "campfire.cold2": {
+    "sounds": [
+      "statues:campfire/cold2"
+    ],
+    "subtitle": "statues.subtitle.campfire.cold"
+  },
+  "campfire.cold3": {
+    "sounds": [
+      "statues:campfire/cold3"
+    ],
+    "subtitle": "statues.subtitle.campfire.cold"
+  },
+  "campfire.greetings": {
+    "sounds": [
+      "statues:campfire/greetings"
+    ],
+    "subtitle": "statues.subtitle.campfire.greetings"
+  },
+  "campfire.greetings.random": {
+    "sounds": [
+      "statues:campfire/greetings",
+      "statues:campfire/greetings2",
+      "statues:campfire/greetings3"
+    ],
+    "subtitle": "statues.subtitle.campfire.greetings"
+  },
+  "campfire.greetings2": {
+    "sounds": [
+      "statues:campfire/greetings2"
+    ],
+    "subtitle": "statues.subtitle.campfire.greetings"
+  },
+  "campfire.greetings3": {
+    "sounds": [
+      "statues:campfire/greetings3"
+    ],
+    "subtitle": "statues.subtitle.campfire.greetings"
+  },
+  "campfire.hello": {
+    "sounds": [
+      "statues:campfire/hello"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello.random": {
+    "sounds": [
+      "statues:campfire/hello",
+      "statues:campfire/hello2",
+      "statues:campfire/hello3",
+      "statues:campfire/hello4",
+      "statues:campfire/hello5",
+      "statues:campfire/hello6",
+      "statues:campfire/hello7",
+      "statues:campfire/hello8",
+      "statues:campfire/hello9"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello2": {
+    "sounds": [
+      "statues:campfire/hello2"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello3": {
+    "sounds": [
+      "statues:campfire/hello3"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello4": {
+    "sounds": [
+      "statues:campfire/hello4"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello5": {
+    "sounds": [
+      "statues:campfire/hello5"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello6": {
+    "sounds": [
+      "statues:campfire/hello6"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello7": {
+    "sounds": [
+      "statues:campfire/hello7"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello8": {
+    "sounds": [
+      "statues:campfire/hello8"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.hello9": {
+    "sounds": [
+      "statues:campfire/hello9"
+    ],
+    "subtitle": "statues.subtitle.campfire.hello"
+  },
+  "campfire.marshmallow": {
+    "sounds": [
+      "statues:campfire/marshmallow"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow.random": {
+    "sounds": [
+      "statues:campfire/marshmallow",
+      "statues:campfire/marshmallow2",
+      "statues:campfire/marshmallow3",
+      "statues:campfire/marshmallow4",
+      "statues:campfire/marshmallow5",
+      "statues:campfire/marshmallow6",
+      "statues:campfire/marshmallow7",
+      "statues:campfire/marshmallow8",
+      "statues:campfire/marshmallow9"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow2": {
+    "sounds": [
+      "statues:campfire/marshmallow2"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow3": {
+    "sounds": [
+      "statues:campfire/marshmallow3"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow4": {
+    "sounds": [
+      "statues:campfire/marshmallow4"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow5": {
+    "sounds": [
+      "statues:campfire/marshmallow5"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow6": {
+    "sounds": [
+      "statues:campfire/marshmallow6"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow7": {
+    "sounds": [
+      "statues:campfire/marshmallow7"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow8": {
+    "sounds": [
+      "statues:campfire/marshmallow8"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.marshmallow9": {
+    "sounds": [
+      "statues:campfire/marshmallow9"
+    ],
+    "subtitle": "statues.subtitle.campfire.marshmallow"
+  },
+  "campfire.snacks": {
+    "sounds": [
+      "statues:campfire/snacks"
+    ],
+    "subtitle": "statues.subtitle.campfire.snacks"
+  },
+  "campfire.snacks.random": {
+    "sounds": [
+      "statues:campfire/snacks",
+      "statues:campfire/snacks2",
+      "statues:campfire/snacks3",
+      "statues:campfire/snacks4"
+    ],
+    "subtitle": "statues.subtitle.campfire.snacks"
+  },
+  "campfire.snacks2": {
+    "sounds": [
+      "statues:campfire/snacks2"
+    ],
+    "subtitle": "statues.subtitle.campfire.snacks"
+  },
+  "campfire.snacks3": {
+    "sounds": [
+      "statues:campfire/snacks3"
+    ],
+    "subtitle": "statues.subtitle.campfire.snacks"
+  },
+  "campfire.snacks4": {
+    "sounds": [
+      "statues:campfire/snacks4"
+    ],
+    "subtitle": "statues.subtitle.campfire.snacks"
+  },
+  "wasteland.hello": {
+    "sounds": [
+      "statues:wasteland/hello"
+    ],
+    "subtitle": "statues.subtitle.wasteland.hello"
+  },
+  "wasteland.onwards": {
+    "sounds": [
+      "statues:wasteland/onwards"
+    ],
+    "subtitle": "statues.subtitle.wasteland.onwards"
+  },
+  "wasteland.tea": {
+    "sounds": [
+      "statues:wasteland/tea"
+    ],
+    "subtitle": "statues.subtitle.wasteland.tea"
+  }
+}

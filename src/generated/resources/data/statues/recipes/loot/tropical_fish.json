@@ -1,0 +1,49 @@
+{
+  "type": "statues:loot",
+  "ingredient": [
+    {
+      "item": "statues:tropical_fish_b"
+    },
+    {
+      "item": "statues:tropical_fish_bb"
+    },
+    {
+      "item": "statues:tropical_fish_be"
+    },
+    {
+      "item": "statues:tropical_fish_bm"
+    },
+    {
+      "item": "statues:tropical_fish_bmb"
+    },
+    {
+      "item": "statues:tropical_fish_bms"
+    },
+    {
+      "item": "statues:tropical_fish_e"
+    },
+    {
+      "item": "statues:tropical_fish_es"
+    },
+    {
+      "item": "statues:tropical_fish_hb"
+    },
+    {
+      "item": "statues:tropical_fish_sb"
+    },
+    {
+      "item": "statues:tropical_fish_sd"
+    },
+    {
+      "item": "statues:tropical_fish_ss"
+    }
+  ],
+  "result1": {
+    "item": "minecraft:tropical_fish"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:bone_meal"
+  },
+  "result2Chance": 0.5
+}

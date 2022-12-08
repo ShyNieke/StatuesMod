@@ -1,7 +1,10 @@
 package com.shynieke.statues.items;
 
+import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractStatueBase;
-import com.shynieke.statues.init.StatueTabs;
+import com.shynieke.statues.registry.StatueTabs;
+import com.shynieke.statues.util.UpgradeHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
@@ -20,6 +23,7 @@ import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Map;
 
 public class StatueBlockItem extends BlockItem {
 
@@ -50,9 +54,16 @@ public class StatueBlockItem extends BlockItem {
 	protected BlockState getPlacementState(BlockPlaceContext context) {
 		BlockState state = super.getPlacementState(context);
 		ItemStack stack = context.getItemInHand();
-		if (Block.byItem(stack.getItem()) instanceof AbstractStatueBase) {
-			if (stack.hasTag() && stack.getTag().get("Traits") != null) {
-				state = state.setValue(AbstractStatueBase.INTERACTIVE, true);
+		if (state != null && state.getBlock() instanceof AbstractStatueBase) {
+			if (stack.hasTag()) {
+				CompoundTag compoundtag = stack.getTagElement("BlockEntityTag");
+				if (compoundtag == null) {
+					compoundtag = stack.getTag();
+				}
+
+				if (compoundtag != null && compoundtag.getBoolean(Reference.UPGRADED)) {
+					state = state.setValue(AbstractStatueBase.INTERACTIVE, true);
+				}
 			}
 		}
 		return state;
@@ -70,13 +81,33 @@ public class StatueBlockItem extends BlockItem {
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> components, TooltipFlag tooltipFlag) {
 		super.appendHoverText(stack, level, components, tooltipFlag);
-//		if (stack.hasTag()) {
-//			CompoundTag tag = stack.getTag();
-//
-//			if (tag.contains(Reference.LEVEL))
-//				components.add(Component.literal("Level: " + tag.getInt(Reference.LEVEL)));
-//			if (tag.contains(Reference.KILL_COUNT))
-//				components.add(Component.literal("Kills: " + tag.getInt(Reference.KILL_COUNT)));
-//		}
+		CompoundTag blockData = stack.getTagElement("BlockEntityTag");
+		if (blockData != null) {
+			if (blockData.contains(Reference.LEVEL))
+				components.add(Component.translatable("statues.info.level").withStyle(ChatFormatting.GOLD)
+						.append(" ").append(
+								Component.literal(String.valueOf(blockData.getInt(Reference.LEVEL))).withStyle(ChatFormatting.YELLOW)
+						)
+				);
+			if (blockData.contains(Reference.KILL_COUNT))
+				components.add(Component.translatable("statues.info.kills").withStyle(ChatFormatting.GOLD)
+						.append(" ").append(
+								Component.literal(String.valueOf(blockData.getInt(Reference.KILL_COUNT))).withStyle(ChatFormatting.YELLOW)
+						)
+				);
+			if (blockData.contains(Reference.UPGRADE_SLOTS))
+				components.add(Component.translatable("statues.info.upgrade_slots").withStyle(ChatFormatting.GOLD)
+						.append(" ").append(
+								Component.literal(String.valueOf(blockData.getInt(Reference.UPGRADE_SLOTS))).withStyle(ChatFormatting.YELLOW)
+						)
+				);
+
+			Map<String, Short> upgradeMap = UpgradeHelper.loadUpgradeMap(blockData);
+			if (!upgradeMap.isEmpty()) {
+				for (Map.Entry<String, Short> entry : upgradeMap.entrySet()) {
+					components.add(UpgradeHelper.getUpgradeName(entry.getKey(), (int) entry.getValue()));
+				}
+			}
+		}
 	}
 }

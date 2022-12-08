@@ -1,0 +1,15 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:enderman_statue"
+  },
+  "result1": {
+    "count": 16,
+    "item": "statues:pebble"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:ender_pearl"
+  },
+  "result2Chance": 0.5
+}

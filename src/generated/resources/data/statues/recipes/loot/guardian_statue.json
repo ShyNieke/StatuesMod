@@ -1,0 +1,18 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:guardian_statue"
+  },
+  "result1": {
+    "item": "minecraft:cod"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:prismarine_shard"
+  },
+  "result2Chance": 0.5,
+  "result3": {
+    "item": "minecraft:prismarine_crystals"
+  },
+  "result3Chance": 0.1
+}

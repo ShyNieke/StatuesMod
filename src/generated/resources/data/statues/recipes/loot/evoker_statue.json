@@ -1,0 +1,10 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:evoker_statue"
+  },
+  "result3": {
+    "item": "minecraft:totem_of_undying"
+  },
+  "result3Chance": 0.1
+}

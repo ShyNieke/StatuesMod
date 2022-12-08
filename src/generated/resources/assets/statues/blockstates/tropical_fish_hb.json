@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "statues:block/tropical_fish_hb",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "statues:block/tropical_fish_hb"
+    },
+    "facing=south": {
+      "model": "statues:block/tropical_fish_hb",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "statues:block/tropical_fish_hb",
+      "y": 270
+    }
+  }
+}

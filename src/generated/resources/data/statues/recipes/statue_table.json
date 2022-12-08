@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "tag": "forge:chests/wooden"
+    },
+    "D": {
+      "tag": "forge:cobblestone/deepslate"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "pattern": [
+    " P ",
+    "DCD",
+    "DDD"
+  ],
+  "result": {
+    "item": "statues:statue_table"
+  }
+}

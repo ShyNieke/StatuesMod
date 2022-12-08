@@ -1,5 +1,6 @@
 package com.shynieke.statues.entity;
 
+import com.shynieke.statues.config.StatuesConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
@@ -43,8 +44,7 @@ public class StatueBatEntity extends Bat {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity) {
-			LivingEntity entitylivingbase = (LivingEntity) source.getDirectEntity();
+		if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity entitylivingbase) {
 
 			if (!source.isExplosion()) {
 				entitylivingbase.hurt(DamageSource.thorns(this), 2.0F);
@@ -55,6 +55,9 @@ public class StatueBatEntity extends Bat {
 	}
 
 	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor levelAccessor, MobSpawnType reason, BlockPos pos, RandomSource randomIn) {
+		if (!StatuesConfig.COMMON.statueBatSpawning.get()) {
+			return false;
+		}
 		if (pos.getY() >= levelAccessor.getSeaLevel()) {
 			return false;
 		} else {

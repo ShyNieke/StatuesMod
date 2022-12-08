@@ -1,6 +1,6 @@
 package com.shynieke.statues.items;
 
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +18,7 @@ public class StatueBeeItem extends StatueBlockItem {
 			final String name = stack.getHoverName().getString();
 			if (entityIn instanceof Player) {
 				if (name.equalsIgnoreCase("Trans Bee")) {
-					((Player) entityIn).getInventory().setItem(itemSlot, new ItemStack(StatueRegistry.TRANS_BEE.get(), stack.getCount(), stack.getTag()));
+					((Player) entityIn).getInventory().setItem(itemSlot, new ItemStack(StatueRegistry.TRANS_BEE_STATUE.get(), stack.getCount(), stack.getTag()));
 				} else if (name.equalsIgnoreCase("Tropibee")) {
 					((Player) entityIn).getInventory().setItem(itemSlot, new ItemStack(StatueRegistry.TROPIBEE.get(), stack.getCount(), stack.getTag()));
 				}

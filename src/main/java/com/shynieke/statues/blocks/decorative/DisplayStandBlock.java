@@ -62,16 +62,16 @@ public class DisplayStandBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState p_220053_1_, BlockGetter p_220053_2_, BlockPos p_220053_3_, CollisionContext p_220053_4_) {
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter getter, BlockPos pos) {
 		return false;
 	}
 
-	private static boolean isntSolid(BlockState state, BlockGetter reader, BlockPos pos) {
+	private static boolean isntSolid(BlockState state, BlockGetter getter, BlockPos pos) {
 		return false;
 	}
 

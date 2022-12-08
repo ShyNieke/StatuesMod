@@ -1,0 +1,9 @@
+{
+  "type": "statues:upgrade",
+  "catalysts": [],
+  "center": {
+    "tag": "statues:statues/upgradeable"
+  },
+  "requireCore": true,
+  "upgradeType": "upgrade"
+}

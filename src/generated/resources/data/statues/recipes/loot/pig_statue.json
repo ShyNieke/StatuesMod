@@ -1,0 +1,10 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:pig_statue"
+  },
+  "result3": {
+    "item": "minecraft:porkchop"
+  },
+  "result3Chance": 0.1
+}

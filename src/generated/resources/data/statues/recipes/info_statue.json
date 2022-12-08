@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:book"
+    },
+    "C": {
+      "tag": "forge:cobblestone"
+    },
+    "R": {
+      "tag": "forge:dyes/red"
+    }
+  },
+  "pattern": [
+    " R ",
+    "BCB",
+    "CCC"
+  ],
+  "result": {
+    "item": "statues:info_statue"
+  }
+}

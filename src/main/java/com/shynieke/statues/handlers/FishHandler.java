@@ -1,7 +1,7 @@
 package com.shynieke.statues.handlers;
 
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -30,8 +30,7 @@ public class FishHandler {
 
 		switch (StatuesConfig.COMMON.statueKillSource.get()) {
 			default:
-				if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
-					ServerPlayer player = (ServerPlayer) source;
+				if (source instanceof ServerPlayer player && !(source instanceof FakePlayer)) {
 					List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
 					if (!luckyPlayers.isEmpty()) {
 						for (String luckyName : luckyPlayers) {

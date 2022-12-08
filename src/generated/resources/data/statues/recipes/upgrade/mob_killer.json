@@ -1,0 +1,13 @@
+{
+  "type": "statues:upgrade",
+  "catalysts": [
+    {
+      "item": "minecraft:diamond_sword"
+    }
+  ],
+  "center": {
+    "tag": "statues:statues/upgradeable"
+  },
+  "tier": 0,
+  "upgradeType": "mob_killer"
+}

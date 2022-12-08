@@ -1,0 +1,10 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:shulker_statue"
+  },
+  "result3": {
+    "item": "minecraft:shulker_shell"
+  },
+  "result3Chance": 0.1
+}

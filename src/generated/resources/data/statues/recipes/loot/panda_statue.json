@@ -1,0 +1,30 @@
+{
+  "type": "statues:loot",
+  "ingredient": [
+    {
+      "item": "statues:panda_angry_statue"
+    },
+    {
+      "item": "statues:panda_brown_statue"
+    },
+    {
+      "item": "statues:panda_lazy_statue"
+    },
+    {
+      "item": "statues:panda_normal_statue"
+    },
+    {
+      "item": "statues:panda_playful_statue"
+    },
+    {
+      "item": "statues:panda_weak_statue"
+    },
+    {
+      "item": "statues:panda_worried_statue"
+    }
+  ],
+  "result1": {
+    "item": "minecraft:bamboo"
+  },
+  "result1Chance": 1.0
+}

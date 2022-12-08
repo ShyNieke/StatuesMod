@@ -1,0 +1,18 @@
+{
+  "type": "statues:upgrade",
+  "catalysts": [
+    {
+      "tag": "forge:heads"
+    },
+    {
+      "item": "minecraft:mycelium"
+    },
+    {
+      "item": "minecraft:lantern"
+    }
+  ],
+  "center": {
+    "tag": "statues:statues/upgradeable"
+  },
+  "upgradeType": "despawner"
+}

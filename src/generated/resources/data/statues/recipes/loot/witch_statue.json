@@ -1,0 +1,18 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:witch_statue"
+  },
+  "result1": {
+    "item": "minecraft:glowstone_dust"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:redstone"
+  },
+  "result2Chance": 0.5,
+  "result3": {
+    "item": "minecraft:glass_bottle"
+  },
+  "result3Chance": 0.1
+}

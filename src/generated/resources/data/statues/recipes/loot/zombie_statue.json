@@ -1,0 +1,15 @@
+{
+  "type": "statues:loot",
+  "group": "zombie",
+  "ingredient": {
+    "item": "statues:zombie_statue"
+  },
+  "result1": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "result1Chance": 1.0,
+  "result3": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result3Chance": 0.1
+}

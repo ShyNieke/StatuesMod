@@ -3,7 +3,7 @@ package com.shynieke.statues.handlers;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.blocks.statues.SheepStatueBlock;
 import com.shynieke.statues.config.StatuesConfig;
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -206,7 +206,7 @@ public class DropHandler {
 //                            random_drop = Math.random();
 //                            if ( random_drop < default_drop_chance )
 //                            {
-//                                event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+//                                event.getDrops().add(new EntityItem(entity.level, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 //                            }
 //                        }
 //                    }
@@ -280,7 +280,7 @@ public class DropHandler {
 //                            random_drop = Math.random();
 //                            if ( random_drop < default_drop_chance )
 //                            {
-//                                event.getDrops().add(new EntityItem(entity.world, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
+//                                event.getDrops().add(new EntityItem(entity.level, entity.posX, entity.posY, entity.posZ, itemStackToDrop));
 //                            }
 //                        }
 //                    }

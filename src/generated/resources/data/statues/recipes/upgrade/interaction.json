@@ -1,0 +1,12 @@
+{
+  "type": "statues:upgrade",
+  "catalysts": [
+    {
+      "item": "minecraft:sculk_sensor"
+    }
+  ],
+  "center": {
+    "tag": "statues:statues/interactable"
+  },
+  "upgradeType": "interaction"
+}

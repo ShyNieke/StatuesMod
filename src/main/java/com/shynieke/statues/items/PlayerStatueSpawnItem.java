@@ -2,7 +2,7 @@ package com.shynieke.statues.items;
 
 import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.entity.PlayerStatue;
-import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Rotations;

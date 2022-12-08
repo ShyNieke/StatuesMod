@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "statues:block/totem_of_undying_statue",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "statues:block/totem_of_undying_statue"
+    },
+    "facing=south": {
+      "model": "statues:block/totem_of_undying_statue",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "statues:block/totem_of_undying_statue",
+      "y": 270
+    }
+  }
+}

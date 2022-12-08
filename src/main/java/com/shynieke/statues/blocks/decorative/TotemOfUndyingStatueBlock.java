@@ -23,11 +23,6 @@ public class TotemOfUndyingStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	public boolean canBeUpgraded() {
-		return false;
-	}
-
-	@Override
 	public boolean isHiddenStatue() {
 		return true;
 	}

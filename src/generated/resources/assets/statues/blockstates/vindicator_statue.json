@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "statues:block/vindicator_statue",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "statues:block/vindicator_statue"
+    },
+    "facing=south": {
+      "model": "statues:block/vindicator_statue",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "statues:block/vindicator_statue",
+      "y": 270
+    }
+  }
+}

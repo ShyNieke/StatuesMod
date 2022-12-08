@@ -1,0 +1,14 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:spider_statue"
+  },
+  "result1": {
+    "item": "minecraft:string"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:spider_eye"
+  },
+  "result2Chance": 0.5
+}
