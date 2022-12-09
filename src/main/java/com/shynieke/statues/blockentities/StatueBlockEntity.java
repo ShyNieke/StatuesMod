@@ -27,6 +27,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
@@ -78,6 +79,12 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				if (blockEntity.cooldown == 0) {
 					blockEntity.cooldown = 200 - (blockEntity.getSpeed() * 20);
 					blockEntity.setStatueAble(true);
+					if (blockEntity.canAutomate()) {
+						if (blockEntity.canDropLoot()) {
+							blockEntity.giveItem();
+							blockEntity.setStatueInteractable(false);
+						}
+					}
 				}
 			} else {
 				//Insert spawner behavior
@@ -107,7 +114,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 
 		if (isStatueInteractable()) {
 			if (canDropLoot()) {
-				giveItem(player);
+				giveItem();
 			}
 
 			setStatueInteractable(false);
@@ -132,7 +139,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		}
 	}
 
-	public void giveItem(Player playerIn) {
+	public void giveItem() {
 		if (level != null) {
 			LootRecipe loot;
 			if (cachedLootRecipe != null) {
@@ -145,24 +152,24 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			ItemStack stack1 = loot.getResultItem().copy();
 			float chance1 = loot.getChance1();
 			if (!stack1.isEmpty() && random <= chance1) {
-				exportItem(playerIn, stack1);
+				exportItem(stack1);
 			}
 
 			ItemStack stack2 = loot.getResultItem2().copy();
 			float chance2 = loot.getChance2();
 			if (!stack2.isEmpty() && random <= chance2) {
-				exportItem(playerIn, stack2);
+				exportItem(stack2);
 			}
 
 			ItemStack stack3 = loot.getResultItem3().copy();
 			float chance3 = loot.getChance3();
 			if (!stack3.isEmpty() && random <= chance3) {
-				exportItem(playerIn, stack3);
+				exportItem(stack3);
 			}
 		}
 	}
 
-	private void exportItem(Player player, ItemStack stack) {
+	private void exportItem(ItemStack stack) {
 		if (canAutomate()) {
 			List<BiggestInventory> inventoryList = new ArrayList<>();
 			for (Direction dir : Direction.values()) {
@@ -183,7 +190,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			}
 			inventoryList.sort(Collections.reverseOrder());
 			if (inventoryList.isEmpty()) {
-				player.drop(stack, true);
+				level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 0.5, worldPosition.getZ(), stack));
 			} else {
 				for (BiggestInventory inventory : inventoryList) {
 					IItemHandler itemHandler = inventory.getIItemHandler(this.level);
@@ -194,7 +201,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				}
 			}
 		} else {
-			player.drop(stack, true);
+			level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 0.5, worldPosition.getZ(), stack));
 		}
 	}
 
