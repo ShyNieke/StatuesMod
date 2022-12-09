@@ -72,7 +72,7 @@ public class StatueBlockItem extends BlockItem {
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		if (ModList.get().isLoaded("curios")) {
-//			return com.shynieke.statues.compat.curios.CuriosCompat.getCapability(stack);
+			return com.shynieke.statues.compat.curios.CuriosCompat.getCapability(stack);
 		}
 		return super.initCapabilities(stack, nbt);
 	}

@@ -41,7 +41,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
@@ -180,7 +179,7 @@ public class ClientHandler {
 		}, "Statues Perks Data Loader").start();
 
 		if (ModList.get().isLoaded("curios")) {
-//			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);
+			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);
 		}
 	}
 
@@ -240,12 +239,6 @@ public class ClientHandler {
 		if (!mc.isLocalServer()) {
 			setPlayerCache(mc);
 		}
-	}
-
-	public static void preStitchEvent(TextureStitchEvent/*.Pre*/ event) {
-//		if (ModList.get().isLoaded("curios") && event.getAtlas().location().equals(InventoryMenu.BLOCK_ATLAS)) {
-//			event.addSprite(new ResourceLocation(Reference.MOD_ID, "curios/core"));
-//		}
 	}
 
 	private static void setPlayerCache(Minecraft mc) {

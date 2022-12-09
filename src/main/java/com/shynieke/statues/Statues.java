@@ -62,7 +62,7 @@ public class Statues {
 		eventBus.addListener(StatueEntities::registerSpawnPlacements);
 
 		if (ModList.get().isLoaded("curios")) {
-//			eventBus.addListener(com.shynieke.statues.compat.curios.CuriosCompat::sendImc);
+			eventBus.addListener(com.shynieke.statues.compat.curios.CuriosCompat::sendImc);
 		}
 
 		MinecraftForge.EVENT_BUS.register(new StatueHandler());
@@ -76,7 +76,6 @@ public class Statues {
 			eventBus.addListener(ClientHandler::registerEntityRenders);
 			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 			eventBus.addListener(ClientHandler::registerBlockColors);
-			eventBus.addListener(ClientHandler::preStitchEvent);
 			MinecraftForge.EVENT_BUS.addListener(ClientHandler::onLogin);
 			MinecraftForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
 		});
