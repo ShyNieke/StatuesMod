@@ -23,6 +23,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
@@ -95,6 +96,6 @@ public class StatuesDataGenerator {
 		registryBuilder.add(Registries.BIOME, $ -> {
 		});
 		RegistryAccess.Frozen regAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
-		return registryBuilder.build(regAccess);
+		return registryBuilder.buildPatch(regAccess, VanillaRegistries.createLookup());
 	}
 }
