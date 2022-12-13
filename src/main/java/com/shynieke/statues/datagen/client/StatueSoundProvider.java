@@ -2,15 +2,15 @@ package com.shynieke.statues.datagen.client;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.registry.StatueSounds;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
 public class StatueSoundProvider extends SoundDefinitionsProvider {
 
-	public StatueSoundProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-		super(generator, Reference.MOD_ID, existingFileHelper);
+	public StatueSoundProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
+		super(packOutput, Reference.MOD_ID, existingFileHelper);
 	}
 
 	@Override

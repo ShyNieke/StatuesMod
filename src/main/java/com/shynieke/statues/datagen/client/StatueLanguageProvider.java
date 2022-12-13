@@ -3,15 +3,15 @@ package com.shynieke.statues.datagen.client;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSounds;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.registries.RegistryObject;
 
 public class StatueLanguageProvider extends LanguageProvider {
 
-	public StatueLanguageProvider(DataGenerator gen) {
-		super(gen, Reference.MOD_ID, "en_us");
+	public StatueLanguageProvider(PackOutput packOutput) {
+		super(packOutput, Reference.MOD_ID, "en_us");
 	}
 
 	@Override

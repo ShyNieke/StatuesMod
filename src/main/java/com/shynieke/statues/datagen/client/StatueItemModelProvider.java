@@ -3,7 +3,7 @@ package com.shynieke.statues.datagen.client;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.items.PlayerCompassItem;
 import com.shynieke.statues.registry.StatueRegistry;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -14,8 +14,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 
 public class StatueItemModelProvider extends ItemModelProvider {
-	public StatueItemModelProvider(DataGenerator gen, ExistingFileHelper helper) {
-		super(gen, Reference.MOD_ID, helper);
+	public StatueItemModelProvider(PackOutput packOutput, ExistingFileHelper helper) {
+		super(packOutput, Reference.MOD_ID, helper);
 	}
 
 	@Override

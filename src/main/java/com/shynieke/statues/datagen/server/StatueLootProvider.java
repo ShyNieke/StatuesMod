@@ -6,7 +6,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.loot.packs.VanillaLootTableProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
@@ -33,13 +32,8 @@ import java.util.stream.Stream;
 
 public class StatueLootProvider extends LootTableProvider {
 	public StatueLootProvider(PackOutput packOutput) {
-		super(packOutput, Set.of(), VanillaLootTableProvider.create(packOutput).getTables());
-	}
-
-	@Override
-	public List<SubProviderEntry> getTables() {
-		return List.of(new SubProviderEntry(StatueBlocks::new, LootContextParamSets.BLOCK),
-				new SubProviderEntry(StatueEntities::new, LootContextParamSets.ENTITY));
+		super(packOutput, Set.of(), List.of(new SubProviderEntry(StatueBlocks::new, LootContextParamSets.BLOCK),
+				new SubProviderEntry(StatueEntities::new, LootContextParamSets.ENTITY)));
 	}
 
 	@Override
