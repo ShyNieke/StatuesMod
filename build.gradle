@@ -113,7 +113,7 @@ dependencies {
 //    implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
 //
 //    implementation fg.deobf("curse.maven:jade-324717:4096513") //Jade (WAILA)
-//    implementation fg.deobf("curse.maven:TheOneProbe-245211:3965693") //The One probe (TOP)
+    implementation fg.deobf("curse.maven:TheOneProbe-245211:4159743") //The One probe (TOP)
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
