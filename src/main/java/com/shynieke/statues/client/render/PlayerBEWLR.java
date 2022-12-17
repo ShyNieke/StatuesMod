@@ -47,7 +47,7 @@ public class PlayerBEWLR extends BlockEntityWithoutLevelRenderer {
 		if (stack != null) {
 			GameProfile gameprofile = null;
 
-			if (stack.hasCustomHoverName()) {
+			if (SkinUtil.isStatueNamed(stack)) {
 				String stackName = stack.getHoverName().getString().toLowerCase(Locale.ROOT);
 				boolean validFlag = !stackName.isEmpty() && !stackName.contains(" ");
 

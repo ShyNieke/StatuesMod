@@ -9,6 +9,7 @@ import com.shynieke.statues.init.StatueBlockEntities;
 import com.shynieke.statues.init.StatueRegistry;
 import com.shynieke.statues.init.StatueTags;
 import com.shynieke.statues.items.PlayerStatueSpawnItem;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
@@ -183,12 +184,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void setPlacedBy(Level worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		super.setPlacedBy(worldIn, pos, state.setValue(ONLINE, false), placer, stack);
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		super.setPlacedBy(level, pos, state.setValue(ONLINE, false), placer, stack);
 
-		if (!worldIn.isClientSide && getBE(worldIn, pos) != null) {
-			PlayerBlockEntity playerBlockEntity = getBE(worldIn, pos);
-			if (stack.hasCustomHoverName()) {
+		if (!level.isClientSide && getBE(level, pos) != null) {
+			PlayerBlockEntity playerBlockEntity = getBE(level, pos);
+			if (SkinUtil.isStatueNamed(stack)) {
 				String stackName = stack.getHoverName().getContents();
 				boolean spaceFlag = stackName.contains(" ");
 				boolean emptyFlag = stackName.isEmpty();

@@ -1,6 +1,7 @@
 package com.shynieke.statues.items;
 
 import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +15,7 @@ public class StatueBeeItem extends StatueBlockItem {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (stack.hasCustomHoverName() && !level.isClientSide) {
+		if (SkinUtil.isStatueNamed(stack) && !level.isClientSide) {
 			final String name = stack.getHoverName().getContents();
 			if (entityIn instanceof Player) {
 				if (name.equalsIgnoreCase("Trans Bee")) {

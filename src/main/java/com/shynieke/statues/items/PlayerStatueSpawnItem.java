@@ -3,6 +3,7 @@ package com.shynieke.statues.items;
 import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.init.StatueRegistry;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Rotations;
@@ -48,7 +49,7 @@ public class PlayerStatueSpawnItem extends Item {
 			EntityType<?> type = StatueRegistry.PLAYER_STATUE_ENTITY.get();
 			if (type.spawn((ServerLevel) level, stack, context.getPlayer(), relativePos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, relativePos) && direction == Direction.UP) instanceof PlayerStatue playerStatue) {
 				applyRandomRotations(playerStatue, level.random);
-				if (!stack.hasCustomHoverName()) {
+				if (!SkinUtil.isStatueNamed(stack)) {
 					if (context.getPlayer() != null) {
 						playerStatue.setGameProfile(context.getPlayer().getGameProfile());
 					} else {
