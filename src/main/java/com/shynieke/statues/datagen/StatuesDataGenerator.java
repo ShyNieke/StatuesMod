@@ -38,15 +38,15 @@ public class StatuesDataGenerator {
 		DataGenerator generator = event.getGenerator();
 		PackOutput packOutput = generator.getPackOutput();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
+		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
 			generator.addProvider(event.includeServer(), new StatueLootProvider(packOutput));
 			generator.addProvider(event.includeServer(), new StatueRecipeProvider(packOutput));
-			StatueBlockTagProvider blockTags = new StatueBlockTagProvider(packOutput, lookupProvider, existingFileHelper);
+			StatueBlockTagProvider blockTags = new StatueBlockTagProvider(packOutput, lookupProvider, helper);
 			generator.addProvider(event.includeServer(), blockTags);
-			generator.addProvider(event.includeServer(), new StatueItemTagProvider(packOutput, lookupProvider, blockTags, existingFileHelper));
-			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(packOutput, lookupProvider, existingFileHelper));
+			generator.addProvider(event.includeServer(), new StatueItemTagProvider(packOutput, lookupProvider, blockTags, helper));
+			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(packOutput, lookupProvider, helper));
 			generator.addProvider(event.includeServer(), new StatueGLMProvider(packOutput));
 //			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(packOutput));
 
@@ -55,9 +55,9 @@ public class StatuesDataGenerator {
 		}
 		if (event.includeClient()) {
 			generator.addProvider(event.includeClient(), new StatueLanguageProvider(packOutput));
-			generator.addProvider(event.includeClient(), new StatueSoundProvider(packOutput, existingFileHelper));
-			generator.addProvider(event.includeClient(), new StatueBlockstateProvider(packOutput, existingFileHelper));
-			generator.addProvider(event.includeClient(), new StatueItemModelProvider(packOutput, existingFileHelper));
+			generator.addProvider(event.includeClient(), new StatueSoundProvider(packOutput, helper));
+			generator.addProvider(event.includeClient(), new StatueBlockstateProvider(packOutput, helper));
+			generator.addProvider(event.includeClient(), new StatueItemModelProvider(packOutput, helper));
 		}
 	}
 
