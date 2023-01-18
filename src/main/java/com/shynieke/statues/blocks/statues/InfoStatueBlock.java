@@ -48,6 +48,8 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 			if (playerIn.getMainHandItem().is(Items.BOOK) && ModList.get().isLoaded("patchouli")) {
 				PatchouliCompat.convertBook(playerIn);
 				return InteractionResult.SUCCESS;
+			} else {
+				sendInfoMessage(playerIn, level, pos);
 			}
 			//Debug option specifically for Shy to know what version is being used
 			if (playerIn.getMainHandItem().is(Items.PAPER) && !(playerIn instanceof FakePlayer) &&
