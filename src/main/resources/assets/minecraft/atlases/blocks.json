@@ -3,6 +3,10 @@
         {
             "type": "single",
             "resource": "statues:curios/core"
+        },
+        {
+            "type": "single",
+            "resource": "minecraft:entity/chest/christmas"
         }
     ]
 }

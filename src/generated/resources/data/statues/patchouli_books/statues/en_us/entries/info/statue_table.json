@@ -1,0 +1,24 @@
+{
+  "category": "statues:info",
+  "icon": "statues:statue_table",
+  "name": "info.statues.book.statue_table.entry.name",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.statue_table.text1"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "statues:statue_table",
+      "text": "info.statues.book.statue_table.text2"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.statue_table.text3"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.statue_table.text4"
+    }
+  ]
+}

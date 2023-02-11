@@ -1,7 +1,7 @@
 {
 	"__comment": "Designed by ShyNieke with Cubik Studio - https://cubik.studio",
 	"textures": {
-		"particle": "map/map_background",
+		"particle": "block/green_concrete",
 		"texture": "block/red_concrete",
 		"texture1": "block/yellow_concrete",
 		"texture2": "block/green_concrete",
