@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.nbt.CompoundTag;
@@ -123,9 +124,9 @@ public class PlayerTileInventoryRenderer extends BlockEntityWithoutLevelRenderer
     }
 
     public void renderItem(GameProfile gameprofile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight) {
-        boolean flag = gameprofile != null && gameprofile.isComplete() && SkinUtil.isSlimSkin(gameprofile.getId());
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(PlayerTileRenderer.getRenderType(gameprofile));
-        if(flag) {
+        SkinUtil.SkinRenderData skinRenderData = SkinUtil.getSkinRenderData(gameprofile);
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(skinRenderData.skinLocation));
+        if(skinRenderData.isSlim) {
             if(slimModel != null) {
                 slimModel.renderToBuffer(poseStack, vertexConsumer, combinedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
             }

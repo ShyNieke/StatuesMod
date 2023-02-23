@@ -7,10 +7,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.entity.PlayerStatue;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
@@ -18,11 +20,8 @@ import net.minecraft.client.renderer.entity.layers.ElytraLayer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-
-import java.util.Map;
 
 public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, PlayerStatueModel> {
     private final PlayerStatueModel playerModel;
@@ -56,15 +55,8 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
         if (!gameProfile.isComplete()) {
             return defaultTexture;
         } else {
-            final Minecraft minecraft = Minecraft.getInstance();
-            SkinManager skinManager = minecraft.getSkinManager();
-            final Map<Type, MinecraftProfileTexture> loadSkinFromCache = skinManager.getInsecureSkinInformation(gameProfile); // returned map may or may not be typed
-            if (loadSkinFromCache.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-                return skinManager.registerTexture(loadSkinFromCache.get(Type.SKIN), Type.SKIN);
-            }
-            else {
-                return DefaultPlayerSkin.getDefaultSkin(gameProfile.getId());
-            }
+            SkinUtil.SkinRenderData skinRenderData = SkinUtil.getSkinRenderData(gameProfile);
+            return skinRenderData.skinLocation;
         }
     }
 

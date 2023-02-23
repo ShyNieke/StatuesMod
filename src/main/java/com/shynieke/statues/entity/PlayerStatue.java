@@ -81,7 +81,7 @@ public class PlayerStatue extends LivingEntity {
     /** After punching the stand, the cooldown before you can punch it again without breaking it. */
     public long punchCooldown;
     private int disabledSlots;
-    private boolean isSlim = false;
+    private SkinUtil.SkinRenderData currentSkinRenderData;
     private Rotations headRotation = DEFAULT_HEAD_ROTATION;
     private Rotations bodyRotation = DEFAULT_BODY_ROTATION;
     private Rotations leftArmRotation = DEFAULT_LEFTARM_ROTATION;
@@ -149,7 +149,6 @@ public class PlayerStatue extends LivingEntity {
     public void setGameProfile(GameProfile playerProfile) {
         PlayerBlockEntity.updateGameprofile(playerProfile, (profile) -> {
             entityData.set(GAMEPROFILE, Optional.of(profile));
-            this.setSlim(profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId()));
         });
     }
 
@@ -171,12 +170,8 @@ public class PlayerStatue extends LivingEntity {
         this.entityData.set(LOCKED_BY_UUID, Optional.empty());
     }
 
-    public void setSlim(boolean slim) {
-        this.isSlim = slim;
-    }
-
     public boolean isSlim() {
-        return this.isSlim;
+        return this.currentSkinRenderData != null && this.currentSkinRenderData.isSlim;
     }
 
     public void setYOffset(float yOffset) {
@@ -890,12 +885,7 @@ public class PlayerStatue extends LivingEntity {
             if (this.level.isClientSide) {
                 this.getGameProfile().ifPresent(gameProfile -> {
                     if(gameProfile.isComplete()) {
-                        Minecraft.getInstance().getSkinManager().registerSkins(gameProfile, (textureType, textureLocation, profileTexture) -> {
-                            if (textureType.equals(MinecraftProfileTexture.Type.SKIN))  {
-                                String metadata = profileTexture.getMetadata("model");
-                                this.setSlim(metadata != null && metadata.equals("slim"));
-                            }
-                        }, true);
+                        this.currentSkinRenderData = SkinUtil.getSkinRenderData(gameProfile);
                     }
                 });
             }
