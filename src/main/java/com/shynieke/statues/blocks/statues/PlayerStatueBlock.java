@@ -15,6 +15,7 @@ import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
@@ -61,6 +62,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class PlayerStatueBlock extends AbstractBaseBlock {
@@ -313,11 +315,11 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 									}
 								}
 							} else {
-								playerIn.sendMessage(new TranslatableComponent("statues:player.compass.dimension.failure", ChatFormatting.GOLD + playerName), Util.NIL_UUID);
+								playerIn.sendMessage(new TranslatableComponent("statues.player.compass.dimension.failure", ChatFormatting.GOLD + playerName), Util.NIL_UUID);
 							}
 
 						} else {
-							playerIn.sendMessage(new TranslatableComponent("statues:player.compass.offline", ChatFormatting.GOLD + playerName), Util.NIL_UUID);
+							playerIn.sendMessage(new TranslatableComponent("statues.player.compass.offline", ChatFormatting.GOLD + playerName), Util.NIL_UUID);
 						}
 						return InteractionResult.SUCCESS;
 					}
@@ -371,6 +373,23 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return SHAPE;
+	}
+
+	@Override
+	public void animateTick(BlockState state, Level level, BlockPos pos, Random randomSource) {
+		super.animateTick(state, level, pos, randomSource);
+
+		if (level.isClientSide) {
+			PlayerBlockEntity playerBlockEntity = getBE(level, pos);
+			if (playerBlockEntity != null && playerBlockEntity.getPlayerProfile() != null &&
+					com.shynieke.statues.client.ClientHandler.TRANSLATORS.contains(playerBlockEntity.getPlayerProfile().getId())) {
+				level.addParticle(ParticleTypes.ENCHANT,
+						(double) pos.getX() + 0.5D, (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D,
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 - randomSource.nextFloat() - 1.0F),
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D);
+			}
+		}
 	}
 
 	public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
