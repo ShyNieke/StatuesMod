@@ -379,7 +379,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		super.animateTick(state, level, pos, randomSource);
 
 		if (level.isClientSide) {
-			if (com.shynieke.statues.client.ClientHandler.TRANSLATORS.contains(getBE(level, pos).getPlayerProfile().getId())) {
+			PlayerBlockEntity playerBlockEntity = getBE(level, pos);
+			if (playerBlockEntity != null && playerBlockEntity.getPlayerProfile() != null &&
+					com.shynieke.statues.client.ClientHandler.TRANSLATORS.contains(playerBlockEntity.getPlayerProfile().getId())) {
 				level.addParticle(ParticleTypes.ENCHANT,
 						(double) pos.getX() + 0.5D, (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
 						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D,
