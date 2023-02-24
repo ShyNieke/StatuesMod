@@ -250,6 +250,12 @@ public class StatueLanguageProvider extends LanguageProvider {
 		add("info.statues.book.statue_table.text4", "$(br)$(l)Mob Killer$() - Kills the mob if it gets nearby (1 = Regular drops, 2 = Player drops, 3 = Player drops + XP)$(br)$(l)Looting$() - Allows the statue to generate loot$(br)$(l)Automation$() - Allows exporting of loot$(br)$(l)Speed$() - Speeds up the interaction/spawning timer$(br)$(l)Interaction$() - Allows special interactions$(br)$(l)Sound$() - Allows the statue to make sound when right-clicked or powered");
 		add("info.statues.book.core.entry.name", "Statue Core");
 		add("info.statues.book.core.text1", "Statue Core's are dropped by the Statue Bat.$(br)The Statue bat just like the vanilla one can be found in dark areas but beware! It hurts you back if you try to kill it.");
+
+		add("statues.modeltype.AUTO", "Auto");
+		add("statues.modeltype.DEFAULT", "Default");
+		add("statues.modeltype.SLIM", "Slim");
+		add("statues.playerstatue.gui.label.model_type", "Model Type");
+		add("statues.playerstatue.gui.label.position", "Position");
 	}
 
 	public void addSubtitle(RegistryObject<SoundEvent> sound, String name) {

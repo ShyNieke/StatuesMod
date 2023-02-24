@@ -3,6 +3,8 @@ package com.shynieke.statues.entity;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
+import com.shynieke.statues.client.ClientHandler;
+import com.shynieke.statues.client.screen.PlayerStatueData;
 import com.shynieke.statues.network.StatuesNetworking;
 import com.shynieke.statues.network.message.PlayerStatueScreenMessage;
 import com.shynieke.statues.registry.StatueRegistry;
@@ -64,6 +66,8 @@ public class PlayerStatue extends LivingEntity {
 	private static final Rotations DEFAULT_RIGHTARM_ROTATION = new Rotations(-15.0F, 0.0F, 10.0F);
 	private static final Rotations DEFAULT_LEFTLEG_ROTATION = new Rotations(-1.0F, 0.0F, -1.0F);
 	private static final Rotations DEFAULT_RIGHTLEG_ROTATION = new Rotations(1.0F, 0.0F, 1.0F);
+
+	private static final String DEFAULT_MODEL = PlayerStatueData.MODEL_TYPE.AUTO.name();
 	private static final EntityDataAccessor<Optional<GameProfile>> GAMEPROFILE = SynchedEntityData.defineId(PlayerStatue.class, StatueSerializers.OPTIONAL_GAME_PROFILE.get());
 	public static final EntityDataAccessor<Byte> STATUS = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.BYTE);
 	public static final EntityDataAccessor<Float> Y_OFFSET = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.FLOAT);
@@ -73,6 +77,7 @@ public class PlayerStatue extends LivingEntity {
 	public static final EntityDataAccessor<Rotations> RIGHT_ARM_ROTATION = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.ROTATIONS);
 	public static final EntityDataAccessor<Rotations> LEFT_LEG_ROTATION = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.ROTATIONS);
 	public static final EntityDataAccessor<Rotations> RIGHT_LEG_ROTATION = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.ROTATIONS);
+	public static final EntityDataAccessor<String> MODEL_TYPE = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.STRING);
 	public static final EntityDataAccessor<Optional<UUID>> LOCKED_BY_UUID = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.OPTIONAL_UUID);
 
 	private final NonNullList<ItemStack> handItems = NonNullList.withSize(2, ItemStack.EMPTY);
@@ -90,8 +95,18 @@ public class PlayerStatue extends LivingEntity {
 	private Rotations leftLegRotation = DEFAULT_LEFTLEG_ROTATION;
 	private Rotations rightLegRotation = DEFAULT_RIGHTLEG_ROTATION;
 
+
 	public PlayerStatue(EntityType<? extends PlayerStatue> entityType, Level level) {
 		super(entityType, level);
+	}
+
+	public int clientLock = 0;
+
+	public void setYRot(float yRot) {
+		if (this.clientLock > 0) {
+			return;
+		}
+		super.setYRot(yRot);
 	}
 
 	@Override
@@ -123,7 +138,7 @@ public class PlayerStatue extends LivingEntity {
 
 	@Override
 	public boolean isNoGravity() {
-		return this.tickCount > 200 && super.isNoGravity();
+		return super.isNoGravity();
 	}
 
 	/**
@@ -145,6 +160,7 @@ public class PlayerStatue extends LivingEntity {
 		this.entityData.define(LEFT_LEG_ROTATION, DEFAULT_LEFTLEG_ROTATION);
 		this.entityData.define(RIGHT_LEG_ROTATION, DEFAULT_RIGHTLEG_ROTATION);
 		this.entityData.define(LOCKED_BY_UUID, Optional.empty());
+		this.entityData.define(MODEL_TYPE, DEFAULT_MODEL);
 	}
 
 	public Optional<GameProfile> getGameProfile() {
@@ -181,6 +197,14 @@ public class PlayerStatue extends LivingEntity {
 		return this.entityData.get(LOCKED_BY_UUID).orElse((UUID) null);
 	}
 
+	public String getModel() {
+		return this.entityData.get(MODEL_TYPE);
+	}
+
+	public void setModel(String model) {
+		this.entityData.set(MODEL_TYPE, model);
+	}
+
 	public boolean canOpenUI(Player player) {
 		final UUID lockedBy = this.getLockedBy();
 		return lockedBy == null || (lockedBy != null && lockedBy.equals(player.getUUID()));
@@ -203,7 +227,14 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	public boolean isSlim() {
-		return this.isSlim;
+		switch (getModel()) {
+			case "SLIM":
+				return true;
+			case "DEFAULT":
+				return false;
+			default:
+				return this.isSlim;
+		}
 	}
 
 	public void setYOffset(float yOffset) {
@@ -252,6 +283,7 @@ public class PlayerStatue extends LivingEntity {
 		}
 
 		compound.putFloat("yOffset", getYOffsetData());
+		compound.putString("Model", getModel());
 
 		ListTag listnbt = new ListTag();
 
@@ -302,8 +334,10 @@ public class PlayerStatue extends LivingEntity {
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
+		if (this.clientLock > 0) return;
 		super.readAdditionalSaveData(compound);
 		this.setYOffset(compound.getFloat("yOffset"));
+		this.setModel(compound.getString("Model"));
 		if (compound.contains("ArmorItems", 9)) {
 			ListTag listnbt = compound.getList("ArmorItems", 10);
 
@@ -734,6 +768,21 @@ public class PlayerStatue extends LivingEntity {
 	 */
 	public void tick() {
 		super.tick();
+
+		if (level.isClientSide && getGameProfile().isPresent()) {
+			if (ClientHandler.TRANSLATORS.contains(getGameProfile().get().getId())) {
+				level.addParticle(ParticleTypes.ENCHANT,
+						(double) getX(), (double) getEyeY() + 1, (double) getZ(),
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D,
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 - random.nextFloat() - 1.0F),
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D);
+			}
+		}
+
+		if (this.clientLock > 0) {
+			this.clientLock--;
+			return;
+		}
 		Rotations rotations = this.entityData.get(HEAD_ROTATION);
 		if (!this.headRotation.equals(rotations)) {
 			this.setHeadRotation(rotations);

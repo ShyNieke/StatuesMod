@@ -162,10 +162,9 @@ public class ClientHandler {
 							continue;
 						}
 						SupporterType type = SupporterType.valueOf(split[1]);
-						if (type == SupporterType.SUPPORTER) {
-							SUPPORTER.add(UUID.fromString(split[0]));
-						} else {
-							TRANSLATORS.add(UUID.fromString(split[0]));
+						switch (type) {
+							default -> SUPPORTER.add(UUID.fromString(split[0]));
+							case TRANSLATOR -> TRANSLATORS.add(UUID.fromString(split[0]));
 						}
 					}
 					reader.close();
