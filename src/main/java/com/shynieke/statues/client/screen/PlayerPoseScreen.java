@@ -1,5 +1,6 @@
 package com.shynieke.statues.client.screen;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.client.screen.widget.DecimalNumberFieldBox;
@@ -23,6 +24,7 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.PacketDistributor;
+import org.lwjgl.glfw.GLFW;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerPoseScreen extends Screen {
@@ -155,6 +157,12 @@ public class PlayerPoseScreen extends Screen {
 	}
 
 	@Override
+	public void onClose() {
+		super.onClose();
+		this.playerStatueEntity.clientLock = 0;
+	}
+
+	@Override
 	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		this.renderBackground(poseStack);
 
@@ -196,6 +204,7 @@ public class PlayerPoseScreen extends Screen {
 	@Override
 	public void tick() {
 		super.tick();
+		this.playerStatueEntity.clientLock = 5;
 		this.rotationTextField.tick();
 		this.YOffsetTextField.tick();
 		for (NumberFieldBox textField : this.poseTextFields)
@@ -213,17 +222,19 @@ public class PlayerPoseScreen extends Screen {
 
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+		var multiplier = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ? 10 : 1;
 		if (allowScrolling && delta > 0) {
 			//Add 1 to the value
 			if (rotationTextField.isFocused()) {
-				int nextValue = (int) (rotationTextField.getFloat() + 1);
+				int nextValue = (int) (rotationTextField.getFloat() + multiplier) % 360;
 				rotationTextField.setValue(String.valueOf(nextValue));
 				this.textFieldUpdated();
 				return true;
 			}
 			for (NumberFieldBox textField : this.poseTextFields) {
 				if (textField.isHoveredOrFocused()) {
-					int nextValue = (int) (textField.getFloat() + 1);
+					// TODO add multiplier for shift/ctrl
+					int nextValue = (int) (textField.getFloat() + multiplier) % 360;
 					textField.setValue(String.valueOf(nextValue));
 					this.textFieldUpdated();
 					return true;
@@ -232,14 +243,14 @@ public class PlayerPoseScreen extends Screen {
 		} else if (allowScrolling && delta < 0) {
 			//Remove 1 to the value
 			if (rotationTextField.isFocused()) {
-				int previousValue = (int) (rotationTextField.getFloat() - 1);
+				int previousValue = (int) (rotationTextField.getFloat() - multiplier) % 360;
 				rotationTextField.setValue(String.valueOf(previousValue));
 				this.textFieldUpdated();
 				return true;
 			}
 			for (NumberFieldBox textField : this.poseTextFields) {
 				if (textField.isHoveredOrFocused()) {
-					int previousValue = (int) (textField.getFloat() - 1);
+					int previousValue = (int) (textField.getFloat() - multiplier) % 360;
 					textField.setValue(String.valueOf(previousValue));
 					this.textFieldUpdated();
 					return true;
@@ -373,7 +384,9 @@ public class PlayerPoseScreen extends Screen {
 	private void updateEntity(CompoundTag compound) {
 		CompoundTag CompoundTag = this.playerStatueEntity.saveWithoutId(new CompoundTag()).copy();
 		CompoundTag.merge(compound);
+		this.playerStatueEntity.clientLock = 0;
 		this.playerStatueEntity.load(CompoundTag);
+		this.playerStatueEntity.clientLock = 5;
 
 		StatuesNetworking.CHANNEL.send(PacketDistributor.SERVER.noArg(), new PlayerStatueSyncMessage(playerStatueEntity.getUUID(), compound));
 	}

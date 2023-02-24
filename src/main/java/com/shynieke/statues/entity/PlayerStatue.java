@@ -95,6 +95,8 @@ public class PlayerStatue extends LivingEntity {
 		super(entityType, level);
 	}
 
+	public int clientLock = 0;
+
 	@Override
 	public float getStepHeight() {
 		return 0.0F;
@@ -303,6 +305,7 @@ public class PlayerStatue extends LivingEntity {
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
+		if(this.clientLock > 0) return;
 		super.readAdditionalSaveData(compound);
 		this.setYOffset(compound.getFloat("yOffset"));
 		if (compound.contains("ArmorItems", 9)) {
@@ -735,6 +738,10 @@ public class PlayerStatue extends LivingEntity {
 	 */
 	public void tick() {
 		super.tick();
+		if(this.clientLock > 0) {
+			this.clientLock--;
+			return;
+		}
 		Rotations rotations = this.entityData.get(HEAD_ROTATION);
 		if (!this.headRotation.equals(rotations)) {
 			this.setHeadRotation(rotations);
