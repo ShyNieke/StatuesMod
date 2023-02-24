@@ -57,6 +57,9 @@ public class PlayerStatueSyncMessage {
 						float YOffset = data.getFloat("yOffset");
 						playerStatue.setYOffset(YOffset);
 
+						String modelType = data.getString("Model");
+						playerStatue.setModel(modelType);
+
 						boolean lockFlag = data.getBoolean("Locked");
 						if (lockFlag) {
 							if (!playerStatue.isLocked()) {
