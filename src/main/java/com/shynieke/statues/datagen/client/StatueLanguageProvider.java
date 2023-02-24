@@ -18,6 +18,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add("itemGroup." + Reference.MOD_ID + ".blocks", "Statue Blocks");
 		add("itemGroup." + Reference.MOD_ID + ".items", "Statue Items");
+		add("item.statues.statue_core.desc", "Alpha");
 
 		addBlock(StatueRegistry.STATUE_TABLE, "S.T.A.T.U.E");
 		addBlock(StatueRegistry.BABY_ZOMBIE_STATUE, "Baby Zombie Statue");
