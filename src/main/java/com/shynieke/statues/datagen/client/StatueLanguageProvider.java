@@ -254,6 +254,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 		add("statues.modeltype.DEFAULT", "Default");
 		add("statues.modeltype.SLIM", "Slim");
 		add("statues.playerstatue.gui.label.model_type", "Model Type");
+		add("statues.playerstatue.gui.label.position", "Position");
 	}
 
 	public void addSubtitle(RegistryObject<SoundEvent> sound, String name) {

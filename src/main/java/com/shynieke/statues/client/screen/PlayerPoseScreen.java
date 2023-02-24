@@ -16,12 +16,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.FloatTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.TagParser;
+import net.minecraft.nbt.*;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.PacketDistributor;
@@ -33,7 +31,7 @@ public class PlayerPoseScreen extends Screen {
 	private final PlayerStatueData playerStatueData;
 
 	private final String[] buttonLabels = new String[]{"small", "rotation", "y_offset", "locked", "name_visible", "gravity", "model_type"};
-	private final String[] sliderLabels = new String[]{"head", "body", "left_leg", "right_leg", "left_arm", "right_arm"};
+	private final String[] sliderLabels = new String[]{"head", "body", "left_leg", "right_leg", "left_arm", "right_arm", "position"};
 
 	private NumberFieldBox rotationTextField;
 	private DecimalNumberFieldBox YOffsetTextField;
@@ -42,8 +40,10 @@ public class PlayerPoseScreen extends Screen {
 	private ToggleButton nameVisibleButton;
 	private ToggleButton noGravityButton;
 	private EnumCycleButton forceModelType;
-	private final NumberFieldBox[] poseTextFields = new NumberFieldBox[18];
+	private final NumberFieldBox[] poseTextFields = new NumberFieldBox[3*7];
 	private final boolean allowScrolling;
+
+	private Vec3 lastSendOffset = new Vec3(0, 0, 0);
 
 	public PlayerPoseScreen(PlayerStatue playerStatue) {
 		super(GameNarrator.NO_TITLE);
@@ -125,6 +125,12 @@ public class PlayerPoseScreen extends Screen {
 			this.poseTextFields[i] = new NumberFieldBox(this.font, x, y, width, height, Component.translatable("statues.playerstatue.gui.label.field.%s", i));
 			this.poseTextFields[i].setValue(value);
 			this.poseTextFields[i].setMaxLength(4);
+			if(i >= 3*6 && i < 3*7)  {
+				this.poseTextFields[i].scrollMultiplier = 0.01f;
+				this.poseTextFields[i].modValue = Integer.MAX_VALUE;
+				this.poseTextFields[i].decimalPoints = 2;
+				this.poseTextFields[i].setMaxLength(6);
+			}
 			this.addWidget(this.poseTextFields[i]);
 		}
 
@@ -161,6 +167,10 @@ public class PlayerPoseScreen extends Screen {
 			this.minecraft.setScreen((Screen) null);
 		}).bounds(offsetX - ((2 * 96) + 2), offsetY, 96, 20).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), (button) -> {
+			this.poseTextFields[18].setValue("0");
+			this.poseTextFields[19].setValue("0");
+			this.poseTextFields[20].setValue("0");
+			this.textFieldUpdated();
 			this.updateEntity(this.playerStatueData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}).bounds(offsetX - 96, offsetY, 96, 20).build());
@@ -183,7 +193,9 @@ public class PlayerPoseScreen extends Screen {
 		this.rotationTextField.render(poseStack, mouseX, mouseY, partialTicks);
 		this.YOffsetTextField.render(poseStack, mouseX, mouseY, partialTicks);
 		for (NumberFieldBox textField : this.poseTextFields)
-			textField.render(poseStack, mouseX, mouseY, partialTicks);
+			if(textField != null) {
+				textField.render(poseStack, mouseX, mouseY, partialTicks);
+			}
 
 		int offsetY = 50;
 
@@ -218,7 +230,9 @@ public class PlayerPoseScreen extends Screen {
 		this.rotationTextField.tick();
 		this.YOffsetTextField.tick();
 		for (NumberFieldBox textField : this.poseTextFields)
-			textField.tick();
+			if(textField != null) {
+				textField.tick();
+			}
 	}
 
 	@Override
@@ -232,20 +246,23 @@ public class PlayerPoseScreen extends Screen {
 
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
-		var multiplier = InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_LEFT_SHIFT) ? 10 : 1;
+		var multiplier = Screen.hasShiftDown() ? 10.0f : 1.0f;
 		if (allowScrolling && delta > 0) {
 			//Add 1 to the value
 			if (rotationTextField.isFocused()) {
-				int nextValue = (int) (rotationTextField.getFloat() + multiplier) % 360;
+				float nextValue = (rotationTextField.getFloat() + multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
 				rotationTextField.setValue(String.valueOf(nextValue));
+				rotationTextField.setCursorPosition(0);
+				rotationTextField.setHighlightPos(0);
 				this.textFieldUpdated();
 				return true;
 			}
 			for (NumberFieldBox textField : this.poseTextFields) {
 				if (textField.isHoveredOrFocused()) {
-					// TODO add multiplier for shift/ctrl
-					int nextValue = (int) (textField.getFloat() + multiplier) % 360;
+					float nextValue = (textField.getFloat() + multiplier * textField.scrollMultiplier) % textField.modValue;
 					textField.setValue(String.valueOf(nextValue));
+					textField.setCursorPosition(0);
+					textField.setHighlightPos(0);
 					this.textFieldUpdated();
 					return true;
 				}
@@ -253,15 +270,19 @@ public class PlayerPoseScreen extends Screen {
 		} else if (allowScrolling && delta < 0) {
 			//Remove 1 to the value
 			if (rotationTextField.isFocused()) {
-				int previousValue = (int) (rotationTextField.getFloat() - multiplier) % 360;
+				float previousValue = (rotationTextField.getFloat() - multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
 				rotationTextField.setValue(String.valueOf(previousValue));
+				rotationTextField.setCursorPosition(0);
+				rotationTextField.setHighlightPos(0);
 				this.textFieldUpdated();
 				return true;
 			}
 			for (NumberFieldBox textField : this.poseTextFields) {
 				if (textField.isHoveredOrFocused()) {
-					int previousValue = (int) (textField.getFloat() - multiplier) % 360;
+					float previousValue = (textField.getFloat() - multiplier * textField.scrollMultiplier) % textField.modValue;
 					textField.setValue(String.valueOf(previousValue));
+					textField.setCursorPosition(0);
+					textField.setHighlightPos(0);
 					this.textFieldUpdated();
 					return true;
 				}
@@ -295,10 +316,10 @@ public class PlayerPoseScreen extends Screen {
 			} else {
 				for (NumberFieldBox textField : this.poseTextFields) {
 					if (textField.keyPressed(keyCode, scanCode, modifiers)) {
-						this.textFieldUpdated();
 						return true;
 					}
 				}
+				this.textFieldUpdated();
 			}
 		}
 		return super.keyPressed(keyCode, scanCode, modifiers);
@@ -310,8 +331,8 @@ public class PlayerPoseScreen extends Screen {
 		this.YOffsetTextField.mouseClicked(mouseX, mouseY, button);
 		for (NumberFieldBox textField : this.poseTextFields) {
 			textField.mouseClicked(mouseX, mouseY, button);
-			this.textFieldUpdated();
 		}
+		this.textFieldUpdated();
 
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
@@ -370,6 +391,19 @@ public class PlayerPoseScreen extends Screen {
 		poseRightArmTag.add(FloatTag.valueOf(this.poseTextFields[16].getFloat()));
 		poseRightArmTag.add(FloatTag.valueOf(this.poseTextFields[17].getFloat()));
 		poseTag.put("RightArm", poseRightArmTag);
+
+		var offsetX = this.poseTextFields[18].getFloat();
+		var offsetY = this.poseTextFields[19].getFloat();
+		var offsetZ = this.poseTextFields[20].getFloat();
+		var offsetXDiff = offsetX - this.lastSendOffset.x;
+		var offsetYDiff = offsetY - this.lastSendOffset.y;
+		var offsetZDiff = offsetZ - this.lastSendOffset.z;
+		ListTag positionOffset = new ListTag();
+		positionOffset.add(DoubleTag.valueOf(offsetXDiff));
+		positionOffset.add(DoubleTag.valueOf(offsetYDiff));
+		positionOffset.add(DoubleTag.valueOf(offsetZDiff));
+		compound.put("Move", positionOffset);
+		this.lastSendOffset = new Vec3(offsetX, offsetY, offsetZ);
 
 		compound.put("Pose", poseTag);
 		return compound;

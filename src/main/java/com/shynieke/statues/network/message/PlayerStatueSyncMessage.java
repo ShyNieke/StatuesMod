@@ -2,6 +2,8 @@ package com.shynieke.statues.network.message;
 
 import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -70,6 +72,14 @@ public class PlayerStatueSyncMessage {
 								playerStatue.setUnlocked();
 							}
 						}
+
+						ListTag tagList = data.getList("Move", Tag.TAG_DOUBLE);
+						double x = tagList.getDouble(0);
+						double y = tagList.getDouble(1);
+						double z = tagList.getDouble(2);
+						playerStatue.setPos(playerStatue.getX() + x,
+								playerStatue.getY() + y,
+								playerStatue.getZ() + z);
 
 						boolean noGravityFlag = data.getBoolean("NoGravity");
 						if (noGravityFlag) {
