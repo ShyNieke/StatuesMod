@@ -3,11 +3,11 @@
   "loader": "forge:composite",
   "children": {
 	"first": {
-	  "parent": "statues:/block/slime_statue_solid",
+	  "parent": "statues:block/slime_statue_solid",
 	  "render_type": "solid"
 	},
 	"second": {
-	  "parent": "statues:/block/slime_statue_translucent",
+	  "parent": "statues:block/slime_statue_translucent",
 	  "render_type": "translucent"
 	}
   }
