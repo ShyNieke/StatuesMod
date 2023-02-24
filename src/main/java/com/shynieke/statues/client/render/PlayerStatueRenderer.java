@@ -73,6 +73,10 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	public void render(PlayerStatue playerStatue, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
 		this.model = playerStatue.isSlim() ? this.slimPlayerModel : playerModel;
 		poseStack.translate(0, playerStatue.getYOffsetData(), 0);
+		if(playerStatue.clientLock > 0) {
+			playerStatue.xRotO = playerStatue.yBodyRot;
+			playerStatue.yHeadRotO = playerStatue.yHeadRot;
+		}
 		super.render(playerStatue, entityYaw, partialTicks, poseStack, bufferSource, isSupporter(playerStatue) ? 15728880 : packedLightIn);
 	}
 

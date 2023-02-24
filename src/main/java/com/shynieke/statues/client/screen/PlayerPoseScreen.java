@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.client.screen.widget.DecimalNumberFieldBox;
 import com.shynieke.statues.client.screen.widget.NumberFieldBox;
+import com.shynieke.statues.client.screen.widget.EnumCycleButton;
 import com.shynieke.statues.client.screen.widget.ToggleButton;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.entity.PlayerStatue;
@@ -31,7 +32,7 @@ public class PlayerPoseScreen extends Screen {
 	private final PlayerStatue playerStatueEntity;
 	private final PlayerStatueData playerStatueData;
 
-	private final String[] buttonLabels = new String[]{"small", "rotation", "y_offset", "locked", "name_visible", "gravity"};
+	private final String[] buttonLabels = new String[]{"small", "rotation", "y_offset", "locked", "name_visible", "gravity", "model_type"};
 	private final String[] sliderLabels = new String[]{"head", "body", "left_leg", "right_leg", "left_arm", "right_arm"};
 
 	private NumberFieldBox rotationTextField;
@@ -40,6 +41,7 @@ public class PlayerPoseScreen extends Screen {
 	private ToggleButton lockButton;
 	private ToggleButton nameVisibleButton;
 	private ToggleButton noGravityButton;
+	private EnumCycleButton forceModelType;
 	private final NumberFieldBox[] poseTextFields = new NumberFieldBox[18];
 	private final boolean allowScrolling;
 
@@ -70,38 +72,46 @@ public class PlayerPoseScreen extends Screen {
 		int offsetX = 110;
 		int offsetY = 50;
 
+		int rowOffset = 22;
+
 		this.addRenderableWidget(this.smallButton = new ToggleButton.Builder(this.playerStatueData.isSmall(), (button) -> {
 			ToggleButton toggleButton = ((ToggleButton) button);
 			toggleButton.setValue(!toggleButton.getValue());
 			this.textFieldUpdated();
 		}).bounds(offsetX, offsetY, 40, 20).build());
-		this.addRenderableWidget(this.lockButton = new ToggleButton.Builder(this.playerStatueData.isLocked(), (button) -> {
-			ToggleButton toggleButton = ((ToggleButton) button);
-			toggleButton.setValue(!toggleButton.getValue());
-			this.textFieldUpdated();
-		}).bounds(offsetX, offsetY + 66, 40, 20).build());
-		this.addRenderableWidget(this.nameVisibleButton = new ToggleButton.Builder(this.playerStatueData.getNameVisible(), (button) -> {
-			ToggleButton toggleButton = ((ToggleButton) button);
-			toggleButton.setValue(!toggleButton.getValue());
-			this.textFieldUpdated();
-		}).bounds(offsetX, offsetY + 89, 40, 20).build());
-		this.addRenderableWidget(this.noGravityButton = new ToggleButton.Builder(this.playerStatueData.hasNoGravity(), (button) -> {
-			ToggleButton toggleButton = ((ToggleButton) button);
-			toggleButton.setValue(!toggleButton.getValue());
-			this.textFieldUpdated();
-		}).bounds(offsetX, offsetY + 112, 40, 20).build());
 
 		// rotation textbox
-		this.rotationTextField = new NumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (22), 38, 17, Component.translatable("statues.playerstatue.gui.label.rotation"));
+		this.rotationTextField = new NumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + rowOffset, 38, 17, Component.translatable("statues.playerstatue.gui.label.rotation"));
 		this.rotationTextField.setValue(String.valueOf((int) this.playerStatueData.rotation));
 		this.rotationTextField.setMaxLength(4);
 		this.addWidget(this.rotationTextField);
 
 		// Y Offset textbox
-		this.YOffsetTextField = new DecimalNumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + (44), 38, 17, Component.translatable("statues.playerstatue.gui.label.y_offset"));
+		this.YOffsetTextField = new DecimalNumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + rowOffset * 2, 38, 17, Component.translatable("statues.playerstatue.gui.label.y_offset"));
 		this.YOffsetTextField.setValue(String.valueOf((float) Mth.clamp(this.playerStatueData.yOffset, -1, 1)));
 		this.YOffsetTextField.setMaxLength(5);
 		this.addWidget(this.YOffsetTextField);
+
+		this.addRenderableWidget(this.lockButton = new ToggleButton.Builder(this.playerStatueData.isLocked(), (button) -> {
+			ToggleButton toggleButton = ((ToggleButton) button);
+			toggleButton.setValue(!toggleButton.getValue());
+			this.textFieldUpdated();
+		}).bounds(offsetX, offsetY + rowOffset * 3, 40, 20).build());
+		this.addRenderableWidget(this.nameVisibleButton = new ToggleButton.Builder(this.playerStatueData.getNameVisible(), (button) -> {
+			ToggleButton toggleButton = ((ToggleButton) button);
+			toggleButton.setValue(!toggleButton.getValue());
+			this.textFieldUpdated();
+		}).bounds(offsetX, offsetY + rowOffset * 4, 40, 20).build());
+		this.addRenderableWidget(this.noGravityButton = new ToggleButton.Builder(this.playerStatueData.hasNoGravity(), (button) -> {
+			ToggleButton toggleButton = ((ToggleButton) button);
+			toggleButton.setValue(!toggleButton.getValue());
+			this.textFieldUpdated();
+		}).bounds(offsetX, offsetY + rowOffset * 5, 40, 20).build());
+		this.addRenderableWidget(this.forceModelType = new EnumCycleButton.Builder(this.playerStatueData.modelType, "modeltype", PlayerStatueData.MODEL_TYPE.values(), (button) -> {
+			EnumCycleButton optionCycleButton = ((EnumCycleButton) button);
+			optionCycleButton.cycleValue();
+			this.textFieldUpdated();
+		}).bounds(offsetX, offsetY + rowOffset * 6, 40, 20).build());
 
 		// pose textboxes
 		offsetX = this.width - 20 - 100;
@@ -120,7 +130,7 @@ public class PlayerPoseScreen extends Screen {
 
 		// copy & paste buttons
 		offsetX = 20;
-		offsetY = this.height / 4 + 120 + 12;
+		offsetY = this.height / 4 + 134 + 12;
 
 		this.addRenderableWidget(Button.builder(Component.translatable("statues.playerstatue.gui.label.copy"), (button) -> {
 			CompoundTag compound = this.writeFieldsToNBT();
@@ -181,7 +191,7 @@ public class PlayerPoseScreen extends Screen {
 		int offsetX = 20;
 		for (int i = 0; i < this.buttonLabels.length; i++) {
 			int x = offsetX;
-			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
+			int y = offsetY + (i * 22) + (11 - (this.font.lineHeight / 2));
 			drawString(poseStack, this.font, this.buttonLabels[i], x, y, 0xA0A0A0);
 		}
 
@@ -317,6 +327,7 @@ public class PlayerPoseScreen extends Screen {
 		compound.putBoolean("CustomNameVisible", this.nameVisibleButton.getValue());
 		compound.putBoolean("NoGravity", this.noGravityButton.getValue());
 		compound.putDouble("yOffset", this.YOffsetTextField.getFloat());
+		compound.putString("Model", this.forceModelType.getValue().name());
 
 		ListTag rotationTag = new ListTag();
 		rotationTag.add(FloatTag.valueOf(this.rotationTextField.getFloat()));
@@ -375,6 +386,7 @@ public class PlayerPoseScreen extends Screen {
 
 		this.YOffsetTextField.setValue(String.valueOf((double) statueData.yOffset));
 		this.rotationTextField.setValue(String.valueOf((int) statueData.rotation));
+		this.forceModelType.setValue(this.forceModelType.findValue(statueData.modelType));
 
 		for (int i = 0; i < this.poseTextFields.length; i++) {
 			this.poseTextFields[i].setValue(String.valueOf((int) statueData.pose[i]));
