@@ -31,7 +31,7 @@ public class StatueTabs {
 						.title(Component.translatable("itemGroup.statues.items"))
 						.displayItems((features, output, hasPermissions) -> {
 							List<ItemStack> stacks = StatueRegistry.ITEMS.getEntries().stream()
-									.filter(reg -> reg.get() instanceof BlockItem).map(reg -> new ItemStack(reg.get())).toList();
+									.filter(reg -> !(reg.get() instanceof BlockItem)).map(reg -> new ItemStack(reg.get())).toList();
 							output.acceptAll(stacks);
 						}));
 	}
