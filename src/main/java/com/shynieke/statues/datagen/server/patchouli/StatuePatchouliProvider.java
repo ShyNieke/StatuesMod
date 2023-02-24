@@ -2,7 +2,6 @@ package com.shynieke.statues.datagen.server.patchouli;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.registry.StatueRegistry;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.ItemStack;
 import xyz.brassgoggledcoders.patchouliprovider.BookBuilder;
