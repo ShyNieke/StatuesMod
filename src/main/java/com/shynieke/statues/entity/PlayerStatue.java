@@ -139,7 +139,7 @@ public class PlayerStatue extends LivingEntity {
 
 	@Override
 	public boolean isNoGravity() {
-		return this.tickCount > 200 && super.isNoGravity();
+		return super.isNoGravity();
 	}
 
 	/**
