@@ -13,6 +13,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
@@ -21,6 +22,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -372,6 +374,20 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		return SHAPE;
 	}
 
+	@Override
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
+		super.animateTick(state, level, pos, randomSource);
+
+		if (level.isClientSide) {
+			if (com.shynieke.statues.client.ClientHandler.TRANSLATORS.contains(getBE(level, pos).getPlayerProfile().getId())) {
+				level.addParticle(ParticleTypes.ENCHANT,
+						(double) pos.getX() + 0.5D, (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D,
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 - randomSource.nextFloat() - 1.0F),
+						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D);
+			}
+		}
+	}
 
 	public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
 		return Shapes.empty();

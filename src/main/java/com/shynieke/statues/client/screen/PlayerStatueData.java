@@ -13,8 +13,16 @@ public class PlayerStatueData {
 	public float yOffset = 0F;
 
 	public float rotation = 0F;
+	public String modelType = "AUTO";
 
-	public final float[] pose = new float[18];
+
+	public enum MODEL_TYPE {
+		AUTO,
+		DEFAULT,
+		SLIM
+	}
+
+	public final float[] pose = new float[3*7];
 
 	public boolean isSmall() {
 		return this.small;
@@ -38,6 +46,7 @@ public class PlayerStatueData {
 		this.nameVisible = compound.getBoolean("CustomNameVisible");
 		this.noGravity = compound.getBoolean("NoGravity");
 		this.yOffset = compound.getFloat("yOffset");
+		this.modelType = compound.getString("Model");
 
 		if (compound.contains("Rotation")) {
 			this.rotation = compound.getList("Rotation", Tag.TAG_FLOAT).getFloat(0);
@@ -66,6 +75,7 @@ public class PlayerStatueData {
 		compound.putBoolean("CustomNameVisible", this.nameVisible);
 		compound.putBoolean("NoGravity", this.noGravity);
 		compound.putFloat("yOffset", this.yOffset);
+		compound.putString("Model", this.modelType);
 
 		ListTag rotationTag = new ListTag();
 		rotationTag.add(FloatTag.valueOf(this.rotation));
