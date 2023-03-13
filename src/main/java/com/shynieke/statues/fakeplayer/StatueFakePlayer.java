@@ -7,7 +7,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.scores.Team;
 import net.minecraftforge.common.util.FakePlayer;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.ref.WeakReference;
 import java.util.function.Function;
@@ -62,5 +64,16 @@ public class StatueFakePlayer extends FakePlayer {
 	@Override
 	public BlockPos blockPosition() {
 		return this.blockPos;
+	}
+
+	@Override
+	public boolean isAlliedTo(Team team) {
+		return false;
+	}
+
+	@Nullable
+	@Override
+	public Team getTeam() {
+		return null;
 	}
 }
