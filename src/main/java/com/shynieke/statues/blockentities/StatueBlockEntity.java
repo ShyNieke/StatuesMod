@@ -243,6 +243,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			double d2 = (double) pos.getZ() + (serverLevel.random.nextDouble() - serverLevel.random.nextDouble()) * (double) 4 + 0.5D;
 			if (serverLevel.noCollision(entityType.getAABB(d0, d1, d2))) {
 				BlockPos blockpos = new BlockPos(d0, d1, d2);
+				if (serverLevel.isAreaLoaded(blockpos, 1)) continue;
 
 				if (!SpawnPlacements.checkSpawnRules(entityType, serverLevel, MobSpawnType.SPAWNER, blockpos, serverLevel.getRandom())) {
 					continue;
