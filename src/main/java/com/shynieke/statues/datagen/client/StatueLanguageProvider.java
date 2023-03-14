@@ -201,6 +201,8 @@ public class StatueLanguageProvider extends LanguageProvider {
 
 		add("gui.statue.loot", "Statue Loot");
 		add("gui.statue.fill", "Filling Interactions");
+		add("gui.statues.statue_table.chisel.tooltip", "Chisel");
+		add("gui.statues.statue_table.invalid_recipe.tooltip", "Invalid Recipe");
 
 		add("curios.identifier.statue", "Statue");
 
