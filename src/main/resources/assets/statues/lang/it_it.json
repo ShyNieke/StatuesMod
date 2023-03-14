@@ -118,6 +118,8 @@
   "fakeplayer.statue": "Statue",
   "gui.statue.fill": "Interazioni Riempimento",
   "gui.statue.loot": "Bottino Statue",
+  "gui.statues.statue_table.chisel.tooltip": "Chisel",
+  "gui.statues.statue_table.invalid_recipe.tooltip": "Invalid Recipe",
   "info.statues.book.core.entry.name": "Statue Core",
   "info.statues.book.core.text1": "Statue Core's are dropped by the Statue Bat.$(br)The Statue bat just like the vanilla one can be found in dark areas but beware! It hurts you back if you try to kill it.",
   "info.statues.book.info.desc": "General info about Statues and it's features.",
