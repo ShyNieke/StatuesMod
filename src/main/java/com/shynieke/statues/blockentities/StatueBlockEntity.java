@@ -69,7 +69,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				blockEntity.interactCooldown--;
 
 				if (blockEntity.interactCooldown == 0) {
-					blockEntity.interactCooldown = 200 - (blockEntity.getSpeed() * 20);
+					blockEntity.interactCooldown = blockEntity.getInteractCooldown();
 					blockEntity.setStatueInteractable(true);
 				}
 			}
@@ -77,7 +77,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				blockEntity.cooldown--;
 
 				if (blockEntity.cooldown == 0) {
-					blockEntity.cooldown = 200 - (blockEntity.getSpeed() * 20);
+					blockEntity.cooldown = blockEntity.getCooldown();
 					blockEntity.setStatueAble(true);
 					if (blockEntity.canAutomate()) {
 						if (blockEntity.canDropLoot()) {

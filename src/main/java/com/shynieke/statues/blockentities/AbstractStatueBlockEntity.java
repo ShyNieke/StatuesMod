@@ -125,11 +125,11 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	public int getCooldown() {
-		return this.cooldown;
+		return this.cooldown - (getSpeed() * 20);
 	}
 
 	public int getInteractCooldown() {
-		return this.interactCooldown;
+		return this.interactCooldown - (getSpeed() * 20);
 	}
 
 	public int getStatueLevel() {
