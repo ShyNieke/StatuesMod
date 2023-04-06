@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "statues:block/azzaro",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "statues:block/azzaro"
+    },
+    "facing=south": {
+      "model": "statues:block/azzaro",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "statues:block/azzaro",
+      "y": 270
+    }
+  }
+}
