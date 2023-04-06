@@ -133,6 +133,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addBlock(StatueRegistry.TROPIBEE, "Tropibee Statue");
 		addBlock(StatueRegistry.EAGLE_RAY, "Eagle Ray Statue");
 		addBlock(StatueRegistry.SLABFISH, "Slabfish Statue");
+		addBlock(StatueRegistry.AZZARO, "Azzaro Statue");
 
 		addItem(StatueRegistry.NUGGET, "Royal Nugget");
 		addItem(StatueRegistry.SOUP, "Mooshroom Soup");

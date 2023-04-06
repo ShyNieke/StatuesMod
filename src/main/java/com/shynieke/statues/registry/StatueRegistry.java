@@ -1,6 +1,7 @@
 package com.shynieke.statues.registry;
 
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.blocks.decorative.AzzaroStatueBlock;
 import com.shynieke.statues.blocks.decorative.BumboStatueBlock;
 import com.shynieke.statues.blocks.decorative.DisplayStandBlock;
 import com.shynieke.statues.blocks.decorative.EndermiteStatueBlock;
@@ -222,6 +223,7 @@ public class StatueRegistry {
 	public static final RegistryObject<Block> TROPIBEE = registerBlock("tropibee", () -> new TropiBeeStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> EAGLE_RAY = registerBlock("eagle_ray", () -> new EagleRayStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> SLABFISH = registerBlock("slabfish", () -> new SlabFishStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> AZZARO = registerBlock("azzaro", () -> new AzzaroStatueBlock(blockBuilder()), blockItemBuilder());
 
 	public static final RegistryObject<Item> CUP = ITEMS.register("cup", () -> new Item(itemBuilder().food(StatueFoods.CUP)));
 	public static final RegistryObject<Item> MARSHMALLOW = ITEMS.register("marshmallow", () -> new Item(itemBuilder().food(StatueFoods.MARSHMALLOW)));
