@@ -80,6 +80,8 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	}
 
 	protected void updateCachedRecipe() {
+		if (this.level == null) return;
+
 		if (getCenterSlot().isEmpty()) {
 			this.currentRecipe = null;
 			return;
@@ -89,6 +91,12 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 			container.setItem(i, handler.getStackInSlot(i));
 		}
 		this.currentRecipe = this.level.getRecipeManager().getRecipeFor(StatuesRecipes.UPGRADE_RECIPE.get(), container, this.level).orElse(null);
+	}
+
+	@Override
+	public void setLevel(Level level) {
+		super.setLevel(level);
+		updateCachedRecipe();
 	}
 
 	public boolean hasValidRecipe() {
