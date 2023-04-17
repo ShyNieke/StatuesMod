@@ -2,6 +2,7 @@ package com.shynieke.statues.blockentities;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractStatueBase;
+import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.storage.StatueSavedData;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.core.BlockPos;
@@ -44,8 +45,8 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 
 	protected AbstractStatueBlockEntity(BlockEntityType<?> tileType, BlockPos pos, BlockState state) {
 		super(tileType, pos, state);
-		this.cooldown = 200;
-		this.interactCooldown = 200;
+		this.cooldown = StatuesConfig.COMMON.statueCooldown.get();
+		this.interactCooldown = StatuesConfig.COMMON.statueCooldown.get();
 		this.statueAble = false;
 		this.statueInteractable = false;
 	}
@@ -125,11 +126,15 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	public int getCooldown() {
-		return this.cooldown - (getSpeed() * 20);
+		return Math.max(StatuesConfig.COMMON.statueMinCooldown.get(), StatuesConfig.COMMON.statueCooldown.get() - getSpeedTicks());
 	}
 
 	public int getInteractCooldown() {
-		return this.interactCooldown - (getSpeed() * 20);
+		return Math.max(StatuesConfig.COMMON.statueMinCooldown.get(), StatuesConfig.COMMON.statueCooldown.get() - getSpeedTicks());
+	}
+
+	public int getSpeedTicks() {
+		return (getSpeed() * StatuesConfig.COMMON.statueSpeedUpgrade.get());
 	}
 
 	public int getStatueLevel() {
@@ -236,7 +241,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	public int getSpeed() {
-		return hasUpgrade("speed") ? getUpgradeLevel("speed") + 1: 0;
+		return hasUpgrade("speed") ? getUpgradeLevel("speed") + 1 : 0;
 	}
 
 	public InteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
