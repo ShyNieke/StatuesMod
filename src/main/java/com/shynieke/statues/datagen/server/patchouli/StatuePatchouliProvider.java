@@ -42,10 +42,18 @@ public class StatuePatchouliProvider extends PatchouliBookProvider {
 				//Add S.T.A.T.U.E. entry
 				.addEntry("info/statue_table", "info.statues.book.statue_table.entry.name", StatueRegistry.STATUE_TABLE.getId().toString())
 				.addTextPage("info.statues.book.statue_table.text1").build()
-				.addSpotlightPage(new ItemStack(StatueRegistry.STATUE_TABLE.get()))
-				.setText("info.statues.book.statue_table.text2").build()
-				.addTextPage("info.statues.book.statue_table.text3").build()
-				.addTextPage("info.statues.book.statue_table.text4").build()
+				.addSpotlightPage(new ItemStack(StatueRegistry.STATUE_TABLE.get())).build()
+				.build()
+
+				//Add Upgrading entry
+				.addEntry("info/upgrading", "info.statues.book.upgrading.entry.name", StatueRegistry.SLIME_STATUE.getId().toString())
+				.addTextPage("info.statues.book.upgrading.text1").build()
+				.addTextPage("info.statues.book.upgrading.text2").build()
+				.addTextPage("info.statues.book.upgrading.text3").build()
+				.addTextPage("info.statues.book.upgrading.text4").build()
+				.addTextPage("info.statues.book.upgrading.text5").build()
+				.addTextPage("info.statues.book.upgrading.text6").build()
+				.addTextPage("info.statues.book.upgrading.text7").build()
 				.build()
 
 				.build(); //Back to the bookbuilder

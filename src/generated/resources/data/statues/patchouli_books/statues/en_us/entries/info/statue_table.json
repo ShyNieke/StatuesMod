@@ -9,16 +9,7 @@
     },
     {
       "type": "patchouli:spotlight",
-      "item": "statues:statue_table",
-      "text": "info.statues.book.statue_table.text2"
-    },
-    {
-      "type": "patchouli:text",
-      "text": "info.statues.book.statue_table.text3"
-    },
-    {
-      "type": "patchouli:text",
-      "text": "info.statues.book.statue_table.text4"
+      "item": "statues:statue_table"
     }
   ]
 }
