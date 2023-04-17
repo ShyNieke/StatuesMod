@@ -240,19 +240,27 @@ public class StatueLanguageProvider extends LanguageProvider {
 
 		//Patchouli
 		add("info.statues.book.name", "Statues");
-		add("info.statues.book.subtitle", "Little functional mobs");
+		add("info.statues.book.subtitle", "Little useful mobs");
 		add("info.statues.book.landing", "A book to help figure out what statues can do for you.");
 
 		add("info.statues.book.info.name", "Information");
 		add("info.statues.book.info.desc", "General info about Statues and it's features.");
 
-		add("info.statues.book.statue_table.entry.name", "S.T.A.T.U.E.");
-		add("info.statues.book.statue_table.text1", "The S.T.A.T.U.E. or Statue Table for Applying Tiered Upgrade Enhancements is a worktable that can be used to upgrade Statues.");
-		add("info.statues.book.statue_table.text2", "To start out you upgrade a statue with a Statue Core. This will allow it to level from killing the mobs the statue is based on. Every 10 mobs will unlock an upgrade slot up to a max of 16.");
-		add("info.statues.book.statue_table.text3", "The following upgrades are available once have an upgrade slot:$(br)$(l)Glowing$() - Allows the statue to emit light$(br)$(l)Unglowing$() - Removes previously applied glowing$(br)$(l)Spawner$() - Allows the statue to spawn it's mob every so often$(br)$(l)Despawner$() - Disallows it's mob from spawning in the nearby area");
-		add("info.statues.book.statue_table.text4", "$(br)$(l)Mob Killer$() - Kills the mob if it gets nearby (1 = Regular drops, 2 = Player drops, 3 = Player drops + XP)$(br)$(l)Looting$() - Allows the statue to generate loot$(br)$(l)Automation$() - Allows exporting of loot$(br)$(l)Speed$() - Speeds up the interaction/spawning timer$(br)$(l)Interaction$() - Allows special interactions$(br)$(l)Sound$() - Allows the statue to make sound when right-clicked or powered");
+		add("info.statues.book.upgrading.entry.name", "Upgrading");
+		add("info.statues.book.upgrading.text1", "The Statue Upgrading System allows players to upgrade and level up their mob statues. This entry will provide an overview of how the system works and what upgrades are available.");
+		add("info.statues.book.upgrading.text2", "To start upgrading a statue, players first need to obtain a statue of the desired mob. This can be done by killing the mob, with a 1%% chance of obtaining the statue by default (which can be changed in the config). In addition to the statue itself, players also need to obtain a $(l:info/core)Statue Core$().");
+		add("info.statues.book.upgrading.text3", "Once the player has obtained a statue and a Statue Core, they need to craft a $(l:info/statue_table)S.T.A.T.U.E$() (\"Statue Table for Applying Tiered Upgrade Enhancements\") and insert the Statue Core and desired statue. After pressing the \"Chisel\" button, the statue will be upgraded to a state in which it can level up.");
+		add("info.statues.book.upgrading.text4", "After upgrading the statue, players can level it up by killing 10 more of the corresponding mob while the statue is in their inventory. Every 10 mobs will unlock an upgrade slot up to a max of 16.");
+		add("info.statues.book.upgrading.text5", "There are several different upgrades available for the statues:$(br)$(l)Glowing$() - Allows the statue to emit light$(br)$(l)Unglowing$() - Removes previously applied glowing$(br)$(l)Spawner$() - Allows the statue to spawn it's mob every so often$(br)$(l)Despawner$() - Disallows it's mob from spawning in the nearby area");
+		add("info.statues.book.upgrading.text6", "$(l)Mob Killer$() - Kills the mob if it gets nearby (1 = Regular drops, 2 = Player drops, 3 = Player drops + XP)$(br)$(l)Looting$() - Allows the statue to generate loot$(br)$(l)Automation$() - Allows exporting of loot$(br)$(l)Speed$() - Speeds up the interaction/spawning timer");
+		add("info.statues.book.upgrading.text7", "$(l)Interaction$() - Allows special interactions$(br)$(l)Sound$() - Allows the statue to make sound when right-clicked or powered");
+
 		add("info.statues.book.core.entry.name", "Statue Core");
 		add("info.statues.book.core.text1", "Statue Core's are dropped by the Statue Bat.$(br)The Statue bat just like the vanilla one can be found in dark areas but beware! It hurts you back if you try to kill it.");
+
+		add("info.statues.book.statue_table.entry.name", "S.T.A.T.U.E.");
+		add("info.statues.book.statue_table.text1", "The S.T.A.T.U.E. or Statue Table for Applying Tiered Upgrade Enhancements is a worktable that can be used to upgrade Statues.");
+
 
 		add("statues.modeltype.AUTO", "Auto");
 		add("statues.modeltype.DEFAULT", "Default");
