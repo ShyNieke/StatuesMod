@@ -33,6 +33,9 @@ public class StatuesConfig {
 		public final BooleanValue statueBatSpawning;
 		public final BooleanValue ancientCityLoot;
 		public final DoubleValue ancientCityLootChance;
+		public final ForgeConfigSpec.IntValue statueCooldown;
+		public final ForgeConfigSpec.IntValue statueMinCooldown;
+		public final ForgeConfigSpec.IntValue statueSpeedUpgrade;
 
 		//Lucky Players
 		public final ConfigValue<List<? extends String>> lucky_players;
@@ -56,6 +59,18 @@ public class StatuesConfig {
 			ancientCityLootChance = builder
 					.comment("The chance of a statue appearing in ancient City loot (Default: 0.1)")
 					.defineInRange("ancientCityLootChance", 0.1, 0, 1.0);
+
+			statueCooldown = builder
+					.comment("The amount of ticks before an upgraded statue becomes interact-able (Default: 200)")
+					.defineInRange("statueCooldown", 200, 1, Integer.MAX_VALUE);
+
+			statueMinCooldown = builder
+					.comment("The minimum cooldown in ticks a statue can have after the speed has been subtracted (Default: 10)")
+					.defineInRange("statuesMinCooldown", 10, 1, Integer.MAX_VALUE);
+
+			statueSpeedUpgrade = builder
+					.comment("The amount of ticks subtracted from the statue cooldown per level of Speed applied (Default: 20)")
+					.defineInRange("statueSpeedUpgrade", 20, 1, Integer.MAX_VALUE);
 
 			builder.pop();
 
