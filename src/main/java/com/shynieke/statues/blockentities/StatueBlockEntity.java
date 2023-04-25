@@ -1,5 +1,6 @@
 package com.shynieke.statues.blockentities;
 
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.fakeplayer.StatueFakePlayer;
 import com.shynieke.statues.recipe.LootRecipe;
@@ -147,7 +148,11 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			if (cachedLootRecipe != null) {
 				loot = cachedLootRecipe;
 			} else {
-				loot = cachedLootRecipe = LootHelper.getMatchingLoot(level, new ItemStack(getBlockState().getBlock()));
+				loot = (cachedLootRecipe = LootHelper.getMatchingLoot(level, new ItemStack(getBlockState().getBlock())));
+			}
+			if (loot == null) {
+				Statues.LOGGER.error("No loot found for statue {}, please report this to the Statues issue tracker", getBlockState());
+				return;
 			}
 
 			double random = level.random.nextDouble();
