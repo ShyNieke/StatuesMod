@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.level.BlockGetter;
@@ -34,6 +35,11 @@ public class KingCluckStatueBlock extends AbstractStatueBase {
 	@Override
 	public boolean isHiddenStatue() {
 		return true;
+	}
+
+	@Override
+	public EntityType<?> getEntity() {
+		return EntityType.CHICKEN;
 	}
 
 	@Override

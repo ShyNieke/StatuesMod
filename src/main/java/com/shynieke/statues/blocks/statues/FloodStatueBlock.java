@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -29,6 +30,16 @@ public class FloodStatueBlock extends AbstractStatueBase {
 	@Override
 	public SoundEvent getSound(BlockState state) {
 		return SoundEvents.VILLAGER_AMBIENT;
+	}
+
+	@Override
+	public EntityType<?> getEntity() {
+		return EntityType.ZOMBIE;
+	}
+
+	@Override
+	public boolean isBaby() {
+		return true;
 	}
 
 	@Override

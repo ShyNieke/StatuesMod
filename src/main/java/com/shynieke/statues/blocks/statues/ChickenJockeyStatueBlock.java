@@ -4,6 +4,7 @@ import com.shynieke.statues.blocks.AbstractStatueBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -25,6 +26,16 @@ public class ChickenJockeyStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public boolean isHiddenStatue() {
+		return true;
+	}
+
+	@Override
+	public EntityType<?> getEntity() {
+		return EntityType.ZOMBIE;
+	}
+
+	@Override
+	public boolean isBaby() {
 		return true;
 	}
 

@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.BlockGetter;
@@ -61,6 +62,11 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 
 	public static SoundEvent getRandomCampfire() {
 		return ListHelper.getRandomFromList(campfire_sounds).get();
+	}
+
+	@Override
+	public EntityType<?> getEntity() {
+		return EntityType.CREEPER;
 	}
 
 	@Override
