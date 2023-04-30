@@ -3,6 +3,7 @@ package com.shynieke.statues.blocks.statues;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.registry.StatueSounds;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -20,5 +21,10 @@ public class WastelandStatueBlock extends AbstractStatueBase {
 	@Override
 	public boolean isHiddenStatue() {
 		return true;
+	}
+
+	@Override
+	public EntityType<?> getEntity() {
+		return EntityType.PIG;
 	}
 }
