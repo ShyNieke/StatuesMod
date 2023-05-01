@@ -130,8 +130,18 @@ public class StatueTableMenu extends AbstractContainerMenu {
 	}
 
 	public class TableSlot extends SlotItemHandler {
+		private final int index;
+
 		public TableSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
 			super(itemHandler, index, xPosition, yPosition);
+			this.index = index;
+		}
+
+		@Override
+		public int getMaxStackSize() {
+			if (index < 2)
+				return 1;
+			return super.getMaxStackSize();
 		}
 
 		@Override
