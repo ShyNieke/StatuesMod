@@ -44,7 +44,7 @@ public class StatuesLootModifier extends LootModifier {
 					CompoundTag entityTag = new CompoundTag();
 					entityTag.putInt(Reference.LEVEL, 1);
 					entityTag.putBoolean(Reference.UPGRADED, true);
-					entityTag.putInt(Reference.UPGRADE_SLOTS, 20);
+					entityTag.putInt(Reference.UPGRADE_SLOTS, 2);
 					entityTag.putInt(Reference.KILL_COUNT, getRandInRange(context.getRandom(), 6, 16));
 
 					statueStack.addTagElement("BlockEntityTag", entityTag);
