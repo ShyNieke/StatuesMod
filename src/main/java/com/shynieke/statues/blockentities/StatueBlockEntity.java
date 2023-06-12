@@ -88,15 +88,17 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 					}
 				}
 			} else {
-				//Insert spawner behavior
-				if (blockEntity.isSpawner()) {
-					blockEntity.summonMob((ServerLevel) level);
-				}
-				if (blockEntity.isKiller()) {
-					blockEntity.killMob((ServerLevel) level);
-				}
+				if (!level.hasNeighborSignal(pos)) {
+					//Insert spawner behavior
+					if (blockEntity.isSpawner()) {
+						blockEntity.summonMob((ServerLevel) level);
+					}
+					if (blockEntity.isKiller()) {
+						blockEntity.killMob((ServerLevel) level);
+					}
 
-				blockEntity.setStatueAble(false);
+					blockEntity.setStatueAble(false);
+				}
 			}
 
 			blockEntity.setChanged();
@@ -239,6 +241,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	public void summonMob(ServerLevel serverLevel) {
 		final BlockPos pos = getBlockPos();
 		final int spawnerLevel = getSpawnerLevel() + 1;
+		final boolean screwTheRulesIHasMoney = spawnerLevel > 3;
 		int spawnCount = serverLevel.random.nextInt(spawnerLevel) + 1;
 		EntityType<?> entityType = getStatue().getEntity();
 
@@ -248,9 +251,9 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			double d2 = (double) pos.getZ() + (serverLevel.random.nextDouble() - serverLevel.random.nextDouble()) * (double) 4 + 0.5D;
 			if (serverLevel.noCollision(entityType.getAABB(d0, d1, d2))) {
 				BlockPos blockpos = new BlockPos(d0, d1, d2);
-				if (serverLevel.isAreaLoaded(blockpos, 1)) continue;
+				if (!serverLevel.isAreaLoaded(blockpos, 1)) continue;
 
-				if (!SpawnPlacements.checkSpawnRules(entityType, serverLevel, MobSpawnType.SPAWNER, blockpos, serverLevel.getRandom())) {
+				if (!screwTheRulesIHasMoney && !SpawnPlacements.checkSpawnRules(entityType, serverLevel, MobSpawnType.SPAWNER, blockpos, serverLevel.getRandom())) {
 					continue;
 				}
 
@@ -274,7 +277,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 							(float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), null, MobSpawnType.SPAWNER);
 					if (res == net.minecraftforge.eventbus.api.Event.Result.DENY) continue;
 					if (res == net.minecraftforge.eventbus.api.Event.Result.DEFAULT)
-						if (!mob.checkSpawnRules(serverLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
+						if (!screwTheRulesIHasMoney && !mob.checkSpawnRules(serverLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
 							continue;
 						}
 
