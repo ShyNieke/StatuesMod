@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[44,)"
+loaderVersion="[45,)"
 issueTrackerURL="https://github.com/ShyNieke/StatuesMod/issues"
 license="MIT"
 
@@ -21,12 +21,12 @@ side="BOTH"
 [[dependencies.statues]]
 modId="forge"
 mandatory=true
-versionRange="[44.0.36,)"
+versionRange="[45.1.0,)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.statues]]
 modId="curios"
 mandatory=false
-versionRange="[1.19-5.1.0.4,)"
+versionRange="[1.19.4-5.1.5.3,)"
 ordering="NONE"
 side="BOTH"

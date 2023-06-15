@@ -1,5 +1,6 @@
 {
   "type": "statues:hardcore_shaped",
+  "category": "misc",
   "pattern": [
     "ECE",
     "LZL",
@@ -21,5 +22,6 @@
   },
   "result": {
     "item": "statues:player_statue"
-  }
+  },
+  "show_notification": true
 }

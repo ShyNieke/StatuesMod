@@ -9,14 +9,13 @@ import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.util.LootHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -25,7 +24,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -34,7 +32,6 @@ import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -155,20 +152,21 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				return;
 			}
 
+			final RegistryAccess access = level.registryAccess();
 			double random = level.random.nextDouble();
-			ItemStack stack1 = loot.getResultItem().copy();
+			ItemStack stack1 = loot.getResultItem(access).copy();
 			float chance1 = loot.getChance1();
 			if (!stack1.isEmpty() && random <= chance1) {
 				exportItem(stack1);
 			}
 
-			ItemStack stack2 = loot.getResultItem2().copy();
+			ItemStack stack2 = loot.getResultItem2(access).copy();
 			float chance2 = loot.getChance2();
 			if (!stack2.isEmpty() && random <= chance2) {
 				exportItem(stack2);
 			}
 
-			ItemStack stack3 = loot.getResultItem3().copy();
+			ItemStack stack3 = loot.getResultItem3(access).copy();
 			float chance3 = loot.getChance3();
 			if (!stack3.isEmpty() && random <= chance3) {
 				exportItem(stack3);
@@ -229,11 +227,11 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				ItemStack tempSword = new ItemStack(Items.DIAMOND_SWORD, 1);
 				StatueFakePlayer.useFakePlayer(serverLevel, (fakePlayer -> {
 					fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, tempSword);
-					target.hurt(DamageSource.playerAttack(fakePlayer), (float) fakePlayer.getAttributeValue(Attributes.ATTACK_DAMAGE));
+					target.hurt(serverLevel.damageSources().playerAttack(fakePlayer), (float) fakePlayer.getAttributeValue(Attributes.ATTACK_DAMAGE));
 					return true;
 				}));
 			} else {
-				target.hurt(DamageSource.GENERIC, 6);
+				target.hurt(serverLevel.damageSources().generic(), 6);
 			}
 		}
 	}
@@ -250,7 +248,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 			double d1 = (double) (pos.getY() + serverLevel.random.nextInt(3) - 1);
 			double d2 = (double) pos.getZ() + (serverLevel.random.nextDouble() - serverLevel.random.nextDouble()) * (double) 4 + 0.5D;
 			if (serverLevel.noCollision(entityType.getAABB(d0, d1, d2))) {
-				BlockPos blockpos = new BlockPos(d0, d1, d2);
+				BlockPos blockpos = BlockPos.containing(d0, d1, d2);
 				if (!serverLevel.isAreaLoaded(blockpos, 1)) continue;
 
 				if (!screwTheRulesIHasMoney && !SpawnPlacements.checkSpawnRules(entityType, serverLevel, MobSpawnType.SPAWNER, blockpos, serverLevel.getRandom())) {
@@ -270,21 +268,16 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				}
 
 				entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), level.random.nextFloat() * 360.0F, 0.0F);
-				if (entity instanceof Mob mob) {
-					getStatue().adjustSpawnedEntity(mob);
+				if (entity instanceof Mob) {
+					Mob mob = (Mob) entity;
+					if (!screwTheRulesIHasMoney && !mob.checkSpawnRules(serverLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
+						continue;
+					}
 
-					net.minecraftforge.eventbus.api.Event.Result res = net.minecraftforge.event.ForgeEventFactory.canEntitySpawn(mob, serverLevel,
-							(float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), null, MobSpawnType.SPAWNER);
-					if (res == net.minecraftforge.eventbus.api.Event.Result.DENY) continue;
-					if (res == net.minecraftforge.eventbus.api.Event.Result.DEFAULT)
-						if (!screwTheRulesIHasMoney && !mob.checkSpawnRules(serverLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
-							continue;
-						}
-
-					if (!net.minecraftforge.event.ForgeEventFactory.doSpecialSpawn(mob, (LevelAccessor) serverLevel,
-							(float) entity.getX(), (float) entity.getY(), (float) entity.getZ(), null, MobSpawnType.SPAWNER))
-						((Mob) entity).finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()),
-								MobSpawnType.SPAWNER, (SpawnGroupData) null, (CompoundTag) null);
+					var event = net.minecraftforge.event.ForgeEventFactory.onFinalizeSpawnSpawner(mob, serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), null, null, null);
+					if (event != null) {
+						mob.finalizeSpawn(serverLevel, event.getDifficulty(), event.getSpawnType(), event.getSpawnData(), event.getSpawnTag());
+					}
 				}
 
 				if (!serverLevel.tryAddFreshEntityWithPassengers(entity)) {

@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -47,8 +48,8 @@ public class HardcoreRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public ItemStack getResultItem() {
-		ItemStack resultStack = super.getResultItem();
+	public ItemStack getResultItem(RegistryAccess access) {
+		ItemStack resultStack = super.getResultItem(access);
 		CompoundTag display = resultStack.getOrCreateTagElement("display");
 		if (!display.contains("lore")) {
 			ListTag nbtTagList = new ListTag();
@@ -61,8 +62,8 @@ public class HardcoreRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer container) {
-		return this.getResultItem().copy();
+	public ItemStack assemble(CraftingContainer container, RegistryAccess access) {
+		return this.getResultItem(access).copy();
 	}
 
 	static NonNullList<Ingredient> dissolvePattern(String[] p_44203_, Map<String, Ingredient> p_44204_, int p_44205_, int p_44206_) {
@@ -221,7 +222,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 				ingredient.toNetwork(byteBuf);
 			}
 
-			byteBuf.writeItem(recipe.getResultItem());
+			byteBuf.writeItem(recipe.getResultItem(null));
 		}
 	}
 }

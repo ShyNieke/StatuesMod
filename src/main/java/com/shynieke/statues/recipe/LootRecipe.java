@@ -3,6 +3,7 @@ package com.shynieke.statues.recipe;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -50,8 +51,8 @@ public class LootRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public ItemStack assemble(Container container) {
-		return this.getResultItem().copy();
+	public ItemStack assemble(Container container, RegistryAccess access) {
+		return this.getResultItem(access).copy();
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class LootRecipe implements Recipe<Container> {
 	 * @return the first result item
 	 */
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess access) {
 		return this.result;
 	}
 
@@ -82,7 +83,7 @@ public class LootRecipe implements Recipe<Container> {
 	/**
 	 * @return the second result item
 	 */
-	public ItemStack getResultItem2() {
+	public ItemStack getResultItem2(RegistryAccess access) {
 		return this.result2;
 	}
 
@@ -96,7 +97,7 @@ public class LootRecipe implements Recipe<Container> {
 	/**
 	 * @return the third result item
 	 */
-	public ItemStack getResultItem3() {
+	public ItemStack getResultItem3(RegistryAccess access) {
 		return this.result3;
 	}
 

@@ -80,11 +80,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
         url = "https://maven.blamejared.com"
     }
     maven {
@@ -111,11 +106,11 @@ dependencies {
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${mc_version}-${curios_version}")
 
-    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE")
     implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
 
-    implementation fg.deobf("curse.maven:jade-324717:4199865") //Jade (WAILA)
-    implementation fg.deobf("curse.maven:TheOneProbe-245211:4159743") //The One probe (TOP)
+    implementation fg.deobf("curse.maven:jade-324717:4573063") //Jade (WAILA)
+    implementation fg.deobf("curse.maven:TheOneProbe-245211:4442439") //The One probe (TOP)
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

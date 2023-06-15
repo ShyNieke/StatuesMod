@@ -17,6 +17,9 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -54,6 +57,13 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, UpgradeRecipe recipe, IFocusGroup focuses) {
+		Minecraft minecraft = Minecraft.getInstance();
+		ClientLevel level = minecraft.level;
+		if (level == null) {
+			throw new NullPointerException("level must not be null.");
+		}
+		RegistryAccess registryAccess = level.registryAccess();
+
 		final Optional<IFocus<?>> focused = focuses.getAllFocuses().stream().findFirst();
 		final int tier = recipe.getTier();
 		if (focused.isPresent() && focused.get().getTypedValue().getIngredient() instanceof ItemStack focusStack &&
@@ -76,7 +86,7 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 			}
 			builder.addSlot(RecipeIngredientRole.INPUT, 73, 23).addItemStack(centerStack);
 
-			if (recipe.getResultItem().isEmpty()) {
+			if (recipe.getResultItem(registryAccess).isEmpty()) {
 				ItemStack outputStack = centerStack.copy();
 				recipe.getUpgradeType().apply(outputStack, tier);
 				if (recipe.getUpgradeType() == UpgradeType.UPGRADE) {
@@ -86,7 +96,7 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 				}
 				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStack(outputStack);
 			} else {
-				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStack(recipe.getResultItem());
+				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStack(recipe.getResultItem(registryAccess));
 			}
 		} else {
 			List<ItemStack> centerList = new ArrayList<>();
@@ -110,7 +120,7 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 			}
 			builder.addSlot(RecipeIngredientRole.INPUT, 73, 23).addItemStacks(centerList);
 
-			if (recipe.getResultItem().isEmpty()) {
+			if (recipe.getResultItem(registryAccess).isEmpty()) {
 				List<ItemStack> stackList = new ArrayList<>();
 				for (ItemStack centerStack : centerList) {
 					ItemStack stack = centerStack.copy();
@@ -124,7 +134,7 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 				}
 				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStacks(stackList);
 			} else {
-				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStack(recipe.getResultItem());
+				builder.addSlot(RecipeIngredientRole.OUTPUT, 127, 23).addItemStack(recipe.getResultItem(registryAccess));
 			}
 		}
 

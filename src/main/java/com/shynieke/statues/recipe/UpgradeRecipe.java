@@ -9,6 +9,7 @@ import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.registry.StatueTags;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -132,8 +133,8 @@ public class UpgradeRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public ItemStack assemble(Container container) {
-		return this.getResultItem().copy();
+	public ItemStack assemble(Container container, RegistryAccess access) {
+		return this.getResultItem(access).copy();
 	}
 
 	@Override
@@ -150,7 +151,7 @@ public class UpgradeRecipe implements Recipe<Container> {
 	 * @return the first result item
 	 */
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess access) {
 		return this.result;
 	}
 

@@ -29,6 +29,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.OldUsersConverter;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -557,15 +558,15 @@ public class PlayerStatue extends LivingEntity {
 	 */
 	public boolean hurt(DamageSource source, float amount) {
 		if (!this.level.isClientSide && !this.isRemoved()) {
-			if (DamageSource.OUT_OF_WORLD.equals(source)) {
+			if (damageSources().outOfWorld().equals(source)) {
 				this.remove(RemovalReason.DISCARDED);
 				return false;
 			} else if (!this.isInvulnerableTo(source)) {
-				if (source.isExplosion()) {
+				if (source.is(DamageTypeTags.IS_EXPLOSION)) {
 					this.brokenByAnything(source);
 					this.remove(RemovalReason.KILLED);
 					return false;
-				} else if (DamageSource.IN_FIRE.equals(source)) {
+				} else if (source.is(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
 					if (this.isOnFire()) {
 						this.damageArmorStand(source, 0.15F);
 					} else {
@@ -573,7 +574,7 @@ public class PlayerStatue extends LivingEntity {
 					}
 
 					return false;
-				} else if (DamageSource.ON_FIRE.equals(source) && this.getHealth() > 0.5F) {
+				} else if (source.is(DamageTypeTags.BURNS_ARMOR_STANDS) && this.getHealth() > 0.5F) {
 					this.damageArmorStand(source, 4.0F);
 					return false;
 				} else {

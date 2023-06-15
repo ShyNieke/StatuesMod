@@ -3,6 +3,7 @@ package com.shynieke.statues.entity;
 import com.shynieke.statues.config.StatuesConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -44,11 +45,9 @@ public class StatueBatEntity extends Bat {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (!source.isMagic() && source.getDirectEntity() instanceof LivingEntity entitylivingbase) {
-
-			if (!source.isExplosion()) {
-				entitylivingbase.hurt(DamageSource.thorns(this), 2.0F);
-			}
+		if (!source.is(DamageTypeTags.AVOIDS_GUARDIAN_THORNS) &&
+				source.getDirectEntity() instanceof LivingEntity livingEntity) {
+			livingEntity.hurt(this.damageSources().thorns(this), 2.0F);
 		}
 
 		return super.hurt(source, amount);

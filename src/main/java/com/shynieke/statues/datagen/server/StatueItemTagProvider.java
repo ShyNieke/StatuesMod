@@ -16,7 +16,7 @@ public class StatueItemTagProvider extends ItemTagsProvider {
 
 	public StatueItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
 								 TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, blockTagProvider, Reference.MOD_ID, existingFileHelper);
+		super(output, lookupProvider, blockTagProvider.contentsGetter(), Reference.MOD_ID, existingFileHelper);
 	}
 
 	@Override

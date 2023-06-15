@@ -15,6 +15,8 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -46,11 +48,18 @@ public class LootCategory implements IRecipeCategory<LootRecipe> {
 
 	@Override
 	public void setRecipe(IRecipeLayoutBuilder builder, LootRecipe recipe, IFocusGroup focuses) {
+		Minecraft minecraft = Minecraft.getInstance();
+		ClientLevel level = minecraft.level;
+		if (level == null) {
+			throw new NullPointerException("level must not be null.");
+		}
+		RegistryAccess registryAccess = level.registryAccess();
+
 		builder.addSlot(RecipeIngredientRole.INPUT, 1, 23).addIngredients(recipe.getIngredients().get(0));
 
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 55, 5).addItemStack(recipe.getResultItem());
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 55, 23).addItemStack(recipe.getResultItem2());
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 55, 41).addItemStack(recipe.getResultItem3());
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 55, 5).addItemStack(recipe.getResultItem(registryAccess));
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 55, 23).addItemStack(recipe.getResultItem2(registryAccess));
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 55, 41).addItemStack(recipe.getResultItem3(registryAccess));
 	}
 
 	@Override

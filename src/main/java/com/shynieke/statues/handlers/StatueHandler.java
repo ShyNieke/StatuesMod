@@ -15,9 +15,8 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class StatueHandler {
@@ -70,13 +69,13 @@ public class StatueHandler {
 	}
 
 	@SubscribeEvent
-	public void onLivingSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-		MobSpawnType spawnReason = event.getSpawnReason();
+	public void onLivingSpawnEvent(MobSpawnEvent.FinalizeSpawn event) {
+		MobSpawnType spawnReason = event.getSpawnType();
 		if (spawnReason == MobSpawnType.NATURAL || spawnReason == MobSpawnType.REINFORCEMENT || spawnReason == MobSpawnType.EVENT) {
 			Mob mob = event.getEntity();
 			if (StatueSavedData.get().isDespawnerNearby(mob.level.dimension(), mob.blockPosition(), 32)) {
 //				Statues.LOGGER.info(mob.blockPosition() + " Spawn cancelled by a Despawner upgraded Statue " + mob.getType());
-				event.setResult(Event.Result.DENY);
+				event.setSpawnCancelled(true);
 			}
 		}
 	}

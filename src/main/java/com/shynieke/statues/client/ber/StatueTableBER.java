@@ -6,12 +6,13 @@ import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntity> {
@@ -43,7 +44,8 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 					poseStack.mulPose(Axis.YP.rotationDegrees(90F));
 				}
 			}
-
+			Minecraft mc = Minecraft.getInstance();
+			Level level = mc.level;
 			ItemStack statueStack = tableBlockEntity.handler.getStackInSlot(0);
 			if (!statueStack.isEmpty()) {
 				float f = (float) tableBlockEntity.time + partialTicks;
@@ -51,8 +53,8 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 				poseStack.pushPose();
 				poseStack.translate(0.5, (1.0 / 16) * 9, 0.5);
 				poseStack.translate(0.0D, (double) (0.1F + Mth.sin(f * 0.2F) * 0.01F), 0.0D);
-				Minecraft.getInstance().getItemRenderer().renderStatic(statueStack, ItemTransforms.TransformType.GROUND,
-						combinedLightIn, combinedOverlayIn, poseStack, bufferSource, 0);
+				Minecraft.getInstance().getItemRenderer().renderStatic(statueStack, ItemDisplayContext.GROUND,
+						combinedLightIn, combinedOverlayIn, poseStack, bufferSource, level, 0);
 				poseStack.popPose();
 			}
 
@@ -61,8 +63,8 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 				poseStack.pushPose();
 				poseStack.translate((1.0 / 16) * 8.75, (1.0 / 16) * 2.5, (1.0 / 16) * 13);
 				poseStack.scale(0.3125F, 0.3125F, 0.3125F);
-				Minecraft.getInstance().getItemRenderer().renderStatic(coreStack, ItemTransforms.TransformType.GROUND,
-						combinedLightIn, combinedOverlayIn, poseStack, bufferSource, 0);
+				Minecraft.getInstance().getItemRenderer().renderStatic(coreStack, ItemDisplayContext.GROUND,
+						combinedLightIn, combinedOverlayIn, poseStack, bufferSource, level, 0);
 				poseStack.popPose();
 			}
 
@@ -97,8 +99,8 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 					poseStack.pushPose();
 					poseStack.translate(0.5 + xOffset, 0.0625 * 9 + yOffset, 0.5 + zOffset);
 					poseStack.scale(0.0625f * 2, 0.0625f * 2, 0.0625f * 2);
-					Minecraft.getInstance().getItemRenderer().renderStatic(catalystSTack, ItemTransforms.TransformType.GUI,
-							combinedLightIn, combinedOverlayIn, poseStack, bufferSource, 0);
+					Minecraft.getInstance().getItemRenderer().renderStatic(catalystSTack, ItemDisplayContext.GUI,
+							combinedLightIn, combinedOverlayIn, poseStack, bufferSource, level, 0);
 					poseStack.popPose();
 				}
 			}

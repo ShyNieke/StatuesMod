@@ -8,12 +8,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.registries.RegistryObject;
@@ -44,7 +44,7 @@ public class StatueCurioRenderer implements ICurioRenderer {
 		poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
 		poseStack.scale(0.65F, -0.65F, -0.65F);
 
-		mc.getItemRenderer().renderStatic(stack, TransformType.HEAD, light, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, 0);
+		mc.getItemRenderer().renderStatic(stack, ItemDisplayContext.HEAD, light, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, mc.level, 0);
 		poseStack.popPose();
 	}
 }

@@ -19,5 +19,6 @@
   ],
   "result": {
     "item": "statues:info_statue"
-  }
+  },
+  "show_notification": true
 }

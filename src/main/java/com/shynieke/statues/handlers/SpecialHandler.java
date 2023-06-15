@@ -6,7 +6,6 @@ import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +33,7 @@ public class SpecialHandler {
 				event.setCanceled(true);
 			}
 
-			player.hurt(DamageSource.MAGIC, player.getMaxHealth() / 2);
+			player.hurt(player.damageSources().magic(), player.getMaxHealth() / 2);
 			resultStack.setHoverName(player.getName());
 		}
 	}
