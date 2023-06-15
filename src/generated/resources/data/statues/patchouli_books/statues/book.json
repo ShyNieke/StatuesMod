@@ -11,5 +11,5 @@
   "show_progress": false,
   "subtitle": "info.statues.book.subtitle",
   "use_blocky_font": true,
-  "use_resource_pack": false
+  "use_resource_pack": true
 }

@@ -250,8 +250,8 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.define('R', Tags.Items.DYES_RED)
 				.unlockedBy("has_book", has(Items.BOOK)).save(consumer);
 
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(Items.QUARTZ_BLOCK),
-						RecipeCategory.MISC, StatueRegistry.DISPLAY_STAND.get(), 2)
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(Items.QUARTZ_BLOCK), RecipeCategory.DECORATIONS,
+						StatueRegistry.DISPLAY_STAND.get(), 2)
 				.unlockedBy("has_quartz_block", has(Items.QUARTZ_BLOCK))
 				.save(consumer, new ResourceLocation(Reference.MOD_ID, "display_stand_from_quartz_block_stonecutting"));
 

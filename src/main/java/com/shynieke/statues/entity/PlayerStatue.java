@@ -122,7 +122,7 @@ public class PlayerStatue extends LivingEntity {
 
 	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return (Packet<ClientGamePacketListener>) NetworkHooks.getEntitySpawningPacket(this);
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public void refreshDimensions() {

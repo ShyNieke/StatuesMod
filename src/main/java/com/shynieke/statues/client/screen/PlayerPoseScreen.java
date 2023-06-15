@@ -1,11 +1,10 @@
 package com.shynieke.statues.client.screen;
 
-import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.client.screen.widget.DecimalNumberFieldBox;
-import com.shynieke.statues.client.screen.widget.NumberFieldBox;
 import com.shynieke.statues.client.screen.widget.EnumCycleButton;
+import com.shynieke.statues.client.screen.widget.NumberFieldBox;
 import com.shynieke.statues.client.screen.widget.ToggleButton;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.entity.PlayerStatue;
@@ -16,14 +15,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.nbt.*;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.PacketDistributor;
-import org.lwjgl.glfw.GLFW;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerPoseScreen extends Screen {
@@ -40,7 +42,7 @@ public class PlayerPoseScreen extends Screen {
 	private ToggleButton nameVisibleButton;
 	private ToggleButton noGravityButton;
 	private EnumCycleButton forceModelType;
-	private final NumberFieldBox[] poseTextFields = new NumberFieldBox[3*7];
+	private final NumberFieldBox[] poseTextFields = new NumberFieldBox[3 * 7];
 	private final boolean allowScrolling;
 
 	private Vec3 lastSendOffset = new Vec3(0, 0, 0);
@@ -122,10 +124,10 @@ public class PlayerPoseScreen extends Screen {
 			int height = 17;
 			String value = String.valueOf((int) this.playerStatueData.pose[i]);
 
-			this.poseTextFields[i] = new NumberFieldBox(this.font, x, y, width, height, Component.translatable("statues.playerstatue.gui.label.field.%s", i));
+			this.poseTextFields[i] = new NumberFieldBox(this.font, x, y, width, height, Component.literal(value));
 			this.poseTextFields[i].setValue(value);
 			this.poseTextFields[i].setMaxLength(4);
-			if(i >= 3*6 && i < 3*7)  {
+			if (i >= 3 * 6 && i < 3 * 7) {
 				this.poseTextFields[i].scrollMultiplier = 0.01f;
 				this.poseTextFields[i].modValue = Integer.MAX_VALUE;
 				this.poseTextFields[i].decimalPoints = 2;
@@ -193,7 +195,7 @@ public class PlayerPoseScreen extends Screen {
 		this.rotationTextField.render(poseStack, mouseX, mouseY, partialTicks);
 		this.YOffsetTextField.render(poseStack, mouseX, mouseY, partialTicks);
 		for (NumberFieldBox textField : this.poseTextFields)
-			if(textField != null) {
+			if (textField != null) {
 				textField.render(poseStack, mouseX, mouseY, partialTicks);
 			}
 
@@ -230,7 +232,7 @@ public class PlayerPoseScreen extends Screen {
 		this.rotationTextField.tick();
 		this.YOffsetTextField.tick();
 		for (NumberFieldBox textField : this.poseTextFields)
-			if(textField != null) {
+			if (textField != null) {
 				textField.tick();
 			}
 	}

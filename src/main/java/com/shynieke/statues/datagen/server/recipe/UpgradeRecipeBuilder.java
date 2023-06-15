@@ -66,7 +66,7 @@ public class UpgradeRecipeBuilder {
 	}
 
 	public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {
-		consumerIn.accept(new UpgradeRecipeBuilder.Result(id, this.group == null ? "" : this.group, this.center,
+		consumerIn.accept(new Result(id, this.group == null ? "" : this.group, this.center,
 				catalysts, result, requireCore, upgradeType, tier));
 	}
 

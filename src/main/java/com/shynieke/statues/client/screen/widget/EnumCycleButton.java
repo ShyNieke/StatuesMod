@@ -25,8 +25,8 @@ public class EnumCycleButton<T extends Enum<T>> extends Button {
 	}
 
 	public T findValue(String name) {
-		for(T option : options) {
-			if(option.name().equals(name)) {
+		for (T option : options) {
+			if (option.name().equals(name)) {
 				return option;
 			}
 		}
@@ -39,8 +39,8 @@ public class EnumCycleButton<T extends Enum<T>> extends Button {
 	}
 
 	private T nextOption(T value) {
-		for(T option : options) {
-			if(option.ordinal() == value.ordinal() + 1) {
+		for (T option : options) {
+			if (option.ordinal() == value.ordinal() + 1) {
 				return option;
 			}
 		}
@@ -72,41 +72,41 @@ public class EnumCycleButton<T extends Enum<T>> extends Button {
 		}
 
 		public T findValue(String name) {
-			for(T option : options) {
-				if(option.name().equals(name)) {
+			for (T option : options) {
+				if (option.name().equals(name)) {
 					return option;
 				}
 			}
 			return options[0];
 		}
 
-		public EnumCycleButton.Builder pos(int x, int y) {
+		public Builder pos(int x, int y) {
 			this.x = x;
 			this.y = y;
 			return this;
 		}
 
-		public EnumCycleButton.Builder width(int width) {
+		public Builder width(int width) {
 			this.width = width;
 			return this;
 		}
 
-		public EnumCycleButton.Builder size(int width, int height) {
+		public Builder size(int width, int height) {
 			this.width = width;
 			this.height = height;
 			return this;
 		}
 
-		public EnumCycleButton.Builder bounds(int p_254166_, int p_253872_, int p_254522_, int p_253985_) {
+		public Builder bounds(int p_254166_, int p_253872_, int p_254522_, int p_253985_) {
 			return this.pos(p_254166_, p_253872_).size(p_254522_, p_253985_);
 		}
 
-		public EnumCycleButton.Builder tooltip(@Nullable Tooltip tooltip) {
+		public Builder tooltip(@Nullable Tooltip tooltip) {
 			this.tooltip = tooltip;
 			return this;
 		}
 
-		public EnumCycleButton.Builder createNarration(CreateNarration createNarration) {
+		public Builder createNarration(CreateNarration createNarration) {
 			this.createNarration = createNarration;
 			return this;
 		}

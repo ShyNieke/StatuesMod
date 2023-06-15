@@ -33,7 +33,6 @@ import java.util.concurrent.CompletableFuture;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class StatuesDataGenerator {
-
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();

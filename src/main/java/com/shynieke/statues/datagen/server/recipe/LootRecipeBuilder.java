@@ -106,7 +106,7 @@ public class LootRecipeBuilder {
 	}
 
 	public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {
-		consumerIn.accept(new LootRecipeBuilder.Result(id, this.group == null ? "" : this.group, this.statueIngredient,
+		consumerIn.accept(new Result(id, this.group == null ? "" : this.group, this.statueIngredient,
 				result, result1Chance, result2, result2Chance, result3, result3Chance));
 	}
 

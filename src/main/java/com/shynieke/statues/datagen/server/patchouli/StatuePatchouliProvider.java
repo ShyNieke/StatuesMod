@@ -26,7 +26,7 @@ public class StatuePatchouliProvider extends PatchouliBookProvider {
 				.setUseBlockyFont(true)
 				.setI18n(true)
 				.addMacro("$(item)", "$(#c47567)")
-				.setUseResourcePack(false);
+				.setUseResourcePack(true); //Datapack support is being deprecated in 1.19.4 to be removed
 
 		//Info category
 		bookBuilder = bookBuilder.addCategory("info", "info.statues.book.info.name",

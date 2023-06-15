@@ -24,12 +24,12 @@ public class StatueBiomeTagProvider extends BiomeTagsProvider {
 
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
-		TagsProvider.TagAppender<Biome> tagappender1 = this.tag(StatueTags.CAN_SPAWN_STATUE_BAT);
+		TagsProvider.TagAppender<Biome> tagAppender = this.tag(StatueTags.CAN_SPAWN_STATUE_BAT);
 		try {
 			HolderGetter<Biome> holdergetter = lookupProvider.get().lookupOrThrow(Registries.BIOME);
 			MultiNoiseBiomeSource.Preset.OVERWORLD.possibleBiomes(holdergetter).forEach((resourceKey) -> {
 				if (!resourceKey.equals(Biomes.DEEP_DARK) && !resourceKey.equals(Biomes.MUSHROOM_FIELDS))
-					tagappender1.add(resourceKey);
+					tagAppender.add(resourceKey);
 			});
 			this.tag(StatueTags.CAN_SPAWN_FEWER_STATUE_BAT).add(Biomes.BASALT_DELTAS);
 		} catch (Exception e) {
