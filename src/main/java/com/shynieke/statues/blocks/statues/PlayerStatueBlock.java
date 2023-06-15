@@ -38,7 +38,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.SignalGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Mirror;
@@ -257,7 +257,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public boolean shouldCheckWeakPower(BlockState state, LevelReader level, BlockPos pos, Direction side) {
+	public boolean shouldCheckWeakPower(BlockState state, SignalGetter level, BlockPos pos, Direction side) {
 		return false;
 	}
 
@@ -293,7 +293,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							CompoundTag locationTag = new CompoundTag();
 
 							Player player = level.getPlayerByUUID(tileProfile.getId());
-							if (player != null && player.level.dimension().location().equals(playerIn.level.dimension().location())) {
+							if (player != null && player.level().dimension().location().equals(playerIn.level().dimension().location())) {
 								BlockPos playerPos = player.blockPosition();
 								locationTag.putLong("lastPlayerLocation", playerPos.asLong());
 								locationTag.putString("playerTracking", tileProfile.getName());

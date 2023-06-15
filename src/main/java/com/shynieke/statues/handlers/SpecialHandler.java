@@ -43,14 +43,14 @@ public class SpecialHandler {
 		if (event.phase == TickEvent.Phase.START)
 			return;
 
-		if (!event.player.level.isClientSide) {
+		if (!event.player.level().isClientSide) {
 			final Player player = event.player;
-			Level level = player.level;
+			Level level = player.level();
 			BlockPos pos = player.blockPosition();
 			AABB hitbox = new AABB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
 					.expandTowards(-3, -3, -3).expandTowards(3, 3, 3);
 
-			for (ItemEntity itemE : player.level.getEntitiesOfClass(ItemEntity.class, hitbox)) {
+			for (ItemEntity itemE : player.level().getEntitiesOfClass(ItemEntity.class, hitbox)) {
 				if (itemE != null) {
 					if (itemE.getItem().getItem().equals(Items.DIAMOND)) {
 						AABB bb = itemE.getBoundingBox().contract(0.1, 0.1, 0.1);

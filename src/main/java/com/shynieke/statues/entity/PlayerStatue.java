@@ -177,7 +177,7 @@ public class PlayerStatue extends LivingEntity {
 
 		synchronized (this) {
 			getGameProfile().ifPresent(profile -> {
-				if (this.level != null && this.level.isClientSide && profile != null && profile.isComplete()) {
+				if (this.level != null && this.level().isClientSide && profile != null && profile.isComplete()) {
 					Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
 						if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
 							String metadata = profileTexture.getMetadata("model");
@@ -557,8 +557,8 @@ public class PlayerStatue extends LivingEntity {
 	 * Called when the entity is attacked.
 	 */
 	public boolean hurt(DamageSource source, float amount) {
-		if (!this.level.isClientSide && !this.isRemoved()) {
-			if (damageSources().outOfWorld().equals(source)) {
+		if (!this.level().isClientSide && !this.isRemoved()) {
+			if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
 				this.remove(RemovalReason.DISCARDED);
 				return false;
 			} else if (!this.isInvulnerableTo(source)) {
@@ -591,9 +591,9 @@ public class PlayerStatue extends LivingEntity {
 						this.remove(RemovalReason.KILLED);
 						return flag1;
 					} else {
-						long i = this.level.getGameTime();
+						long i = this.level().getGameTime();
 						if (i - this.punchCooldown > 5L && !flag) {
-							this.level.broadcastEntityEvent(this, (byte) 32);
+							this.level().broadcastEntityEvent(this, (byte) 32);
 							this.punchCooldown = i;
 						} else {
 							this.breakPlayerStatue(source);
@@ -615,9 +615,9 @@ public class PlayerStatue extends LivingEntity {
 	@OnlyIn(Dist.CLIENT)
 	public void handleEntityEvent(byte id) {
 		if (id == 32) {
-			if (this.level.isClientSide) {
-				this.level.playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_HIT, this.getSoundSource(), 0.3F, 1.0F, false);
-				this.punchCooldown = this.level.getGameTime();
+			if (this.level().isClientSide) {
+				this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_HIT, this.getSoundSource(), 0.3F, 1.0F, false);
+				this.punchCooldown = this.level().getGameTime();
 			}
 		} else {
 			super.handleEntityEvent(id);
@@ -640,8 +640,8 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	private void playParticles() {
-		if (this.level instanceof ServerLevel) {
-			((ServerLevel) this.level).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, StatueRegistry.PLAYER_STATUE.get().defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 10, (double) (this.getBbWidth() / 4.0F), (double) (this.getBbHeight() / 4.0F), (double) (this.getBbWidth() / 4.0F), 0.05D);
+		if (this.level() instanceof ServerLevel) {
+			((ServerLevel) this.level()).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, StatueRegistry.PLAYER_STATUE.get().defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 10, (double) (this.getBbWidth() / 4.0F), (double) (this.getBbHeight() / 4.0F), (double) (this.getBbWidth() / 4.0F), 0.05D);
 		}
 
 	}
@@ -718,7 +718,7 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	private void playBrokenSound() {
-		this.level.playSound((Player) null, this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_BREAK, this.getSoundSource(), 1.0F, 1.0F);
+		this.level().playSound((Player) null, this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_BREAK, this.getSoundSource(), 1.0F, 1.0F);
 	}
 
 	protected float tickHeadTurn(float p_110146_1_, float p_110146_2_) {
@@ -917,7 +917,7 @@ public class PlayerStatue extends LivingEntity {
 	 * Called when a player attacks an entity. If this returns true the attack will not happen.
 	 */
 	public boolean skipAttackInteraction(Entity entityIn) {
-		return entityIn instanceof Player && !this.level.mayInteract((Player) entityIn, this.blockPosition());
+		return entityIn instanceof Player && !this.level().mayInteract((Player) entityIn, this.blockPosition());
 	}
 
 	protected SoundEvent getFallDamageSound(int heightIn) {
@@ -952,7 +952,7 @@ public class PlayerStatue extends LivingEntity {
 		if (GAMEPROFILE.equals(key)) {
 			synchronized (this) {
 				getGameProfile().ifPresent(profile -> {
-					if (this.level != null && this.level.isClientSide && profile != null && profile.isComplete()) {
+					if (this.level != null && this.level().isClientSide && profile != null && profile.isComplete()) {
 						Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
 							if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
 								String metadata = profileTexture.getMetadata("model");

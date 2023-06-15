@@ -75,24 +75,32 @@ import com.shynieke.statues.items.StatueMooshroomSoup;
 import com.shynieke.statues.items.StatueTeaItem;
 import com.shynieke.statues.menu.ShulkerStatueMenu;
 import com.shynieke.statues.menu.StatueTableMenu;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class StatueRegistry {
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Reference.MOD_ID);
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Reference.MOD_ID);
+	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Reference.MOD_ID);
+
 	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Reference.MOD_ID);
 	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, Reference.MOD_ID);
 
@@ -272,6 +280,23 @@ public class StatueRegistry {
 	}
 
 	private static Block.Properties blockBuilder() {
-		return Block.Properties.of(Material.SHULKER_SHELL);
+		return Block.Properties.of().mapColor(MapColor.COLOR_PURPLE);
 	}
+
+
+	public static final RegistryObject<CreativeModeTab> STATUES_BLOCKS = CREATIVE_MODE_TABS.register("blocks", () -> CreativeModeTab.builder()
+			.icon(() -> new ItemStack(StatueRegistry.SLIME_STATUE.get()))
+			.title(Component.translatable("itemGroup.statues.blocks"))
+			.displayItems((displayParameters, output) -> {
+				List<ItemStack> stacks = StatueRegistry.BLOCKS.getEntries().stream().map(reg -> new ItemStack(reg.get())).toList();
+				output.acceptAll(stacks);
+			}).build());
+	public static final RegistryObject<CreativeModeTab> STATUES_ITEMS = CREATIVE_MODE_TABS.register("items", () -> CreativeModeTab.builder()
+			.icon(() -> new ItemStack(StatueRegistry.STATUE_CORE.get()))
+			.title(Component.translatable("itemGroup.statues.items"))
+			.displayItems((displayParameters, output) -> {
+				List<ItemStack> stacks = StatueRegistry.ITEMS.getEntries().stream()
+						.filter(reg -> !(reg.get() instanceof BlockItem)).map(reg -> new ItemStack(reg.get())).toList();
+				output.acceptAll(stacks);
+			}).build());
 }

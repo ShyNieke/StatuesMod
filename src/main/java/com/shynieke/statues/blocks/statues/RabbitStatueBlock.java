@@ -33,7 +33,7 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public LivingEntity adjustSpawnedEntity(LivingEntity livingEntity) {
-		if (livingEntity instanceof Rabbit rabbit && rabbit.level.random.nextDouble() < 0.2) {
+		if (livingEntity instanceof Rabbit rabbit && rabbit.level().random.nextDouble() < 0.2) {
 			rabbit.setVariant(Rabbit.Variant.EVIL);
 			return rabbit;
 		}

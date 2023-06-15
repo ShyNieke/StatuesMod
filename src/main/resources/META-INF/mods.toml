@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[45,)"
+loaderVersion="[46,)"
 issueTrackerURL="https://github.com/ShyNieke/StatuesMod/issues"
 license="MIT"
 
@@ -15,18 +15,12 @@ Just a little functional decoration.
 [[dependencies.statues]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19.3,1.20)"
+versionRange="[1.20,1.21)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.statues]]
 modId="forge"
 mandatory=true
-versionRange="[45.1.0,)"
-ordering="NONE"
-side="BOTH"
-[[dependencies.statues]]
-modId="curios"
-mandatory=false
-versionRange="[1.19.4-5.1.5.3,)"
+versionRange="[46.0.1,)"
 ordering="NONE"
 side="BOTH"

@@ -1,6 +1,5 @@
 package com.shynieke.statues.compat.jei.category;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.compat.jei.JEIPlugin;
 import com.shynieke.statues.recipe.LootRecipe;
 import com.shynieke.statues.registry.StatueRegistry;
@@ -15,6 +14,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
@@ -63,14 +63,14 @@ public class LootCategory implements IRecipeCategory<LootRecipe> {
 	}
 
 	@Override
-	public void draw(LootRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-		IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
+	public void draw(LootRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		Font font = minecraft.font;
-		font.draw(stack, Component.literal((int) (100 * recipe.getChance1()) + "%"), 74, 8, 0);
-		font.draw(stack, Component.literal((int) (100 * recipe.getChance2()) + "%"), 74, 27, 0);
-		font.draw(stack, Component.literal((int) (100 * recipe.getChance3()) + "%"), 74, 45, 0);
+		guiGraphics.drawString(font, Component.literal((int) (100 * recipe.getChance1()) + "%"), 74, 8, 0, false);
+		guiGraphics.drawString(font, Component.literal((int) (100 * recipe.getChance2()) + "%"), 74, 27, 0, false);
+		guiGraphics.drawString(font, Component.literal((int) (100 * recipe.getChance3()) + "%"), 74, 45, 0, false);
 	}
 
 	@Override

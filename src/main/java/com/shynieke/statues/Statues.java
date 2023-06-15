@@ -17,7 +17,6 @@ import com.shynieke.statues.registry.StatueLootModifiers;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSerializers;
 import com.shynieke.statues.registry.StatueSounds;
-import com.shynieke.statues.registry.StatueTabs;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraftforge.api.distmarker.Dist;
@@ -50,6 +49,7 @@ public class Statues {
 		StatueRegistry.ENTITIES.register(eventBus);
 		StatueRegistry.BLOCKS.register(eventBus);
 		StatueRegistry.ITEMS.register(eventBus);
+		StatueRegistry.CREATIVE_MODE_TABS.register(eventBus);
 		StatueRegistry.MENU_TYPES.register(eventBus);
 		StatueBlockEntities.BLOCK_ENTITIES.register(eventBus);
 		StatueSounds.SOUND_EVENTS.register(eventBus);
@@ -57,7 +57,6 @@ public class Statues {
 		StatuesRecipes.RECIPE_SERIALIZERS.register(eventBus);
 		StatueLootModifiers.GLM.register(eventBus);
 
-		eventBus.register(new StatueTabs());
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 		eventBus.addListener(StatueEntities::registerSpawnPlacements);
 

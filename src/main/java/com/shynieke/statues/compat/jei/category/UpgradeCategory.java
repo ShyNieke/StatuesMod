@@ -1,6 +1,5 @@
 package com.shynieke.statues.compat.jei.category;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.compat.jei.JEIPlugin;
 import com.shynieke.statues.recipe.UpgradeRecipe;
@@ -18,6 +17,7 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -172,8 +172,8 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 	}
 
 	@Override
-	public void draw(UpgradeRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack stack, double mouseX, double mouseY) {
-		IRecipeCategory.super.draw(recipe, recipeSlotsView, stack, mouseX, mouseY);
+	public void draw(UpgradeRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
 	}
 
 	@Override

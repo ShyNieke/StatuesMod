@@ -1,4 +1,4 @@
-// 1.19.4	2023-06-15T20:10:58.3723499	Tags for minecraft:item mod id statues
+// 1.20.1	2023-06-15T20:40:21.1735633	Tags for minecraft:item mod id statues
 95e966c60ff996797cf399bd7d3288140ba8cc6e data/curios/tags/items/statue.json
 a75022c454865d8cbe520ecf02bb8feeabf59d5b data/statues/tags/items/core.json
 e07ed81eb5155d98050f5996c68bbdaa8211b974 data/statues/tags/items/player_upgrade_item.json

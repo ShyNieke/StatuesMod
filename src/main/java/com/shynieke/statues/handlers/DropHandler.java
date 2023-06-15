@@ -28,6 +28,7 @@ import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -45,9 +46,10 @@ public class DropHandler {
 	public void onLivingDrop(LivingDropsEvent event) {
 		Entity entity = event.getEntity();
 		Entity source = event.getSource().getEntity();
+		Level level = entity.level();
 
 		if (entity instanceof Villager) {
-			switch (entity.level.random.nextInt(4)) {
+			switch (level.random.nextInt(4)) {
 				default ->
 						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
 				case 1 ->
@@ -71,7 +73,7 @@ public class DropHandler {
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Bee bee) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.BEE_STATUE.get());
-			if (entity.level.random.nextBoolean()) {
+			if (level.random.nextBoolean()) {
 				itemStackToDrop = new ItemStack(StatueRegistry.ANGRY_BEE_STATUE.get());
 			}
 			String trans = "Trans Bee";
@@ -216,7 +218,7 @@ public class DropHandler {
 //                    else
 //                    {
 						if (random_drop <= playerDropChance) {
-							event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+							event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
 						}
 //                    }
 					}
@@ -224,13 +226,13 @@ public class DropHandler {
 				case PLAYER_FAKEPLAYER:
 					if (source instanceof ServerPlayer) {
 						if (random_drop <= playerDropChance) {
-							event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+							event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
 						}
 					}
 					break;
 				case ALL:
 					if (random_drop <= playerDropChance) {
-						event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+						event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
 					}
 					break;
 			}
@@ -243,16 +245,16 @@ public class DropHandler {
 		switch (StatuesConfig.COMMON.statueKillSource.get()) {
 			default:
 				if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
-					event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 				}
 				break;
 			case PLAYER_FAKEPLAYER:
 				if (source instanceof ServerPlayer) {
-					event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 				}
 				break;
 			case ALL:
-				event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+				event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 				break;
 		}
 	}
@@ -290,7 +292,7 @@ public class DropHandler {
 //                    else
 //                    {
 					if (random_drop <= default_drop_chance) {
-						event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+						event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 					}
 //                    }
 				}
@@ -298,13 +300,13 @@ public class DropHandler {
 			case PLAYER_FAKEPLAYER:
 				if (source instanceof ServerPlayer) {
 					if (random_drop <= default_drop_chance) {
-						event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+						event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 					}
 				}
 				break;
 			case ALL:
 				if (random_drop <= default_drop_chance) {
-					event.getDrops().add(new ItemEntity(entity.level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 				}
 				break;
 		}

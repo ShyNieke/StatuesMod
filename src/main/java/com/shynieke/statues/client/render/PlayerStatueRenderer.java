@@ -88,7 +88,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 
 	protected void setupRotations(PlayerStatue playerStatue, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
 		poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - rotationYaw));
-		float f = (float) (playerStatue.level.getGameTime() - playerStatue.punchCooldown) + partialTicks;
+		float f = (float) (playerStatue.level().getGameTime() - playerStatue.punchCooldown) + partialTicks;
 		if (f < 5.0F) {
 			poseStack.mulPose(Axis.YP.rotationDegrees(Mth.sin(f / 1.5F * (float) Math.PI) * 3.0F));
 		}

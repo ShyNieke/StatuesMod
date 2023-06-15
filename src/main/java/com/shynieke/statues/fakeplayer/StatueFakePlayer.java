@@ -51,7 +51,7 @@ public class StatueFakePlayer extends FakePlayer {
 
 	public static void unload(LevelAccessor levelAccessor) {
 		StatueFakePlayer actual = INSTANCE == null ? null : INSTANCE.get();
-		if (actual != null && actual.level == levelAccessor) {
+		if (actual != null && actual.level() == levelAccessor) {
 			actual.level = null;
 		}
 	}

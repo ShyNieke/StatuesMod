@@ -1,7 +1,8 @@
 {
-    "pack": {
-        "description": "Statues resources",
-        "pack_format": 13,
-        "forge:server_data_pack_format": 12
-    }
+  "pack": {
+    "description": {
+      "text": "Statues resources"
+    },
+    "pack_format": 15
+  }
 }

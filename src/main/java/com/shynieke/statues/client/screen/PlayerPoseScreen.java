@@ -1,6 +1,5 @@
 package com.shynieke.statues.client.screen;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.client.screen.widget.DecimalNumberFieldBox;
 import com.shynieke.statues.client.screen.widget.EnumCycleButton;
@@ -12,6 +11,7 @@ import com.shynieke.statues.network.StatuesNetworking;
 import com.shynieke.statues.network.message.PlayerStatueSyncMessage;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -185,18 +185,19 @@ public class PlayerPoseScreen extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(poseStack);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground(guiGraphics);
 
 		// Draw gui title
-		drawCenteredString(poseStack, this.font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)), this.width / 2, 20, 0xFFFFFF);
+		guiGraphics.drawCenteredString(font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)),
+				this.width / 2, 20, 0xFFFFFF);
 
 		// Draw textboxes
-		this.rotationTextField.render(poseStack, mouseX, mouseY, partialTicks);
-		this.YOffsetTextField.render(poseStack, mouseX, mouseY, partialTicks);
+		this.rotationTextField.render(guiGraphics, mouseX, mouseY, partialTicks);
+		this.YOffsetTextField.render(guiGraphics, mouseX, mouseY, partialTicks);
 		for (NumberFieldBox textField : this.poseTextFields)
 			if (textField != null) {
-				textField.render(poseStack, mouseX, mouseY, partialTicks);
+				textField.render(guiGraphics, mouseX, mouseY, partialTicks);
 			}
 
 		int offsetY = 50;
@@ -206,23 +207,23 @@ public class PlayerPoseScreen extends Screen {
 		for (int i = 0; i < this.buttonLabels.length; i++) {
 			int x = offsetX;
 			int y = offsetY + (i * 22) + (11 - (this.font.lineHeight / 2));
-			drawString(poseStack, this.font, this.buttonLabels[i], x, y, 0xA0A0A0);
+			guiGraphics.drawString(font, this.buttonLabels[i], x, y, 0xA0A0A0, false);
 		}
 
 		// right column labels
 		offsetX = this.width - 20 - 100;
 		// x, y, z
-		drawString(poseStack, this.font, "X", offsetX, 37, 0xA0A0A0);
-		drawString(poseStack, this.font, "Y", offsetX + (35), 37, 0xA0A0A0);
-		drawString(poseStack, this.font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0);
+		guiGraphics.drawString(font, "X", offsetX, 37, 0xA0A0A0, false);
+		guiGraphics.drawString(font, "Y", offsetX + (35), 37, 0xA0A0A0, false);
+		guiGraphics.drawString(font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0, false);
 		// pose textboxes
 		for (int i = 0; i < this.sliderLabels.length; i++) {
 			int x = offsetX - this.font.width(this.sliderLabels[i]) - 10;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			drawString(poseStack, this.font, this.sliderLabels[i], x, y, 0xA0A0A0);
+			guiGraphics.drawString(font, this.sliderLabels[i], x, y, 0xA0A0A0, false);
 		}
 
-		super.render(poseStack, mouseX, mouseY, partialTicks);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 	}
 
 	@Override

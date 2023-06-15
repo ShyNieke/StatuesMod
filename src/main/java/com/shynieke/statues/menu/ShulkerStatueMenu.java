@@ -24,7 +24,7 @@ public class ShulkerStatueMenu extends AbstractContainerMenu {
 	private static ShulkerStatueBlockEntity getBlockEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInventory, "playerInventory cannot be null!");
 		Objects.requireNonNull(data, "data cannot be null!");
-		final BlockEntity BlockEntityAtPos = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+		final BlockEntity BlockEntityAtPos = playerInventory.player.level().getBlockEntity(data.readBlockPos());
 
 		if (BlockEntityAtPos instanceof ShulkerStatueBlockEntity) {
 			return (ShulkerStatueBlockEntity) BlockEntityAtPos;

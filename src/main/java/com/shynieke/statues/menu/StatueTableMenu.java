@@ -30,7 +30,7 @@ public class StatueTableMenu extends AbstractContainerMenu {
 	private static StatueTableBlockEntity getBlockEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInventory, "playerInventory cannot be null!");
 		Objects.requireNonNull(data, "data cannot be null!");
-		final BlockEntity BlockEntityAtPos = playerInventory.player.level.getBlockEntity(data.readBlockPos());
+		final BlockEntity BlockEntityAtPos = playerInventory.player.level().getBlockEntity(data.readBlockPos());
 
 		if (BlockEntityAtPos instanceof StatueTableBlockEntity) {
 			return (StatueTableBlockEntity) BlockEntityAtPos;
@@ -124,7 +124,7 @@ public class StatueTableMenu extends AbstractContainerMenu {
 			super.slotsChanged(inventoryIn);
 		}
 		getStatueBE().setChanged();
-		if (!player.level.isClientSide) {
+		if (!player.level().isClientSide) {
 			this.validRecipe[0] = statueBE.hasValidRecipe() ? 1 : 0;
 		}
 	}

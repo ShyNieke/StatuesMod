@@ -42,7 +42,7 @@ public class PlayerStatueSyncMessage {
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isServer()) {
 				final ServerPlayer player = ctx.getSender();
-				final ServerLevel serverLevel = ctx.getSender().getLevel();
+				final ServerLevel serverLevel = ctx.getSender().serverLevel();
 				Entity entity = serverLevel.getEntity(this.entityUUID);
 				if (entity instanceof PlayerStatue playerStatue && player != null) {
 					if (!playerStatue.isLocked() || (playerStatue.getLockedBy().equals(player.getUUID()))) {

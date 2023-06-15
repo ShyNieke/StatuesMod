@@ -1,12 +1,11 @@
 package com.shynieke.statues.client.screen;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.menu.StatueTableMenu;
 import com.shynieke.statues.network.StatuesNetworking;
 import com.shynieke.statues.network.message.StatueTableMessage;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -50,21 +49,20 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 	}
 
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(poseStack);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground(guiGraphics);
 
-		super.render(poseStack, mouseX, mouseY, partialTicks);
-		this.renderTooltip(poseStack, mouseX, mouseY);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		this.renderTooltip(guiGraphics, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(PoseStack poseStack, float partialTicks, int x, int y) {
-		RenderSystem.setShaderTexture(0, TEXTURE);
-		this.blit(poseStack, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
+		guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
 	}
 
 	@Override
-	protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
 		int actualMouseX = mouseX - ((this.width - this.imageWidth) / 2);
 		int actualMouseY = mouseY - ((this.height - this.imageHeight) / 2);
 
@@ -77,7 +75,7 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 				text.add(Component.translatable("gui.statues.statue_table.invalid_recipe.tooltip")
 						.withStyle(ChatFormatting.RED));
 			}
-			renderComponentTooltip(poseStack, text, actualMouseX, actualMouseY);
+			guiGraphics.renderComponentTooltip(font, text, actualMouseX, actualMouseY);
 		}
 	}
 }

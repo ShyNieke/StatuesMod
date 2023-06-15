@@ -12,7 +12,6 @@ import com.shynieke.statues.datagen.server.StatueGLMProvider;
 import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
-import com.shynieke.statues.datagen.server.patchouli.StatuePatchouliProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistrySetBuilder;
@@ -48,7 +47,7 @@ public class StatuesDataGenerator {
 			generator.addProvider(event.includeServer(), new StatueItemTagProvider(packOutput, lookupProvider, blockTags, helper));
 			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(packOutput, lookupProvider, helper));
 			generator.addProvider(event.includeServer(), new StatueGLMProvider(packOutput));
-			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(packOutput));
+//			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(packOutput)); TODO: Re-enable once 1.20 Patchouli is available and I've updated PatchouliProvider
 
 			generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
 					packOutput, CompletableFuture.supplyAsync(StatuesDataGenerator::getProvider), Set.of(Reference.MOD_ID)));

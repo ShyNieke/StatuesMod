@@ -19,7 +19,7 @@ public class PatchouliCompat {
 			ItemStack patchouliBook = new ItemStack(guideBook);
 			CompoundTag tag = patchouliBook.getOrCreateTag();
 			tag.putString("patchouli:book", "statues:statues");
-			Level level = playerIn.level;
+			Level level = playerIn.level();
 			if (!playerIn.addItem(patchouliBook)) {
 				level.addFreshEntity(new ItemEntity(level, playerIn.getX(), playerIn.getY(), playerIn.getZ(), patchouliBook));
 			}
