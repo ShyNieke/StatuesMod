@@ -40,6 +40,10 @@ public class StatueBlockItem extends BlockItem {
 		return this.getBlock() instanceof AbstractStatueBase statueBase ? statueBase.isBaby() : false;
 	}
 
+	public boolean isHiddenStatue() {
+		return this.getBlock() instanceof AbstractStatueBase statueBase ? statueBase.isHiddenStatue() : false;
+	}
+
 	public EntityType<?> getEntity() {
 		return this.getBlock() instanceof AbstractStatueBase statueBase ? statueBase.getEntity() : null;
 	}

@@ -1,1 +1,1 @@
-* Initial update to 1.20
+* Add more info to JEI about Statue Upgrading

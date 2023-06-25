@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "statues:block/pillager",
-		"1": "statues:block/omnious banner",
+		"1": "statues:block/omnious_banner",
 		"particle": "statues:block/pillager"
 	},
 	"elements": [

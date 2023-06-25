@@ -209,6 +209,18 @@ public class StatueLanguageProvider extends LanguageProvider {
 
 		add("statues.gui.jei.category.loot", "Statue Loot");
 		add("statues.gui.jei.category.upgrade", "Statue Upgrade");
+		add("statues.gui.jei.statue.info", "%s can be obtained as a %s drop chance from killing %s");
+		add("statues.gui.jei.statue_core.info", "%s can be obtained by killing %s");
+		add("statues.gui.jei.statue_core.info2", "The %s just like the vanilla one can be found in dark areas but be careful!");
+		add("statues.gui.jei.statue_table.info", "The Statue Upgrading System allows players to upgrade and level up their mob statues. This entry will provide an overview of how the system works and what upgrades are available.");
+		add("statues.gui.jei.statue_table.info2", "To start upgrading a statue, players first need to obtain a statue of the desired mob.");
+		add("statues.gui.jei.statue_table.info3", "Once the player has obtained a Statue and a Statue Core, they need to craft a §c§lS.T.A.T.U.E§r (\"Statue Table for Applying Tiered Upgrade Enhancements\") and insert the Statue Core and desired statue. After pressing the \"Chisel\" button, the statue will be upgraded to a state in which it can level up.");
+		add("statues.gui.jei.statue_table.info4", "After upgrading the statue, players can level it up by killing 10 more of the corresponding mob while the statue is in their inventory. Every 10 mobs will unlock an upgrade slot up to a max of 16.");
+		add("statues.gui.jei.statue_table.info5", "There are several different upgrades available for the statues:");
+		add("statues.gui.jei.statue_table.info6", "§lGlowing§r - Allows the statue to emit light\n§lUnglowing§r - Removes previously applied glowing\n§lSpawner§r - Allows the statue to spawn it's mob every so often\n§lDespawner§r - Disallows it's mob from spawning in the nearby area");
+		add("statues.gui.jei.statue_table.info7", "§lMob Killer§r - Kills the mob if it gets nearby (1 = Regular drops, 2 = Player drops, 3 = Player drops + XP)\n§lLooting§r - Allows the statue to generate loot\n§lAutomation§r - Allows exporting of loot\n§lSpeed§r - Speeds up the interaction/spawning timer");
+		add("statues.gui.jei.statue_table.info8", "§lInteraction§r - Allows special interactions\n§lSound§r - Allows the statue to make sound when right-clicked or powered");
+
 
 		add("statues.info.level", "Level:");
 		add("statues.info.kills", "Kills:");

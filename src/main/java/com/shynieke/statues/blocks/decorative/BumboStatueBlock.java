@@ -26,6 +26,11 @@ public class BumboStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
+	public boolean isHiddenStatue() {
+		return true;
+	}
+
+	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
