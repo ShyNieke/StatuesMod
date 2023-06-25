@@ -124,8 +124,8 @@ dependencies {
 
     implementation fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 
-//    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}-FORGE")
-//    implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
+    implementation fg.deobf("vazkii.patchouli:Patchouli:${patchouli_version}")
+    implementation fg.deobf("xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}")
 
     implementation fg.deobf("curse.maven:jade-324717:4586193") //Jade (WAILA)
     implementation fg.deobf("curse.maven:TheOneProbe-245211:4579432") //The One probe (TOP)
