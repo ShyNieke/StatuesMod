@@ -1,1 +1,1 @@
-* Add more info to JEI about Statue Upgrading
+* Fix creative tab ordering

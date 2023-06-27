@@ -82,6 +82,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -286,6 +287,7 @@ public class StatueRegistry {
 
 	public static final RegistryObject<CreativeModeTab> STATUES_BLOCKS = CREATIVE_MODE_TABS.register("blocks", () -> CreativeModeTab.builder()
 			.icon(() -> new ItemStack(StatueRegistry.SLIME_STATUE.get()))
+			.withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
 			.title(Component.translatable("itemGroup.statues.blocks"))
 			.displayItems((displayParameters, output) -> {
 				List<ItemStack> stacks = StatueRegistry.BLOCKS.getEntries().stream().map(reg -> new ItemStack(reg.get())).toList();
@@ -293,6 +295,7 @@ public class StatueRegistry {
 			}).build());
 	public static final RegistryObject<CreativeModeTab> STATUES_ITEMS = CREATIVE_MODE_TABS.register("items", () -> CreativeModeTab.builder()
 			.icon(() -> new ItemStack(StatueRegistry.STATUE_CORE.get()))
+			.withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
 			.title(Component.translatable("itemGroup.statues.items"))
 			.displayItems((displayParameters, output) -> {
 				List<ItemStack> stacks = StatueRegistry.ITEMS.getEntries().stream()
