@@ -1,7 +1,9 @@
 package com.shynieke.statues.blocks.statues.fish;
 
+import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blockentities.TropicalFishBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
+import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -20,6 +22,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -113,5 +117,19 @@ public class FishStatueBlock extends AbstractStatueBase {
 	@OnlyIn(Dist.CLIENT)
 	public static int fromColor(int color) {
 		return DyeColor.byId(color).getTextColor();
+	}
+
+	@Nullable
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
+		if (state.getValue(INTERACTIVE).booleanValue()) {
+			return createStatueTicker(level, blockEntityType, StatueBlockEntities.TROPICAL_FISH.get());
+		} else {
+			return null;
+		}
+	}
+
+	@Nullable
+	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends StatueBlockEntity> blockEntityType1) {
+		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, TropicalFishBlockEntity::serverTick);
 	}
 }
