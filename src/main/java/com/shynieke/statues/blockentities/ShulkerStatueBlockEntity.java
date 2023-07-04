@@ -60,13 +60,13 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 	@Override
 	public void load(CompoundTag compound) {
 		super.load(compound);
-		compound.put("ItemStackHandler", handler.serializeNBT());
+		handler.deserializeNBT(compound.getCompound("ItemStackHandler"));
 	}
 
 	@Override
 	public void saveAdditional(CompoundTag compound) {
 		super.saveAdditional(compound);
-		handler.deserializeNBT(compound.getCompound("ItemStackHandler"));
+		compound.put("ItemStackHandler", handler.serializeNBT());
 	}
 
 	@Override
