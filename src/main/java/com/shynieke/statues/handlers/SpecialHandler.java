@@ -53,7 +53,6 @@ public class SpecialHandler {
 			for (ItemEntity itemE : player.level().getEntitiesOfClass(ItemEntity.class, hitbox)) {
 				if (itemE != null) {
 					if (itemE.getItem().getItem().equals(Items.DIAMOND)) {
-						AABB bb = itemE.getBoundingBox().contract(0.1, 0.1, 0.1);
 						BlockPos lavaPos = itemE.blockPosition();
 
 						boolean lavaFound;
