@@ -5,6 +5,11 @@
 ## About ##
 Expanding the idea of OpenBlocks Trophies.
 
+## Contributions ##
+Localization contributors can choose to get the Translator cosmetic effect on their player statues.
+
+At this time we will not accept PR's that add new missing vanilla mobs as Shy would like to make all the models/textures herself.
+
 ## License ##
 * Statues is licensed under the MIT License
   - (c) 2021 ShyNieke
