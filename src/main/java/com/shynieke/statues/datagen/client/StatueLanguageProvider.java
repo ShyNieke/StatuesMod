@@ -226,17 +226,6 @@ public class StatueLanguageProvider extends LanguageProvider {
 		add("statues.info.kills", "Kills:");
 		add("statues.info.upgrade_slots", "Upgrade Slots:");
 
-		add("statues.upgrade.level.1", "I");
-		add("statues.upgrade.level.2", "II");
-		add("statues.upgrade.level.3", "III");
-		add("statues.upgrade.level.4", "IV");
-		add("statues.upgrade.level.5", "V");
-		add("statues.upgrade.level.6", "VI");
-		add("statues.upgrade.level.7", "VII");
-		add("statues.upgrade.level.8", "VIII");
-		add("statues.upgrade.level.9", "IX");
-		add("statues.upgrade.level.10", "X");
-
 		add("statues.upgrade.glowing.name", "Glowing");
 		add("statues.upgrade.spawner.name", "Spawner");
 		add("statues.upgrade.despawner.name", "Despawner");
