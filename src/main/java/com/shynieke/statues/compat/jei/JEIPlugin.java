@@ -13,7 +13,6 @@ import com.shynieke.statues.recipe.UpgradeRecipe;
 import com.shynieke.statues.registry.StatueRegistry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.recipe.RecipeType;
