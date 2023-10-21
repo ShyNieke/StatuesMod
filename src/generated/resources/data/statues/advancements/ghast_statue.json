@@ -1,0 +1,38 @@
+{
+  "parent": "statues:blaze_statue",
+  "criteria": {
+    "ghast_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:ghast_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.ghast_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:ghast_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.ghast_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "ghast_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,38 @@
+{
+  "parent": "statues:spider_statue",
+  "criteria": {
+    "slime_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:slime_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.slime_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:slime_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.slime_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "slime_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

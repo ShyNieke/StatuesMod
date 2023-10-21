@@ -1,0 +1,38 @@
+{
+  "parent": "statues:witch_statue",
+  "criteria": {
+    "pillager_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:pillager_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.pillager_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:pillager_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.pillager_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "pillager_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

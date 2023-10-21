@@ -1,0 +1,38 @@
+{
+  "parent": "statues:root",
+  "criteria": {
+    "enderman_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:enderman_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.enderman_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:enderman_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.enderman_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "enderman_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

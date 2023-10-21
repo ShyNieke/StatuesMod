@@ -5,6 +5,7 @@ import com.shynieke.statues.datagen.client.StatueBlockstateProvider;
 import com.shynieke.statues.datagen.client.StatueItemModelProvider;
 import com.shynieke.statues.datagen.client.StatueLanguageProvider;
 import com.shynieke.statues.datagen.client.StatueSoundProvider;
+import com.shynieke.statues.datagen.server.StatueAdvancementProvider;
 import com.shynieke.statues.datagen.server.StatueBiomeModifiers;
 import com.shynieke.statues.datagen.server.StatueBiomeTagProvider;
 import com.shynieke.statues.datagen.server.StatueBlockTagProvider;
@@ -49,6 +50,7 @@ public class StatuesDataGenerator {
 			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(packOutput, lookupProvider, helper));
 			generator.addProvider(event.includeServer(), new StatueGLMProvider(packOutput));
 			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(packOutput));
+			generator.addProvider(event.includeServer(), new StatueAdvancementProvider(packOutput, lookupProvider, helper));
 
 			generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
 					packOutput, CompletableFuture.supplyAsync(StatuesDataGenerator::getProvider), Set.of(Reference.MOD_ID)));

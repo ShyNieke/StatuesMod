@@ -1,0 +1,181 @@
+{
+  "parent": "statues:salmon_statue",
+  "criteria": {
+    "tropical_fish_b": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_b"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_bb": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_bb"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_be": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_be"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_bm": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_bm"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_bmb": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_bmb"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_bms": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_bms"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_e": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_e"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_es": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_es"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_hb": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_hb"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_sb": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_sb"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_sd": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_sd"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "tropical_fish_ss": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tropical_fish_ss"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.tropical_fish_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:tropical_fish_b"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.tropical_fish_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "tropical_fish_b",
+      "tropical_fish_bb",
+      "tropical_fish_be",
+      "tropical_fish_bm",
+      "tropical_fish_bmb",
+      "tropical_fish_bms",
+      "tropical_fish_e",
+      "tropical_fish_es",
+      "tropical_fish_hb",
+      "tropical_fish_sb",
+      "tropical_fish_sd",
+      "tropical_fish_ss"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

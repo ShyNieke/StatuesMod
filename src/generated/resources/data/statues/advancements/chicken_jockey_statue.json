@@ -1,0 +1,38 @@
+{
+  "parent": "statues:chicken_statue",
+  "criteria": {
+    "chicken_jockey_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:chicken_jockey_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.chicken_jockey_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:chicken_jockey_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.chicken_jockey_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "chicken_jockey_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

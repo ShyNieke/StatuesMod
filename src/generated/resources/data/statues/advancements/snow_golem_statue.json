@@ -1,0 +1,38 @@
+{
+  "parent": "statues:cow_statue",
+  "criteria": {
+    "snow_golem_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:snow_golem_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.snow_golem_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:snow_golem_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.snow_golem_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "snow_golem_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

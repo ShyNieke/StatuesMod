@@ -1,0 +1,38 @@
+{
+  "parent": "statues:display_stand",
+  "criteria": {
+    "info_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:info_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.info_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:info_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.info_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "info_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

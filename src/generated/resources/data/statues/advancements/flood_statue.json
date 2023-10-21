@@ -1,0 +1,38 @@
+{
+  "parent": "statues:baby_zombie_statue",
+  "criteria": {
+    "flood_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:flood_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.flood_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "statues:flood_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.flood_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "flood_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

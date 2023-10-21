@@ -1,0 +1,103 @@
+{
+  "parent": "statues:fox_snow_statue",
+  "criteria": {
+    "rabbit_br_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:rabbit_br_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "rabbit_bs_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:rabbit_bs_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "rabbit_bw_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:rabbit_bw_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "rabbit_go_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:rabbit_go_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "rabbit_wh_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:rabbit_wh_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "rabbit_ws_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:rabbit_ws_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.rabbit_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:rabbit_br_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.rabbit_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "rabbit_br_statue",
+      "rabbit_bs_statue",
+      "rabbit_bw_statue",
+      "rabbit_go_statue",
+      "rabbit_wh_statue",
+      "rabbit_ws_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
