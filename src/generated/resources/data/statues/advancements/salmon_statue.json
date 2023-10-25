@@ -1,0 +1,38 @@
+{
+  "parent": "statues:cod_statue",
+  "criteria": {
+    "salmon_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:salmon_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.salmon_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:salmon_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.salmon_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "salmon_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

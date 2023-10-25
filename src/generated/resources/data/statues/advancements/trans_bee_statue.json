@@ -1,0 +1,38 @@
+{
+  "parent": "statues:bee_statue",
+  "criteria": {
+    "trans_bee_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:trans_bee_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.trans_bee_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "statues:trans_bee_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.trans_bee_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "trans_bee_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

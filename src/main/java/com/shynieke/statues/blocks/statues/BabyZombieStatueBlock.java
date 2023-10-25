@@ -32,13 +32,13 @@ public class BabyZombieStatueBlock extends AbstractStatueBase {
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (this.isDecorative(state)) {
 			BlockState blockState = level.getBlockState(pos.below());
-			if (blockState.getBlock() == Blocks.LAPIS_BLOCK) {
+			if (blockState.is(Blocks.LAPIS_BLOCK)) {
 				level.addParticle(ParticleTypes.EXPLOSION, pos.below().getX(), pos.below().getY(), pos.below().getZ(), 0.0D, 0.0D, 0.0D);
 				level.setBlockAndUpdate(pos.below(), StatueRegistry.FLOOD_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
 				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 				level.playLocalSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, SoundEvents.VILLAGER_YES, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 			}
-			if (blockState.getBlock() == StatueRegistry.CHICKEN_STATUE.get() && isDecorative(blockState)) {
+			if (blockState.is(StatueRegistry.CHICKEN_STATUE.get()) && isDecorative(blockState)) {
 				level.addParticle(ParticleTypes.EXPLOSION, pos.below().getX(), pos.below().getY(), pos.below().getZ(), 0.0D, 0.0D, 0.0D);
 				level.setBlockAndUpdate(pos.below(), StatueRegistry.CHICKEN_JOCKEY_STATUE.get().defaultBlockState().setValue(FACING, placer.getDirection().getOpposite()));
 				level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());

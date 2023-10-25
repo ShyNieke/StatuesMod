@@ -1,0 +1,38 @@
+{
+  "parent": "statues:cow_statue",
+  "criteria": {
+    "chicken_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:chicken_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.chicken_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:chicken_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.chicken_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "chicken_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

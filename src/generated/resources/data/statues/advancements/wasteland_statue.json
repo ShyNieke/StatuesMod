@@ -1,0 +1,38 @@
+{
+  "parent": "statues:pig_statue",
+  "criteria": {
+    "wasteland_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:wasteland_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.wasteland_statue.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "statues:wasteland_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.wasteland_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "wasteland_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

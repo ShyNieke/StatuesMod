@@ -1,0 +1,38 @@
+{
+  "parent": "statues:endermite_statue",
+  "criteria": {
+    "shulker_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:shulker_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.shulker_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:shulker_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.shulker_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "shulker_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

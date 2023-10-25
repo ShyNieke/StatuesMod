@@ -1,0 +1,38 @@
+{
+  "parent": "statues:husk_statue",
+  "criteria": {
+    "drowned_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:drowned_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.drowned_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:drowned_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.drowned_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "drowned_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

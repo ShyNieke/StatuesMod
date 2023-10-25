@@ -1,0 +1,38 @@
+{
+  "parent": "statues:root",
+  "criteria": {
+    "elder_guardian_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:elder_guardian_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.elder_guardian_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "statues:elder_guardian_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.elder_guardian_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "elder_guardian_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

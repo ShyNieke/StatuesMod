@@ -5,6 +5,10 @@ pluginManagement {
             name = 'MinecraftForge'
             url = 'https://maven.minecraftforge.net/'
         }
+        maven {
+            name = 'Saps Mirror'
+            url = 'https://maven.saps.dev/mirror'
+        }
     }
 }
 

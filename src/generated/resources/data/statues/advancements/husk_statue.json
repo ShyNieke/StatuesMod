@@ -1,0 +1,38 @@
+{
+  "parent": "statues:zombie_statue",
+  "criteria": {
+    "husk_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:husk_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.husk_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:husk_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.husk_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "husk_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

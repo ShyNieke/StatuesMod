@@ -1,0 +1,188 @@
+{
+  "parent": "statues:cat_statue",
+  "criteria": {
+    "cat_black_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_black_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_british_shorthair_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_british_shorthair_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_calico_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_calico_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_jellie_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_jellie_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_persian_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_persian_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_ragdoll_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_ragdoll_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_red_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_red_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_siamese_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_siamese_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_tabby_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_tabby_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_tuxedo_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_tuxedo_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "cat_white_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cat_white_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.cat_all_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "statues:cat_tuxedo_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.cat_all_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "cat_black_statue"
+    ],
+    [
+      "cat_british_shorthair_statue"
+    ],
+    [
+      "cat_calico_statue"
+    ],
+    [
+      "cat_jellie_statue"
+    ],
+    [
+      "cat_persian_statue"
+    ],
+    [
+      "cat_ragdoll_statue"
+    ],
+    [
+      "cat_red_statue"
+    ],
+    [
+      "cat_siamese_statue"
+    ],
+    [
+      "cat_tabby_statue"
+    ],
+    [
+      "cat_tuxedo_statue"
+    ],
+    [
+      "cat_white_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
