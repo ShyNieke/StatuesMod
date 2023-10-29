@@ -17,3 +17,4 @@ ef9541cb-4630-4b4f-953e-ec8617386fea SUPPORTER		Dovahmiin
 5577a71c-d3f5-41e5-bcca-74b2322a4519 AKLIZ        	EvilSpaceBunny
 0b844a66-d870-455f-a3d9-b2155bba2eed AKLIZ        	The_Infamous_Alk
 4589c755-d075-423b-b571-e1b667453a31 TRANSLATOR		_Blay_
+2c024012-fe1e-4317-8ea5-585b79513c45 TRANSLATOR		Ferri_Arnus
