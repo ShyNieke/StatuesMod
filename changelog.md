@@ -1,1 +1,1 @@
-* Fix a potential issue with the full sized Player Statue
+* Add Dutch localization (Courtesy of [ferriarnus](https://github.com/ShyNieke/StatuesMod/pull/92))
