@@ -5,8 +5,8 @@ import com.shynieke.statues.network.message.PlayerStatueScreenMessage;
 import com.shynieke.statues.network.message.PlayerStatueSyncMessage;
 import com.shynieke.statues.network.message.StatueTableMessage;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.neoforge.network.NetworkRegistry;
+import net.neoforged.neoforge.network.simple.SimpleChannel;
 
 public class StatuesNetworking {
 	private static final String PROTOCOL_VERSION = "1";

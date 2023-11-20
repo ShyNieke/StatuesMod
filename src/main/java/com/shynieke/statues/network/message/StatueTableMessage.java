@@ -3,9 +3,7 @@ package com.shynieke.statues.network.message;
 import com.shynieke.statues.menu.StatueTableMenu;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraftforge.network.NetworkEvent.Context;
-
-import java.util.function.Supplier;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 public class StatueTableMessage {
 
@@ -23,8 +21,7 @@ public class StatueTableMessage {
 		return new StatueTableMessage(packetBuffer.readBoolean());
 	}
 
-	public void handle(Supplier<Context> context) {
-		Context ctx = context.get();
+	public void handle(NetworkEvent.Context ctx) {
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isServer() && ctx.getSender() != null) {
 				AbstractContainerMenu container = ctx.getSender().containerMenu;

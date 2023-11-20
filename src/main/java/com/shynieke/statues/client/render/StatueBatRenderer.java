@@ -20,21 +20,21 @@ public class StatueBatRenderer extends MobRenderer<StatueBatEntity, StatueBatMod
 	/**
 	 * Returns the location of an entity's texture.
 	 */
-	public ResourceLocation getTextureLocation(StatueBatEntity entity) {
+	public ResourceLocation getTextureLocation(StatueBatEntity statueBat) {
 		return BAT_TEXTURES;
 	}
 
-	protected void scale(StatueBatEntity entitylivingbaseIn, PoseStack poseStack, float partialTickTime) {
+	protected void scale(StatueBatEntity batEntity, PoseStack poseStack, float partialTickTime) {
 		poseStack.scale(0.35F, 0.35F, 0.35F);
 	}
 
-	protected void setupRotations(StatueBatEntity entityLiving, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
-		if (entityLiving.isResting()) {
+	protected void setupRotations(StatueBatEntity batEntity, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+		if (batEntity.isResting()) {
 			poseStack.translate(0.0D, (double) -0.1F, 0.0D);
 		} else {
 			poseStack.translate(0.0D, (double) (Mth.cos(ageInTicks * 0.3F) * 0.1F), 0.0D);
 		}
 
-		super.setupRotations(entityLiving, poseStack, ageInTicks, rotationYaw, partialTicks);
+		super.setupRotations(batEntity, poseStack, ageInTicks, rotationYaw, partialTicks);
 	}
 }

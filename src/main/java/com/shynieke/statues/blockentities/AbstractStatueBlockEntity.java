@@ -25,10 +25,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -308,8 +308,8 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		protected IItemHandler getIItemHandler(Level level) {
 			if (level.isAreaLoaded(worldPosition, 1)) {
 				BlockEntity blockEntity = level.getBlockEntity(tilePos);
-				if (!blockEntity.isRemoved() && blockEntity.hasLevel() && blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
-					return blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, direction).orElse(null);
+				if (!blockEntity.isRemoved() && blockEntity.hasLevel() && blockEntity.getCapability(Capabilities.ITEM_HANDLER).isPresent()) {
+					return blockEntity.getCapability(Capabilities.ITEM_HANDLER, direction).orElse(null);
 				}
 			}
 			return null;

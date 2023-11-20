@@ -17,11 +17,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent.ItemCraftedEvent;
 
 public class SpecialHandler {
 	@SubscribeEvent
@@ -30,7 +29,7 @@ public class SpecialHandler {
 		if (resultStack.getItem() == StatueRegistry.PLAYER_STATUE.get().asItem()) {
 			Player player = event.getEntity();
 			if (player == null || player instanceof FakePlayer) {
-				event.setCanceled(true);
+				return;
 			}
 
 			player.hurt(player.damageSources().magic(), player.getMaxHealth() / 2);
@@ -39,7 +38,7 @@ public class SpecialHandler {
 	}
 
 	@SubscribeEvent
-	public void playerTick(PlayerTickEvent event) {
+	public void playerTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.START)
 			return;
 
@@ -47,10 +46,10 @@ public class SpecialHandler {
 			final Player player = event.player;
 			Level level = player.level();
 			BlockPos pos = player.blockPosition();
-			AABB hitbox = new AABB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
-					.expandTowards(-3, -3, -3).expandTowards(3, 3, 3);
+			AABB aabb = new AABB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)
+					.inflate(3);
 
-			for (ItemEntity itemE : player.level().getEntitiesOfClass(ItemEntity.class, hitbox)) {
+			for (ItemEntity itemE : player.level().getEntitiesOfClass(ItemEntity.class, aabb)) {
 				if (itemE != null) {
 					if (itemE.getItem().getItem().equals(Items.DIAMOND)) {
 						BlockPos lavaPos = itemE.blockPosition();

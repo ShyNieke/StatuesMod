@@ -23,9 +23,9 @@ import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerPoseScreen extends Screen {
@@ -188,7 +188,7 @@ public class PlayerPoseScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(guiGraphics);
+		this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 
 		// Draw gui title
 		guiGraphics.drawCenteredString(font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)),
@@ -232,12 +232,6 @@ public class PlayerPoseScreen extends Screen {
 	public void tick() {
 		super.tick();
 		this.playerStatueEntity.clientLock = 5;
-		this.rotationTextField.tick();
-		this.YOffsetTextField.tick();
-		for (NumberFieldBox textField : this.poseTextFields)
-			if (textField != null) {
-				textField.tick();
-			}
 	}
 
 	@Override
@@ -250,7 +244,7 @@ public class PlayerPoseScreen extends Screen {
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double delta, double delta2) {
 		var multiplier = Screen.hasShiftDown() ? 10.0f : 1.0f;
 		if (allowScrolling && delta > 0) {
 			//Add 1 to the value
@@ -293,7 +287,7 @@ public class PlayerPoseScreen extends Screen {
 				}
 			}
 		}
-		return super.mouseScrolled(mouseX, mouseY, delta);
+		return super.mouseScrolled(mouseX, mouseY, delta, delta2);
 	}
 
 	@Override
@@ -302,12 +296,12 @@ public class PlayerPoseScreen extends Screen {
 			for (int i = 0; i < this.poseTextFields.length; i++) {
 				if (this.poseTextFields[i].isFocused()) {
 					this.textFieldUpdated();
-					this.poseTextFields[i].moveCursorToEnd();
+					this.poseTextFields[i].moveCursorToEnd(false);
 					this.poseTextFields[i].setFocused(false);
 
 					int j = (!Screen.hasShiftDown() ? (i == this.poseTextFields.length - 1 ? 0 : i + 1) : (i == 0 ? this.poseTextFields.length - 1 : i - 1));
 					this.poseTextFields[j].setFocused(true);
-					this.poseTextFields[j].moveCursorTo(0);
+					this.poseTextFields[j].moveCursorTo(0, false);
 					this.poseTextFields[j].setHighlightPos(this.poseTextFields[j].getValue().length());
 				}
 			}

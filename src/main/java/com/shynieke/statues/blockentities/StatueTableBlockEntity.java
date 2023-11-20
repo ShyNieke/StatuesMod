@@ -21,18 +21,19 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class StatueTableBlockEntity extends BlockEntity implements MenuProvider {
 	public int time;
@@ -40,7 +41,7 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	public static final int SLOT_CENTER = 0;
 	public static final int SLOT_CORE = 1;
 	public static final int[] SLOT_CATALYSTS = new int[]{2, 3, 4, 5};
-	protected UpgradeRecipe currentRecipe;
+	protected RecipeHolder<UpgradeRecipe> currentRecipe;
 
 	public final ItemStackHandler handler = new ItemStackHandler(6) {
 		@Override
@@ -105,18 +106,19 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 
 	public void executeCraft() {
 		if (hasValidRecipe()) {
-			if (currentRecipe.requiresCore()) {
+			UpgradeRecipe recipe = this.currentRecipe.value();
+			if (recipe.requiresCore()) {
 				getCoreSlot().shrink(1);
 			}
 			for (int slot : SLOT_CATALYSTS) {
 				handler.getStackInSlot(slot).shrink(1);
 			}
 
-			ItemStack resultStack = currentRecipe.getResultItem(level.registryAccess()).copy();
+			ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
 			ItemStack centerStack = getCenterSlot();
 			if (resultStack.isEmpty()) {
-				if (!currentRecipe.getUpgradeType().apply(centerStack, currentRecipe.getTier())) {
-					Statues.LOGGER.debug("Failed to apply upgrade {} to {}", currentRecipe.getId(), resultStack);
+				if (!recipe.getUpgradeType().apply(centerStack, recipe.getTier())) {
+					Statues.LOGGER.debug("Failed to apply upgrade {} to {}", currentRecipe.id(), resultStack);
 					this.currentRecipe = null;
 					return;
 				}
@@ -218,7 +220,7 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-		if (capability == ForgeCapabilities.ITEM_HANDLER) {
+		if (capability == Capabilities.ITEM_HANDLER) {
 			return stackHolder.cast();
 		}
 		return super.getCapability(capability, facing);
@@ -233,6 +235,6 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	@Override
 	public void reviveCaps() {
 		super.reviveCaps();
-		this.stackHolder = net.minecraftforge.common.util.LazyOptional.of(() -> handler);
+		this.stackHolder = LazyOptional.of(() -> handler);
 	}
 }

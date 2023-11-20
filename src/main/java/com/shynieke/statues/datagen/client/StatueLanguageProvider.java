@@ -5,8 +5,9 @@ import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+
+import java.util.function.Supplier;
 
 public class StatueLanguageProvider extends LanguageProvider {
 
@@ -338,7 +339,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 	 * @param sound The sound event
 	 * @param text  The subtitle text
 	 */
-	public void addSubtitle(RegistryObject<SoundEvent> sound, String text) {
+	public void addSubtitle(Supplier<SoundEvent> sound, String text) {
 		this.addSubtitle(sound.get(), text);
 	}
 

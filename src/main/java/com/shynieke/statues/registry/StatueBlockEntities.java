@@ -6,15 +6,16 @@ import com.shynieke.statues.blockentities.ShulkerStatueBlockEntity;
 import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.blockentities.TropicalFishBlockEntity;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class StatueBlockEntities {
-	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Reference.MOD_ID);
+	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Reference.MOD_ID);
 
-	public static final RegistryObject<BlockEntityType<StatueBlockEntity>> STATUE = BLOCK_ENTITIES.register("statue", () -> BlockEntityType.Builder.of(StatueBlockEntity::new,
+	public static final Supplier<BlockEntityType<StatueBlockEntity>> STATUE = BLOCK_ENTITIES.register("statue", () -> BlockEntityType.Builder.of(StatueBlockEntity::new,
 			StatueRegistry.ANGRY_BEE_STATUE.get(), StatueRegistry.BABY_ZOMBIE_STATUE.get(), StatueRegistry.BEE_STATUE.get(),
 			StatueRegistry.BLAZE_STATUE.get(), StatueRegistry.BROWN_MOOSHROOM_STATUE.get(), StatueRegistry.CAMPFIRE_STATUE.get(),
 			StatueRegistry.CAT_BLACK_STATUE.get(), StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get(), StatueRegistry.CAT_CALICO_STATUE.get(),
@@ -50,18 +51,18 @@ public class StatueBlockEntities {
 			StatueRegistry.VILLAGER_PU_STATUE.get(), StatueRegistry.VILLAGER_WH_STATUE.get(), StatueRegistry.VINDICATOR_STATUE.get(),
 			StatueRegistry.WASTELAND_STATUE.get(), StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<ShulkerStatueBlockEntity>> SHULKER_STATUE = BLOCK_ENTITIES.register("shulker_statue", () ->
+	public static final Supplier<BlockEntityType<ShulkerStatueBlockEntity>> SHULKER_STATUE = BLOCK_ENTITIES.register("shulker_statue", () ->
 			BlockEntityType.Builder.of(ShulkerStatueBlockEntity::new, StatueRegistry.SHULKER_STATUE.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<TropicalFishBlockEntity>> TROPICAL_FISH = BLOCK_ENTITIES.register("tropical_fish", () ->
+	public static final Supplier<BlockEntityType<TropicalFishBlockEntity>> TROPICAL_FISH = BLOCK_ENTITIES.register("tropical_fish", () ->
 			BlockEntityType.Builder.of(TropicalFishBlockEntity::new, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
 					StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
 					StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(),
 					StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<PlayerBlockEntity>> PLAYER = BLOCK_ENTITIES.register("player", () -> BlockEntityType.Builder.of(PlayerBlockEntity::new,
+	public static final Supplier<BlockEntityType<PlayerBlockEntity>> PLAYER = BLOCK_ENTITIES.register("player", () -> BlockEntityType.Builder.of(PlayerBlockEntity::new,
 			StatueRegistry.PLAYER_STATUE.get()).build(null));
 
-	public static final RegistryObject<BlockEntityType<StatueTableBlockEntity>> STATUE_TABLE = BLOCK_ENTITIES.register("statue_table", () -> BlockEntityType.Builder.of(StatueTableBlockEntity::new,
+	public static final Supplier<BlockEntityType<StatueTableBlockEntity>> STATUE_TABLE = BLOCK_ENTITIES.register("statue_table", () -> BlockEntityType.Builder.of(StatueTableBlockEntity::new,
 			StatueRegistry.STATUE_TABLE.get()).build(null));
 }

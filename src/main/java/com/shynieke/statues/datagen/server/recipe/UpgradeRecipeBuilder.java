@@ -4,18 +4,19 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipe.UpgradeType;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
-import java.util.function.Consumer;
 
 public class UpgradeRecipeBuilder {
 	private final Ingredient center;
@@ -65,7 +66,7 @@ public class UpgradeRecipeBuilder {
 		return this;
 	}
 
-	public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {
+	public void build(RecipeOutput consumerIn, ResourceLocation id) {
 		consumerIn.accept(new Result(id, this.group == null ? "" : this.group, this.center,
 				catalysts, result, requireCore, upgradeType, tier));
 	}
@@ -96,12 +97,12 @@ public class UpgradeRecipeBuilder {
 			if (!this.group.isEmpty())
 				json.addProperty("group", this.group);
 
-			json.add("center", this.center.toJson());
+			json.add("center", this.center.toJson(false));
 
 			JsonArray jsonarray = new JsonArray();
 
 			for (Ingredient ingredient : this.catalysts)
-				jsonarray.add(ingredient.toJson());
+				jsonarray.add(ingredient.toJson(false));
 
 			json.add("catalysts", jsonarray);
 
@@ -120,7 +121,7 @@ public class UpgradeRecipeBuilder {
 			if (stack != null && !stack.isEmpty()) {
 				JsonObject object = new JsonObject();
 
-				object.addProperty("item", ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
+				object.addProperty("item", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
 				if (stack.getCount() != 1) {
 					object.addProperty("count", stack.getCount());
 				}
@@ -131,32 +132,18 @@ public class UpgradeRecipeBuilder {
 			}
 		}
 
-		/**
-		 * Gets the ID for the recipe.
-		 */
-		public ResourceLocation getId() {
-			return this.id;
-		}
-
 		@Override
-		public RecipeSerializer<?> getType() {
+		public RecipeSerializer<?> type() {
 			return StatuesRecipes.UPGRADE_SERIALIZER.get();
 		}
 
-		/**
-		 * Gets the JSON for the advancement that unlocks this recipe. Null if there is no advancement.
-		 */
-		@Nullable
-		public JsonObject serializeAdvancement() {
-			return null;
+		@Override
+		public ResourceLocation id() {
+			return this.id;
 		}
 
-		/**
-		 * Gets the ID for the advancement associated with this recipe. Should not be null if {@link #getAdvancementId()}
-		 * is non-null.
-		 */
 		@Nullable
-		public ResourceLocation getAdvancementId() {
+		public AdvancementHolder advancement() {
 			return null;
 		}
 	}

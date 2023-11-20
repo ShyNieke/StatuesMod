@@ -10,6 +10,7 @@ import com.shynieke.statues.util.LootHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -39,11 +41,11 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +53,7 @@ import java.util.List;
 
 public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	private AABB hitbox;
-	protected LootRecipe cachedLootRecipe;
+	protected RecipeHolder<LootRecipe> cachedLootRecipe;
 
 	public StatueBlockEntity(BlockPos pos, BlockState state) {
 		this(StatueBlockEntities.STATUE.get(), pos, state);
@@ -143,9 +145,9 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 		if (level != null) {
 			LootRecipe loot;
 			if (cachedLootRecipe != null) {
-				loot = cachedLootRecipe;
+				loot = cachedLootRecipe.value();
 			} else {
-				loot = (cachedLootRecipe = LootHelper.getMatchingLoot(level, new ItemStack(getBlockState().getBlock())));
+				loot = (cachedLootRecipe = LootHelper.getMatchingLoot(level, new ItemStack(getBlockState().getBlock()))).value();
 			}
 			if (loot == null) {
 				Statues.LOGGER.error("No loot found for statue {}, please report this to the Statues issue tracker", getBlockState());
@@ -182,10 +184,10 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				if (this.level.isAreaLoaded(worldPosition, 1)) {
 					BlockEntity foundTile = this.level.getBlockEntity(offPos);
 					if (foundTile != null) {
-						ResourceLocation typeLocation = ForgeRegistries.BLOCK_ENTITY_TYPES.getKey(foundTile.getType());
+						ResourceLocation typeLocation = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(foundTile.getType());
 						boolean flag2 = typeLocation != null;
-						if (flag2 && !foundTile.isRemoved() && foundTile.hasLevel() && foundTile.getCapability(ForgeCapabilities.ITEM_HANDLER).isPresent()) {
-							IItemHandler itemHandler = foundTile.getCapability(ForgeCapabilities.ITEM_HANDLER, dir.getOpposite()).orElse(null);
+						if (flag2 && !foundTile.isRemoved() && foundTile.hasLevel() && foundTile.getCapability(Capabilities.ITEM_HANDLER).isPresent()) {
+							IItemHandler itemHandler = foundTile.getCapability(Capabilities.ITEM_HANDLER, dir.getOpposite()).orElse(null);
 							if (itemHandler != null) {
 								inventoryList.add(new BiggestInventory(offPos, itemHandler.getSlots(), dir.getOpposite()));
 							}
@@ -268,13 +270,12 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				}
 
 				entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), level.random.nextFloat() * 360.0F, 0.0F);
-				if (entity instanceof Mob) {
-					Mob mob = (Mob) entity;
+				if (entity instanceof Mob mob) {
 					if (!screwTheRulesIHasMoney && !mob.checkSpawnRules(serverLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
 						continue;
 					}
 
-					var event = net.minecraftforge.event.ForgeEventFactory.onFinalizeSpawnSpawner(mob, serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), null, null, null);
+					var event = EventHooks.onFinalizeSpawnSpawner(mob, serverLevel, serverLevel.getCurrentDifficultyAt(entity.blockPosition()), null, null, null);
 					if (event != null) {
 						mob.finalizeSpawn(serverLevel, event.getDifficulty(), event.getSpawnType(), event.getSpawnData(), event.getSpawnTag());
 					}

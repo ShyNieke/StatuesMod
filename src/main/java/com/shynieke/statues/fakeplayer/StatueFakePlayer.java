@@ -8,7 +8,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Team;
-import net.minecraftforge.common.util.FakePlayer;
+import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.ref.WeakReference;
@@ -30,10 +30,10 @@ public class StatueFakePlayer extends FakePlayer {
 			INSTANCE = new WeakReference<>(actual);
 		}
 		StatueFakePlayer player = actual;
-		player.level = serverLevel;
+		player.setLevel(serverLevel);
 		R result = fakePlayerConsumer.apply(player);
 
-		player.level = null;
+		player.setLevel(null);
 		return result;
 	}
 
@@ -52,7 +52,7 @@ public class StatueFakePlayer extends FakePlayer {
 	public static void unload(LevelAccessor levelAccessor) {
 		StatueFakePlayer actual = INSTANCE == null ? null : INSTANCE.get();
 		if (actual != null && actual.level() == levelAccessor) {
-			actual.level = null;
+			actual.setLevel(null);
 		}
 	}
 

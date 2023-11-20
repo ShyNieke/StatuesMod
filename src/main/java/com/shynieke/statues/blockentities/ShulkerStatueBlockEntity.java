@@ -19,12 +19,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.network.NetworkHooks;
+import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.common.capabilities.Capability;
+import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -93,7 +93,7 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-		if (capability == ForgeCapabilities.ITEM_HANDLER && hasSpecialInteraction()) {
+		if (capability == Capabilities.ITEM_HANDLER && hasSpecialInteraction()) {
 			return stackHolder.cast();
 		}
 		return super.getCapability(capability, facing);
@@ -110,6 +110,6 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 	public void reviveCaps() {
 		super.reviveCaps();
 		if (hasSpecialInteraction())
-			this.stackHolder = net.minecraftforge.common.util.LazyOptional.of(() -> handler);
+			this.stackHolder = LazyOptional.of(() -> handler);
 	}
 }

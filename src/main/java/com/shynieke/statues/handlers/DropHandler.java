@@ -30,10 +30,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -162,8 +162,8 @@ public class DropHandler {
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else {
-			List<RegistryObject<Block>> matchingStatues = new ArrayList<>();
-			for (RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries()) {
+			List<DeferredHolder<Block, ? extends Block>> matchingStatues = new ArrayList<>();
+			for (DeferredHolder<Block, ? extends Block> block : StatueRegistry.BLOCKS.getEntries()) {
 				if (block.get() instanceof AbstractStatueBase statue) {
 					if (statue.getEntity().equals(entity.getType()) && !statue.isHiddenStatue()) {
 						matchingStatues.add(block);
@@ -171,7 +171,7 @@ public class DropHandler {
 				}
 			}
 			if (!matchingStatues.isEmpty()) {
-				RegistryObject<Block> block = matchingStatues.get(rand.nextInt(matchingStatues.size()));
+				DeferredHolder<Block, ? extends Block> block = matchingStatues.get(rand.nextInt(matchingStatues.size()));
 				AbstractStatueBase statue = (AbstractStatueBase) block.get();
 				ItemStack itemStackToDrop = new ItemStack(statue);
 				if (entity instanceof Mob) {

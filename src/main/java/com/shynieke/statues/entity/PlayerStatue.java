@@ -1,7 +1,6 @@
 package com.shynieke.statues.entity;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.screen.PlayerStatueData;
@@ -9,8 +8,7 @@ import com.shynieke.statues.network.StatuesNetworking;
 import com.shynieke.statues.network.message.PlayerStatueScreenMessage;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSerializers;
-import com.shynieke.statues.util.SkinUtil;
-import net.minecraft.client.Minecraft;
+import net.minecraft.Util;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Rotations;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -51,12 +49,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.network.NetworkHooks;
+import net.neoforged.neoforge.network.PacketDistributor;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
@@ -89,7 +87,6 @@ public class PlayerStatue extends LivingEntity {
 	 */
 	public long punchCooldown;
 	private int disabledSlots;
-	private boolean isSlim = false;
 	private Rotations headRotation = DEFAULT_HEAD_ROTATION;
 	private Rotations bodyRotation = DEFAULT_BODY_ROTATION;
 	private Rotations leftArmRotation = DEFAULT_LEFTARM_ROTATION;
@@ -169,24 +166,8 @@ public class PlayerStatue extends LivingEntity {
 		return entityData.get(GAMEPROFILE);
 	}
 
-	public void setGameProfile(GameProfile playerProfile) {
-		PlayerBlockEntity.updateGameprofile(playerProfile, (profile) -> {
-			entityData.set(GAMEPROFILE, Optional.of(profile));
-			this.setSlim(profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId()));
-		});
-
-		synchronized (this) {
-			getGameProfile().ifPresent(profile -> {
-				if (this.level != null && this.level().isClientSide && profile != null && profile.isComplete()) {
-					Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
-						if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
-							String metadata = profileTexture.getMetadata("model");
-							this.setSlim(metadata != null && metadata.equals("slim"));
-						}
-					}, true);
-				}
-			});
-		}
+	public void setGameProfile(GameProfile profile) {
+		entityData.set(GAMEPROFILE, Optional.of(profile));
 	}
 
 	@Nullable
@@ -196,7 +177,7 @@ public class PlayerStatue extends LivingEntity {
 
 	@Nullable
 	public UUID getLockedBy() {
-		return this.entityData.get(LOCKED_BY_UUID).orElse((UUID) null);
+		return this.entityData.get(LOCKED_BY_UUID).orElse(Util.NIL_UUID);
 	}
 
 	public String getModel() {
@@ -222,21 +203,6 @@ public class PlayerStatue extends LivingEntity {
 
 	public void setUnlocked() {
 		this.entityData.set(LOCKED_BY_UUID, Optional.empty());
-	}
-
-	public void setSlim(boolean slim) {
-		this.isSlim = slim;
-	}
-
-	public boolean isSlim() {
-		switch (getModel()) {
-			case "SLIM":
-				return true;
-			case "DEFAULT":
-				return false;
-			default:
-				return this.isSlim;
-		}
 	}
 
 	public void setYOffset(float yOffset) {
@@ -438,7 +404,11 @@ public class PlayerStatue extends LivingEntity {
 			if (!isLocked()) {
 				super.setCustomName(name);
 
-				this.setGameProfile(new GameProfile((UUID) null, name.getString().toLowerCase(Locale.ROOT)));
+				String username = name.getString().toLowerCase(Locale.ROOT);
+				PlayerBlockEntity.fetchGameProfile(username)
+						.thenAccept(
+								profile -> this.setGameProfile(profile.orElse(new GameProfile(Util.NIL_UUID, username)))
+						);
 			}
 		}
 	}
@@ -449,7 +419,7 @@ public class PlayerStatue extends LivingEntity {
 	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
-			if (!level.isClientSide && player != null) {
+			if (!this.level().isClientSide && player != null) {
 				if (canOpenUI(player)) {
 					StatuesNetworking.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PlayerStatueScreenMessage(getId()));
 				}
@@ -458,7 +428,7 @@ public class PlayerStatue extends LivingEntity {
 			if (itemstack.getItem() != Items.NAME_TAG) {
 				if (player.isSpectator()) {
 					return InteractionResult.SUCCESS;
-				} else if (player.level.isClientSide) {
+				} else if (player.level().isClientSide) {
 					return InteractionResult.CONSUME;
 				} else {
 					if (!isLocked()) {
@@ -672,8 +642,8 @@ public class PlayerStatue extends LivingEntity {
 			}
 		}
 
-		Block.popResource(this.level, this.blockPosition(), stack);
-		Block.popResource(this.level, this.blockPosition(), new ItemStack(StatueRegistry.STATUE_CORE.get()));
+		Block.popResource(this.level(), this.blockPosition(), stack);
+		Block.popResource(this.level(), this.blockPosition(), new ItemStack(StatueRegistry.STATUE_CORE.get()));
 		this.brokenByAnything(source);
 	}
 
@@ -702,7 +672,7 @@ public class PlayerStatue extends LivingEntity {
 		for (int i = 0; i < this.handItems.size(); ++i) {
 			ItemStack itemstack = this.handItems.get(i);
 			if (!itemstack.isEmpty()) {
-				Block.popResource(this.level, this.blockPosition().above(), itemstack);
+				Block.popResource(this.level(), this.blockPosition().above(), itemstack);
 				this.handItems.set(i, ItemStack.EMPTY);
 			}
 		}
@@ -710,7 +680,7 @@ public class PlayerStatue extends LivingEntity {
 		for (int j = 0; j < this.armorItems.size(); ++j) {
 			ItemStack itemstack1 = this.armorItems.get(j);
 			if (!itemstack1.isEmpty()) {
-				Block.popResource(this.level, this.blockPosition().above(), itemstack1);
+				Block.popResource(this.level(), this.blockPosition().above(), itemstack1);
 				this.armorItems.set(j, ItemStack.EMPTY);
 			}
 		}
@@ -734,8 +704,9 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Returns the Y Offset of this entity.
 	 */
-	public double getMyRidingOffset() {
-		return (double) 0.1F + getYOffsetData(); //TODO: what does this do?
+	@Override
+	protected float ridingOffset(Entity entity) {
+		return 0.1F + getYOffsetData(); //TODO: what does this do?
 	}
 
 	public void travel(Vec3 travelVector) {
@@ -771,13 +742,13 @@ public class PlayerStatue extends LivingEntity {
 	public void tick() {
 		super.tick();
 
-		if (level.isClientSide && getGameProfile().isPresent()) {
+		if (level().isClientSide && getGameProfile().isPresent()) {
 			if (ClientHandler.TRANSLATORS.contains(getGameProfile().get().getId())) {
-				level.addParticle(ParticleTypes.ENCHANT,
+				level().addParticle(ParticleTypes.ENCHANT,
 						(double) getX(), (double) getEyeY() + 1, (double) getZ(),
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D,
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 - random.nextFloat() - 1.0F),
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D);
+						(double) ((float) (level().random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D,
+						(double) ((float) (level().random.nextFloat() - 0.5) * 3 - random.nextFloat() - 1.0F),
+						(double) ((float) (level().random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D);
 			}
 		}
 
@@ -948,20 +919,6 @@ public class PlayerStatue extends LivingEntity {
 		if (STATUS.equals(key)) {
 			this.refreshDimensions();
 			this.blocksBuilding = !this.isRemoved();
-		}
-		if (GAMEPROFILE.equals(key)) {
-			synchronized (this) {
-				getGameProfile().ifPresent(profile -> {
-					if (this.level != null && this.level().isClientSide && profile != null && profile.isComplete()) {
-						Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
-							if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
-								String metadata = profileTexture.getMetadata("model");
-								this.setSlim(metadata != null && metadata.equals("slim"));
-							}
-						}, true);
-					}
-				});
-			}
 		}
 
 		super.onSyncedDataUpdated(key);

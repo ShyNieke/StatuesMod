@@ -3,6 +3,7 @@ package com.shynieke.statues.items;
 import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.registry.StatueRegistry;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Rotations;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class PlayerStatueSpawnItem extends Item {
 
@@ -52,7 +52,7 @@ public class PlayerStatueSpawnItem extends Item {
 					if (context.getPlayer() != null) {
 						playerStatue.setGameProfile(context.getPlayer().getGameProfile());
 					} else {
-						playerStatue.setGameProfile(new GameProfile((UUID) null, "steve"));
+						playerStatue.setGameProfile(new GameProfile(Util.NIL_UUID, "steve"));
 					}
 				}
 				stack.shrink(1);

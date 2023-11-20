@@ -2,6 +2,7 @@ package com.shynieke.statues.items;
 
 import com.shynieke.statues.registry.StatueFoods;
 import com.shynieke.statues.registry.StatueRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -9,9 +10,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class StatueGoldenMarshmallow extends Item {
 	public StatueGoldenMarshmallow(Properties builder) {
@@ -23,7 +23,7 @@ public class StatueGoldenMarshmallow extends Item {
 		if (this.isEdible()) {
 			if (!level.isClientSide) {
 				if (this == StatueRegistry.MARSHMALLOW_GOLDEN.get()) {
-					ArrayList<MobEffect> effectList = new ArrayList<>(ForgeRegistries.MOB_EFFECTS.getValues());
+					List<MobEffect> effectList = BuiltInRegistries.MOB_EFFECT.stream().toList();
 					effectList.remove(MobEffects.CONFUSION);
 
 					int i = level.random.nextInt(effectList.size());

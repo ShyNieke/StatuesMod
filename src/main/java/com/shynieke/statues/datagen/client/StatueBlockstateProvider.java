@@ -7,10 +7,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class StatueBlockstateProvider extends BlockStateProvider {
 	public StatueBlockstateProvider(PackOutput packOutput, ExistingFileHelper helper) {
@@ -19,7 +19,7 @@ public class StatueBlockstateProvider extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		for (RegistryObject<Block> registryObject : StatueRegistry.BLOCKS.getEntries()) {
+		for (DeferredHolder<Block, ? extends Block> registryObject : StatueRegistry.BLOCKS.getEntries()) {
 			if (registryObject.get() instanceof AbstractBaseBlock) {
 				makeStatue(registryObject);
 			} else {
@@ -30,7 +30,7 @@ public class StatueBlockstateProvider extends BlockStateProvider {
 		}
 	}
 
-	private void makeStatue(RegistryObject<Block> registryObject) {
+	private void makeStatue(DeferredHolder<Block, ? extends Block> registryObject) {
 		ModelFile model = models().getExistingFile(modLoc("block/" + registryObject.getId().getPath()));
 		getVariantBuilder(registryObject.get())
 				.partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH)

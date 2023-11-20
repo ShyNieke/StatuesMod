@@ -8,11 +8,9 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkEvent.Context;
+import net.neoforged.neoforge.network.NetworkEvent;
 
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class PlayerStatueSyncMessage {
 	private final UUID entityUUID;
@@ -37,8 +35,7 @@ public class PlayerStatueSyncMessage {
 		return new PlayerStatueSyncMessage(packetBuffer.readUUID(), packetBuffer.readNbt());
 	}
 
-	public void handle(Supplier<Context> context) {
-		NetworkEvent.Context ctx = context.get();
+	public void handle(NetworkEvent.Context ctx) {
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isServer()) {
 				final ServerPlayer player = ctx.getSender();

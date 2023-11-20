@@ -1,8 +1,6 @@
 package com.shynieke.statues.client.render;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -18,22 +16,21 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.DefaultPlayerSkin;
+import net.minecraft.client.resources.SkinManager;
 import net.minecraft.core.Direction;
-import net.minecraft.core.UUIDUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-
-import javax.annotation.Nullable;
-import java.util.Map;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 	private final StatuePlayerTileModel model;
 	private final StatuePlayerTileModel slimModel;
+	public static boolean isSlim = false;
 
-	public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkin();
+	public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultTexture();
 
 	public PlayerBER(BlockEntityRendererProvider.Context context) {
 		this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
@@ -47,10 +44,16 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 		Direction direction = flag ? blockstate.getValue(PlayerStatueBlock.FACING) : Direction.UP;
 		GameProfile profile = blockEntity.getPlayerProfile();
 
-		render(direction, profile, blockEntity.isSlim(), poseStack, bufferSource, combinedLightIn, partialTicks);
+		if (profile != null) {
+			SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
+			if (isSlim != skinmanager.getInsecureSkin(profile).model().id().equals("slim"))
+				isSlim = !isSlim;
+		}
+
+		render(direction, profile, poseStack, bufferSource, combinedLightIn, partialTicks);
 	}
 
-	public void render(@Nullable Direction direction, @Nullable GameProfile profile, boolean isSlim, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, float partialTicks) {
+	public void render(@Nullable Direction direction, @Nullable GameProfile profile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, float partialTicks) {
 		poseStack.translate(0.5D, 0.25D, 0.5D);
 		poseStack.pushPose();
 		if (direction != null) {
@@ -93,17 +96,10 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 		poseStack.popPose();
 	}
 
-	public static RenderType getRenderType(@Nullable GameProfile gameProfileIn) {
-		if (gameProfileIn == null || !gameProfileIn.isComplete()) {
-			return RenderType.entityCutoutNoCull(defaultTexture);
-		} else {
-			final Minecraft minecraft = Minecraft.getInstance();
-			final Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().getInsecureSkinInformation(gameProfileIn);
-			if (map.containsKey(Type.SKIN)) {
-				return RenderType.entityTranslucent(minecraft.getSkinManager().registerTexture((MinecraftProfileTexture) map.get(Type.SKIN), Type.SKIN));
-			} else {
-				return RenderType.entityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(UUIDUtil.getOrCreatePlayerUUID(gameProfileIn)));
-			}
-		}
+	public static RenderType getRenderType(@Nullable GameProfile gameProfile) {
+		if (gameProfile == null)
+			return RenderType.entityTranslucent(defaultTexture);
+		SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
+		return RenderType.entityTranslucent(skinmanager.getInsecureSkin(gameProfile).texture());
 	}
 }

@@ -22,7 +22,7 @@ import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableConditio
 import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.List;
 import java.util.Map;
@@ -54,7 +54,7 @@ public class StatueLootProvider extends LootTableProvider {
 			this.dropSelf(StatueRegistry.INFO_STATUE.get());
 			this.dropSelf(StatueRegistry.STATUE_TABLE.get());
 			this.add(StatueRegistry.PLAYER_STATUE.get(), createNameableBlockEntityTable(StatueRegistry.PLAYER_STATUE.get()));
-			for (RegistryObject<Block> blockObject : StatueRegistry.BLOCKS.getEntries()) {
+			for (DeferredHolder<Block, ? extends Block> blockObject : StatueRegistry.BLOCKS.getEntries()) {
 				if (blockObject.get() instanceof AbstractStatueBase) {
 					this.dropSelf(blockObject.get());
 				}
@@ -63,7 +63,7 @@ public class StatueLootProvider extends LootTableProvider {
 
 		@Override
 		protected Iterable<Block> getKnownBlocks() {
-			return (Iterable<Block>) StatueRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get)::iterator;
+			return (Iterable<Block>) StatueRegistry.BLOCKS.getEntries().stream().map(holder -> (Block) holder.get())::iterator;
 		}
 	}
 
@@ -91,7 +91,7 @@ public class StatueLootProvider extends LootTableProvider {
 
 		@Override
 		protected Stream<EntityType<?>> getKnownEntityTypes() {
-			return StatueRegistry.ENTITIES.getEntries().stream().map(RegistryObject::get);
+			return StatueRegistry.ENTITIES.getEntries().stream().map(holder -> holder.get());
 		}
 	}
 }

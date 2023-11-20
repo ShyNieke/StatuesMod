@@ -22,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class SombreroBlock extends AbstractBaseBlock {
 
@@ -55,7 +55,7 @@ public class SombreroBlock extends AbstractBaseBlock {
 	}
 
 	public float getPitch() {
-		return (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.0F;
+		return (RANDOM.nextFloat() - RANDOM.nextFloat()) * 0.2F + 1.0F;
 	}
 
 	public boolean canPlaySound(Level level, BlockPos pos, BlockState state) {

@@ -1,34 +1,32 @@
 package com.shynieke.statues.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.registry.StatueTags;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.util.RecipeMatcher;
+import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
 
 public class UpgradeRecipe implements Recipe<Container> {
-	protected final ResourceLocation id;
 	protected final String group;
 	protected final Ingredient center;
 	protected final NonNullList<Ingredient> catalysts;
@@ -36,10 +34,10 @@ public class UpgradeRecipe implements Recipe<Container> {
 	protected final boolean requireCore;
 	private final UpgradeType upgradeType;
 	private final int tier;
+	protected final boolean showNotification;
 
-	public UpgradeRecipe(ResourceLocation id, String group, Ingredient center, NonNullList<Ingredient> catalysts,
-						 ItemStack stack, boolean requireCore, UpgradeType upgradeType, int tier) {
-		this.id = id;
+	public UpgradeRecipe(String group, Ingredient center, NonNullList<Ingredient> catalysts,
+						 ItemStack stack, boolean requireCore, UpgradeType upgradeType, int tier, boolean showNotification) {
 		this.group = group;
 		this.center = center;
 		this.catalysts = catalysts;
@@ -47,6 +45,7 @@ public class UpgradeRecipe implements Recipe<Container> {
 		this.requireCore = requireCore;
 		this.upgradeType = upgradeType;
 		this.tier = tier;
+		this.showNotification = showNotification;
 	}
 
 	public NonNullList<Ingredient> getIngredients() {
@@ -56,6 +55,11 @@ public class UpgradeRecipe implements Recipe<Container> {
 			nonnulllist.add(Ingredient.of(StatueTags.STATUE_CORE));
 		nonnulllist.addAll(catalysts);
 		return nonnulllist;
+	}
+
+	@Override
+	public boolean showNotification() {
+		return this.showNotification;
 	}
 
 	public Ingredient getCenter() {
@@ -129,7 +133,7 @@ public class UpgradeRecipe implements Recipe<Container> {
 			}
 		}
 
-		return itemCount == this.catalysts.size() && net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs, this.catalysts) != null;
+		return itemCount == this.catalysts.size() && RecipeMatcher.findMatches(inputs, this.catalysts) != null;
 	}
 
 	@Override
@@ -156,11 +160,6 @@ public class UpgradeRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public ResourceLocation getId() {
-		return this.id;
-	}
-
-	@Override
 	public RecipeSerializer<?> getSerializer() {
 		return StatuesRecipes.UPGRADE_SERIALIZER.get();
 	}
@@ -172,55 +171,28 @@ public class UpgradeRecipe implements Recipe<Container> {
 
 	public static class Serializer implements RecipeSerializer<UpgradeRecipe> {
 
+		private static final Codec<UpgradeRecipe> CODEC = UpgradeRecipe.Serializer.RawUpgradeRecipe.CODEC.flatXmap(rawLootRecipe -> {
+			return DataResult.success(new UpgradeRecipe(
+					rawLootRecipe.group,
+					rawLootRecipe.center,
+					rawLootRecipe.catalysts,
+					rawLootRecipe.stack,
+					rawLootRecipe.requireCore,
+					rawLootRecipe.upgradeType,
+					rawLootRecipe.tier,
+					rawLootRecipe.showNotification
+			));
+		}, recipe -> {
+			throw new NotImplementedException("Serializing UpgradeRecipe is not implemented yet.");
+		});
+
 		@Override
-		public UpgradeRecipe fromJson(ResourceLocation recipeID, JsonObject jsonObject) {
-			String s = GsonHelper.getAsString(jsonObject, "group", "");
-			JsonElement jsonelement = (JsonElement) (GsonHelper.isArrayNode(jsonObject, "center") ?
-					GsonHelper.getAsJsonArray(jsonObject, "center") :
-					GsonHelper.getAsJsonObject(jsonObject, "center"));
-
-			Ingredient center = Ingredient.fromJson(jsonelement);
-			NonNullList<Ingredient> catalystList = itemsFromJson(GsonHelper.getAsJsonArray(jsonObject, "catalysts"));
-			String type = GsonHelper.getAsString(jsonObject, "upgradeType", "crafting");
-			UpgradeType upgradeType = UpgradeType.valueOf(type.toUpperCase());
-			if (catalystList.isEmpty() && upgradeType != UpgradeType.UPGRADE) {
-				throw new JsonParseException("No catalysts for upgrade recipe");
-			} else if (catalystList.size() > 4) {
-				throw new JsonParseException("Too many catalysts for upgrade recipe. The maximum is " + 4);
-			} else {
-				ItemStack resultStack;
-				if (jsonObject.has("result")) {
-					if (jsonObject.get("result").isJsonObject())
-						resultStack = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(jsonObject, "result"));
-					else {
-						String s1 = GsonHelper.getAsString(jsonObject, "result");
-						ResourceLocation resourcelocation = new ResourceLocation(s1);
-						resultStack = new ItemStack(BuiltInRegistries.ITEM.getOptional(resourcelocation).orElseThrow(() ->
-								new IllegalStateException("Item: " + s1 + " does not exist")));
-					}
-				} else {
-					resultStack = ItemStack.EMPTY;
-				}
-				boolean requireCore = GsonHelper.getAsBoolean(jsonObject, "requireCore", false);
-				int tier = GsonHelper.getAsInt(jsonObject, "tier", -1);
-
-				return new UpgradeRecipe(recipeID, s, center, catalystList, resultStack, requireCore, upgradeType, tier);
-			}
-		}
-
-		private static NonNullList<Ingredient> itemsFromJson(JsonArray jsonArray) {
-			NonNullList<Ingredient> nonnulllist = NonNullList.create();
-
-			for (int i = 0; i < jsonArray.size(); ++i) {
-				Ingredient ingredient = Ingredient.fromJson(jsonArray.get(i));
-				nonnulllist.add(ingredient);
-			}
-
-			return nonnulllist;
+		public Codec<UpgradeRecipe> codec() {
+			return CODEC;
 		}
 
 		@Override
-		public @Nullable UpgradeRecipe fromNetwork(ResourceLocation recipeID, FriendlyByteBuf byteBuf) {
+		public @Nullable UpgradeRecipe fromNetwork(FriendlyByteBuf byteBuf) {
 			String s = byteBuf.readUtf(32767);
 			Ingredient center = Ingredient.fromNetwork(byteBuf);
 
@@ -236,8 +208,9 @@ public class UpgradeRecipe implements Recipe<Container> {
 			int type = byteBuf.readVarInt();
 			UpgradeType upgradeType = UpgradeType.values()[type];
 			int tier = byteBuf.readVarInt();
+			boolean showNotification = byteBuf.readBoolean();
 
-			return new UpgradeRecipe(recipeID, s, center, catalist, result, requireCore, upgradeType, tier);
+			return new UpgradeRecipe(s, center, catalist, result, requireCore, upgradeType, tier, showNotification);
 		}
 
 		@Override
@@ -255,6 +228,44 @@ public class UpgradeRecipe implements Recipe<Container> {
 			byteBuf.writeBoolean(recipe.requireCore);
 			byteBuf.writeVarInt(recipe.upgradeType.ordinal());
 			byteBuf.writeVarInt(recipe.tier);
+			byteBuf.writeBoolean(recipe.showNotification);
+		}
+
+
+		static record RawUpgradeRecipe(
+				String group, Ingredient center, NonNullList<Ingredient> catalysts,
+				ItemStack stack, boolean requireCore, UpgradeType upgradeType, int tier, boolean showNotification
+		) {
+			public static final Codec<UpgradeRecipe.Serializer.RawUpgradeRecipe> CODEC = RecordCodecBuilder.create(
+					instance -> instance.group(
+									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+									Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.center),
+									Ingredient.CODEC_NONEMPTY
+											.listOf()
+											.fieldOf("ingredients")
+											.flatXmap(
+													array -> {
+														Ingredient[] aingredient = array
+																.toArray(Ingredient[]::new); //Forge skip the empty check and immediatly create the array.
+														if (aingredient.length == 0) {
+															return DataResult.error(() -> "No ingredients for shapeless recipe");
+														} else {
+															return aingredient.length > 4
+																	? DataResult.error(() -> "Too many ingredients for shapeless recipe. The maximum is: %s".formatted(4))
+																	: DataResult.success(NonNullList.of(Ingredient.EMPTY, aingredient));
+														}
+													},
+													DataResult::success
+											)
+											.forGetter(recipe -> recipe.catalysts),
+									CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.stack),
+									ExtraCodecs.strictOptionalField(Codec.BOOL, "requireCore", false).forGetter(recipe -> recipe.requireCore),
+									UpgradeType.CODEC.optionalFieldOf("requireCore", UpgradeType.CRAFTING).forGetter(recipe -> recipe.upgradeType),
+									Codec.INT.optionalFieldOf("tier", -1).forGetter(recipe -> recipe.tier),
+									ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(recipe -> recipe.showNotification)
+							)
+							.apply(instance, UpgradeRecipe.Serializer.RawUpgradeRecipe::new)
+			);
 		}
 	}
 }

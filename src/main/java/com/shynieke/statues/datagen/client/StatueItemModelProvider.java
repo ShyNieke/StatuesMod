@@ -8,10 +8,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
-import net.minecraftforge.client.model.generators.ItemModelBuilder;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class StatueItemModelProvider extends ItemModelProvider {
 	public StatueItemModelProvider(PackOutput packOutput, ExistingFileHelper helper) {
@@ -20,7 +20,7 @@ public class StatueItemModelProvider extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
-		for (RegistryObject<Item> registryObject : StatueRegistry.ITEMS.getEntries()) {
+		for (DeferredHolder<Item, ? extends Item> registryObject : StatueRegistry.ITEMS.getEntries()) {
 			if (registryObject.get() instanceof BlockItem) {
 				withBlockParent(registryObject.getId());
 			} else {

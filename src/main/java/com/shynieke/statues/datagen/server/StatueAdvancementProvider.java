@@ -3,10 +3,12 @@ package com.shynieke.statues.datagen.server;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
-import net.minecraft.advancements.RequirementsStrategy;
 import net.minecraft.advancements.critereon.EnterBlockTrigger;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
@@ -21,15 +23,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class StatueAdvancementProvider extends ForgeAdvancementProvider {
+public class StatueAdvancementProvider extends AdvancementProvider {
 	public StatueAdvancementProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper existingFileHelper) {
 		super(output, registries, existingFileHelper, List.of(new StatueAdvancementGenerator()));
 	}
@@ -37,77 +39,77 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 	public static class StatueAdvancementGenerator implements AdvancementGenerator {
 
 		@Override
-		public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+		public void generate(HolderLookup.Provider registries, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
 			//Root advancement
-			Advancement root = Advancement.Builder.advancement()
+			AdvancementHolder root = Advancement.Builder.advancement()
 					.display(rootDisplay(StatueRegistry.STATUE_CORE.get(), advancementPrefix("root" + ".title"),
 							advancementPrefix("root" + ".desc"), modLoc("textures/block/pebble.png")))
 					.addCriterion("core", EnterBlockTrigger.TriggerInstance.entersBlock(Blocks.AIR))
 					.save(consumer, rootID("root"));
 
-			Advancement elderGuardian = onHoldBlock(consumer, StatueRegistry.ELDER_GUARDIAN_STATUE, FrameType.GOAL, false, root);
+			AdvancementHolder elderGuardian = onHoldBlock(consumer, StatueRegistry.ELDER_GUARDIAN_STATUE, FrameType.GOAL, false, root);
 			onHoldBlock(consumer, StatueRegistry.RAVAGER_STATUE, FrameType.GOAL, false, elderGuardian);
 
-			Advancement zombie = onHoldBlock(consumer, StatueRegistry.ZOMBIE_STATUE, root);
-			Advancement babyZombie = onHoldBlock(consumer, StatueRegistry.BABY_ZOMBIE_STATUE, zombie);
-			Advancement flood = onHoldBlock(consumer, StatueRegistry.FLOOD_STATUE, FrameType.GOAL, true, babyZombie);
-			Advancement husk = onHoldBlock(consumer, StatueRegistry.HUSK_STATUE, zombie);
-			Advancement creeper = onHoldBlock(consumer, StatueRegistry.CREEPER_STATUE, husk);
-			Advancement campfire = onHoldBlock(consumer, StatueRegistry.CAMPFIRE_STATUE, FrameType.CHALLENGE, true, creeper);
-			Advancement drowned = onHoldBlock(consumer, StatueRegistry.DROWNED_STATUE, husk);
-			Advancement guardian = onHoldBlock(consumer, StatueRegistry.GUARDIAN_STATUE, drowned);
-			Advancement spider = onHoldBlock(consumer, StatueRegistry.SPIDER_STATUE, husk);
-			Advancement slime = onHoldBlock(consumer, StatueRegistry.SLIME_STATUE, spider);
+			AdvancementHolder zombie = onHoldBlock(consumer, StatueRegistry.ZOMBIE_STATUE, root);
+			AdvancementHolder babyZombie = onHoldBlock(consumer, StatueRegistry.BABY_ZOMBIE_STATUE, zombie);
+			AdvancementHolder flood = onHoldBlock(consumer, StatueRegistry.FLOOD_STATUE, FrameType.GOAL, true, babyZombie);
+			AdvancementHolder husk = onHoldBlock(consumer, StatueRegistry.HUSK_STATUE, zombie);
+			AdvancementHolder creeper = onHoldBlock(consumer, StatueRegistry.CREEPER_STATUE, husk);
+			AdvancementHolder campfire = onHoldBlock(consumer, StatueRegistry.CAMPFIRE_STATUE, FrameType.CHALLENGE, true, creeper);
+			AdvancementHolder drowned = onHoldBlock(consumer, StatueRegistry.DROWNED_STATUE, husk);
+			AdvancementHolder guardian = onHoldBlock(consumer, StatueRegistry.GUARDIAN_STATUE, drowned);
+			AdvancementHolder spider = onHoldBlock(consumer, StatueRegistry.SPIDER_STATUE, husk);
+			AdvancementHolder slime = onHoldBlock(consumer, StatueRegistry.SLIME_STATUE, spider);
 
-			Advancement statueTable = onHoldBlock(consumer, StatueRegistry.STATUE_TABLE, root);
-			Advancement displayStand = onHoldBlock(consumer, StatueRegistry.DISPLAY_STAND, statueTable);
-			Advancement infoStatue = onHoldBlock(consumer, StatueRegistry.INFO_STATUE, displayStand);
-			Advancement bumbo = onHoldBlock(consumer, StatueRegistry.BUMBO_STATUE, infoStatue);
+			AdvancementHolder statueTable = onHoldBlock(consumer, StatueRegistry.STATUE_TABLE, root);
+			AdvancementHolder displayStand = onHoldBlock(consumer, StatueRegistry.DISPLAY_STAND, statueTable);
+			AdvancementHolder infoStatue = onHoldBlock(consumer, StatueRegistry.INFO_STATUE, displayStand);
+			AdvancementHolder bumbo = onHoldBlock(consumer, StatueRegistry.BUMBO_STATUE, infoStatue);
 
-			Advancement enderman = onHoldBlock(consumer, StatueRegistry.ENDERMAN_STATUE, root);
-			Advancement endermite = onHoldBlock(consumer, StatueRegistry.ENDERMITE_STATUE, enderman);
-			Advancement shulker = onHoldBlock(consumer, StatueRegistry.SHULKER_STATUE, endermite);
+			AdvancementHolder enderman = onHoldBlock(consumer, StatueRegistry.ENDERMAN_STATUE, root);
+			AdvancementHolder endermite = onHoldBlock(consumer, StatueRegistry.ENDERMITE_STATUE, enderman);
+			AdvancementHolder shulker = onHoldBlock(consumer, StatueRegistry.SHULKER_STATUE, endermite);
 
-			Advancement cod = onHoldBlock(consumer, StatueRegistry.COD_STATUE, root);
-			Advancement salmon = onHoldBlock(consumer, StatueRegistry.SALMON_STATUE, cod);
-			Advancement tropical = onHoldAnyBlock(consumer, StatueRegistry.TROPICAL_FISH_B, FrameType.TASK, false,
-					salmon, "tropical_fish_statue", RequirementsStrategy.OR,
+			AdvancementHolder cod = onHoldBlock(consumer, StatueRegistry.COD_STATUE, root);
+			AdvancementHolder salmon = onHoldBlock(consumer, StatueRegistry.SALMON_STATUE, cod);
+			AdvancementHolder tropical = onHoldAnyBlock(consumer, StatueRegistry.TROPICAL_FISH_B, FrameType.TASK, false,
+					salmon, "tropical_fish_statue", AdvancementRequirements.Strategy.OR,
 					StatueRegistry.TROPICAL_FISH_B, StatueRegistry.TROPICAL_FISH_BB, StatueRegistry.TROPICAL_FISH_BE,
 					StatueRegistry.TROPICAL_FISH_BM, StatueRegistry.TROPICAL_FISH_BMB, StatueRegistry.TROPICAL_FISH_BMS,
 					StatueRegistry.TROPICAL_FISH_E, StatueRegistry.TROPICAL_FISH_ES, StatueRegistry.TROPICAL_FISH_HB,
 					StatueRegistry.TROPICAL_FISH_SB, StatueRegistry.TROPICAL_FISH_SD, StatueRegistry.TROPICAL_FISH_SS
 			);
-			Advancement tropicalAll = onHoldAnyBlock(consumer, StatueRegistry.TROPICAL_FISH_BB, FrameType.GOAL, false,
-					tropical, "tropical_fish_all_statue", RequirementsStrategy.AND,
+			AdvancementHolder tropicalAll = onHoldAnyBlock(consumer, StatueRegistry.TROPICAL_FISH_BB, FrameType.GOAL, false,
+					tropical, "tropical_fish_all_statue", AdvancementRequirements.Strategy.AND,
 					StatueRegistry.TROPICAL_FISH_B, StatueRegistry.TROPICAL_FISH_BB, StatueRegistry.TROPICAL_FISH_BE,
 					StatueRegistry.TROPICAL_FISH_BM, StatueRegistry.TROPICAL_FISH_BMB, StatueRegistry.TROPICAL_FISH_BMS,
 					StatueRegistry.TROPICAL_FISH_E, StatueRegistry.TROPICAL_FISH_ES, StatueRegistry.TROPICAL_FISH_HB,
 					StatueRegistry.TROPICAL_FISH_SB, StatueRegistry.TROPICAL_FISH_SD, StatueRegistry.TROPICAL_FISH_SS
 			);
-			Advancement pufferSmall = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_SMALL_STATUE, salmon);
-			Advancement pufferMedium = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_MEDIUM_STATUE, pufferSmall);
-			Advancement puffer = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_STATUE, pufferMedium);
-			Advancement dolphin = onHoldBlock(consumer, StatueRegistry.DOLPHIN_STATUE, salmon);
-			Advancement squid = onHoldBlock(consumer, StatueRegistry.SQUID_STATUE, dolphin);
-			Advancement turtle = onHoldBlock(consumer, StatueRegistry.TURTLE_STATUE, squid);
+			AdvancementHolder pufferSmall = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_SMALL_STATUE, salmon);
+			AdvancementHolder pufferMedium = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_MEDIUM_STATUE, pufferSmall);
+			AdvancementHolder puffer = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_STATUE, pufferMedium);
+			AdvancementHolder dolphin = onHoldBlock(consumer, StatueRegistry.DOLPHIN_STATUE, salmon);
+			AdvancementHolder squid = onHoldBlock(consumer, StatueRegistry.SQUID_STATUE, dolphin);
+			AdvancementHolder turtle = onHoldBlock(consumer, StatueRegistry.TURTLE_STATUE, squid);
 
-			Advancement witch = onHoldBlock(consumer, StatueRegistry.WITCH_STATUE, root);
-			Advancement pillager = onHoldBlock(consumer, StatueRegistry.PILLAGER_STATUE, witch);
-			Advancement vindicator = onHoldBlock(consumer, StatueRegistry.VINDICATOR_STATUE, pillager);
+			AdvancementHolder witch = onHoldBlock(consumer, StatueRegistry.WITCH_STATUE, root);
+			AdvancementHolder pillager = onHoldBlock(consumer, StatueRegistry.PILLAGER_STATUE, witch);
+			AdvancementHolder vindicator = onHoldBlock(consumer, StatueRegistry.VINDICATOR_STATUE, pillager);
 			onHoldBlock(consumer, StatueRegistry.EVOKER_STATUE, vindicator);
 
-			Advancement cow = onHoldBlock(consumer, StatueRegistry.COW_STATUE, root);
-			Advancement mooshroom = onHoldBlock(consumer, StatueRegistry.MOOSHROOM_STATUE, cow);
-			Advancement mooshroomBrown = onHoldBlock(consumer, StatueRegistry.BROWN_MOOSHROOM_STATUE, mooshroom);
-			Advancement pig = onHoldBlock(consumer, StatueRegistry.PIG_STATUE, cow);
-			Advancement snowman = onHoldBlock(consumer, StatueRegistry.SNOW_GOLEM_STATUE, cow);
+			AdvancementHolder cow = onHoldBlock(consumer, StatueRegistry.COW_STATUE, root);
+			AdvancementHolder mooshroom = onHoldBlock(consumer, StatueRegistry.MOOSHROOM_STATUE, cow);
+			AdvancementHolder mooshroomBrown = onHoldBlock(consumer, StatueRegistry.BROWN_MOOSHROOM_STATUE, mooshroom);
+			AdvancementHolder pig = onHoldBlock(consumer, StatueRegistry.PIG_STATUE, cow);
+			AdvancementHolder snowman = onHoldBlock(consumer, StatueRegistry.SNOW_GOLEM_STATUE, cow);
 
-			Advancement wasteland = onHoldBlock(consumer, StatueRegistry.WASTELAND_STATUE, FrameType.CHALLENGE, true, pig);
-			Advancement chicken = onHoldBlock(consumer, StatueRegistry.CHICKEN_STATUE, cow);
-			Advancement kingCluck = onHoldBlock(consumer, StatueRegistry.KING_CLUCK_STATUE, FrameType.GOAL, true, chicken);
-			Advancement chickenJockey = onHoldBlock(consumer, StatueRegistry.CHICKEN_JOCKEY_STATUE, chicken);
-			Advancement sheep = onHoldAnyBlock(consumer, StatueRegistry.SHEEP_STATUE_WHITE, FrameType.TASK, false,
-					cow, "sheep_statue", RequirementsStrategy.OR,
+			AdvancementHolder wasteland = onHoldBlock(consumer, StatueRegistry.WASTELAND_STATUE, FrameType.CHALLENGE, true, pig);
+			AdvancementHolder chicken = onHoldBlock(consumer, StatueRegistry.CHICKEN_STATUE, cow);
+			AdvancementHolder kingCluck = onHoldBlock(consumer, StatueRegistry.KING_CLUCK_STATUE, FrameType.GOAL, true, chicken);
+			AdvancementHolder chickenJockey = onHoldBlock(consumer, StatueRegistry.CHICKEN_JOCKEY_STATUE, chicken);
+			AdvancementHolder sheep = onHoldAnyBlock(consumer, StatueRegistry.SHEEP_STATUE_WHITE, FrameType.TASK, false,
+					cow, "sheep_statue", AdvancementRequirements.Strategy.OR,
 					StatueRegistry.SHEEP_SHAVEN_STATUE, StatueRegistry.SHEEP_STATUE_BLACK, StatueRegistry.SHEEP_STATUE_BLUE,
 					StatueRegistry.SHEEP_STATUE_BROWN, StatueRegistry.SHEEP_STATUE_CYAN, StatueRegistry.SHEEP_STATUE_GRAY,
 					StatueRegistry.SHEEP_STATUE_GREEN, StatueRegistry.SHEEP_STATUE_LIGHT_BLUE, StatueRegistry.SHEEP_STATUE_LIGHT_GRAY,
@@ -115,8 +117,8 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 					StatueRegistry.SHEEP_STATUE_PINK, StatueRegistry.SHEEP_STATUE_PURPLE, StatueRegistry.SHEEP_STATUE_RED,
 					StatueRegistry.SHEEP_STATUE_WHITE, StatueRegistry.SHEEP_STATUE_YELLOW
 			);
-			Advancement sheepAll = onHoldAnyBlock(consumer, StatueRegistry.SHEEP_STATUE_WHITE, FrameType.GOAL, false,
-					sheep, "sheep_all_statue", RequirementsStrategy.AND,
+			AdvancementHolder sheepAll = onHoldAnyBlock(consumer, StatueRegistry.SHEEP_STATUE_WHITE, FrameType.GOAL, false,
+					sheep, "sheep_all_statue", AdvancementRequirements.Strategy.AND,
 					StatueRegistry.SHEEP_SHAVEN_STATUE, StatueRegistry.SHEEP_STATUE_BLACK, StatueRegistry.SHEEP_STATUE_BLUE,
 					StatueRegistry.SHEEP_STATUE_BROWN, StatueRegistry.SHEEP_STATUE_CYAN, StatueRegistry.SHEEP_STATUE_GRAY,
 					StatueRegistry.SHEEP_STATUE_GREEN, StatueRegistry.SHEEP_STATUE_LIGHT_BLUE, StatueRegistry.SHEEP_STATUE_LIGHT_GRAY,
@@ -125,50 +127,50 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 					StatueRegistry.SHEEP_STATUE_WHITE, StatueRegistry.SHEEP_STATUE_YELLOW
 			);
 
-			Advancement cat = onHoldAnyBlock(consumer, StatueRegistry.CAT_JELLIE_STATUE, FrameType.TASK, false,
-					root, "cat_statue", RequirementsStrategy.OR,
+			AdvancementHolder cat = onHoldAnyBlock(consumer, StatueRegistry.CAT_JELLIE_STATUE, FrameType.TASK, false,
+					root, "cat_statue", AdvancementRequirements.Strategy.OR,
 					StatueRegistry.CAT_BLACK_STATUE, StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE, StatueRegistry.CAT_CALICO_STATUE,
 					StatueRegistry.CAT_JELLIE_STATUE, StatueRegistry.CAT_PERSIAN_STATUE, StatueRegistry.CAT_RAGDOLL_STATUE,
 					StatueRegistry.CAT_RED_STATUE, StatueRegistry.CAT_SIAMESE_STATUE, StatueRegistry.CAT_TABBY_STATUE,
 					StatueRegistry.CAT_TUXEDO_STATUE, StatueRegistry.CAT_WHITE_STATUE
 			);
-			Advancement catAll = onHoldAnyBlock(consumer, StatueRegistry.CAT_TUXEDO_STATUE, FrameType.GOAL, false,
-					cat, "cat_all_statue", RequirementsStrategy.AND,
+			AdvancementHolder catAll = onHoldAnyBlock(consumer, StatueRegistry.CAT_TUXEDO_STATUE, FrameType.GOAL, false,
+					cat, "cat_all_statue", AdvancementRequirements.Strategy.AND,
 					StatueRegistry.CAT_BLACK_STATUE, StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE, StatueRegistry.CAT_CALICO_STATUE,
 					StatueRegistry.CAT_JELLIE_STATUE, StatueRegistry.CAT_PERSIAN_STATUE, StatueRegistry.CAT_RAGDOLL_STATUE,
 					StatueRegistry.CAT_RED_STATUE, StatueRegistry.CAT_SIAMESE_STATUE, StatueRegistry.CAT_TABBY_STATUE,
 					StatueRegistry.CAT_TUXEDO_STATUE, StatueRegistry.CAT_WHITE_STATUE
 			);
-			Advancement fox = onHoldBlock(consumer, StatueRegistry.FOX_STATUE, cat);
-			Advancement foxSnow = onHoldBlock(consumer, StatueRegistry.FOX_SNOW_STATUE, fox);
-			Advancement panda = onHoldAnyBlock(consumer, StatueRegistry.PANDA_LAZY_STATUE, FrameType.TASK, false,
-					foxSnow, "panda_statue", RequirementsStrategy.OR,
+			AdvancementHolder fox = onHoldBlock(consumer, StatueRegistry.FOX_STATUE, cat);
+			AdvancementHolder foxSnow = onHoldBlock(consumer, StatueRegistry.FOX_SNOW_STATUE, fox);
+			AdvancementHolder panda = onHoldAnyBlock(consumer, StatueRegistry.PANDA_LAZY_STATUE, FrameType.TASK, false,
+					foxSnow, "panda_statue", AdvancementRequirements.Strategy.OR,
 					StatueRegistry.PANDA_ANGRY_STATUE, StatueRegistry.PANDA_BROWN_STATUE, StatueRegistry.PANDA_LAZY_STATUE,
 					StatueRegistry.PANDA_NORMAL_STATUE, StatueRegistry.PANDA_PLAYFUL_STATUE, StatueRegistry.PANDA_WEAK_STATUE,
 					StatueRegistry.PANDA_WORRIED_STATUE
 			);
-			Advancement pandaAll = onHoldAnyBlock(consumer, StatueRegistry.PANDA_BROWN_STATUE, FrameType.GOAL, false,
-					panda, "panda_all_statue", RequirementsStrategy.AND,
+			AdvancementHolder pandaAll = onHoldAnyBlock(consumer, StatueRegistry.PANDA_BROWN_STATUE, FrameType.GOAL, false,
+					panda, "panda_all_statue", AdvancementRequirements.Strategy.AND,
 					StatueRegistry.PANDA_ANGRY_STATUE, StatueRegistry.PANDA_BROWN_STATUE, StatueRegistry.PANDA_LAZY_STATUE,
 					StatueRegistry.PANDA_NORMAL_STATUE, StatueRegistry.PANDA_PLAYFUL_STATUE, StatueRegistry.PANDA_WEAK_STATUE,
 					StatueRegistry.PANDA_WORRIED_STATUE
 			);
-			Advancement bee = onHoldBlock(consumer, StatueRegistry.BEE_STATUE, foxSnow);
-			Advancement beeTrans = onHoldBlock(consumer, StatueRegistry.TRANS_BEE_STATUE, FrameType.GOAL, false, bee);
-			Advancement beeAngry = onHoldBlock(consumer, StatueRegistry.ANGRY_BEE_STATUE, bee);
-			Advancement rabbit = onHoldAnyBlock(consumer, StatueRegistry.RABBIT_BR_STATUE, FrameType.TASK, false,
-					foxSnow, "rabbit_statue", RequirementsStrategy.OR,
+			AdvancementHolder bee = onHoldBlock(consumer, StatueRegistry.BEE_STATUE, foxSnow);
+			AdvancementHolder beeTrans = onHoldBlock(consumer, StatueRegistry.TRANS_BEE_STATUE, FrameType.GOAL, false, bee);
+			AdvancementHolder beeAngry = onHoldBlock(consumer, StatueRegistry.ANGRY_BEE_STATUE, bee);
+			AdvancementHolder rabbit = onHoldAnyBlock(consumer, StatueRegistry.RABBIT_BR_STATUE, FrameType.TASK, false,
+					foxSnow, "rabbit_statue", AdvancementRequirements.Strategy.OR,
 					StatueRegistry.RABBIT_BR_STATUE, StatueRegistry.RABBIT_BS_STATUE, StatueRegistry.RABBIT_BW_STATUE,
 					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
 			);
-			Advancement rabbitAll = killerCollection(consumer, StatueRegistry.RABBIT_WH_STATUE, rabbit, "rabbit_all_statue",
+			AdvancementHolder rabbitAll = killerCollection(consumer, StatueRegistry.RABBIT_WH_STATUE, rabbit, "rabbit_all_statue",
 					StatueRegistry.RABBIT_BR_STATUE, StatueRegistry.RABBIT_BS_STATUE, StatueRegistry.RABBIT_BW_STATUE,
 					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
 			);
 
-			Advancement blaze = onHoldBlock(consumer, StatueRegistry.BLAZE_STATUE, root);
-			Advancement ghast = onHoldBlock(consumer, StatueRegistry.GHAST_STATUE, blaze);
-			Advancement magma = onHoldBlock(consumer, StatueRegistry.MAGMA_STATUE, ghast);
+			AdvancementHolder blaze = onHoldBlock(consumer, StatueRegistry.BLAZE_STATUE, root);
+			AdvancementHolder ghast = onHoldBlock(consumer, StatueRegistry.GHAST_STATUE, blaze);
+			AdvancementHolder magma = onHoldBlock(consumer, StatueRegistry.MAGMA_STATUE, ghast);
 
 			onHoldBlock(consumer, StatueRegistry.PLAYER_STATUE, root);
 
@@ -183,7 +185,8 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 		 * @param hidden         If the advancement is hidden.
 		 * @param root           The root advancement.
 		 */
-		protected static Advancement onHoldBlock(Consumer<Advancement> consumer, RegistryObject<Block> registryObject, FrameType type, boolean hidden, Advancement root) {
+		protected static AdvancementHolder onHoldBlock(Consumer<AdvancementHolder> consumer, DeferredHolder<Block, ? extends Block> registryObject,
+													   FrameType type, boolean hidden, AdvancementHolder root) {
 			String path = registryObject.getId().getPath();
 			ResourceLocation registryLocation = modLoc(path);
 
@@ -199,17 +202,18 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 		 * Adds an advancement for holding a given block.
 		 *
 		 * @param consumer       The consumer to add to.
-		 * @param registryObject The block registry object.
+		 * @param deferredHolder The block registry object.
 		 * @param root           The root advancement.
 		 */
-		protected static Advancement onHoldBlock(Consumer<Advancement> consumer, RegistryObject<Block> registryObject, Advancement root) {
-			String path = registryObject.getId().getPath();
+		protected static AdvancementHolder onHoldBlock(Consumer<AdvancementHolder> consumer, DeferredHolder<Block, ? extends Block> deferredHolder,
+													   AdvancementHolder root) {
+			String path = deferredHolder.getId().getPath();
 			ResourceLocation registryLocation = modLoc(path);
 
 			return Advancement.Builder.advancement()
-					.display(simpleDisplay(registryObject.get(), path, FrameType.TASK))
+					.display(simpleDisplay(deferredHolder.get(), path, FrameType.TASK))
 					.parent(root)
-					.addCriterion(path, onHeldItems(registryObject.get()))
+					.addCriterion(path, onHeldItems(deferredHolder.get()))
 					.save(consumer, rootID(registryLocation.getPath()));
 		}
 
@@ -218,22 +222,24 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 		 * Adds an advancement for holding any/all the given items.
 		 *
 		 * @param consumer        The consumer to add to.
-		 * @param displayObject   The display block registry object.
+		 * @param deferredHolder  The display block registry object.
 		 * @param type            The frame type.
 		 * @param hidden          If the advancement is hidden.
 		 * @param root            The root advancement.
 		 * @param path            The path of the advancement.
 		 * @param registryObjects The block registry objects that you need to hold one of.
 		 */
-		protected static Advancement onHoldAnyBlock(Consumer<Advancement> consumer, RegistryObject<Block> displayObject, FrameType type, boolean hidden, Advancement root, String path, RequirementsStrategy requirementsStrategy, RegistryObject<Block>... registryObjects) {
+		protected static AdvancementHolder onHoldAnyBlock(Consumer<AdvancementHolder> consumer, DeferredHolder<Block, ? extends Block> deferredHolder,
+														  FrameType type, boolean hidden, AdvancementHolder root, String path,
+														  AdvancementRequirements.Strategy requirementsStrategy, DeferredHolder<Block, ? extends Block>... registryObjects) {
 			ResourceLocation registryLocation = modLoc(path);
 
-			DisplayInfo info = hidden ? hiddenDisplay(displayObject.get(), path, type) : simpleDisplay(displayObject.get(), path, type);
+			DisplayInfo info = hidden ? hiddenDisplay(deferredHolder.get(), path, type) : simpleDisplay(deferredHolder.get(), path, type);
 			Advancement.Builder builder = Advancement.Builder.advancement()
 					.display(info)
 					.parent(root);
 
-			for (RegistryObject<Block> registryObject : registryObjects) {
+			for (DeferredHolder<Block, ? extends Block> registryObject : registryObjects) {
 				builder.addCriterion(registryObject.getId().getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(registryObject.get()));
 			}
 			return builder.requirements(requirementsStrategy).save(consumer, rootID(registryLocation.getPath()));
@@ -246,21 +252,22 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 		 * @param displayObject   The display block registry object.
 		 * @param root            The root advancement.
 		 * @param path            The path of the advancement.
-		 * @param registryObjects The block registry objects that you need to hold one of.
+		 * @param deferredHolders The block registry objects that you need to hold one of.
 		 */
-		protected static Advancement killerCollection(Consumer<Advancement> consumer, RegistryObject<Block> displayObject, Advancement root, String path, RegistryObject<Block>... registryObjects) {
+		protected static AdvancementHolder killerCollection(Consumer<AdvancementHolder> consumer, DeferredHolder<Block, ? extends Block> displayObject,
+															AdvancementHolder root, String path, DeferredHolder<Block, ? extends Block>... deferredHolders) {
 			ResourceLocation registryLocation = modLoc(path);
 
 			Advancement.Builder builder = Advancement.Builder.advancement()
 					.display(simpleDisplay(displayObject.get(), path, FrameType.GOAL))
 					.parent(root);
 
-			for (RegistryObject<Block> registryObject : registryObjects) {
+			for (DeferredHolder<Block, ? extends Block> registryObject : deferredHolders) {
 				builder.addCriterion(registryObject.getId().getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(registryObject.get()));
 			}
 			return builder
 					.rewards(AdvancementRewards.Builder.function(modLoc("killer_rabbit")))
-					.requirements(RequirementsStrategy.AND)
+					.requirements(AdvancementRequirements.Strategy.AND)
 					.save(consumer, rootID(registryLocation.getPath()));
 		}
 
@@ -268,20 +275,21 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 		 * Adds an advancement for holding a given item.
 		 *
 		 * @param consumer       The consumer to add to.
-		 * @param registryObject The block registry object.
+		 * @param deferredHolder The block registry object.
 		 * @param type           The frame type.
 		 * @param hidden         If the advancement is hidden.
 		 * @param root           The root advancement.
 		 */
-		protected static Advancement onHoldItem(Consumer<Advancement> consumer, RegistryObject<Item> registryObject, FrameType type, boolean hidden, Advancement root) {
-			String path = registryObject.getId().getPath();
+		protected static AdvancementHolder onHoldItem(Consumer<AdvancementHolder> consumer, DeferredHolder<Item, ? extends Item> deferredHolder,
+													  FrameType type, boolean hidden, AdvancementHolder root) {
+			String path = deferredHolder.getId().getPath();
 			ResourceLocation registryLocation = modLoc(path);
 
-			DisplayInfo info = hidden ? hiddenDisplay(registryObject.get(), path, type) : simpleDisplay(registryObject.get(), path, type);
+			DisplayInfo info = hidden ? hiddenDisplay(deferredHolder.get(), path, type) : simpleDisplay(deferredHolder.get(), path, type);
 			return Advancement.Builder.advancement()
 					.display(info)
 					.parent(root)
-					.addCriterion(path, onHeldItems(registryObject.get()))
+					.addCriterion(path, onHeldItems(deferredHolder.get()))
 					.save(consumer, rootID(registryLocation.getPath()));
 		}
 
@@ -337,7 +345,7 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 		 * @param entityType The entity type.
 		 * @return The trigger instance.
 		 */
-		protected static KilledTrigger.TriggerInstance onKill(EntityType<?> entityType) {
+		protected static Criterion<KilledTrigger.TriggerInstance> onKill(EntityType<?> entityType) {
 			return KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(entityType));
 		}
 
@@ -347,7 +355,7 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 		 * @param items The items.
 		 * @return The trigger instance.
 		 */
-		protected static InventoryChangeTrigger.TriggerInstance onHeldItems(ItemLike... items) {
+		protected static Criterion<InventoryChangeTrigger.TriggerInstance> onHeldItems(ItemLike... items) {
 			return InventoryChangeTrigger.TriggerInstance.hasItems(items);
 		}
 

@@ -19,17 +19,17 @@ import com.shynieke.statues.registry.StatueSerializers;
 import com.shynieke.statues.registry.StatueSounds;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import org.slf4j.Logger;
 
 @Mod(Reference.MOD_ID)
@@ -43,7 +43,7 @@ public class Statues {
 		eventBus.register(StatuesConfig.class);
 
 		eventBus.addListener(this::setup);
-		MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
+		NeoForge.EVENT_BUS.addListener(this::serverAboutToStart);
 
 		StatueSerializers.ENTITY_DATA_SERIALIZER.register(eventBus);
 		StatueRegistry.ENTITIES.register(eventBus);
@@ -61,23 +61,23 @@ public class Statues {
 		eventBus.addListener(StatueEntities::registerSpawnPlacements);
 
 		if (ModList.get().isLoaded("curios")) {
-			eventBus.addListener(com.shynieke.statues.compat.curios.CuriosCompat::sendImc);
+//			eventBus.addListener(com.shynieke.statues.compat.curios.CuriosCompat::sendImc);
 		}
 
-		MinecraftForge.EVENT_BUS.register(new StatueHandler());
-		MinecraftForge.EVENT_BUS.register(new FishHandler());
-		MinecraftForge.EVENT_BUS.register(new TraderHandler());
-		MinecraftForge.EVENT_BUS.register(new DropHandler());
-		MinecraftForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
+		NeoForge.EVENT_BUS.register(new StatueHandler());
+		NeoForge.EVENT_BUS.register(new FishHandler());
+		NeoForge.EVENT_BUS.register(new TraderHandler());
+		NeoForge.EVENT_BUS.register(new DropHandler());
+		NeoForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+		if (FMLEnvironment.dist == Dist.CLIENT) {
 			eventBus.addListener(ClientHandler::doClientStuff);
 			eventBus.addListener(ClientHandler::registerEntityRenders);
 			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 			eventBus.addListener(ClientHandler::registerBlockColors);
-			MinecraftForge.EVENT_BUS.addListener(ClientHandler::onLogin);
-			MinecraftForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
-		});
+			NeoForge.EVENT_BUS.addListener(ClientHandler::onLogin);
+			NeoForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
+		}
 
 	}
 

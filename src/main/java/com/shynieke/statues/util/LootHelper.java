@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 
 public class LootHelper {
@@ -18,7 +19,7 @@ public class LootHelper {
 		return floodBucket;
 	}
 
-	public static LootRecipe getMatchingLoot(Level level, ItemStack stack) {
+	public static RecipeHolder<LootRecipe> getMatchingLoot(Level level, ItemStack stack) {
 		return level.getRecipeManager().getRecipeFor(StatuesRecipes.LOOT_RECIPE.get(), new SimpleContainer(stack), level).orElse(null);
 	}
 

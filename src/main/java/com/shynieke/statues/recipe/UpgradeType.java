@@ -4,29 +4,34 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.util.UpgradeHelper;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Locale;
 import java.util.Map;
 
-public enum UpgradeType {
-	CRAFTING(false, false, 1), //Unused but packs can add crafting recipes using the S.T.A.T.U.E
-	UPGRADE(false, false, 1), //Upgrades a statue to one that can level (Uses a statue core)
-	GLOWING(true, false, 15), //Makes the statue emit light
-	UNGLOWING(false, false, 14), //Reduces the light emitted
-	SPAWNER(true, true, 10), //Spawns the mob
-	DESPAWNER(true, true, 1), //Stops the mob from spawning nearby
-	MOB_KILLER(true, true, 3), //0 = Regular drops,1 = Player drops, 2 = XP too
-	LOOTING(true, true, 5), //Allows dropping of Loot (every upgrade increases chance of every drop by 10%)
-	AUTOMATION(true, true, 1), //Allows exporting of the loot
-	SPEED(true, true, 10), //Speed up the interactions / mob spawn timer
-	INTERACTION(true, true, 1), //The special interactions for certain statues (like Mooshroom, and Etho)
-	SOUND(true, true, 1); //Plays the mobs sound when redstone is applied or interacted
+public enum UpgradeType implements StringRepresentable {
+	CRAFTING("crafting", false, false, 1), //Unused but packs can add crafting recipes using the S.T.A.T.U.E
+	UPGRADE("upgrade", false, false, 1), //Upgrades a statue to one that can level (Uses a statue core)
+	GLOWING("glowing", true, false, 15), //Makes the statue emit light
+	UNGLOWING("unglowing", false, false, 14), //Reduces the light emitted
+	SPAWNER("spawner", true, true, 10), //Spawns the mob
+	DESPAWNER("despawner", true, true, 1), //Stops the mob from spawning nearby
+	MOB_KILLER("mob_killer", true, true, 3), //0 = Regular drops,1 = Player drops, 2 = XP too
+	LOOTING("looting", true, true, 5), //Allows dropping of Loot (every upgrade increases chance of every drop by 10%)
+	AUTOMATION("automation", true, true, 1), //Allows exporting of the loot
+	SPEED("speed", true, true, 10), //Speed up the interactions / mob spawn timer
+	INTERACTION("interaction", true, true, 1), //The special interactions for certain statues (like Mooshroom, and Etho)
+	SOUND("sound", true, true, 1); //Plays the mobs sound when redstone is applied or interacted
 
+
+	public static final StringRepresentable.EnumCodec<UpgradeType> CODEC = StringRepresentable.fromEnum(UpgradeType::values);
+	private final String name;
 	private final boolean upgraded, subsequentUsesSlot;
 	private final int cap;
 
-	UpgradeType(boolean upgraded, boolean subsequentUsesSlot, int cap) {
+	UpgradeType(String name, boolean upgraded, boolean subsequentUsesSlot, int cap) {
+		this.name = name;
 		this.upgraded = upgraded;
 		this.subsequentUsesSlot = subsequentUsesSlot;
 		this.cap = cap;
@@ -145,5 +150,10 @@ public enum UpgradeType {
 		}
 
 		return false;
+	}
+
+	@Override
+	public String getSerializedName() {
+		return this.name;
 	}
 }

@@ -1,5 +1,6 @@
 package com.shynieke.statues.compat.patchouli;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -9,11 +10,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
 
 public class PatchouliCompat {
 	public static void convertBook(Player playerIn) {
-		Item guideBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
+		Item guideBook = BuiltInRegistries.ITEM.get(new ResourceLocation("patchouli", "guide_book"));
 		if (guideBook != null) {
 			playerIn.getMainHandItem().shrink(1);
 			ItemStack patchouliBook = new ItemStack(guideBook);

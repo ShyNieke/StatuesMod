@@ -1,8 +1,6 @@
 package com.shynieke.statues.client.render;
 
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftProfileTexture.Type;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.shynieke.statues.client.ClientHandler;
@@ -24,12 +22,11 @@ import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import java.util.Map;
-
 public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, PlayerStatueModel> {
 	private final PlayerStatueModel playerModel;
 	private final PlayerStatueModel slimPlayerModel;
-	public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultSkin();
+	public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultTexture();
+	public static boolean isSlim = false;
 
 	public PlayerStatueRenderer(EntityRendererProvider.Context context) {
 		this(context, false);
@@ -56,23 +53,17 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	}
 
 	private ResourceLocation getSkin(GameProfile gameProfile) {
-		if (!gameProfile.isComplete()) {
-			return defaultTexture;
-		} else {
-			final Minecraft minecraft = Minecraft.getInstance();
-			SkinManager skinManager = minecraft.getSkinManager();
-			final Map<Type, MinecraftProfileTexture> loadSkinFromCache = skinManager.getInsecureSkinInformation(gameProfile); // returned map may or may not be typed
-			if (loadSkinFromCache.containsKey(MinecraftProfileTexture.Type.SKIN)) {
-				return skinManager.registerTexture(loadSkinFromCache.get(Type.SKIN), Type.SKIN);
-			} else {
-				return DefaultPlayerSkin.getDefaultSkin(gameProfile.getId());
-			}
-		}
+		SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
+		return skinmanager.getInsecureSkin(gameProfile).texture();
 	}
 
 	@Override
 	public void render(PlayerStatue playerStatue, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
-		this.model = playerStatue.isSlim() ? this.slimPlayerModel : playerModel;
+		SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
+		if (isSlim != skinmanager.getInsecureSkin(playerStatue.getGameProfile().get()).model().id().equals("slim"))
+			isSlim = !isSlim;
+
+		this.model = isSlim ? this.slimPlayerModel : playerModel;
 		poseStack.translate(0, playerStatue.getYOffsetData(), 0);
 		if (playerStatue.clientLock > 0) {
 			playerStatue.xRotO = playerStatue.yBodyRot;
@@ -108,9 +99,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		if (playerStatue.getGameProfile().isPresent()) {
 			GameProfile profile = playerStatue.getGameProfile().get();
 			String s = ChatFormatting.stripFormatting(profile.getName());
-			if ("Dinnerbone".equals(s) || "Grumm".equals(s)) {
-				return true;
-			}
+			return "Dinnerbone".equals(s) || "Grumm".equals(s);
 		}
 
 		return false;

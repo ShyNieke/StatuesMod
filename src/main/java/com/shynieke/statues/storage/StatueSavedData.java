@@ -10,8 +10,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
-import net.minecraftforge.fml.util.thread.SidedThreadGroups;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.fml.util.thread.SidedThreadGroups;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,7 +96,7 @@ public class StatueSavedData extends SavedData {
 	public static StatueSavedData get() {
 		if (Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
 			return ServerLifecycleHooks.getCurrentServer().getLevel(Level.OVERWORLD).getDataStorage()
-					.computeIfAbsent(StatueSavedData::load, StatueSavedData::new, DATA_NAME);
+					.computeIfAbsent(new SavedData.Factory<>(StatueSavedData::new, StatueSavedData::load), DATA_NAME);
 		else
 			return blank;
 	}

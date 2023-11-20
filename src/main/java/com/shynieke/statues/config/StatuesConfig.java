@@ -1,13 +1,12 @@
 package com.shynieke.statues.config;
 
 import com.shynieke.statues.Statues;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.EnumValue;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.List;
@@ -23,19 +22,19 @@ public class StatuesConfig {
 	public static class Common {
 
 		public final DoubleValue statueDropChance;
-		public final EnumValue<EnumDeathSource> statueKillSource;
+		public final ModConfigSpec.EnumValue<EnumDeathSource> statueKillSource;
 
 		public final BooleanValue playerDropsStatue;
-		public final EnumValue<EnumDeathSource> playerStatueKillSource;
+		public final ModConfigSpec.EnumValue<EnumDeathSource> playerStatueKillSource;
 		public final DoubleValue playerStatueDropChance;
 		public final BooleanValue playerCompass;
 
 		public final BooleanValue statueBatSpawning;
 		public final BooleanValue ancientCityLoot;
 		public final DoubleValue ancientCityLootChance;
-		public final ForgeConfigSpec.IntValue statueCooldown;
-		public final ForgeConfigSpec.IntValue statueMinCooldown;
-		public final ForgeConfigSpec.IntValue statueSpeedUpgrade;
+		public final ModConfigSpec.IntValue statueCooldown;
+		public final ModConfigSpec.IntValue statueMinCooldown;
+		public final ModConfigSpec.IntValue statueSpeedUpgrade;
 
 		//Lucky Players
 		public final ConfigValue<List<? extends String>> lucky_players;
@@ -43,7 +42,7 @@ public class StatuesConfig {
 		//Messages
 		public final ConfigValue<List<? extends String>> info_messages;
 
-		Common(ForgeConfigSpec.Builder builder) {
+		Common(ModConfigSpec.Builder builder) {
 			//General settings
 			builder.comment("General settings")
 					.push("general");
@@ -168,7 +167,7 @@ public class StatuesConfig {
 	public static class Client {
 		public final BooleanValue allowScrolling;
 
-		Client(ForgeConfigSpec.Builder builder) {
+		Client(ModConfigSpec.Builder builder) {
 			builder.comment("Client settings")
 					.push("Client");
 
@@ -180,21 +179,21 @@ public class StatuesConfig {
 		}
 	}
 
-	public static final ForgeConfigSpec commonSpec;
+	public static final ModConfigSpec commonSpec;
 	public static final Common COMMON;
 
 	static {
-		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+		final Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
 		commonSpec = specPair.getRight();
 		COMMON = specPair.getLeft();
 	}
 
 
-	public static final ForgeConfigSpec clientSpec;
+	public static final ModConfigSpec clientSpec;
 	public static final Client CLIENT;
 
 	static {
-		final Pair<Client, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Client::new);
+		final Pair<Client, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Client::new);
 		clientSpec = specPair.getRight();
 		CLIENT = specPair.getLeft();
 	}

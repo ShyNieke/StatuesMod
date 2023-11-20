@@ -31,7 +31,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -179,7 +179,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	public float getPitch() {
-		return this.isBaby() ? (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.5F : (this.RANDOM.nextFloat() - this.RANDOM.nextFloat()) * 0.2F + 1.0F;
+		return this.isBaby() ? (RANDOM.nextFloat() - RANDOM.nextFloat()) * 0.2F + 1.5F : (RANDOM.nextFloat() - RANDOM.nextFloat()) * 0.2F + 1.0F;
 	}
 
 	public boolean canPlaySound(Level level, BlockPos pos, BlockState state) {

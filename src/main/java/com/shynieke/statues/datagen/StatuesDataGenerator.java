@@ -13,7 +13,6 @@ import com.shynieke.statues.datagen.server.StatueGLMProvider;
 import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
-import com.shynieke.statues.datagen.server.patchouli.StatuePatchouliProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.RegistrySetBuilder;
@@ -22,12 +21,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.registries.VanillaRegistries;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -43,13 +42,13 @@ public class StatuesDataGenerator {
 
 		if (event.includeServer()) {
 			generator.addProvider(event.includeServer(), new StatueLootProvider(packOutput));
-			generator.addProvider(event.includeServer(), new StatueRecipeProvider(packOutput));
+			generator.addProvider(event.includeServer(), new StatueRecipeProvider(packOutput, lookupProvider));
 			StatueBlockTagProvider blockTags = new StatueBlockTagProvider(packOutput, lookupProvider, helper);
 			generator.addProvider(event.includeServer(), blockTags);
 			generator.addProvider(event.includeServer(), new StatueItemTagProvider(packOutput, lookupProvider, blockTags, helper));
 			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(packOutput, lookupProvider, helper));
 			generator.addProvider(event.includeServer(), new StatueGLMProvider(packOutput));
-			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(packOutput));
+//			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(packOutput));
 			generator.addProvider(event.includeServer(), new StatueAdvancementProvider(packOutput, lookupProvider, helper));
 
 			generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
@@ -69,7 +68,7 @@ public class StatuesDataGenerator {
 		});
 		registryBuilder.add(Registries.PLACED_FEATURE, $ -> {
 		});
-		registryBuilder.add(ForgeRegistries.Keys.BIOME_MODIFIERS, StatueBiomeModifiers::bootstrap);
+		registryBuilder.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, StatueBiomeModifiers::bootstrap);
 		// We need the BIOME registry to be present so we can use a biome tag, doesn't matter that it's empty
 		registryBuilder.add(Registries.BIOME, $ -> {
 		});

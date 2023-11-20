@@ -26,9 +26,9 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.ModList;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.fml.ModList;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
@@ -115,7 +115,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 
 				if (level.random.nextDouble() <= 0.3D && j == 11 && i <= 20) {
 					randomMessage = Component.literal("Please check out our friends over at ")
-							.withStyle(ChatFormatting.YELLOW).append(ForgeHooks.newChatWithLinks("https://lovetropics.com/"));
+							.withStyle(ChatFormatting.YELLOW).append(CommonHooks.newChatWithLinks("https://lovetropics.com/"));
 				} else {
 					randomMessage = Component.literal(messages.get(idx));
 				}

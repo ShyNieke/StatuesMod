@@ -2,16 +2,16 @@ package com.shynieke.statues.datagen.server.recipe;
 
 import com.google.gson.JsonObject;
 import com.shynieke.statues.recipe.StatuesRecipes;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
-
-import javax.annotation.Nullable;
-import java.util.function.Consumer;
+import org.jetbrains.annotations.Nullable;
 
 public class LootRecipeBuilder {
 	private final Ingredient statueIngredient;
@@ -100,14 +100,26 @@ public class LootRecipeBuilder {
 		return this;
 	}
 
-	public void build(Consumer<FinishedRecipe> consumerIn) {
-		ResourceLocation itemKey = ForgeRegistries.ITEMS.getKey(this.statueIngredient.getItems()[0].getItem());
-		this.build(consumerIn, new ResourceLocation(itemKey.getNamespace(), "loot/" + itemKey.getPath()));
+	public void build(RecipeOutput recipeOutput) {
+		ResourceLocation itemKey = BuiltInRegistries.ITEM.getKey(this.statueIngredient.getItems()[0].getItem());
+		this.build(recipeOutput, new ResourceLocation(itemKey.getNamespace(), "loot/" + itemKey.getPath()));
 	}
 
-	public void build(Consumer<FinishedRecipe> consumerIn, ResourceLocation id) {
-		consumerIn.accept(new Result(id, this.group == null ? "" : this.group, this.statueIngredient,
-				result, result1Chance, result2, result2Chance, result3, result3Chance));
+	public void build(RecipeOutput consumerIn, ResourceLocation id) {
+		System.out.println(id);
+		consumerIn.accept(
+				new Result(
+						id,
+						this.group == null ? "" : this.group,
+						this.statueIngredient,
+						this.result,
+						this.result1Chance,
+						this.result2,
+						this.result2Chance,
+						this.result3,
+						this.result3Chance
+				)
+		);
 	}
 
 	public static class Result implements FinishedRecipe {
@@ -137,7 +149,7 @@ public class LootRecipeBuilder {
 				json.addProperty("group", this.group);
 			}
 
-			json.add("ingredient", this.statueIngredient.toJson());
+			json.add("ingredient", this.statueIngredient.toJson(false));
 
 			addStack(json, "result1", this.result, this.result1Chance);
 			addStack(json, "result2", this.result2, this.result2Chance);
@@ -148,7 +160,7 @@ public class LootRecipeBuilder {
 			if (stack != null && !stack.isEmpty()) {
 				JsonObject object = new JsonObject();
 
-				object.addProperty("item", ForgeRegistries.ITEMS.getKey(stack.getItem()).toString());
+				object.addProperty("item", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
 				if (stack.getCount() != 1) {
 					object.addProperty("count", stack.getCount());
 				}
@@ -160,32 +172,19 @@ public class LootRecipeBuilder {
 			}
 		}
 
-		/**
-		 * Gets the ID for the recipe.
-		 */
-		public ResourceLocation getId() {
-			return this.id;
-		}
-
 		@Override
-		public RecipeSerializer<?> getType() {
+		public RecipeSerializer<?> type() {
 			return StatuesRecipes.LOOT_SERIALIZER.get();
 		}
 
-		/**
-		 * Gets the JSON for the advancement that unlocks this recipe. Null if there is no advancement.
-		 */
-		@Nullable
-		public JsonObject serializeAdvancement() {
-			return null;
+		@Override
+		public ResourceLocation id() {
+			return this.id;
 		}
 
-		/**
-		 * Gets the ID for the advancement associated with this recipe. Should not be null if {@link #getAdvancementId()}
-		 * is non-null.
-		 */
 		@Nullable
-		public ResourceLocation getAdvancementId() {
+		@Override
+		public AdvancementHolder advancement() {
 			return null;
 		}
 	}

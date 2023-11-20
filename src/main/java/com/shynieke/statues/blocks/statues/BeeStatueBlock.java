@@ -18,16 +18,6 @@ public class BeeStatueBlock extends AngryBeeStatueBlock {
 	}
 
 	@Override
-	public EntityType<?> getEntity() {
-		return EntityType.BEE;
-	}
-
-	@Override
-	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.BEE_LOOP;
-	}
-
-	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}

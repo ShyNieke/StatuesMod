@@ -36,15 +36,15 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterColorHandlersEvent;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -168,7 +168,7 @@ public class ClientHandler {
 					reader.close();
 				} catch (IOException ex) {
 					Statues.LOGGER.error("Exception loading supporter data!");
-					ex.printStackTrace();
+					Statues.LOGGER.trace("Trace", ex);
 				}
 			} catch (Exception k) {
 				//not possible
@@ -178,7 +178,7 @@ public class ClientHandler {
 		}, "Statues Perks Data Loader").start();
 
 		if (ModList.get().isLoaded("curios")) {
-			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);
+//			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);
 		}
 	}
 

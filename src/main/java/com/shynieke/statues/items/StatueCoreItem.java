@@ -8,13 +8,13 @@ import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class StatueCoreItem extends RecordItem {
 
 	public StatueCoreItem(Item.Properties builder) {
-		super(0, SoundEvents.MUSIC_CREDITS, builder, 12060);
+		super(0, SoundEvents.MUSIC_CREDITS.value(), builder, 12060);
 	}
 
 	@Override
