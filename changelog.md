@@ -1,1 +1,1 @@
-* Add Dutch localization (Courtesy of [ferriarnus](https://github.com/ShyNieke/StatuesMod/pull/92))
+* Initial update to 1.20.2
