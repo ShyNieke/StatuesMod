@@ -1,1 +1,2 @@
-* Initial update to 1.20.2
+* Fix recipes being broken
+* Fix slime statue rendering
