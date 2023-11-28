@@ -239,26 +239,22 @@ public class UpgradeRecipe implements Recipe<Container> {
 			public static final Codec<UpgradeRecipe.Serializer.RawUpgradeRecipe> CODEC = RecordCodecBuilder.create(
 					instance -> instance.group(
 									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-									Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.center),
+									Ingredient.CODEC_NONEMPTY.fieldOf("center").forGetter(recipe -> recipe.center),
 									Ingredient.CODEC_NONEMPTY
 											.listOf()
-											.fieldOf("ingredients")
+											.fieldOf("catalysts")
 											.flatXmap(
 													array -> {
 														Ingredient[] aingredient = array
 																.toArray(Ingredient[]::new); //Forge skip the empty check and immediatly create the array.
-														if (aingredient.length == 0) {
-															return DataResult.error(() -> "No ingredients for shapeless recipe");
-														} else {
-															return aingredient.length > 4
-																	? DataResult.error(() -> "Too many ingredients for shapeless recipe. The maximum is: %s".formatted(4))
-																	: DataResult.success(NonNullList.of(Ingredient.EMPTY, aingredient));
-														}
+														return aingredient.length > 4
+																? DataResult.error(() -> "Too many ingredients for shapeless recipe. The maximum is: %s".formatted(4))
+																: DataResult.success(NonNullList.of(Ingredient.EMPTY, aingredient));
 													},
 													DataResult::success
 											)
 											.forGetter(recipe -> recipe.catalysts),
-									CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(recipe -> recipe.stack),
+									ExtraCodecs.strictOptionalField(CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC, "result", ItemStack.EMPTY).forGetter(recipe -> recipe.stack),
 									ExtraCodecs.strictOptionalField(Codec.BOOL, "requireCore", false).forGetter(recipe -> recipe.requireCore),
 									UpgradeType.CODEC.optionalFieldOf("requireCore", UpgradeType.CRAFTING).forGetter(recipe -> recipe.upgradeType),
 									Codec.INT.optionalFieldOf("tier", -1).forGetter(recipe -> recipe.tier),
@@ -269,3 +265,4 @@ public class UpgradeRecipe implements Recipe<Container> {
 		}
 	}
 }
+

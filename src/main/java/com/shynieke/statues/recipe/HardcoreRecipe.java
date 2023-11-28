@@ -163,16 +163,15 @@ public class HardcoreRecipe extends ShapedRecipe {
 	}
 
 	public static class Serializer implements RecipeSerializer<HardcoreRecipe> {
-		private static final net.minecraft.resources.ResourceLocation NAME = new net.minecraft.resources.ResourceLocation("minecraft", "crafting_shaped");
-		static final Codec<List<String>> PATTERN_CODEC = Codec.STRING.listOf().flatXmap(p_300940_ -> {
-			if (p_300940_.size() > MAX_HEIGHT) {
+		static final Codec<List<String>> PATTERN_CODEC = Codec.STRING.listOf().flatXmap(list -> {
+			if (list.size() > MAX_HEIGHT) {
 				return DataResult.error(() -> "Invalid pattern: too many rows, %s is maximum".formatted(MAX_HEIGHT));
-			} else if (p_300940_.isEmpty()) {
+			} else if (list.isEmpty()) {
 				return DataResult.error(() -> "Invalid pattern: empty pattern not allowed");
 			} else {
-				int i = p_300940_.get(0).length();
+				int i = list.get(0).length();
 
-				for (String s : p_300940_) {
+				for (String s : list) {
 					if (s.length() > MAX_WIDTH) {
 						return DataResult.error(() -> "Invalid pattern: too many columns, %s is maximum".formatted(MAX_WIDTH));
 					}
@@ -182,29 +181,29 @@ public class HardcoreRecipe extends ShapedRecipe {
 					}
 				}
 
-				return DataResult.success(p_300940_);
+				return DataResult.success(list);
 			}
 		}, DataResult::success);
-		static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.flatXmap(p_300861_ -> {
-			if (p_300861_.length() != 1) {
-				return DataResult.error(() -> "Invalid ingredient entry: '" + p_300861_ + "' is an invalid symbol (must be 1 character only).");
+		static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.flatXmap(s -> {
+			if (s.length() != 1) {
+				return DataResult.error(() -> "Invalid ingredient entry: '" + s + "' is an invalid symbol (must be 1 character only).");
 			} else {
-				return " ".equals(p_300861_) ? DataResult.error(() -> "Invalid ingredient entry: ' ' is a reserved symbol.") : DataResult.success(p_300861_);
+				return " ".equals(s) ? DataResult.error(() -> "Invalid ingredient entry: ' ' is a reserved symbol.") : DataResult.success(s);
 			}
 		}, DataResult::success);
-		private static final Codec<HardcoreRecipe> CODEC = RawHardcoreRecipe.CODEC.flatXmap(p_301248_ -> {
-			String[] astring = HardcoreRecipe.shrink(p_301248_.pattern);
+		private static final Codec<HardcoreRecipe> CODEC = RawHardcoreRecipe.CODEC.flatXmap(hardcoreRecipe -> {
+			String[] astring = HardcoreRecipe.shrink(hardcoreRecipe.pattern);
 			int i = astring[0].length();
 			int j = astring.length;
 			NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i * j, Ingredient.EMPTY);
-			Set<String> set = Sets.newHashSet(p_301248_.key.keySet());
+			Set<String> set = Sets.newHashSet(hardcoreRecipe.key.keySet());
 
 			for (int k = 0; k < astring.length; ++k) {
 				String s = astring[k];
 
 				for (int l = 0; l < s.length(); ++l) {
 					String s1 = s.substring(l, l + 1);
-					Ingredient ingredient = s1.equals(" ") ? Ingredient.EMPTY : p_301248_.key.get(s1);
+					Ingredient ingredient = s1.equals(" ") ? Ingredient.EMPTY : hardcoreRecipe.key.get(s1);
 					if (ingredient == null) {
 						return DataResult.error(() -> "Pattern references symbol '" + s1 + "' but it's not defined in the ingredient");
 					}
@@ -217,7 +216,7 @@ public class HardcoreRecipe extends ShapedRecipe {
 			if (!set.isEmpty()) {
 				return DataResult.error(() -> "Key defines symbols that aren't used in pattern: " + set);
 			} else {
-				HardcoreRecipe shapedrecipe = new HardcoreRecipe(p_301248_.group, p_301248_.category, i, j, nonnulllist, p_301248_.result, p_301248_.showNotification);
+				HardcoreRecipe shapedrecipe = new HardcoreRecipe(hardcoreRecipe.group, hardcoreRecipe.category, i, j, nonnulllist, hardcoreRecipe.result, hardcoreRecipe.showNotification);
 				return DataResult.success(shapedrecipe);
 			}
 		}, p_300934_ -> {
@@ -266,14 +265,14 @@ public class HardcoreRecipe extends ShapedRecipe {
 		) {
 			public static final Codec<RawHardcoreRecipe> CODEC = RecordCodecBuilder.create(
 					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(p_301109_ -> p_301109_.group),
-									CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(p_301117_ -> p_301117_.category),
+									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(hardcoreRecipe -> hardcoreRecipe.group),
+									CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(hardcoreRecipe -> hardcoreRecipe.category),
 									ExtraCodecs.strictUnboundedMap(HardcoreRecipe.Serializer.SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY)
-											.fieldOf("ingredient")
-											.forGetter(p_301234_ -> p_301234_.key),
-									HardcoreRecipe.Serializer.PATTERN_CODEC.fieldOf("pattern").forGetter(p_301164_ -> p_301164_.pattern),
-									CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(p_301076_ -> p_301076_.result),
-									ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(p_301293_ -> p_301293_.showNotification)
+											.fieldOf("key")
+											.forGetter(hardcoreRecipe -> hardcoreRecipe.key),
+									HardcoreRecipe.Serializer.PATTERN_CODEC.fieldOf("pattern").forGetter(hardcoreRecipe -> hardcoreRecipe.pattern),
+									CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(hardcoreRecipe -> hardcoreRecipe.result),
+									ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(hardcoreRecipe -> hardcoreRecipe.showNotification)
 							)
 							.apply(instance, RawHardcoreRecipe::new)
 			);
