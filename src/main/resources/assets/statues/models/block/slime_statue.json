@@ -1,6 +1,6 @@
 {
   "parent": "block/block",
-  "loader": "forge:composite",
+  "loader": "neoforge:composite",
   "children": {
 	"first": {
 	  "parent": "statues:block/slime_statue_solid",
