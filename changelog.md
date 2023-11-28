@@ -1,2 +1,1 @@
-* Fix recipes being broken
-* Fix slime statue rendering
+* Remove unnecessary logging

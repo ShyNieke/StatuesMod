@@ -106,7 +106,6 @@ public class LootRecipeBuilder {
 	}
 
 	public void build(RecipeOutput consumerIn, ResourceLocation id) {
-		System.out.println(id);
 		consumerIn.accept(
 				new Result(
 						id,
