@@ -16,15 +16,19 @@ import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
 import net.minecraft.world.entity.animal.Fox;
 import net.minecraft.world.entity.animal.Fox.Type;
+import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.axolotl.Axolotl;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.ElderGuardian;
 import net.minecraft.world.entity.monster.Evoker;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.monster.Vindicator;
+import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -161,6 +165,32 @@ public class DropHandler {
 				itemStackToDrop = new ItemStack(StatueRegistry.FOX_SNOW_STATUE.get());
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);
+		} else if (entity instanceof Axolotl axolotl) {
+			ItemStack itemStackToDrop = switch (axolotl.getVariant()) {
+				case LUCY -> new ItemStack(StatueRegistry.AXOLOTL_LUCY_STATUE.get());
+				case WILD -> new ItemStack(StatueRegistry.AXOLOTL_WILD_STATUE.get());
+				case GOLD -> new ItemStack(StatueRegistry.AXOLOTL_GOLD_STATUE.get());
+				case CYAN -> new ItemStack(StatueRegistry.AXOLOTL_CYAN_STATUE.get());
+				case BLUE -> new ItemStack(StatueRegistry.AXOLOTL_BLUE_STATUE.get());
+			};
+			dropLootStatues(entity, itemStackToDrop, source, event);
+		} else if (entity instanceof Frog frog) {
+			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.FROG_TEMPERATE_STATUE.get());
+			if (frog.getVariant() == FrogVariant.WARM) {
+				itemStackToDrop = new ItemStack(StatueRegistry.FROG_WARM_STATUE.get());
+			} else if (frog.getVariant() == FrogVariant.COLD) {
+				itemStackToDrop = new ItemStack(StatueRegistry.FROG_COLD_STATUE.get());
+			}
+			dropLootStatues(entity, itemStackToDrop, source, event);
+		} else if (entity instanceof Fox fox) {
+			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.FOX_STATUE.get());
+			if (fox.getFoxType() == Type.SNOW) {
+				itemStackToDrop = new ItemStack(StatueRegistry.FOX_SNOW_STATUE.get());
+			}
+			dropLootStatues(entity, itemStackToDrop, source, event);
+		} else if (entity instanceof Warden) {
+			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.WARDEN_STATUE.get());
+			dropBossStatue(entity, itemStackToDrop, source, event);
 		} else {
 			List<RegistryObject<Block>> matchingStatues = new ArrayList<>();
 			for (RegistryObject<Block> block : StatueRegistry.BLOCKS.getEntries()) {
