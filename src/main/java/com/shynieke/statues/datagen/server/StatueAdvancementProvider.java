@@ -48,6 +48,7 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 			Advancement elderGuardian = onHoldBlock(consumer, StatueRegistry.ELDER_GUARDIAN_STATUE, FrameType.GOAL, false, root);
 			onHoldBlock(consumer, StatueRegistry.RAVAGER_STATUE, FrameType.GOAL, false, elderGuardian);
 
+			Advancement warden = onHoldBlock(consumer, StatueRegistry.WARDEN_STATUE, FrameType.GOAL, false, root);
 			Advancement zombie = onHoldBlock(consumer, StatueRegistry.ZOMBIE_STATUE, root);
 			Advancement babyZombie = onHoldBlock(consumer, StatueRegistry.BABY_ZOMBIE_STATUE, zombie);
 			Advancement flood = onHoldBlock(consumer, StatueRegistry.FLOOD_STATUE, FrameType.GOAL, true, babyZombie);

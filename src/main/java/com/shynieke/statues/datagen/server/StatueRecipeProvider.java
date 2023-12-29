@@ -200,6 +200,8 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.result1(Items.SLIME_BALL).result3(Items.PEARLESCENT_FROGLIGHT).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.FROG_COLD_STATUE.get()))
 				.result1(Items.SLIME_BALL).result3(Items.VERDANT_FROGLIGHT).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.WARDEN_STATUE.get()))
+				.result1(Items.SCULK_SENSOR).result2(Items.SCULK_SHRIEKER).result3(Items.SCULK_CATALYST).build(consumer);
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), new ArrayList<>())
 				.requiresCore().upgradeType(UpgradeType.UPGRADE).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/statue_upgrade"));
