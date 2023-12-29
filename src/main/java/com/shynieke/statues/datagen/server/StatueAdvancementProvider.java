@@ -254,7 +254,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		 */
 		protected static AdvancementHolder onHoldAnyBlock(Consumer<AdvancementHolder> consumer, DeferredHolder<Block, ? extends Block> deferredHolder,
 														  FrameType type, boolean hidden, AdvancementHolder root, String path,
-														  AdvancementRequirements.Strategy requirementsStrategy, DeferredHolder<Block, ? extends Block>... registryObjects) {
+														  AdvancementRequirements.Strategy strategy, DeferredHolder<Block, ? extends Block>... registryObjects) {
 			ResourceLocation registryLocation = modLoc(path);
 
 			DisplayInfo info = hidden ? hiddenDisplay(deferredHolder.get(), path, type) : simpleDisplay(deferredHolder.get(), path, type);
@@ -265,7 +265,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 			for (DeferredHolder<Block, ? extends Block> registryObject : registryObjects) {
 				builder.addCriterion(registryObject.getId().getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(registryObject.get()));
 			}
-			return builder.requirements(requirementsStrategy).save(consumer, rootID(registryLocation.getPath()));
+			return builder.requirements(strategy).save(consumer, rootID(registryLocation.getPath()));
 		}
 
 		/**
