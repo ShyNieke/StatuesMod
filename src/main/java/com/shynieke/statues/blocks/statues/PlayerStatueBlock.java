@@ -139,7 +139,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public ItemStack pickupBlock(@Nullable Player p_294786_, LevelAccessor level, BlockPos pos, BlockState state) {
+	public ItemStack pickupBlock(@Nullable Player player, LevelAccessor level, BlockPos pos, BlockState state) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (blockEntity instanceof PlayerBlockEntity) {
 			return getStatueWithName(level, pos, state);
