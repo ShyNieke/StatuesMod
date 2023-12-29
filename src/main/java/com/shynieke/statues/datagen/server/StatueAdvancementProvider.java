@@ -96,6 +96,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		Advancement mooshroomBrown = onHoldBlock(consumer, StatueRegistry.BROWN_MOOSHROOM_STATUE, mooshroom);
 		Advancement pig = onHoldBlock(consumer, StatueRegistry.PIG_STATUE, cow);
 		Advancement snowman = onHoldBlock(consumer, StatueRegistry.SNOW_GOLEM_STATUE, cow);
+		Advancement allay = onHoldBlock(consumer, StatueRegistry.ALLAY_STATUE, cow);
 
 		Advancement wasteland = onHoldBlock(consumer, StatueRegistry.WASTELAND_STATUE, FrameType.CHALLENGE, true, pig);
 		Advancement chicken = onHoldBlock(consumer, StatueRegistry.CHICKEN_STATUE, cow);
