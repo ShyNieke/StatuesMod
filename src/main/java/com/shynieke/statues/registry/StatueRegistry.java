@@ -51,6 +51,7 @@ import com.shynieke.statues.blocks.statues.VindicatorStatueBlock;
 import com.shynieke.statues.blocks.statues.WastelandStatueBlock;
 import com.shynieke.statues.blocks.statues.WitchStatueBlock;
 import com.shynieke.statues.blocks.statues.ZombieStatueBlock;
+import com.shynieke.statues.blocks.statues.fish.AxolotlStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.CodStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.DolphinStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.DrownedStatueBlock;
@@ -216,6 +217,11 @@ public class StatueRegistry {
 	public static final RegistryObject<Block> WITCH_STATUE = registerStatue("witch_statue", () -> new WitchStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> ZOMBIE_STATUE = registerStatue("zombie_statue", () -> new ZombieStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> ALLAY_STATUE = registerStatue("allay_statue", () -> new AllayStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> AXOLOTL_LUCY_STATUE = registerStatue("axolotl_lucy_statue", () -> new AxolotlStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> AXOLOTL_WILD_STATUE = registerStatue("axolotl_wild_statue", () -> new AxolotlStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> AXOLOTL_GOLD_STATUE = registerStatue("axolotl_gold_statue", () -> new AxolotlStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> AXOLOTL_CYAN_STATUE = registerStatue("axolotl_cyan_statue", () -> new AxolotlStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> AXOLOTL_BLUE_STATUE = registerStatue("axolotl_blue_statue", () -> new AxolotlStatueBlock(blockBuilder()), blockItemBuilder());
 
 	public static final RegistryObject<Block> DISPLAY_STAND = registerBlock("display_stand", () -> new DisplayStandBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> BUMBO_STATUE = registerBlock("bumbo_statue", () -> new BumboStatueBlock(blockBuilder()), blockItemBuilder());
