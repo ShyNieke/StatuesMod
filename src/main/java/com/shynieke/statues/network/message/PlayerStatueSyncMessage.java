@@ -79,11 +79,7 @@ public class PlayerStatueSyncMessage {
 								playerStatue.getZ() + z);
 
 						boolean noGravityFlag = data.getBoolean("NoGravity");
-						if (noGravityFlag) {
-							playerStatue.setNoGravity(true);
-						} else {
-							playerStatue.setNoGravity(false);
-						}
+						playerStatue.setNoGravity(noGravityFlag);
 					}
 				}
 			}
