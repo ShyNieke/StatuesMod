@@ -21,7 +21,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
@@ -59,10 +58,6 @@ public class Statues {
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 		eventBus.addListener(StatueEntities::registerSpawnPlacements);
-
-		if (ModList.get().isLoaded("curios")) {
-//			eventBus.addListener(com.shynieke.statues.compat.curios.CuriosCompat::sendImc);
-		}
 
 		NeoForge.EVENT_BUS.register(new StatueHandler());
 		NeoForge.EVENT_BUS.register(new FishHandler());

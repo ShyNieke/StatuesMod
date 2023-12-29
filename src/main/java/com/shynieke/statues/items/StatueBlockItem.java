@@ -17,10 +17,8 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.ICapabilityProvider;
-import net.neoforged.fml.ModList;
-
 import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 import java.util.Map;
 
@@ -70,15 +68,6 @@ public class StatueBlockItem extends BlockItem {
 			}
 		}
 		return state;
-	}
-
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		if (ModList.get().isLoaded("curios")) {
-//			return com.shynieke.statues.compat.curios.CuriosCompat.getCapability(stack);
-		}
-		return super.initCapabilities(stack, nbt);
 	}
 
 	@Override
