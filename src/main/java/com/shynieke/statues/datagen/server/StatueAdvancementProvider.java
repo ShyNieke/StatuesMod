@@ -84,6 +84,19 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 					StatueRegistry.TROPICAL_FISH_E, StatueRegistry.TROPICAL_FISH_ES, StatueRegistry.TROPICAL_FISH_HB,
 					StatueRegistry.TROPICAL_FISH_SB, StatueRegistry.TROPICAL_FISH_SD, StatueRegistry.TROPICAL_FISH_SS
 			);
+			Advancement axolotl = onHoldAnyBlock(consumer, StatueRegistry.AXOLOTL_LUCY_STATUE, FrameType.TASK, false,
+					salmon, "axolotl_statue", RequirementsStrategy.OR,
+					StatueRegistry.AXOLOTL_LUCY_STATUE, StatueRegistry.AXOLOTL_WILD_STATUE,
+					StatueRegistry.AXOLOTL_GOLD_STATUE, StatueRegistry.AXOLOTL_CYAN_STATUE,
+					StatueRegistry.AXOLOTL_BLUE_STATUE
+			);
+			Advancement axolotlAll = onHoldAnyBlock(consumer, StatueRegistry.AXOLOTL_GOLD_STATUE, FrameType.GOAL, false,
+					axolotl, "axolotl_all_statue", RequirementsStrategy.AND,
+					StatueRegistry.AXOLOTL_LUCY_STATUE, StatueRegistry.AXOLOTL_WILD_STATUE,
+					StatueRegistry.AXOLOTL_GOLD_STATUE, StatueRegistry.AXOLOTL_CYAN_STATUE,
+					StatueRegistry.AXOLOTL_BLUE_STATUE
+			);
+
 			Advancement pufferSmall = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_SMALL_STATUE, salmon);
 			Advancement pufferMedium = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_MEDIUM_STATUE, pufferSmall);
 			Advancement puffer = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_STATUE, pufferMedium);
