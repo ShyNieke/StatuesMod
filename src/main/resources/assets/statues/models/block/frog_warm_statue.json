@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "warm_frog_statue",
-		"particle": "warm_frog_statue"
+		"0": "statues:block/warm_frog_statue",
+		"particle": "statues:block/warm_frog_statue"
 	},
 	"elements": [
 		{

@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "pink_axolotl_statue",
-		"particle": "pink_axolotl_statue"
+		"0": "statues:block/pink_axolotl_statue",
+		"particle": "statues:block/pink_axolotl_statue"
 	},
 	"elements": [
 		{

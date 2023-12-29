@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "temperate_frog",
-		"particle": "temperate_frog"
+		"0": "statues:block/temperate_frog",
+		"particle": "statues:block/temperate_frog"
 	},
 	"elements": [
 		{
