@@ -157,6 +157,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 				frog, "frog_all_statue", RequirementsStrategy.AND,
 				StatueRegistry.FROG_TEMPERATE_STATUE, StatueRegistry.FROG_WARM_STATUE, StatueRegistry.FROG_COLD_STATUE
 		);
+		Advancement tadpole = onHoldBlock(consumer, StatueRegistry.TADPOLE_STATUE, frog);
 
 		Advancement fox = onHoldBlock(consumer, StatueRegistry.FOX_STATUE, cat);
 		Advancement foxSnow = onHoldBlock(consumer, StatueRegistry.FOX_SNOW_STATUE, fox);

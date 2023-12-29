@@ -7,6 +7,7 @@ import com.shynieke.statues.blocks.decorative.DisplayStandBlock;
 import com.shynieke.statues.blocks.decorative.EndermiteStatueBlock;
 import com.shynieke.statues.blocks.decorative.PebbleBlock;
 import com.shynieke.statues.blocks.decorative.SombreroBlock;
+import com.shynieke.statues.blocks.decorative.TadpoleStatueBlock;
 import com.shynieke.statues.blocks.decorative.TotemOfUndyingStatueBlock;
 import com.shynieke.statues.blocks.decorative.charity.EagleRayStatueBlock;
 import com.shynieke.statues.blocks.decorative.charity.SlabFishStatueBlock;
@@ -226,6 +227,7 @@ public class StatueRegistry {
 	public static final RegistryObject<Block> FROG_TEMPERATE_STATUE = registerStatue("frog_temperate_statue", () -> new FrogStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> FROG_WARM_STATUE = registerStatue("frog_warm_statue", () -> new FrogStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> FROG_COLD_STATUE = registerStatue("frog_cold_statue", () -> new FrogStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> TADPOLE_STATUE = registerStatue("tadpole_statue", () -> new TadpoleStatueBlock(blockBuilder()), blockItemBuilder());
 
 	public static final RegistryObject<Block> DISPLAY_STAND = registerBlock("display_stand", () -> new DisplayStandBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> BUMBO_STATUE = registerBlock("bumbo_statue", () -> new BumboStatueBlock(blockBuilder()), blockItemBuilder());
