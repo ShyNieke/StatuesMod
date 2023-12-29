@@ -177,12 +177,6 @@ public class DropHandler {
 				itemStackToDrop = new ItemStack(StatueRegistry.FROG_COLD_STATUE.get());
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);
-		} else if (entity instanceof Fox fox) {
-			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.FOX_STATUE.get());
-			if (fox.getFoxType() == Type.SNOW) {
-				itemStackToDrop = new ItemStack(StatueRegistry.FOX_SNOW_STATUE.get());
-			}
-			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Warden) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.WARDEN_STATUE.get());
 			dropBossStatue(entity, itemStackToDrop, source, event);
