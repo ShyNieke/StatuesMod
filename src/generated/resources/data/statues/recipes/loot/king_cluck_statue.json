@@ -3,12 +3,10 @@
   "ingredient": {
     "item": "statues:king_cluck_statue"
   },
-  "result1": {
+  "result": {
     "item": "statues:royal_nugget"
   },
-  "result1Chance": 1.0,
   "result3": {
     "item": "minecraft:gold_nugget"
-  },
-  "result3Chance": 0.1
+  }
 }

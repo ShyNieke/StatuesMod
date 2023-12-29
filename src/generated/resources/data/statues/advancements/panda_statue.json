@@ -87,16 +87,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.panda_statue.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "statues:panda_lazy_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.panda_statue.title"
     }

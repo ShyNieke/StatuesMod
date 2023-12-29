@@ -23,8 +23,7 @@
       "item": "statues:panda_worried_statue"
     }
   ],
-  "result1": {
+  "result": {
     "item": "minecraft:bamboo"
-  },
-  "result1Chance": 1.0
+  }
 }

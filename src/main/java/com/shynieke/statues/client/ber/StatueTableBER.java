@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
 
 public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntity> {
 	public StatueTableBER(BlockEntityRendererProvider.Context context) {
@@ -22,7 +23,8 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 	@Override
 	public void render(StatueTableBlockEntity tableBlockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource,
 					   int combinedLightIn, int combinedOverlayIn) {
-		if (tableBlockEntity.handler != null) {
+		if (tableBlockEntity.getHandler() != null) {
+			IItemHandler handler = tableBlockEntity.getHandler();
 			final BlockState state = tableBlockEntity.getBlockState();
 			final Direction direction = state.getValue(AbstractBaseBlock.FACING);
 
@@ -46,7 +48,7 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 			}
 			Minecraft mc = Minecraft.getInstance();
 			Level level = mc.level;
-			ItemStack statueStack = tableBlockEntity.handler.getStackInSlot(0);
+			ItemStack statueStack = handler.getStackInSlot(0);
 			if (!statueStack.isEmpty()) {
 				float f = (float) tableBlockEntity.time + partialTicks;
 
@@ -58,7 +60,7 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 				poseStack.popPose();
 			}
 
-			ItemStack coreStack = tableBlockEntity.handler.getStackInSlot(1);
+			ItemStack coreStack = handler.getStackInSlot(1);
 			if (!statueStack.isEmpty()) {
 				poseStack.pushPose();
 				poseStack.translate((1.0 / 16) * 8.75, (1.0 / 16) * 2.5, (1.0 / 16) * 13);
@@ -69,7 +71,7 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 			}
 
 			for (int i = 2; i < 6; i++) {
-				ItemStack catalystSTack = tableBlockEntity.handler.getStackInSlot(i);
+				ItemStack catalystSTack = handler.getStackInSlot(i);
 				float xOffset = 0;
 				float yOffset = 0;
 				float zOffset = 0;

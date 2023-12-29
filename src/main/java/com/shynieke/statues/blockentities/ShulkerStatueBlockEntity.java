@@ -4,7 +4,6 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.menu.ShulkerStatueMenu;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,38 +12,13 @@ import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.NetworkHooks;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuProvider {
-	public final ItemStackHandler handler = new ItemStackHandler(18) {
-
-		@Override
-		public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-			return super.isItemValid(slot, stack) &&
-					!(Block.byItem(stack.getItem()) instanceof ShulkerBoxBlock) &&
-					!(Block.byItem(stack.getItem()) instanceof ShulkerBoxBlock) && stack.getItem().canFitInsideContainerItems();
-		}
-
-		@Override
-		protected void onContentsChanged(int slot) {
-			super.onContentsChanged(slot);
-			refreshClient();
-		}
-	};
-	private LazyOptional<IItemHandler> stackHolder = LazyOptional.of(() -> handler);
 
 	public ShulkerStatueBlockEntity(BlockPos pos, BlockState state) {
 		super(StatueBlockEntities.SHULKER_STATUE.get(), pos, state);
@@ -60,13 +34,11 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 	@Override
 	public void load(CompoundTag compound) {
 		super.load(compound);
-		handler.deserializeNBT(compound.getCompound("ItemStackHandler"));
 	}
 
 	@Override
 	public void saveAdditional(CompoundTag compound) {
 		super.saveAdditional(compound);
-		compound.put("ItemStackHandler", handler.serializeNBT());
 	}
 
 	@Override
@@ -92,24 +64,7 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 	}
 
 	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-		if (capability == Capabilities.ITEM_HANDLER && hasSpecialInteraction()) {
-			return stackHolder.cast();
-		}
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		if (hasSpecialInteraction())
-			this.stackHolder.invalidate();
-	}
-
-	@Override
-	public void reviveCaps() {
-		super.reviveCaps();
-		if (hasSpecialInteraction())
-			this.stackHolder = LazyOptional.of(() -> handler);
+	public void refreshClient() {
+		super.refreshClient();
 	}
 }

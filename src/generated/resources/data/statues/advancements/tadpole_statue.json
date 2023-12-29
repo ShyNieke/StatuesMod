@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.tadpole_statue.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "statues:tadpole_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.tadpole_statue.title"
     }

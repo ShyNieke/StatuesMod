@@ -38,7 +38,6 @@ import java.util.Random;
 import java.util.UUID;
 
 public class InfoStatueBlock extends AbstractBaseBlock {
-
 	private static final VoxelShape BOTTOM_SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 4.5D, 13.0D);
 	private static final VoxelShape TOP_SHAPE = Block.box(5.5D, 4.5D, 5.5D, 10.5D, 7.0D, 10.5D);
 	private static final VoxelShape SHAPE = Shapes.or(BOTTOM_SHAPE, TOP_SHAPE);

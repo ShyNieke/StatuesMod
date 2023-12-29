@@ -14,14 +14,12 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -170,21 +168,32 @@ public class UpgradeRecipe implements Recipe<Container> {
 	}
 
 	public static class Serializer implements RecipeSerializer<UpgradeRecipe> {
-
-		private static final Codec<UpgradeRecipe> CODEC = UpgradeRecipe.Serializer.RawUpgradeRecipe.CODEC.flatXmap(rawLootRecipe -> {
-			return DataResult.success(new UpgradeRecipe(
-					rawLootRecipe.group,
-					rawLootRecipe.center,
-					rawLootRecipe.catalysts,
-					rawLootRecipe.stack,
-					rawLootRecipe.requireCore,
-					rawLootRecipe.upgradeType,
-					rawLootRecipe.tier,
-					rawLootRecipe.showNotification
-			));
-		}, recipe -> {
-			throw new NotImplementedException("Serializing UpgradeRecipe is not implemented yet.");
-		});
+		private static final Codec<UpgradeRecipe> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+								Ingredient.CODEC_NONEMPTY.fieldOf("center").forGetter(recipe -> recipe.center),
+								Ingredient.CODEC_NONEMPTY
+										.listOf()
+										.fieldOf("catalysts")
+										.flatXmap(
+												array -> {
+													Ingredient[] aingredient = array
+															.toArray(Ingredient[]::new); //Forge skip the empty check and immediately create the array.
+													return aingredient.length > 4
+															? DataResult.error(() -> "Too many ingredients for shapeless recipe. The maximum is: %s".formatted(4))
+															: DataResult.success(NonNullList.of(Ingredient.EMPTY, aingredient));
+												},
+												DataResult::success
+										)
+										.forGetter(recipe -> recipe.catalysts),
+								ExtraCodecs.strictOptionalField(ItemStack.SINGLE_ITEM_CODEC, "result", ItemStack.EMPTY).forGetter(recipe -> recipe.result),
+								ExtraCodecs.strictOptionalField(Codec.BOOL, "requireCore", false).forGetter(recipe -> recipe.requireCore),
+								UpgradeType.CODEC.optionalFieldOf("upgradeType", UpgradeType.CRAFTING).forGetter(recipe -> recipe.upgradeType),
+								Codec.INT.optionalFieldOf("tier", -1).forGetter(recipe -> recipe.tier),
+								ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(recipe -> recipe.showNotification)
+						)
+						.apply(instance, UpgradeRecipe::new)
+		);
 
 		@Override
 		public Codec<UpgradeRecipe> codec() {
@@ -229,39 +238,6 @@ public class UpgradeRecipe implements Recipe<Container> {
 			byteBuf.writeVarInt(recipe.upgradeType.ordinal());
 			byteBuf.writeVarInt(recipe.tier);
 			byteBuf.writeBoolean(recipe.showNotification);
-		}
-
-
-		static record RawUpgradeRecipe(
-				String group, Ingredient center, NonNullList<Ingredient> catalysts,
-				ItemStack stack, boolean requireCore, UpgradeType upgradeType, int tier, boolean showNotification
-		) {
-			public static final Codec<UpgradeRecipe.Serializer.RawUpgradeRecipe> CODEC = RecordCodecBuilder.create(
-					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-									Ingredient.CODEC_NONEMPTY.fieldOf("center").forGetter(recipe -> recipe.center),
-									Ingredient.CODEC_NONEMPTY
-											.listOf()
-											.fieldOf("catalysts")
-											.flatXmap(
-													array -> {
-														Ingredient[] aingredient = array
-																.toArray(Ingredient[]::new); //Forge skip the empty check and immediatly create the array.
-														return aingredient.length > 4
-																? DataResult.error(() -> "Too many ingredients for shapeless recipe. The maximum is: %s".formatted(4))
-																: DataResult.success(NonNullList.of(Ingredient.EMPTY, aingredient));
-													},
-													DataResult::success
-											)
-											.forGetter(recipe -> recipe.catalysts),
-									ExtraCodecs.strictOptionalField(CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC, "result", ItemStack.EMPTY).forGetter(recipe -> recipe.stack),
-									ExtraCodecs.strictOptionalField(Codec.BOOL, "requireCore", false).forGetter(recipe -> recipe.requireCore),
-									UpgradeType.CODEC.optionalFieldOf("requireCore", UpgradeType.CRAFTING).forGetter(recipe -> recipe.upgradeType),
-									Codec.INT.optionalFieldOf("tier", -1).forGetter(recipe -> recipe.tier),
-									ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(recipe -> recipe.showNotification)
-							)
-							.apply(instance, UpgradeRecipe.Serializer.RawUpgradeRecipe::new)
-			);
 		}
 	}
 }

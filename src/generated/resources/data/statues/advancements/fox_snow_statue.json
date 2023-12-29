@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.fox_snow_statue.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "statues:fox_snow_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.fox_snow_statue.title"
     }

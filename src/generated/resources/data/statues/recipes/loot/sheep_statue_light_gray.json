@@ -4,12 +4,10 @@
   "ingredient": {
     "item": "statues:sheep_statue_light_gray"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:light_gray_wool"
   },
-  "result1Chance": 1.0,
   "result3": {
     "item": "minecraft:mutton"
-  },
-  "result3Chance": 0.1
+  }
 }

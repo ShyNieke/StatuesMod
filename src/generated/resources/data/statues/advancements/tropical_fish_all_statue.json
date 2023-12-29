@@ -147,16 +147,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.tropical_fish_all_statue.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "statues:tropical_fish_bb"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.tropical_fish_all_statue.title"
     }

@@ -3,12 +3,10 @@
   "ingredient": {
     "item": "statues:frog_temperate_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:slime_ball"
   },
-  "result1Chance": 1.0,
   "result3": {
     "item": "minecraft:ochre_froglight"
-  },
-  "result3Chance": 0.1
+  }
 }

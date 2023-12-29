@@ -75,16 +75,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.rabbit_statue.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "statues:rabbit_br_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.rabbit_statue.title"
     }

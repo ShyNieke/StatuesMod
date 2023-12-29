@@ -21,7 +21,8 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -62,11 +63,12 @@ public class StatueTableBlock extends AbstractBaseBlock {
 		if (!state.is(newState.getBlock())) {
 			BlockEntity blockentity = level.getBlockEntity(pos);
 			if (blockentity instanceof StatueTableBlockEntity) {
-				blockentity.getCapability(Capabilities.ITEM_HANDLER).ifPresent(handler -> {
+				IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+				if(handler != null) {
 					for (int i = 0; i < handler.getSlots(); ++i) {
 						Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
 					}
-				});
+				}
 			}
 
 			super.onRemove(state, level, pos, newState, isMoving);

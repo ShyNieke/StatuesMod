@@ -135,16 +135,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.cat_all_statue.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "statues:cat_tuxedo_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.cat_all_statue.title"
     }

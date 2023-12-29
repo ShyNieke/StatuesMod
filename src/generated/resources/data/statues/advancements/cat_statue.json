@@ -135,16 +135,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.cat_statue.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "statues:cat_jellie_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.cat_statue.title"
     }

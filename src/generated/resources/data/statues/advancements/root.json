@@ -13,8 +13,6 @@
     "description": {
       "translate": "advancement.statues.root.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "statues:statue_core"
     },

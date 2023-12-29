@@ -15,7 +15,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.king_cluck_statue.desc"
     },
@@ -24,7 +23,6 @@
     "icon": {
       "item": "statues:king_cluck_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.king_cluck_statue.title"
     }

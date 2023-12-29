@@ -11,9 +11,9 @@
       "tag": "forge:storage_blocks/lapis"
     },
     {
-      "type": "neoforge:partial_nbt",
+      "type": "neoforge:nbt",
       "item": "minecraft:enchanted_book",
-      "tag": {}
+      "tag": "{}"
     }
   ],
   "center": {

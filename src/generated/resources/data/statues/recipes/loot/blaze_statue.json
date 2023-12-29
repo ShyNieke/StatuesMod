@@ -3,12 +3,10 @@
   "ingredient": {
     "item": "statues:blaze_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:blaze_powder"
   },
-  "result1Chance": 1.0,
   "result2": {
     "item": "minecraft:blaze_rod"
-  },
-  "result2Chance": 0.5
+  }
 }

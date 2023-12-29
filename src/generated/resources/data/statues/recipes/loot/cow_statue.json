@@ -3,12 +3,10 @@
   "ingredient": {
     "item": "statues:cow_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:beef"
   },
-  "result1Chance": 1.0,
   "result3": {
     "item": "minecraft:leather"
-  },
-  "result3Chance": 0.1
+  }
 }

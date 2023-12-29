@@ -8,8 +8,7 @@
       "item": "statues:fox_snow_statue"
     }
   ],
-  "result1": {
+  "result": {
     "item": "minecraft:sweet_berries"
-  },
-  "result1Chance": 1.0
+  }
 }

@@ -4,12 +4,10 @@
   "ingredient": {
     "item": "statues:drowned_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:rotten_flesh"
   },
-  "result1Chance": 1.0,
   "result3": {
     "item": "minecraft:copper_ingot"
-  },
-  "result3Chance": 0.1
+  }
 }

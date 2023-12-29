@@ -39,6 +39,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.SignalGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -64,7 +65,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class PlayerStatueBlock extends AbstractBaseBlock {
-
 	private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
 	public static final BooleanProperty ONLINE = BooleanProperty.create("online");
 
@@ -149,7 +149,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 		if (blockEntity instanceof PlayerBlockEntity) {
 			return getStatueWithName(level, pos, state);

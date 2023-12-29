@@ -38,12 +38,10 @@
       "item": "statues:tropical_fish_ss"
     }
   ],
-  "result1": {
+  "result": {
     "item": "minecraft:tropical_fish"
   },
-  "result1Chance": 1.0,
   "result2": {
     "item": "minecraft:bone_meal"
-  },
-  "result2Chance": 0.5
+  }
 }

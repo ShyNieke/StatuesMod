@@ -3,12 +3,10 @@
   "ingredient": {
     "item": "statues:cod_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:cod"
   },
-  "result1Chance": 1.0,
   "result2": {
     "item": "minecraft:bone_meal"
-  },
-  "result2Chance": 0.5
+  }
 }

@@ -15,7 +15,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.flood_statue.desc"
     },
@@ -24,7 +23,6 @@
     "icon": {
       "item": "statues:flood_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.flood_statue.title"
     }

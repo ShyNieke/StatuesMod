@@ -7,8 +7,15 @@ import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.blockentities.TropicalFishBlockEntity;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -65,4 +72,49 @@ public class StatueBlockEntities {
 
 	public static final Supplier<BlockEntityType<StatueTableBlockEntity>> STATUE_TABLE = BLOCK_ENTITIES.register("statue_table", () -> BlockEntityType.Builder.of(StatueTableBlockEntity::new,
 			StatueRegistry.STATUE_TABLE.get()).build(null));
+
+	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SHULKER_STATUE.get(), (shulkerStatueBlockEntity, side) -> new ItemStackHandler(18) {
+
+			@Override
+			public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+				return super.isItemValid(slot, stack) &&
+						!(Block.byItem(stack.getItem()) instanceof ShulkerBoxBlock) &&
+						!(Block.byItem(stack.getItem()) instanceof ShulkerBoxBlock) && stack.getItem().canFitInsideContainerItems();
+			}
+
+			@Override
+			protected void onContentsChanged(int slot) {
+				super.onContentsChanged(slot);
+				shulkerStatueBlockEntity.refreshClient();
+			}
+		});
+		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, STATUE_TABLE.get(), (statueTableBlockEntity, side) -> new ItemStackHandler(6) {
+			@Override
+			protected int getStackLimit(int slot, @NotNull ItemStack stack) {
+				if (slot == StatueTableBlockEntity.SLOT_CENTER || slot == StatueTableBlockEntity.SLOT_CORE) {
+					return 1;
+				} else {
+					return 64;
+				}
+			}
+
+			@Override
+			public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+				if (slot == StatueTableBlockEntity.SLOT_CENTER) {
+					return stack.is(StatueTags.UPGRADEABLE_STATUES);
+				} else if (slot == StatueTableBlockEntity.SLOT_CORE) {
+					return stack.is(StatueTags.STATUE_CORE);
+				} else {
+					return super.isItemValid(slot, stack);
+				}
+			}
+
+			@Override
+			protected void onContentsChanged(int slot) {
+				super.onContentsChanged(slot);
+				statueTableBlockEntity.refreshClient();
+			}
+		});
+	}
 }

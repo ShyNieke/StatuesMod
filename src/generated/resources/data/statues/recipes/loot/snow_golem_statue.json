@@ -3,12 +3,10 @@
   "ingredient": {
     "item": "statues:snow_golem_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:snowball"
   },
-  "result1Chance": 1.0,
   "result3": {
     "item": "minecraft:pumpkin"
-  },
-  "result3Chance": 0.1
+  }
 }

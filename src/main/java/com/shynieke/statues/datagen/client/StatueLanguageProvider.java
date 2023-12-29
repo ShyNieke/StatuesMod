@@ -328,7 +328,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addAdvancement("king_cluck_statue", "A royal chicken, who would have thought", "You managed to make a chicken royal!");
 		addAdvancement("chicken_jockey_statue", "Zombie loves chicken", "You successfully created a Chicken Jockey");
 		addAdvancement("cat_statue", "A purrfect catch", "Collect any Cat Statue");
-		addAdvancement("cat_all_statue", "Catastopic collection", "Collect all Cat Statues");
+		addAdvancement("cat_all_statue", "Catastrophic collection", "Collect all Cat Statues");
 		addAdvancement("rabbit_statue", "Rabbit statue", "Collect any Rabbit Statue");
 		addAdvancement("rabbit_all_statue", "Just Caerbannog missing", "Collect all Rabbit Statues");
 		addAdvancement("panda_statue", "Nanananana pandaaaaa", "Collect any Panda Statue");

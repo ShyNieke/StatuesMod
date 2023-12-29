@@ -3,8 +3,7 @@
   "ingredient": {
     "item": "statues:creeper_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:gunpowder"
-  },
-  "result1Chance": 1.0
+  }
 }

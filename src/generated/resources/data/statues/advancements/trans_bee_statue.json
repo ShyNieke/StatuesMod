@@ -15,16 +15,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.trans_bee_statue.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "statues:trans_bee_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.trans_bee_statue.title"
     }

@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.pufferfish_statue.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "statues:pufferfish_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.pufferfish_statue.title"
     }

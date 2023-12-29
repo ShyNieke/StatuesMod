@@ -3,8 +3,7 @@
   "ingredient": {
     "item": "statues:magma_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:magma_cream"
-  },
-  "result1Chance": 1.0
+  }
 }

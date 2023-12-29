@@ -6,13 +6,13 @@ import com.shynieke.statues.menu.StatueTableMenu;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipe.UpgradeRecipe;
 import com.shynieke.statues.registry.StatueBlockEntities;
-import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
@@ -26,13 +26,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
-import net.neoforged.neoforge.common.capabilities.Capability;
-import net.neoforged.neoforge.common.util.LazyOptional;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
-
 import org.jetbrains.annotations.Nullable;
 
 public class StatueTableBlockEntity extends BlockEntity implements MenuProvider {
@@ -43,41 +40,26 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	public static final int[] SLOT_CATALYSTS = new int[]{2, 3, 4, 5};
 	protected RecipeHolder<UpgradeRecipe> currentRecipe;
 
-	public final ItemStackHandler handler = new ItemStackHandler(6) {
-		@Override
-		protected int getStackLimit(int slot, @NotNull ItemStack stack) {
-			if (slot == SLOT_CENTER || slot == SLOT_CORE) {
-				return 1;
-			} else {
-				return 64;
-			}
-		}
-
-		@Override
-		public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-			if (slot == SLOT_CENTER) {
-				return stack.is(StatueTags.UPGRADEABLE_STATUES);
-			} else if (slot == SLOT_CORE) {
-				return stack.is(StatueTags.STATUE_CORE);
-			} else {
-				return super.isItemValid(slot, stack);
-			}
-		}
-
-		@Override
-		protected void onContentsChanged(int slot) {
-			super.onContentsChanged(slot);
-			refreshClient();
-		}
-	};
-	private LazyOptional<IItemHandler> stackHolder = LazyOptional.of(() -> handler);
-
 	public StatueTableBlockEntity(BlockEntityType<?> blockEntityType, BlockPos pos, BlockState state) {
 		super(blockEntityType, pos, state);
 	}
 
 	public StatueTableBlockEntity(BlockPos pos, BlockState state) {
 		this(StatueBlockEntities.STATUE_TABLE.get(), pos, state);
+	}
+
+	private IItemHandler getCap() {
+		if(this.level == null) return null;
+		if(this.level.isClientSide) return this.level.getCapability(Capabilities.ItemHandler.BLOCK, this.worldPosition, Direction.UP);
+		BlockCapabilityCache<IItemHandler, Direction> cache = BlockCapabilityCache.create(Capabilities.ItemHandler.BLOCK, (ServerLevel) level, this.worldPosition, Direction.UP);
+		return cache.getCapability();
+	}
+
+	public ItemStackHandler getHandler() {
+		if(getCap() instanceof ItemStackHandler handler) {
+			return handler;
+		}
+		return null;
 	}
 
 	protected void updateCachedRecipe() {
@@ -88,9 +70,12 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 			return;
 		}
 		SimpleContainer container = new SimpleContainer(6);
+		IItemHandler handler = getHandler();
+		if(handler == null) return;
 		for (int i = 0; i < handler.getSlots(); i++) {
 			container.setItem(i, handler.getStackInSlot(i));
 		}
+
 		this.currentRecipe = this.level.getRecipeManager().getRecipeFor(StatuesRecipes.UPGRADE_RECIPE.get(), container, this.level).orElse(null);
 	}
 
@@ -110,6 +95,7 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 			if (recipe.requiresCore()) {
 				getCoreSlot().shrink(1);
 			}
+			ItemStackHandler handler = getHandler();
 			for (int slot : SLOT_CATALYSTS) {
 				handler.getStackInSlot(slot).shrink(1);
 			}
@@ -134,24 +120,26 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	}
 
 	public ItemStack getCenterSlot() {
+		IItemHandler handler = getHandler();
+		if(handler == null) return ItemStack.EMPTY;
 		return handler.getStackInSlot(SLOT_CENTER);
 	}
 
 	public ItemStack getCoreSlot() {
+		IItemHandler handler = getHandler();
+		if(handler == null) return ItemStack.EMPTY;
 		return handler.getStackInSlot(SLOT_CORE);
 	}
 
 	@Override
 	public void load(CompoundTag compound) {
 		super.load(compound);
-		handler.deserializeNBT(compound.getCompound("ItemStackHandler"));
 		updateCachedRecipe();
 	}
 
 	@Override
 	public void saveAdditional(CompoundTag compound) {
 		super.saveAdditional(compound);
-		compound.put("ItemStackHandler", handler.serializeNBT());
 	}
 
 	@Override
@@ -180,7 +168,7 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 		++tableBlockEntity.time;
 	}
 
-	private void refreshClient() {
+	public void refreshClient() {
 		setChanged();
 		BlockState state = level.getBlockState(worldPosition);
 		level.sendBlockUpdated(worldPosition, state, state, 2);
@@ -216,25 +204,5 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
 		return new StatueTableMenu(id, inventory, this);
-	}
-
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction facing) {
-		if (capability == Capabilities.ITEM_HANDLER) {
-			return stackHolder.cast();
-		}
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void invalidateCaps() {
-		super.invalidateCaps();
-		this.stackHolder.invalidate();
-	}
-
-	@Override
-	public void reviveCaps() {
-		super.reviveCaps();
-		this.stackHolder = LazyOptional.of(() -> handler);
 	}
 }

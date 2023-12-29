@@ -25,7 +25,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
@@ -35,8 +34,7 @@ import org.slf4j.Logger;
 public class Statues {
 	public static final Logger LOGGER = LogUtils.getLogger();
 
-	public Statues() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+	public Statues(IEventBus eventBus) {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, StatuesConfig.clientSpec);
 		eventBus.register(StatuesConfig.class);
@@ -58,6 +56,7 @@ public class Statues {
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 		eventBus.addListener(StatueEntities::registerSpawnPlacements);
+		eventBus.addListener(StatueBlockEntities::registerCapabilities);
 
 		NeoForge.EVENT_BUS.register(new StatueHandler());
 		NeoForge.EVENT_BUS.register(new FishHandler());

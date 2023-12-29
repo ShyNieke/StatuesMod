@@ -35,13 +35,11 @@
       "item": "statues:cat_white_statue"
     }
   ],
-  "result1": {
+  "result": {
     "item": "minecraft:string"
   },
-  "result1Chance": 1.0,
   "result3": {
     "item": "minecraft:paper",
-    "tag": "{display:{Name:'{\"color\":\"light_purple\",\"text\":\"I.O.U\"}'}}"
-  },
-  "result3Chance": 0.1
+    "nbt": "{display:{Name:'{\"text\":\"I.O.U\",\"color\":\"light_purple\"}'}}"
+  }
 }

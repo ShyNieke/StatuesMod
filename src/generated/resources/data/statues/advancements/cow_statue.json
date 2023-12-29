@@ -15,16 +15,12 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.cow_statue.desc"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "statues:cow_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.cow_statue.title"
     }

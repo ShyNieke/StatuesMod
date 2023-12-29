@@ -63,16 +63,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.axolotl_all_statue.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "statues:axolotl_gold_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.axolotl_all_statue.title"
     }

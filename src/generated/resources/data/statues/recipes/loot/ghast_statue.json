@@ -3,12 +3,10 @@
   "ingredient": {
     "item": "statues:ghast_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:gunpowder"
   },
-  "result1Chance": 1.0,
   "result3": {
     "item": "minecraft:ghast_tear"
-  },
-  "result3Chance": 0.1
+  }
 }

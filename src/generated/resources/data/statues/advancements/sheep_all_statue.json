@@ -207,16 +207,13 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.sheep_all_statue.desc"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "statues:sheep_statue_white"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.sheep_all_statue.title"
     }

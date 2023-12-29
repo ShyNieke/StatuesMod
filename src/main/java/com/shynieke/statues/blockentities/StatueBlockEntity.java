@@ -41,7 +41,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.items.IItemHandler;
@@ -177,6 +177,9 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 	}
 
 	private void exportItem(ItemStack stack) {
+		if (level.isClientSide) return;
+
+		ServerLevel serverLevel = (ServerLevel) this.level;
 		if (canAutomate()) {
 			List<BiggestInventory> inventoryList = new ArrayList<>();
 			for (Direction dir : Direction.values()) {
@@ -186,8 +189,9 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 					if (foundTile != null) {
 						ResourceLocation typeLocation = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(foundTile.getType());
 						boolean flag2 = typeLocation != null;
-						if (flag2 && !foundTile.isRemoved() && foundTile.hasLevel() && foundTile.getCapability(Capabilities.ITEM_HANDLER).isPresent()) {
-							IItemHandler itemHandler = foundTile.getCapability(Capabilities.ITEM_HANDLER, dir.getOpposite()).orElse(null);
+						IItemHandler handler = this.level.getCapability(Capabilities.ItemHandler.BLOCK, offPos, null);
+						if (flag2 && !foundTile.isRemoved() && foundTile.hasLevel() && handler != null) {
+							IItemHandler itemHandler = this.level.getCapability(Capabilities.ItemHandler.BLOCK, offPos, dir.getOpposite());
 							if (itemHandler != null) {
 								inventoryList.add(new BiggestInventory(offPos, itemHandler.getSlots(), dir.getOpposite()));
 							}
@@ -200,7 +204,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity {
 				level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 0.5, worldPosition.getZ(), stack));
 			} else {
 				for (BiggestInventory inventory : inventoryList) {
-					IItemHandler itemHandler = inventory.getIItemHandler(this.level);
+					IItemHandler itemHandler = inventory.getIItemHandler(serverLevel);
 					ItemStack rest = ItemHandlerHelper.insertItem(itemHandler, stack, false);
 					if (rest.isEmpty()) {
 						break;

@@ -3,16 +3,15 @@
   "ingredient": {
     "item": "statues:elder_guardian_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:prismarine_crystals"
   },
-  "result1Chance": 0.75,
   "result2": {
     "item": "minecraft:wet_sponge"
   },
-  "result2Chance": 0.5,
   "result3": {
     "item": "minecraft:prismarine_crystals"
   },
-  "result3Chance": 0.25
+  "result_chance": 0.75,
+  "result_chance3": 0.25
 }

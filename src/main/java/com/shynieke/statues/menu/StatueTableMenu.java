@@ -2,6 +2,7 @@ package com.shynieke.statues.menu;
 
 import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.registry.StatueRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -10,7 +11,9 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
@@ -30,30 +33,36 @@ public class StatueTableMenu extends AbstractContainerMenu {
 	private static StatueTableBlockEntity getBlockEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInventory, "playerInventory cannot be null!");
 		Objects.requireNonNull(data, "data cannot be null!");
-		final BlockEntity BlockEntityAtPos = playerInventory.player.level().getBlockEntity(data.readBlockPos());
+		final BlockEntity blockEntity = playerInventory.player.level().getBlockEntity(data.readBlockPos());
 
-		if (BlockEntityAtPos instanceof StatueTableBlockEntity) {
-			return (StatueTableBlockEntity) BlockEntityAtPos;
+		if (blockEntity instanceof StatueTableBlockEntity statueTableBlock) {
+			return statueTableBlock;
 		}
 
-		throw new IllegalStateException("Block entity is not correct! " + BlockEntityAtPos);
+		throw new IllegalStateException("Block entity is not correct! " + blockEntity);
 	}
 
-	public StatueTableMenu(int id, Inventory playerInventoryIn, StatueTableBlockEntity tableBlockEntity) {
+	public StatueTableMenu(int id, Inventory playerInventoryIn, StatueTableBlockEntity statueTableBlockEntity) {
 		super(StatueRegistry.STATUE_TABLE_MENU.get(), id);
 		this.player = playerInventoryIn.player;
-		this.statueBE = tableBlockEntity;
+		this.statueBE = statueTableBlockEntity;
+
+		final Level level = this.player.level();
+		final BlockPos pos = this.statueBE.getBlockPos();
+		IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+		if (handler == null)
+			throw new IllegalStateException("Item handler is null!");
 
 		//Statue Block slot
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 0, 80, 30));
+		this.addSlot(new TableSlot(handler, 0, 80, 30));
 		//Statue Core Slot
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 1, 8, 48));
+		this.addSlot(new TableSlot(handler, 1, 8, 48));
 
 		//Catalyst slots [2, 5]
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 2, 62, 12));
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 3, 98, 12));
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 4, 62, 48));
-		this.addSlot(new TableSlot(tableBlockEntity.handler, 5, 98, 48));
+		this.addSlot(new TableSlot(handler, 2, 62, 12));
+		this.addSlot(new TableSlot(handler, 3, 98, 12));
+		this.addSlot(new TableSlot(handler, 4, 62, 48));
+		this.addSlot(new TableSlot(handler, 5, 98, 48));
 
 		//player inventory here
 		int xPos = 8;

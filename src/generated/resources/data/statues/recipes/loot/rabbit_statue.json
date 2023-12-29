@@ -20,8 +20,7 @@
       "item": "statues:rabbit_ws_statue"
     }
   ],
-  "result1": {
+  "result": {
     "item": "minecraft:rabbit_foot"
-  },
-  "result1Chance": 1.0
+  }
 }

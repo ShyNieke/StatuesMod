@@ -1,39 +1,39 @@
 package com.shynieke.statues.datagen.server.recipe;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.shynieke.statues.recipe.StatuesRecipes;
+import com.shynieke.statues.recipe.UpgradeRecipe;
 import com.shynieke.statues.recipe.UpgradeType;
-import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.core.NonNullList;
+import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Locale;
+import java.util.Objects;
 
-public class UpgradeRecipeBuilder {
+public class UpgradeRecipeBuilder implements RecipeBuilder {
 	private final Ingredient center;
-	private final List<Ingredient> catalysts;
+	private final NonNullList<Ingredient> catalysts = NonNullList.create();
 	private ItemStack result = ItemStack.EMPTY;
 	private boolean requireCore = false;
 	private UpgradeType upgradeType = UpgradeType.CRAFTING;
 	private int tier = -1;
 	private String group;
+	private boolean showNotification = true;
 
-	private UpgradeRecipeBuilder(Ingredient center, List<Ingredient> catalysts) {
+	private UpgradeRecipeBuilder(Ingredient center) {
 		this.center = center;
-		this.catalysts = catalysts;
 	}
 
 	public static UpgradeRecipeBuilder upgrade(Ingredient statueIngredient, List<Ingredient> catalysts) {
-		return new UpgradeRecipeBuilder(statueIngredient, catalysts);
+		UpgradeRecipeBuilder builder = new UpgradeRecipeBuilder(statueIngredient);
+		builder.catalysts.addAll(catalysts);
+		return builder;
 	}
 
 	public UpgradeRecipeBuilder result(ItemLike resultIn) {
@@ -66,85 +66,22 @@ public class UpgradeRecipeBuilder {
 		return this;
 	}
 
-	public void build(RecipeOutput consumerIn, ResourceLocation id) {
-		consumerIn.accept(new Result(id, this.group == null ? "" : this.group, this.center,
-				catalysts, result, requireCore, upgradeType, tier));
+	@Override
+	public RecipeBuilder unlockedBy(String s, Criterion<?> criterion) {
+		return null;
 	}
 
-	public static class Result implements FinishedRecipe {
-		private final ResourceLocation id;
-		private final String group;
-		private final Ingredient center;
-		private final List<Ingredient> catalysts;
-		private final ItemStack result;
-		private final boolean requireCore;
-		private final UpgradeType upgradeType;
-		private final int tier;
+	@Override
+	public Item getResult() {
+		return result.getItem();
+	}
 
-		public Result(ResourceLocation idIn, String groupIn, Ingredient center, List<Ingredient> catalysts,
-					  ItemStack result, boolean requireCore, UpgradeType upgradeType, int tier) {
-			this.id = idIn;
-			this.group = groupIn;
-			this.center = center;
-			this.catalysts = catalysts;
-			this.result = result;
-			this.requireCore = requireCore;
-			this.upgradeType = upgradeType;
-			this.tier = tier;
-		}
+	@Override
+	public void save(RecipeOutput recipeOutput, ResourceLocation id) {
+		UpgradeRecipe upgradeRecipe = new UpgradeRecipe(
+				Objects.requireNonNullElse(this.group, ""),
+				center, catalysts, result, requireCore, upgradeType, tier, showNotification);
 
-		public void serializeRecipeData(JsonObject json) {
-			if (!this.group.isEmpty())
-				json.addProperty("group", this.group);
-
-			json.add("center", this.center.toJson(false));
-
-			JsonArray jsonarray = new JsonArray();
-
-			for (Ingredient ingredient : this.catalysts)
-				jsonarray.add(ingredient.toJson(false));
-
-			json.add("catalysts", jsonarray);
-
-			addStack(json, "result", this.result);
-
-			if (requireCore)
-				json.addProperty("requireCore", true);
-
-			json.addProperty("upgradeType", upgradeType.name().toLowerCase(Locale.ROOT));
-
-			if (tier != -1)
-				json.addProperty("tier", tier);
-		}
-
-		private void addStack(JsonObject json, String property, ItemStack stack) {
-			if (stack != null && !stack.isEmpty()) {
-				JsonObject object = new JsonObject();
-
-				object.addProperty("item", BuiltInRegistries.ITEM.getKey(stack.getItem()).toString());
-				if (stack.getCount() != 1) {
-					object.addProperty("count", stack.getCount());
-				}
-				if (stack.hasTag()) {
-					object.addProperty("tag", stack.getTag().toString());
-				}
-				json.add(property, object);
-			}
-		}
-
-		@Override
-		public RecipeSerializer<?> type() {
-			return StatuesRecipes.UPGRADE_SERIALIZER.get();
-		}
-
-		@Override
-		public ResourceLocation id() {
-			return this.id;
-		}
-
-		@Nullable
-		public AdvancementHolder advancement() {
-			return null;
-		}
+		recipeOutput.accept(id, upgradeRecipe, null);
 	}
 }

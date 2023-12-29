@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -25,10 +26,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.common.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
+import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
-
 import org.jetbrains.annotations.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -305,11 +307,12 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		}
 
 		@SuppressWarnings("deprecation")
-		protected IItemHandler getIItemHandler(Level level) {
+		protected IItemHandler getIItemHandler(ServerLevel level) {
 			if (level.isAreaLoaded(worldPosition, 1)) {
 				BlockEntity blockEntity = level.getBlockEntity(tilePos);
-				if (!blockEntity.isRemoved() && blockEntity.hasLevel() && blockEntity.getCapability(Capabilities.ITEM_HANDLER).isPresent()) {
-					return blockEntity.getCapability(Capabilities.ITEM_HANDLER, direction).orElse(null);
+				BlockCapabilityCache<IItemHandler, Direction> cache = BlockCapabilityCache.create(Capabilities.ItemHandler.BLOCK, level, tilePos, direction);
+				if (!blockEntity.isRemoved() && blockEntity.hasLevel() && cache.getCapability() != null) {
+					return cache.getCapability();
 				}
 			}
 			return null;

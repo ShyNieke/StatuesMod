@@ -3,8 +3,7 @@
   "ingredient": {
     "item": "statues:axolotl_wild_statue"
   },
-  "result1": {
+  "result": {
     "item": "minecraft:tropical_fish"
-  },
-  "result1Chance": 1.0
+  }
 }

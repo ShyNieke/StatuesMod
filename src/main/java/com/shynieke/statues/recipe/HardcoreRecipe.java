@@ -4,7 +4,6 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonSyntaxException;
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.NonNullList;
@@ -18,36 +17,28 @@ import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.Level;
-import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class HardcoreRecipe extends ShapedRecipe {
-	static final int MAX_WIDTH = 3;
-	static final int MAX_HEIGHT = 3;
-
-	final int width;
-	final int height;
-	final NonNullList<Ingredient> recipeItems;
+	final ShapedRecipePattern pattern;
 	final ItemStack result;
 	final String group;
 	final CraftingBookCategory category;
 	final boolean showNotification;
 
-	public HardcoreRecipe(String group, CraftingBookCategory category, int width, int height, NonNullList<Ingredient> recipeItems, ItemStack result, boolean showNotification) {
-		super(group, category, width, height, recipeItems, result);
+	public HardcoreRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack result, boolean showNotification) {
+		super(group, category, pattern, result);
 		this.group = group;
 		this.category = category;
-		this.width = width;
-		this.height = height;
-		this.recipeItems = recipeItems;
+		this.pattern = pattern;
 		this.result = result;
 		this.showNotification = showNotification;
 	}
@@ -163,119 +154,37 @@ public class HardcoreRecipe extends ShapedRecipe {
 	}
 
 	public static class Serializer implements RecipeSerializer<HardcoreRecipe> {
-		static final Codec<List<String>> PATTERN_CODEC = Codec.STRING.listOf().flatXmap(list -> {
-			if (list.size() > MAX_HEIGHT) {
-				return DataResult.error(() -> "Invalid pattern: too many rows, %s is maximum".formatted(MAX_HEIGHT));
-			} else if (list.isEmpty()) {
-				return DataResult.error(() -> "Invalid pattern: empty pattern not allowed");
-			} else {
-				int i = list.get(0).length();
-
-				for (String s : list) {
-					if (s.length() > MAX_WIDTH) {
-						return DataResult.error(() -> "Invalid pattern: too many columns, %s is maximum".formatted(MAX_WIDTH));
-					}
-
-					if (i != s.length()) {
-						return DataResult.error(() -> "Invalid pattern: each row must be the same width");
-					}
-				}
-
-				return DataResult.success(list);
-			}
-		}, DataResult::success);
-		static final Codec<String> SINGLE_CHARACTER_STRING_CODEC = Codec.STRING.flatXmap(s -> {
-			if (s.length() != 1) {
-				return DataResult.error(() -> "Invalid ingredient entry: '" + s + "' is an invalid symbol (must be 1 character only).");
-			} else {
-				return " ".equals(s) ? DataResult.error(() -> "Invalid ingredient entry: ' ' is a reserved symbol.") : DataResult.success(s);
-			}
-		}, DataResult::success);
-		private static final Codec<HardcoreRecipe> CODEC = RawHardcoreRecipe.CODEC.flatXmap(hardcoreRecipe -> {
-			String[] astring = HardcoreRecipe.shrink(hardcoreRecipe.pattern);
-			int i = astring[0].length();
-			int j = astring.length;
-			NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i * j, Ingredient.EMPTY);
-			Set<String> set = Sets.newHashSet(hardcoreRecipe.key.keySet());
-
-			for (int k = 0; k < astring.length; ++k) {
-				String s = astring[k];
-
-				for (int l = 0; l < s.length(); ++l) {
-					String s1 = s.substring(l, l + 1);
-					Ingredient ingredient = s1.equals(" ") ? Ingredient.EMPTY : hardcoreRecipe.key.get(s1);
-					if (ingredient == null) {
-						return DataResult.error(() -> "Pattern references symbol '" + s1 + "' but it's not defined in the ingredient");
-					}
-
-					set.remove(s1);
-					nonnulllist.set(l + i * k, ingredient);
-				}
-			}
-
-			if (!set.isEmpty()) {
-				return DataResult.error(() -> "Key defines symbols that aren't used in pattern: " + set);
-			} else {
-				HardcoreRecipe shapedrecipe = new HardcoreRecipe(hardcoreRecipe.group, hardcoreRecipe.category, i, j, nonnulllist, hardcoreRecipe.result, hardcoreRecipe.showNotification);
-				return DataResult.success(shapedrecipe);
-			}
-		}, p_300934_ -> {
-			throw new NotImplementedException("Serializing HardcoreRecipe is not implemented yet.");
-		});
+		public static final Codec<HardcoreRecipe> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(hardcoreRecipe -> hardcoreRecipe.group),
+								CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(hardcoreRecipe -> hardcoreRecipe.category),
+								ShapedRecipePattern.MAP_CODEC.forGetter(hardcoreRecipe -> hardcoreRecipe.pattern),
+								ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(hardcoreRecipe -> hardcoreRecipe.result),
+								ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(hardcoreRecipe -> hardcoreRecipe.showNotification)
+						)
+						.apply(instance, HardcoreRecipe::new)
+		);
 
 		@Override
 		public Codec<HardcoreRecipe> codec() {
 			return CODEC;
 		}
 
-		public HardcoreRecipe fromNetwork(FriendlyByteBuf friendlyByteBuf) {
-			int i = friendlyByteBuf.readVarInt();
-			int j = friendlyByteBuf.readVarInt();
-			String s = friendlyByteBuf.readUtf();
-			CraftingBookCategory craftingbookcategory = friendlyByteBuf.readEnum(CraftingBookCategory.class);
-			NonNullList<Ingredient> nonnulllist = NonNullList.withSize(i * j, Ingredient.EMPTY);
-
-			for (int k = 0; k < nonnulllist.size(); ++k) {
-				nonnulllist.set(k, Ingredient.fromNetwork(friendlyByteBuf));
-			}
-
-			ItemStack itemstack = friendlyByteBuf.readItem();
-			boolean flag = friendlyByteBuf.readBoolean();
-			return new HardcoreRecipe(s, craftingbookcategory, i, j, nonnulllist, itemstack, flag);
+		public HardcoreRecipe fromNetwork(FriendlyByteBuf byteBuf) {
+			String s = byteBuf.readUtf();
+			CraftingBookCategory craftingbookcategory = byteBuf.readEnum(CraftingBookCategory.class);
+			ShapedRecipePattern recipePattern = ShapedRecipePattern.fromNetwork(byteBuf);
+			ItemStack itemstack = byteBuf.readItem();
+			boolean flag = byteBuf.readBoolean();
+			return new HardcoreRecipe(s, craftingbookcategory, recipePattern, itemstack, flag);
 		}
 
-		public void toNetwork(FriendlyByteBuf friendlyByteBuf, HardcoreRecipe hardcoreRecipe) {
-			friendlyByteBuf.writeVarInt(hardcoreRecipe.width);
-			friendlyByteBuf.writeVarInt(hardcoreRecipe.height);
-			friendlyByteBuf.writeUtf(hardcoreRecipe.group);
-			friendlyByteBuf.writeEnum(hardcoreRecipe.category);
-
-			for (Ingredient ingredient : hardcoreRecipe.recipeItems) {
-				ingredient.toNetwork(friendlyByteBuf);
-			}
-
-			friendlyByteBuf.writeItem(hardcoreRecipe.result);
-			friendlyByteBuf.writeBoolean(hardcoreRecipe.showNotification);
-		}
-
-
-		static record RawHardcoreRecipe(
-				String group, CraftingBookCategory category, Map<String, Ingredient> key, List<String> pattern,
-				ItemStack result, boolean showNotification
-		) {
-			public static final Codec<RawHardcoreRecipe> CODEC = RecordCodecBuilder.create(
-					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(hardcoreRecipe -> hardcoreRecipe.group),
-									CraftingBookCategory.CODEC.fieldOf("category").orElse(CraftingBookCategory.MISC).forGetter(hardcoreRecipe -> hardcoreRecipe.category),
-									ExtraCodecs.strictUnboundedMap(HardcoreRecipe.Serializer.SINGLE_CHARACTER_STRING_CODEC, Ingredient.CODEC_NONEMPTY)
-											.fieldOf("key")
-											.forGetter(hardcoreRecipe -> hardcoreRecipe.key),
-									HardcoreRecipe.Serializer.PATTERN_CODEC.fieldOf("pattern").forGetter(hardcoreRecipe -> hardcoreRecipe.pattern),
-									CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.fieldOf("result").forGetter(hardcoreRecipe -> hardcoreRecipe.result),
-									ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(hardcoreRecipe -> hardcoreRecipe.showNotification)
-							)
-							.apply(instance, RawHardcoreRecipe::new)
-			);
+		public void toNetwork(FriendlyByteBuf byteBuf, HardcoreRecipe hardcoreRecipe) {
+			byteBuf.writeUtf(hardcoreRecipe.group);
+			byteBuf.writeEnum(hardcoreRecipe.category);
+			hardcoreRecipe.pattern.toNetwork(byteBuf);
+			byteBuf.writeItem(hardcoreRecipe.result);
+			byteBuf.writeBoolean(hardcoreRecipe.showNotification);
 		}
 	}
 }

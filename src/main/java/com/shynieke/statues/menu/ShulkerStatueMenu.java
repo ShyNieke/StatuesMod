@@ -2,13 +2,17 @@ package com.shynieke.statues.menu;
 
 import com.shynieke.statues.blockentities.ShulkerStatueBlockEntity;
 import com.shynieke.statues.registry.StatueRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
@@ -17,11 +21,11 @@ import java.util.Objects;
 public class ShulkerStatueMenu extends AbstractContainerMenu {
 	private final ShulkerStatueBlockEntity shulkerBE;
 
-	public ShulkerStatueMenu(final int windowId, final Inventory playerInventory, final FriendlyByteBuf data) {
-		this(windowId, playerInventory, getBlockEntity(playerInventory, data));
+	public ShulkerStatueMenu(final int windowId, final Inventory playerInventory, FriendlyByteBuf byteBuf) {
+		this(windowId, playerInventory, getBlockEntity(playerInventory, byteBuf));
 	}
 
-	private static ShulkerStatueBlockEntity getBlockEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
+	private static ShulkerStatueBlockEntity getBlockEntity(final Inventory playerInventory, FriendlyByteBuf data) {
 		Objects.requireNonNull(playerInventory, "playerInventory cannot be null!");
 		Objects.requireNonNull(data, "data cannot be null!");
 		final BlockEntity BlockEntityAtPos = playerInventory.player.level().getBlockEntity(data.readBlockPos());
@@ -37,6 +41,12 @@ public class ShulkerStatueMenu extends AbstractContainerMenu {
 		super(StatueRegistry.SHULKER_STATUE_MENU.get(), id);
 		this.shulkerBE = shulkerBlockEntity;
 
+		final Level level = playerInventoryIn.player.level();
+		final BlockPos pos = this.shulkerBE.getBlockPos();
+		IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+		if (handler == null)
+			throw new IllegalStateException("Item handler is null!");
+
 		int xPos = 8;
 		int yPos = 18;
 
@@ -47,7 +57,7 @@ public class ShulkerStatueMenu extends AbstractContainerMenu {
 				if (middle >= -1 && middle <= 1)
 					continue;
 
-				this.addSlot(new SlotItemHandler(shulkerBlockEntity.handler, index++, xPos + x * 18, yPos + y * 18));
+				this.addSlot(new SlotItemHandler(handler, index++, xPos + x * 18, yPos + y * 18));
 			}
 		}
 

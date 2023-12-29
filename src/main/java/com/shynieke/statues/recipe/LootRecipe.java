@@ -1,7 +1,6 @@
 package com.shynieke.statues.recipe;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
@@ -9,13 +8,11 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipeCodecs;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
 public class LootRecipe implements Recipe<Container> {
@@ -123,22 +120,20 @@ public class LootRecipe implements Recipe<Container> {
 	}
 
 	public static class Serializer implements RecipeSerializer<LootRecipe> {
-
-		private static final Codec<LootRecipe> CODEC = LootRecipe.Serializer.RawLootRecipe.CODEC.flatXmap(rawLootRecipe -> {
-			return DataResult.success(new LootRecipe(
-					rawLootRecipe.group,
-					rawLootRecipe.ingredient,
-					rawLootRecipe.result,
-					rawLootRecipe.resultChance,
-					rawLootRecipe.result2,
-					rawLootRecipe.resultChance2,
-					rawLootRecipe.result3,
-					rawLootRecipe.resultChance3,
-					rawLootRecipe.showNotification
-			));
-		}, recipe -> {
-			throw new NotImplementedException("Serializing LootRecipe is not implemented yet.");
-		});
+		private static final Codec<LootRecipe> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
+								Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+								ItemStack.ITEM_WITH_COUNT_CODEC.optionalFieldOf("result", ItemStack.EMPTY).forGetter(recipe -> recipe.result),
+								Codec.FLOAT.optionalFieldOf("result_chance", 1.0F).forGetter(recipe -> recipe.resultChance),
+								ItemStack.ITEM_WITH_COUNT_CODEC.optionalFieldOf("result2", ItemStack.EMPTY).forGetter(recipe -> recipe.result2),
+								Codec.FLOAT.optionalFieldOf("result_chance2", 0.5F).forGetter(recipe -> recipe.result2Chance),
+								ItemStack.ITEM_WITH_COUNT_CODEC.optionalFieldOf("result3", ItemStack.EMPTY).forGetter(recipe -> recipe.result3),
+								Codec.FLOAT.optionalFieldOf("result_chance3", 0.1F).forGetter(recipe -> recipe.result3Chance),
+								ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(recipe -> recipe.showNotification)
+						)
+						.apply(instance, LootRecipe::new)
+		);
 
 		@Override
 		public Codec<LootRecipe> codec() {
@@ -170,28 +165,6 @@ public class LootRecipe implements Recipe<Container> {
 			byteBuf.writeItem(recipe.result3);
 			byteBuf.writeFloat(recipe.result3Chance);
 			byteBuf.writeBoolean(recipe.showNotification);
-		}
-
-		static record RawLootRecipe(
-				String group, Ingredient ingredient,
-				ItemStack result, float resultChance, ItemStack result2, float resultChance2, ItemStack result3,
-				float resultChance3,
-				boolean showNotification
-		) {
-			public static final Codec<LootRecipe.Serializer.RawLootRecipe> CODEC = RecordCodecBuilder.create(
-					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-									Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
-									CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.optionalFieldOf("result", ItemStack.EMPTY).forGetter(recipe -> recipe.result),
-									Codec.FLOAT.optionalFieldOf("result_chance", 1.0F).forGetter(recipe -> recipe.resultChance),
-									CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.optionalFieldOf("result2", ItemStack.EMPTY).forGetter(recipe -> recipe.result2),
-									Codec.FLOAT.optionalFieldOf("result_chance2", 0.5F).forGetter(recipe -> recipe.resultChance),
-									CraftingRecipeCodecs.ITEMSTACK_OBJECT_CODEC.optionalFieldOf("result3", ItemStack.EMPTY).forGetter(recipe -> recipe.result3),
-									Codec.FLOAT.optionalFieldOf("result_chance3", 0.1F).forGetter(recipe -> recipe.resultChance),
-									ExtraCodecs.strictOptionalField(Codec.BOOL, "show_notification", true).forGetter(recipe -> recipe.showNotification)
-							)
-							.apply(instance, LootRecipe.Serializer.RawLootRecipe::new)
-			);
 		}
 	}
 }

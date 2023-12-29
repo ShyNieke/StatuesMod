@@ -15,7 +15,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "translate": "advancement.statues.wasteland_statue.desc"
     },
@@ -24,7 +23,6 @@
     "icon": {
       "item": "statues:wasteland_statue"
     },
-    "show_toast": true,
     "title": {
       "translate": "advancement.statues.wasteland_statue.title"
     }
