@@ -154,9 +154,11 @@ public class PlayerPoseScreen extends Screen {
 				if (this.minecraft != null) {
 					clipboardData = this.minecraft.keyboardHandler.getClipboard();
 				}
-				CompoundTag compound = TagParser.parseTag(clipboardData);
-				this.readFieldsFromNBT(compound);
-				this.updateEntity(compound);
+				if (clipboardData != null) {
+					CompoundTag compound = TagParser.parseTag(clipboardData);
+					this.readFieldsFromNBT(compound);
+					this.updateEntity(compound);
+				}
 			} catch (Exception e) {
 				//Nope
 			}
