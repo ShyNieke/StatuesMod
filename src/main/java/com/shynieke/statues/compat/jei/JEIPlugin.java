@@ -1,8 +1,12 @@
 package com.shynieke.statues.compat.jei;
 
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.Statues;
+import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.compat.jei.category.LootCategory;
 import com.shynieke.statues.compat.jei.category.UpgradeCategory;
+import com.shynieke.statues.config.StatuesConfig;
+import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.recipe.LootRecipe;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.recipe.UpgradeRecipe;
@@ -16,12 +20,16 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Objects;
 
 @JeiPlugin
@@ -67,5 +75,43 @@ public class JEIPlugin implements IModPlugin {
 		ClientLevel clientLevel = Objects.requireNonNull(Minecraft.getInstance().level);
 		registration.addRecipes(LOOT_TYPE, clientLevel.getRecipeManager().getAllRecipesFor(StatuesRecipes.LOOT_RECIPE.get()));
 		registration.addRecipes(UPGRADE_TYPE, clientLevel.getRecipeManager().getAllRecipesFor(StatuesRecipes.UPGRADE_RECIPE.get()));
+
+		List<StatueBlockItem> statues = StatueRegistry.ITEMS.getEntries().stream()
+				.filter(registryObject -> registryObject.get() instanceof StatueBlockItem statueBlock &&
+						statueBlock.getBlock() instanceof AbstractStatueBase statueBase && !statueBase.isHiddenStatue())
+				.map(registryObject -> (StatueBlockItem) registryObject.get()).toList();
+		double chance = StatuesConfig.COMMON.statueDropChance.get();
+		for (StatueBlockItem statue : statues) {
+			if (statue.getEntity() == null) {
+				Statues.LOGGER.error("Tried adding info to statue but statue {} has no entity linked", ForgeRegistries.ITEMS.getKey(statue));
+			} else {
+				registration.addItemStackInfo(statue.getDefaultInstance(),
+						Component.translatable("statues.gui.jei.statue.info",
+								Component.translatable(statue.getDescriptionId()).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD),
+								Component.literal((int) (chance * 100) + "%").withStyle(ChatFormatting.DARK_GREEN).withStyle(ChatFormatting.BOLD),
+								Component.translatable(statue.getEntity().getDescriptionId()).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD)
+						)
+				);
+			}
+		}
+		registration.addItemStackInfo(StatueRegistry.STATUE_CORE.get().getDefaultInstance(),
+				Component.translatable("statues.gui.jei.statue_core.info",
+						Component.translatable(StatueRegistry.STATUE_CORE.get().getDescriptionId()).withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD),
+						Component.translatable(StatueRegistry.STATUE_BAT.get().getDescriptionId()).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD)
+				),
+				Component.translatable("statues.gui.jei.statue_core.info2",
+						Component.translatable(StatueRegistry.STATUE_BAT.get().getDescriptionId()).withStyle(ChatFormatting.RED).withStyle(ChatFormatting.BOLD)
+				)
+		);
+		registration.addItemStackInfo(StatueRegistry.STATUE_TABLE.get().asItem().getDefaultInstance(),
+				Component.translatable("statues.gui.jei.statue_table.info"),
+				Component.translatable("statues.gui.jei.statue_table.info2"),
+				Component.translatable("statues.gui.jei.statue_table.info3"),
+				Component.translatable("statues.gui.jei.statue_table.info4"),
+				Component.translatable("statues.gui.jei.statue_table.info5"),
+				Component.translatable("statues.gui.jei.statue_table.info6"),
+				Component.translatable("statues.gui.jei.statue_table.info7"),
+				Component.translatable("statues.gui.jei.statue_table.info8")
+		);
 	}
 }
