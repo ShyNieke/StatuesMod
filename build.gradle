@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.45'
+    id 'net.neoforged.gradle.userdev' version '7.0.72'
     id 'net.darkhax.curseforgegradle' version '1.1.17'
     id 'com.modrinth.minotaur' version "2.+"
 }
@@ -83,7 +83,7 @@ dependencies {
 
 //    implementation "com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"
 
-//    implementation "top.theillusivec4.curios:curios-forge:${curios_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}+${mc_version}"
 
 //    implementation "vazkii.patchouli:Patchouli:${patchouli_version}"
 //    implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
@@ -140,6 +140,7 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'
 
+        mainFile.addOptional("curios", "the-cactus-mod")
 //        mainFile.addOptional("jei", "curios", "patchouli", "the-cactus-mod")
     }
 }
@@ -156,12 +157,12 @@ if (System.getenv().MODRINTH_KEY) {
         gameVersions = ["${mc_version}"]
         loaders = ["neoforge"]
 
-//        dependencies {
+        dependencies {
 //            optional.project "jei"
-//            optional.project "curios"
+            optional.project "curios"
 //            optional.project "patchouli"
-//            optional.project "the-cactus-mod"
-//        }
+            optional.project "the-cactus-mod"
+        }
     }
 }
 
