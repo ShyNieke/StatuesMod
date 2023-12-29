@@ -36,6 +36,7 @@ public class StatueBlockTagProvider extends BlockTagsProvider {
 				StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(), StatueRegistry.TROPICAL_FISH_E.get(),
 				StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get(), StatueRegistry.TURTLE_STATUE.get(),
 				StatueRegistry.VILLAGER_BR_STATUE.get(), StatueRegistry.VILLAGER_GR_STATUE.get(), StatueRegistry.VILLAGER_PU_STATUE.get(), StatueRegistry.VILLAGER_WH_STATUE.get(), StatueRegistry.VINDICATOR_STATUE.get(), StatueRegistry.WASTELAND_STATUE.get(),
-				StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get(), StatueRegistry.BUMBO_STATUE.get(), StatueRegistry.TROPIBEE.get(), StatueRegistry.EAGLE_RAY.get(), StatueRegistry.SLABFISH.get(), StatueRegistry.AZZARO.get());
+				StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get(), StatueRegistry.BUMBO_STATUE.get(), StatueRegistry.TROPIBEE.get(), StatueRegistry.EAGLE_RAY.get(), StatueRegistry.SLABFISH.get(), StatueRegistry.AZZARO.get(),
+				StatueRegistry.ALLAY_STATUE.get());
 	}
 }
