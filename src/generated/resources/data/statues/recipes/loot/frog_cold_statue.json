@@ -1,0 +1,14 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:frog_cold_statue"
+  },
+  "result1": {
+    "item": "minecraft:slime_ball"
+  },
+  "result1Chance": 1.0,
+  "result3": {
+    "item": "minecraft:verdant_froglight"
+  },
+  "result3Chance": 0.1
+}

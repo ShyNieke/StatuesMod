@@ -1,5 +1,11 @@
-// 1.20.1	2023-06-15T20:40:21.1695642	Item Models: statues
+// 1.20.1	2023-12-29T17:42:23.0930232	Item Models: statues
+3bd1b5b2646515290e1ea7df0abf9798e194d549 assets/statues/models/item/allay_statue.json
 7b1e7d4cd383ce69a71bdb343872386329321241 assets/statues/models/item/angry_bee_statue.json
+9880572a3f4467e95bf0796f6d1ee27653ed0e92 assets/statues/models/item/axolotl_blue_statue.json
+14fcfef817cf6b483aa4211737a382d89b269a42 assets/statues/models/item/axolotl_cyan_statue.json
+74aefe1ea0c1b82d57630f5ec7bc2210b1e2c3b7 assets/statues/models/item/axolotl_gold_statue.json
+2e77762d1fbc6e64e206e616d012c17c37fbe610 assets/statues/models/item/axolotl_lucy_statue.json
+8084728c2e2eb561177f27bad815c1cc658af1d5 assets/statues/models/item/axolotl_wild_statue.json
 b2c51440211df6f0290df32fe475c7b456feac89 assets/statues/models/item/azzaro.json
 220dc7d6d76d1b849a3009cd36cd27574ba6c2cc assets/statues/models/item/baby_zombie_statue.json
 48fcacf895449438d3b4474f805367ae86c55b8f assets/statues/models/item/bee_statue.json
@@ -36,6 +42,9 @@ dd940b0ff2d41df71328bad87a913e8bf4dce839 assets/statues/models/item/elder_guardi
 4f97e2b2bbcc0edcd9fbad4177511769abecaee2 assets/statues/models/item/flood_statue.json
 cd308f1b2ec80ef6e5067d86f56d1bb33852d67d assets/statues/models/item/fox_snow_statue.json
 a6d1f7ea9308eb43a8d21fa510be936a522e56da assets/statues/models/item/fox_statue.json
+b6ece04875f4ed83c5b16c904f83cedf15417d46 assets/statues/models/item/frog_cold_statue.json
+f15768248e80597e8f3dce397c0b5dacc013ef3a assets/statues/models/item/frog_temperate_statue.json
+db34caac6ca1d027a2efff6e2e65c898f860e91b assets/statues/models/item/frog_warm_statue.json
 6106bf7c3149e079f2e9f7b7f03bdecf9c4ffb2b assets/statues/models/item/ghast_statue.json
 b94feaa868abfdb6ce4e4607b9fa884019cdb01d assets/statues/models/item/guardian_statue.json
 e1692dbc56456dc405129ca6573514a55a35569c assets/statues/models/item/husk_statue.json
@@ -100,6 +109,7 @@ e638038b73512cfeb4adf0750da135d36edb0a81 assets/statues/models/item/squid_statue
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/statues/models/item/statue_bat_spawn_egg.json
 e99f6aa9afb31087f9be902f6a362d94e2dbd460 assets/statues/models/item/statue_core.json
 1e73dfa94687dcfc6d2a5edeab29ef1ee5ddeeb2 assets/statues/models/item/statue_table.json
+71f12361363d9a0c8a9c2c502b9b11f7690fea40 assets/statues/models/item/tadpole_statue.json
 b3842022901a24095430043b63923521deea2bb8 assets/statues/models/item/tea.json
 a39cff8a927dbdb0cce282e4cad95a21e15ef9d7 assets/statues/models/item/totem_of_undying_statue.json
 0285355948bf8e6d563194face9678d05fd357ce assets/statues/models/item/trans_bee_statue.json
@@ -122,6 +132,7 @@ afd4408f98c8e11057e802e91511ca07f71cbc26 assets/statues/models/item/villager_br_
 a0fd26357a2edd3620d70c8dc02429cd0d14b6c3 assets/statues/models/item/villager_pu_statue.json
 43df855d48fdff349a81bd9fc78e5dea39ad4cf7 assets/statues/models/item/villager_wh_statue.json
 10b2aeb2ba0c50895627c5e7f4e1a8bd64932329 assets/statues/models/item/vindicator_statue.json
+2cff4c81dcb6bc48d161b540e032a096bf1cf77d assets/statues/models/item/warden_statue.json
 0c0f13120c1958138d806743b98321a5a17c7e81 assets/statues/models/item/wasteland_statue.json
 438b1f9203b2a4fd58a4e19bccd9398bd59567b3 assets/statues/models/item/witch_statue.json
 7cd26dfe59794aaade9f3b7690d32df6703cbc04 assets/statues/models/item/zombie_statue.json

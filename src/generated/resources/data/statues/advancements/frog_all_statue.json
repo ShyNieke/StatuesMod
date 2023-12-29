@@ -1,0 +1,68 @@
+{
+  "parent": "statues:frog_statue",
+  "criteria": {
+    "frog_cold_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:frog_cold_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "frog_temperate_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:frog_temperate_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "frog_warm_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:frog_warm_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.frog_all_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "statues:frog_cold_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.frog_all_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "frog_temperate_statue"
+    ],
+    [
+      "frog_warm_statue"
+    ],
+    [
+      "frog_cold_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

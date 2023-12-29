@@ -1,0 +1,98 @@
+{
+  "parent": "statues:axolotl_statue",
+  "criteria": {
+    "axolotl_blue_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:axolotl_blue_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "axolotl_cyan_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:axolotl_cyan_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "axolotl_gold_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:axolotl_gold_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "axolotl_lucy_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:axolotl_lucy_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "axolotl_wild_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:axolotl_wild_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.axolotl_all_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "statues:axolotl_gold_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.axolotl_all_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "axolotl_lucy_statue"
+    ],
+    [
+      "axolotl_wild_statue"
+    ],
+    [
+      "axolotl_gold_statue"
+    ],
+    [
+      "axolotl_cyan_statue"
+    ],
+    [
+      "axolotl_blue_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

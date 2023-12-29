@@ -1,0 +1,38 @@
+{
+  "parent": "statues:frog_statue",
+  "criteria": {
+    "tadpole_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:tadpole_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.tadpole_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:tadpole_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.tadpole_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "tadpole_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
