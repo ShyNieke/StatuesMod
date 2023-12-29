@@ -1,0 +1,37 @@
+{
+  "parent": "statues:mooshroom_statue",
+  "criteria": {
+    "brown_mooshroom_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:brown_mooshroom_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.brown_mooshroom_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:brown_mooshroom_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.brown_mooshroom_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "brown_mooshroom_statue"
+    ]
+  ]
+}

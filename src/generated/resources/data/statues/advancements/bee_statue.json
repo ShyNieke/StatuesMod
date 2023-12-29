@@ -1,0 +1,37 @@
+{
+  "parent": "statues:fox_snow_statue",
+  "criteria": {
+    "bee_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:bee_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.bee_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:bee_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.bee_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "bee_statue"
+    ]
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "statues:root",
+  "criteria": {
+    "blaze_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:blaze_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.blaze_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:blaze_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.blaze_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "blaze_statue"
+    ]
+  ]
+}

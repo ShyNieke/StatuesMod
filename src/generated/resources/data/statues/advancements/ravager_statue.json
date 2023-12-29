@@ -1,0 +1,37 @@
+{
+  "parent": "statues:elder_guardian_statue",
+  "criteria": {
+    "ravager_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:ravager_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.ravager_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "statues:ravager_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.ravager_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "ravager_statue"
+    ]
+  ]
+}

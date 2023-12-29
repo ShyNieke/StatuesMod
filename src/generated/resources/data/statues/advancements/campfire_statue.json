@@ -1,0 +1,37 @@
+{
+  "parent": "statues:creeper_statue",
+  "criteria": {
+    "campfire_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:campfire_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.campfire_statue.desc"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "statues:campfire_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.campfire_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "campfire_statue"
+    ]
+  ]
+}

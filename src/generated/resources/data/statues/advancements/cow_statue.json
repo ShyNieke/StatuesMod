@@ -1,0 +1,37 @@
+{
+  "parent": "statues:root",
+  "criteria": {
+    "cow_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:cow_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.cow_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:cow_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.cow_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "cow_statue"
+    ]
+  ]
+}

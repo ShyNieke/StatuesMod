@@ -1,0 +1,37 @@
+{
+  "parent": "statues:bee_statue",
+  "criteria": {
+    "angry_bee_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:angry_bee_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.angry_bee_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:angry_bee_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.angry_bee_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "angry_bee_statue"
+    ]
+  ]
+}

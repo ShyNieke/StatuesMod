@@ -1,0 +1,37 @@
+{
+  "parent": "statues:salmon_statue",
+  "criteria": {
+    "dolphin_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:dolphin_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.dolphin_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:dolphin_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.dolphin_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "dolphin_statue"
+    ]
+  ]
+}

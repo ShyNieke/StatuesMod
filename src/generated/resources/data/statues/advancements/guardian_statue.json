@@ -1,0 +1,37 @@
+{
+  "parent": "statues:drowned_statue",
+  "criteria": {
+    "guardian_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:guardian_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.guardian_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:guardian_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.guardian_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "guardian_statue"
+    ]
+  ]
+}

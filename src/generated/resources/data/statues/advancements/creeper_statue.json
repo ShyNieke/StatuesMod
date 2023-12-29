@@ -1,0 +1,37 @@
+{
+  "parent": "statues:husk_statue",
+  "criteria": {
+    "creeper_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:creeper_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.creeper_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:creeper_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.creeper_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "creeper_statue"
+    ]
+  ]
+}

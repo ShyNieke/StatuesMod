@@ -1,0 +1,37 @@
+{
+  "parent": "statues:cat_statue",
+  "criteria": {
+    "fox_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:fox_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.fox_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:fox_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.fox_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "fox_statue"
+    ]
+  ]
+}

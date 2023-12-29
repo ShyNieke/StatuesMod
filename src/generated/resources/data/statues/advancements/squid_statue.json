@@ -1,0 +1,37 @@
+{
+  "parent": "statues:dolphin_statue",
+  "criteria": {
+    "squid_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:squid_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.squid_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:squid_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.squid_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "squid_statue"
+    ]
+  ]
+}

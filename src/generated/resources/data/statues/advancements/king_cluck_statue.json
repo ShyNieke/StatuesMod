@@ -1,0 +1,37 @@
+{
+  "parent": "statues:chicken_statue",
+  "criteria": {
+    "king_cluck_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:king_cluck_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.king_cluck_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": true,
+    "icon": {
+      "item": "statues:king_cluck_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.king_cluck_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "king_cluck_statue"
+    ]
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "statues:info_statue",
+  "criteria": {
+    "bumbo_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:bumbo_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.bumbo_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:bumbo_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.bumbo_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "bumbo_statue"
+    ]
+  ]
+}

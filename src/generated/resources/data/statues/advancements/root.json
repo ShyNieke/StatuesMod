@@ -1,0 +1,31 @@
+{
+  "criteria": {
+    "core": {
+      "conditions": {
+        "block": "minecraft:air"
+      },
+      "trigger": "minecraft:enter_block"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "statues:textures/block/pebble.png",
+    "description": {
+      "translate": "advancement.statues.root.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:statue_core"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancement.statues.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "core"
+    ]
+  ]
+}

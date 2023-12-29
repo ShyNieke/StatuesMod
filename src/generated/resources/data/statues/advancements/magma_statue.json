@@ -1,0 +1,37 @@
+{
+  "parent": "statues:ghast_statue",
+  "criteria": {
+    "magma_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:magma_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.magma_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:magma_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.magma_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "magma_statue"
+    ]
+  ]
+}

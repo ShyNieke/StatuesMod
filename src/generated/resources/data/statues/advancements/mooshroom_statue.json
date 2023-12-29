@@ -1,0 +1,37 @@
+{
+  "parent": "statues:cow_statue",
+  "criteria": {
+    "mooshroom_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:mooshroom_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.mooshroom_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:mooshroom_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.mooshroom_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "mooshroom_statue"
+    ]
+  ]
+}

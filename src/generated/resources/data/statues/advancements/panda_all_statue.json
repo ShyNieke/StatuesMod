@@ -1,0 +1,127 @@
+{
+  "parent": "statues:panda_statue",
+  "criteria": {
+    "panda_angry_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:panda_angry_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "panda_brown_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:panda_brown_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "panda_lazy_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:panda_lazy_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "panda_normal_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:panda_normal_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "panda_playful_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:panda_playful_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "panda_weak_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:panda_weak_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "panda_worried_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:panda_worried_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.panda_all_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "statues:panda_brown_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.panda_all_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "panda_angry_statue"
+    ],
+    [
+      "panda_brown_statue"
+    ],
+    [
+      "panda_lazy_statue"
+    ],
+    [
+      "panda_normal_statue"
+    ],
+    [
+      "panda_playful_statue"
+    ],
+    [
+      "panda_weak_statue"
+    ],
+    [
+      "panda_worried_statue"
+    ]
+  ]
+}

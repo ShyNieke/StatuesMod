@@ -1,0 +1,37 @@
+{
+  "parent": "statues:squid_statue",
+  "criteria": {
+    "turtle_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:turtle_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.turtle_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:turtle_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.turtle_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "turtle_statue"
+    ]
+  ]
+}

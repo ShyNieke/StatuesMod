@@ -1,0 +1,37 @@
+{
+  "parent": "statues:vindicator_statue",
+  "criteria": {
+    "evoker_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:evoker_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.evoker_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:evoker_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.evoker_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "evoker_statue"
+    ]
+  ]
+}
