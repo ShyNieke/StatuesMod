@@ -28,6 +28,7 @@ import com.shynieke.statues.blocks.statues.EndermanStatueBlock;
 import com.shynieke.statues.blocks.statues.EvokerStatueBlock;
 import com.shynieke.statues.blocks.statues.FloodStatueBlock;
 import com.shynieke.statues.blocks.statues.FoxStatueBlock;
+import com.shynieke.statues.blocks.statues.FrogStatueBlock;
 import com.shynieke.statues.blocks.statues.GhastStatueBlock;
 import com.shynieke.statues.blocks.statues.HuskStatueBlock;
 import com.shynieke.statues.blocks.statues.InfoStatueBlock;
@@ -231,6 +232,9 @@ public class StatueRegistry {
 	public static final RegistryObject<Block> AXOLOTL_GOLD_STATUE = registerStatue("axolotl_gold_statue", () -> new AxolotlStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> AXOLOTL_CYAN_STATUE = registerStatue("axolotl_cyan_statue", () -> new AxolotlStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> AXOLOTL_BLUE_STATUE = registerStatue("axolotl_blue_statue", () -> new AxolotlStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> FROG_TEMPERATE_STATUE = registerStatue("frog_temperate_statue", () -> new FrogStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> FROG_WARM_STATUE = registerStatue("frog_warm_statue", () -> new FrogStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final RegistryObject<Block> FROG_COLD_STATUE = registerStatue("frog_cold_statue", () -> new FrogStatueBlock(blockBuilder()), blockItemBuilder());
 
 	public static final RegistryObject<Block> DISPLAY_STAND = registerBlock("display_stand", () -> new DisplayStandBlock(blockBuilder()), blockItemBuilder());
 	public static final RegistryObject<Block> BUMBO_STATUE = registerBlock("bumbo_statue", () -> new BumboStatueBlock(blockBuilder()), blockItemBuilder());
