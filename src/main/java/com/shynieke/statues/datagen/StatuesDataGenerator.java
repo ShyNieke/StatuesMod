@@ -46,10 +46,10 @@ public class StatuesDataGenerator {
 		if (event.includeServer()) {
 			generator.addProvider(event.includeServer(), new StatueLootProvider(generator));
 			generator.addProvider(event.includeServer(), new StatueRecipeProvider(generator));
-			StatueBlockTagProvider blockTags = new StatueBlockTagProvider(generator, event.getExistingFileHelper());
+			StatueBlockTagProvider blockTags = new StatueBlockTagProvider(generator, helper);
 			generator.addProvider(event.includeServer(), blockTags);
-			generator.addProvider(event.includeServer(), new StatueItemTagProvider(generator, blockTags, event.getExistingFileHelper()));
-			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(generator, event.getExistingFileHelper()));
+			generator.addProvider(event.includeServer(), new StatueItemTagProvider(generator, blockTags, helper));
+			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(generator, helper));
 			generator.addProvider(event.includeServer(), new StatueGLMProvider(generator));
 			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(generator));
 
