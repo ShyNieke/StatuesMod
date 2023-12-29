@@ -136,6 +136,11 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addBlock(StatueRegistry.SLABFISH, "Slabfish Statue");
 		addBlock(StatueRegistry.AZZARO, "Azzaro Statue");
 		addBlock(StatueRegistry.ALLAY_STATUE, "Allay Statue");
+		addBlock(StatueRegistry.AXOLOTL_LUCY_STATUE, "Axolotl Statue");
+		addBlock(StatueRegistry.AXOLOTL_WILD_STATUE, "Axolotl Statue");
+		addBlock(StatueRegistry.AXOLOTL_GOLD_STATUE, "Axolotl Statue");
+		addBlock(StatueRegistry.AXOLOTL_CYAN_STATUE, "Axolotl Statue");
+		addBlock(StatueRegistry.AXOLOTL_BLUE_STATUE, "Axolotl Statue");
 
 		addItem(StatueRegistry.NUGGET, "Royal Nugget");
 		addItem(StatueRegistry.SOUP, "Mooshroom Soup");
@@ -332,6 +337,8 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addAdvancement("ghast_statue", "The squids from the nether", "Obtain a Ghast Statue");
 		addAdvancement("magma_statue", "Boiled Slimes", "Obtain a Magma Cube Statue");
 		addAdvancement("allay_statue", "Your Allay", "Obtain an allay Statue");
+		addAdvancement("axolotl_statue", "Water kitten", "Collect any Axolotl Statue");
+		addAdvancement("axolotl_all_statue", "Critically endangered", "Collect all Axolotl Statues");
 	}
 
 	/**

@@ -86,6 +86,19 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 					StatueRegistry.TROPICAL_FISH_E, StatueRegistry.TROPICAL_FISH_ES, StatueRegistry.TROPICAL_FISH_HB,
 					StatueRegistry.TROPICAL_FISH_SB, StatueRegistry.TROPICAL_FISH_SD, StatueRegistry.TROPICAL_FISH_SS
 			);
+			AdvancementHolder axolotl = onHoldAnyBlock(consumer, StatueRegistry.AXOLOTL_LUCY_STATUE, FrameType.TASK, false,
+					salmon, "axolotl_statue", RequirementsStrategy.OR,
+					StatueRegistry.AXOLOTL_LUCY_STATUE, StatueRegistry.AXOLOTL_WILD_STATUE,
+					StatueRegistry.AXOLOTL_GOLD_STATUE, StatueRegistry.AXOLOTL_CYAN_STATUE,
+					StatueRegistry.AXOLOTL_BLUE_STATUE
+			);
+			AdvancementHolder axolotlAll = onHoldAnyBlock(consumer, StatueRegistry.AXOLOTL_GOLD_STATUE, FrameType.GOAL, false,
+					axolotl, "axolotl_all_statue", RequirementsStrategy.AND,
+					StatueRegistry.AXOLOTL_LUCY_STATUE, StatueRegistry.AXOLOTL_WILD_STATUE,
+					StatueRegistry.AXOLOTL_GOLD_STATUE, StatueRegistry.AXOLOTL_CYAN_STATUE,
+					StatueRegistry.AXOLOTL_BLUE_STATUE
+			);
+
 			AdvancementHolder pufferSmall = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_SMALL_STATUE, salmon);
 			AdvancementHolder pufferMedium = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_MEDIUM_STATUE, pufferSmall);
 			AdvancementHolder puffer = onHoldBlock(consumer, StatueRegistry.PUFFERFISH_STATUE, pufferMedium);
