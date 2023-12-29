@@ -1,0 +1,18 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:allay_statue"
+  },
+  "result1": {
+    "item": "minecraft:light_blue_dye"
+  },
+  "result1Chance": 1.0,
+  "result2": {
+    "item": "minecraft:light_blue_dye"
+  },
+  "result2Chance": 0.5,
+  "result3": {
+    "item": "minecraft:light_blue_dye"
+  },
+  "result3Chance": 0.1
+}

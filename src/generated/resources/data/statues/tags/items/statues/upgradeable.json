@@ -100,6 +100,16 @@
     "statues:vindicator_statue",
     "statues:wasteland_statue",
     "statues:witch_statue",
-    "statues:zombie_statue"
+    "statues:zombie_statue",
+    "statues:allay_statue",
+    "statues:axolotl_lucy_statue",
+    "statues:axolotl_wild_statue",
+    "statues:axolotl_gold_statue",
+    "statues:axolotl_cyan_statue",
+    "statues:axolotl_blue_statue",
+    "statues:frog_temperate_statue",
+    "statues:frog_warm_statue",
+    "statues:frog_cold_statue",
+    "statues:warden_statue"
   ]
 }

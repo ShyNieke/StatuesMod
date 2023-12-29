@@ -1,0 +1,38 @@
+{
+  "parent": "statues:cow_statue",
+  "criteria": {
+    "allay_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:allay_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.allay_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:allay_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.allay_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "allay_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
