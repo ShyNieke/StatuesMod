@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "tadpole_statue",
-		"particle": "tadpole_statue"
+		"0": "statues:block/tadpole_statue",
+		"particle": "statues:block/tadpole_statue"
 	},
 	"elements": [
 		{
