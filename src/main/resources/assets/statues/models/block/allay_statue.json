@@ -1,8 +1,8 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "allay_statue",
-		"particle": "allay_statue"
+		"0": "statues:block/allay_statue",
+		"particle": "statues:block/allay_statue"
 	},
 	"elements": [
 		{
