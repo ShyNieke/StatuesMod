@@ -36,11 +36,12 @@ public class StatueBatEntity extends Bat {
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+		SpawnGroupData data = super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn, dataTag);
 		int random = getRandom().nextInt(10);
 		if (random < 5) {
 			addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2000 * 20, 2, true, false));
 		}
-		return super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn, dataTag);
+		return data;
 	}
 
 	@Override
