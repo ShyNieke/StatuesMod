@@ -181,15 +181,15 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 					StatueRegistry.RABBIT_BR_STATUE, StatueRegistry.RABBIT_BS_STATUE, StatueRegistry.RABBIT_BW_STATUE,
 					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
 			);
-			Advancement rabbit = onHoldAnyBlock(consumer, StatueRegistry.RABBIT_BR_STATUE, FrameType.TASK, false,
-					foxSnow, "rabbit_statue", RequirementsStrategy.OR,
-					StatueRegistry.RABBIT_BR_STATUE, StatueRegistry.RABBIT_BS_STATUE, StatueRegistry.RABBIT_BW_STATUE,
-					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
+			Advancement frog = onHoldAnyBlock(consumer, StatueRegistry.FROG_TEMPERATE_STATUE, FrameType.TASK, false,
+					root, "frog_statue", RequirementsStrategy.OR,
+					StatueRegistry.FROG_TEMPERATE_STATUE, StatueRegistry.FROG_WARM_STATUE, StatueRegistry.FROG_COLD_STATUE
 			);
-			Advancement rabbitAll = killerCollection(consumer, StatueRegistry.RABBIT_WH_STATUE, rabbit, "rabbit_all_statue",
-					StatueRegistry.RABBIT_BR_STATUE, StatueRegistry.RABBIT_BS_STATUE, StatueRegistry.RABBIT_BW_STATUE,
-					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
+			Advancement frogAll = onHoldAnyBlock(consumer, StatueRegistry.FROG_COLD_STATUE, FrameType.GOAL, false,
+					frog, "frog_all_statue", RequirementsStrategy.AND,
+					StatueRegistry.FROG_TEMPERATE_STATUE, StatueRegistry.FROG_WARM_STATUE, StatueRegistry.FROG_COLD_STATUE
 			);
+			Advancement tadpole = onHoldBlock(consumer, StatueRegistry.TADPOLE_STATUE, frog);
 
 			AdvancementHolder blaze = onHoldBlock(consumer, StatueRegistry.BLAZE_STATUE, root);
 			AdvancementHolder ghast = onHoldBlock(consumer, StatueRegistry.GHAST_STATUE, blaze);
