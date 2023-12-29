@@ -141,6 +141,9 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addBlock(StatueRegistry.AXOLOTL_GOLD_STATUE, "Axolotl Statue");
 		addBlock(StatueRegistry.AXOLOTL_CYAN_STATUE, "Axolotl Statue");
 		addBlock(StatueRegistry.AXOLOTL_BLUE_STATUE, "Axolotl Statue");
+		addBlock(StatueRegistry.FROG_TEMPERATE_STATUE, "Frog Statue");
+		addBlock(StatueRegistry.FROG_WARM_STATUE, "Frog Statue");
+		addBlock(StatueRegistry.FROG_COLD_STATUE, "Frog Statue");
 
 		addItem(StatueRegistry.NUGGET, "Royal Nugget");
 		addItem(StatueRegistry.SOUP, "Mooshroom Soup");
@@ -339,6 +342,8 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addAdvancement("allay_statue", "Your Allay", "Obtain an allay Statue");
 		addAdvancement("axolotl_statue", "Water kitten", "Collect any Axolotl Statue");
 		addAdvancement("axolotl_all_statue", "Critically endangered", "Collect all Axolotl Statues");
+		addAdvancement("frog_statue", "Ribbiting experience", "Collect any Frog Statue");
+		addAdvancement("frog_all_statue", "Combining our powers for reals", "Collect all Frog Statues");
 	}
 
 	/**

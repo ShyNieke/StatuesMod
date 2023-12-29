@@ -181,6 +181,15 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 					StatueRegistry.RABBIT_BR_STATUE, StatueRegistry.RABBIT_BS_STATUE, StatueRegistry.RABBIT_BW_STATUE,
 					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
 			);
+			Advancement rabbit = onHoldAnyBlock(consumer, StatueRegistry.RABBIT_BR_STATUE, FrameType.TASK, false,
+					foxSnow, "rabbit_statue", RequirementsStrategy.OR,
+					StatueRegistry.RABBIT_BR_STATUE, StatueRegistry.RABBIT_BS_STATUE, StatueRegistry.RABBIT_BW_STATUE,
+					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
+			);
+			Advancement rabbitAll = killerCollection(consumer, StatueRegistry.RABBIT_WH_STATUE, rabbit, "rabbit_all_statue",
+					StatueRegistry.RABBIT_BR_STATUE, StatueRegistry.RABBIT_BS_STATUE, StatueRegistry.RABBIT_BW_STATUE,
+					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
+			);
 
 			AdvancementHolder blaze = onHoldBlock(consumer, StatueRegistry.BLAZE_STATUE, root);
 			AdvancementHolder ghast = onHoldBlock(consumer, StatueRegistry.GHAST_STATUE, blaze);
