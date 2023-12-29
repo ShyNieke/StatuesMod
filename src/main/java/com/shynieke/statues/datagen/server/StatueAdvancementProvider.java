@@ -148,6 +148,16 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 				StatueRegistry.CAT_RED_STATUE, StatueRegistry.CAT_SIAMESE_STATUE, StatueRegistry.CAT_TABBY_STATUE,
 				StatueRegistry.CAT_TUXEDO_STATUE, StatueRegistry.CAT_WHITE_STATUE
 		);
+
+		Advancement frog = onHoldAnyBlock(consumer, StatueRegistry.FROG_TEMPERATE_STATUE, FrameType.TASK, false,
+				root, "frog_statue", RequirementsStrategy.OR,
+				StatueRegistry.FROG_TEMPERATE_STATUE, StatueRegistry.FROG_WARM_STATUE, StatueRegistry.FROG_COLD_STATUE
+		);
+		Advancement frogAll = onHoldAnyBlock(consumer, StatueRegistry.FROG_COLD_STATUE, FrameType.GOAL, false,
+				frog, "frog_all_statue", RequirementsStrategy.AND,
+				StatueRegistry.FROG_TEMPERATE_STATUE, StatueRegistry.FROG_WARM_STATUE, StatueRegistry.FROG_COLD_STATUE
+		);
+
 		Advancement fox = onHoldBlock(consumer, StatueRegistry.FOX_STATUE, cat);
 		Advancement foxSnow = onHoldBlock(consumer, StatueRegistry.FOX_SNOW_STATUE, fox);
 		Advancement panda = onHoldAnyBlock(consumer, StatueRegistry.PANDA_LAZY_STATUE, FrameType.TASK, false,

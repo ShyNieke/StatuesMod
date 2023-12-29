@@ -192,6 +192,12 @@ public class StatueRecipeProvider extends RecipeProvider {
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.AXOLOTL_GOLD_STATUE.get())).result1(Items.TROPICAL_FISH).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.AXOLOTL_CYAN_STATUE.get())).result1(Items.TROPICAL_FISH).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.AXOLOTL_BLUE_STATUE.get())).result1(Items.TROPICAL_FISH).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.FROG_TEMPERATE_STATUE.get()))
+				.result1(Items.SLIME_BALL).result3(Items.OCHRE_FROGLIGHT).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.FROG_WARM_STATUE.get()))
+				.result1(Items.SLIME_BALL).result3(Items.PEARLESCENT_FROGLIGHT).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.FROG_COLD_STATUE.get()))
+				.result1(Items.SLIME_BALL).result3(Items.VERDANT_FROGLIGHT).build(consumer);
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), new ArrayList<>())
 				.requiresCore().upgradeType(UpgradeType.UPGRADE).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/statue_upgrade"));
