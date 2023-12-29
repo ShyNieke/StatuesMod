@@ -68,7 +68,7 @@ public class UpgradeHelper {
 		MutableComponent mutablecomponent = Component.translatable(descriptionID).withStyle(ChatFormatting.GRAY);
 
 		if (level > 0) {
-			mutablecomponent.append(" ").append(Component.translatable("statues.upgrade.level." + level));
+			mutablecomponent.append(" ").append(Component.translatable("enchantment.level." + level));
 		}
 
 		return mutablecomponent;
