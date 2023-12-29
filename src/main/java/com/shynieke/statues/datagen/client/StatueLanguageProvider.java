@@ -144,6 +144,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addBlock(StatueRegistry.FROG_WARM_STATUE, "Frog Statue");
 		addBlock(StatueRegistry.FROG_COLD_STATUE, "Frog Statue");
 		addBlock(StatueRegistry.TADPOLE_STATUE, "Tadpole Statue");
+		addBlock(StatueRegistry.WARDEN_STATUE, "Warden Statue");
 
 		addItem(StatueRegistry.NUGGET, "Royal Nugget");
 		addItem(StatueRegistry.SOUP, "Mooshroom Soup");
@@ -345,6 +346,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addAdvancement("frog_statue", "Ribbiting experience", "Collect any Frog Statue");
 		addAdvancement("frog_all_statue", "Combining our powers for reals", "Collect all Frog Statues");
 		addAdvancement("tadpole_statue", "Frogn't", "Obtain a Tadpole Statue");
+		addAdvancement("warden_statue", "You've been Awardend", "Obtain a Warden Statue");
 	}
 
 	/**

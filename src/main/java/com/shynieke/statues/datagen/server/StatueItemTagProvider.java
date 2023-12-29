@@ -72,7 +72,7 @@ public class StatueItemTagProvider extends ItemTagsProvider {
 				StatueRegistry.AXOLOTL_WILD_STATUE.get().asItem(), StatueRegistry.AXOLOTL_GOLD_STATUE.get().asItem(),
 				StatueRegistry.AXOLOTL_CYAN_STATUE.get().asItem(), StatueRegistry.AXOLOTL_BLUE_STATUE.get().asItem(),
 				StatueRegistry.FROG_TEMPERATE_STATUE.get().asItem(), StatueRegistry.FROG_WARM_STATUE.get().asItem(),
-				StatueRegistry.FROG_COLD_STATUE.get().asItem());
+				StatueRegistry.FROG_COLD_STATUE.get().asItem(), StatueRegistry.WARDEN_STATUE.get().asItem());
 
 		this.tag(StatueTags.STATUE_INTERACTABLE).add(StatueRegistry.FLOOD_STATUE.get().asItem(), StatueRegistry.MOOSHROOM_STATUE.get().asItem(),
 				StatueRegistry.BROWN_MOOSHROOM_STATUE.get().asItem(), StatueRegistry.COW_STATUE.get().asItem(), StatueRegistry.SPIDER_STATUE.get().asItem(),
