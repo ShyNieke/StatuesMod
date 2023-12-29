@@ -187,6 +187,8 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.result1(Items.BEEF).result2(Items.BROWN_MUSHROOM).result3(Items.BROWN_MUSHROOM_BLOCK).build(consumer);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.VINDICATOR_STATUE.get()))
 				.result2(Items.EMERALD).build(consumer);
+		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.ALLAY_STATUE.get()))
+				.result1(Items.LIGHT_BLUE_DYE).result2(Items.LIGHT_BLUE_DYE).result3(Items.LIGHT_BLUE_DYE).build(consumer);
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), new ArrayList<>())
 				.requiresCore().upgradeType(UpgradeType.UPGRADE).build(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/statue_upgrade"));

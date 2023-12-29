@@ -135,6 +135,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addBlock(StatueRegistry.EAGLE_RAY, "Eagle Ray Statue");
 		addBlock(StatueRegistry.SLABFISH, "Slabfish Statue");
 		addBlock(StatueRegistry.AZZARO, "Azzaro Statue");
+		addBlock(StatueRegistry.ALLAY_STATUE, "Allay Statue");
 
 		addItem(StatueRegistry.NUGGET, "Royal Nugget");
 		addItem(StatueRegistry.SOUP, "Mooshroom Soup");
@@ -330,7 +331,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addAdvancement("blaze_statue", "Retrieved from fire", "Obtain a Blaze Statue");
 		addAdvancement("ghast_statue", "The squids from the nether", "Obtain a Ghast Statue");
 		addAdvancement("magma_statue", "Boiled Slimes", "Obtain a Magma Cube Statue");
-
+		addAdvancement("allay_statue", "Your Allay", "Obtain an allay Statue");
 	}
 
 	/**
