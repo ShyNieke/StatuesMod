@@ -1,5 +1,11 @@
-// 1.19.2	2023-04-06T16:20:31.8203187	LootTables
+// 1.19.2	2023-12-29T17:19:42.0616129	LootTables
+a54b958176617edf07f5341843ff44e5c514ccc3 data/statues/loot_tables/blocks/allay_statue.json
 90fe06cbba2e8031adf175009b74d6be9eafe93e data/statues/loot_tables/blocks/angry_bee_statue.json
+165b1c7558d17eb5b92eacbe468e88261af3f140 data/statues/loot_tables/blocks/axolotl_blue_statue.json
+c8d84b04fab1a064e0af385fabd8b61d93f9749a data/statues/loot_tables/blocks/axolotl_cyan_statue.json
+1bb76683f2d3cd8e346950286f7286051275553b data/statues/loot_tables/blocks/axolotl_gold_statue.json
+47df4e6d314b106abd1941b5ad5f5d307b63aaac data/statues/loot_tables/blocks/axolotl_lucy_statue.json
+1e8dcacf54780bd2b860a281f14a8600a31bfee4 data/statues/loot_tables/blocks/axolotl_wild_statue.json
 32ed19c63cb9a7e625fc23a62a9a4ba847d4ae17 data/statues/loot_tables/blocks/azzaro.json
 58fedd2b331d61c20e53b85a30b5e4d7a8548160 data/statues/loot_tables/blocks/baby_zombie_statue.json
 ca9545da4f72550b8ff14f1aaca8567402e1e421 data/statues/loot_tables/blocks/bee_statue.json
@@ -35,6 +41,9 @@ abf0146cef616d7810a5ae174d6eee7ca9afc677 data/statues/loot_tables/blocks/enderma
 ef0e0835f4b6c2a8e16743145aa47ce2df621bda data/statues/loot_tables/blocks/flood_statue.json
 ed8cf8438cb32577c5d2eb356144876e2562d1b2 data/statues/loot_tables/blocks/fox_snow_statue.json
 e569dc37ab1a71e9685969f0f3394f3f4ca098a8 data/statues/loot_tables/blocks/fox_statue.json
+4482ba254759f376d83863a82ed7ac90af41f668 data/statues/loot_tables/blocks/frog_cold_statue.json
+d0de08a92520c2b4dc227f2eaddde9b70637e663 data/statues/loot_tables/blocks/frog_temperate_statue.json
+b09e039364b39f5c1cf899ba5edbeb051a726445 data/statues/loot_tables/blocks/frog_warm_statue.json
 5b7dce1b213218dc61a4c0b4c9225be6c6f0573f data/statues/loot_tables/blocks/ghast_statue.json
 9957815cc02369f951c6c855704755eb040d9920 data/statues/loot_tables/blocks/guardian_statue.json
 864197951679ecdf4adcd50f594df51bb2fbbff7 data/statues/loot_tables/blocks/husk_statue.json
@@ -89,6 +98,7 @@ ef51f8fed7b787668fc638d8d989c7ff9a7fc3a0 data/statues/loot_tables/blocks/sombrer
 4b28c542a8cb9b14d79dfab4c82a5c09b63e264c data/statues/loot_tables/blocks/spider_statue.json
 49b1eb51890c89c47c1b0514943c6267677c4db6 data/statues/loot_tables/blocks/squid_statue.json
 14faf91999c8d3776cdc24429dbc3698bf3f3984 data/statues/loot_tables/blocks/statue_table.json
+78f423246a6274c527a48ad3ae2a275a09144dda data/statues/loot_tables/blocks/tadpole_statue.json
 0ae1fd1423c7f9b8fecdaa0aa76dd599777ebc88 data/statues/loot_tables/blocks/totem_of_undying_statue.json
 331f6fad3f5d785618538d31f97e4e4dde30ae09 data/statues/loot_tables/blocks/trans_bee_statue.json
 7ccd2867ceb4638c69c70a156901e096428ea95c data/statues/loot_tables/blocks/tropibee.json
@@ -110,6 +120,7 @@ c5a4b52ba3e0bf16cbc4331c8ddbb3a0e1234fe8 data/statues/loot_tables/blocks/village
 5a39078698c4a0d2cd0d8d157c9d92b2d5dc8e24 data/statues/loot_tables/blocks/villager_pu_statue.json
 0d3d53cadd8c0d0aaab4897c73b7f4e7cd37c641 data/statues/loot_tables/blocks/villager_wh_statue.json
 7d60af9355a290fbff746e170afd949792758c1b data/statues/loot_tables/blocks/vindicator_statue.json
+b929e088dd907e17d7ced2406257bc0b7f4ae574 data/statues/loot_tables/blocks/warden_statue.json
 bbd83fd8ba7cdb9db333a11dff8c0c40c4661265 data/statues/loot_tables/blocks/wasteland_statue.json
 f92f46e425254524b8b6a25219a03cff8cd39e7b data/statues/loot_tables/blocks/witch_statue.json
 ec52187ff3b6b83e29006c742a3285594d964a8c data/statues/loot_tables/blocks/zombie_statue.json

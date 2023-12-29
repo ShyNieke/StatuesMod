@@ -1,6 +1,12 @@
-// 1.19.2	2023-04-25T14:02:53.1041793	Recipes
+// 1.19.2	2023-12-29T17:19:42.0631141	Recipes
 28e80424f62a15d0cbd7d55cbc22050a9eca0ddb data/statues/recipes/display_stand_from_quartz_block_stonecutting.json
 1baafd38bc5544c8a883973e168fe929e0bdcf18 data/statues/recipes/info_statue.json
+33402c71eb58a334b22134db4c7bf41938fb82fb data/statues/recipes/loot/allay_statue.json
+d7b9c3c28038d4fc541f2f51bad912ac3cf9edf6 data/statues/recipes/loot/axolotl_blue_statue.json
+2647b6b0ea1e26100be22f8562127511bce6699f data/statues/recipes/loot/axolotl_cyan_statue.json
+caf7ba9cdc04852c6a30e6a65485e14d8561c06f data/statues/recipes/loot/axolotl_gold_statue.json
+7d7b3fd94048f5872212dadf8aa588b669ecca48 data/statues/recipes/loot/axolotl_lucy_statue.json
+c3216d828957d2229f63c9fcc7ed214491b60b0b data/statues/recipes/loot/axolotl_wild_statue.json
 f291cdd7cfc9f72c7302a3f0577f65094f2bc4ea data/statues/recipes/loot/baby_zombie_statue.json
 ef87450757e21bddeeb650ef6e3ef36d2454b5bb data/statues/recipes/loot/bee_statue.json
 df6875ca73f4488fae5cd3bac7196d20291494c6 data/statues/recipes/loot/blaze_statue.json
@@ -19,6 +25,9 @@ bf4297cdbb86e37655612f002e25fd6ff1d1418a data/statues/recipes/loot/enderman_stat
 8b31c6b23f07ba603f68cb29d01e8ae67f07e2b5 data/statues/recipes/loot/evoker_statue.json
 2d1d58bcc482badbc0e97e14dde4b3a4c8c3e474 data/statues/recipes/loot/flood_statue.json
 fbbac22bb2357ab7a9f715c7f3f37d15caea0bcb data/statues/recipes/loot/fox_statue.json
+800d49a5e448fe8e1da4a644696f96b40730700e data/statues/recipes/loot/frog_cold_statue.json
+143c6eaf74e67dae7fe9053c8ac0847b21b6a259 data/statues/recipes/loot/frog_temperate_statue.json
+4689c14723a0aec48391e4bdd4c161c70e1a80a2 data/statues/recipes/loot/frog_warm_statue.json
 ceb952371f3655618dfe71e80bc631fd55c7568b data/statues/recipes/loot/ghast_statue.json
 dd38396222f5d4ab02d54096c26dd85543dbe525 data/statues/recipes/loot/guardian_statue.json
 7fa994aa35f446d70c0fc7c22109aea2576226ce data/statues/recipes/loot/husk_statue.json
@@ -58,6 +67,7 @@ d431bab8fe301c90fb7d6ff70b2351c3ff95644a data/statues/recipes/loot/tropical_fish
 202df364db709166abb4fc7f2f308e552f493485 data/statues/recipes/loot/turtle_statue.json
 547521b54e31ca63663d7a0c940c9e972abaef90 data/statues/recipes/loot/villager_statue.json
 2f9967d49dad2b862a2483bb801f2831dc012a8e data/statues/recipes/loot/vindicator_statue.json
+8463989beb70c38921aa92105a205327bb24a3b3 data/statues/recipes/loot/warden_statue.json
 b76de5f88f36180b4ef05f494a84173fccc88a34 data/statues/recipes/loot/wasteland_statue.json
 8b46cc9c70a84aff4a9b4d9412a931e7a54a3137 data/statues/recipes/loot/witch_statue.json
 9539ad570a77fa8b1546ba1e32636b47b7ea4580 data/statues/recipes/loot/zombie_statue.json

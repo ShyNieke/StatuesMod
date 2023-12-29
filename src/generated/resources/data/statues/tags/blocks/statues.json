@@ -109,6 +109,17 @@
     "statues:tropibee",
     "statues:eagle_ray",
     "statues:slabfish",
-    "statues:azzaro"
+    "statues:azzaro",
+    "statues:allay_statue",
+    "statues:axolotl_lucy_statue",
+    "statues:axolotl_wild_statue",
+    "statues:axolotl_gold_statue",
+    "statues:axolotl_cyan_statue",
+    "statues:axolotl_blue_statue",
+    "statues:frog_temperate_statue",
+    "statues:frog_warm_statue",
+    "statues:frog_cold_statue",
+    "statues:tadpole_statue",
+    "statues:warden_statue"
   ]
 }

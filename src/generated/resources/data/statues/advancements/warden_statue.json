@@ -1,0 +1,37 @@
+{
+  "parent": "statues:root",
+  "criteria": {
+    "warden_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:warden_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.warden_statue.desc"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "statues:warden_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.warden_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "warden_statue"
+    ]
+  ]
+}
