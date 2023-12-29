@@ -268,14 +268,100 @@ public class StatueLanguageProvider extends LanguageProvider {
 		add("statues.modeltype.SLIM", "Slim");
 		add("statues.playerstatue.gui.label.model_type", "Model Type");
 		add("statues.playerstatue.gui.label.position", "Position");
+
+		addAdvancement("root", "Statues", "Killing a mob may sometimes drop a smaller one");
+		addAdvancement("player_statue", "A statue of a friend or foe", "Obtain a Player Statue by having to respawn thanks to a player");
+		addAdvancement("elder_guardian_statue", "Slaying the elders of the monuments", "Obtain a Elder Guardian Statue");
+		addAdvancement("ravager_statue", "Ravaging through the statues", "Obtain a Ravager Statue");
+		addAdvancement("zombie_statue", "Just wants to nibble on your brains", "Obtain a Zombie Statue");
+		addAdvancement("baby_zombie_statue", "Baby undead", "Obtain a Baby Zombie Statue");
+		addAdvancement("flood_statue", "Let the flood happen", "You found the way to create Docm77's secret statue");
+		addAdvancement("husk_statue", "Letting a zombie dry up in the sun... would be funny if that worked", "Obtain a Husk Statue");
+		addAdvancement("creeper_statue", "It won't blow up this time", "Obtain a Creeper Statue");
+		addAdvancement("spider_statue", "BURN IT WITH FIRE!", "Obtain a Spider Statue");
+		addAdvancement("slime_statue", "You found a Slime chunk!", "Obtain a Slime Statue");
+		addAdvancement("drowned_statue", "Drowning a zombie statue does not work", "Obtain a Drowned Statue");
+		addAdvancement("guardian_statue", "Slaying the protectors of the ocean", "Obtain a Guardian Statue");
+		addAdvancement("campfire_statue", "Created blue fire, the old fashioned way", "Obtain Etho's secret statue");
+		addAdvancement("pig_statue", "You pigged up a Statue", "Obtain a Pig Statue");
+		addAdvancement("wasteland_statue", "Riding the pigs!", "You found Xisuma's secret statue");
+		addAdvancement("statue_table", "S.T.A.T.U.E", "Wait you can upgrade statues?!");
+		addAdvancement("display_stand", "A fancy way to display statues and more!", "You cut the Nether Quartz in just the right pieces");
+		addAdvancement("info_statue", "Question about Statues? just right click me", "Crafted an Informative Statue");
+		addAdvancement("bumbo_statue", "Bumbo's legacy", "Put a hat on a cactus");
+		addAdvancement("witch_statue", "Bewitched!", "Obtain a Witch Statue");
+		addAdvancement("pillager_statue", "Crossbow Included", "Obtain a Pillager Statue");
+		addAdvancement("vindicator_statue", "Can I axe you a question", "Obtain a Vindicator Statue");
+		addAdvancement("evoker_statue", "Wooolooolooo", "Obtain an Evoker Statue");
+		addAdvancement("enderman_statue", "It won't teleport around... or at least it should not", "Obtain an Enderman Statue");
+		addAdvancement("endermite_statue", "That pearl was in fact infected", "Obtain an Endermite Statue");
+		addAdvancement("shulker_statue", "Relocating the City citizen", "Obtain a Shulker Statue");
+		addAdvancement("cod_statue", "There are more fish in the sea", "Obtain a Cod Statue");
+		addAdvancement("dolphin_statue", "A playful friend", "Obtain a Dolhpin Statue");
+		addAdvancement("pufferfish_small_statue", "It is so Smoll protect it all cost!", "Obtain the smallest Pufferfish Statue");
+		addAdvancement("pufferfish_medium_statue", "Don't scare it", "Obtain a slightly bloated Pufferfish Statue");
+		addAdvancement("pufferfish_statue", "You scared it!", "Obtain a bloated Pufferfish Statue");
+		addAdvancement("salmon_statue", "Going upstream!", "Obtain a Salmon Statue");
+		addAdvancement("squid_statue", "Release the kraken!", "Obtain a Squid Statue");
+		addAdvancement("turtle_statue", "Does it live in a sewer?", "Obtain a Turtle Statue");
+		addAdvancement("tropical_fish_statue", "Tropical Fish statue", "Obtain any Tropical Fish Statue");
+		addAdvancement("tropical_fish_all_statue", "Extinction of the Coral Reef", "Obtain all Tropical Fish Statue");
+		addAdvancement("cow_statue", "This one is amoozing", "Obtain a Cow Statue");
+		addAdvancement("mooshroom_statue", "Poisonous cows?", "Obtain a Red Mooshroom Statue");
+		addAdvancement("brown_mooshroom_statue", "Fungi Cows?", "Obtain a Brown Mooshroom Statue");
+		addAdvancement("sheep_statue", "Sheep Statue", "Obtain any Sheep Statue");
+		addAdvancement("sheep_all_statue", "Herding Sheep", "Obtain all Sheep Statue");
+		addAdvancement("snow_golem_statue", "Do you want to kill a Snow Man", "Obtain a Snow Man Statue");
+		addAdvancement("chicken_statue", "Clearly the chicken came first, there is no egg statue", "Obtain a Chicken Statue");
+		addAdvancement("king_cluck_statue", "A royal chicken, who would have thought", "You managed to make a chicken royal!");
+		addAdvancement("chicken_jockey_statue", "Zombie loves chicken", "You successfully created a Chicken Jockey");
+		addAdvancement("cat_statue", "A purrfect catch", "Collect any Cat Statue");
+		addAdvancement("cat_all_statue", "Catastopic collection", "Collect all Cat Statues");
+		addAdvancement("rabbit_statue", "Rabbit statue", "Collect any Rabbit Statue");
+		addAdvancement("rabbit_all_statue", "Just Caerbannog missing", "Collect all Rabbit Statues");
+		addAdvancement("panda_statue", "Nanananana pandaaaaa", "Collect any Panda Statue");
+		addAdvancement("panda_all_statue", "Extinction of the bamboo", "Collect all Panda Statues");
+		addAdvancement("fox_statue", "Burning it would make it a firefox right?", "Obtain a Fox Statue");
+		addAdvancement("fox_snow_statue", "Snow fox given", "Obtain a Snow Fox Statue");
+		addAdvancement("bee_statue", "What is all the buzz about", "Obtain a Bee Statue");
+		addAdvancement("trans_bee_statue", "Just bee you!", "TRANS RIGHTS ARE HUMAN RIGHTS!");
+		addAdvancement("angry_bee_statue", "This one must sting!", "Obtain an Angry Bee Statue");
+		addAdvancement("blaze_statue", "Retrieved from fire", "Obtain a Blaze Statue");
+		addAdvancement("ghast_statue", "The squids from the nether", "Obtain a Ghast Statue");
+		addAdvancement("magma_statue", "Boiled Slimes", "Obtain a Magma Cube Statue");
 	}
 
-	public void addSubtitle(RegistryObject<SoundEvent> sound, String name) {
-		this.addSubtitle(sound.get(), name);
+	/**
+	 * Add a subtitle to a sound event
+	 *
+	 * @param sound The sound event
+	 * @param text  The subtitle text
+	 */
+	public void addSubtitle(RegistryObject<SoundEvent> sound, String text) {
+		this.addSubtitle(sound.get(), text);
 	}
 
-	public void addSubtitle(SoundEvent sound, String name) {
+	/**
+	 * Add a subtitle to a sound event
+	 *
+	 * @param sound The sound event registry object
+	 * @param text  The subtitle text
+	 */
+	public void addSubtitle(SoundEvent sound, String text) {
 		String path = Reference.MOD_ID + ".subtitle." + sound.getLocation().getPath();
-		this.add(path, name);
+		this.add(path, text);
+	}
+
+	/**
+	 * Add the translation of an advancement
+	 *
+	 * @param id          The advancement id
+	 * @param name        The name of the advancement
+	 * @param description The description of the advancement
+	 */
+	private void addAdvancement(String id, String name, String description) {
+		String prefix = "advancement.statues.";
+		add(prefix + id + ".title", name);
+		add(prefix + id + ".desc", description);
 	}
 }

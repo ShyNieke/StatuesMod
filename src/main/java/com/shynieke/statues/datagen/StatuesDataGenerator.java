@@ -7,6 +7,7 @@ import com.shynieke.statues.datagen.client.StatueBlockstateProvider;
 import com.shynieke.statues.datagen.client.StatueItemModelProvider;
 import com.shynieke.statues.datagen.client.StatueLanguageProvider;
 import com.shynieke.statues.datagen.client.StatueSoundProvider;
+import com.shynieke.statues.datagen.server.StatueAdvancementProvider;
 import com.shynieke.statues.datagen.server.StatueBiomeTagProvider;
 import com.shynieke.statues.datagen.server.StatueBlockTagProvider;
 import com.shynieke.statues.datagen.server.StatueGLMProvider;
@@ -52,6 +53,7 @@ public class StatuesDataGenerator {
 			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(generator, helper));
 			generator.addProvider(event.includeServer(), new StatueGLMProvider(generator));
 			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(generator));
+			generator.addProvider(event.includeServer(), new StatueAdvancementProvider(generator, helper));
 
 			final HolderSet.Named<Biome> spawnBiomesTag = new HolderSet.Named<>(ops.registry(Registry.BIOME_REGISTRY).get(), StatueTags.CAN_SPAWN_STATUE_BAT);
 			final BiomeModifier addSpawn = AddSpawnsBiomeModifier.singleSpawn(
