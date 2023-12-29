@@ -87,13 +87,13 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 					StatueRegistry.TROPICAL_FISH_SB, StatueRegistry.TROPICAL_FISH_SD, StatueRegistry.TROPICAL_FISH_SS
 			);
 			AdvancementHolder axolotl = onHoldAnyBlock(consumer, StatueRegistry.AXOLOTL_LUCY_STATUE, FrameType.TASK, false,
-					salmon, "axolotl_statue", RequirementsStrategy.OR,
+					salmon, "axolotl_statue", AdvancementRequirements.Strategy.OR,
 					StatueRegistry.AXOLOTL_LUCY_STATUE, StatueRegistry.AXOLOTL_WILD_STATUE,
 					StatueRegistry.AXOLOTL_GOLD_STATUE, StatueRegistry.AXOLOTL_CYAN_STATUE,
 					StatueRegistry.AXOLOTL_BLUE_STATUE
 			);
 			AdvancementHolder axolotlAll = onHoldAnyBlock(consumer, StatueRegistry.AXOLOTL_GOLD_STATUE, FrameType.GOAL, false,
-					axolotl, "axolotl_all_statue", RequirementsStrategy.AND,
+					axolotl, "axolotl_all_statue", AdvancementRequirements.Strategy.AND,
 					StatueRegistry.AXOLOTL_LUCY_STATUE, StatueRegistry.AXOLOTL_WILD_STATUE,
 					StatueRegistry.AXOLOTL_GOLD_STATUE, StatueRegistry.AXOLOTL_CYAN_STATUE,
 					StatueRegistry.AXOLOTL_BLUE_STATUE
@@ -182,11 +182,11 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 					StatueRegistry.RABBIT_GO_STATUE, StatueRegistry.RABBIT_WH_STATUE, StatueRegistry.RABBIT_WS_STATUE
 			);
 			AdvancementHolder frog = onHoldAnyBlock(consumer, StatueRegistry.FROG_TEMPERATE_STATUE, FrameType.TASK, false,
-					root, "frog_statue", RequirementsStrategy.OR,
+					root, "frog_statue", AdvancementRequirements.Strategy.OR,
 					StatueRegistry.FROG_TEMPERATE_STATUE, StatueRegistry.FROG_WARM_STATUE, StatueRegistry.FROG_COLD_STATUE
 			);
 			AdvancementHolder frogAll = onHoldAnyBlock(consumer, StatueRegistry.FROG_COLD_STATUE, FrameType.GOAL, false,
-					frog, "frog_all_statue", RequirementsStrategy.AND,
+					frog, "frog_all_statue", AdvancementRequirements.Strategy.AND,
 					StatueRegistry.FROG_TEMPERATE_STATUE, StatueRegistry.FROG_WARM_STATUE, StatueRegistry.FROG_COLD_STATUE
 			);
 			AdvancementHolder tadpole = onHoldBlock(consumer, StatueRegistry.TADPOLE_STATUE, frog);
