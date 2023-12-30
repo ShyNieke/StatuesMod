@@ -14,7 +14,7 @@ public enum UpgradeType implements StringRepresentable {
 	CRAFTING("crafting", false, false, 1), //Unused but packs can add crafting recipes using the S.T.A.T.U.E
 	UPGRADE("upgrade", false, false, 1), //Upgrades a statue to one that can level (Uses a statue core)
 	GLOWING("glowing", true, false, 15), //Makes the statue emit light
-	UNGLOWING("unglowing", false, false, 14), //Reduces the light emitted
+	UNGLOWING("unglowing", false, false, 1), //Reduces the light emitted
 	SPAWNER("spawner", true, true, 10), //Spawns the mob
 	DESPAWNER("despawner", true, true, 1), //Stops the mob from spawning nearby
 	MOB_KILLER("mob_killer", true, true, 3), //0 = Regular drops,1 = Player drops, 2 = XP too
@@ -84,28 +84,14 @@ public enum UpgradeType implements StringRepresentable {
 						}
 						String ID = this.name().toLowerCase(Locale.ROOT);
 						String glowingID = GLOWING.name().toLowerCase(Locale.ROOT);
-						String unglowingID = UNGLOWING.name().toLowerCase(Locale.ROOT);
 						Map<String, Short> upgradeMap = UpgradeHelper.loadUpgradeMap(compoundtag);
-
-						if (this == UNGLOWING) {
-							if (upgradeMap.getOrDefault(glowingID, (short) 0) == 0)
-								return false;
-						}
 
 						short currentLevel = upgradeMap.getOrDefault(ID, (short) 0);
 						if ((currentLevel + 1) <= getCap()) {
 							if (level != -1) {
 								if (currentLevel == level) {
-									if (this == UNGLOWING) {
-										if (upgradeMap.getOrDefault(glowingID, (short) 0) > 0) {
-											UpgradeHelper.downgrade(upgradeMap, glowingID);
-										}
-									} else if (this == GLOWING) {
-										if (upgradeMap.getOrDefault(unglowingID, (short) 0) > 0) {
-											UpgradeHelper.downgrade(upgradeMap, unglowingID);
-										} else {
-											UpgradeHelper.upgrade(upgradeMap, glowingID);
-										}
+									if (this == GLOWING) {
+										UpgradeHelper.upgrade(upgradeMap, glowingID);
 									} else {
 										UpgradeHelper.upgrade(upgradeMap, ID);
 									}
@@ -116,16 +102,8 @@ public enum UpgradeType implements StringRepresentable {
 									return false;
 								}
 							} else {
-								if (this == UNGLOWING) {
-									if (upgradeMap.getOrDefault(glowingID, (short) 0) > 0) {
-										UpgradeHelper.downgrade(upgradeMap, glowingID);
-									}
-								} else if (this == GLOWING) {
-									if (upgradeMap.getOrDefault(unglowingID, (short) 0) > 0) {
-										UpgradeHelper.downgrade(upgradeMap, unglowingID);
-									} else {
-										UpgradeHelper.upgrade(upgradeMap, glowingID);
-									}
+								if (this == GLOWING) {
+									UpgradeHelper.upgrade(upgradeMap, glowingID);
 								} else {
 									UpgradeHelper.upgrade(upgradeMap, ID);
 								}
@@ -141,9 +119,42 @@ public enum UpgradeType implements StringRepresentable {
 						return true;
 					}
 				} else {
-					CompoundTag compoundtag = stack.getOrCreateTag();
-					compoundtag.putBoolean(Reference.UPGRADED, true);
-					compoundtag.putInt(Reference.UPGRADED, 1);
+					if (this == UNGLOWING) {
+						CompoundTag compoundtag = stack.getTagElement("BlockEntityTag");
+						if (compoundtag == null && stack.getTag() == null) {
+							//Not upgraded
+							return false;
+						}
+
+						if (compoundtag != null) {
+							int upgradeSlots = compoundtag.getInt(Reference.UPGRADE_SLOTS);
+							if (isSubsequentUsesSlot() && !(upgradeSlots > 0)) {
+								//No upgrade slots
+								return false;
+							}
+
+							String glowingID = GLOWING.name().toLowerCase(Locale.ROOT);
+							Map<String, Short> upgradeMap = UpgradeHelper.loadUpgradeMap(compoundtag);
+							short glowLevel = upgradeMap.getOrDefault(glowingID, (short) 0);
+
+							if (glowLevel > 0) {
+								UpgradeHelper.downgrade(upgradeMap, glowingID);
+
+								if (upgradeMap.getOrDefault(glowingID, (short) 0) == 0)
+									upgradeMap.remove(glowingID);
+
+								UpgradeHelper.saveUpgradeMap(compoundtag, upgradeMap);
+							} else {
+								//Can't downgrade a stack that isn't glowing
+								return false;
+							}
+						}
+					} else {
+						CompoundTag compoundtag = stack.getOrCreateTag();
+						compoundtag.putBoolean(Reference.UPGRADED, true);
+						compoundtag.putInt(Reference.UPGRADED, 1);
+					}
+
 					return true;
 				}
 			}
