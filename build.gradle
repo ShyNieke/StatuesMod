@@ -65,6 +65,9 @@ repositories {
         url = "https://maven.theillusivec4.top/"
     }
     maven {
+        url "https://maven.shedaniel.me/"
+    }
+    maven {
         url "https://cursemaven.com"
         content {
             includeGroup "curse.maven"
@@ -80,6 +83,13 @@ dependencies {
 //    compileOnly "mezz.jei:jei-${mc_version}-forge-api:${jei_version}"
 //
 //    runtimeOnly "mezz.jei:jei-${mc_version}-forge:${jei_version}"
+
+    runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
+
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+    implementation "dev.architectury:architectury-neoforge:${architectury_version}"
 
 //    implementation "com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"
 
