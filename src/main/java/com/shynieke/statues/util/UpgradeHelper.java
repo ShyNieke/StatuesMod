@@ -63,7 +63,7 @@ public class UpgradeHelper {
 		return upgradeMap == null ? -1 : upgradeMap.getOrDefault(id, (short) 0);
 	}
 
-	public static Component getUpgradeName(String id, int level) {
+	public static MutableComponent getUpgradeName(String id, int level) {
 		String descriptionID = "statues.upgrade." + id + ".name";
 		MutableComponent mutablecomponent = Component.translatable(descriptionID).withStyle(ChatFormatting.GRAY);
 
