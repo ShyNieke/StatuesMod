@@ -245,7 +245,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(StatueTags.UPGRADEABLE_STATUES), List.of(Ingredient.of(Items.NOTE_BLOCK),
 						Ingredient.of(Items.AMETHYST_SHARD)))
-				.upgradeType(UpgradeType.INTERACTION).save(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/sound"));
+				.upgradeType(UpgradeType.SOUND).save(consumer, new ResourceLocation(Reference.MOD_ID, "upgrade/sound"));
 
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, StatueRegistry.STATUE_TABLE.get())
 				.pattern(" P ")
