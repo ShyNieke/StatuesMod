@@ -364,6 +364,8 @@
   "statues.upgrade.sound.name": "Sound",
   "statues.upgrade.spawner.name": "Spawner",
   "statues.upgrade.speed.name": "Speed",
+  "statues.upgrade.unglowing.name": "Unglowing",
+  "statues.upgrade.upgrade.name": "Upgrade",
   "statues.villager.info": "WIP, Trades in the future.",
   "tooltip.statues.player.info": "Player Username: ",
   "tooltip.statues.player.info2": "Player UUID: ",

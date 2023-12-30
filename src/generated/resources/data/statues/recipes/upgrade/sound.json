@@ -11,5 +11,5 @@
   "center": {
     "tag": "statues:statues/upgradeable"
   },
-  "upgradeType": "interaction"
+  "upgradeType": "sound"
 }
