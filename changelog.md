@@ -1,1 +1,1 @@
-* Add REI support
+* Add more info to REI
