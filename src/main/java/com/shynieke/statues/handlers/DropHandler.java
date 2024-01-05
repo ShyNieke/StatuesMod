@@ -167,7 +167,7 @@ public class DropHandler {
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Axolotl axolotl) {
 			ItemStack itemStackToDrop = switch (axolotl.getVariant()) {
-				case LUCY -> new ItemStack(StatueRegistry.AXOLOTL_LUCY_STATUE.get());
+				default -> new ItemStack(StatueRegistry.AXOLOTL_LUCY_STATUE.get());
 				case WILD -> new ItemStack(StatueRegistry.AXOLOTL_WILD_STATUE.get());
 				case GOLD -> new ItemStack(StatueRegistry.AXOLOTL_GOLD_STATUE.get());
 				case CYAN -> new ItemStack(StatueRegistry.AXOLOTL_CYAN_STATUE.get());
