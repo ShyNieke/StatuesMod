@@ -70,12 +70,12 @@ public class StatuesDataGenerator {
 		registryBuilder.add(Registries.PLACED_FEATURE, $ -> {
 		});
 		registryBuilder.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, StatueBiomeModifiers::bootstrap);
-		// We need the BIOME registry to be present so we can use a biome tag, doesn't matter that it's empty
+		// We need the BIOME registry to be present, so we can use a biome tag, doesn't matter that it's empty
 		registryBuilder.add(Registries.BIOME, $ -> {
 		});
 		RegistryAccess.Frozen regAccess = RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY);
 		Cloner.Factory cloner$factory = new Cloner.Factory();
-		net.neoforged.neoforge.registries.DataPackRegistriesHooks.getDataPackRegistriesWithDimensions().forEach(p_311524_ -> p_311524_.runWithArguments(cloner$factory::addCodec));
+		net.neoforged.neoforge.registries.DataPackRegistriesHooks.getDataPackRegistriesWithDimensions().forEach(data -> data.runWithArguments(cloner$factory::addCodec));
 		return registryBuilder.buildPatch(regAccess, VanillaRegistries.createLookup(), cloner$factory);
 	}
 }
