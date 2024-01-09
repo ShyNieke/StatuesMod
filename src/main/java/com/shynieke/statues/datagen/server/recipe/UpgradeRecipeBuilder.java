@@ -66,6 +66,11 @@ public class UpgradeRecipeBuilder implements RecipeBuilder {
 		return this;
 	}
 
+	public UpgradeRecipeBuilder setShowNotification(boolean showNotification) {
+		this.showNotification = showNotification;
+		return this;
+	}
+
 	@Override
 	public RecipeBuilder unlockedBy(String s, Criterion<?> criterion) {
 		return null;

@@ -4,8 +4,7 @@ import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.screen.PlayerStatueData;
-import com.shynieke.statues.network.StatuesNetworking;
-import com.shynieke.statues.network.message.PlayerStatueScreenMessage;
+import com.shynieke.statues.network.message.PlayerStatueScreenData;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSerializers;
 import net.minecraft.Util;
@@ -17,8 +16,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -51,8 +48,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.NetworkHooks;
-import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -116,11 +111,6 @@ public class PlayerStatue extends LivingEntity {
 	public PlayerStatue(Level level, double posX, double posY, double posZ) {
 		this(StatueRegistry.PLAYER_STATUE_ENTITY.get(), level);
 		this.setPos(posX, posY, posZ);
-	}
-
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public void refreshDimensions() {
@@ -190,7 +180,7 @@ public class PlayerStatue extends LivingEntity {
 
 	public boolean canOpenUI(Player player) {
 		final UUID lockedBy = this.getLockedBy();
-		return lockedBy == null || (lockedBy != null && lockedBy.equals(player.getUUID()));
+		return lockedBy.equals(Util.NIL_UUID) || (lockedBy != Util.NIL_UUID && lockedBy.equals(player.getUUID()));
 	}
 
 	public void setLockedBy(@Nullable UUID uuid) {
@@ -419,10 +409,9 @@ public class PlayerStatue extends LivingEntity {
 	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
-			if (!this.level().isClientSide && player != null) {
-				if (canOpenUI(player)) {
-					StatuesNetworking.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PlayerStatueScreenMessage(getId()));
-				}
+			System.out.println(getLockedBy());
+			if (!this.level().isClientSide && player != null && canOpenUI(player)) {
+				((ServerPlayer) player).connection.send(new PlayerStatueScreenData(getId()));
 			}
 		} else {
 			if (itemstack.getItem() != Items.NAME_TAG) {
@@ -458,23 +447,23 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	private EquipmentSlot getClickedSlot(Vec3 clicked) {
-		EquipmentSlot equipmentslottype = EquipmentSlot.MAINHAND;
+		EquipmentSlot equipmentSlot = EquipmentSlot.MAINHAND;
 		boolean flag = this.isSmall();
 		double d0 = flag ? clicked.y * 2.0D : clicked.y;
-		EquipmentSlot equipmentslottype1 = EquipmentSlot.FEET;
-		if (d0 >= 0.1D && d0 < 0.1D + (flag ? 0.8D : 0.45D) && this.hasItemInSlot(equipmentslottype1)) {
-			equipmentslottype = EquipmentSlot.FEET;
+		EquipmentSlot equipmentSlot1 = EquipmentSlot.FEET;
+		if (d0 >= 0.1D && d0 < 0.1D + (flag ? 0.8D : 0.45D) && this.hasItemInSlot(equipmentSlot1)) {
+			equipmentSlot = EquipmentSlot.FEET;
 		} else if (d0 >= 0.9D + (flag ? 0.3D : 0.0D) && d0 < 0.9D + (flag ? 1.0D : 0.7D) && this.hasItemInSlot(EquipmentSlot.CHEST)) {
-			equipmentslottype = EquipmentSlot.CHEST;
+			equipmentSlot = EquipmentSlot.CHEST;
 		} else if (d0 >= 0.4D && d0 < 0.4D + (flag ? 1.0D : 0.8D) && this.hasItemInSlot(EquipmentSlot.LEGS)) {
-			equipmentslottype = EquipmentSlot.LEGS;
+			equipmentSlot = EquipmentSlot.LEGS;
 		} else if (d0 >= 1.6D && this.hasItemInSlot(EquipmentSlot.HEAD)) {
-			equipmentslottype = EquipmentSlot.HEAD;
+			equipmentSlot = EquipmentSlot.HEAD;
 		} else if (!this.hasItemInSlot(EquipmentSlot.MAINHAND) && this.hasItemInSlot(EquipmentSlot.OFFHAND)) {
-			equipmentslottype = EquipmentSlot.OFFHAND;
+			equipmentSlot = EquipmentSlot.OFFHAND;
 		}
 
-		return equipmentslottype;
+		return equipmentSlot;
 	}
 
 	private boolean isDisabled(EquipmentSlot slotIn) {

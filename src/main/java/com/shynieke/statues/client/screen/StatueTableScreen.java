@@ -2,8 +2,7 @@ package com.shynieke.statues.client.screen;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.menu.StatueTableMenu;
-import com.shynieke.statues.network.StatuesNetworking;
-import com.shynieke.statues.network.message.StatueTableMessage;
+import com.shynieke.statues.network.message.StatueTableData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -33,7 +32,7 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 		this.buttonChisel = this.addRenderableWidget(Button.builder(Component.literal("Chisel"), (button) -> {
 			boolean flag = getMenu().validRecipe[0] == 1;
 			if (flag) {
-				StatuesNetworking.CHANNEL.send(PacketDistributor.SERVER.noArg(), new StatueTableMessage(true));
+				PacketDistributor.SERVER.noArg().send(new StatueTableData(true));
 			}
 		}).bounds(leftPos + 130, topPos + 46, 38, 20).build());
 	}
@@ -50,8 +49,6 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
-
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		this.renderTooltip(guiGraphics, mouseX, mouseY);
 	}

@@ -4,7 +4,6 @@ import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -23,7 +22,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -50,7 +48,7 @@ public class StatueTableBlock extends AbstractBaseBlock {
 		if (blockentity instanceof StatueTableBlockEntity statueTableBlockEntity) {
 			if (!level.isClientSide) {
 				statueTableBlockEntity.hasValidRecipe();
-				NetworkHooks.openScreen((ServerPlayer) playerIn, (StatueTableBlockEntity) blockentity, pos);
+				playerIn.openMenu((StatueTableBlockEntity) blockentity, pos);
 			}
 
 			return InteractionResult.SUCCESS;
@@ -64,7 +62,7 @@ public class StatueTableBlock extends AbstractBaseBlock {
 			BlockEntity blockentity = level.getBlockEntity(pos);
 			if (blockentity instanceof StatueTableBlockEntity) {
 				IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
-				if(handler != null) {
+				if (handler != null) {
 					for (int i = 0; i < handler.getSlots(); ++i) {
 						Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
 					}

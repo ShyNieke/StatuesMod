@@ -7,8 +7,7 @@ import com.shynieke.statues.client.screen.widget.NumberFieldBox;
 import com.shynieke.statues.client.screen.widget.ToggleButton;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.entity.PlayerStatue;
-import com.shynieke.statues.network.StatuesNetworking;
-import com.shynieke.statues.network.message.PlayerStatueSyncMessage;
+import com.shynieke.statues.network.message.PlayerStatueSyncData;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -188,7 +187,7 @@ public class PlayerPoseScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		// Draw gui title
 		guiGraphics.drawCenteredString(font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)),
@@ -224,8 +223,6 @@ public class PlayerPoseScreen extends Screen {
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
 			guiGraphics.drawString(font, this.sliderLabels[i], x, y, 0xA0A0A0, false);
 		}
-
-		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 	}
 
 	@Override
@@ -433,7 +430,7 @@ public class PlayerPoseScreen extends Screen {
 		this.playerStatueEntity.load(CompoundTag);
 		this.playerStatueEntity.clientLock = 5;
 
-		StatuesNetworking.CHANNEL.send(PacketDistributor.SERVER.noArg(), new PlayerStatueSyncMessage(playerStatueEntity.getUUID(), compound));
+		PacketDistributor.SERVER.noArg().send(new PlayerStatueSyncData(playerStatueEntity.getUUID(), compound));
 	}
 
 	@Override

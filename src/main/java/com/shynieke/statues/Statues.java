@@ -24,7 +24,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
@@ -39,7 +38,6 @@ public class Statues {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, StatuesConfig.clientSpec);
 		eventBus.register(StatuesConfig.class);
 
-		eventBus.addListener(this::setup);
 		NeoForge.EVENT_BUS.addListener(this::serverAboutToStart);
 
 		StatueSerializers.ENTITY_DATA_SERIALIZER.register(eventBus);
@@ -57,6 +55,7 @@ public class Statues {
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 		eventBus.addListener(StatueEntities::registerSpawnPlacements);
 		eventBus.addListener(StatueBlockEntities::registerCapabilities);
+		eventBus.addListener(StatuesNetworking::setupPackets);
 
 		NeoForge.EVENT_BUS.register(new StatueHandler());
 		NeoForge.EVENT_BUS.register(new FishHandler());
@@ -73,10 +72,6 @@ public class Statues {
 			NeoForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
 		}
 
-	}
-
-	private void setup(final FMLCommonSetupEvent event) {
-		StatuesNetworking.init();
 	}
 
 	public void serverAboutToStart(final ServerAboutToStartEvent event) {

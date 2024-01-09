@@ -105,6 +105,11 @@ public class LootRecipeBuilder implements RecipeBuilder {
 		return this;
 	}
 
+	public LootRecipeBuilder setShowNotification(boolean showNotification) {
+		this.showNotification = showNotification;
+		return this;
+	}
+
 	@Override
 	public RecipeBuilder unlockedBy(String s, Criterion<?> criterion) {
 		return null;

@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class StatueTableMenu extends AbstractContainerMenu {
@@ -87,7 +87,7 @@ public class StatueTableMenu extends AbstractContainerMenu {
 	}
 
 	@Override
-	@Nonnull
+	@NotNull
 	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);

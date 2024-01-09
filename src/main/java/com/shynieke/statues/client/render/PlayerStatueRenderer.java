@@ -60,8 +60,10 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	@Override
 	public void render(PlayerStatue playerStatue, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
 		SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
-		if (isSlim != skinmanager.getInsecureSkin(playerStatue.getGameProfile().get()).model().id().equals("slim"))
-			isSlim = !isSlim;
+		if (playerStatue.getGameProfile().isPresent()) {
+			if (isSlim != skinmanager.getInsecureSkin(playerStatue.getGameProfile().get()).model().id().equals("slim"))
+				isSlim = !isSlim;
+		}
 
 		this.model = isSlim ? this.slimPlayerModel : playerModel;
 		poseStack.translate(0, playerStatue.getYOffsetData(), 0);
