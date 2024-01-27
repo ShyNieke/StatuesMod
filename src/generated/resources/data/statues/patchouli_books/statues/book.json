@@ -1,0 +1,15 @@
+{
+  "book_texture": "patchouli:textures/gui/book_gray.png",
+  "creative_tab": "statues.items",
+  "i18n": true,
+  "landing_text": "info.statues.book.landing",
+  "macros": {
+    "$(item)": "$(#c47567)"
+  },
+  "model": "patchouli:book_gray",
+  "name": "info.statues.book.name",
+  "show_progress": false,
+  "subtitle": "info.statues.book.subtitle",
+  "use_blocky_font": true,
+  "use_resource_pack": true
+}

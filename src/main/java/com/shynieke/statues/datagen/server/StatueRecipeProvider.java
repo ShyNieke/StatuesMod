@@ -34,8 +34,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class StatueRecipeProvider extends RecipeProvider {
 
-	public StatueRecipeProvider(PackOutput packOutput, CompletableFuture<net.minecraft.core.HolderLookup.Provider> lookupProvider) {
-		super(packOutput, lookupProvider);
+	public StatueRecipeProvider(PackOutput packOutput) {
+		super(packOutput);
 	}
 
 	@Override

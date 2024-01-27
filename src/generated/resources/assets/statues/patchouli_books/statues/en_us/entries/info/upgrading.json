@@ -1,0 +1,35 @@
+{
+  "category": "statues:info",
+  "icon": "statues:slime_statue",
+  "name": "info.statues.book.upgrading.entry.name",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.upgrading.text1"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.upgrading.text2"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.upgrading.text3"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.upgrading.text4"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.upgrading.text5"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.upgrading.text6"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "info.statues.book.upgrading.text7"
+    }
+  ]
+}
