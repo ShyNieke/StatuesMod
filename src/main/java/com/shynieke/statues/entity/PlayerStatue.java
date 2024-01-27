@@ -187,7 +187,7 @@ public class PlayerStatue extends LivingEntity {
 		if (uuid == null) {
 			this.setUnlocked();
 		} else {
-			this.entityData.set(LOCKED_BY_UUID, Optional.ofNullable(uuid));
+			this.entityData.set(LOCKED_BY_UUID, Optional.of(uuid));
 		}
 	}
 
