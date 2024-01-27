@@ -15,7 +15,6 @@ import com.shynieke.statues.client.screen.StatueTableScreen;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -43,6 +42,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
@@ -63,9 +63,6 @@ public class ClientHandler {
 		setPlayerCache(Minecraft.getInstance());
 
 		event.enqueueWork(() -> {
-			MenuScreens.register(StatueRegistry.STATUE_TABLE_MENU.get(), StatueTableScreen::new);
-			MenuScreens.register(StatueRegistry.SHULKER_STATUE_MENU.get(), ShulkerStatueScreen::new);
-
 			ItemProperties.register(StatueRegistry.PLAYER_COMPASS.get(), new ResourceLocation("angle"), new ClampedItemPropertyFunction() {
 				private final ClientHandler.Angle rotation = new ClientHandler.Angle();
 				private final ClientHandler.Angle rota = new ClientHandler.Angle();
@@ -178,8 +175,13 @@ public class ClientHandler {
 		}, "Statues Perks Data Loader").start();
 
 		if (ModList.get().isLoaded("curios")) {
-//			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer(event);
+			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
 		}
+	}
+
+	public static void onRegisterMenu(final RegisterMenuScreensEvent event) {
+		event.register(StatueRegistry.STATUE_TABLE_MENU.get(), StatueTableScreen::new);
+		event.register(StatueRegistry.SHULKER_STATUE_MENU.get(), ShulkerStatueScreen::new);
 	}
 
 	@OnlyIn(Dist.CLIENT)
