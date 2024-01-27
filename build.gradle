@@ -65,7 +65,7 @@ repositories {
         url = "https://maven.theillusivec4.top/"
     }
     maven {
-        url "https://maven.shedaniel.me/"
+        url = "https://maven.shedaniel.me/"
     }
     maven {
         url "https://cursemaven.com"
@@ -79,9 +79,9 @@ repositories {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-//    compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
-//    compileOnly "mezz.jei:jei-${mc_version}-forge-api:${jei_version}"
-//
+    compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}"
+
 //    runtimeOnly "mezz.jei:jei-${mc_version}-forge:${jei_version}"
 
     runtimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
@@ -91,12 +91,12 @@ dependencies {
     implementation "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
     implementation "dev.architectury:architectury-neoforge:${architectury_version}"
 
-//    implementation "com.blamejared.crafttweaker:CraftTweaker-forge-${mc_version}:${crafttweaker_version}"
+//    implementation "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
 
-//    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}+${mc_version}" TODO: Re-enable once it updates past the network refactor
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}+${mc_version}"
 
-//    implementation "vazkii.patchouli:Patchouli:${patchouli_version}"
-//    implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+    implementation "vazkii.patchouli:Patchouli:${patchouli_version}"
+    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
 //    implementation "curse.maven:jade-324717:4980188" //Jade (WAILA)
 //    implementation "curse.maven:TheOneProbe-245211:4579432" //The One probe (TOP)
@@ -150,8 +150,7 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'
 
-        mainFile.addOptional("curios", "the-cactus-mod", "roughly-enough-items")
-//        mainFile.addOptional("jei", "curios", "patchouli", "the-cactus-mod")
+        mainFile.addOptional("curios", "the-cactus-mod", "roughly-enough-items", "jei", "patchouli")
     }
 }
 
@@ -168,11 +167,11 @@ if (System.getenv().MODRINTH_KEY) {
         loaders = ["neoforge"]
 
         dependencies {
-//            optional.project "jei"
             optional.project "curios"
-//            optional.project "patchouli"
             optional.project "the-cactus-mod"
             optional.project "rei"
+            optional.project "jei"
+            optional.project "patchouli"
         }
     }
 }
