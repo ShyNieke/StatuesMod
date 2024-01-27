@@ -13,7 +13,6 @@ public class StatuesNetworking {
 	public static void setupPackets(final RegisterPayloadHandlerEvent event) {
 		final IPayloadRegistrar registrar = event.registrar(Reference.MOD_ID);
 
-
 		registrar.play(PlayerStatueScreenData.ID, PlayerStatueScreenData::new, handler -> handler
 				.client(ClientPayloadHandler.getInstance()::handleData));
 		registrar.play(StatueTableData.ID, StatueTableData::new, handler -> handler

@@ -217,6 +217,10 @@ public class StatueLanguageProvider extends LanguageProvider {
 		add("gui.statues.statue_table.chisel.tooltip", "Chisel");
 		add("gui.statues.statue_table.invalid_recipe.tooltip", "Invalid Recipe");
 
+		add("statues.networking.player_statue_screen.failed", "Failed to open Player Statue Screen: %s");
+		add("statues.networking.player_statue_sync.failed", "Failed to sync Player Statue: %s");
+		add("statues.networking.table.failed", "Failed to sync Statue Table: %s");
+
 		add("curios.identifier.statue", "Statue");
 
 		add("statues.gui.jei.category.loot", "Statue Loot");
