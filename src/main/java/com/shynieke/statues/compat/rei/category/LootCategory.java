@@ -69,9 +69,4 @@ public class LootCategory implements DisplayCategory<LootDisplay> {
 	public int getDisplayWidth(LootDisplay display) {
 		return 100;
 	}
-
-	@Override
-	public int getDisplayHeight() {
-		return 66;
-	}
 }

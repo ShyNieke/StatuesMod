@@ -94,9 +94,4 @@ public class UpgradeCategory implements DisplayCategory<UpgradeDisplay> {
 	public int getDisplayWidth(UpgradeDisplay display) {
 		return 148;
 	}
-
-	@Override
-	public int getDisplayHeight() {
-		return 66;
-	}
 }
