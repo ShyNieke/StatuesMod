@@ -65,6 +65,7 @@ public class Statues {
 
 		if (FMLEnvironment.dist == Dist.CLIENT) {
 			eventBus.addListener(ClientHandler::doClientStuff);
+			eventBus.addListener(ClientHandler::onRegisterMenu);
 			eventBus.addListener(ClientHandler::registerEntityRenders);
 			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 			eventBus.addListener(ClientHandler::registerBlockColors);
