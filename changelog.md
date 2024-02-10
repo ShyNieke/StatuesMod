@@ -1,1 +1,1 @@
-* Change how the axolotl statue is obtained in case mods add new axolotl variants
+* Fix potential NullPointerException when using a Mob Killer 2 upgraded statue
