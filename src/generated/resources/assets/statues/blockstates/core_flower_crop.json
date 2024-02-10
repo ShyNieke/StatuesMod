@@ -1,0 +1,31 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "statues:block/core_flower_crop_0"
+    },
+    "age=1": {
+      "model": "statues:block/core_flower_crop_1"
+    },
+    "age=2": {
+      "model": "statues:block/core_flower_crop_2"
+    },
+    "age=3": {
+      "model": "statues:block/core_flower_crop_3"
+    },
+    "age=4": {
+      "model": "statues:block/core_flower_crop_4"
+    },
+    "age=5": {
+      "model": "statues:block/core_flower_crop_5"
+    },
+    "age=6": {
+      "model": "statues:block/core_flower_crop_6"
+    },
+    "age=7": {
+      "model": "statues:block/core_flower_crop_7"
+    },
+    "age=8": {
+      "model": "statues:block/core_flower_crop_8"
+    }
+  }
+}

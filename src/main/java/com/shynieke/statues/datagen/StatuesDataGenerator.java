@@ -14,6 +14,7 @@ import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
 import com.shynieke.statues.datagen.server.patchouli.StatuePatchouliProvider;
+import com.shynieke.statues.registry.StatueTrims;
 import net.minecraft.core.Cloner;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistryAccess;
@@ -70,6 +71,7 @@ public class StatuesDataGenerator {
 		});
 		registryBuilder.add(Registries.PLACED_FEATURE, $ -> {
 		});
+		registryBuilder.add(Registries.TRIM_PATTERN, StatueTrims::bootstrap);
 		registryBuilder.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, StatueBiomeModifiers::bootstrap);
 		// We need the BIOME registry to be present, so we can use a biome tag, doesn't matter that it's empty
 		registryBuilder.add(Registries.BIOME, $ -> {

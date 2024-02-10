@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-29T20:24:23.9571593	Loot Tables
+// 1.20.4	2024-02-05T17:20:47.8275944	Loot Tables
 63ebf6ea91a5210188bc8165299f0beaa5759208 data/statues/loot_tables/blocks/allay_statue.json
 0e0103dece0812379551b1784138d8a1da8d34b9 data/statues/loot_tables/blocks/angry_bee_statue.json
 b2974bee64db4765febe3eb74ef004981402308e data/statues/loot_tables/blocks/axolotl_blue_statue.json
@@ -27,6 +27,8 @@ c9a8a54933eb135a9a3e136edee8d771c5aad1dd data/statues/loot_tables/blocks/cat_whi
 f4ce331e2acdb461305ceaec3389b9072a8e5207 data/statues/loot_tables/blocks/chicken_jockey_statue.json
 230926d8397286db10fb0d8ce2c6e32945817df7 data/statues/loot_tables/blocks/chicken_statue.json
 1325b479c72a58ac84bc4ea6373b1d1008f3bac8 data/statues/loot_tables/blocks/cod_statue.json
+8d724ecf50a10015c3630a4d219a93754105fb45 data/statues/loot_tables/blocks/core_flower.json
+820403fc58f3ad8c6e3e449b99f3e70dade7feb6 data/statues/loot_tables/blocks/core_flower_crop.json
 7e08a960f945081133e91d3013bab941f8f9abbf data/statues/loot_tables/blocks/cow_statue.json
 03100f4b910afd5bb28fdf7d7ebb03a4cdf8891c data/statues/loot_tables/blocks/creeper_statue.json
 e1cbb8654c49f26c69a1b621cfee8b3aef178fc4 data/statues/loot_tables/blocks/detective_platypus_statue.json

@@ -96,7 +96,7 @@ dependencies {
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}+${mc_version}"
 
     implementation "vazkii.patchouli:Patchouli:${patchouli_version}"
-    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+    implementation "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
 //    implementation "curse.maven:jade-324717:4980188" //Jade (WAILA)
 //    implementation "curse.maven:TheOneProbe-245211:4579432" //The One probe (TOP)

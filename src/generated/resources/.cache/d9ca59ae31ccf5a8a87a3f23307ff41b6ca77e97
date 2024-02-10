@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-29T20:24:23.9526594	Item Models: statues
+// 1.20.4	2024-02-05T17:25:47.6770543	Item Models: statues
 3bd1b5b2646515290e1ea7df0abf9798e194d549 assets/statues/models/item/allay_statue.json
 7b1e7d4cd383ce69a71bdb343872386329321241 assets/statues/models/item/angry_bee_statue.json
 9880572a3f4467e95bf0796f6d1ee27653ed0e92 assets/statues/models/item/axolotl_blue_statue.json
@@ -27,6 +27,8 @@ c6b3d7c43aa44116d74a4302702457380290bcc2 assets/statues/models/item/cat_tabby_st
 5642a6d5e5653e0fcc6e2bfb6ca5f17050fa1372 assets/statues/models/item/chicken_jockey_statue.json
 c53212e227d6900315c6fe1a02af1c034c4e137c assets/statues/models/item/chicken_statue.json
 eec2fe82386acb894e4ba4537d648de5363702a1 assets/statues/models/item/cod_statue.json
+e83570688a2a3d4a233e5b99aa5d0823797df655 assets/statues/models/item/core_armor_trim_smithing_template.json
+b06a4dcef04a175a00ab407a6e34b662eee3c1dc assets/statues/models/item/core_flower_seed.json
 131af84e2d3c06c00a56294aed1f0e4d742b36d8 assets/statues/models/item/cow_statue.json
 d8f8569b37feac7dc3dcd62278f29be819ecacf4 assets/statues/models/item/creeper_statue.json
 fc2bf34471370f46d7ae894ffae76832b7a854a8 assets/statues/models/item/cup.json
@@ -108,6 +110,7 @@ ba830ad3d4f3ac191ead566d0895cb524f42353f assets/statues/models/item/sombrero.jso
 e638038b73512cfeb4adf0750da135d36edb0a81 assets/statues/models/item/squid_statue.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/statues/models/item/statue_bat_spawn_egg.json
 e99f6aa9afb31087f9be902f6a362d94e2dbd460 assets/statues/models/item/statue_core.json
+b2f6780311c8eb35af4d06e5d73ac3f64dfb3be3 assets/statues/models/item/statue_core_pottery_sherd.json
 1e73dfa94687dcfc6d2a5edeab29ef1ee5ddeeb2 assets/statues/models/item/statue_table.json
 71f12361363d9a0c8a9c2c502b9b11f7690fea40 assets/statues/models/item/tadpole_statue.json
 b3842022901a24095430043b63923521deea2bb8 assets/statues/models/item/tea.json

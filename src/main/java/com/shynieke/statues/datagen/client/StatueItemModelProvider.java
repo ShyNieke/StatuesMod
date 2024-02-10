@@ -7,6 +7,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -21,8 +22,11 @@ public class StatueItemModelProvider extends ItemModelProvider {
 	@Override
 	protected void registerModels() {
 		for (DeferredHolder<Item, ? extends Item> registryObject : StatueRegistry.ITEMS.getEntries()) {
-			if (registryObject.get() instanceof BlockItem) {
-				withBlockParent(registryObject.getId());
+			if (registryObject.get() instanceof BlockItem blockItem) {
+				if (blockItem instanceof ItemNameBlockItem)
+					generatedItem(registryObject.getId());
+				else
+					withBlockParent(registryObject.getId());
 			} else {
 				if (registryObject.get() instanceof PlayerCompassItem) {
 					generateStatueCompass(registryObject.getId(), mcLoc("item/compass_16"));

@@ -12,6 +12,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.ValidationContext;
@@ -53,6 +54,14 @@ public class StatueLootProvider extends LootTableProvider {
 			this.dropSelf(StatueRegistry.SOMBRERO.get());
 			this.dropSelf(StatueRegistry.INFO_STATUE.get());
 			this.dropSelf(StatueRegistry.STATUE_TABLE.get());
+			this.dropSelf(StatueRegistry.CORE_FLOWER.get());
+			this.add(
+					StatueRegistry.CORE_FLOWER_CROP.get(),
+					this.applyExplosionDecay(
+							StatueRegistry.CORE_FLOWER_CROP, LootTable.lootTable().withPool(LootPool.lootPool()
+									.add(LootItem.lootTableItem(StatueRegistry.CORE_FLOWER_SEED.get())))
+					)
+			);
 			this.add(StatueRegistry.PLAYER_STATUE.get(), createNameableBlockEntityTable(StatueRegistry.PLAYER_STATUE.get()));
 			for (DeferredHolder<Block, ? extends Block> blockObject : StatueRegistry.BLOCKS.getEntries()) {
 				if (blockObject.get() instanceof AbstractStatueBase) {

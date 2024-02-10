@@ -161,6 +161,8 @@
   "block.statues.chicken_jockey_statue": "Chicken Jockey Statue",
   "block.statues.chicken_statue": "Chicken Statue",
   "block.statues.cod_statue": "Cod Statue",
+  "block.statues.core_flower": "Core Flower",
+  "block.statues.core_flower_crop": "Core Flower",
   "block.statues.cow_statue": "Cow Statue",
   "block.statues.creeper_statue": "Creeper Statue",
   "block.statues.detective_platypus_statue": "Detective Platypus Statue",
@@ -283,6 +285,8 @@
   "info.statues.book.upgrading.text5": "There are several different upgrades available for the statues:$(br)$(l)Glowing$() - Allows the statue to emit light$(br)$(l)Unglowing$() - Removes previously applied glowing$(br)$(l)Spawner$() - Allows the statue to spawn it's mob every so often$(br)$(l)Despawner$() - Disallows it's mob from spawning in the nearby area",
   "info.statues.book.upgrading.text6": "$(l)Mob Killer$() - Kills the mob if it gets nearby (1 = Regular drops, 2 = Player drops, 3 = Player drops + XP)$(br)$(l)Looting$() - Allows the statue to generate loot$(br)$(l)Automation$() - Allows exporting of loot$(br)$(l)Speed$() - Speeds up the interaction/spawning timer",
   "info.statues.book.upgrading.text7": "$(l)Interaction$() - Allows special interactions$(br)$(l)Sound$() - Allows the statue to make sound when right-clicked or powered",
+  "item.statues.core_armor_trim_smithing_template": "Core Armor Trim Smithing Template",
+  "item.statues.core_flower_seed": "Core Flower Seed",
   "item.statues.cup": "Edible Cup",
   "item.statues.marshmallow": "Marshmallow",
   "item.statues.marshmallow_charred": "Charred Marshmallow",
@@ -295,6 +299,7 @@
   "item.statues.statue_bat_spawn_egg": "Statue Bat Spawn Egg",
   "item.statues.statue_core": "Statue Core",
   "item.statues.statue_core.desc": "Alpha",
+  "item.statues.statue_core_pottery_sherd": "Statue Core Pottery Sherd",
   "item.statues.tea": "Cup Of Tea",
   "itemGroup.statues.blocks": "Statue Blocks",
   "itemGroup.statues.items": "Statue Items",
@@ -373,5 +378,6 @@
   "tooltip.statues.player.info": "Player Username: ",
   "tooltip.statues.player.info2": "Player UUID: ",
   "tooltip.statues.timer": "Cooldown percentage: ",
-  "tooltip.statues.timer.finished": "Ready for interaction"
+  "tooltip.statues.timer.finished": "Ready for interaction",
+  "trim_pattern.statues.core": "Statue Core"
 }

@@ -147,6 +147,9 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addBlock(StatueRegistry.TADPOLE_STATUE, "Tadpole Statue");
 		addBlock(StatueRegistry.WARDEN_STATUE, "Warden Statue");
 
+		addBlock(StatueRegistry.CORE_FLOWER, "Core Flower");
+		addBlock(StatueRegistry.CORE_FLOWER_CROP, "Core Flower");
+
 		addItem(StatueRegistry.NUGGET, "Royal Nugget");
 		addItem(StatueRegistry.SOUP, "Mooshroom Soup");
 		addItem(StatueRegistry.STATUE_CORE, "Statue Core");
@@ -159,6 +162,11 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addItem(StatueRegistry.PLAYER_COMPASS, "Player Compass");
 		addItem(StatueRegistry.PLAYER_STATUE_SPAWN_EGG, "Player Statue Spawn Egg");
 		addItem(StatueRegistry.STATUE_BAT_SPANW_EGG, "Statue Bat Spawn Egg");
+		addItem(StatueRegistry.CORE_ARMOR_TRIM_SMITHING_TEMPLATE, "Core Armor Trim Smithing Template");
+		addItem(StatueRegistry.CORE_FLOWER_SEED, "Core Flower Seed");
+		addItem(StatueRegistry.STATUE_CORE_POTTERY_SHERD, "Statue Core Pottery Sherd");
+
+		add("trim_pattern.statues.core", "Statue Core");
 
 		add("statues.cluckington.info", "Also known as Cluckington");
 		add("statues.royalnugget.info", "Made for and from royals");

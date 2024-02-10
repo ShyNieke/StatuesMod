@@ -1,4 +1,4 @@
-// 1.20.4	2023-12-29T20:24:23.9591595	Block States: statues
+// 1.20.4	2024-02-05T17:20:47.8295963	Block States: statues
 4427e42906b8877f46bd091919b793be75c3018b assets/statues/blockstates/allay_statue.json
 42d5ac316c690763e56b4fc0cab4ff995f42790a assets/statues/blockstates/angry_bee_statue.json
 a969b3fd05f50339960b7a4fee7a0200e2a085c4 assets/statues/blockstates/axolotl_blue_statue.json
@@ -27,6 +27,8 @@ d7e8f15fd091fa506212ead8424cc474bf118019 assets/statues/blockstates/cat_white_st
 46aebf303188ed897e27e957288dd3a5de3eb536 assets/statues/blockstates/chicken_jockey_statue.json
 1124d4ddbaf64edbcf8033ac9f33b61ff8af26e6 assets/statues/blockstates/chicken_statue.json
 6aa4deb8811c1d2f274f5ce70b5f6f54f8a101dc assets/statues/blockstates/cod_statue.json
+5ea341d731e126324278a85c9785931d3d3d7d2b assets/statues/blockstates/core_flower.json
+89e48e89577d00e41b3b4702c7dff9188435b8fd assets/statues/blockstates/core_flower_crop.json
 97182b2a35f9d1a47e15805ca3fb14f6411705df assets/statues/blockstates/cow_statue.json
 327a8da4e987670d24cf618c70ef462d4d4c9807 assets/statues/blockstates/creeper_statue.json
 c0ae77faeae899779ae9406a21515c46b0d54526 assets/statues/blockstates/detective_platypus_statue.json
@@ -124,3 +126,13 @@ ff1c7007bc7b0f9ddcc157ea5b19985ba9c4bcad assets/statues/blockstates/vindicator_s
 b964885d8668d37da6caabaeede00838ed16895f assets/statues/blockstates/wasteland_statue.json
 6a21847d7d714e18cfcf5ebfdebdf1eadb6829dd assets/statues/blockstates/witch_statue.json
 d9841641a0f227cc36448cb62e0ee47b26e4f89b assets/statues/blockstates/zombie_statue.json
+e730be9c3649881d81761624b421bf9819ca83dd assets/statues/models/block/core_flower.json
+d0198496def9e65cb5827c68e01abb52d0d58def assets/statues/models/block/core_flower_crop_0.json
+59f51fc58e4b54383b3057209d1056c0203768dd assets/statues/models/block/core_flower_crop_1.json
+36714e1e66638f2db8cd3899bfd3bca803afaed1 assets/statues/models/block/core_flower_crop_2.json
+0a37e479de70fe36cbd76d0ae3823bbaedc12f9f assets/statues/models/block/core_flower_crop_3.json
+8fb7024d886e9441f3f49a8b9a043acbb2cc79d5 assets/statues/models/block/core_flower_crop_4.json
+1d4a5e54c7b33820a3b1f44f3ece445aa4ac021e assets/statues/models/block/core_flower_crop_5.json
+f0c7b8d77e2edd7c29eeb777f2234b72f593fd1b assets/statues/models/block/core_flower_crop_6.json
+0b96b935ab2345cfae18a2cc08515c4a7b7e13d7 assets/statues/models/block/core_flower_crop_7.json
+5962a630c75b49e63db964af40c21ab626dbae17 assets/statues/models/block/core_flower_crop_8.json

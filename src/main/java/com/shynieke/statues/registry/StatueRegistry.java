@@ -1,6 +1,7 @@
 package com.shynieke.statues.registry;
 
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.blocks.CoreFlowerCropBlock;
 import com.shynieke.statues.blocks.decorative.AzzaroStatueBlock;
 import com.shynieke.statues.blocks.decorative.BumboStatueBlock;
 import com.shynieke.statues.blocks.decorative.DisplayStandBlock;
@@ -82,6 +83,7 @@ import com.shynieke.statues.menu.ShulkerStatueMenu;
 import com.shynieke.statues.menu.StatueTableMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.MenuType;
@@ -90,9 +92,15 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -245,11 +253,28 @@ public class StatueRegistry {
 	public static final DeferredBlock<BumboStatueBlock> BUMBO_STATUE = registerBlock("bumbo_statue", () -> new BumboStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final DeferredBlock<PebbleBlock> PEBBLE = registerBlock("pebble", () -> new PebbleBlock(blockBuilder()), blockItemBuilder());
 	public static final DeferredBlock<SombreroBlock> SOMBRERO = registerBlock("sombrero", () -> new SombreroBlock(blockBuilder()), blockItemBuilder());
-
 	public static final DeferredBlock<TropiBeeStatueBlock> TROPIBEE = registerBlock("tropibee", () -> new TropiBeeStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final DeferredBlock<EagleRayStatueBlock> EAGLE_RAY = registerBlock("eagle_ray", () -> new EagleRayStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final DeferredBlock<SlabFishStatueBlock> SLABFISH = registerBlock("slabfish", () -> new SlabFishStatueBlock(blockBuilder()), blockItemBuilder());
 	public static final DeferredBlock<AzzaroStatueBlock> AZZARO = registerBlock("azzaro", () -> new AzzaroStatueBlock(blockBuilder()), blockItemBuilder());
+	public static final DeferredBlock<FlowerBlock> CORE_FLOWER = BLOCKS.register("core_flower", () -> new FlowerBlock(
+			MobEffects.MOVEMENT_SLOWDOWN,
+			5,
+			BlockBehaviour.Properties.of()
+					.mapColor(MapColor.PLANT)
+					.noCollission()
+					.instabreak()
+					.sound(SoundType.GRASS)
+					.offsetType(BlockBehaviour.OffsetType.XZ)
+					.pushReaction(PushReaction.DESTROY)));
+	public static final DeferredBlock<CoreFlowerCropBlock> CORE_FLOWER_CROP = BLOCKS.registerBlock("core_flower_crop", CoreFlowerCropBlock::new,
+			BlockBehaviour.Properties.of()
+					.mapColor(MapColor.PLANT)
+					.noCollission()
+					.randomTicks()
+					.instabreak()
+					.sound(SoundType.CROP)
+					.pushReaction(PushReaction.DESTROY));
 
 	public static final DeferredItem<Item> CUP = ITEMS.register("cup", () -> new Item(itemBuilder().food(StatueFoods.CUP)));
 	public static final DeferredItem<Item> MARSHMALLOW = ITEMS.register("marshmallow", () -> new Item(itemBuilder().food(StatueFoods.MARSHMALLOW)));
@@ -261,6 +286,9 @@ public class StatueRegistry {
 	public static final DeferredItem<StatueMooshroomSoup> SOUP = ITEMS.register("mooshroom_soup", () -> new StatueMooshroomSoup(itemBuilder()));
 	public static final DeferredItem<StatueCoreItem> STATUE_CORE = ITEMS.register("statue_core", () -> new StatueCoreItem(itemBuilder()));
 	public static final DeferredItem<StatueTeaItem> TEA = ITEMS.register("tea", () -> new StatueTeaItem(itemBuilder(), StatueFoods.TEA));
+	public static final DeferredItem<Item> CORE_ARMOR_TRIM_SMITHING_TEMPLATE = ITEMS.register("core_armor_trim_smithing_template", () -> SmithingTemplateItem.createArmorTrimTemplate(StatueTrims.CORE));
+	public static final DeferredItem<Item> CORE_FLOWER_SEED = ITEMS.register("core_flower_seed", () -> new ItemNameBlockItem(CORE_FLOWER_CROP.get(), itemBuilder()));
+	public static final DeferredItem<Item> STATUE_CORE_POTTERY_SHERD = ITEMS.register("statue_core_pottery_sherd", () -> SmithingTemplateItem.createArmorTrimTemplate(StatueTrims.CORE));
 
 	public static final DeferredItem<PlayerStatueSpawnItem> PLAYER_STATUE_SPAWN_EGG = ITEMS.register("player_statue_spawn_egg", () -> new PlayerStatueSpawnItem(itemBuilder()));
 	public static final DeferredItem<DeferredSpawnEggItem> STATUE_BAT_SPANW_EGG = ITEMS.register("statue_bat_spawn_egg", () -> new DeferredSpawnEggItem(StatueRegistry.STATUE_BAT::get, 3421236, 3556687, itemBuilder()));
