@@ -1,1 +1,1 @@
-* Fix potential NullPointerException when using a Mob Killer 2 upgraded statue
+* Fix potential NullPointerException when using a Mob Killer 2 upgraded statue 
