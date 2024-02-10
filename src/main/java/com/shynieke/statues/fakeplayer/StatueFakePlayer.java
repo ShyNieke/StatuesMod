@@ -31,14 +31,15 @@ public class StatueFakePlayer extends FakePlayer {
 			INSTANCE = new WeakReference<>(actual);
 		}
 		StatueFakePlayer player = actual;
-		player.setLevel(serverLevel);
+		player.setServerLevel(serverLevel);
 		R result = fakePlayerConsumer.apply(player);
 
-		player.setLevel(null);
+		//don't keep reference to the World, note we set it to the overworld to avoid any potential null pointers
+		player.setServerLevel(serverLevel.getServer().overworld());
 		return result;
 	}
 
-	public void setPosition(double x, double y, double z) {
+	public void setPos(double x, double y, double z) {
 		if (pos.x != x || pos.y != y || pos.z != z) {
 			pos = new Vec3(x, y, z);
 			blockPos.set(Math.floor(x), Math.floor(y), Math.floor(z));
@@ -50,10 +51,11 @@ public class StatueFakePlayer extends FakePlayer {
 		return false;
 	}
 
-	public static void unload(LevelAccessor levelAccessor) {
+	public static void unload(ServerLevel serverLevel) {
 		StatueFakePlayer actual = INSTANCE == null ? null : INSTANCE.get();
-		if (actual != null && actual.level() == levelAccessor) {
-			actual.setLevel(null);
+		if (actual != null && actual.level() == serverLevel) {
+			//don't keep reference to the World, note we set it to the overworld to avoid any potential null pointers
+			actual.setServerLevel(serverLevel.getServer().overworld());
 		}
 	}
 
