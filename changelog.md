@@ -1,1 +1,1 @@
-* Fix potential NullPointerException when using a Mob Killer 2 upgraded statue 
+* Fix NullPointerException caused by the previous fix. This should fix the issue for good.
