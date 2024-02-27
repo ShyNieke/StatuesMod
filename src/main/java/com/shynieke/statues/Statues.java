@@ -14,6 +14,7 @@ import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueEntities;
 import com.shynieke.statues.registry.StatueLootModifiers;
+import com.shynieke.statues.registry.StatuePatterns;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSerializers;
 import com.shynieke.statues.registry.StatueSounds;
@@ -24,6 +25,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
@@ -38,6 +40,7 @@ public class Statues {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, StatuesConfig.clientSpec);
 		eventBus.register(StatuesConfig.class);
 
+		eventBus.addListener(this::commonSetup);
 		NeoForge.EVENT_BUS.addListener(this::serverAboutToStart);
 
 		StatueSerializers.ENTITY_DATA_SERIALIZER.register(eventBus);
@@ -51,6 +54,7 @@ public class Statues {
 		StatuesRecipes.RECIPE_TYPES.register(eventBus);
 		StatuesRecipes.RECIPE_SERIALIZERS.register(eventBus);
 		StatueLootModifiers.GLM.register(eventBus);
+		StatuePatterns.POT_PATTERNS.register(eventBus);
 
 		eventBus.addListener(StatueEntities::registerEntityAttributes);
 		eventBus.addListener(StatueEntities::registerSpawnPlacements);
@@ -73,6 +77,12 @@ public class Statues {
 			NeoForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
 		}
 
+	}
+
+	public void commonSetup(final FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> {
+			StatuePatterns.expandVanillaDefinitions();
+		});
 	}
 
 	public void serverAboutToStart(final ServerAboutToStartEvent event) {

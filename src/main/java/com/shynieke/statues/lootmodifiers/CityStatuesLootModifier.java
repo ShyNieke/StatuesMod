@@ -24,11 +24,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class StatuesLootModifier extends LootModifier {
-	public static final Supplier<Codec<StatuesLootModifier>> CODEC = Suppliers.memoize(() ->
-			RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, StatuesLootModifier::new)));
+public class CityStatuesLootModifier extends LootModifier {
+	public static final Supplier<Codec<CityStatuesLootModifier>> CODEC = Suppliers.memoize(() ->
+			RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, CityStatuesLootModifier::new)));
 
-	public StatuesLootModifier(LootItemCondition[] conditionsIn) {
+	public CityStatuesLootModifier(LootItemCondition[] conditionsIn) {
 		super(conditionsIn);
 	}
 
@@ -56,7 +56,6 @@ public class StatuesLootModifier extends LootModifier {
 				}
 			}
 		}
-
 		return generatedLoot;
 	}
 

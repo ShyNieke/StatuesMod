@@ -288,6 +288,7 @@ public class StatueRegistry {
 	public static final DeferredItem<StatueTeaItem> TEA = ITEMS.register("tea", () -> new StatueTeaItem(itemBuilder(), StatueFoods.TEA));
 	public static final DeferredItem<Item> CORE_ARMOR_TRIM_SMITHING_TEMPLATE = ITEMS.register("core_armor_trim_smithing_template", () -> SmithingTemplateItem.createArmorTrimTemplate(StatueTrims.CORE));
 	public static final DeferredItem<Item> CORE_FLOWER_SEED = ITEMS.register("core_flower_seed", () -> new ItemNameBlockItem(CORE_FLOWER_CROP.get(), itemBuilder()));
+	public static final DeferredItem<Item> CORE_FLOWER_ITEM = ITEMS.register("core_flower", () -> new BlockItem(CORE_FLOWER.get(), itemBuilder()));
 	public static final DeferredItem<Item> STATUE_CORE_POTTERY_SHERD = ITEMS.register("statue_core_pottery_sherd", () -> SmithingTemplateItem.createArmorTrimTemplate(StatueTrims.CORE));
 
 	public static final DeferredItem<PlayerStatueSpawnItem> PLAYER_STATUE_SPAWN_EGG = ITEMS.register("player_statue_spawn_egg", () -> new PlayerStatueSpawnItem(itemBuilder()));

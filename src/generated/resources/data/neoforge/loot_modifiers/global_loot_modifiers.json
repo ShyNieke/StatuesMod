@@ -1,6 +1,7 @@
 {
   "entries": [
-    "statues:statues_loot"
+    "statues:statues_loot",
+    "statues:statues_sherd"
   ],
   "replace": false
 }

@@ -23,10 +23,15 @@ public class StatueItemModelProvider extends ItemModelProvider {
 	protected void registerModels() {
 		for (DeferredHolder<Item, ? extends Item> registryObject : StatueRegistry.ITEMS.getEntries()) {
 			if (registryObject.get() instanceof BlockItem blockItem) {
-				if (blockItem instanceof ItemNameBlockItem)
+				if (blockItem instanceof ItemNameBlockItem) {
 					generatedItem(registryObject.getId());
-				else
-					withBlockParent(registryObject.getId());
+				} else {
+					if (registryObject.getId().equals(StatueRegistry.CORE_FLOWER_ITEM.getId()))
+						singleTexture(registryObject.getId().getPath(), new ResourceLocation("item/generated"),
+								"layer0", new ResourceLocation(Reference.MOD_ID, "block/" + registryObject.getId().getPath()));
+					else
+						withBlockParent(registryObject.getId());
+				}
 			} else {
 				if (registryObject.get() instanceof PlayerCompassItem) {
 					generateStatueCompass(registryObject.getId(), mcLoc("item/compass_16"));

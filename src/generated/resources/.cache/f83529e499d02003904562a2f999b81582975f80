@@ -1,3 +1,4 @@
-// 1.20.4	2023-12-29T20:24:23.9566595	Global Loot Modifiers : statues
-17f55865f012eca3d2b5714c838177019a3bed2d data/neoforge/loot_modifiers/global_loot_modifiers.json
+// 1.20.4	2024-02-27T16:48:23.1108969	Global Loot Modifiers : statues
+c155ebb9e407aca160492b3b1e357370dcce20dc data/neoforge/loot_modifiers/global_loot_modifiers.json
 9fee9c7f7a191414a67bbfaa11e7d6a7521b13f0 data/statues/loot_modifiers/statues_loot.json
+a72cbc19f85cd29b6604b3f1780d34caeaf9f278 data/statues/loot_modifiers/statues_sherd.json

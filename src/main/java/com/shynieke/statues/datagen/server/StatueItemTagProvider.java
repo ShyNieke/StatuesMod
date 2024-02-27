@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 public class StatueItemTagProvider extends ItemTagsProvider {
 
 	public StatueItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
-								 TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
+	                             TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
 		super(output, lookupProvider, blockTagProvider.contentsGetter(), Reference.MOD_ID, existingFileHelper);
 	}
 
@@ -88,5 +89,6 @@ public class StatueItemTagProvider extends ItemTagsProvider {
 
 		this.tag(StatueTags.STATUE_CORE).add(StatueRegistry.STATUE_CORE.get());
 		this.tag(StatueTags.PLAYER_UPGRADE_ITEM).addTag(StatueTags.STATUE_CORE);
+		this.tag(ItemTags.DECORATED_POT_SHERDS).add(StatueRegistry.STATUE_CORE_POTTERY_SHERD.get());
 	}
 }

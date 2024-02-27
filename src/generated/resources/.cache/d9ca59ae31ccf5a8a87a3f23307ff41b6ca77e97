@@ -1,4 +1,4 @@
-// 1.20.4	2024-02-05T17:25:47.6770543	Item Models: statues
+// 1.20.4	2024-02-27T17:24:34.1028303	Item Models: statues
 3bd1b5b2646515290e1ea7df0abf9798e194d549 assets/statues/models/item/allay_statue.json
 7b1e7d4cd383ce69a71bdb343872386329321241 assets/statues/models/item/angry_bee_statue.json
 9880572a3f4467e95bf0796f6d1ee27653ed0e92 assets/statues/models/item/axolotl_blue_statue.json
@@ -28,6 +28,7 @@ c6b3d7c43aa44116d74a4302702457380290bcc2 assets/statues/models/item/cat_tabby_st
 c53212e227d6900315c6fe1a02af1c034c4e137c assets/statues/models/item/chicken_statue.json
 eec2fe82386acb894e4ba4537d648de5363702a1 assets/statues/models/item/cod_statue.json
 e83570688a2a3d4a233e5b99aa5d0823797df655 assets/statues/models/item/core_armor_trim_smithing_template.json
+fa9fc7f611d993b13371c755ad759e6869988ecd assets/statues/models/item/core_flower.json
 b06a4dcef04a175a00ab407a6e34b662eee3c1dc assets/statues/models/item/core_flower_seed.json
 131af84e2d3c06c00a56294aed1f0e4d742b36d8 assets/statues/models/item/cow_statue.json
 d8f8569b37feac7dc3dcd62278f29be819ecacf4 assets/statues/models/item/creeper_statue.json

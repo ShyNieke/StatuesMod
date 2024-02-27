@@ -368,5 +368,16 @@
   "tooltip.statues.player.info": "Speler Name: ",
   "tooltip.statues.player.info2": "Speler UUID: ",
   "tooltip.statues.timer": "Afkoelpercentage: ",
-  "tooltip.statues.timer.finished": "Klaar voor interacties"
+  "tooltip.statues.timer.finished": "Klaar voor interacties",
+  "block.statues.core_flower": "Core Flower",
+  "block.statues.core_flower_crop": "Core Flower",
+  "item.statues.core_armor_trim_smithing_template": "Core Armor Trim Smithing Template",
+  "item.statues.core_flower_seed": "Core Flower Seed",
+  "item.statues.statue_core_pottery_sherd": "Statue Core Pottery Sherd",
+  "statues.networking.player_statue_screen.failed": "Failed to open Player Statue Screen: %s",
+  "statues.networking.player_statue_sync.failed": "Failed to sync Player Statue: %s",
+  "statues.networking.table.failed": "Failed to sync Statue Table: %s",
+  "statues.upgrade.unglowing.name": "Unglowing",
+  "statues.upgrade.upgrade.name": "Upgrade",
+  "trim_pattern.statues.core": "Statue Core"
 }

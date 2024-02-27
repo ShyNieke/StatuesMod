@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "minecraft:air"
+          "name": "statues:core_flower"
         }
       ],
       "rolls": 1.0

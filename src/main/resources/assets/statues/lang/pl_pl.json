@@ -368,5 +368,16 @@
   "tooltip.statues.player.info": "Nazwa Gracza: ",
   "tooltip.statues.player.info2": "UUID Gracza: ",
   "tooltip.statues.timer": "Procent odnowienia: ",
-  "tooltip.statues.timer.finished": "Gotowe do interakcji"
+  "tooltip.statues.timer.finished": "Gotowe do interakcji",
+  "block.statues.core_flower": "Core Flower",
+  "block.statues.core_flower_crop": "Core Flower",
+  "item.statues.core_armor_trim_smithing_template": "Core Armor Trim Smithing Template",
+  "item.statues.core_flower_seed": "Core Flower Seed",
+  "item.statues.statue_core_pottery_sherd": "Statue Core Pottery Sherd",
+  "statues.networking.player_statue_screen.failed": "Failed to open Player Statue Screen: %s",
+  "statues.networking.player_statue_sync.failed": "Failed to sync Player Statue: %s",
+  "statues.networking.table.failed": "Failed to sync Statue Table: %s",
+  "statues.upgrade.unglowing.name": "Unglowing",
+  "statues.upgrade.upgrade.name": "Upgrade",
+  "trim_pattern.statues.core": "Statue Core"
 }
