@@ -1,1 +1,1 @@
-* Backport the fix that should solve the potential NullPointerException when using a Mob Killer 2 upgraded statue
+* Fix incompatibility with any mod that adds axolotl variants
