@@ -51,7 +51,8 @@ public class StatueBlockEntities {
 			StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get(),
 			StatueRegistry.TURTLE_STATUE.get(), StatueRegistry.VILLAGER_BR_STATUE.get(), StatueRegistry.VILLAGER_GR_STATUE.get(),
 			StatueRegistry.VILLAGER_PU_STATUE.get(), StatueRegistry.VILLAGER_WH_STATUE.get(), StatueRegistry.VINDICATOR_STATUE.get(),
-			StatueRegistry.WASTELAND_STATUE.get(), StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get()).build(null));
+			StatueRegistry.WASTELAND_STATUE.get(), StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get(),
+			StatueRegistry.WARDEN_STATUE.get()).build(null));
 
 	public static final Supplier<BlockEntityType<ShulkerStatueBlockEntity>> SHULKER_STATUE = BLOCK_ENTITIES.register("shulker_statue", () ->
 			BlockEntityType.Builder.of(ShulkerStatueBlockEntity::new, StatueRegistry.SHULKER_STATUE.get()).build(null));
