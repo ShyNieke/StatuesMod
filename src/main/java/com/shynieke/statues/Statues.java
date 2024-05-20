@@ -3,6 +3,7 @@ package com.shynieke.statues;
 import com.mojang.logging.LogUtils;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
+import com.shynieke.statues.commands.StatuesCommands;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.FishHandler;
@@ -29,6 +30,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import org.slf4j.Logger;
 
 @Mod(Reference.MOD_ID)
@@ -42,6 +44,7 @@ public class Statues {
 
 		eventBus.addListener(this::commonSetup);
 		NeoForge.EVENT_BUS.addListener(this::serverAboutToStart);
+		NeoForge.EVENT_BUS.addListener(this::onCommandRegister);
 
 		StatueSerializers.ENTITY_DATA_SERIALIZER.register(eventBus);
 		StatueRegistry.ENTITIES.register(eventBus);
@@ -83,6 +86,10 @@ public class Statues {
 		event.enqueueWork(() -> {
 			StatuePatterns.expandVanillaDefinitions();
 		});
+	}
+
+	public void onCommandRegister(RegisterCommandsEvent event) {
+		StatuesCommands.initializeCommands(event.getDispatcher());
 	}
 
 	public void serverAboutToStart(final ServerAboutToStartEvent event) {

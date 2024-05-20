@@ -265,6 +265,11 @@ public class StatueLanguageProvider extends LanguageProvider {
 		//FakePlayer
 		add("fakeplayer.statue", "Statue");
 
+		//Command
+		add("commands.statues.upgrade.too_high", "Chosen tier is invalid for this upgrade, the highest level is %s");
+		add("commands.statues.upgrade.success", "%s has been upgraded");
+		add("commands.statues.upgrade.invalid", "%s is not an upgradable statue");
+
 		//Patchouli
 		add("info.statues.book.name", "Statues");
 		add("info.statues.book.subtitle", "Little useful mobs");
