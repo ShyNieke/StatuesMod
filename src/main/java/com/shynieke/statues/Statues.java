@@ -3,6 +3,7 @@ package com.shynieke.statues;
 import com.mojang.logging.LogUtils;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
+import com.shynieke.statues.commands.StatuesCommands;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.FishHandler;
@@ -21,6 +22,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -44,6 +46,7 @@ public class Statues {
 
 		eventBus.addListener(this::setup);
 		MinecraftForge.EVENT_BUS.addListener(this::serverAboutToStart);
+		MinecraftForge.EVENT_BUS.addListener(this::onCommandRegister);
 
 		StatueSerializers.ENTITY_DATA_SERIALIZER.register(eventBus);
 		StatueRegistry.ENTITIES.register(eventBus);
@@ -83,6 +86,10 @@ public class Statues {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		StatuesNetworking.init();
+	}
+
+	public void onCommandRegister(RegisterCommandsEvent event) {
+		StatuesCommands.initializeCommands(event.getDispatcher());
 	}
 
 	public void serverAboutToStart(final ServerAboutToStartEvent event) {
