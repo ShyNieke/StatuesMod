@@ -3,7 +3,6 @@ package com.shynieke.statues.client.screen.widget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
-
 import org.jetbrains.annotations.Nullable;
 
 public class ToggleButton extends Button {

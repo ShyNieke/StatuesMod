@@ -10,8 +10,8 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterList;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-
 import org.jetbrains.annotations.Nullable;
+
 import java.util.concurrent.CompletableFuture;
 
 public class StatueBiomeTagProvider extends BiomeTagsProvider {
