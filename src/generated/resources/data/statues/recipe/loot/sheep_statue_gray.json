@@ -1,9 +1,7 @@
 {
   "type": "statues:loot",
   "group": "sheep",
-  "ingredient": {
-    "item": "statues:sheep_statue_gray"
-  },
+  "ingredient": "statues:sheep_statue_gray",
   "result": {
     "count": 1,
     "id": "minecraft:gray_wool"

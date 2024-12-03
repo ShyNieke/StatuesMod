@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:king_cluck_statue"
-  },
+  "ingredient": "statues:king_cluck_statue",
   "result": {
     "count": 1,
     "id": "statues:royal_nugget"

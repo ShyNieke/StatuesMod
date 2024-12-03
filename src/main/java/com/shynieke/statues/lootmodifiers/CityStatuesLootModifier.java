@@ -37,7 +37,7 @@ public class CityStatuesLootModifier extends LootModifier {
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		if (StatuesConfig.COMMON.ancientCityLoot.get()) {
-			Optional<HolderSet.Named<Item>> optionalTag = BuiltInRegistries.ITEM.getTag(StatueTags.STATUES_ITEMS);
+			Optional<HolderSet.Named<Item>> optionalTag = BuiltInRegistries.ITEM.get(StatueTags.STATUES_ITEMS);
 			if (optionalTag.isPresent()) {
 				HolderSet.Named<Item> tag = optionalTag.get();
 				RandomSource random = context.getRandom();

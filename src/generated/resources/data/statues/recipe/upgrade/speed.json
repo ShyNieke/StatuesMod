@@ -1,18 +1,10 @@
 {
   "type": "statues:upgrade",
   "catalysts": [
-    {
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "minecraft:clock"
-    }
+    "#c:dusts/redstone",
+    "minecraft:sugar",
+    "minecraft:clock"
   ],
-  "center": {
-    "tag": "statues:statues/upgradeable"
-  },
+  "center": "#statues:statues/upgradeable",
   "upgradeType": "speed"
 }

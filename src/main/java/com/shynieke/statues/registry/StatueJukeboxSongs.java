@@ -16,7 +16,7 @@ public class StatueJukeboxSongs {
 	public static final ResourceKey<JukeboxSong> CREDITS = create("credits");
 
 	private static ResourceKey<JukeboxSong> create(String path) {
-		return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, path));
+		return ResourceKey.create(Registries.JUKEBOX_SONG, Reference.modLoc(path));
 	}
 
 	public static void bootstrap(BootstrapContext<JukeboxSong> context) {

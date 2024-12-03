@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
@@ -48,7 +48,7 @@ public class PlayerStatueSpawnItem extends Item {
 			}
 
 			EntityType<?> type = StatueRegistry.PLAYER_STATUE_ENTITY.get();
-			if (type.spawn((ServerLevel) level, stack, context.getPlayer(), relativePos, MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, relativePos) && direction == Direction.UP) instanceof PlayerStatue playerStatue) {
+			if (type.spawn((ServerLevel) level, stack, context.getPlayer(), relativePos, EntitySpawnReason.SPAWN_ITEM_USE, true, !Objects.equals(pos, relativePos) && direction == Direction.UP) instanceof PlayerStatue playerStatue) {
 				applyRandomRotations(playerStatue, level.random);
 				if (!stack.has(DataComponents.CUSTOM_NAME)) {
 					if (context.getPlayer() != null) {

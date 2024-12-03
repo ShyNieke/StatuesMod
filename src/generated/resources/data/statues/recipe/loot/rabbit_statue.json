@@ -1,24 +1,12 @@
 {
   "type": "statues:loot",
   "ingredient": [
-    {
-      "item": "statues:rabbit_br_statue"
-    },
-    {
-      "item": "statues:rabbit_bs_statue"
-    },
-    {
-      "item": "statues:rabbit_bw_statue"
-    },
-    {
-      "item": "statues:rabbit_go_statue"
-    },
-    {
-      "item": "statues:rabbit_wh_statue"
-    },
-    {
-      "item": "statues:rabbit_ws_statue"
-    }
+    "statues:rabbit_br_statue",
+    "statues:rabbit_bs_statue",
+    "statues:rabbit_bw_statue",
+    "statues:rabbit_go_statue",
+    "statues:rabbit_wh_statue",
+    "statues:rabbit_ws_statue"
   ],
   "result": {
     "count": 1,

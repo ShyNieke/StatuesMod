@@ -18,15 +18,15 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -111,10 +111,10 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 	}
 
 	@Override
-	public ItemInteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
+	public InteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
 		AbstractStatueBase statueBase = getStatue();
 		if (statueBase == null)
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS;
 
 		if (makesSounds()) {
 			playSound(statueBase.getSound(state), pos);
@@ -131,7 +131,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 		if (hasSpecialInteraction()) {
 			onSpecialInteract(level, pos, state, player, handIn, result);
 		}
-		return ItemInteractionResult.CONSUME;
+		return InteractionResult.CONSUME;
 	}
 
 	public void onSpecialInteract(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
@@ -148,13 +148,13 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 	}
 
 	public void giveItem() {
-		if (level != null) {
+		if (level != null && !level.isClientSide()) {
 			if (!drainPower(getItemPowerUsage())) return;
 			LootRecipe loot;
 			if (cachedLootRecipe != null) {
 				loot = cachedLootRecipe.value();
 			} else {
-				loot = (cachedLootRecipe = LootHelper.getMatchingLoot(level, new ItemStack(getBlockState().getBlock()))).value();
+				loot = (cachedLootRecipe = LootHelper.getMatchingLoot((ServerLevel) level, new ItemStack(getBlockState().getBlock()))).value();
 			}
 			if (loot == null) {
 				Statues.LOGGER.error("No loot found for statue {}, please report this to the Statues issue tracker", getBlockState());
@@ -265,12 +265,12 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 				BlockPos blockpos = BlockPos.containing(d0, d1, d2);
 				if (!serverLevel.isAreaLoaded(blockpos, 1)) continue;
 
-				if (!screwTheRulesIHasMoney && !SpawnPlacements.checkSpawnRules(entityType, serverLevel, MobSpawnType.SPAWNER, blockpos, serverLevel.getRandom())) {
+				if (!screwTheRulesIHasMoney && !SpawnPlacements.checkSpawnRules(entityType, serverLevel, EntitySpawnReason.SPAWNER, blockpos, serverLevel.getRandom())) {
 					continue;
 				}
 
 				if (!drainPower(getSummonPowerUsage())) return;
-				Entity entity = entityType.create(level);
+				Entity entity = entityType.create(serverLevel, EntitySpawnReason.SPAWNER);
 				if (entity == null) {
 					continue;
 				}
@@ -284,12 +284,12 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 
 				entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), level.random.nextFloat() * 360.0F, 0.0F);
 				if (entity instanceof Mob mob) {
-					if (!screwTheRulesIHasMoney && !mob.checkSpawnRules(serverLevel, MobSpawnType.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
+					if (!screwTheRulesIHasMoney && !mob.checkSpawnRules(serverLevel, EntitySpawnReason.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
 						continue;
 					}
 
 					net.neoforged.neoforge.event.EventHooks.finalizeMobSpawnSpawner(mob, serverLevel,
-							serverLevel.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.SPAWNER, null, this, true);
+							serverLevel.getCurrentDifficultyAt(entity.blockPosition()), EntitySpawnReason.SPAWNER, null, this, true);
 				}
 
 				if (!serverLevel.tryAddFreshEntityWithPassengers(entity)) {

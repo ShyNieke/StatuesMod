@@ -1,12 +1,8 @@
 {
   "type": "statues:upgrade",
   "catalysts": [
-    {
-      "item": "minecraft:ink_sac"
-    }
+    "minecraft:ink_sac"
   ],
-  "center": {
-    "tag": "statues:statues/upgradeable"
-  },
+  "center": "#statues:statues/upgradeable",
   "upgradeType": "unglowing"
 }

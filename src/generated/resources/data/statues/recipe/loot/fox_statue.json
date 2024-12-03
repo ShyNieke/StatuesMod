@@ -1,12 +1,8 @@
 {
   "type": "statues:loot",
   "ingredient": [
-    {
-      "item": "statues:fox_statue"
-    },
-    {
-      "item": "statues:fox_snow_statue"
-    }
+    "statues:fox_statue",
+    "statues:fox_snow_statue"
   ],
   "result": {
     "count": 1,

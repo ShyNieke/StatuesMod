@@ -7,15 +7,14 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.armortrim.TrimPattern;
+import net.minecraft.world.item.equipment.trim.TrimPattern;
 
 public class StatueTrims {
 	public static final ResourceKey<TrimPattern> CORE = registerKey("core");
 
 	private static ResourceKey<TrimPattern> registerKey(String name) {
-		return ResourceKey.create(Registries.TRIM_PATTERN, ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, name));
+		return ResourceKey.create(Registries.TRIM_PATTERN, Reference.modLoc(name));
 	}
 
 	public static void bootstrap(BootstrapContext<TrimPattern> context) {

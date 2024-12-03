@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
@@ -40,7 +40,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
 	                                          Player player, InteractionHand hand, BlockHitResult result) {
 		if (stack.getItem() instanceof DyeItem dyeItem && this.COLOR != dyeItem.getDyeColor()) {
 			Block block = COLOR_DYE_STATUE_MAP.get(dyeItem.getDyeColor());
@@ -60,7 +60,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 					level.setBlockEntity(blockEntity);
 				}
 				stack.consume(1, player);
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 
 		}

@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:brown_mooshroom_statue"
-  },
+  "ingredient": "statues:brown_mooshroom_statue",
   "result": {
     "count": 1,
     "id": "minecraft:beef"

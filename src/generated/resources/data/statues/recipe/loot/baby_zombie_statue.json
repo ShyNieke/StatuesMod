@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:baby_zombie_statue"
-  },
+  "ingredient": "statues:baby_zombie_statue",
   "result": {
     "count": 1,
     "id": "minecraft:rotten_flesh"

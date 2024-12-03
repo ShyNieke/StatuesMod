@@ -35,25 +35,25 @@ public class HardcoreRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends ShapedRecipe> getSerializer() {
 		return StatuesRecipes.HARDCORE_SHAPED_SERIALIZER.get();
 	}
 
 	@Override
 	public boolean matches(CraftingInput craftingInput, Level level) {
-		return super.matches(craftingInput, level) && level != null && level.getLevelData().isHardcore();
+		return super.matches(craftingInput, level) && level.getLevelData().isHardcore();
 	}
 
-	@Override
-	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
-		ItemStack resultStack = super.getResultItem(lookupProvider);
-
-		ItemLore lore = ItemLore.EMPTY;
-		lore = lore.withLineAdded(Component.literal("Only craftable in Hardcore Mode").withStyle(ChatFormatting.DARK_PURPLE));
-		resultStack.set(DataComponents.LORE, lore);
-
-		return resultStack;
-	}
+//	@Override
+//	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
+//		ItemStack resultStack = super.getResultItem(lookupProvider);
+//
+//		ItemLore lore = ItemLore.EMPTY;
+//		lore = lore.withLineAdded(Component.literal("Only craftable in Hardcore Mode").withStyle(ChatFormatting.DARK_PURPLE));
+//		resultStack.set(DataComponents.LORE, lore);
+//
+//		return resultStack;
+//	}
 
 	@Override
 	public ItemStack assemble(CraftingInput craftingInput, HolderLookup.Provider lookupProvider) {

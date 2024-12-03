@@ -76,12 +76,12 @@ public class StatuesCommands {
 				upgrade.apply(heldStack, i);
 			}
 			ctx.getSource().sendSuccess(
-					() -> Component.translatable("commands.statues.upgrade.success", I18n.get(heldStack.getDescriptionId())).withStyle(ChatFormatting.GREEN),
+					() -> Component.translatable("commands.statues.upgrade.success", Component.translatable(heldStack.getItem().getDescriptionId()).getString()).withStyle(ChatFormatting.GREEN),
 					true
 			);
 		} else {
 			ctx.getSource().sendFailure(
-					Component.translatable("commands.statues.upgrade.invalid", I18n.get(heldStack.getDescriptionId())).withStyle(ChatFormatting.RED)
+					Component.translatable("commands.statues.upgrade.invalid", Component.translatable(heldStack.getItem().getDescriptionId()).getString()).withStyle(ChatFormatting.RED)
 			);
 		}
 		return 0;

@@ -26,6 +26,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+@SuppressWarnings("rawtypes")
 @OnlyIn(Dist.CLIENT)
 public class PlayerPoseScreen extends Screen {
 	private final PlayerStatue playerStatueEntity;

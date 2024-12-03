@@ -1,21 +1,11 @@
 {
   "type": "statues:upgrade",
   "catalysts": [
-    {
-      "item": "minecraft:echo_shard"
-    },
-    {
-      "tag": "c:eggs"
-    },
-    {
-      "tag": "c:ender_pearls"
-    },
-    {
-      "tag": "minecraft:soul_fire_base_blocks"
-    }
+    "minecraft:echo_shard",
+    "#c:eggs",
+    "#c:ender_pearls",
+    "#minecraft:soul_fire_base_blocks"
   ],
-  "center": {
-    "tag": "statues:statues/upgradeable"
-  },
+  "center": "#statues:statues/upgradeable",
   "upgradeType": "spawner"
 }

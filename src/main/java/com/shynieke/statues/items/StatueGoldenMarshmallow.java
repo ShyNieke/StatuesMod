@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class StatueGoldenMarshmallow extends Item {
 		if (stack.has(DataComponents.FOOD)) {
 			if (!level.isClientSide) {
 				if (this == StatueRegistry.MARSHMALLOW_GOLDEN.get()) {
-					List<Holder<MobEffect>> effectList = BuiltInRegistries.MOB_EFFECT.holders().collect(Collectors.toList());
+					List<Holder<MobEffect>> effectList = BuiltInRegistries.MOB_EFFECT.listElements().collect(Collectors.toList());
 					effectList.remove(MobEffects.CONFUSION);
 
 					int i = level.random.nextInt(effectList.size());
@@ -36,7 +37,12 @@ public class StatueGoldenMarshmallow extends Item {
 					entityIn.addEffect(randomEffect);
 				}
 			}
-			return entityIn.eat(level, stack);
+			Consumable consumable = stack.get(DataComponents.CONSUMABLE);
+			if (consumable != null) {
+				consumable.onConsume(level, entityIn, stack);
+			}
+
+			return stack;
 		}
 
 		return stack;

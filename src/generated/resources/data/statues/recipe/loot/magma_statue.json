@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:magma_statue"
-  },
+  "ingredient": "statues:magma_statue",
   "result": {
     "count": 1,
     "id": "minecraft:magma_cream"

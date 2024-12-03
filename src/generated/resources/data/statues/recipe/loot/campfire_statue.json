@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:campfire_statue"
-  },
+  "ingredient": "statues:campfire_statue",
   "result": {
     "count": 1,
     "id": "statues:marshmallow"

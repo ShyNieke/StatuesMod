@@ -1,15 +1,9 @@
 {
   "type": "statues:upgrade",
   "catalysts": [
-    {
-      "item": "minecraft:note_block"
-    },
-    {
-      "item": "minecraft:amethyst_shard"
-    }
+    "minecraft:note_block",
+    "minecraft:amethyst_shard"
   ],
-  "center": {
-    "tag": "statues:statues/upgradeable"
-  },
+  "center": "#statues:statues/upgradeable",
   "upgradeType": "sound"
 }

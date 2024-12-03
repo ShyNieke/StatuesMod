@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:evoker_statue"
-  },
+  "ingredient": "statues:evoker_statue",
   "result3": {
     "count": 1,
     "id": "minecraft:totem_of_undying"

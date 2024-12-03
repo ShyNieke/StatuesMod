@@ -10,7 +10,7 @@ public record StatueTableData(boolean isButtonPressed) implements CustomPacketPa
 	public static final StreamCodec<FriendlyByteBuf, StatueTableData> CODEC = CustomPacketPayload.codec(
 			StatueTableData::write,
 			StatueTableData::new);
-	public static final Type<StatueTableData> ID = new Type<>(ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "table_message"));
+	public static final Type<StatueTableData> ID = new Type<>(Reference.modLoc("table_message"));
 
 	public StatueTableData(final FriendlyByteBuf packetBuffer) {
 		this(packetBuffer.readBoolean());

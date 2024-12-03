@@ -10,7 +10,7 @@ public class EnumCycleButton<T extends Enum<T>> extends Button {
 	private final String translationPrefix;
 	private T value;
 
-	private T[] options;
+	private final T[] options;
 
 	public EnumCycleButton(int x, int y, int width, int height, String translationPrefix, T defaultValue, T[] options, OnPress onPress, CreateNarration createNarration) {
 		super(x, y, width, height, Component.translatable("statues." + translationPrefix + "." + defaultValue), onPress, createNarration);

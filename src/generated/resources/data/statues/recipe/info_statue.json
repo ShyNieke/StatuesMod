@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:book"
-    },
-    "C": {
-      "tag": "c:cobblestones"
-    },
-    "R": {
-      "tag": "c:dyes/red"
-    }
+    "B": "minecraft:book",
+    "C": "#c:cobblestones",
+    "R": "#c:dyes/red"
   },
   "pattern": [
     " R ",

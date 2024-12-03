@@ -9,7 +9,10 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 public class StatueEntities {
 	public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
-		event.register(StatueRegistry.STATUE_BAT.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, StatueBatEntity::canSpawnHere, RegisterSpawnPlacementsEvent.Operation.AND);
+		event.register(StatueRegistry.STATUE_BAT.get(),
+				SpawnPlacementTypes.ON_GROUND,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+				StatueBatEntity::canSpawnHere, RegisterSpawnPlacementsEvent.Operation.AND);
 	}
 
 	public static void registerEntityAttributes(EntityAttributeCreationEvent event) {

@@ -1,24 +1,16 @@
 {
   "type": "statues:upgrade",
   "catalysts": [
+    "#c:storage_blocks/lapis",
+    "#c:storage_blocks/lapis",
+    "#c:storage_blocks/lapis",
     {
-      "tag": "c:storage_blocks/lapis"
-    },
-    {
-      "tag": "c:storage_blocks/lapis"
-    },
-    {
-      "tag": "c:storage_blocks/lapis"
-    },
-    {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {},
       "items": "minecraft:enchanted_book"
     }
   ],
-  "center": {
-    "tag": "statues:statues/upgradeable"
-  },
+  "center": "#statues:statues/upgradeable",
   "tier": 1,
   "upgradeType": "mob_killer"
 }

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "tag": "c:chests/wooden"
-    },
-    "D": {
-      "tag": "c:cobblestones/deepslate"
-    },
-    "P": {
-      "item": "minecraft:piston"
-    }
+    "C": "#c:chests/wooden",
+    "D": "#c:cobblestones/deepslate",
+    "P": "minecraft:piston"
   },
   "pattern": [
     " P ",

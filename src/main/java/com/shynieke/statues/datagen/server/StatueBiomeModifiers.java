@@ -17,10 +17,10 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 public class StatueBiomeModifiers {
 
 	protected static final ResourceKey<BiomeModifier> ADD_SPAWN_MODIFIER = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
-			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "add_statue_bat_spawn"));
+			Reference.modLoc("add_statue_bat_spawn"));
 
 	protected static final ResourceKey<BiomeModifier> ADD_FEWER_SPAWN_MODIFIER = ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS,
-			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "add_fewer_statue_bat_spawn"));
+			Reference.modLoc("add_fewer_statue_bat_spawn"));
 
 	public static void bootstrap(BootstrapContext<BiomeModifier> context) {
 		HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);

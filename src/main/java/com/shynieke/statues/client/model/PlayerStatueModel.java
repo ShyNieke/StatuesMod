@@ -1,7 +1,8 @@
 package com.shynieke.statues.client.model;
 
-import com.google.common.collect.ImmutableList;
-import com.shynieke.statues.entity.PlayerStatue;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.shynieke.statues.client.model.state.PlayerStatueRenderState;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -9,11 +10,30 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.entity.HumanoidArm;
 
-public class PlayerStatueModel extends PlayerModel<PlayerStatue> {
+import java.util.List;
 
-	public PlayerStatueModel(ModelPart modelPart, boolean slim) {
-		super(modelPart, slim);
+public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
+
+	private final List<ModelPart> bodyParts;
+	public final ModelPart leftSleeve;
+	public final ModelPart rightSleeve;
+	public final ModelPart leftPants;
+	public final ModelPart rightPants;
+	public final ModelPart jacket;
+	private final boolean slim;
+
+	public PlayerStatueModel(ModelPart root, boolean slim) {
+		super(root, RenderType::entityTranslucent);
+		this.slim = slim;
+		this.leftSleeve = this.leftArm.getChild("left_sleeve");
+		this.rightSleeve = this.rightArm.getChild("right_sleeve");
+		this.leftPants = this.leftLeg.getChild("left_pants");
+		this.rightPants = this.rightLeg.getChild("right_pants");
+		this.jacket = this.body.getChild("jacket");
+		this.bodyParts = List.of(this.head, this.body, this.leftArm, this.rightArm, this.leftLeg, this.rightLeg);
 
 		this.hat.setRotation(0.0F, -1.75F, 0.0F);
 		this.rightSleeve.setRotation(-5.0F, 2.0F, 0.0F);
@@ -34,25 +54,31 @@ public class PlayerStatueModel extends PlayerModel<PlayerStatue> {
 	}
 
 	@Override
-	public void setupAnim(PlayerStatue entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.head.xRot = ((float) Math.PI / 180F) * entityIn.getHeadRotation().getX();
-		this.head.yRot = ((float) Math.PI / 180F) * entityIn.getHeadRotation().getY();
-		this.head.zRot = ((float) Math.PI / 180F) * entityIn.getHeadRotation().getZ();
-		this.body.xRot = ((float) Math.PI / 180F) * entityIn.getBodyRotation().getX();
-		this.body.yRot = ((float) Math.PI / 180F) * entityIn.getBodyRotation().getY();
-		this.body.zRot = ((float) Math.PI / 180F) * entityIn.getBodyRotation().getZ();
-		this.leftArm.xRot = ((float) Math.PI / 180F) * entityIn.getLeftArmRotation().getX();
-		this.leftArm.yRot = ((float) Math.PI / 180F) * entityIn.getLeftArmRotation().getY();
-		this.leftArm.zRot = ((float) Math.PI / 180F) * entityIn.getLeftArmRotation().getZ();
-		this.rightArm.xRot = ((float) Math.PI / 180F) * entityIn.getRightArmRotation().getX();
-		this.rightArm.yRot = ((float) Math.PI / 180F) * entityIn.getRightArmRotation().getY();
-		this.rightArm.zRot = ((float) Math.PI / 180F) * entityIn.getRightArmRotation().getZ();
-		this.leftLeg.xRot = ((float) Math.PI / 180F) * entityIn.getLeftLegRotation().getX();
-		this.leftLeg.yRot = ((float) Math.PI / 180F) * entityIn.getLeftLegRotation().getY();
-		this.leftLeg.zRot = ((float) Math.PI / 180F) * entityIn.getLeftLegRotation().getZ();
-		this.rightLeg.xRot = ((float) Math.PI / 180F) * entityIn.getRightLegRotation().getX();
-		this.rightLeg.yRot = ((float) Math.PI / 180F) * entityIn.getRightLegRotation().getY();
-		this.rightLeg.zRot = ((float) Math.PI / 180F) * entityIn.getRightLegRotation().getZ();
+	public void setupAnim(PlayerStatueRenderState renderState) {
+		this.body.visible = true;
+		this.rightArm.visible = true;
+		this.leftArm.visible = true;
+		this.rightLeg.visible = true;
+		this.leftLeg.visible = true;
+		super.setupAnim(renderState);
+		this.head.xRot = (float) (Math.PI / 180.0) * renderState.headPose.getX();
+		this.head.yRot = (float) (Math.PI / 180.0) * renderState.headPose.getY();
+		this.head.zRot = (float) (Math.PI / 180.0) * renderState.headPose.getZ();
+		this.body.xRot = (float) (Math.PI / 180.0) * renderState.bodyPose.getX();
+		this.body.yRot = (float) (Math.PI / 180.0) * renderState.bodyPose.getY();
+		this.body.zRot = (float) (Math.PI / 180.0) * renderState.bodyPose.getZ();
+		this.leftArm.xRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getX();
+		this.leftArm.yRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getY();
+		this.leftArm.zRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getZ();
+		this.rightArm.xRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getX();
+		this.rightArm.yRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getY();
+		this.rightArm.zRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getZ();
+		this.leftLeg.xRot = (float) (Math.PI / 180.0) * renderState.leftLegPose.getX();
+		this.leftLeg.yRot = (float) (Math.PI / 180.0) * renderState.leftLegPose.getY();
+		this.leftLeg.zRot = (float) (Math.PI / 180.0) * renderState.leftLegPose.getZ();
+		this.rightLeg.xRot = (float) (Math.PI / 180.0) * renderState.rightLegPose.getX();
+		this.rightLeg.yRot = (float) (Math.PI / 180.0) * renderState.rightLegPose.getY();
+		this.rightLeg.zRot = (float) (Math.PI / 180.0) * renderState.rightLegPose.getZ();
 		this.hat.copyFrom(this.head);
 		this.jacket.copyFrom(this.body);
 		this.leftSleeve.copyFrom(this.leftArm);
@@ -62,7 +88,26 @@ public class PlayerStatueModel extends PlayerModel<PlayerStatue> {
 	}
 
 	@Override
-	protected Iterable<ModelPart> headParts() {
-		return ImmutableList.of(this.head, this.hat);
+	public void setAllVisible(boolean visible) {
+		super.setAllVisible(visible);
+		this.leftSleeve.visible = visible;
+		this.rightSleeve.visible = visible;
+		this.leftPants.visible = visible;
+		this.rightPants.visible = visible;
+		this.jacket.visible = visible;
+	}
+
+	@Override
+	public void translateToHand(HumanoidArm side, PoseStack poseStack) {
+		this.root().translateAndRotate(poseStack);
+		ModelPart modelpart = this.getArm(side);
+		if (this.slim) {
+			float f = 0.5F * (float) (side == HumanoidArm.RIGHT ? 1 : -1);
+			modelpart.x += f;
+			modelpart.translateAndRotate(poseStack);
+			modelpart.x -= f;
+		} else {
+			modelpart.translateAndRotate(poseStack);
+		}
 	}
 }

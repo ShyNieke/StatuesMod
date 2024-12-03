@@ -3,13 +3,16 @@ package com.shynieke.statues.datagen.server.recipe;
 import com.shynieke.statues.recipe.LootRecipe;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
@@ -120,16 +123,25 @@ public class LootRecipeBuilder implements RecipeBuilder {
 		return Items.AIR;
 	}
 
+
 	@Override
 	public void save(RecipeOutput recipeOutput) {
-		ResourceLocation itemKey = BuiltInRegistries.ITEM.getKey(this.statueIngredient.getItems()[0].getItem());
+		ResourceLocation itemKey = this.statueIngredient.getValues().get(0).getKey().location();
 		ResourceLocation recipeID = ResourceLocation.fromNamespaceAndPath(itemKey.getNamespace(), "loot/" + itemKey.getPath());
 
-		save(recipeOutput, recipeID);
+		save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeID));
+	}
+
+	static ResourceLocation getDefaultRecipeId(ItemLike itemLike) {
+		return BuiltInRegistries.ITEM.getKey(itemLike.asItem());
+	}
+
+	public void save(RecipeOutput recipeOutput, ResourceLocation recipeID) {
+		save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeID));
 	}
 
 	@Override
-	public void save(RecipeOutput recipeOutput, ResourceLocation id) {
+	public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> resourceKey) {
 		LootRecipe lootRecipe = new LootRecipe(
 				Objects.requireNonNullElse(this.group, ""),
 				this.statueIngredient,
@@ -141,6 +153,6 @@ public class LootRecipeBuilder implements RecipeBuilder {
 				this.result3Chance,
 				this.showNotification);
 
-		recipeOutput.accept(id, lootRecipe, null);
+		recipeOutput.accept(resourceKey, lootRecipe, null);
 	}
 }

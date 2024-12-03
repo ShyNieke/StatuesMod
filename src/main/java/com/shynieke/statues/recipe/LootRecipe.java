@@ -4,13 +4,16 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -57,10 +60,10 @@ public class LootRecipe implements Recipe<RecipeInput> {
 		return this.getResultItem(lookupProvider).copy();
 	}
 
-	@Override
-	public boolean canCraftInDimensions(int x, int y) {
-		return false;
-	}
+//	@Override
+//	public boolean canCraftInDimensions(int x, int y) {
+//		return false;
+//	}
 
 	@Override
 	public boolean isSpecial() {
@@ -70,7 +73,6 @@ public class LootRecipe implements Recipe<RecipeInput> {
 	/**
 	 * @return the first result item
 	 */
-	@Override
 	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
 		return this.result;
 	}
@@ -111,20 +113,30 @@ public class LootRecipe implements Recipe<RecipeInput> {
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends Recipe<RecipeInput>> getSerializer() {
 		return StatuesRecipes.LOOT_SERIALIZER.get();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends Recipe<RecipeInput>> getType() {
 		return StatuesRecipes.LOOT_RECIPE.get();
+	}
+
+	@Override
+	public PlacementInfo placementInfo() {
+		return null;
+	}
+
+	@Override
+	public RecipeBookCategory recipeBookCategory() {
+		return null;
 	}
 
 	public static class Serializer implements RecipeSerializer<LootRecipe> {
 		private static final MapCodec<LootRecipe> CODEC = RecordCodecBuilder.mapCodec(
 				instance -> instance.group(
 								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
-								Ingredient.CODEC_NONEMPTY.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
+								Ingredient.CODEC.fieldOf("ingredient").forGetter(recipe -> recipe.ingredient),
 								ItemStack.STRICT_CODEC.optionalFieldOf("result", ItemStack.EMPTY).forGetter(recipe -> recipe.result),
 								Codec.FLOAT.optionalFieldOf("result_chance", 1.0F).forGetter(recipe -> recipe.resultChance),
 								ItemStack.STRICT_CODEC.optionalFieldOf("result2", ItemStack.EMPTY).forGetter(recipe -> recipe.result2),

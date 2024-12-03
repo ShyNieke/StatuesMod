@@ -7,7 +7,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemNameBlockItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -23,12 +22,12 @@ public class StatueItemModelProvider extends ItemModelProvider {
 	protected void registerModels() {
 		for (DeferredHolder<Item, ? extends Item> registryObject : StatueRegistry.ITEMS.getEntries()) {
 			if (registryObject.get() instanceof BlockItem blockItem) {
-				if (blockItem instanceof ItemNameBlockItem) {
+				if (blockItem.getBlock() == StatueRegistry.CORE_FLOWER_CROP.get()) {
 					generatedItem(registryObject.getId());
 				} else {
 					if (registryObject.getId().equals(StatueRegistry.CORE_FLOWER_ITEM.getId()))
 						singleTexture(registryObject.getId().getPath(), ResourceLocation.withDefaultNamespace("item/generated"),
-								"layer0", ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "block/" + registryObject.getId().getPath()));
+								"layer0", Reference.modLoc("block/" + registryObject.getId().getPath()));
 					else
 						withBlockParent(registryObject.getId());
 				}
@@ -50,7 +49,7 @@ public class StatueItemModelProvider extends ItemModelProvider {
 
 	private void generatedItem(ResourceLocation location) {
 		singleTexture(location.getPath(), ResourceLocation.withDefaultNamespace("item/generated"),
-				"layer0", ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "item/" + location.getPath()));
+				"layer0", Reference.modLoc("item/" + location.getPath()));
 	}
 
 	private void generateStatueCompass(ResourceLocation location, ResourceLocation textureLocation) {

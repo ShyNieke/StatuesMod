@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:warden_statue"
-  },
+  "ingredient": "statues:warden_statue",
   "result": {
     "count": 1,
     "id": "minecraft:sculk_sensor"

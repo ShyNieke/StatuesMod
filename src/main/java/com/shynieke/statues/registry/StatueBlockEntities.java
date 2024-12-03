@@ -17,7 +17,7 @@ import java.util.function.Supplier;
 public class StatueBlockEntities {
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Reference.MOD_ID);
 
-	public static final Supplier<BlockEntityType<StatueBlockEntity>> STATUE = BLOCK_ENTITIES.register("statue", () -> BlockEntityType.Builder.of(StatueBlockEntity::new,
+	public static final Supplier<BlockEntityType<StatueBlockEntity>> STATUE = BLOCK_ENTITIES.register("statue", () -> new BlockEntityType<>(StatueBlockEntity::new,
 			StatueRegistry.ANGRY_BEE_STATUE.get(), StatueRegistry.TRANS_BEE_STATUE.get(), StatueRegistry.BABY_ZOMBIE_STATUE.get(), StatueRegistry.BEE_STATUE.get(),
 			StatueRegistry.BLAZE_STATUE.get(), StatueRegistry.BROWN_MOOSHROOM_STATUE.get(), StatueRegistry.CAMPFIRE_STATUE.get(),
 			StatueRegistry.CAT_BLACK_STATUE.get(), StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get(), StatueRegistry.CAT_CALICO_STATUE.get(),
@@ -55,22 +55,22 @@ public class StatueBlockEntities {
 			StatueRegistry.WARDEN_STATUE.get(), StatueRegistry.ALLAY_STATUE.get(), StatueRegistry.AXOLOTL_LUCY_STATUE.get(),
 			StatueRegistry.AXOLOTL_WILD_STATUE.get(), StatueRegistry.AXOLOTL_GOLD_STATUE.get(), StatueRegistry.AXOLOTL_CYAN_STATUE.get(),
 			StatueRegistry.AXOLOTL_BLUE_STATUE.get(), StatueRegistry.FROG_TEMPERATE_STATUE.get(), StatueRegistry.FROG_WARM_STATUE.get(),
-			StatueRegistry.FROG_COLD_STATUE.get(), StatueRegistry.TADPOLE_STATUE.get()).build(null));
+			StatueRegistry.FROG_COLD_STATUE.get(), StatueRegistry.TADPOLE_STATUE.get()));
 
 	public static final Supplier<BlockEntityType<ShulkerStatueBlockEntity>> SHULKER_STATUE = BLOCK_ENTITIES.register("shulker_statue", () ->
-			BlockEntityType.Builder.of(ShulkerStatueBlockEntity::new, StatueRegistry.SHULKER_STATUE.get()).build(null));
+			new BlockEntityType<>(ShulkerStatueBlockEntity::new, StatueRegistry.SHULKER_STATUE.get()));
 
 	public static final Supplier<BlockEntityType<TropicalFishBlockEntity>> TROPICAL_FISH = BLOCK_ENTITIES.register("tropical_fish", () ->
-			BlockEntityType.Builder.of(TropicalFishBlockEntity::new, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
+			new BlockEntityType<>(TropicalFishBlockEntity::new, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
 					StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
 					StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(),
-					StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()).build(null));
+					StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()));
 
-	public static final Supplier<BlockEntityType<PlayerBlockEntity>> PLAYER = BLOCK_ENTITIES.register("player", () -> BlockEntityType.Builder.of(PlayerBlockEntity::new,
-			StatueRegistry.PLAYER_STATUE.get()).build(null));
+	public static final Supplier<BlockEntityType<PlayerBlockEntity>> PLAYER = BLOCK_ENTITIES.register("player", () -> new BlockEntityType<>(PlayerBlockEntity::new,
+			StatueRegistry.PLAYER_STATUE.get()));
 
-	public static final Supplier<BlockEntityType<StatueTableBlockEntity>> STATUE_TABLE = BLOCK_ENTITIES.register("statue_table", () -> BlockEntityType.Builder.of(StatueTableBlockEntity::new,
-			StatueRegistry.STATUE_TABLE.get()).build(null));
+	public static final Supplier<BlockEntityType<StatueTableBlockEntity>> STATUE_TABLE = BLOCK_ENTITIES.register("statue_table", () -> new BlockEntityType<>(StatueTableBlockEntity::new,
+			StatueRegistry.STATUE_TABLE.get()));
 
 	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
 		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SHULKER_STATUE.get(), ShulkerStatueBlockEntity::getHandler);

@@ -7,6 +7,7 @@ import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
+import com.shynieke.statues.client.model.state.PlayerStatueRenderState;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -88,6 +89,7 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
 		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
 
+		playerModel.setupAnim(new PlayerStatueRenderState());
 		playerModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY);
 
 		poseStack.popPose();

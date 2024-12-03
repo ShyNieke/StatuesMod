@@ -17,9 +17,9 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
 import net.minecraft.world.entity.animal.Fox;
-import net.minecraft.world.entity.animal.Fox.Type;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.animal.MushroomCow;
+import net.minecraft.world.entity.animal.MushroomCow.Variant;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.animal.Sheep;
@@ -163,13 +163,13 @@ public class DropHandler {
 			}
 		} else if (entity instanceof MushroomCow mooshroom) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.MOOSHROOM_STATUE.get());
-			if (mooshroom.getVariant() == MushroomCow.MushroomType.BROWN) {
+			if (mooshroom.getVariant() == Variant.BROWN) {
 				itemStackToDrop = new ItemStack(StatueRegistry.BROWN_MOOSHROOM_STATUE.get());
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Fox fox) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.FOX_STATUE.get());
-			if (fox.getVariant() == Type.SNOW) {
+			if (fox.getVariant() == Fox.Variant.SNOW) {
 				itemStackToDrop = new ItemStack(StatueRegistry.FOX_SNOW_STATUE.get());
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);

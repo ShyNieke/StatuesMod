@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:axolotl_gold_statue"
-  },
+  "ingredient": "statues:axolotl_gold_statue",
   "result": {
     "count": 1,
     "id": "minecraft:tropical_fish"

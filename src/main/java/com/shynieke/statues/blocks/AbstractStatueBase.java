@@ -1,5 +1,6 @@
 package com.shynieke.statues.blocks;
 
+import com.shynieke.statues.blockentities.AbstractStatueBlockEntity;
 import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -9,7 +10,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -57,16 +58,15 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		}
 		return super.useWithoutItem(state, level, pos, player, result);
 	}
-
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
 	                                          InteractionHand hand, BlockHitResult result) {
 		if (state.getValue(INTERACTIVE) && hand == InteractionHand.MAIN_HAND) {
 			if (!level.isClientSide && (getBE(level, pos) != null)) {
 				return getBE(level, pos).interact(level, pos, state, player, hand, result);
 			}
 		}
-		return ItemInteractionResult.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	public StatueBlockEntity getBE(BlockGetter getter, BlockPos pos) {
@@ -106,22 +106,20 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-		ItemStack itemstack = super.getCloneItemStack(level, pos, state);
-		if (level.getBlockEntity(pos) != null) {
-			level.getBlockEntity(pos).saveToItem(itemstack, level.registryAccess());
+	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+		ItemStack stack = super.getCloneItemStack(level, pos, state, includeData, player);
+		if (level.getBlockEntity(pos) instanceof AbstractStatueBlockEntity statueBlockEntity) {
+			statueBlockEntity.saveToItem(stack, level.registryAccess());
 		}
-		return itemstack;
+		return stack;
 	}
 
 	@Override
 	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (state.getValue(INTERACTIVE) && level.getBlockEntity(pos) instanceof StatueBlockEntity statueBlockEntity) {
-			BlockEntity blockentity = level.getBlockEntity(pos);
 			if (!level.isClientSide && !player.hasInfiniteMaterials()) {
 				ItemStack itemstack = new ItemStack(this.asItem());
 				statueBlockEntity.saveToItem(itemstack, level.registryAccess());
-				blockentity.saveToItem(itemstack, level.registryAccess());
 
 				ItemEntity itementity = new ItemEntity(level,
 						(double) pos.getX() + 0.5D,
@@ -149,7 +147,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, BlockGetter getter, BlockPos pos) {
+	protected boolean propagatesSkylightDown(BlockState state) {
 		return true;
 	}
 
@@ -199,12 +197,13 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, @Nullable Orientation orientation, boolean isMoving) {
 		if (!level.isClientSide) {
 			if (canPlaySound(level, pos, state) && level.hasNeighborSignal(pos)) {
-				level.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F, (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.5F);
+				level.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F,
+						(level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.5F);
 			}
 		}
-		super.neighborChanged(state, level, pos, blockIn, fromPos, isMoving);
+		super.neighborChanged(state, level, pos, blockIn, orientation, isMoving);
 	}
 }

@@ -55,10 +55,9 @@ public class StatueBlockItem extends BlockItem {
 		BlockState state = super.getPlacementState(context);
 		ItemStack stack = context.getItemInHand();
 		if (state != null && state.getBlock() instanceof AbstractStatueBase) {
-			if (stack.has(StatueDataComponents.UPGRADED)) {
-				if (stack.get(StatueDataComponents.UPGRADED)) {
-					state = state.setValue(AbstractStatueBase.INTERACTIVE, true);
-				}
+			boolean upgraded = stack.getOrDefault(StatueDataComponents.UPGRADED, false);
+			if (upgraded) {
+				state = state.setValue(AbstractStatueBase.INTERACTIVE, true);
 			}
 		}
 		return state;

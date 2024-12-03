@@ -1,12 +1,8 @@
 {
   "type": "statues:upgrade",
   "catalysts": [
-    {
-      "item": "minecraft:glow_ink_sac"
-    }
+    "minecraft:glow_ink_sac"
   ],
-  "center": {
-    "tag": "statues:statues/upgradeable"
-  },
+  "center": "#statues:statues/upgradeable",
   "upgradeType": "glowing"
 }

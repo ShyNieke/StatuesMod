@@ -2,15 +2,17 @@ package com.shynieke.statues.entity;
 
 import com.shynieke.statues.config.StatuesConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -33,7 +35,7 @@ public class StatueBatEntity extends Bat {
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn, EntitySpawnReason reason, @Nullable SpawnGroupData spawnDataIn) {
 		SpawnGroupData data = super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn);
 		int random = getRandom().nextInt(10);
 		if (random < 5) {
@@ -43,16 +45,16 @@ public class StatueBatEntity extends Bat {
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (!source.is(DamageTypeTags.AVOIDS_GUARDIAN_THORNS) &&
 				source.getDirectEntity() instanceof LivingEntity livingEntity) {
-			livingEntity.hurt(this.damageSources().thorns(this), 2.0F);
+			livingEntity.hurtServer(serverLevel, this.damageSources().thorns(this), 2.0F);
 		}
 
-		return super.hurt(source, amount);
+		return super.hurtServer(serverLevel, source, amount);
 	}
 
-	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor levelAccessor, MobSpawnType reason, BlockPos pos, RandomSource randomIn) {
+	public static boolean canSpawnHere(EntityType<StatueBatEntity> batIn, LevelAccessor levelAccessor, EntitySpawnReason reason, BlockPos pos, RandomSource randomIn) {
 		if (!StatuesConfig.COMMON.statueBatSpawning.get()) {
 			return false;
 		}
@@ -61,7 +63,7 @@ public class StatueBatEntity extends Bat {
 		} else {
 			int i = levelAccessor.getMaxLocalRawBrightness(pos);
 			int j = 4;
-			if (isNearHalloween()) {
+			if (isHalloween()) {
 				j = 7;
 			} else if (randomIn.nextBoolean()) {
 				return false;
@@ -71,7 +73,7 @@ public class StatueBatEntity extends Bat {
 		}
 	}
 
-	private static boolean isNearHalloween() {
+	private static boolean isHalloween() {
 		LocalDate localdate = LocalDate.now();
 		int i = localdate.getDayOfMonth();
 		int j = localdate.getMonthValue();

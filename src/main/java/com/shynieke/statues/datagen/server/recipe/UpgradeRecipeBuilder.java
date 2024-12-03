@@ -4,21 +4,25 @@ import com.shynieke.statues.recipe.UpgradeRecipe;
 import com.shynieke.statues.recipe.UpgradeType;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class UpgradeRecipeBuilder implements RecipeBuilder {
 	private final Ingredient center;
-	private final NonNullList<Ingredient> catalysts = NonNullList.create();
+	private final List<Ingredient> catalysts = new ArrayList<>();
 	private ItemStack result = ItemStack.EMPTY;
 	private boolean requireCore = false;
 	private UpgradeType upgradeType = UpgradeType.CRAFTING;
@@ -81,12 +85,16 @@ public class UpgradeRecipeBuilder implements RecipeBuilder {
 		return result.getItem();
 	}
 
+	public void save(RecipeOutput recipeOutput, ResourceLocation recipeID) {
+		save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeID));
+	}
+
 	@Override
-	public void save(RecipeOutput recipeOutput, ResourceLocation id) {
+	public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> resourceKey) {
 		UpgradeRecipe upgradeRecipe = new UpgradeRecipe(
 				Objects.requireNonNullElse(this.group, ""),
 				center, catalysts, result, requireCore, upgradeType, tier, showNotification);
 
-		recipeOutput.accept(id, upgradeRecipe, null);
+		recipeOutput.accept(resourceKey, upgradeRecipe, null);
 	}
 }

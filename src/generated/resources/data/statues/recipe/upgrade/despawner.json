@@ -1,18 +1,10 @@
 {
   "type": "statues:upgrade",
   "catalysts": [
-    {
-      "tag": "minecraft:skulls"
-    },
-    {
-      "item": "minecraft:mycelium"
-    },
-    {
-      "item": "minecraft:lantern"
-    }
+    "#minecraft:skulls",
+    "minecraft:mycelium",
+    "minecraft:lantern"
   ],
-  "center": {
-    "tag": "statues:statues/upgradeable"
-  },
+  "center": "#statues:statues/upgradeable",
   "upgradeType": "despawner"
 }

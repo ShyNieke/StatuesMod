@@ -1,9 +1,7 @@
 {
   "type": "statues:loot",
   "group": "sheep",
-  "ingredient": {
-    "item": "statues:sheep_statue_orange"
-  },
+  "ingredient": "statues:sheep_statue_orange",
   "result": {
     "count": 1,
     "id": "minecraft:orange_wool"

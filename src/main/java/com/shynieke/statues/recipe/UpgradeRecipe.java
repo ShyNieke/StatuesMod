@@ -1,7 +1,6 @@
 package com.shynieke.statues.recipe;
 
 import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.shynieke.statues.datacomponent.StatueStats;
@@ -12,32 +11,37 @@ import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class UpgradeRecipe implements Recipe<RecipeInput> {
 	protected final String group;
 	protected final Ingredient center;
-	protected final NonNullList<Ingredient> catalysts;
+	protected final List<Ingredient> catalysts;
 	protected final ItemStack result;
 	protected final boolean requireCore;
 	private final UpgradeType upgradeType;
 	private final int tier;
 	protected final boolean showNotification;
 
-	public UpgradeRecipe(String group, Ingredient center, NonNullList<Ingredient> catalysts,
+	public UpgradeRecipe(String group, Ingredient center, List<Ingredient> catalysts,
 	                     ItemStack stack, boolean requireCore, UpgradeType upgradeType, int tier, boolean showNotification) {
 		this.group = group;
 		this.center = center;
@@ -53,7 +57,7 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 		NonNullList<Ingredient> nonnulllist = NonNullList.create();
 		nonnulllist.add(center);
 		if (requireCore)
-			nonnulllist.add(Ingredient.of(StatueTags.STATUE_CORE));
+			nonnulllist.add(Ingredient.of(BuiltInRegistries.ITEM.getOrThrow(StatueTags.STATUE_CORE)));
 		nonnulllist.addAll(catalysts);
 		return nonnulllist;
 	}
@@ -67,7 +71,7 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 		return center;
 	}
 
-	public NonNullList<Ingredient> getCatalysts() {
+	public List<Ingredient> getCatalysts() {
 		return catalysts;
 	}
 
@@ -159,10 +163,10 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 		return this.getResultItem(lookupProvider).copy();
 	}
 
-	@Override
-	public boolean canCraftInDimensions(int x, int y) {
-		return false;
-	}
+//	@Override
+//	public boolean canCraftInDimensions(int x, int y) {
+//		return false;
+//	}
 
 	@Override
 	public boolean isSpecial() {
@@ -172,40 +176,36 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 	/**
 	 * @return the first result item
 	 */
-	@Override
 	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
 		return this.result;
 	}
 
 	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends Recipe<RecipeInput>> getSerializer() {
 		return StatuesRecipes.UPGRADE_SERIALIZER.get();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends Recipe<RecipeInput>> getType() {
 		return StatuesRecipes.UPGRADE_RECIPE.get();
+	}
+
+	@Override
+	public PlacementInfo placementInfo() {
+		return null;
+	}
+
+	@Override
+	public RecipeBookCategory recipeBookCategory() {
+		return null;
 	}
 
 	public static class Serializer implements RecipeSerializer<UpgradeRecipe> {
 		private static final MapCodec<UpgradeRecipe> CODEC = RecordCodecBuilder.mapCodec(
 				instance -> instance.group(
 								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
-								Ingredient.CODEC_NONEMPTY.fieldOf("center").forGetter(recipe -> recipe.center),
-								Ingredient.CODEC_NONEMPTY
-										.listOf()
-										.fieldOf("catalysts")
-										.flatXmap(
-												array -> {
-													Ingredient[] aingredient = array
-															.toArray(Ingredient[]::new); //Forge skip the empty check and immediately create the array.
-													return aingredient.length > 4
-															? DataResult.error(() -> "Too many ingredients for shapeless recipe. The maximum is: %s".formatted(4))
-															: DataResult.success(NonNullList.of(Ingredient.EMPTY, aingredient));
-												},
-												DataResult::success
-										)
-										.forGetter(recipe -> recipe.catalysts),
+								Ingredient.CODEC.fieldOf("center").forGetter(recipe -> recipe.center),
+								Codec.lazyInitialized(() -> Ingredient.CODEC.listOf(0, 4)).fieldOf("catalysts").forGetter(p_360071_ -> p_360071_.catalysts),
 								ItemStack.SINGLE_ITEM_CODEC.optionalFieldOf("result", ItemStack.EMPTY).forGetter(recipe -> recipe.result),
 								Codec.BOOL.optionalFieldOf("requireCore", false).forGetter(recipe -> recipe.requireCore),
 								UpgradeType.CODEC.optionalFieldOf("upgradeType", UpgradeType.CRAFTING).forGetter(recipe -> recipe.upgradeType),
@@ -233,9 +233,9 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 			Ingredient center = Ingredient.CONTENTS_STREAM_CODEC.decode(byteBuf);
 
 			int i = byteBuf.readVarInt();
-			NonNullList<Ingredient> catalist = NonNullList.withSize(i, Ingredient.EMPTY); //You get it? As it's a list of catalysts
+			List<Ingredient> catalist = new ArrayList<>();
 
-			for (int j = 0; j < catalist.size(); ++j) {
+			for (int j = 0; j < i; ++j) {
 				catalist.set(j, Ingredient.CONTENTS_STREAM_CODEC.decode(byteBuf));
 			}
 

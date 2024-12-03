@@ -12,39 +12,22 @@ import com.shynieke.statues.client.render.PlayerStatueRenderer;
 import com.shynieke.statues.client.render.StatueBatRenderer;
 import com.shynieke.statues.client.screen.ShulkerStatueScreen;
 import com.shynieke.statues.client.screen.StatueTableScreen;
-import com.shynieke.statues.datacomponent.PlayerCompassData;
 import com.shynieke.statues.registry.StatueBlockEntities;
-import com.shynieke.statues.registry.StatueDataComponents;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.Services;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.decoration.ItemFrame;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -55,92 +38,13 @@ import java.util.List;
 import java.util.UUID;
 
 public class ClientHandler {
-	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "player_statue"), "player_statue");
-	public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "player_statue_slim"), "player_statue_slim");
+	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(Reference.modLoc("player_statue"), "player_statue");
+	public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(Reference.modLoc("player_statue_slim"), "player_statue_slim");
 	public static final List<UUID> SUPPORTER = new ArrayList<>();
 	public static final List<UUID> TRANSLATORS = new ArrayList<>();
 
 	public static void doClientStuff(final FMLClientSetupEvent event) {
 		setPlayerCache(Minecraft.getInstance());
-
-		event.enqueueWork(() -> {
-			ItemProperties.register(StatueRegistry.PLAYER_COMPASS.get(), ResourceLocation.withDefaultNamespace("angle"), new ClampedItemPropertyFunction() {
-				private final ClientHandler.Angle rotation = new ClientHandler.Angle();
-				private final ClientHandler.Angle rota = new ClientHandler.Angle();
-
-				public float unclampedCall(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity entityIn, int p_174567_) {
-					Entity entity = (Entity) (entityIn != null ? entityIn : stack.getEntityRepresentation());
-					if (entity == null) {
-						return 0.0F;
-					} else {
-						if (level == null && entity.level() instanceof ClientLevel) {
-							level = (ClientLevel) entity.level();
-						}
-						if (level != null) {
-							BlockPos blockpos = this.getWorldPos(level);
-							long gameTime = level.getGameTime();
-
-							PlayerCompassData compassData = stack.get(StatueDataComponents.PLAYER_COMPASS_DATA.get());
-							if (compassData != null) {
-								blockpos = compassData.pos();
-							}
-
-							if (blockpos != null && !(entity.distanceToSqr((double) blockpos.getX() + 0.5D, entity.position().y(), (double) blockpos.getZ() + 0.5D) < (double) 1.0E-5F)) {
-								boolean flag = entity instanceof Player && ((Player) entity).isLocalPlayer();
-								double d1 = 0.0D;
-								if (flag) {
-									d1 = (double) entityIn.getYRot();
-								} else if (entity instanceof ItemFrame) {
-									d1 = this.getFrameRotation((ItemFrame) entity);
-								} else if (entity instanceof ItemEntity) {
-									d1 = (double) (180.0F - ((ItemEntity) entity).getSpin(0.5F) / ((float) Math.PI * 2F) * 360.0F);
-								} else if (entityIn != null) {
-									d1 = (double) entityIn.yBodyRot;
-								}
-
-								d1 = Mth.positiveModulo(d1 / 360.0D, 1.0D);
-								double d2 = this.getLocationToAngle(Vec3.atCenterOf(blockpos), entity) / (double) ((float) Math.PI * 2F);
-								double d3;
-								if (flag) {
-									if (this.rotation.shouldUpdate(gameTime)) {
-										this.rotation.update(gameTime, 0.5D - (d1 - 0.25D));
-									}
-									d3 = d2 + this.rotation.rotation;
-								} else {
-									d3 = 0.5D - (d1 - 0.25D - d2);
-								}
-
-								return Mth.positiveModulo((float) d3, 1.0F);
-							} else {
-								if (this.rota.shouldUpdate(gameTime)) {
-									this.rota.update(gameTime, Math.random());
-								}
-
-								double d0 = this.rota.rotation + (double) ((float) stack.hashCode() / 2.14748365E9F);
-								return Mth.positiveModulo((float) d0, 1.0F);
-							}
-						}
-						double d0 = this.rota.rotation + (double) ((float) stack.hashCode() / 2.14748365E9F);
-						return Mth.positiveModulo((float) d0, 1.0F);
-					}
-				}
-
-				@Nullable
-				private BlockPos getWorldPos(ClientLevel level) {
-					return level.dimensionType().natural() ? level.getSharedSpawnPos() : null;
-				}
-
-				private double getFrameRotation(ItemFrame itemFrameIn) {
-					Direction direction = itemFrameIn.getDirection();
-					int i = direction.getAxis().isVertical() ? 90 * direction.getAxisDirection().getStep() : 0;
-					return (double) Mth.wrapDegrees(180 + direction.get2DDataValue() * 90 + itemFrameIn.getRotation() * 45 + i);
-				}
-
-				private double getLocationToAngle(Vec3 location, Entity entityIn) {
-					return Math.atan2(location.z() - entityIn.getZ(), location.x() - entityIn.getX());
-				}
-			});
-		});
 
 		new Thread(() -> {
 			Statues.LOGGER.info("Loading Statues supporter data...");
@@ -172,10 +76,26 @@ public class ClientHandler {
 			Statues.LOGGER.info("Loaded {} translators.", TRANSLATORS.size());
 		}, "Statues Perks Data Loader").start();
 
-		if (ModList.get().isLoaded("curios")) {
-			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
-		}
+//		if (ModList.get().isLoaded("curios")) {
+//			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
+//		}
 	}
+
+//	public static void registerExtensions(RegisterClientExtensionsEvent event) {
+//		event.registerItem(new IClientItemExtensions() {
+//			@Override
+//			public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+//				return new PlayerBEWLR(new BlockEntityRendererProvider.Context(
+//						Minecraft.getInstance().getBlockEntityRenderDispatcher(),
+//						Minecraft.getInstance().getBlockRenderer(),
+//						Minecraft.getInstance().getItemRenderer(),
+//						Minecraft.getInstance().getEntityRenderDispatcher(),
+//						Minecraft.getInstance().getEntityModels(),
+//						Minecraft.getInstance().font
+//				));
+//			}
+//		}, StatueRegistry.PLAYER_STATUE.asItem());
+//	}
 
 	public static void onRegisterMenu(final RegisterMenuScreensEvent event) {
 		event.register(StatueRegistry.STATUE_TABLE_MENU.get(), StatueTableScreen::new);

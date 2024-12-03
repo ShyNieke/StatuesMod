@@ -36,18 +36,18 @@ public class StatuesDevCommands {
 		beBlocks.addAll(StatueBlockEntities.SHULKER_STATUE.get().getValidBlocks());
 		beBlocks.addAll(StatueBlockEntities.TROPICAL_FISH.get().getValidBlocks());
 		List<ResourceLocation> missingBlocks = new ArrayList<>();
-		ctx.getSource().getLevel().getRecipeManager().getAllRecipesFor(StatuesRecipes.LOOT_RECIPE.get()).forEach(recipe -> {
-			if (recipe.id().getNamespace().equals(Reference.MOD_ID)) {
-				for (Ingredient ingredient : recipe.value().getIngredients()) {
-					for (ItemStack stack : ingredient.getItems()) {
-						if (stack.getItem() instanceof BlockItem blockItem) {
-							if (!beBlocks.contains(blockItem.getBlock()))
-								missingBlocks.add(BuiltInRegistries.BLOCK.getKey(blockItem.getBlock()));
-						}
-					}
-				}
-			}
-		});
+//		ctx.getSource().getLevel().getRecipeManager().getAllRecipesFor(StatuesRecipes.LOOT_RECIPE.get()).forEach(recipe -> { TODO: Fix this check loot command!
+//			if (recipe.id().getNamespace().equals(Reference.MOD_ID)) {
+//				for (Ingredient ingredient : recipe.value().getIngredients()) {
+//					for (ItemStack stack : ingredient.getItems()) {
+//						if (stack.getItem() instanceof BlockItem blockItem) {
+//							if (!beBlocks.contains(blockItem.getBlock()))
+//								missingBlocks.add(BuiltInRegistries.BLOCK.getKey(blockItem.getBlock()));
+//						}
+//					}
+//				}
+//			}
+//		});
 		if (missingBlocks.isEmpty()) {
 			ctx.getSource().sendSuccess(() -> Component.literal("No blocks with loot are missing from the Statue block entity valid blocks"), false);
 		} else {

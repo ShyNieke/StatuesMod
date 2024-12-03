@@ -11,7 +11,7 @@ public record PlayerStatueScreenData(int entityID) implements CustomPacketPayloa
 	public static final StreamCodec<FriendlyByteBuf, PlayerStatueScreenData> CODEC = CustomPacketPayload.codec(
 			PlayerStatueScreenData::write,
 			PlayerStatueScreenData::new);
-	public static final Type<PlayerStatueScreenData> ID = new Type<>(ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "statue_screen"));
+	public static final Type<PlayerStatueScreenData> ID = new Type<>(Reference.modLoc("statue_screen"));
 
 
 	public PlayerStatueScreenData(FriendlyByteBuf buf) {

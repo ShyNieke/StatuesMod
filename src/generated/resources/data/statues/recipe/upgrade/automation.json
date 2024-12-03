@@ -1,15 +1,9 @@
 {
   "type": "statues:upgrade",
   "catalysts": [
-    {
-      "item": "minecraft:hopper"
-    },
-    {
-      "item": "minecraft:observer"
-    }
+    "minecraft:hopper",
+    "minecraft:observer"
   ],
-  "center": {
-    "tag": "statues:statues/lootable"
-  },
+  "center": "#statues:statues/lootable",
   "upgradeType": "automation"
 }

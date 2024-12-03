@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id 'net.neoforged.gradle.userdev' version '7.0.168'
+    id 'net.neoforged.gradle.userdev' version '7.0.171'
     id 'net.darkhax.curseforgegradle' version '1.1.25'
     id 'com.modrinth.minotaur' version "2.+"
 }
@@ -45,7 +45,7 @@ runs {
         programArgument '--nogui'
     }
 
-    data {
+    clientData {
         // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
         // workingDirectory project.file('run-data')
 
@@ -94,35 +94,35 @@ repositories {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
-    compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
+//    compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
+//    compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
 
-    localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
+//    localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 
-    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
-    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+//    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
 
-    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
 
 //    implementation "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
 
-    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
-    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+//    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+//    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
-    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
-    localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"
+//    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+//    localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"
 
-    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
-    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+//    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+//    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
-    compileOnly "curse.maven:jade-324717:5639932" //Jade (WAILA)
-    localRuntime "curse.maven:jade-324717:5639932" //Jade (WAILA)
-//    runtimeOnly "curse.maven:TheOneProbe-245211:5084077" //The One probe (TOP)
+//    compileOnly "curse.maven:jade-324717:${jade_id}" //Jade (WAILA)
+//    localRuntime "curse.maven:jade-324717:${jade_id}" //Jade (WAILA)
+//    compileOnly "curse.maven:TheOneProbe-245211:5836106" //The One probe (TOP)
 
-    localRuntime "curse.maven:powah-rearchitected-633483:5608949" //Powah
-    localRuntime "curse.maven:cloth-config-348521:5623420" //Cloth Config (Dep for Powah)
+//    localRuntime "curse.maven:powah-rearchitected-633483:5608949" //Powah
+//    localRuntime "curse.maven:cloth-config-348521:5623420" //Cloth Config (Dep for Powah)
 }
 
 jar {

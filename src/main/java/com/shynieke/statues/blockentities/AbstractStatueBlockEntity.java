@@ -26,7 +26,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -94,7 +94,6 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		this.saveToNbt(compound, provider);
 	}
 
-	@Override
 	public void saveToItem(ItemStack stack, HolderLookup.Provider provider) {
 		stack.set(StatueDataComponents.STATS, this.stats);
 		stack.set(StatueDataComponents.UPGRADED, true);
@@ -373,8 +372,8 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		return true;
 	}
 
-	public ItemInteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+	public InteractionResult interact(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
+		return InteractionResult.PASS;
 	}
 
 	public AbstractStatueBase getStatue() {

@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:dolphin_statue"
-  },
+  "ingredient": "statues:dolphin_statue",
   "result": {
     "count": 1,
     "id": "minecraft:cod"

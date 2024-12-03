@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:ravager_statue"
-  },
+  "ingredient": "statues:ravager_statue",
   "result3": {
     "count": 1,
     "id": "minecraft:saddle"

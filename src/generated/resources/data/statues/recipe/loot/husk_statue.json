@@ -1,9 +1,7 @@
 {
   "type": "statues:loot",
   "group": "zombie",
-  "ingredient": {
-    "item": "statues:husk_statue"
-  },
+  "ingredient": "statues:husk_statue",
   "result": {
     "count": 1,
     "id": "minecraft:rotten_flesh"

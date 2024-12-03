@@ -7,6 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> {
 
-	private final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "textures/gui/container/statue_table.png");
+	private final ResourceLocation TEXTURE = Reference.modLoc("textures/gui/container/statue_table.png");
 	private Button buttonChisel;
 
 	public StatueTableScreen(StatueTableMenu screenContainer, Inventory inv, Component titleIn) {
@@ -55,7 +56,7 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-		guiGraphics.blit(TEXTURE, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.leftPos, this.topPos, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
 	}
 
 	@Override

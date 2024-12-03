@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:allay_statue"
-  },
+  "ingredient": "statues:allay_statue",
   "result": {
     "count": 1,
     "id": "minecraft:light_blue_dye"

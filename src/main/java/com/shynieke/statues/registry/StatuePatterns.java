@@ -16,7 +16,7 @@ public class StatuePatterns {
 	public static final ResourceKey<DecoratedPotPattern> STATUE_CORE = create("statue_core_pottery_pattern");
 
 	private static ResourceKey<DecoratedPotPattern> create(String path) {
-		return ResourceKey.create(Registries.DECORATED_POT_PATTERN, ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, path));
+		return ResourceKey.create(Registries.DECORATED_POT_PATTERN, Reference.modLoc(path));
 	}
 
 	public static void expandVanillaDefinitions() {

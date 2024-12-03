@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:elder_guardian_statue"
-  },
+  "ingredient": "statues:elder_guardian_statue",
   "result": {
     "count": 1,
     "id": "minecraft:prismarine_crystals"

@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:vindicator_statue"
-  },
+  "ingredient": "statues:vindicator_statue",
   "result2": {
     "count": 1,
     "id": "minecraft:emerald"

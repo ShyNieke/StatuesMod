@@ -10,14 +10,11 @@ import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.critereon.EnterBlockTrigger;
-import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.KilledTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -369,16 +366,6 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		}
 
 		/**
-		 * Get a trigger instance for killing an entity.
-		 *
-		 * @param entityType The entity type.
-		 * @return The trigger instance.
-		 */
-		protected static Criterion<KilledTrigger.TriggerInstance> onKill(EntityType<?> entityType) {
-			return KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(entityType));
-		}
-
-		/**
 		 * Get a trigger instance for holding items.
 		 *
 		 * @param items The items.
@@ -395,7 +382,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		 * @return The ResourceLocation.
 		 */
 		private static ResourceLocation modLoc(String path) {
-			return ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, path);
+			return Reference.modLoc(path);
 		}
 
 		/**

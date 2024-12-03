@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:pillager_statue"
-  },
+  "ingredient": "statues:pillager_statue",
   "result": {
     "count": 1,
     "id": "minecraft:arrow"

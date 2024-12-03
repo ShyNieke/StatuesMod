@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:salmon_statue"
-  },
+  "ingredient": "statues:salmon_statue",
   "result": {
     "count": 1,
     "id": "minecraft:salmon"

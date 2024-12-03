@@ -23,6 +23,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.Services;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.Nameable;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.Level;
@@ -291,9 +292,11 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		}
 	}
 
-	@Override
 	public void saveToItem(ItemStack stack, HolderLookup.Provider registries) {
-		super.saveToItem(stack, registries);
+		CompoundTag compoundtag = this.saveCustomOnly(registries);
+		this.removeComponentsFromTag(compoundtag);
+		BlockItem.setBlockEntityData(stack, this.getType(), compoundtag);
+		stack.applyComponents(this.collectComponents());
 	}
 
 	@Override

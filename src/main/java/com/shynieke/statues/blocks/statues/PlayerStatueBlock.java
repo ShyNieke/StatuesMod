@@ -14,20 +14,22 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.Nameable;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -98,7 +100,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity be, ItemStack stack) {
-		if (be instanceof PlayerBlockEntity blockEntity && ((Nameable) be).hasCustomName()) {
+		if (be instanceof PlayerBlockEntity playerBlockEntity && ((Nameable) be).hasCustomName()) {
 			player.causeFoodExhaustion(0.005F);
 
 			if (level.isClientSide)
@@ -108,13 +110,13 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				return;
 
 			ItemStack itemstack = new ItemStack(this);
-			itemstack.set(DataComponents.CUSTOM_NAME, ((Nameable) blockEntity).getName());
+			itemstack.set(DataComponents.CUSTOM_NAME, ((Nameable) playerBlockEntity).getName());
 
-			blockEntity.saveToItem(itemstack, level.registryAccess());
+			playerBlockEntity.saveToItem(itemstack, level.registryAccess());
 
 			popResource(level, pos, itemstack);
 
-			if (blockEntity.getComparatorApplied()) {
+			if (playerBlockEntity.getComparatorApplied()) {
 				popResource(level, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
 		} else {
@@ -130,11 +132,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-		ItemStack itemstack = super.getCloneItemStack(level, pos, state);
-		level.getBlockEntity(pos, StatueBlockEntities.PLAYER.get()).ifPresent(blockEntity ->
-				blockEntity.saveToItem(itemstack, level.registryAccess()));
-		return itemstack;
+	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
+		ItemStack stack = super.getCloneItemStack(level, pos, state, includeData, player);
+		if (level.getBlockEntity(pos) instanceof PlayerBlockEntity playerBlockEntity) {
+			playerBlockEntity.saveToItem(stack, level.registryAccess());
+		}
+		return stack;
 	}
 
 	@Override
@@ -179,10 +182,10 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult result) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult result) {
 		ResolvableProfile tileProfile = getBE(level, pos).getPlayerProfile();
 		PlayerBlockEntity playerBlockEntity = getBE(level, pos);
-		if (!level.isClientSide && playerBlockEntity != null && tileProfile != null) {
+		if (playerIn instanceof ServerPlayer serverPlayer && playerBlockEntity != null && tileProfile != null) {
 			String playerName = tileProfile.name().orElse("Unknown");
 			UUID id = tileProfile.id().orElse(null);
 			boolean onlineFlag = id != null && level.getPlayerByUUID(tileProfile.id().get()) != null;
@@ -195,7 +198,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY() + 0.5, pos.getZ(), comparatorStack));
 					}
 				}
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 			} else {
 				if (StatuesConfig.COMMON.playerCompass.get()) {
 					if (stack.getItem() == Items.COMPASS || stack.getItem() == StatueRegistry.PLAYER_COMPASS.get()) {
@@ -204,7 +207,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							ItemStack playerCompass = isPlayerCompass ? stack : new ItemStack(StatueRegistry.PLAYER_COMPASS.get());
 							Player player = level.getPlayerByUUID(id);
 							if (player != null && player.level().dimension().location().equals(playerIn.level().dimension().location())) {
-								BlockPos playerPos = player.blockPosition();
+								GlobalPos playerPos = GlobalPos.of(player.level().dimension(), player.blockPosition());
 								playerCompass.set(StatueDataComponents.PLAYER_COMPASS_DATA.get(), new PlayerCompassData(playerPos, tileProfile.name().orElse("Unknown")));
 
 								if (!isPlayerCompass) {
@@ -216,29 +219,29 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 									}
 								}
 							} else {
-								playerIn.sendSystemMessage(Component.translatable("statues.player.compass.dimension.failure", ChatFormatting.GOLD + playerName));
+								serverPlayer.sendSystemMessage(Component.translatable("statues.player.compass.dimension.failure", ChatFormatting.GOLD + playerName));
 							}
 
 						} else {
-							playerIn.sendSystemMessage(Component.translatable("statues.player.compass.offline", ChatFormatting.GOLD + playerName));
+							serverPlayer.sendSystemMessage(Component.translatable("statues.player.compass.offline", ChatFormatting.GOLD + playerName));
 						}
-						return ItemInteractionResult.SUCCESS;
+						return InteractionResult.SUCCESS;
 					}
 					if (stack.getItem() == Items.COMPARATOR) {
 						if (!playerBlockEntity.getComparatorApplied()) {
 							stack.consume(1, playerIn);
 							playerBlockEntity.setComparatorApplied(true);
 							playerBlockEntity.updateOnline();
-							return ItemInteractionResult.SUCCESS;
+							return InteractionResult.SUCCESS;
 						}
 					}
 					if (stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
 						if (level instanceof ServerLevel serverLevel) {
 							Consumer<PlayerStatue> consumer = EntityType.appendCustomEntityStackConfig((p_263581_) -> {
 							}, serverLevel, stack, playerIn);
-							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverLevel, consumer, pos, MobSpawnType.SPAWN_EGG, true, true);
+							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverLevel, consumer, pos, EntitySpawnReason.SPAWN_ITEM_USE, true, true);
 							if (playerStatueEntity == null) {
-								return ItemInteractionResult.FAIL;
+								return InteractionResult.FAIL;
 							}
 
 							serverLevel.addFreshEntityWithPassengers(playerStatueEntity);
@@ -256,7 +259,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				}
 			}
 		}
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 
 	@Override
@@ -292,7 +295,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
+	protected VoxelShape getOcclusionShape(BlockState state) {
 		return Shapes.empty();
 	}
 

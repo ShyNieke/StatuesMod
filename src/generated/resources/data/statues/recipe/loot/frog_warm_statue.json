@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:frog_warm_statue"
-  },
+  "ingredient": "statues:frog_warm_statue",
   "result": {
     "count": 1,
     "id": "minecraft:slime_ball"

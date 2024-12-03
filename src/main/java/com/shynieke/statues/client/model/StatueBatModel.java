@@ -1,15 +1,15 @@
 package com.shynieke.statues.client.model;
 
-import com.shynieke.statues.entity.StatueBatEntity;
+import com.shynieke.statues.client.model.state.StatueBatRenderState;
 import net.minecraft.client.animation.definitions.BatAnimation;
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
 
 /**
  * Because vanilla BatModel doesn't allow any other class than BatEntity
  */
-public class StatueBatModel extends HierarchicalModel<StatueBatEntity> {
+public class StatueBatModel extends EntityModel<StatueBatRenderState> {
 	private final ModelPart root;
 	private final ModelPart head;
 	private final ModelPart body;
@@ -20,7 +20,7 @@ public class StatueBatModel extends HierarchicalModel<StatueBatEntity> {
 	private final ModelPart feet;
 
 	public StatueBatModel(ModelPart root) {
-		super(RenderType::entityCutout);
+		super(root, RenderType::entityCutout);
 		this.root = root;
 		this.body = root.getChild("body");
 		this.head = root.getChild("head");
@@ -31,23 +31,18 @@ public class StatueBatModel extends HierarchicalModel<StatueBatEntity> {
 		this.feet = this.body.getChild("feet");
 	}
 
-	@Override
-	public ModelPart root() {
-		return this.root;
-	}
-
 	/**
 	 * Sets this entity's model rotation angles
 	 */
 	@Override
-	public void setupAnim(StatueBatEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		this.root().getAllParts().forEach(ModelPart::resetPose);
-		if (entity.isResting()) {
-			this.applyHeadRotation(netHeadYaw);
+	public void setupAnim(StatueBatRenderState statueBatRenderState) {
+		super.setupAnim(statueBatRenderState);
+		if (statueBatRenderState.isResting) {
+			this.applyHeadRotation(statueBatRenderState.yRot);
 		}
 
-		this.animate(entity.flyAnimationState, BatAnimation.BAT_FLYING, ageInTicks, 1.0F);
-		this.animate(entity.restAnimationState, BatAnimation.BAT_RESTING, ageInTicks, 1.0F);
+		this.animate(statueBatRenderState.flyAnimationState, BatAnimation.BAT_FLYING, statueBatRenderState.ageInTicks, 1.0F);
+		this.animate(statueBatRenderState.restAnimationState, BatAnimation.BAT_RESTING, statueBatRenderState.ageInTicks, 1.0F);
 	}
 
 	private void applyHeadRotation(float headRotation) {

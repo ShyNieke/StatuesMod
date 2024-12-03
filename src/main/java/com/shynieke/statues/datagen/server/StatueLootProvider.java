@@ -130,11 +130,6 @@ public class StatueLootProvider extends LootTableProvider {
 		}
 
 		@Override
-		protected boolean canHaveLootTable(EntityType<?> entitytype) {
-			return true;
-		}
-
-		@Override
 		protected Stream<EntityType<?>> getKnownEntityTypes() {
 			return StatueRegistry.ENTITIES.getEntries().stream().map(holder -> holder.get());
 		}

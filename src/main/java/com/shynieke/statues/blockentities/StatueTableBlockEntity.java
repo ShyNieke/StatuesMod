@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.MenuProvider;
@@ -81,7 +82,7 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	}
 
 	protected void updateCachedRecipe() {
-		if (this.level == null) return;
+		if (this.level == null || this.level.isClientSide) return;
 
 		if (getCenterSlot().isEmpty()) {
 			this.currentRecipe = null;
@@ -93,7 +94,7 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 		for (int i = 0; i < handler.getSlots(); i++) {
 			inputs.add(i, handler.getStackInSlot(i));
 		}
-		this.currentRecipe = this.level.getRecipeManager().getRecipeFor(StatuesRecipes.UPGRADE_RECIPE.get(), new MultipleRecipeInput(inputs), this.level).orElse(null);
+		this.currentRecipe = ((ServerLevel)this.level).recipeAccess().getRecipeFor(StatuesRecipes.UPGRADE_RECIPE.get(), new MultipleRecipeInput(inputs), this.level).orElse(null);
 	}
 
 	@Override

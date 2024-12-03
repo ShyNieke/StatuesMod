@@ -1,12 +1,9 @@
 package com.shynieke.statues.client.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.minecraft.client.model.PlayerModel;
+import com.shynieke.statues.client.model.state.PlayerStatueRenderState;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.world.entity.LivingEntity;
 
-public class StatuePlayerTileModel<T extends LivingEntity> extends PlayerModel<T> {
+public class StatuePlayerTileModel extends PlayerStatueModel {
 	public StatuePlayerTileModel(ModelPart part, boolean slim) {
 		super(part, slim);
 		this.hat.setPos(0.0F, -1.75F, 0.0F);
@@ -14,7 +11,8 @@ public class StatuePlayerTileModel<T extends LivingEntity> extends PlayerModel<T
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int p_102036_, int p_102037_, int p_350361_) {
+	public void setupAnim(PlayerStatueRenderState renderState) {
+		super.setupAnim(renderState);
 		this.setAllVisible(true);
 		this.hat.visible = true;
 		this.jacket.visible = true;
@@ -22,6 +20,5 @@ public class StatuePlayerTileModel<T extends LivingEntity> extends PlayerModel<T
 		this.rightPants.visible = true;
 		this.leftSleeve.visible = true;
 		this.rightSleeve.visible = true;
-		super.renderToBuffer(poseStack, vertexConsumer, p_102036_, p_102037_, p_350361_);
 	}
 }

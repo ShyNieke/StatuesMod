@@ -1,18 +1,10 @@
 {
   "type": "statues:loot",
   "ingredient": [
-    {
-      "item": "statues:villager_br_statue"
-    },
-    {
-      "item": "statues:villager_gr_statue"
-    },
-    {
-      "item": "statues:villager_pu_statue"
-    },
-    {
-      "item": "statues:villager_wh_statue"
-    }
+    "statues:villager_br_statue",
+    "statues:villager_gr_statue",
+    "statues:villager_pu_statue",
+    "statues:villager_wh_statue"
   ],
   "result3": {
     "count": 1,

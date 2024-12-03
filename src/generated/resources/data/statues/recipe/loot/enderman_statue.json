@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:enderman_statue"
-  },
+  "ingredient": "statues:enderman_statue",
   "result": {
     "count": 16,
     "id": "statues:pebble"

@@ -49,8 +49,6 @@ import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Locale;
@@ -231,19 +229,17 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	@Override
+	public boolean canUseSlot(EquipmentSlot slot) {
+		return slot != EquipmentSlot.BODY && !this.isDisabled(slot);
+	}
+
+	@Override
 	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
 		this.verifyEquippedItem(stack);
 		switch (slotIn.getType()) {
 			case HAND -> this.onEquipItem(slotIn, this.handItems.set(slotIn.getIndex(), stack), stack);
 			case HUMANOID_ARMOR -> this.onEquipItem(slotIn, this.armorItems.set(slotIn.getIndex(), stack), stack);
 		}
-
-	}
-
-	@Override
-	public boolean canTakeItem(ItemStack itemstackIn) {
-		EquipmentSlot equipmentSlot = getEquipmentSlotForItem(itemstackIn);
-		return this.getItemBySlot(equipmentSlot).isEmpty() && !this.isDisabled(equipmentSlot);
 	}
 
 	@Override
@@ -489,14 +485,14 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	private boolean isDisabled(EquipmentSlot slotIn) {
-		return (this.disabledSlots & 1 << slotIn.getFilterFlag()) != 0;
+		return (this.disabledSlots & 1 << slotIn.getFilterBit(0)) != 0;
 	}
 
 	private boolean swapItem(Player player, EquipmentSlot slot, ItemStack stack, InteractionHand hand) {
 		ItemStack itemstack = this.getItemBySlot(slot);
-		if (!itemstack.isEmpty() && (this.disabledSlots & 1 << slot.getFilterFlag() + 8) != 0) {
+		if (!itemstack.isEmpty() && (this.disabledSlots & 1 << slot.getFilterBit(8)) != 0) {
 			return false;
-		} else if (itemstack.isEmpty() && (this.disabledSlots & 1 << slot.getFilterFlag() + 16) != 0) {
+		} else if (itemstack.isEmpty() && (this.disabledSlots & 1 << slot.getFilterBit(16)) != 0) {
 			return false;
 		} else if (player.hasInfiniteMaterials() && itemstack.isEmpty() && !stack.isEmpty()) {
 			ItemStack itemstack2 = stack.copy();
@@ -526,25 +522,25 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
+	public boolean isInvulnerableTo(ServerLevel serverLevel, DamageSource source) {
 		if (isLocked()) {
 			return true;
 		}
 
-		return super.isInvulnerableTo(source);
+		return super.isInvulnerableTo(serverLevel, source);
 	}
 
 	/**
 	 * Called when the entity is attacked.
 	 */
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (this.isRemoved()) {
 			return false;
 		} else if (this.level() instanceof ServerLevel serverlevel) {
 			if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
 				this.remove(RemovalReason.DISCARDED);
 				return false;
-			} else if (!this.isInvulnerableTo(source)) {
+			} else if (!this.isInvulnerableTo(serverLevel, source)) {
 				if (source.is(DamageTypeTags.IS_EXPLOSION)) {
 					this.brokenByAnything(serverlevel, source);
 					this.remove(RemovalReason.KILLED);
@@ -595,7 +591,6 @@ public class PlayerStatue extends LivingEntity {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public void handleEntityEvent(byte id) {
 		if (id == 32) {
 			if (this.level().isClientSide) {
@@ -611,7 +606,6 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Checks if the entity is in range to render.
 	 */
-	@OnlyIn(Dist.CLIENT)
 	public boolean shouldRenderAtSqrDistance(double distance) {
 		double d0 = this.getBoundingBox().getSize() * 4.0D;
 		if (Double.isNaN(d0) || d0 == 0.0D) {
@@ -866,22 +860,22 @@ public class PlayerStatue extends LivingEntity {
 		return this.bodyRotation;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+
 	public Rotations getLeftArmRotation() {
 		return this.leftArmRotation;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+
 	public Rotations getRightArmRotation() {
 		return this.rightArmRotation;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+
 	public Rotations getLeftLegRotation() {
 		return this.leftLegRotation;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+
 	public Rotations getRightLegRotation() {
 		return this.rightLegRotation;
 	}

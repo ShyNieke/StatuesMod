@@ -177,6 +177,6 @@ public class StatueSoundProvider extends SoundDefinitionsProvider {
 	}
 
 	public ResourceLocation modLoc(String name) {
-		return ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, name);
+		return Reference.modLoc(name);
 	}
 }

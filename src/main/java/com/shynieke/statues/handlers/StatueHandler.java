@@ -9,9 +9,9 @@ import com.shynieke.statues.storage.StatueSavedData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -63,8 +63,8 @@ public class StatueHandler {
 
 	@SubscribeEvent
 	public void onLivingSpawnEvent(FinalizeSpawnEvent event) {
-		MobSpawnType spawnReason = event.getSpawnType();
-		if (spawnReason == MobSpawnType.NATURAL || spawnReason == MobSpawnType.REINFORCEMENT || spawnReason == MobSpawnType.EVENT) {
+		EntitySpawnReason spawnReason = event.getSpawnType();
+		if (spawnReason == EntitySpawnReason.NATURAL || spawnReason == EntitySpawnReason.REINFORCEMENT || spawnReason == EntitySpawnReason.EVENT) {
 			Mob mob = event.getEntity();
 			BlockPos nearestDespawner = StatueSavedData.get().getNearestDespawner(mob.level().dimension(), mob.blockPosition(), 32);
 			if (nearestDespawner != null) {

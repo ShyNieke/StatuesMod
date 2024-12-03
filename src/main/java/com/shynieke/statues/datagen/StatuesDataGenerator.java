@@ -13,7 +13,6 @@ import com.shynieke.statues.datagen.server.StatueGLMProvider;
 import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
-import com.shynieke.statues.datagen.server.patchouli.StatuePatchouliProvider;
 import com.shynieke.statues.registry.StatueJukeboxSongs;
 import com.shynieke.statues.registry.StatueTrims;
 import net.minecraft.core.Cloner;
@@ -38,32 +37,29 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class StatuesDataGenerator {
 	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
+	public static void gatherData(GatherDataEvent.Client event) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput packOutput = generator.getPackOutput();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
-		if (event.includeServer()) {
-			generator.addProvider(event.includeServer(), new StatueLootProvider(packOutput, lookupProvider));
-			generator.addProvider(event.includeServer(), new StatueRecipeProvider(packOutput, lookupProvider));
-			StatueBlockTagProvider blockTags = new StatueBlockTagProvider(packOutput, lookupProvider, helper);
-			generator.addProvider(event.includeServer(), blockTags);
-			generator.addProvider(event.includeServer(), new StatueItemTagProvider(packOutput, lookupProvider, blockTags, helper));
-			generator.addProvider(event.includeServer(), new StatueBiomeTagProvider(packOutput, lookupProvider, helper));
-			generator.addProvider(event.includeServer(), new StatueGLMProvider(packOutput, lookupProvider));
-			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(packOutput, lookupProvider));
-			generator.addProvider(event.includeServer(), new StatueAdvancementProvider(packOutput, lookupProvider, helper));
+		generator.addProvider(true, new StatueLanguageProvider(packOutput));
+		generator.addProvider(true, new StatueSoundProvider(packOutput, helper));
+		generator.addProvider(true, new StatueBlockstateProvider(packOutput, helper));
+		generator.addProvider(true, new StatueItemModelProvider(packOutput, helper));
 
-			generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
-					packOutput, CompletableFuture.supplyAsync(StatuesDataGenerator::getProvider), Set.of(Reference.MOD_ID)));
-		}
-		if (event.includeClient()) {
-			generator.addProvider(event.includeClient(), new StatueLanguageProvider(packOutput));
-			generator.addProvider(event.includeClient(), new StatueSoundProvider(packOutput, helper));
-			generator.addProvider(event.includeClient(), new StatueBlockstateProvider(packOutput, helper));
-			generator.addProvider(event.includeClient(), new StatueItemModelProvider(packOutput, helper));
-		}
+		generator.addProvider(true, new StatueLootProvider(packOutput, lookupProvider));
+		generator.addProvider(true, new StatueRecipeProvider.Runner(packOutput, lookupProvider));
+		StatueBlockTagProvider blockTags = new StatueBlockTagProvider(packOutput, lookupProvider, helper);
+		generator.addProvider(true, blockTags);
+		generator.addProvider(true, new StatueItemTagProvider(packOutput, lookupProvider, blockTags, helper));
+		generator.addProvider(true, new StatueBiomeTagProvider(packOutput, lookupProvider, helper));
+		generator.addProvider(true, new StatueGLMProvider(packOutput, lookupProvider));
+//			generator.addProvider(true, new StatuePatchouliProvider(packOutput, lookupProvider));
+		generator.addProvider(true, new StatueAdvancementProvider(packOutput, lookupProvider, helper));
+
+		generator.addProvider(true, new DatapackBuiltinEntriesProvider(
+				packOutput, CompletableFuture.supplyAsync(StatuesDataGenerator::getProvider), Set.of(Reference.MOD_ID)));
 	}
 
 	private static RegistrySetBuilder.PatchedRegistries getProvider() {

@@ -1,9 +1,7 @@
 {
   "type": "statues:loot",
   "group": "sheep",
-  "ingredient": {
-    "item": "statues:sheep_shaven_statue"
-  },
+  "ingredient": "statues:sheep_shaven_statue",
   "result3": {
     "count": 1,
     "id": "minecraft:mutton"

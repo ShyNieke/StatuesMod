@@ -5,6 +5,7 @@ import com.shynieke.statues.recipe.StatuesRecipes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -20,11 +21,11 @@ public class LootHelper {
 		return floodBucket;
 	}
 
-	public static RecipeHolder<LootRecipe> getMatchingLoot(Level level, ItemStack stack) {
-		return level.getRecipeManager().getRecipeFor(StatuesRecipes.LOOT_RECIPE.get(), new SingleRecipeInput(stack), level).orElse(null);
+	public static RecipeHolder<LootRecipe> getMatchingLoot(ServerLevel serverLevel, ItemStack stack) {
+		return serverLevel.recipeAccess().getRecipeFor(StatuesRecipes.LOOT_RECIPE.get(), new SingleRecipeInput(stack), serverLevel).orElse(null);
 	}
 
-	public static boolean hasLoot(Level level, ItemStack stack) {
-		return getMatchingLoot(level, stack) != null;
+	public static boolean hasLoot(ServerLevel serverLevel, ItemStack stack) {
+		return getMatchingLoot(serverLevel, stack) != null;
 	}
 }

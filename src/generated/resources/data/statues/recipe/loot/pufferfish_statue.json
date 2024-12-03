@@ -1,15 +1,9 @@
 {
   "type": "statues:loot",
   "ingredient": [
-    {
-      "item": "statues:pufferfish_statue"
-    },
-    {
-      "item": "statues:pufferfish_medium_statue"
-    },
-    {
-      "item": "statues:pufferfish_small_statue"
-    }
+    "statues:pufferfish_statue",
+    "statues:pufferfish_medium_statue",
+    "statues:pufferfish_small_statue"
   ],
   "result2": {
     "count": 1,

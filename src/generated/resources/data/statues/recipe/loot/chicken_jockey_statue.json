@@ -1,8 +1,6 @@
 {
   "type": "statues:loot",
-  "ingredient": {
-    "item": "statues:chicken_jockey_statue"
-  },
+  "ingredient": "statues:chicken_jockey_statue",
   "result": {
     "count": 1,
     "id": "minecraft:rotten_flesh"
