@@ -117,12 +117,12 @@ dependencies {
     compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
     localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
-    compileOnly "curse.maven:jade-324717:5639932" //Jade (WAILA)
-    localRuntime "curse.maven:jade-324717:5639932" //Jade (WAILA)
-//    runtimeOnly "curse.maven:TheOneProbe-245211:5084077" //The One probe (TOP)
+    compileOnly "curse.maven:jade-324717:6011258" //Jade (WAILA)
+    localRuntime "curse.maven:jade-324717:6011258" //Jade (WAILA)
+    localRuntime "curse.maven:TheOneProbe-245211:5836106" //The One probe (TOP)
 
-    localRuntime "curse.maven:powah-rearchitected-633483:5608949" //Powah
-    localRuntime "curse.maven:cloth-config-348521:5623420" //Cloth Config (Dep for Powah)
+    localRuntime "curse.maven:powah-rearchitected-633483:6074034" //Powah
+    localRuntime "curse.maven:cloth-config-348521:5729127" //Cloth Config (Dep for Powah)
 }
 
 jar {
