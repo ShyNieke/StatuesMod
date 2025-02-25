@@ -1,1 +1,1 @@
-* Fix incompatibility with any mod that adds axolotl variants
+* Fix some statues not being able to generate loot while they should
