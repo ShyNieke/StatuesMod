@@ -1,4 +1,8 @@
 {
+    "obtaining": {
+        "name": "Obtaining",
+        "icon": null
+    },
     "upgrading": {
         "name": "Upgrading",
         "icon": null
