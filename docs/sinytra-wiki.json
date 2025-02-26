@@ -1,0 +1,10 @@
+{
+    "id": "statues",
+    "platforms": {
+        "curseforge": "statues",
+        "modrinth": "statues"
+    },
+    "versions": {
+        "1.21.1": "1.21"
+    }
+}
