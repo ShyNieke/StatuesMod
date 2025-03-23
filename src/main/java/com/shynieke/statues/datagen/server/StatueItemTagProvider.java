@@ -9,15 +9,14 @@ import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
 public class StatueItemTagProvider extends ItemTagsProvider {
 
 	public StatueItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
-	                             TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, blockTagProvider.contentsGetter(), Reference.MOD_ID, existingFileHelper);
+	                             TagsProvider<Block> blockTagProvider) {
+		super(output, lookupProvider, blockTagProvider.contentsGetter(), Reference.MOD_ID);
 	}
 
 	@Override

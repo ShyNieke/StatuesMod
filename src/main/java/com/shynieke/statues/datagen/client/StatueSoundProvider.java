@@ -4,13 +4,12 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.registry.StatueSounds;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 
 public class StatueSoundProvider extends SoundDefinitionsProvider {
 
-	public StatueSoundProvider(PackOutput packOutput, ExistingFileHelper existingFileHelper) {
-		super(packOutput, Reference.MOD_ID, existingFileHelper);
+	public StatueSoundProvider(PackOutput packOutput) {
+		super(packOutput, Reference.MOD_ID);
 	}
 
 	@Override

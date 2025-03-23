@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "statues:block/pebble_down",
+    "east": "statues:block/pebble_east",
+    "north": "statues:block/pebble_north",
+    "particle": "statues:block/pebble_particle",
+    "south": "statues:block/pebble_south",
+    "up": "statues:block/pebble_up",
+    "west": "statues:block/pebble_west"
+  }
+}

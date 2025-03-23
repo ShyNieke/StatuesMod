@@ -1,9 +1,8 @@
 package com.shynieke.statues.datagen;
 
 import com.shynieke.statues.Reference;
-import com.shynieke.statues.datagen.client.StatueBlockstateProvider;
-import com.shynieke.statues.datagen.client.StatueItemModelProvider;
 import com.shynieke.statues.datagen.client.StatueLanguageProvider;
+import com.shynieke.statues.datagen.client.StatueModelProvider;
 import com.shynieke.statues.datagen.client.StatueSoundProvider;
 import com.shynieke.statues.datagen.server.StatueAdvancementProvider;
 import com.shynieke.statues.datagen.server.StatueBiomeModifiers;
@@ -27,7 +26,6 @@ import net.minecraft.data.registries.VanillaRegistries;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
@@ -41,22 +39,20 @@ public class StatuesDataGenerator {
 		DataGenerator generator = event.getGenerator();
 		PackOutput packOutput = generator.getPackOutput();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		generator.addProvider(true, new StatueLanguageProvider(packOutput));
-		generator.addProvider(true, new StatueSoundProvider(packOutput, helper));
-		generator.addProvider(true, new StatueBlockstateProvider(packOutput, helper));
-		generator.addProvider(true, new StatueItemModelProvider(packOutput, helper));
+		generator.addProvider(true, new StatueSoundProvider(packOutput));
+		generator.addProvider(true, new StatueModelProvider(packOutput));
 
 		generator.addProvider(true, new StatueLootProvider(packOutput, lookupProvider));
 		generator.addProvider(true, new StatueRecipeProvider.Runner(packOutput, lookupProvider));
-		StatueBlockTagProvider blockTags = new StatueBlockTagProvider(packOutput, lookupProvider, helper);
+		StatueBlockTagProvider blockTags = new StatueBlockTagProvider(packOutput, lookupProvider);
 		generator.addProvider(true, blockTags);
-		generator.addProvider(true, new StatueItemTagProvider(packOutput, lookupProvider, blockTags, helper));
-		generator.addProvider(true, new StatueBiomeTagProvider(packOutput, lookupProvider, helper));
+		generator.addProvider(true, new StatueItemTagProvider(packOutput, lookupProvider, blockTags));
+		generator.addProvider(true, new StatueBiomeTagProvider(packOutput, lookupProvider));
 		generator.addProvider(true, new StatueGLMProvider(packOutput, lookupProvider));
 //			generator.addProvider(true, new StatuePatchouliProvider(packOutput, lookupProvider));
-		generator.addProvider(true, new StatueAdvancementProvider(packOutput, lookupProvider, helper));
+		generator.addProvider(true, new StatueAdvancementProvider(packOutput, lookupProvider));
 
 		generator.addProvider(true, new DatapackBuiltinEntriesProvider(
 				packOutput, CompletableFuture.supplyAsync(StatuesDataGenerator::getProvider), Set.of(Reference.MOD_ID)));
