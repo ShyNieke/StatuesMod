@@ -1,6 +1,9 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "statues:block/player_statue"
+    "type": "minecraft:special",
+    "base": "statues:item/player_statue",
+    "model": {
+      "type": "statues:player"
+    }
   }
 }

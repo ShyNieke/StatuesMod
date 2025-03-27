@@ -1,4 +1,4 @@
-// 1.21.4	2025-03-23T19:55:15.6742244	Model Definitions - statues
+// 1.21.4	2025-03-27T21:21:49.4811102	Model Definitions - statues
 4427e42906b8877f46bd091919b793be75c3018b assets/statues/blockstates/allay_statue.json
 42d5ac316c690763e56b4fc0cab4ff995f42790a assets/statues/blockstates/angry_bee_statue.json
 a969b3fd05f50339960b7a4fee7a0200e2a085c4 assets/statues/blockstates/axolotl_blue_statue.json
@@ -63,7 +63,7 @@ ec17188937190dce594e3e4eef67149267994bce assets/statues/blockstates/panda_weak_s
 11497f5d60023b9b1a380655e5555b4d8b8da033 assets/statues/blockstates/pebble.json
 32e63e92b142c35e08e795e8b12cbf099222a97f assets/statues/blockstates/pig_statue.json
 59b663a8ca536ace19c186c39ebdb8fbec8c2918 assets/statues/blockstates/pillager_statue.json
-6d89a500de2d230c8e1bc7670d05b023d2ceafaa assets/statues/blockstates/player_statue.json
+31dbfa3605635d9030efd097cf1dfaad82b37c1a assets/statues/blockstates/player_statue.json
 c814cbdb1507ae95acb9510ec5943035eb8f8b10 assets/statues/blockstates/pufferfish_medium_statue.json
 2bff2cfd8e5fc06f48ac64e6e20ec02e255dd1cf assets/statues/blockstates/pufferfish_small_statue.json
 00747f01795757077171e99b12f4a3ed5e94c96f assets/statues/blockstates/pufferfish_statue.json
@@ -198,7 +198,7 @@ ddacad1a3c792bffabd255a2a97a1caa352ca8b9 assets/statues/items/pebble.json
 08d37ff11b4ba58fe40b9c5a408019e1d26c8944 assets/statues/items/pig_statue.json
 66f8b69159e36651d9e30a42318b0f1d014cdc87 assets/statues/items/pillager_statue.json
 bad45f288bf37fad570b4fb563f5b2e5be45b0b8 assets/statues/items/player_compass.json
-e0853dde8c940ae5a765974697399e3add9fe8c2 assets/statues/items/player_statue.json
+31508ee3c40fa9fd92fbc498a08c30c356da2d83 assets/statues/items/player_statue.json
 51c088d060df34170527f6bf012273c1734b194d assets/statues/items/player_statue_spawn_egg.json
 ab7e5f5b730cb53117f2387880975c6ff8eaf135 assets/statues/items/pufferfish_medium_statue.json
 fabedff0458b4f004a8dc90a5e3740af0a3ed994 assets/statues/items/pufferfish_small_statue.json
@@ -278,6 +278,7 @@ ed954e34fbb4467479f63fb9fa5a01d1b1d2cea3 assets/statues/models/block/core_flower
 198135cbd660d967c5f1d73c5285d0af91e99eb8 assets/statues/models/block/core_flower_crop_stage7.json
 390d4acc47641b1822790456589562abc90b213c assets/statues/models/block/core_flower_crop_stage8.json
 b159625eec2ceb1a669a6381cd1c3e9268450bf2 assets/statues/models/block/pebble.json
+a5137f381146466da673bf43fda6967800cc6703 assets/statues/models/block/player_statue.json
 e83570688a2a3d4a233e5b99aa5d0823797df655 assets/statues/models/item/core_armor_trim_smithing_template.json
 fa9fc7f611d993b13371c755ad759e6869988ecd assets/statues/models/item/core_flower.json
 b06a4dcef04a175a00ab407a6e34b662eee3c1dc assets/statues/models/item/core_flower_seed.json
@@ -288,6 +289,7 @@ b91ff219ed9b688c7601b74748043589a7513d0d assets/statues/models/item/marshmallow_
 f4cd2aea4af504431d7478c935db31f107d96696 assets/statues/models/item/marshmallow_golden.json
 53487111f3baab5442713955652192b507960f56 assets/statues/models/item/mooshroom_soup.json
 0f6fef9803462c1fd504a57bde8505070ea9c080 assets/statues/models/item/player_compass.json
+5f4847ea4522caa57bf9b03a7b1af951b4072180 assets/statues/models/item/player_statue.json
 2f97193100bda21982466751167f006cd4472014 assets/statues/models/item/player_statue_spawn_egg.json
 691f96a85f14b4edd2e414c98ca8b973161d425d assets/statues/models/item/royal_nugget.json
 9c7292a42aed65f13f4b82fd323580584f7af2ae assets/statues/models/item/statue_bat_spawn_egg.json

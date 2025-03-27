@@ -10,7 +10,10 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidArmorModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.multiplayer.PlayerInfo;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
@@ -25,6 +28,14 @@ import net.minecraft.client.resources.PlayerSkin.Model;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.PlayerModelPart;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.jetbrains.annotations.Nullable;
 
@@ -83,8 +94,8 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		this.addLayer(
 				new HumanoidArmorLayer<>(
 						this,
-						new HumanoidArmorModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_INNER_ARMOR : ModelLayers.PLAYER_INNER_ARMOR)),
-						new HumanoidArmorModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_OUTER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR)),
+						new HumanoidArmorModel<>(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_INNER_ARMOR : ModelLayers.PLAYER_INNER_ARMOR)),
+						new HumanoidArmorModel<>(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_OUTER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR)),
 						context.getEquipmentRenderer()
 				)
 		);
@@ -100,10 +111,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 
 	@Override
 	public void render(PlayerStatueRenderState statueRenderState, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
-		if (statueRenderState.skin != null && statueRenderState.skin.model() == Model.SLIM) {
-			isSlim = !isSlim;
-		}
-
+		this.isSlim = statueRenderState.skin != null && statueRenderState.skin.model() == Model.SLIM;
 		this.model = isSlim ? this.slimPlayerModel : playerModel;
 		poseStack.translate(0, statueRenderState.yOffset, 0);
 		if (statueRenderState.clientLock > 0) {

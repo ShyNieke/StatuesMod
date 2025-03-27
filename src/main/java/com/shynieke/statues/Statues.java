@@ -77,7 +77,8 @@ public class Statues {
 			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 			eventBus.addListener(ClientHandler::doClientStuff);
 			eventBus.addListener(ClientHandler::onRegisterMenu);
-			eventBus.addListener(ClientHandler::registerEntityRenders);
+			eventBus.addListener(ClientHandler::registerEntityRenderers);
+			eventBus.addListener(ClientHandler::registerSpecialModelRenderers);
 			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 			eventBus.addListener(ClientHandler::registerBlockColors);
 			NeoForge.EVENT_BUS.addListener(ClientHandler::onLogin);

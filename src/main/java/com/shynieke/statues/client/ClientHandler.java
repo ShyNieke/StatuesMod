@@ -7,7 +7,8 @@ import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
 import com.shynieke.statues.client.ber.StatueTableBER;
 import com.shynieke.statues.client.model.PlayerStatueModel;
-import com.shynieke.statues.client.render.PlayerBER;
+import com.shynieke.statues.client.render.PlayerBlockRenderer;
+import com.shynieke.statues.client.render.PlayerSpecialRenderer;
 import com.shynieke.statues.client.render.PlayerStatueRenderer;
 import com.shynieke.statues.client.render.StatueBatRenderer;
 import com.shynieke.statues.client.screen.ShulkerStatueScreen;
@@ -28,6 +29,7 @@ import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -125,13 +127,17 @@ public class ClientHandler {
 		}
 	}
 
-	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerBlockEntityRenderer(StatueBlockEntities.PLAYER.get(), PlayerBER::new);
+	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+		event.registerBlockEntityRenderer(StatueBlockEntities.PLAYER.get(), PlayerBlockRenderer::new);
 
 		event.registerEntityRenderer(StatueRegistry.PLAYER_STATUE_ENTITY.get(), PlayerStatueRenderer::new);
 		event.registerEntityRenderer(StatueRegistry.STATUE_BAT.get(), StatueBatRenderer::new);
 
 		event.registerBlockEntityRenderer(StatueBlockEntities.STATUE_TABLE.get(), StatueTableBER::new);
+	}
+
+	public static void registerSpecialModelRenderers(RegisterSpecialModelRendererEvent event) {
+		event.register(Reference.modLoc("player"), PlayerSpecialRenderer.Unbaked.CODEC);
 	}
 
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

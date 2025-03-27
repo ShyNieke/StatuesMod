@@ -4,6 +4,7 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.blocks.CoreFlowerCropBlock;
 import com.shynieke.statues.blocks.decorative.DisplayStandBlock;
+import com.shynieke.statues.client.render.PlayerSpecialRenderer;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.BlockModelGenerators.PlantType;
@@ -12,12 +13,19 @@ import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.Variant;
 import net.minecraft.client.data.models.blockstates.VariantProperties;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
+import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
@@ -27,10 +35,18 @@ public class StatueModelProvider extends ModelProvider {
 		super(output, Reference.MOD_ID);
 	}
 
+	private static final ModelTemplate PLAYER_STATUE = ModelTemplates.create("statues:player_statue", TextureSlot.PARTICLE);
+
 	@Override
 	protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
 		for (DeferredHolder<Block, ? extends Block> registryObject : StatueRegistry.BLOCKS.getEntries()) {
-			if (registryObject.get() instanceof AbstractBaseBlock) {
+			 if (registryObject.get() == StatueRegistry.PLAYER_STATUE.get()){
+				blockModels.createParticleOnlyBlock(registryObject.get(), Blocks.SOUL_SAND);
+				Item item = registryObject.get().asItem();
+				ResourceLocation resourcelocation = PLAYER_STATUE.create(item, TextureMapping.particle(registryObject.get()), blockModels.modelOutput);
+				ItemModel.Unbaked itemmodel$unbaked = ItemModelUtils.specialModel(resourcelocation, new PlayerSpecialRenderer.Unbaked());
+				itemModels.itemModelOutput.accept(item, itemmodel$unbaked);
+			} else if (registryObject.get() instanceof AbstractBaseBlock) {
 				makeStatue(blockModels, registryObject.get());
 			} else if (registryObject.get() == StatueRegistry.CORE_FLOWER_CROP.get()) {
 				blockModels.createCropBlock(registryObject.get(), CoreFlowerCropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7, 8);

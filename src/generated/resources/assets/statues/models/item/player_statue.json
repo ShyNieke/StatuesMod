@@ -1,0 +1,6 @@
+{
+  "parent": "statues:block/player_statue",
+  "textures": {
+    "particle": "statues:block/player_statue"
+  }
+}

@@ -6,8 +6,8 @@ import net.minecraft.client.model.geom.ModelPart;
 public class StatuePlayerTileModel extends PlayerStatueModel {
 	public StatuePlayerTileModel(ModelPart part, boolean slim) {
 		super(part, slim);
-		this.hat.setPos(0.0F, -1.75F, 0.0F);
-		this.rightSleeve.setPos(-5.0F, 2.0F, 0.0F);
+		this.hat.setRotation(0.0F, -1.75F, 0.0F);
+		this.rightSleeve.setRotation(-5.0F, 2.0F, 0.0F);
 	}
 
 	@Override

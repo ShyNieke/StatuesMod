@@ -3,6 +3,9 @@ package com.shynieke.statues.client.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.client.ClientHandler;
@@ -11,30 +14,36 @@ import com.shynieke.statues.client.model.state.PlayerStatueRenderState;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.SkullModelBase;
+import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
+import net.minecraft.client.renderer.special.SkullSpecialRenderer;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.ResolvableProfile;
+import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 @OnlyIn(Dist.CLIENT)
-public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
+public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntity> {
 	private final StatuePlayerTileModel model;
 	private final StatuePlayerTileModel slimModel;
 	public boolean isSlim = false;
 
 	public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultTexture();
 
-	public PlayerBER(BlockEntityRendererProvider.Context context) {
+	public PlayerBlockRenderer(BlockEntityRendererProvider.Context context) {
 		this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
 		this.slimModel = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), true);
 	}
@@ -52,10 +61,15 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 				isSlim = !isSlim;
 		}
 
-		render(direction, resolvableProfile, poseStack, bufferSource, combinedLightIn, partialTicks);
+		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
+		poseStack.pushPose();
+		poseStack.scale(0.5625F, 0.5625F, 0.5625F);
+		poseStack.translate(0.375F, 0.0F, 0.375F);
+		renderPlayerStatue(direction, resolvableProfile, playerModel, poseStack, bufferSource, combinedLightIn, partialTicks);
+		poseStack.popPose();
 	}
 
-	public void render(@Nullable Direction direction, @Nullable ResolvableProfile profile, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, float partialTicks) {
+	public static void renderPlayerStatue(@Nullable Direction direction, @Nullable ResolvableProfile profile, StatuePlayerTileModel playerModel, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, float partialTicks) {
 		poseStack.translate(0.5D, 0.25D, 0.5D);
 		poseStack.pushPose();
 		if (direction != null) {
@@ -87,7 +101,6 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 
 		int light = isSupporter ? 15728880 : combinedLight;
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
-		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
 
 		playerModel.setupAnim(new PlayerStatueRenderState());
 		playerModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY);

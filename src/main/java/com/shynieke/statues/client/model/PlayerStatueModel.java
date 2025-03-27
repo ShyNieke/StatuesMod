@@ -40,16 +40,55 @@ public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
 	}
 
 	public static MeshDefinition createStatueMesh(CubeDeformation cubeDeformation, boolean slim) {
-		MeshDefinition meshdefinition = PlayerModel.createMesh(cubeDeformation, slim);
+		MeshDefinition meshdefinition = HumanoidModel.createMesh(cubeDeformation, 0.0F);
 		PartDefinition partdefinition = meshdefinition.getRoot();
-
-		partdefinition.addOrReplaceChild("hat", CubeListBuilder.create().texOffs(32, 0).addBox(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, cubeDeformation.extend(2.5F)), PartPose.offset(0.0F, 0.0F, 0.0F));
-
+		float f = 0.25F;
 		if (slim) {
-			partdefinition.addOrReplaceChild("right_sleeve", CubeListBuilder.create().texOffs(40, 32).addBox(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.offset(-5.0F, 2.5F, 0.0F));
+			PartDefinition partdefinition1 = partdefinition.addOrReplaceChild(
+					"left_arm",
+					CubeListBuilder.create().texOffs(32, 48).addBox(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, cubeDeformation),
+					PartPose.offset(5.0F, 2.0F, 0.0F)
+			);
+			PartDefinition partdefinition2 = partdefinition.addOrReplaceChild(
+					"right_arm",
+					CubeListBuilder.create().texOffs(40, 16).addBox(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, cubeDeformation),
+					PartPose.offset(-5.0F, 2.0F, 0.0F)
+			);
+			partdefinition1.addOrReplaceChild(
+					"left_sleeve", CubeListBuilder.create().texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.ZERO
+			);
+			partdefinition2.addOrReplaceChild(
+					"right_sleeve", CubeListBuilder.create().texOffs(40, 32).addBox(-2.0F, -2.0F, -2.0F, 3.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.ZERO
+			);
 		} else {
-			partdefinition.addOrReplaceChild("right_sleeve", CubeListBuilder.create().texOffs(40, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.offset(-5.0F, 2.0F, 0.0F));
+			PartDefinition partdefinition4 = partdefinition.addOrReplaceChild(
+					"left_arm",
+					CubeListBuilder.create().texOffs(32, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation),
+					PartPose.offset(5.0F, 2.0F, 0.0F)
+			);
+			PartDefinition partdefinition6 = partdefinition.getChild("right_arm");
+			partdefinition4.addOrReplaceChild(
+					"left_sleeve", CubeListBuilder.create().texOffs(48, 48).addBox(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.ZERO
+			);
+			partdefinition6.addOrReplaceChild(
+					"right_sleeve", CubeListBuilder.create().texOffs(40, 32).addBox(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.ZERO
+			);
 		}
+
+		PartDefinition partdefinition5 = partdefinition.addOrReplaceChild(
+				"left_leg", CubeListBuilder.create().texOffs(16, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation), PartPose.offset(1.9F, 12.0F, 0.0F)
+		);
+		PartDefinition partdefinition7 = partdefinition.getChild("right_leg");
+		partdefinition5.addOrReplaceChild(
+				"left_pants", CubeListBuilder.create().texOffs(0, 48).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.ZERO
+		);
+		partdefinition7.addOrReplaceChild(
+				"right_pants", CubeListBuilder.create().texOffs(0, 32).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.ZERO
+		);
+		PartDefinition partdefinition3 = partdefinition.getChild("body");
+		partdefinition3.addOrReplaceChild(
+				"jacket", CubeListBuilder.create().texOffs(16, 32).addBox(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, cubeDeformation.extend(0.25F)), PartPose.ZERO
+		);
 		return meshdefinition;
 	}
 
@@ -67,12 +106,12 @@ public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
 		this.body.xRot = (float) (Math.PI / 180.0) * renderState.bodyPose.getX();
 		this.body.yRot = (float) (Math.PI / 180.0) * renderState.bodyPose.getY();
 		this.body.zRot = (float) (Math.PI / 180.0) * renderState.bodyPose.getZ();
-		this.leftArm.xRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getX();
-		this.leftArm.yRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getY();
-		this.leftArm.zRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getZ();
-		this.rightArm.xRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getX();
-		this.rightArm.yRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getY();
-		this.rightArm.zRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getZ();
+//		this.leftArm.xRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getX();
+//		this.leftArm.yRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getY();
+//		this.leftArm.zRot = (float) (Math.PI / 180.0) * renderState.leftArmPose.getZ();
+//		this.rightArm.xRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getX();
+//		this.rightArm.yRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getY();
+//		this.rightArm.zRot = (float) (Math.PI / 180.0) * renderState.rightArmPose.getZ();
 		this.leftLeg.xRot = (float) (Math.PI / 180.0) * renderState.leftLegPose.getX();
 		this.leftLeg.yRot = (float) (Math.PI / 180.0) * renderState.leftLegPose.getY();
 		this.leftLeg.zRot = (float) (Math.PI / 180.0) * renderState.leftLegPose.getZ();
@@ -81,8 +120,6 @@ public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
 		this.rightLeg.zRot = (float) (Math.PI / 180.0) * renderState.rightLegPose.getZ();
 		this.hat.copyFrom(this.head);
 		this.jacket.copyFrom(this.body);
-		this.leftSleeve.copyFrom(this.leftArm);
-		this.rightSleeve.copyFrom(this.rightArm);
 		this.leftPants.copyFrom(this.leftLeg);
 		this.rightPants.copyFrom(this.rightLeg);
 	}
