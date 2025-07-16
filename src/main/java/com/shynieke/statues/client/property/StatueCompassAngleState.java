@@ -36,35 +36,30 @@ public class StatueCompassAngleState extends NeedleDirectionHelper {
 	}
 
 	@Override
-	protected boolean wobble() {
-		return super.wobble();
-	}
-
-	@Override
-	protected float calculate(ItemStack stack, ClientLevel level, int p_388073_, Entity p_388489_) {
+	protected float calculate(ItemStack stack, ClientLevel level, int seed, Entity targetPos) {
 		PlayerCompassData compassData = stack.get(StatueDataComponents.PLAYER_COMPASS_DATA.get());
 		GlobalPos globalpos = compassData != null ? compassData.globalPos() : null;
 		long i = level.getGameTime();
-		return !isValidCompassTargetPos(p_388489_, globalpos)
-				? this.getRandomlySpinningRotation(p_388073_, i)
-				: this.getRotationTowardsCompassTarget(p_388489_, i, globalpos.pos());
+		return !isValidCompassTargetPos(targetPos, globalpos)
+				? this.getRandomlySpinningRotation(seed, i)
+				: this.getRotationTowardsCompassTarget(targetPos, i, globalpos.pos());
 	}
 
-	private float getRandomlySpinningRotation(int p_388932_, long p_387198_) {
-		if (this.noTargetWobbler.shouldUpdate(p_387198_)) {
-			this.noTargetWobbler.update(p_387198_, this.random.nextFloat());
+	private float getRandomlySpinningRotation(int seed, long gameTime) {
+		if (this.noTargetWobbler.shouldUpdate(gameTime)) {
+			this.noTargetWobbler.update(gameTime, this.random.nextFloat());
 		}
 
-		float f = this.noTargetWobbler.rotation() + (float) hash(p_388932_) / 2.1474836E9F;
+		float f = this.noTargetWobbler.rotation() + (float) hash(seed) / 2.1474836E9F;
 		return Mth.positiveModulo(f, 1.0F);
 	}
 
-	private float getRotationTowardsCompassTarget(Entity p_387599_, long p_387654_, BlockPos p_388263_) {
-		float f = (float) getAngleFromEntityToPos(p_387599_, p_388263_);
-		float f1 = getWrappedVisualRotationY(p_387599_);
-		if (p_387599_ instanceof Player player && player.isLocalPlayer() && player.level().tickRateManager().runsNormally()) {
-			if (this.wobbler.shouldUpdate(p_387654_)) {
-				this.wobbler.update(p_387654_, 0.5F - (f1 - 0.25F));
+	private float getRotationTowardsCompassTarget(Entity entity, long gameTime, BlockPos targetOis) {
+		float f = (float) getAngleFromEntityToPos(entity, targetOis);
+		float f1 = getWrappedVisualRotationY(entity);
+		if (entity instanceof Player player && player.isLocalPlayer() && player.level().tickRateManager().runsNormally()) {
+			if (this.wobbler.shouldUpdate(gameTime)) {
+				this.wobbler.update(gameTime, 0.5F - (f1 - 0.25F));
 			}
 
 			float f3 = f + this.wobbler.rotation();
@@ -75,22 +70,22 @@ public class StatueCompassAngleState extends NeedleDirectionHelper {
 		return Mth.positiveModulo(f2, 1.0F);
 	}
 
-	private static boolean isValidCompassTargetPos(Entity p_386563_, @Nullable GlobalPos p_387891_) {
-		return p_387891_ != null
-				&& p_387891_.dimension() == p_386563_.level().dimension()
-				&& !(p_387891_.pos().distToCenterSqr(p_386563_.position()) < 1.0E-5F);
+	private static boolean isValidCompassTargetPos(Entity entity, @Nullable GlobalPos pos) {
+		return pos != null
+				&& pos.dimension() == entity.level().dimension()
+				&& !(pos.pos().distToCenterSqr(entity.position()) < 1.0E-5F);
 	}
 
-	private static double getAngleFromEntityToPos(Entity p_388327_, BlockPos p_387426_) {
-		Vec3 vec3 = Vec3.atCenterOf(p_387426_);
-		return Math.atan2(vec3.z() - p_388327_.getZ(), vec3.x() - p_388327_.getX()) / (float) (Math.PI * 2);
+	private static double getAngleFromEntityToPos(Entity entity, BlockPos pos) {
+		Vec3 vec3 = Vec3.atCenterOf(pos);
+		return Math.atan2(vec3.z() - entity.getZ(), vec3.x() - entity.getX()) / (float) (Math.PI * 2);
 	}
 
-	private static float getWrappedVisualRotationY(Entity p_386969_) {
-		return Mth.positiveModulo(p_386969_.getVisualRotationYInDegrees() / 360.0F, 1.0F);
+	private static float getWrappedVisualRotationY(Entity entity) {
+		return Mth.positiveModulo(entity.getVisualRotationYInDegrees() / 360.0F, 1.0F);
 	}
 
-	private static int hash(int p_387430_) {
-		return p_387430_ * 1327217883;
+	private static int hash(int seed) {
+		return seed * 1327217883;
 	}
 }

@@ -1,5 +1,6 @@
 package com.shynieke.statues.network.handler;
 
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.menu.StatueTableMenu;
 import com.shynieke.statues.network.message.PlayerStatueSyncData;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
+import java.util.List;
 import java.util.UUID;
 
 public class ServerPayloadHandler {
@@ -23,6 +25,12 @@ public class ServerPayloadHandler {
 	public static ServerPayloadHandler getInstance() {
 		return INSTANCE;
 	}
+
+	private static final List<String> allowedKeys = List.of(
+			"NoGravity", "Small", "CustomNameVisible", "Invulnerable",
+			"Pose", "DisabledSlots", "Pose", "Scale", "Move", "Rotation",
+			"Model", "yOffset", "Locked"
+	);
 
 	public void handleSyncData(final PlayerStatueSyncData syncData, final IPayloadContext context) {
 		// Do something with the data, on the main thread
@@ -38,34 +46,39 @@ public class ServerPayloadHandler {
 									CompoundTag entityTag = playerStatue.saveWithoutId(new CompoundTag());
 									CompoundTag entityTagCopy = entityTag.copy();
 									if (!data.isEmpty()) {
+										List<String> keysToRemove = data.getAllKeys().stream()
+												.filter(key -> !allowedKeys.contains(key))
+												.toList();
+										Statues.LOGGER.info("Keys in tag: {}", data.getAllKeys());
+										keysToRemove.forEach(data::remove);
+
 										entityTagCopy.merge(data);
-										UUID uuid = playerStatue.getUUID();
 										playerStatue.load(entityTagCopy);
-										playerStatue.setUUID(uuid);
-									}
-									float YOffset = data.getFloat("yOffset");
-									playerStatue.setYOffset(YOffset);
-									String modelType = data.getString("Model");
-									playerStatue.setModel(modelType);
-									boolean lockFlag = data.getBoolean("Locked");
-									if (lockFlag) {
-										if (!playerStatue.isLocked()) {
-											playerStatue.setLockedBy(serverPlayer.getUUID());
+										playerStatue.setUUID(playerStatue.getUUID());
+
+										float YOffset = data.getFloat("yOffset");
+										playerStatue.setYOffset(YOffset);
+										String modelType = data.getString("Model");
+										playerStatue.setModel(modelType);
+										boolean lockFlag = data.getBoolean("Locked");
+										if (lockFlag) {
+											if (!playerStatue.isLocked()) {
+												playerStatue.setLockedBy(serverPlayer.getUUID());
+											}
+										} else {
+											if (playerStatue.isLocked()) {
+												playerStatue.setUnlocked();
+											}
 										}
-									} else {
-										if (playerStatue.isLocked()) {
-											playerStatue.setUnlocked();
-										}
+										ListTag tagList = data.getList("Move", Tag.TAG_DOUBLE);
+										double xOffset = tagList.getDouble(0);
+										double yOffset = tagList.getDouble(1);
+										double zOffset = tagList.getDouble(2);
+										if (xOffset != 0 || yOffset != 0 || zOffset != 0)
+											playerStatue.setPosRaw(playerStatue.getX() + xOffset,
+													playerStatue.getY() + yOffset,
+													playerStatue.getZ() + zOffset);
 									}
-									ListTag tagList = data.getList("Move", Tag.TAG_DOUBLE);
-									double x = tagList.getDouble(0);
-									double y = tagList.getDouble(1);
-									double z = tagList.getDouble(2);
-									playerStatue.setPos(playerStatue.getX() + x,
-											playerStatue.getY() + y,
-											playerStatue.getZ() + z);
-									boolean noGravityFlag = data.getBoolean("NoGravity");
-									playerStatue.setNoGravity(noGravityFlag);
 								}
 							}
 						}

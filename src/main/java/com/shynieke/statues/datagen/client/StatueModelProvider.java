@@ -4,7 +4,9 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.blocks.CoreFlowerCropBlock;
 import com.shynieke.statues.blocks.decorative.DisplayStandBlock;
+import com.shynieke.statues.client.property.StatueCompassAngle;
 import com.shynieke.statues.client.render.PlayerSpecialRenderer;
+import com.shynieke.statues.items.PlayerCompassItem;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.BlockModelGenerators.PlantType;
@@ -20,15 +22,19 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.RangeSelectItemModel.Entry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class StatueModelProvider extends ModelProvider {
 	public StatueModelProvider(PackOutput output) {
@@ -65,16 +71,24 @@ public class StatueModelProvider extends ModelProvider {
 			if (registryObject.get() instanceof BlockItem) {
 				continue; //Ignore block items as they are handled by the block model
 			}
-			itemModels.generateFlatItem(registryObject.get(), ModelTemplates.FLAT_ITEM); //TODO: Fix compass
 
-//			if (registryObject.get() instanceof PlayerCompassItem) {
-//				generateStatueCompass(registryObject.getId(), mcLoc("item/compass_16"));
-//			} else if (registryObject.get() instanceof SpawnEggItem) {
-//				withExistingParent(registryObject.getId().getPath(), ResourceLocation.withDefaultNamespace("item/template_spawn_egg"));
-//			} else {
-//				generatedItem(registryObject.getId());
-//			}
+			if (registryObject.get() instanceof PlayerCompassItem) {
+				generateStatueCompass(itemModels, registryObject.get());
+			} else if (registryObject.get() instanceof SpawnEggItem) {
+				itemModels.generateSpawnEgg(registryObject.get(), 3421236, 3556687);
+			} else {
+				itemModels.generateFlatItem(registryObject.get(), ModelTemplates.FLAT_ITEM);
+			}
 		}
+	}
+
+	public void generateStatueCompass(ItemModelGenerators itemModels, Item item) {
+		List<Entry> list = itemModels.createCompassModels(item);
+		itemModels.itemModelOutput
+				.accept(
+						item,
+						ItemModelUtils.rangeSelect(new StatueCompassAngle(false), 32.0F, list)
+				);
 	}
 
 	public void makeStatue(BlockModelGenerators generators, Block statueBlock) {

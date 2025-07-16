@@ -76,6 +76,7 @@ public class Statues {
 			container.registerConfig(ModConfig.Type.CLIENT, StatuesConfig.clientSpec);
 			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 			eventBus.addListener(ClientHandler::doClientStuff);
+			eventBus.addListener(ClientHandler::registerRangeSelectProperties);
 			eventBus.addListener(ClientHandler::onRegisterMenu);
 			eventBus.addListener(ClientHandler::registerEntityRenderers);
 			eventBus.addListener(ClientHandler::registerSpecialModelRenderers);

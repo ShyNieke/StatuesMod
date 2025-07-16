@@ -7,6 +7,7 @@ import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
 import com.shynieke.statues.client.ber.StatueTableBER;
 import com.shynieke.statues.client.model.PlayerStatueModel;
+import com.shynieke.statues.client.property.StatueCompassAngle;
 import com.shynieke.statues.client.render.PlayerBlockRenderer;
 import com.shynieke.statues.client.render.PlayerSpecialRenderer;
 import com.shynieke.statues.client.render.PlayerStatueRenderer;
@@ -21,14 +22,12 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.server.Services;
 import net.minecraft.server.players.GameProfileCache;
-import net.minecraft.util.Mth;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
 import net.neoforged.neoforge.client.event.RegisterSpecialModelRendererEvent;
 
 import java.io.BufferedReader;
@@ -45,6 +44,7 @@ public class ClientHandler {
 	public static final List<UUID> SUPPORTER = new ArrayList<>();
 	public static final List<UUID> TRANSLATORS = new ArrayList<>();
 
+	@SuppressWarnings("deprecation")
 	public static void doClientStuff(final FMLClientSetupEvent event) {
 		setPlayerCache(Minecraft.getInstance());
 
@@ -62,8 +62,8 @@ public class ClientHandler {
 						}
 						SupporterType type = SupporterType.valueOf(split[1]);
 						switch (type) {
-							default -> SUPPORTER.add(UUID.fromString(split[0]));
 							case TRANSLATOR -> TRANSLATORS.add(UUID.fromString(split[0]));
+							default -> SUPPORTER.add(UUID.fromString(split[0]));
 						}
 					}
 					reader.close();
@@ -99,32 +99,13 @@ public class ClientHandler {
 //		}, StatueRegistry.PLAYER_STATUE.asItem());
 //	}
 
+	public static void registerRangeSelectProperties(final RegisterRangeSelectItemModelPropertyEvent event) {
+		event.register(Reference.modLoc("statue_compass_angle"), StatueCompassAngle.MAP_CODEC);
+	}
+
 	public static void onRegisterMenu(final RegisterMenuScreensEvent event) {
 		event.register(StatueRegistry.STATUE_TABLE_MENU.get(), StatueTableScreen::new);
 		event.register(StatueRegistry.SHULKER_STATUE_MENU.get(), ShulkerStatueScreen::new);
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	static class Angle {
-		private double rotation;
-		private double deltaRotation;
-		private long lastUpdateTick;
-
-		private Angle() {
-		}
-
-		private boolean shouldUpdate(long p_239448_1_) {
-			return this.lastUpdateTick != p_239448_1_;
-		}
-
-		private void update(long updateTick, double p_239449_3_) {
-			this.lastUpdateTick = updateTick;
-			double d0 = p_239449_3_ - this.rotation;
-			d0 = Mth.positiveModulo(d0 + 0.5D, 1.0D) - 0.5D;
-			this.deltaRotation += d0 * 0.1D;
-			this.deltaRotation *= 0.8D;
-			this.rotation = Mth.positiveModulo(this.rotation + this.deltaRotation, 1.0D);
-		}
 	}
 
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {

@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "statues:item/statue_bat_spawn_egg"
+    "layer0": "statues:item/player_compass_00"
   }
 }

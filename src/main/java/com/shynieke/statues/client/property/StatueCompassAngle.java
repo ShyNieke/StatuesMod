@@ -13,17 +13,17 @@ public class StatueCompassAngle implements RangeSelectItemModelProperty {
 			angle -> angle.state);
 	private final StatueCompassAngleState state;
 
-	public StatueCompassAngle(boolean b) {
-		this(new StatueCompassAngleState(b));
+	public StatueCompassAngle(boolean wobble) {
+		this(new StatueCompassAngleState(wobble));
 	}
 
-	private StatueCompassAngle(StatueCompassAngleState p_388477_) {
-		this.state = p_388477_;
+	private StatueCompassAngle(StatueCompassAngleState state) {
+		this.state = state;
 	}
 
 	@Override
-	public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity livingEntity, int p_387210_) {
-		return this.state.get(stack, level, livingEntity, p_387210_);
+	public float get(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity livingEntity, int seed) {
+		return this.state.get(stack, level, livingEntity, seed);
 	}
 
 	@Override

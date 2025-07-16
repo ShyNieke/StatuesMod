@@ -1,6 +1,16 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "statues:item/statue_bat_spawn_egg"
+    "model": "minecraft:item/template_spawn_egg",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -13355980
+      },
+      {
+        "type": "minecraft:constant",
+        "value": -13220529
+      }
+    ]
   }
 }

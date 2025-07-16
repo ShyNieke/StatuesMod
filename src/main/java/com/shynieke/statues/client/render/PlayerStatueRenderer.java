@@ -2,6 +2,7 @@ package com.shynieke.statues.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.client.model.state.PlayerStatueRenderState;
@@ -56,13 +57,13 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 
 	@Override
 	public void extractRenderState(PlayerStatue statue, PlayerStatueRenderState statueRenderState, float partialTick) {
-		super.extractRenderState(statue, statueRenderState, partialTick);
 		HumanoidMobRenderer.extractHumanoidRenderState(statue, statueRenderState, partialTick, this.itemModelResolver);
 		statueRenderState.yRot = Mth.rotLerp(partialTick, statue.yRotO, statue.getYRot());
 		statueRenderState.isSmall = statue.isSmall();
 		statueRenderState.bodyPose = statue.getBodyRotation();
 		statueRenderState.headPose = statue.getHeadRotation();
 		statueRenderState.leftArmPose = statue.getLeftArmRotation();
+		Statues.LOGGER.error("{} {} {}", statue.getLeftArmRotation().getWrappedX(), statue.getLeftArmRotation().getWrappedY(), statue.getLeftArmRotation().getWrappedZ());
 		statueRenderState.rightArmPose = statue.getRightArmRotation();
 		statueRenderState.leftLegPose = statue.getLeftLegRotation();
 		statueRenderState.rightLegPose = statue.getRightLegRotation();
