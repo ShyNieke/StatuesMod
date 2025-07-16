@@ -5,6 +5,8 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
 
+import java.util.Locale;
+
 public class NumberFieldBox extends EditBox {
 
 	public float scrollMultiplier = 1;
@@ -38,7 +40,7 @@ public class NumberFieldBox extends EditBox {
 
 	@Override
 	public void setValue(String value) {
-		super.setValue(String.format(("%." + decimalPoints + "f"), Float.parseFloat(value)));
+		super.setValue(String.format(Locale.ROOT, ("%." + decimalPoints + "f"), Float.parseFloat(value)));
 	}
 
 	public float getFloat() {

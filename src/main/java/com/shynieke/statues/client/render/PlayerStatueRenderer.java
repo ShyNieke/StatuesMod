@@ -63,7 +63,6 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		statueRenderState.bodyPose = statue.getBodyRotation();
 		statueRenderState.headPose = statue.getHeadRotation();
 		statueRenderState.leftArmPose = statue.getLeftArmRotation();
-		Statues.LOGGER.error("{} {} {}", statue.getLeftArmRotation().getWrappedX(), statue.getLeftArmRotation().getWrappedY(), statue.getLeftArmRotation().getWrappedZ());
 		statueRenderState.rightArmPose = statue.getRightArmRotation();
 		statueRenderState.leftLegPose = statue.getLeftLegRotation();
 		statueRenderState.rightLegPose = statue.getRightLegRotation();

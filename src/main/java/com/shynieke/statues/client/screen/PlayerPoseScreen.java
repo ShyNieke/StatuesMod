@@ -26,6 +26,8 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.network.PacketDistributor;
 
+import java.util.Locale;
+
 @SuppressWarnings("rawtypes")
 @OnlyIn(Dist.CLIENT)
 public class PlayerPoseScreen extends Screen {
@@ -58,15 +60,16 @@ public class PlayerPoseScreen extends Screen {
 		this.allowScrolling = StatuesConfig.CLIENT.allowScrolling.get();
 
 		for (int i = 0; i < this.buttonLabels.length; i++)
-			this.buttonLabels[i] = I18n.get(String.format("%s.playerstatue.gui.label." + this.buttonLabels[i], Reference.MOD_ID));
+			this.buttonLabels[i] = I18n.get(String.format(Locale.ROOT, "%s.playerstatue.gui.label." + this.buttonLabels[i], Reference.MOD_ID));
 		for (int i = 0; i < this.sliderLabels.length; i++)
-			this.sliderLabels[i] = I18n.get(String.format("%s.playerstatue.gui.label." + this.sliderLabels[i], Reference.MOD_ID));
+			this.sliderLabels[i] = I18n.get(String.format(Locale.ROOT, "%s.playerstatue.gui.label." + this.sliderLabels[i], Reference.MOD_ID));
 	}
 
 	public static void openScreen(PlayerStatue playerStatue) {
 		Minecraft.getInstance().setScreen(new PlayerPoseScreen(playerStatue));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void init() {
 		super.init();
@@ -242,12 +245,12 @@ public class PlayerPoseScreen extends Screen {
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double delta, double delta2) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double xScroll, double yScroll) {
 		var multiplier = Screen.hasShiftDown() ? 10.0f : 1.0f;
-		if (allowScrolling && delta > 0) {
+		if (allowScrolling && yScroll > 0) {
 			//Add 1 to the value
-			if (rotationTextField.isFocused()) {
-				float nextValue = (rotationTextField.getFloat() + multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
+			if (rotationTextField.canConsumeInput()) {
+				int nextValue = (int) (rotationTextField.getFloat() + (1 * multiplier));
 				rotationTextField.setValue(String.valueOf(nextValue));
 				rotationTextField.setCursorPosition(0);
 				rotationTextField.setHighlightPos(0);
@@ -255,7 +258,7 @@ public class PlayerPoseScreen extends Screen {
 				return true;
 			}
 			for (NumberFieldBox textField : this.poseTextFields) {
-				if (textField.isHoveredOrFocused()) {
+				if (textField.canConsumeInput()) {
 					float nextValue = (textField.getFloat() + multiplier * textField.scrollMultiplier) % textField.modValue;
 					textField.setValue(String.valueOf(nextValue));
 					textField.setCursorPosition(0);
@@ -264,10 +267,10 @@ public class PlayerPoseScreen extends Screen {
 					return true;
 				}
 			}
-		} else if (allowScrolling && delta < 0) {
+		} else if (allowScrolling && yScroll < 0) {
 			//Remove 1 to the value
-			if (rotationTextField.isFocused()) {
-				float previousValue = (rotationTextField.getFloat() - multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
+			if (rotationTextField.canConsumeInput()) {
+				int previousValue = (int) (rotationTextField.getFloat() - (1 * multiplier));
 				rotationTextField.setValue(String.valueOf(previousValue));
 				rotationTextField.setCursorPosition(0);
 				rotationTextField.setHighlightPos(0);
@@ -275,7 +278,7 @@ public class PlayerPoseScreen extends Screen {
 				return true;
 			}
 			for (NumberFieldBox textField : this.poseTextFields) {
-				if (textField.isHoveredOrFocused()) {
+				if (textField.canConsumeInput()) {
 					float previousValue = (textField.getFloat() - multiplier * textField.scrollMultiplier) % textField.modValue;
 					textField.setValue(String.valueOf(previousValue));
 					textField.setCursorPosition(0);
@@ -285,7 +288,7 @@ public class PlayerPoseScreen extends Screen {
 				}
 			}
 		}
-		return super.mouseScrolled(mouseX, mouseY, delta, delta2);
+		return super.mouseScrolled(mouseX, mouseY, xScroll, yScroll);
 	}
 
 	@Override
@@ -313,10 +316,10 @@ public class PlayerPoseScreen extends Screen {
 			} else {
 				for (NumberFieldBox textField : this.poseTextFields) {
 					if (textField.keyPressed(keyCode, scanCode, modifiers)) {
+						this.textFieldUpdated();
 						return true;
 					}
 				}
-				this.textFieldUpdated();
 			}
 		}
 		return super.keyPressed(keyCode, scanCode, modifiers);
@@ -329,7 +332,6 @@ public class PlayerPoseScreen extends Screen {
 		for (NumberFieldBox textField : this.poseTextFields) {
 			textField.mouseClicked(mouseX, mouseY, button);
 		}
-		this.textFieldUpdated();
 
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
@@ -389,12 +391,12 @@ public class PlayerPoseScreen extends Screen {
 		poseRightArmTag.add(FloatTag.valueOf(this.poseTextFields[17].getFloat()));
 		poseTag.put("RightArm", poseRightArmTag);
 
-		var offsetX = this.poseTextFields[18].getFloat();
-		var offsetY = this.poseTextFields[19].getFloat();
-		var offsetZ = this.poseTextFields[20].getFloat();
-		var offsetXDiff = offsetX - this.lastSendOffset.x;
-		var offsetYDiff = offsetY - this.lastSendOffset.y;
-		var offsetZDiff = offsetZ - this.lastSendOffset.z;
+		float offsetX = this.poseTextFields[18].getFloat();
+		float offsetY = this.poseTextFields[19].getFloat();
+		float offsetZ = this.poseTextFields[20].getFloat();
+		double offsetXDiff = offsetX - this.lastSendOffset.x;
+		double offsetYDiff = offsetY - this.lastSendOffset.y;
+		double offsetZDiff = offsetZ - this.lastSendOffset.z;
 		ListTag positionOffset = new ListTag();
 		positionOffset.add(DoubleTag.valueOf(offsetXDiff));
 		positionOffset.add(DoubleTag.valueOf(offsetYDiff));
@@ -406,21 +408,70 @@ public class PlayerPoseScreen extends Screen {
 		return compound;
 	}
 
+	@SuppressWarnings("unchecked")
 	private void readFieldsFromNBT(CompoundTag compound) {
-		PlayerStatueData statueData = new PlayerStatueData();
-		statueData.readFromNBT(compound);
+		CompoundTag armorStandTag = this.playerStatueData.writeToNBT();
+		armorStandTag.merge(compound);
+		this.playerStatueData.readFromNBT(armorStandTag);
 
-		this.smallButton.setValue(statueData.small);
-		this.lockButton.setValue(statueData.locked);
-		this.nameVisibleButton.setValue(statueData.nameVisible);
-		this.noGravityButton.setValue(statueData.noGravity);
+		this.smallButton.setValue(this.playerStatueData.small);
+		this.lockButton.setValue(this.playerStatueData.locked);
+		this.nameVisibleButton.setValue(this.playerStatueData.nameVisible);
+		this.noGravityButton.setValue(this.playerStatueData.noGravity);
 
-		this.YOffsetTextField.setValue(String.valueOf((double) statueData.yOffset));
-		this.rotationTextField.setValue(String.valueOf((int) statueData.rotation));
-		this.forceModelType.setValue(this.forceModelType.findValue(statueData.modelType));
+		this.YOffsetTextField.setValue(String.valueOf((double) this.playerStatueData.yOffset));
+		this.forceModelType.setValue(this.forceModelType.findValue(this.playerStatueData.modelType));
 
-		for (int i = 0; i < this.poseTextFields.length; i++) {
-			this.poseTextFields[i].setValue(String.valueOf((int) statueData.pose[i]));
+		// Set rotation text field
+		ListTag rotationTag = compound.getList("Rotation", 5); // 5 is the type for float
+		if (!rotationTag.isEmpty()) {
+			this.rotationTextField.setValue(String.valueOf(rotationTag.getFloat(0)));
+		}
+
+		// Set pose text fields
+		CompoundTag poseTag = compound.getCompound("Pose");
+
+		ListTag poseHeadTag = poseTag.getList("Head", 5);
+		this.poseTextFields[0].setValue(String.valueOf(poseHeadTag.getFloat(0)));
+		this.poseTextFields[1].setValue(String.valueOf(poseHeadTag.getFloat(1)));
+		this.poseTextFields[2].setValue(String.valueOf(poseHeadTag.getFloat(2)));
+
+		ListTag poseBodyTag = poseTag.getList("Body", 5);
+		this.poseTextFields[3].setValue(String.valueOf(poseBodyTag.getFloat(0)));
+		this.poseTextFields[4].setValue(String.valueOf(poseBodyTag.getFloat(1)));
+		this.poseTextFields[5].setValue(String.valueOf(poseBodyTag.getFloat(2)));
+
+		ListTag poseLeftLegTag = poseTag.getList("LeftLeg", 5);
+		this.poseTextFields[6].setValue(String.valueOf(poseLeftLegTag.getFloat(0)));
+		this.poseTextFields[7].setValue(String.valueOf(poseLeftLegTag.getFloat(1)));
+		this.poseTextFields[8].setValue(String.valueOf(poseLeftLegTag.getFloat(2)));
+
+		ListTag poseRightLegTag = poseTag.getList("RightLeg", 5);
+		this.poseTextFields[9].setValue(String.valueOf(poseRightLegTag.getFloat(0)));
+		this.poseTextFields[10].setValue(String.valueOf(poseRightLegTag.getFloat(1)));
+		this.poseTextFields[11].setValue(String.valueOf(poseRightLegTag.getFloat(2)));
+
+		ListTag poseLeftArmTag = poseTag.getList("LeftArm", 5);
+		this.poseTextFields[12].setValue(String.valueOf(poseLeftArmTag.getFloat(0)));
+		this.poseTextFields[13].setValue(String.valueOf(poseLeftArmTag.getFloat(1)));
+		this.poseTextFields[14].setValue(String.valueOf(poseLeftArmTag.getFloat(2)));
+
+		ListTag poseRightArmTag = poseTag.getList("RightArm", 5);
+		this.poseTextFields[15].setValue(String.valueOf(poseRightArmTag.getFloat(0)));
+		this.poseTextFields[16].setValue(String.valueOf(poseRightArmTag.getFloat(1)));
+		this.poseTextFields[17].setValue(String.valueOf(poseRightArmTag.getFloat(2)));
+
+		// Set position offsets
+		ListTag positionOffset = compound.getList("Move", 6); // 6 is the type for double
+		if (!positionOffset.isEmpty()) {
+			this.poseTextFields[18].setValue(String.valueOf(positionOffset.getDouble(0) + this.lastSendOffset.x));
+			this.poseTextFields[19].setValue(String.valueOf(positionOffset.getDouble(1) + this.lastSendOffset.y));
+			this.poseTextFields[20].setValue(String.valueOf(positionOffset.getDouble(2) + this.lastSendOffset.z));
+			this.lastSendOffset = new Vec3(
+					positionOffset.getDouble(0) + this.lastSendOffset.x,
+					positionOffset.getDouble(1) + this.lastSendOffset.y,
+					positionOffset.getDouble(2) + this.lastSendOffset.z
+			);
 		}
 	}
 
