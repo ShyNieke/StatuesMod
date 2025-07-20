@@ -125,38 +125,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean p_196243_5_) {
-		if (state.hasBlockEntity() && newState.getBlock() != StatueRegistry.PLAYER_STATUE.get()) {
-			level.removeBlockEntity(pos);
-		}
-	}
-
-	@Override
 	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
 		ItemStack stack = super.getCloneItemStack(level, pos, state, includeData, player);
 		if (level.getBlockEntity(pos) instanceof PlayerBlockEntity playerBlockEntity) {
 			playerBlockEntity.saveToItem(stack, level.registryAccess());
 		}
 		return stack;
-	}
-
-	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> components, TooltipFlag flag) {
-		if (Screen.hasShiftDown()) {
-			MutableComponent userComponent = Component.literal("Username: ").withStyle(ChatFormatting.GOLD);
-			userComponent.append(stack.getHoverName().plainCopy().withStyle(ChatFormatting.WHITE));
-			components.add(userComponent);
-
-			if (stack.has(DataComponents.PROFILE)) {
-				ResolvableProfile profile = stack.get(DataComponents.PROFILE);
-				profile.id().ifPresent((id) -> {
-					MutableComponent UUIDComponent = Component.literal("UUID: ").withStyle(ChatFormatting.GOLD);
-					UUIDComponent.append(Component.literal(id.toString()).withStyle(ChatFormatting.WHITE));
-					components.add(UUIDComponent);
-				});
-			}
-		}
-		super.appendHoverText(stack, context, components, flag);
 	}
 
 	@Override
@@ -247,7 +221,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							serverLevel.addFreshEntityWithPassengers(playerStatueEntity);
 							float f = (float) Mth.floor((Mth.wrapDegrees(playerIn.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 							playerStatueEntity.setGameProfile(playerBlockEntity.getPlayerProfile());
-							playerStatueEntity.moveTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
+							playerStatueEntity.snapTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
 							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.random);
 							level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 							level.addFreshEntity(playerStatueEntity);

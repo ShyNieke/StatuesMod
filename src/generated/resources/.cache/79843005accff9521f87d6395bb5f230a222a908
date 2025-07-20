@@ -1,4 +1,4 @@
-// 1.21.4	2024-12-03T22:12:26.9389885	Statues Recipes
+// 1.21.8	2025-07-20T21:02:34.6498766	Statues Recipes
 18e987dfadfe8b3a50e692cace2f8740225aa39b data/statues/advancement/recipes/decorations/display_stand_from_quartz_block_stonecutting.json
 63a4b8f8cbc1656364761abc74c1b083424037a7 data/statues/advancement/recipes/misc/info_statue.json
 19084d3ced99bf522cf7e8705ebdeb8ce8c04c44 data/statues/advancement/recipes/misc/statue_core.json
@@ -16,7 +16,7 @@ b9c605c415873e737c3989775841dc008c04bc84 data/statues/recipe/loot/bee_statue.jso
 58343b8dc0c93a0698552c9aaf64e80dcc13700e data/statues/recipe/loot/blaze_statue.json
 993ac49e6e475361458ccbc347ddd0d111514925 data/statues/recipe/loot/brown_mooshroom_statue.json
 a9aa1b507a84a4f5ed5d2f7bf9f4907625d48a20 data/statues/recipe/loot/campfire_statue.json
-77d1b368da600b7f64356c109d5308c56c7ad778 data/statues/recipe/loot/cat_statue.json
+83399f983e5ec669b1d9ae8705c17425605bc0e8 data/statues/recipe/loot/cat_statue.json
 7f9f455acf214f5305f706feab9ee4129d5d8a94 data/statues/recipe/loot/chicken_jockey_statue.json
 062f0fbd1eecac7bb7f78812e21d3c0b7254abca data/statues/recipe/loot/chicken_statue.json
 62d3952ebf9855ab3f950eb8876ad926d952675d data/statues/recipe/loot/cod_statue.json
@@ -72,7 +72,7 @@ f2d3456bcab887ae56ca89b3a49769b25fc1ba8d data/statues/recipe/loot/turtle_statue.
 9a075b2a399bd59a2fae490c5bf5069baad8d621 data/statues/recipe/loot/villager_statue.json
 2e398dbc66a1a11631df2eec4911dcc039928efc data/statues/recipe/loot/vindicator_statue.json
 8b27299ac922043db935f90c61b6f8e133184f13 data/statues/recipe/loot/warden_statue.json
-f200b2f98e1229b26d0d57f0f0b47ee4380173b7 data/statues/recipe/loot/wasteland_statue.json
+613e74cbd05caab47fcaea3cefff8cf4df99b719 data/statues/recipe/loot/wasteland_statue.json
 167b1481738cce9e05293d2c5889d39ec4d2c966 data/statues/recipe/loot/witch_statue.json
 8cdd4433d82a1be3de1d44b2a92c115217a98814 data/statues/recipe/loot/zombie_statue.json
 fa27eaabcd66330e5738b12f6abe5c60d0de4d14 data/statues/recipe/statue_core.json

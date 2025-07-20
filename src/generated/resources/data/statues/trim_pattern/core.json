@@ -3,6 +3,5 @@
   "decal": false,
   "description": {
     "translate": "trim_pattern.statues.core"
-  },
-  "template_item": "statues:core_armor_trim_smithing_template"
+  }
 }

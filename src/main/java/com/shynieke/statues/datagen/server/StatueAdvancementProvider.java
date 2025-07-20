@@ -11,6 +11,7 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.critereon.EnterBlockTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
@@ -43,7 +44,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 			//Root advancement
 			AdvancementHolder root = Advancement.Builder.advancement()
 					.display(rootDisplay(StatueRegistry.STATUE_CORE.get(), advancementPrefix("root" + ".title"),
-							advancementPrefix("root" + ".desc"), modLoc("textures/block/pebble.png")))
+							advancementPrefix("root" + ".desc"), modLoc("block/pebble")))
 					.addCriterion("core", EnterBlockTrigger.TriggerInstance.entersBlock(Blocks.AIR))
 					.save(consumer, rootID("root"));
 
@@ -332,7 +333,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 			return new DisplayInfo(new ItemStack(icon),
 					Component.translatable(titleKey),
 					Component.translatable(descKey),
-					Optional.of(background), AdvancementType.TASK, false, false, false);
+					Optional.of(new ClientAsset(background)), AdvancementType.TASK, false, false, false);
 		}
 
 		/**

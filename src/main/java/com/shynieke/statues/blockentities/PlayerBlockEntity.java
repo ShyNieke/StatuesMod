@@ -12,15 +12,16 @@ import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.Services;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.item.BlockItem;
@@ -29,6 +30,9 @@ import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
@@ -118,55 +122,54 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
-		super.loadAdditional(compound, lookupProvider);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
 
-		if (compound.contains("profile")) {
-			ResolvableProfile.CODEC
-					.parse(NbtOps.INSTANCE, compound.get("profile"))
-					.resultOrPartial(error -> Statues.LOGGER.error("Failed to load profile from player statue: {}", error))
-					.ifPresent(this::setPlayerProfile);
-		}
+		Optional<ResolvableProfile> optionalProfile = input.read("profile", ResolvableProfile.CODEC);
+		optionalProfile.ifPresent(this::setPlayerProfile);
 
-		comparatorApplied = compound.getBoolean("comparatorApplied");
-		onlineChecking = compound.getBoolean("OnlineChecking");
-		checkerCooldown = compound.getInt("checkerCooldown");
+		comparatorApplied = input.getBooleanOr("comparatorApplied", false);
+		onlineChecking = input.getBooleanOr("OnlineChecking", false);
+		checkerCooldown = input.getIntOr("checkerCooldown", 0);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider lookupProvider) {
-		super.saveAdditional(compound, lookupProvider);
-		if (this.playerProfile != null) {
-			compound.put("profile", ResolvableProfile.CODEC.encodeStart(NbtOps.INSTANCE, this.playerProfile).getOrThrow());
-		}
-		compound.putBoolean("comparatorApplied", comparatorApplied);
-		compound.putBoolean("OnlineChecking", onlineChecking);
-		compound.putInt("checkerCooldown", checkerCooldown);
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		if (this.playerProfile != null)
+			output.store("profile", ResolvableProfile.CODEC, this.playerProfile);
+
+		output.putBoolean("comparatorApplied", comparatorApplied);
+		output.putBoolean("OnlineChecking", onlineChecking);
+		output.putInt("checkerCooldown", checkerCooldown);
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider lookupProvider) {
-		CompoundTag compoundNBT = pkt.getTag();
-		handleUpdateTag(compoundNBT, lookupProvider);
-	}
-
-	@Override
-	public void handleUpdateTag(CompoundTag tag, HolderLookup.Provider lookupProvider) {
-		super.handleUpdateTag(tag, lookupProvider);
+	public void onDataPacket(Connection net, ValueInput valueInput) {
+		super.onDataPacket(net, valueInput);
 	}
 
 	@Override
 	public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
-		CompoundTag nbt = new CompoundTag();
-		this.saveAdditional(nbt, lookupProvider);
-		return nbt;
+		CompoundTag tag = new CompoundTag();
+		try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Statues.LOGGER)) {
+			TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, lookupProvider);
+			this.saveAdditional(output);
+			tag.merge(output.buildResult());
+		}
+		return tag;
 	}
 
 	@Override
 	public CompoundTag getPersistentData() {
-		CompoundTag nbt = new CompoundTag();
-		this.saveAdditional(nbt, level != null ? level.registryAccess() : VanillaRegistries.createLookup());
-		return nbt;
+		CompoundTag tag = new CompoundTag();
+		try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Statues.LOGGER)) {
+			HolderLookup.Provider lookupProvider = this.level != null ? this.level.registryAccess() : VanillaRegistries.createLookup();
+			TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, lookupProvider);
+			this.saveAdditional(output);
+			tag.merge(output.buildResult());
+		}
+		return tag;
 	}
 
 	@Nullable
@@ -293,17 +296,21 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 	}
 
 	public void saveToItem(ItemStack stack, HolderLookup.Provider registries) {
-		CompoundTag compoundtag = this.saveCustomOnly(registries);
-		this.removeComponentsFromTag(compoundtag);
-		BlockItem.setBlockEntityData(stack, this.getType(), compoundtag);
-		stack.applyComponents(this.collectComponents());
+		try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Statues.LOGGER)) {
+			TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, registries);
+			saveCustomOnly(output);
+			removeComponentsFromTag(output);
+
+			BlockItem.setBlockEntityData(stack, this.getType(), output);
+			stack.applyComponents(this.collectComponents());
+		}
 	}
 
 	@Override
-	protected void applyImplicitComponents(BlockEntity.DataComponentInput input) {
-		super.applyImplicitComponents(input);
-		this.setPlayerProfileFromName(input.get(DataComponents.CUSTOM_NAME));
-		this.setPlayerProfile(input.get(DataComponents.PROFILE));
+	protected void applyImplicitComponents(DataComponentGetter getter) {
+		super.applyImplicitComponents(getter);
+		this.setPlayerProfileFromName(getter.get(DataComponents.CUSTOM_NAME));
+		this.setPlayerProfile(getter.get(DataComponents.PROFILE));
 	}
 
 	@Override
@@ -314,12 +321,12 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 	}
 
 	@Override
-	public void removeComponentsFromTag(CompoundTag tag) {
-		super.removeComponentsFromTag(tag);
-		tag.remove("profile");
-		tag.remove("OnlineChecking");
-		tag.remove("checkerCooldown");
-		tag.remove("comparatorApplied");
+	public void removeComponentsFromTag(ValueOutput output) {
+		super.removeComponentsFromTag(output);
+		output.discard("profile");
+		output.discard("OnlineChecking");
+		output.discard("checkerCooldown");
+		output.discard("comparatorApplied");
 	}
 
 	public static CompletableFuture<Optional<GameProfile>> fetchGameProfile(String profileName) {

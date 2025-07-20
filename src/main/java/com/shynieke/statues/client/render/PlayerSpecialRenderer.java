@@ -3,7 +3,6 @@ package com.shynieke.statues.client.render;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
-import com.shynieke.statues.Statues;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
@@ -20,10 +19,12 @@ import net.minecraft.world.item.component.ResolvableProfile;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvableProfile> {
 	private final StatuePlayerTileModel model;
@@ -39,16 +40,21 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvablePro
 	public void render(@Nullable ResolvableProfile resolvableProfile, ItemDisplayContext displayContext,
 	                   PoseStack poseStack, MultiBufferSource bufferSource,
 	                   int packedLight, int packedOverlay, boolean hasFoilType) {
-		poseStack.pushPose();
-		poseStack.scale(0.375F, 0.375F, 0.375F);
-		poseStack.translate(1D, 0D, 0.75D);
 		SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
 		if (resolvableProfile != null && isSlim != skinmanager.getInsecureSkin(resolvableProfile.gameProfile()).model().id().equals("slim"))
 			isSlim = !isSlim;
 		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
 
 		PlayerBlockRenderer.renderPlayerStatue(null, resolvableProfile, playerModel, poseStack, bufferSource, packedLight, packedOverlay);
-		poseStack.popPose();
+	}
+
+	@Override
+	public void getExtents(Set<Vector3f> p_428562_) {
+		PoseStack posestack = new PoseStack();
+		posestack.scale(0.375F, 0.375F, 0.375F);
+		posestack.translate(1D, 0D, 0.75D);
+		this.model.root().getExtentsForGui(posestack, p_428562_);
+		this.slimModel.root().getExtentsForGui(posestack, p_428562_);
 	}
 
 	private static final Map<String, ResolvableProfile> GAMEPROFILE_CACHE = new HashMap<>();

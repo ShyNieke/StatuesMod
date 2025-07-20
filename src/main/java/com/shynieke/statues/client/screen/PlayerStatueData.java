@@ -1,9 +1,12 @@
 package com.shynieke.statues.client.screen;
 
+import com.shynieke.statues.Statues;
+import net.minecraft.core.Rotations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.phys.Vec2;
 
 public class PlayerStatueData {
 	public boolean small = false;
@@ -41,28 +44,31 @@ public class PlayerStatueData {
 	}
 
 	public void readFromNBT(CompoundTag compound) {
-		this.small = compound.getBoolean("Small");
-		this.locked = compound.getBoolean("Locked");
-		this.nameVisible = compound.getBoolean("CustomNameVisible");
-		this.noGravity = compound.getBoolean("NoGravity");
-		this.yOffset = compound.getFloat("yOffset");
-		this.modelType = compound.getString("Model");
+		this.small = compound.getBooleanOr("Small", false);
+		this.locked = compound.getBooleanOr("Locked", false);
+		this.nameVisible = compound.getBooleanOr("CustomNameVisible", false);
+		this.noGravity = compound.getBooleanOr("NoGravity", false);
+		this.yOffset = compound.getFloatOr("yOffset", 0.0F);
+		this.modelType = compound.getStringOr("Model", "AUTO");
 
 		if (compound.contains("Rotation")) {
-			this.rotation = compound.getList("Rotation", Tag.TAG_FLOAT).getFloat(0);
+			compound.store("Rotation", Vec2.CODEC, new Vec2(this.rotation, 0));
 		}
 		if (compound.contains("Pose")) {
-			CompoundTag poseTag = (CompoundTag) compound.get("Pose");
+			CompoundTag poseTag = compound.getCompoundOrEmpty("Pose");
+			if (poseTag.isEmpty()) {
+				Statues.LOGGER.warn("Pose tag is empty, skipping pose data");
+				return;
+			}
 
 			String[] keys = new String[]{"Head", "Body", "LeftLeg", "RightLeg", "LeftArm", "RightArm"};
 			for (int i = 0; i < keys.length; i++) {
 				String key = keys[i];
 				if (poseTag.contains(key)) {
-					ListTag tagList = poseTag.getList(key, Tag.TAG_FLOAT);
-					for (int j = 0; j <= 2; j++) {
-						int k = (i * 3) + j;
-						this.pose[k] = tagList.getFloat(j);
-					}
+					Rotations rotations = poseTag.read(key, Rotations.CODEC).orElse(new Rotations(0, 0, 0));
+					this.pose[i * 3] = rotations.x();
+					this.pose[(i * 3) + 1] = rotations.y();
+					this.pose[(i * 3) + 2] = rotations.z();
 				}
 			}
 		}

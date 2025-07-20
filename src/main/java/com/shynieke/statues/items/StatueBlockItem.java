@@ -13,6 +13,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 public class StatueBlockItem extends BlockItem {
 
@@ -64,21 +66,20 @@ public class StatueBlockItem extends BlockItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
-		super.appendHoverText(stack, context, components, tooltipFlag);
+	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
 		if (stack.has(StatueDataComponents.STATS)) {
 			StatueStats stats = stack.get(StatueDataComponents.STATS);
-			components.add(Component.translatable("statues.info.level").withStyle(ChatFormatting.GOLD)
+			tooltipAdder.accept(Component.translatable("statues.info.level").withStyle(ChatFormatting.GOLD)
 					.append(" ").append(
 							Component.literal(String.valueOf(stats.level())).withStyle(ChatFormatting.YELLOW)
 					)
 			);
-			components.add(Component.translatable("statues.info.kills").withStyle(ChatFormatting.GOLD)
+			tooltipAdder.accept(Component.translatable("statues.info.kills").withStyle(ChatFormatting.GOLD)
 					.append(" ").append(
 							Component.literal(String.valueOf(stats.killCount())).withStyle(ChatFormatting.YELLOW)
 					)
 			);
-			components.add(Component.translatable("statues.info.upgrade_slots").withStyle(ChatFormatting.GOLD)
+			tooltipAdder.accept(Component.translatable("statues.info.upgrade_slots").withStyle(ChatFormatting.GOLD)
 					.append(" ").append(
 							Component.literal(String.valueOf(stats.upgradeSlots())).withStyle(ChatFormatting.YELLOW)
 					)
@@ -89,7 +90,7 @@ public class StatueBlockItem extends BlockItem {
 		StatueUpgrades upgrades = stack.getOrDefault(StatueDataComponents.UPGRADES, StatueUpgrades.empty());
 		Map<String, Short> upgradeMap = upgrades.upgradeMap();
 		if (!upgradeMap.isEmpty()) {
-			components.addAll(upgrades.getUpgradeNames());
+			upgrades.getUpgradeNames().forEach(tooltipAdder);
 		}
 	}
 }

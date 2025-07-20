@@ -2,27 +2,32 @@ package com.shynieke.statues.registry;
 
 import com.shynieke.statues.Reference;
 import net.minecraft.Util;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 
 public class StatueTrims {
-	public static final ResourceKey<TrimPattern> CORE = registerKey("core");
+	public static final ResourceKey<TrimPattern> CORE = registryKey("core");
 
-	private static ResourceKey<TrimPattern> registerKey(String name) {
+	private static ResourceKey<TrimPattern> registryKey(String name) {
 		return ResourceKey.create(Registries.TRIM_PATTERN, Reference.modLoc(name));
 	}
 
 	public static void bootstrap(BootstrapContext<TrimPattern> context) {
-		register(context, StatueRegistry.CORE_ARMOR_TRIM_SMITHING_TEMPLATE.asItem(), CORE);
+		register(context, CORE);
 	}
 
-	private static void register(BootstrapContext<TrimPattern> pContext, Item pTemplateItem, ResourceKey<TrimPattern> pTrimPatternKey) {
-		TrimPattern trimpattern = new TrimPattern(pTrimPatternKey.location(), BuiltInRegistries.ITEM.wrapAsHolder(pTemplateItem), Component.translatable(Util.makeDescriptionId("trim_pattern", pTrimPatternKey.location())), false);
-		pContext.register(pTrimPatternKey, trimpattern);
+	public static void register(BootstrapContext<TrimPattern> context, ResourceKey<TrimPattern> key) {
+		TrimPattern trimpattern = new TrimPattern(
+				defaultAssetId(key), Component.translatable(Util.makeDescriptionId("trim_pattern", key.location())), false
+		);
+		context.register(key, trimpattern);
+	}
+
+	public static ResourceLocation defaultAssetId(ResourceKey<TrimPattern> key) {
+		return key.location();
 	}
 }

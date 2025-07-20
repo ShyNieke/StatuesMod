@@ -7,10 +7,12 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 		this.buttonChisel = this.addRenderableWidget(Button.builder(Component.literal("Chisel"), (button) -> {
 			boolean flag = getMenu().validRecipe[0] == 1;
 			if (flag) {
-				PacketDistributor.sendToServer(new StatueTableData(true));
+				ClientPacketDistributor.sendToServer(new StatueTableData(true));
 			}
 		}).bounds(leftPos + 130, topPos + 46, 38, 20).build());
 	}
@@ -56,7 +58,7 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-		guiGraphics.blit(RenderType::guiTextured, TEXTURE, this.leftPos, this.topPos, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
+		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
 	}
 
 	@Override
@@ -73,7 +75,7 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 				text.add(Component.translatable("gui.statues.statue_table.invalid_recipe.tooltip")
 						.withStyle(ChatFormatting.RED));
 			}
-			guiGraphics.renderComponentTooltip(font, text, actualMouseX, actualMouseY);
+			guiGraphics.setComponentTooltipForNextFrame(font, text, actualMouseX, actualMouseY);
 		}
 	}
 }

@@ -12,10 +12,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class PlayerCompassItem extends Item {
 
@@ -35,11 +37,11 @@ public class PlayerCompassItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
 		if (stack.has(StatueDataComponents.PLAYER_COMPASS_DATA.get())) {
 			PlayerCompassData data = stack.get(StatueDataComponents.PLAYER_COMPASS_DATA.get());
 			if (data != null) {
-				tooltip.add(Component.translatable("statues.last.known.location", data.name()).withStyle(ChatFormatting.GOLD));
+				tooltipAdder.accept(Component.translatable("statues.last.known.location", data.name()).withStyle(ChatFormatting.GOLD));
 			}
 		}
 	}

@@ -31,6 +31,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
@@ -49,7 +50,7 @@ public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntit
 	}
 
 	@Override
-	public void render(PlayerBlockEntity blockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLightIn, int combinedOverlayIn) {
+	public void render(PlayerBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vec3 cameraPos) {
 		BlockState blockstate = blockEntity.getBlockState();
 		boolean flag = blockstate.getBlock() instanceof PlayerStatueBlock;
 		Direction direction = flag ? blockstate.getValue(PlayerStatueBlock.FACING) : Direction.UP;
@@ -65,7 +66,7 @@ public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntit
 		poseStack.pushPose();
 		poseStack.scale(0.5625F, 0.5625F, 0.5625F);
 		poseStack.translate(0.375F, 0.0F, 0.375F);
-		renderPlayerStatue(direction, resolvableProfile, playerModel, poseStack, bufferSource, combinedLightIn, partialTicks);
+		renderPlayerStatue(direction, resolvableProfile, playerModel, poseStack, bufferSource, packedLight, partialTick);
 		poseStack.popPose();
 	}
 

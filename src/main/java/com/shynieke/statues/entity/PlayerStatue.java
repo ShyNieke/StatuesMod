@@ -1,7 +1,8 @@
 package com.shynieke.statues.entity;
 
 import com.mojang.authlib.GameProfile;
-import com.shynieke.statues.Statues;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.screen.PlayerStatueData;
@@ -9,14 +10,12 @@ import com.shynieke.statues.network.message.PlayerStatueScreenData;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSerializers;
 import net.minecraft.Util;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.Rotations;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -41,6 +40,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -48,6 +48,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -56,12 +58,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class PlayerStatue extends LivingEntity {
-	private static final Rotations DEFAULT_HEAD_ROTATION = new Rotations(0.0F, 0.0F, 0.0F);
-	private static final Rotations DEFAULT_BODY_ROTATION = new Rotations(0.0F, 0.0F, 0.0F);
-	private static final Rotations DEFAULT_LEFTARM_ROTATION = new Rotations(-10.0F, 0.0F, -10.0F);
-	private static final Rotations DEFAULT_RIGHTARM_ROTATION = new Rotations(-15.0F, 0.0F, 10.0F);
-	private static final Rotations DEFAULT_LEFTLEG_ROTATION = new Rotations(-1.0F, 0.0F, -1.0F);
-	private static final Rotations DEFAULT_RIGHTLEG_ROTATION = new Rotations(1.0F, 0.0F, 1.0F);
+	public static final Rotations DEFAULT_HEAD_POSE = new Rotations(0.0F, 0.0F, 0.0F);
+	public static final Rotations DEFAULT_BODY_POSE = new Rotations(0.0F, 0.0F, 0.0F);
+	public static final Rotations DEFAULT_LEFT_ARM_POSE = new Rotations(-10.0F, 0.0F, -10.0F);
+	public static final Rotations DEFAULT_RIGHT_ARM_POSE = new Rotations(-15.0F, 0.0F, 10.0F);
+	public static final Rotations DEFAULT_LEFT_LEG_POSE = new Rotations(-1.0F, 0.0F, -1.0F);
+	public static final Rotations DEFAULT_RIGHT_LEG_POSE = new Rotations(1.0F, 0.0F, 1.0F);
 
 	private static final String DEFAULT_MODEL = PlayerStatueData.MODEL_TYPE.AUTO.name();
 	private static final EntityDataAccessor<Optional<ResolvableProfile>> RESOLVABLE_PROFILE = SynchedEntityData.defineId(PlayerStatue.class, StatueSerializers.OPTIONAL_RESOLVABLE_PROFILE.get());
@@ -74,21 +76,18 @@ public class PlayerStatue extends LivingEntity {
 	public static final EntityDataAccessor<Rotations> LEFT_LEG_ROTATION = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.ROTATIONS);
 	public static final EntityDataAccessor<Rotations> RIGHT_LEG_ROTATION = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.ROTATIONS);
 	public static final EntityDataAccessor<String> MODEL_TYPE = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.STRING);
-	public static final EntityDataAccessor<Optional<UUID>> LOCKED_BY_UUID = SynchedEntityData.defineId(PlayerStatue.class, EntityDataSerializers.OPTIONAL_UUID);
-
-	private final NonNullList<ItemStack> handItems = NonNullList.withSize(2, ItemStack.EMPTY);
-	private final NonNullList<ItemStack> armorItems = NonNullList.withSize(4, ItemStack.EMPTY);
+	public static final EntityDataAccessor<Optional<UUID>> LOCKED_BY_UUID = SynchedEntityData.defineId(PlayerStatue.class, StatueSerializers.OPTIONAL_UUID.get());
 	/**
 	 * After punching the stand, the cooldown before you can punch it again without breaking it.
 	 */
 	public long punchCooldown;
 	private int disabledSlots;
-	private Rotations headRotation = DEFAULT_HEAD_ROTATION;
-	private Rotations bodyRotation = DEFAULT_BODY_ROTATION;
-	private Rotations leftArmRotation = DEFAULT_LEFTARM_ROTATION;
-	private Rotations rightArmRotation = DEFAULT_RIGHTARM_ROTATION;
-	private Rotations leftLegRotation = DEFAULT_LEFTLEG_ROTATION;
-	private Rotations rightLegRotation = DEFAULT_RIGHTLEG_ROTATION;
+	private Rotations headRotation = DEFAULT_HEAD_POSE;
+	private Rotations bodyRotation = DEFAULT_BODY_POSE;
+	private Rotations leftArmRotation = DEFAULT_LEFT_ARM_POSE;
+	private Rotations rightArmRotation = DEFAULT_RIGHT_ARM_POSE;
+	private Rotations leftLegRotation = DEFAULT_LEFT_LEG_POSE;
+	private Rotations rightLegRotation = DEFAULT_RIGHT_LEG_POSE;
 
 
 	public PlayerStatue(EntityType<? extends PlayerStatue> entityType, Level level) {
@@ -145,12 +144,12 @@ public class PlayerStatue extends LivingEntity {
 		builder.define(RESOLVABLE_PROFILE, Optional.empty());
 		builder.define(STATUS, (byte) 0);
 		builder.define(Y_OFFSET, 0F);
-		builder.define(HEAD_ROTATION, DEFAULT_HEAD_ROTATION);
-		builder.define(BODY_ROTATION, DEFAULT_BODY_ROTATION);
-		builder.define(LEFT_ARM_ROTATION, DEFAULT_LEFTARM_ROTATION);
-		builder.define(RIGHT_ARM_ROTATION, DEFAULT_RIGHTARM_ROTATION);
-		builder.define(LEFT_LEG_ROTATION, DEFAULT_LEFTLEG_ROTATION);
-		builder.define(RIGHT_LEG_ROTATION, DEFAULT_RIGHTLEG_ROTATION);
+		builder.define(HEAD_ROTATION, DEFAULT_HEAD_POSE);
+		builder.define(BODY_ROTATION, DEFAULT_BODY_POSE);
+		builder.define(LEFT_ARM_ROTATION, DEFAULT_LEFT_ARM_POSE);
+		builder.define(RIGHT_ARM_ROTATION, DEFAULT_RIGHT_ARM_POSE);
+		builder.define(LEFT_LEG_ROTATION, DEFAULT_LEFT_LEG_POSE);
+		builder.define(RIGHT_LEG_ROTATION, DEFAULT_RIGHT_LEG_POSE);
 		builder.define(LOCKED_BY_UUID, Optional.empty());
 		builder.define(MODEL_TYPE, DEFAULT_MODEL);
 	}
@@ -207,128 +206,61 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	@Override
-	public Iterable<ItemStack> getHandSlots() {
-		return this.handItems;
-	}
-
-	@Override
-	public Iterable<ItemStack> getArmorSlots() {
-		return this.armorItems;
-	}
-
-	@Override
-	public ItemStack getItemBySlot(EquipmentSlot slotIn) {
-		switch (slotIn.getType()) {
-			case HAND:
-				return this.handItems.get(slotIn.getIndex());
-			case HUMANOID_ARMOR:
-				return this.armorItems.get(slotIn.getIndex());
-			default:
-				return ItemStack.EMPTY;
-		}
-	}
-
-	@Override
 	public boolean canUseSlot(EquipmentSlot slot) {
 		return slot != EquipmentSlot.BODY && !this.isDisabled(slot);
 	}
 
 	@Override
-	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
-		this.verifyEquippedItem(stack);
-		switch (slotIn.getType()) {
-			case HAND -> this.onEquipItem(slotIn, this.handItems.set(slotIn.getIndex(), stack), stack);
-			case HUMANOID_ARMOR -> this.onEquipItem(slotIn, this.armorItems.set(slotIn.getIndex(), stack), stack);
-		}
-	}
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
 
-	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putBoolean("profileExists", entityData.get(RESOLVABLE_PROFILE).isPresent());
+		output.putBoolean("profileExists", entityData.get(RESOLVABLE_PROFILE).isPresent());
+
 		if (getGameProfile().isPresent()) {
-			ResolvableProfile.CODEC.encodeStart(NbtOps.INSTANCE, entityData.get(RESOLVABLE_PROFILE).get())
-					.resultOrPartial(Statues.LOGGER::error)
-					.ifPresent(profile -> compound.put("profile", profile));
-
+			output.store("profile", ResolvableProfile.CODEC, getGameProfile().get());
 		}
 
-		compound.putFloat("yOffset", getYOffsetData());
-		compound.putString("Model", getModel());
+		output.putFloat("yOffset", getYOffsetData());
+		output.putString("Model", getModel());
 
-		ListTag listnbt = new ListTag();
-
-		for (ItemStack itemstack : this.armorItems) {
-			CompoundTag compoundnbt = new CompoundTag();
-			if (!itemstack.isEmpty()) {
-				itemstack.save(level().registryAccess(), compoundnbt);
-			}
-
-			listnbt.add(compoundnbt);
-		}
-
-		compound.put("ArmorItems", listnbt);
-		ListTag listnbt1 = new ListTag();
-
-		for (ItemStack itemstack1 : this.handItems) {
-			CompoundTag compoundnbt1 = new CompoundTag();
-			if (!itemstack1.isEmpty()) {
-				itemstack1.save(level().registryAccess(), compoundnbt1);
-			}
-
-			listnbt1.add(compoundnbt1);
-		}
-
-		compound.putBoolean("Locked", this.isLocked());
+		output.putBoolean("Locked", this.isLocked());
 		if (this.isLocked() && this.getLockedBy() != null) {
-			compound.putUUID("LockedBy", this.getLockedBy());
+			output.store("LockedBy", UUIDUtil.CODEC, this.getLockedBy());
 		}
 
-		compound.put("HandItems", listnbt1);
-		compound.putBoolean("Small", this.isSmall());
-		compound.putInt("DisabledSlots", this.disabledSlots);
+		output.putBoolean("Small", this.isSmall());
+		output.putInt("DisabledSlots", this.disabledSlots);
 
-		compound.put("Pose", this.writePose());
+		output.store("Pose", StatuePose.CODEC, this.getStatuePose());
 	}
 
 	@Override
-	public CompoundTag saveWithoutId(CompoundTag compound) {
-		return super.saveWithoutId(compound);
-	}
+	public void load(ValueInput input) {
+		super.load(input);
 
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		boolean profileExists = compound.getBoolean("profileExists");
-		if (profileExists) {
-			entityData.set(RESOLVABLE_PROFILE, ResolvableProfile.CODEC
-					.parse(NbtOps.INSTANCE, compound.get("profile"))
-					.resultOrPartial(p_332637_ -> Statues.LOGGER.error("Failed to load profile from player statue: {}", p_332637_)));
+		Optional<ResolvableProfile> optionalProfile = input.read("profile", ResolvableProfile.CODEC);
+		if (optionalProfile.isPresent()) {
+			entityData.set(RESOLVABLE_PROFILE, optionalProfile);
 		} else {
 			entityData.set(RESOLVABLE_PROFILE, Optional.empty());
 		}
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
+	protected void readAdditionalSaveData(ValueInput input) {
 		if (this.clientLock > 0) return;
-		super.readAdditionalSaveData(compound);
-		this.setYOffset(compound.getFloat("yOffset"));
-		this.setModel(compound.getString("Model"));
-		if (compound.contains("ArmorItems", 9)) {
-			ListTag listnbt = compound.getList("ArmorItems", 10);
+		super.readAdditionalSaveData(input);
 
-			for (int i = 0; i < this.armorItems.size(); ++i) {
-				this.armorItems.set(i, ItemStack.parseOptional(level().registryAccess(), listnbt.getCompound(i)));
-			}
-		}
+		this.setYOffset(input.getFloatOr("yOffset", 0));
+		this.setModel(input.getStringOr("Model", "DEFAULT"));
 
-		if (compound.getBoolean("Locked")) {
+		if (input.getBooleanOr("Locked", false)) {
 			UUID uuid;
-			if (compound.hasUUID("LockedBy")) {
-				uuid = compound.getUUID("LockedBy");
+			Optional<UUID> lockedBy = input.read("LockedBy", UUIDUtil.CODEC);
+			if (lockedBy.isPresent()) {
+				uuid = lockedBy.get();
 			} else {
-				String s = compound.getString("LockedBy");
+				String s = input.getStringOr("LockedBy", "");
 				uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
 			}
 
@@ -337,63 +269,38 @@ public class PlayerStatue extends LivingEntity {
 			}
 		}
 
-		if (compound.contains("HandItems", 9)) {
-			ListTag listnbt1 = compound.getList("HandItems", 10);
-
-			for (int j = 0; j < this.handItems.size(); ++j) {
-				this.handItems.set(j, ItemStack.parseOptional(level().registryAccess(), listnbt1.getCompound(j)));
-			}
-		}
-
-		this.setSmall(compound.getBoolean("Small"));
-		this.disabledSlots = compound.getInt("DisabledSlots");
+		this.setSmall(input.getBooleanOr("Small", false));
+		this.disabledSlots = input.getIntOr("DisabledSlots", 0);
 		this.noPhysics = !this.hasPhysics();
-		CompoundTag compoundnbt = compound.getCompound("Pose");
-		this.readPose(compoundnbt);
+		input.read("Pose", StatuePose.CODEC).ifPresent(this::setStatuePose);
 	}
 
-	private void readPose(CompoundTag tagCompound) {
-		ListTag listnbt = tagCompound.getList("Head", 5);
-		this.setHeadRotation(listnbt.isEmpty() ? DEFAULT_HEAD_ROTATION : new Rotations(listnbt));
-		ListTag listnbt1 = tagCompound.getList("Body", 5);
-		this.setBodyRotation(listnbt1.isEmpty() ? DEFAULT_BODY_ROTATION : new Rotations(listnbt1));
-		ListTag listnbt2 = tagCompound.getList("LeftArm", 5);
-		this.setLeftArmRotation(listnbt2.isEmpty() ? DEFAULT_LEFTARM_ROTATION : new Rotations(listnbt2));
-		ListTag listnbt3 = tagCompound.getList("RightArm", 5);
-		this.setRightArmRotation(listnbt3.isEmpty() ? DEFAULT_RIGHTARM_ROTATION : new Rotations(listnbt3));
-		ListTag listnbt4 = tagCompound.getList("LeftLeg", 5);
-		this.setLeftLegRotation(listnbt4.isEmpty() ? DEFAULT_LEFTLEG_ROTATION : new Rotations(listnbt4));
-		ListTag listnbt5 = tagCompound.getList("RightLeg", 5);
-		this.setRightLegRotation(listnbt5.isEmpty() ? DEFAULT_RIGHTLEG_ROTATION : new Rotations(listnbt5));
+	public void setStatuePose(StatuePose statuePose) {
+		this.setHeadPose(statuePose.head());
+		this.setBodyPose(statuePose.body());
+		this.setLeftArmPose(statuePose.leftArm());
+		this.setRightArmPose(statuePose.rightArm());
+		this.setLeftLegPose(statuePose.leftLeg());
+		this.setRightLegPose(statuePose.rightLeg());
 	}
 
-	private CompoundTag writePose() {
-		CompoundTag compoundnbt = new CompoundTag();
-		if (!DEFAULT_HEAD_ROTATION.equals(this.headRotation)) {
-			compoundnbt.put("Head", this.headRotation.save());
-		}
+	public StatuePose getStatuePose() {
+		return new StatuePose(
+				this.getHeadPose(), this.getBodyPose(), this.getLeftArmPose(), this.getRightArmPose(), this.getLeftLegPose(), this.getRightLegPose()
+		);
+	}
 
-		if (!DEFAULT_BODY_ROTATION.equals(this.bodyRotation)) {
-			compoundnbt.put("Body", this.bodyRotation.save());
-		}
+	public static CompoundTag writeAllPoses(PlayerStatue playerStatue) {
+		CompoundTag compoundTag = new CompoundTag();
 
-		if (!DEFAULT_LEFTARM_ROTATION.equals(this.leftArmRotation)) {
-			compoundnbt.put("LeftArm", this.leftArmRotation.save());
-		}
+		compoundTag.store("Head", Rotations.CODEC, playerStatue.getHeadPose());
+		compoundTag.store("Body", Rotations.CODEC, playerStatue.getBodyPose());
+		compoundTag.store("LeftArm", Rotations.CODEC, playerStatue.getLeftArmPose());
+		compoundTag.store("RightArm", Rotations.CODEC, playerStatue.getRightArmPose());
+		compoundTag.store("LeftLeg", Rotations.CODEC, playerStatue.getLeftLegPose());
+		compoundTag.store("RightLeg", Rotations.CODEC, playerStatue.getRightLegPose());
 
-		if (!DEFAULT_RIGHTARM_ROTATION.equals(this.rightArmRotation)) {
-			compoundnbt.put("RightArm", this.rightArmRotation.save());
-		}
-
-		if (!DEFAULT_LEFTLEG_ROTATION.equals(this.leftLegRotation)) {
-			compoundnbt.put("LeftLeg", this.leftLegRotation.save());
-		}
-
-		if (!DEFAULT_RIGHTLEG_ROTATION.equals(this.rightLegRotation)) {
-			compoundnbt.put("RightLeg", this.rightLegRotation.save());
-		}
-
-		return compoundnbt;
+		return compoundTag;
 	}
 
 	/**
@@ -672,22 +579,12 @@ public class PlayerStatue extends LivingEntity {
 		this.playBrokenSound();
 		this.dropAllDeathLoot(serverLevel, source);
 
-		for (int i = 0; i < this.handItems.size(); ++i) {
-			ItemStack itemstack = this.handItems.get(i);
+		for (EquipmentSlot equipmentslot : EquipmentSlot.VALUES) {
+			ItemStack itemstack = this.equipment.set(equipmentslot, ItemStack.EMPTY);
 			if (!itemstack.isEmpty()) {
 				Block.popResource(this.level(), this.blockPosition().above(), itemstack);
-				this.handItems.set(i, ItemStack.EMPTY);
 			}
 		}
-
-		for (int j = 0; j < this.armorItems.size(); ++j) {
-			ItemStack itemstack1 = this.armorItems.get(j);
-			if (!itemstack1.isEmpty()) {
-				Block.popResource(this.level(), this.blockPosition().above(), itemstack1);
-				this.armorItems.set(j, ItemStack.EMPTY);
-			}
-		}
-
 	}
 
 	private void playBrokenSound() {
@@ -761,32 +658,32 @@ public class PlayerStatue extends LivingEntity {
 		}
 		Rotations rotations = this.entityData.get(HEAD_ROTATION);
 		if (!this.headRotation.equals(rotations)) {
-			this.setHeadRotation(rotations);
+			this.setHeadPose(rotations);
 		}
 
 		Rotations rotations1 = this.entityData.get(BODY_ROTATION);
 		if (!this.bodyRotation.equals(rotations1)) {
-			this.setBodyRotation(rotations1);
+			this.setBodyPose(rotations1);
 		}
 
 		Rotations rotations2 = this.entityData.get(LEFT_ARM_ROTATION);
 		if (!this.leftArmRotation.equals(rotations2)) {
-			this.setLeftArmRotation(rotations2);
+			this.setLeftArmPose(rotations2);
 		}
 
 		Rotations rotations3 = this.entityData.get(RIGHT_ARM_ROTATION);
 		if (!this.rightArmRotation.equals(rotations3)) {
-			this.setRightArmRotation(rotations3);
+			this.setRightArmPose(rotations3);
 		}
 
 		Rotations rotations4 = this.entityData.get(LEFT_LEG_ROTATION);
 		if (!this.leftLegRotation.equals(rotations4)) {
-			this.setLeftLegRotation(rotations4);
+			this.setLeftLegPose(rotations4);
 		}
 
 		Rotations rotations5 = this.entityData.get(RIGHT_LEG_ROTATION);
 		if (!this.rightLegRotation.equals(rotations5)) {
-			this.setRightLegRotation(rotations5);
+			this.setRightLegPose(rotations5);
 		}
 	}
 
@@ -822,61 +719,61 @@ public class PlayerStatue extends LivingEntity {
 		return p_184797_1_;
 	}
 
-	public void setHeadRotation(Rotations vec) {
+	public void setHeadPose(Rotations vec) {
 		this.headRotation = vec;
 		this.entityData.set(HEAD_ROTATION, vec);
 	}
 
-	public void setBodyRotation(Rotations vec) {
+	public void setBodyPose(Rotations vec) {
 		this.bodyRotation = vec;
 		this.entityData.set(BODY_ROTATION, vec);
 	}
 
-	public void setLeftArmRotation(Rotations vec) {
+	public void setLeftArmPose(Rotations vec) {
 		this.leftArmRotation = vec;
 		this.entityData.set(LEFT_ARM_ROTATION, vec);
 	}
 
-	public void setRightArmRotation(Rotations vec) {
+	public void setRightArmPose(Rotations vec) {
 		this.rightArmRotation = vec;
 		this.entityData.set(RIGHT_ARM_ROTATION, vec);
 	}
 
-	public void setLeftLegRotation(Rotations vec) {
+	public void setLeftLegPose(Rotations vec) {
 		this.leftLegRotation = vec;
 		this.entityData.set(LEFT_LEG_ROTATION, vec);
 	}
 
-	public void setRightLegRotation(Rotations vec) {
+	public void setRightLegPose(Rotations vec) {
 		this.rightLegRotation = vec;
 		this.entityData.set(RIGHT_LEG_ROTATION, vec);
 	}
 
-	public Rotations getHeadRotation() {
+	public Rotations getHeadPose() {
 		return this.headRotation;
 	}
 
-	public Rotations getBodyRotation() {
+	public Rotations getBodyPose() {
 		return this.bodyRotation;
 	}
 
 
-	public Rotations getLeftArmRotation() {
+	public Rotations getLeftArmPose() {
 		return this.leftArmRotation;
 	}
 
 
-	public Rotations getRightArmRotation() {
+	public Rotations getRightArmPose() {
 		return this.rightArmRotation;
 	}
 
 
-	public Rotations getLeftLegRotation() {
+	public Rotations getLeftLegPose() {
 		return this.leftLegRotation;
 	}
 
 
-	public Rotations getRightLegRotation() {
+	public Rotations getRightLegPose() {
 		return this.rightLegRotation;
 	}
 
@@ -929,5 +826,28 @@ public class PlayerStatue extends LivingEntity {
 
 	public boolean attackable() {
 		return false;
+	}
+
+	public record StatuePose(Rotations head, Rotations body, Rotations leftArm, Rotations rightArm, Rotations leftLeg,
+	                         Rotations rightLeg) {
+		public static final PlayerStatue.StatuePose DEFAULT = new PlayerStatue.StatuePose(
+				PlayerStatue.DEFAULT_HEAD_POSE,
+				PlayerStatue.DEFAULT_BODY_POSE,
+				PlayerStatue.DEFAULT_LEFT_ARM_POSE,
+				PlayerStatue.DEFAULT_RIGHT_ARM_POSE,
+				PlayerStatue.DEFAULT_LEFT_LEG_POSE,
+				PlayerStatue.DEFAULT_RIGHT_LEG_POSE
+		);
+		public static final Codec<PlayerStatue.StatuePose> CODEC = RecordCodecBuilder.create(
+				instance -> instance.group(
+								Rotations.CODEC.optionalFieldOf("Head", PlayerStatue.DEFAULT_HEAD_POSE).forGetter(PlayerStatue.StatuePose::head),
+								Rotations.CODEC.optionalFieldOf("Body", PlayerStatue.DEFAULT_BODY_POSE).forGetter(PlayerStatue.StatuePose::body),
+								Rotations.CODEC.optionalFieldOf("LeftArm", PlayerStatue.DEFAULT_LEFT_ARM_POSE).forGetter(PlayerStatue.StatuePose::leftArm),
+								Rotations.CODEC.optionalFieldOf("RightArm", PlayerStatue.DEFAULT_RIGHT_ARM_POSE).forGetter(PlayerStatue.StatuePose::rightArm),
+								Rotations.CODEC.optionalFieldOf("LeftLeg", PlayerStatue.DEFAULT_LEFT_LEG_POSE).forGetter(PlayerStatue.StatuePose::leftLeg),
+								Rotations.CODEC.optionalFieldOf("RightLeg", PlayerStatue.DEFAULT_RIGHT_LEG_POSE).forGetter(PlayerStatue.StatuePose::rightLeg)
+						)
+						.apply(instance, PlayerStatue.StatuePose::new)
+		);
 	}
 }

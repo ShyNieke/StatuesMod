@@ -12,18 +12,18 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.registries.VanillaRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -36,6 +36,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
@@ -47,6 +50,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	private final Map<String, Short> upgrades = new HashMap<>();
@@ -72,26 +76,26 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-		super.loadAdditional(compound, provider);
-		cooldown = compound.getInt("StatueCooldown");
-		interactCooldown = compound.getInt("InteractionCooldown");
-		statueAble = compound.getBoolean("StatueAble");
-		statueInteractable = compound.getBoolean("StatueInteractable");
-		if (compound.contains("EnergyHandler") && compound.get("EnergyHandler") instanceof IntTag intTag)
-			energyStorage.deserializeNBT(provider, intTag);
-		this.loadFromNbt(compound, provider);
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		cooldown = input.getIntOr("StatueCooldown", 0);
+		interactCooldown = input.getIntOr("InteractionCooldown", 0);
+		statueAble = input.getBooleanOr("StatueAble", false);
+		statueInteractable = input.getBooleanOr("StatueInteractable", false);
+
+		energyStorage.deserialize(input);
+		this.loadFromNbt(input);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-		super.saveAdditional(compound, provider);
-		compound.putInt("StatueCooldown", cooldown);
-		compound.putInt("InteractionCooldown", interactCooldown);
-		compound.putBoolean("StatueAble", statueAble);
-		compound.putBoolean("StatueInteractable", statueInteractable);
-		compound.put("EnergyHandler", energyStorage.serializeNBT(provider));
-		this.saveToNbt(compound, provider);
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		output.putInt("StatueCooldown", cooldown);
+		output.putInt("InteractionCooldown", interactCooldown);
+		output.putBoolean("StatueAble", statueAble);
+		output.putBoolean("StatueInteractable", statueInteractable);
+		energyStorage.serialize(output);
+		this.saveToNbt(output);
 	}
 
 	public void saveToItem(ItemStack stack, HolderLookup.Provider provider) {
@@ -100,11 +104,12 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		stack.set(StatueDataComponents.UPGRADES, new StatueUpgrades(this.upgrades));
 	}
 
+
 	@Override
-	protected void applyImplicitComponents(BlockEntity.DataComponentInput input) {
-		super.applyImplicitComponents(input);
-		this.stats = input.getOrDefault(StatueDataComponents.STATS, StatueStats.empty());
-		Map<String, Short> upgradeMap = input.getOrDefault(StatueDataComponents.UPGRADES, StatueUpgrades.empty()).upgradeMap();
+	protected void applyImplicitComponents(DataComponentGetter getter) {
+		super.applyImplicitComponents(getter);
+		this.stats = getter.getOrDefault(StatueDataComponents.STATS, StatueStats.empty());
+		Map<String, Short> upgradeMap = getter.getOrDefault(StatueDataComponents.UPGRADES, StatueUpgrades.empty()).upgradeMap();
 		if (!upgradeMap.isEmpty())
 			this.upgrades.putAll(upgradeMap);
 	}
@@ -117,11 +122,11 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public void removeComponentsFromTag(CompoundTag tag) {
-		super.removeComponentsFromTag(tag);
-		tag.remove("tag");
-		tag.remove("stats");
-		tag.remove("EnergyHandler");
+	public void removeComponentsFromTag(ValueOutput output) {
+		super.removeComponentsFromTag(output);
+		output.discard("tag");
+		output.discard("stats");
+		output.discard("energy");
 	}
 
 	public EnergyStorage getEnergyStorage(@Nullable Direction facing) {
@@ -148,25 +153,34 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket pkt, HolderLookup.Provider provider) {
-		loadAdditional(pkt.getTag(), provider);
+	public void onDataPacket(Connection net, ValueInput valueInput) {
+		super.onDataPacket(net, valueInput);
 
 		BlockState state = level.getBlockState(getBlockPos());
 		level.sendBlockUpdated(getBlockPos(), state, state, 3);
 	}
 
 	@Override
-	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		CompoundTag nbt = new CompoundTag();
-		this.saveAdditional(nbt, provider);
-		return nbt;
+	public CompoundTag getUpdateTag(HolderLookup.Provider lookupProvider) {
+		CompoundTag tag = new CompoundTag();
+		try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Statues.LOGGER)) {
+			TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, lookupProvider);
+			this.saveAdditional(output);
+			tag.merge(output.buildResult());
+		}
+		return tag;
 	}
 
 	@Override
 	public CompoundTag getPersistentData() {
-		CompoundTag nbt = new CompoundTag();
-		this.saveAdditional(nbt, level != null ? level.registryAccess() : VanillaRegistries.createLookup());
-		return nbt;
+		CompoundTag tag = new CompoundTag();
+		try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Statues.LOGGER)) {
+			HolderLookup.Provider lookupProvider = this.level != null ? this.level.registryAccess() : VanillaRegistries.createLookup();
+			TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, lookupProvider);
+			this.saveAdditional(output);
+			tag.merge(output.buildResult());
+		}
+		return tag;
 	}
 
 	@Nullable
@@ -217,51 +231,35 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		this.setChanged();
 	}
 
-	public void loadFromNbt(CompoundTag compound, HolderLookup.Provider provider) {
-		statueUpgraded = compound.getBoolean(Reference.UPGRADED);
+	public void loadFromNbt(ValueInput input) {
+		statueUpgraded = input.getBooleanOr(Reference.UPGRADED, false);
 
-		if (compound.contains("upgrades")) {
-			StatueUpgrades.CODEC
-					.parse(NbtOps.INSTANCE, compound.get("upgrades"))
-					.resultOrPartial(error -> Statues.LOGGER.error("Failed to load upgrades from statue: {}", error))
-					.ifPresent(upgrades -> {
-						this.upgrades.clear();
-						this.upgrades.putAll(upgrades.upgradeMap());
-					});
-		}
+		Optional<StatueUpgrades> upgrades = input.read("upgrades", StatueUpgrades.CODEC);
+		upgrades.ifPresent((statueUpgrades) -> {
+			this.upgrades.clear();
+			this.upgrades.putAll(statueUpgrades.upgradeMap());
+		});
 
-		if (compound.contains("stats")) {
-			StatueStats.CODEC
-					.parse(NbtOps.INSTANCE, compound.get("stats"))
-					.resultOrPartial(error -> Statues.LOGGER.error("Failed to load stats from statue: {}", error))
-					.ifPresent(this::setStats);
-		}
+		Optional<StatueStats> stats = input.read("stats", StatueStats.CODEC);
+		stats.ifPresent(this::setStats);
 	}
 
 	public void setStats(StatueStats stats) {
 		this.stats = stats;
 	}
 
-	public CompoundTag saveToNbt(CompoundTag compound, HolderLookup.Provider provider) {
-		saveUpgrades(compound, provider);
+	public void saveToNbt(ValueOutput output) {
+		saveUpgrades(output);
 		if (this.upgrades != null) {
-			StatueUpgrades.CODEC.encodeStart(NbtOps.INSTANCE, new StatueUpgrades(this.upgrades))
-					.resultOrPartial(Statues.LOGGER::error)
-					.ifPresent(upgrades -> compound.put("upgrades", upgrades));
+			output.store("upgrades", StatueUpgrades.CODEC, new StatueUpgrades(this.upgrades));
 		}
 		if (this.stats != null) {
-			StatueStats.CODEC.encodeStart(NbtOps.INSTANCE, this.stats)
-					.resultOrPartial(Statues.LOGGER::error)
-					.ifPresent(stats -> compound.put("stats", stats));
+			output.store("stats", StatueStats.CODEC, this.stats);
 		}
-
-		return compound;
 	}
 
-	public CompoundTag saveUpgrades(CompoundTag tag, HolderLookup.Provider provider) {
-		tag.putBoolean(Reference.UPGRADED, statueUpgraded);
-
-		return tag;
+	public void saveUpgrades(ValueOutput output) {
+		output.putBoolean(Reference.UPGRADED, statueUpgraded);
 	}
 
 	protected void refreshClient() {

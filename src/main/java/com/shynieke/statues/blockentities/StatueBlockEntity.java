@@ -274,7 +274,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 				if (entity == null) {
 					continue;
 				}
-				entity.moveTo(d0, d1, d2, entity.getYRot(), entity.getXRot());
+				entity.snapTo(d0, d1, d2, entity.getYRot(), entity.getXRot());
 
 				int k = serverLevel.getEntitiesOfClass(entity.getClass(), (new AABB((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), (double)
 						(pos.getX() + 1), (double) (pos.getY() + 1), (double) (pos.getZ() + 1))).inflate((double) 4)).size();
@@ -282,7 +282,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 					continue;
 				}
 
-				entity.moveTo(entity.getX(), entity.getY(), entity.getZ(), level.random.nextFloat() * 360.0F, 0.0F);
+				entity.snapTo(entity.getX(), entity.getY(), entity.getZ(), level.random.nextFloat() * 360.0F, 0.0F);
 				if (entity instanceof Mob mob) {
 					if (!screwTheRulesIHasMoney && !mob.checkSpawnRules(serverLevel, EntitySpawnReason.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
 						continue;

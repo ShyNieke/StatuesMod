@@ -13,7 +13,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -28,6 +28,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemLore;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -244,7 +245,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
-						DataComponentIngredient.of(false, DataComponentPredicate.builder().build(), Items.ENCHANTED_BOOK))).tier(1)
+						DataComponentIngredient.of(false, DataComponentExactPredicate.builder().build(), Items.ENCHANTED_BOOK))).tier(1)
 				.upgradeType(UpgradeType.MOB_KILLER).save(this.output, Reference.modLoc("upgrade/mob_killer_2"));
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(Ingredient.of(Items.EXPERIENCE_BOTTLE))).tier(2)
@@ -321,8 +322,8 @@ public class StatueRecipeProvider extends RecipeProvider {
 		}
 
 		ItemEnchantments enchantments = wasteland.getEnchantments();
-		enchantments.withTooltip(false);
 		wasteland.set(DataComponents.ENCHANTMENTS, enchantments);
+		wasteland.set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT.withHidden(DataComponents.ENCHANTMENTS, true));
 		return wasteland;
 	}
 

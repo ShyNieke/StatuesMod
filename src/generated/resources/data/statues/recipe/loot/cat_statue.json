@@ -19,7 +19,10 @@
   },
   "result3": {
     "components": {
-      "minecraft:custom_name": "{\"color\":\"light_purple\",\"text\":\"I.O.U\"}"
+      "minecraft:custom_name": {
+        "color": "light_purple",
+        "text": "I.O.U"
+      }
     },
     "count": 1,
     "id": "minecraft:paper"

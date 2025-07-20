@@ -274,7 +274,7 @@ public class StatueRegistry {
 	public static final DeferredBlock<SlabFishStatueBlock> SLABFISH = registerBlock("slabfish", () -> new SlabFishStatueBlock(blockBuilder("slabfish")));
 	public static final DeferredBlock<AzzaroStatueBlock> AZZARO = registerBlock("azzaro", () -> new AzzaroStatueBlock(blockBuilder("azzaro")));
 	public static final DeferredBlock<FlowerBlock> CORE_FLOWER = BLOCKS.registerBlock("core_flower", (properties) -> new FlowerBlock(
-			MobEffects.MOVEMENT_SLOWDOWN, 5, properties),
+			MobEffects.SLOWNESS, 5, properties),
 			BlockBehaviour.Properties.of()
 			.mapColor(MapColor.PLANT)
 			.noCollission()

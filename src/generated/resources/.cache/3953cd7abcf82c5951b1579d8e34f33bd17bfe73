@@ -1,4 +1,4 @@
-// 1.21.4	2025-07-16T20:19:44.1368801	Model Definitions - statues
+// 1.21.8	2025-07-20T21:03:23.1793864	Model Definitions - statues
 4427e42906b8877f46bd091919b793be75c3018b assets/statues/blockstates/allay_statue.json
 42d5ac316c690763e56b4fc0cab4ff995f42790a assets/statues/blockstates/angry_bee_statue.json
 a969b3fd05f50339960b7a4fee7a0200e2a085c4 assets/statues/blockstates/axolotl_blue_statue.json
@@ -236,7 +236,7 @@ f1a3cdbb650b35e321b353b06962e62abb54c950 assets/statues/items/snow_golem_statue.
 b7c27d2d0558e35efdc1b5da56518b263d93e56e assets/statues/items/sombrero.json
 c27296f60d3d424c08aa0c86468f8d1fdded0c2e assets/statues/items/spider_statue.json
 fa197f8c04b99b4d762fd201216d914007557360 assets/statues/items/squid_statue.json
-7ca51424ef7360ceea59f5ef0fcf18a36e12e94e assets/statues/items/statue_bat_spawn_egg.json
+826cdaf9bf3d937d03a0434282d87c3e51e37134 assets/statues/items/statue_bat_spawn_egg.json
 390d565511952ab4108723223e81c8bfc9672ee9 assets/statues/items/statue_core.json
 31db901db4bca2b15ce95633ac9aa820cf719fcc assets/statues/items/statue_core_pottery_sherd.json
 76d89e35b3618ff90b227d3814963ea44b18c183 assets/statues/items/statue_table.json
@@ -323,6 +323,7 @@ a5624573226002f4e92d2fa5ab3121a6b869a417 assets/statues/models/item/player_compa
 5f4847ea4522caa57bf9b03a7b1af951b4072180 assets/statues/models/item/player_statue.json
 2f97193100bda21982466751167f006cd4472014 assets/statues/models/item/player_statue_spawn_egg.json
 691f96a85f14b4edd2e414c98ca8b973161d425d assets/statues/models/item/royal_nugget.json
+9c7292a42aed65f13f4b82fd323580584f7af2ae assets/statues/models/item/statue_bat_spawn_egg.json
 e99f6aa9afb31087f9be902f6a362d94e2dbd460 assets/statues/models/item/statue_core.json
 b2f6780311c8eb35af4d06e5d73ac3f64dfb3be3 assets/statues/models/item/statue_core_pottery_sherd.json
 b3842022901a24095430043b63923521deea2bb8 assets/statues/models/item/tea.json

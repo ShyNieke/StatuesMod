@@ -5,8 +5,6 @@ import com.shynieke.statues.menu.ShulkerStatueMenu;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.MenuProvider;
@@ -18,6 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import org.jetbrains.annotations.NotNull;
@@ -52,15 +52,15 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-		super.loadAdditional(compound, provider);
-		handler.deserializeNBT(provider, compound.getCompound("ItemStackHandler"));
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		handler.deserialize(input);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-		super.saveAdditional(compound, provider);
-		compound.put("ItemStackHandler", handler.serializeNBT(provider));
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		handler.serialize(output);
 	}
 
 	public ItemStackHandler getHandler(@Nullable Direction direction) {

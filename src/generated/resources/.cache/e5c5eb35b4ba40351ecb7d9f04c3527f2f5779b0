@@ -1,4 +1,4 @@
-// 1.21.4	2024-12-03T22:12:26.9439935	Advancements
+// 1.21.8	2025-07-20T21:02:34.6578836	Advancements
 b4ee7ee90d7f4b339c235ce6c5418cadf7f6eed1 data/statues/advancement/allay_statue.json
 8689c4dcd413ee7e570d33de280523959456de42 data/statues/advancement/angry_bee_statue.json
 ea8a172cf2f6aeb1ea84d50050a59dc8591861d2 data/statues/advancement/axolotl_all_statue.json
@@ -46,7 +46,7 @@ f15c0d7ae15130a8676200c229d6d331689d762a data/statues/advancement/pufferfish_med
 307bbdb4a7f192873eff15b5e6998931306866c6 data/statues/advancement/rabbit_all_statue.json
 405d8c216ddd64dbb81f3b4c47095ed48d59ebc9 data/statues/advancement/rabbit_statue.json
 dd468ad2c4404779278da1235da03695fd65ec53 data/statues/advancement/ravager_statue.json
-cb1ccdfed765db6505c983cd904c130a3cd51d80 data/statues/advancement/root.json
+c0a132584530118d0d8846eda6da8466442f5a01 data/statues/advancement/root.json
 85dfc530112a9f5de34e01ebded89d948d021d8a data/statues/advancement/salmon_statue.json
 3d3c7b3d2339ef4b386ca4552938488bd3e95654 data/statues/advancement/sheep_all_statue.json
 99909b792cbd0d8325bb4707dff445399393fba7 data/statues/advancement/sheep_statue.json

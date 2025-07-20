@@ -28,7 +28,7 @@ public class StatueGoldenMarshmallow extends Item {
 			if (!level.isClientSide) {
 				if (this == StatueRegistry.MARSHMALLOW_GOLDEN.get()) {
 					List<Holder<MobEffect>> effectList = BuiltInRegistries.MOB_EFFECT.listElements().collect(Collectors.toList());
-					effectList.remove(MobEffects.CONFUSION);
+					effectList.remove(MobEffects.NAUSEA);
 
 					int i = level.random.nextInt(effectList.size());
 					int amplifier = level.random.nextInt(2);

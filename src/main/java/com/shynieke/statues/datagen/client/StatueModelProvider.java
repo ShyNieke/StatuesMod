@@ -12,22 +12,20 @@ import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.BlockModelGenerators.PlantType;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
-import net.minecraft.client.data.models.blockstates.Variant;
-import net.minecraft.client.data.models.blockstates.VariantProperties;
 import net.minecraft.client.data.models.model.ItemModelUtils;
-import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel.Entry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
@@ -74,8 +72,6 @@ public class StatueModelProvider extends ModelProvider {
 
 			if (registryObject.get() instanceof PlayerCompassItem) {
 				generateStatueCompass(itemModels, registryObject.get());
-			} else if (registryObject.get() instanceof SpawnEggItem) {
-				itemModels.generateSpawnEgg(registryObject.get(), 3421236, 3556687);
 			} else {
 				itemModels.generateFlatItem(registryObject.get(), ModelTemplates.FLAT_ITEM);
 			}
@@ -92,11 +88,8 @@ public class StatueModelProvider extends ModelProvider {
 	}
 
 	public void makeStatue(BlockModelGenerators generators, Block statueBlock) {
-		generators.blockStateOutput
-				.accept(
-						MultiVariantGenerator.multiVariant(statueBlock, Variant.variant().with(VariantProperties.MODEL, ModelLocationUtils.getModelLocation(statueBlock)))
-								.with(BlockModelGenerators.createHorizontalFacingDispatch())
-				);
+		MultiVariant multivariant = BlockModelGenerators.plainVariant(BuiltInRegistries.BLOCK.getKey(statueBlock).withPrefix("block/"));
+		generators.blockStateOutput.accept(MultiVariantGenerator.dispatch(statueBlock, multivariant).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING));
 	}
 
 //	private void makeStatue(DeferredHolder<Block, ? extends Block> registryObject) {

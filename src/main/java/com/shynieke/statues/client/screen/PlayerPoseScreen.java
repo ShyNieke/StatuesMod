@@ -1,6 +1,7 @@
 package com.shynieke.statues.client.screen;
 
 import com.shynieke.statues.Reference;
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.client.screen.widget.DecimalNumberFieldBox;
 import com.shynieke.statues.client.screen.widget.EnumCycleButton;
 import com.shynieke.statues.client.screen.widget.NumberFieldBox;
@@ -14,6 +15,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Rotations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.FloatTag;
@@ -21,12 +23,17 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import java.util.Locale;
+import java.util.Optional;
 
 @SuppressWarnings("rawtypes")
 @OnlyIn(Dist.CLIENT)
@@ -55,7 +62,17 @@ public class PlayerPoseScreen extends Screen {
 		this.playerStatueEntity = playerStatue;
 
 		this.playerStatueData = new PlayerStatueData();
-		this.playerStatueData.readFromNBT(playerStatueEntity.saveWithoutId(new CompoundTag()));
+		try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Statues.LOGGER)) {
+			TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, playerStatueEntity.registryAccess());
+			playerStatueEntity.saveWithoutId(output);
+			CompoundTag tag = output.buildResult();
+
+			if (tag.getCompoundOrEmpty("Pose").isEmpty()) {
+				CompoundTag poseTag = PlayerStatue.writeAllPoses(playerStatueEntity);
+				tag.put("Pose", poseTag);
+			}
+			this.playerStatueData.readFromNBT(tag);
+		}
 
 		this.allowScrolling = StatuesConfig.CLIENT.allowScrolling.get();
 
@@ -158,7 +175,7 @@ public class PlayerPoseScreen extends Screen {
 					clipboardData = this.minecraft.keyboardHandler.getClipboard();
 				}
 				if (clipboardData != null) {
-					CompoundTag compound = TagParser.parseTag(clipboardData);
+					CompoundTag compound = TagParser.parseCompoundFully(clipboardData);
 					this.readFieldsFromNBT(compound);
 					this.updateEntity(compound);
 				}
@@ -423,66 +440,78 @@ public class PlayerPoseScreen extends Screen {
 		this.forceModelType.setValue(this.forceModelType.findValue(this.playerStatueData.modelType));
 
 		// Set rotation text field
-		ListTag rotationTag = compound.getList("Rotation", 5); // 5 is the type for float
-		if (!rotationTag.isEmpty()) {
-			this.rotationTextField.setValue(String.valueOf(rotationTag.getFloat(0)));
+		Optional<Vec2> rotation = compound.read("Rotation", Vec2.CODEC);
+		if (rotation.isPresent()) {
+			this.rotationTextField.setValue(String.valueOf(rotation.get().x));
 		}
 
 		// Set pose text fields
-		CompoundTag poseTag = compound.getCompound("Pose");
+		CompoundTag poseTag = compound.getCompoundOrEmpty("Pose");
 
-		ListTag poseHeadTag = poseTag.getList("Head", 5);
-		this.poseTextFields[0].setValue(String.valueOf(poseHeadTag.getFloat(0)));
-		this.poseTextFields[1].setValue(String.valueOf(poseHeadTag.getFloat(1)));
-		this.poseTextFields[2].setValue(String.valueOf(poseHeadTag.getFloat(2)));
+		Rotations poseHeadTag = poseTag.read("Head", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
+		this.poseTextFields[0].setValue(String.valueOf(poseHeadTag.x()));
+		this.poseTextFields[1].setValue(String.valueOf(poseHeadTag.y()));
+		this.poseTextFields[2].setValue(String.valueOf(poseHeadTag.z()));
 
-		ListTag poseBodyTag = poseTag.getList("Body", 5);
-		this.poseTextFields[3].setValue(String.valueOf(poseBodyTag.getFloat(0)));
-		this.poseTextFields[4].setValue(String.valueOf(poseBodyTag.getFloat(1)));
-		this.poseTextFields[5].setValue(String.valueOf(poseBodyTag.getFloat(2)));
+		Rotations poseBodyTag = poseTag.read("Body", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
+		this.poseTextFields[3].setValue(String.valueOf(poseBodyTag.x()));
+		this.poseTextFields[4].setValue(String.valueOf(poseBodyTag.y()));
+		this.poseTextFields[5].setValue(String.valueOf(poseBodyTag.z()));
 
-		ListTag poseLeftLegTag = poseTag.getList("LeftLeg", 5);
-		this.poseTextFields[6].setValue(String.valueOf(poseLeftLegTag.getFloat(0)));
-		this.poseTextFields[7].setValue(String.valueOf(poseLeftLegTag.getFloat(1)));
-		this.poseTextFields[8].setValue(String.valueOf(poseLeftLegTag.getFloat(2)));
+		Rotations poseLeftLegTag = poseTag.read("LeftLeg", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
+		this.poseTextFields[6].setValue(String.valueOf(poseLeftLegTag.x()));
+		this.poseTextFields[7].setValue(String.valueOf(poseLeftLegTag.y()));
+		this.poseTextFields[8].setValue(String.valueOf(poseLeftLegTag.z()));
 
-		ListTag poseRightLegTag = poseTag.getList("RightLeg", 5);
-		this.poseTextFields[9].setValue(String.valueOf(poseRightLegTag.getFloat(0)));
-		this.poseTextFields[10].setValue(String.valueOf(poseRightLegTag.getFloat(1)));
-		this.poseTextFields[11].setValue(String.valueOf(poseRightLegTag.getFloat(2)));
+		Rotations poseRightLegTag = poseTag.read("RightLeg", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
+		this.poseTextFields[9].setValue(String.valueOf(poseRightLegTag.x()));
+		this.poseTextFields[10].setValue(String.valueOf(poseRightLegTag.y()));
+		this.poseTextFields[11].setValue(String.valueOf(poseRightLegTag.z()));
 
-		ListTag poseLeftArmTag = poseTag.getList("LeftArm", 5);
-		this.poseTextFields[12].setValue(String.valueOf(poseLeftArmTag.getFloat(0)));
-		this.poseTextFields[13].setValue(String.valueOf(poseLeftArmTag.getFloat(1)));
-		this.poseTextFields[14].setValue(String.valueOf(poseLeftArmTag.getFloat(2)));
+		Rotations poseLeftArmTag = poseTag.read("LeftArm", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
+		this.poseTextFields[12].setValue(String.valueOf(poseLeftArmTag.x()));
+		this.poseTextFields[13].setValue(String.valueOf(poseLeftArmTag.y()));
+		this.poseTextFields[14].setValue(String.valueOf(poseLeftArmTag.z()));
 
-		ListTag poseRightArmTag = poseTag.getList("RightArm", 5);
-		this.poseTextFields[15].setValue(String.valueOf(poseRightArmTag.getFloat(0)));
-		this.poseTextFields[16].setValue(String.valueOf(poseRightArmTag.getFloat(1)));
-		this.poseTextFields[17].setValue(String.valueOf(poseRightArmTag.getFloat(2)));
+		Rotations poseRightArmTag = poseTag.read("RightArm", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
+		this.poseTextFields[15].setValue(String.valueOf(poseRightArmTag.x()));
+		this.poseTextFields[16].setValue(String.valueOf(poseRightArmTag.y()));
+		this.poseTextFields[17].setValue(String.valueOf(poseRightArmTag.z()));
 
 		// Set position offsets
-		ListTag positionOffset = compound.getList("Move", 6); // 6 is the type for double
-		if (!positionOffset.isEmpty()) {
-			this.poseTextFields[18].setValue(String.valueOf(positionOffset.getDouble(0) + this.lastSendOffset.x));
-			this.poseTextFields[19].setValue(String.valueOf(positionOffset.getDouble(1) + this.lastSendOffset.y));
-			this.poseTextFields[20].setValue(String.valueOf(positionOffset.getDouble(2) + this.lastSendOffset.z));
+		Optional<Vec3> optionalOffset = compound.read("Move", Vec3.CODEC);
+		if (optionalOffset.isPresent()) {
+			Vec3 offset = optionalOffset.get();
+			this.poseTextFields[18].setValue(String.valueOf(offset.x() + this.lastSendOffset.x));
+			this.poseTextFields[19].setValue(String.valueOf(offset.y() + this.lastSendOffset.y));
+			this.poseTextFields[20].setValue(String.valueOf(offset.z() + this.lastSendOffset.z));
 			this.lastSendOffset = new Vec3(
-					positionOffset.getDouble(0) + this.lastSendOffset.x,
-					positionOffset.getDouble(1) + this.lastSendOffset.y,
-					positionOffset.getDouble(2) + this.lastSendOffset.z
+					offset.x() + this.lastSendOffset.x,
+					offset.y() + this.lastSendOffset.y,
+					offset.z() + this.lastSendOffset.z
 			);
 		}
 	}
 
 	private void updateEntity(CompoundTag compound) {
-		CompoundTag CompoundTag = this.playerStatueEntity.saveWithoutId(new CompoundTag()).copy();
-		CompoundTag.merge(compound);
-		this.playerStatueEntity.clientLock = 0;
-		this.playerStatueEntity.load(CompoundTag);
-		this.playerStatueEntity.clientLock = 5;
+		try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Statues.LOGGER)) {
+			TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, this.playerStatueEntity.registryAccess());
 
-		PacketDistributor.sendToServer(new PlayerStatueSyncData(playerStatueEntity.getUUID(), compound));
+			// Save the player statue's current state without an ID
+			this.playerStatueEntity.saveWithoutId(output);
+			// Build the result compound tag from the output
+			CompoundTag outputCompound = output.buildResult();
+			// Merge the provided compound data into the output compound
+			outputCompound.merge(compound);
+
+			// Load the player statue with the updated compound data
+			this.playerStatueEntity.clientLock = 0;
+			this.playerStatueEntity.load(TagValueInput.create(ProblemReporter.DISCARDING, this.playerStatueEntity.registryAccess(), outputCompound));
+			this.playerStatueEntity.clientLock = 5;
+
+			ClientPacketDistributor.sendToServer(new PlayerStatueSyncData(playerStatueEntity.getUUID(), outputCompound));
+
+		}
 	}
 
 	@Override

@@ -66,14 +66,14 @@ public class PlayerStatueSpawnItem extends Item {
 	}
 
 	public static void applyRandomRotations(PlayerStatue playerStatueEntity, RandomSource rand) {
-		Rotations rotations = playerStatueEntity.getHeadRotation();
+		Rotations rotations = playerStatueEntity.getHeadPose();
 		float f = rand.nextFloat() * 5.0F;
 		float f1 = rand.nextFloat() * 20.0F - 10.0F;
-		Rotations rotations1 = new Rotations(rotations.getX() + f, rotations.getY() + f1, rotations.getZ());
-		playerStatueEntity.setHeadRotation(rotations1);
-		rotations = playerStatueEntity.getBodyRotation();
+		Rotations rotations1 = new Rotations(rotations.x() + f, rotations.y() + f1, rotations.z());
+		playerStatueEntity.setHeadPose(rotations1);
+		rotations = playerStatueEntity.getBodyPose();
 		f = rand.nextFloat() * 10.0F - 5.0F;
-		rotations1 = new Rotations(rotations.getX(), rotations.getY() + f, rotations.getZ());
-		playerStatueEntity.setBodyRotation(rotations1);
+		rotations1 = new Rotations(rotations.x(), rotations.y() + f, rotations.z());
+		playerStatueEntity.setBodyPose(rotations1);
 	}
 }

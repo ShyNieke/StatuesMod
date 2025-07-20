@@ -5,11 +5,12 @@ import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterList;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class StatueBiomeTagProvider extends BiomeTagsProvider {
@@ -20,15 +21,8 @@ public class StatueBiomeTagProvider extends BiomeTagsProvider {
 
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
-		TagsProvider.TagAppender<Biome> tagAppender = this.tag(StatueTags.CAN_SPAWN_STATUE_BAT);
-		try {
-			MultiNoiseBiomeSourceParameterList.Preset.OVERWORLD.usedBiomes().forEach((resourceKey) -> {
-				if (!resourceKey.equals(Biomes.DEEP_DARK) && !resourceKey.equals(Biomes.MUSHROOM_FIELDS))
-					tagAppender.add(resourceKey);
-			});
-			this.tag(StatueTags.CAN_SPAWN_FEWER_STATUE_BAT).add(Biomes.BASALT_DELTAS);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		List<ResourceKey<Biome>> list = MultiNoiseBiomeSourceParameterList.Preset.OVERWORLD.usedBiomes().toList();
+		list = list.stream().filter(resourceKey -> !resourceKey.equals(Biomes.DEEP_DARK) && !resourceKey.equals(Biomes.MUSHROOM_FIELDS)).toList();
+		this.tag(StatueTags.CAN_SPAWN_STATUE_BAT).addAll(list);
 	}
 }

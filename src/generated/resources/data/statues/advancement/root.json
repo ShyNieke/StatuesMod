@@ -9,7 +9,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "background": "statues:textures/block/pebble.png",
+    "background": "statues:block/pebble",
     "description": {
       "translate": "advancement.statues.root.desc"
     },

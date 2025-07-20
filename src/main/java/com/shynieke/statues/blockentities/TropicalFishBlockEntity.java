@@ -2,9 +2,9 @@ package com.shynieke.statues.blockentities;
 
 import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class TropicalFishBlockEntity extends StatueBlockEntity {
 	private int MAIN_COLOR;
@@ -17,17 +17,17 @@ public class TropicalFishBlockEntity extends StatueBlockEntity {
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-		super.loadAdditional(compound, provider);
-		this.MAIN_COLOR = compound.getInt("MainColor");
-		this.SECONDARY_COLOR = compound.getInt("SecondaryColor");
+	protected void loadAdditional(ValueInput input) {
+		super.loadAdditional(input);
+		this.MAIN_COLOR = input.getIntOr("MainColor", 0);
+		this.SECONDARY_COLOR = input.getIntOr("SecondaryColor", 0);
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag compound, HolderLookup.Provider provider) {
-		super.saveAdditional(compound, provider);
-		compound.putInt("MainColor", MAIN_COLOR);
-		compound.putInt("SecondaryColor", SECONDARY_COLOR);
+	protected void saveAdditional(ValueOutput output) {
+		super.saveAdditional(output);
+		output.putInt("MainColor", MAIN_COLOR);
+		output.putInt("SecondaryColor", SECONDARY_COLOR);
 	}
 
 	public void scrambleColors() {

@@ -1,6 +1,7 @@
 package com.shynieke.statues.blocks.statues;
 
 import com.google.common.collect.Maps;
+import com.shynieke.statues.Statues;
 import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import net.minecraft.core.BlockPos;
@@ -8,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -21,10 +23,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.List;
 import java.util.Map;
 
 public class SheepStatueBlock extends AbstractStatueBase {
@@ -55,9 +61,12 @@ public class SheepStatueBlock extends AbstractStatueBase {
 						.setValue(WATERLOGGED, state.getValue(WATERLOGGED));
 				level.setBlock(pos, copiedState, 3);
 				if (copiedState.hasBlockEntity() && !blockData.isEmpty()) {
-					BlockEntity blockEntity = new StatueBlockEntity(pos, copiedState);
-					blockEntity.loadWithComponents(blockData, level.registryAccess());
-					level.setBlockEntity(blockEntity);
+					try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Statues.LOGGER)) {
+						BlockEntity blockEntity = new StatueBlockEntity(pos, copiedState);
+						ValueInput input = TagValueInput.create(problemreporter$scopedcollector, level.registryAccess(), blockData);
+						blockEntity.loadWithComponents(input);
+						level.setBlockEntity(blockEntity);
+					}
 				}
 				stack.consume(1, player);
 				return InteractionResult.SUCCESS;

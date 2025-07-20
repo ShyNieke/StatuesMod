@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.items.IItemHandler;
 
 public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntity> {
@@ -21,8 +22,8 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 	}
 
 	@Override
-	public void render(StatueTableBlockEntity tableBlockEntity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource,
-	                   int combinedLightIn, int combinedOverlayIn) {
+	public void render(StatueTableBlockEntity tableBlockEntity, float partialTick, PoseStack poseStack,
+	                   MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vec3 cameraPos) {
 		if (tableBlockEntity.getHandler() != null) {
 			IItemHandler handler = tableBlockEntity.getHandler();
 			final BlockState state = tableBlockEntity.getBlockState();
@@ -50,13 +51,13 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 			Level level = mc.level;
 			ItemStack statueStack = handler.getStackInSlot(0);
 			if (!statueStack.isEmpty()) {
-				float f = (float) tableBlockEntity.time + partialTicks;
+				float f = (float) tableBlockEntity.time + partialTick;
 
 				poseStack.pushPose();
 				poseStack.translate(0.5, (1.0 / 16) * 9, 0.5);
 				poseStack.translate(0.0D, (double) (0.1F + Mth.sin(f * 0.2F) * 0.01F), 0.0D);
 				Minecraft.getInstance().getItemRenderer().renderStatic(statueStack, ItemDisplayContext.GROUND,
-						combinedLightIn, combinedOverlayIn, poseStack, bufferSource, level, 0);
+						packedLight, packedOverlay, poseStack, bufferSource, level, 0);
 				poseStack.popPose();
 			}
 
@@ -66,7 +67,7 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 				poseStack.translate((1.0 / 16) * 8.75, (1.0 / 16) * 2.5, (1.0 / 16) * 13);
 				poseStack.scale(0.3125F, 0.3125F, 0.3125F);
 				Minecraft.getInstance().getItemRenderer().renderStatic(coreStack, ItemDisplayContext.GROUND,
-						combinedLightIn, combinedOverlayIn, poseStack, bufferSource, level, 0);
+						packedLight, packedOverlay, poseStack, bufferSource, level, 0);
 				poseStack.popPose();
 			}
 
@@ -102,7 +103,7 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 					poseStack.translate(0.5 + xOffset, 0.0625 * 9 + yOffset, 0.5 + zOffset);
 					poseStack.scale(0.0625f * 2, 0.0625f * 2, 0.0625f * 2);
 					Minecraft.getInstance().getItemRenderer().renderStatic(catalystSTack, ItemDisplayContext.GUI,
-							combinedLightIn, combinedOverlayIn, poseStack, bufferSource, level, 0);
+							packedLight, packedOverlay, poseStack, bufferSource, level, 0);
 					poseStack.popPose();
 				}
 			}

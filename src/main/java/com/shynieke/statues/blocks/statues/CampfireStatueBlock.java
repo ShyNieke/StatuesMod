@@ -6,7 +6,6 @@ import com.shynieke.statues.registry.StatueSounds;
 import com.shynieke.statues.util.ListHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
@@ -45,9 +44,8 @@ public class CampfireStatueBlock extends AbstractStatueBase {
 	public LivingEntity adjustSpawnedEntity(LivingEntity livingEntity) {
 		if (livingEntity instanceof Creeper general) {
 			general.setCustomName(Component.literal("General Spazz"));
-			CompoundTag tag = new CompoundTag();
-			tag.putByte("ExplosionRadius", (byte) 0);
-			general.addAdditionalSaveData(tag);
+			general.explosionRadius = 0;
+
 			return general;
 		}
 		return livingEntity;

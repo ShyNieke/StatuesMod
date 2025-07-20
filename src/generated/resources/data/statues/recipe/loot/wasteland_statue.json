@@ -7,11 +7,17 @@
   },
   "result2": {
     "components": {
-      "minecraft:custom_name": "{\"color\":\"light_purple\",\"text\":\"Wasteland Block\"}",
+      "minecraft:custom_name": {
+        "color": "light_purple",
+        "text": "Wasteland Block"
+      },
       "minecraft:enchantments": {
-        "levels": {
-          "minecraft:vanishing_curse": 1
-        }
+        "minecraft:vanishing_curse": 1
+      },
+      "minecraft:tooltip_display": {
+        "hidden_components": [
+          "minecraft:enchantments"
+        ]
       }
     },
     "count": 1,

@@ -6,7 +6,6 @@ import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,15 +15,17 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
+import net.minecraft.world.entity.animal.CatVariants;
 import net.minecraft.world.entity.animal.Fox;
-import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.animal.MushroomCow;
 import net.minecraft.world.entity.animal.MushroomCow.Variant;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.animal.Rabbit;
-import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.axolotl.Axolotl;
 import net.minecraft.world.entity.animal.frog.Frog;
+import net.minecraft.world.entity.animal.frog.FrogVariant;
+import net.minecraft.world.entity.animal.frog.FrogVariants;
+import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.ElderGuardian;
 import net.minecraft.world.entity.monster.Evoker;
@@ -124,29 +125,28 @@ public class DropHandler {
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Cat cat) {
 			ItemStack itemStackToDrop = ItemStack.EMPTY;
-			CatVariant variant = cat.getVariant().value();
-			ResourceKey<CatVariant> catKey = BuiltInRegistries.CAT_VARIANT.getResourceKey(variant).orElse(null);
-			if (catKey == CatVariant.TABBY) {
+			ResourceKey<CatVariant> catKey = cat.getVariant().unwrapKey().orElse(null);
+			if (catKey == CatVariants.TABBY) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_TABBY_STATUE.get());
-			} else if (catKey == CatVariant.BLACK) {
+			} else if (catKey == CatVariants.BLACK) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_TUXEDO_STATUE.get());
-			} else if (catKey == CatVariant.RED) {
+			} else if (catKey == CatVariants.RED) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_RED_STATUE.get());
-			} else if (catKey == CatVariant.SIAMESE) {
+			} else if (catKey == CatVariants.SIAMESE) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_SIAMESE_STATUE.get());
-			} else if (catKey == CatVariant.BRITISH_SHORTHAIR) {
+			} else if (catKey == CatVariants.BRITISH_SHORTHAIR) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get());
-			} else if (catKey == CatVariant.CALICO) {
+			} else if (catKey == CatVariants.CALICO) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_CALICO_STATUE.get());
-			} else if (catKey == CatVariant.PERSIAN) {
+			} else if (catKey == CatVariants.PERSIAN) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_PERSIAN_STATUE.get());
-			} else if (catKey == CatVariant.RAGDOLL) {
+			} else if (catKey == CatVariants.RAGDOLL) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_RAGDOLL_STATUE.get());
-			} else if (catKey == CatVariant.WHITE) {
+			} else if (catKey == CatVariants.WHITE) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_WHITE_STATUE.get());
-			} else if (catKey == CatVariant.JELLIE) {
+			} else if (catKey == CatVariants.JELLIE) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_JELLIE_STATUE.get());
-			} else if (catKey == CatVariant.ALL_BLACK) {
+			} else if (catKey == CatVariants.ALL_BLACK) {
 				itemStackToDrop = new ItemStack(StatueRegistry.CAT_BLACK_STATUE.get());
 			} else {
 				//Fallback to tabby
@@ -185,9 +185,9 @@ public class DropHandler {
 		} else if (entity instanceof Frog frog) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.FROG_TEMPERATE_STATUE.get());
 			ResourceKey<FrogVariant> frogVariant = frog.getVariant().unwrapKey().orElseThrow();
-			if (frogVariant.location().equals(FrogVariant.WARM.location())) {
+			if (frogVariant.equals(FrogVariants.WARM)) {
 				itemStackToDrop = new ItemStack(StatueRegistry.FROG_WARM_STATUE.get());
-			} else if (frogVariant.location().equals(FrogVariant.COLD.location())) {
+			} else if (frogVariant.equals(FrogVariants.COLD)) {
 				itemStackToDrop = new ItemStack(StatueRegistry.FROG_COLD_STATUE.get());
 			}
 			dropLootStatues(entity, itemStackToDrop, source, event);

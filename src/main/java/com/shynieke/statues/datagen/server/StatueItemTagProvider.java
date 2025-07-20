@@ -5,18 +5,15 @@ import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 
 public class StatueItemTagProvider extends ItemTagsProvider {
 
-	public StatueItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
-	                             TagsProvider<Block> blockTagProvider) {
-		super(output, lookupProvider, blockTagProvider.contentsGetter(), Reference.MOD_ID);
+	public StatueItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+		super(output, lookupProvider, Reference.MOD_ID);
 	}
 
 	@Override
@@ -140,8 +137,30 @@ public class StatueItemTagProvider extends ItemTagsProvider {
 				StatueRegistry.BROWN_MOOSHROOM_STATUE.get().asItem(), StatueRegistry.COW_STATUE.get().asItem(), StatueRegistry.SPIDER_STATUE.get().asItem(),
 				StatueRegistry.SHULKER_STATUE.get().asItem());
 
-		this.copy(StatueTags.STATUE_BLOCKS, StatueTags.STATUES_ITEMS);
+		// Used to use copy() but don't know how to do that now...
+		this.tag(StatueTags.STATUES_ITEMS).add(StatueRegistry.ANGRY_BEE_STATUE.asItem(), StatueRegistry.BABY_ZOMBIE_STATUE.asItem(), StatueRegistry.BEE_STATUE.asItem(), StatueRegistry.TRANS_BEE_STATUE.asItem(), StatueRegistry.BLAZE_STATUE.asItem(),
+				StatueRegistry.BROWN_MOOSHROOM_STATUE.asItem(), StatueRegistry.CAMPFIRE_STATUE.asItem(), StatueRegistry.CAT_BLACK_STATUE.asItem(), StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.asItem(), StatueRegistry.CAT_CALICO_STATUE.asItem(),
+				StatueRegistry.CAT_JELLIE_STATUE.asItem(), StatueRegistry.CAT_PERSIAN_STATUE.asItem(), StatueRegistry.CAT_RAGDOLL_STATUE.asItem(), StatueRegistry.CAT_RED_STATUE.asItem(), StatueRegistry.CAT_SIAMESE_STATUE.asItem(), StatueRegistry.CAT_TABBY_STATUE.asItem(),
+				StatueRegistry.CAT_TUXEDO_STATUE.asItem(), StatueRegistry.CAT_WHITE_STATUE.asItem(), StatueRegistry.CHICKEN_JOCKEY_STATUE.asItem(), StatueRegistry.CHICKEN_STATUE.asItem(), StatueRegistry.COD_STATUE.asItem(), StatueRegistry.COW_STATUE.asItem(),
+				StatueRegistry.CREEPER_STATUE.asItem(), StatueRegistry.DETECTIVE_PLATYPUS.asItem(), StatueRegistry.DOLPHIN_STATUE.asItem(), StatueRegistry.DROWNED_STATUE.asItem(), StatueRegistry.ELDER_GUARDIAN_STATUE.asItem(), StatueRegistry.ENDERMAN_STATUE.asItem(),
+				StatueRegistry.ENDERMITE_STATUE.asItem(), StatueRegistry.EVOKER_STATUE.asItem(), StatueRegistry.FLOOD_STATUE.asItem(), StatueRegistry.FOX_SNOW_STATUE.asItem(), StatueRegistry.FOX_STATUE.asItem(), StatueRegistry.GHAST_STATUE.asItem(), StatueRegistry.GUARDIAN_STATUE.asItem(),
+				StatueRegistry.HUSK_STATUE.asItem(), StatueRegistry.INFO_STATUE.asItem(), StatueRegistry.KING_CLUCK_STATUE.asItem(), StatueRegistry.MAGMA_STATUE.asItem(), StatueRegistry.MOOSHROOM_STATUE.asItem(), StatueRegistry.PANDA_ANGRY_STATUE.asItem(),
+				StatueRegistry.PANDA_BROWN_STATUE.asItem(), StatueRegistry.PANDA_LAZY_STATUE.asItem(), StatueRegistry.PANDA_NORMAL_STATUE.asItem(), StatueRegistry.PANDA_PLAYFUL_STATUE.asItem(), StatueRegistry.PANDA_WEAK_STATUE.asItem(),
+				StatueRegistry.PANDA_WORRIED_STATUE.asItem(), StatueRegistry.PIG_STATUE.asItem(), StatueRegistry.PILLAGER_STATUE.asItem(), StatueRegistry.PLAYER_STATUE.asItem(), StatueRegistry.PUFFERFISH_MEDIUM_STATUE.asItem(),
+				StatueRegistry.PUFFERFISH_SMALL_STATUE.asItem(), StatueRegistry.PUFFERFISH_STATUE.asItem(), StatueRegistry.RABBIT_BR_STATUE.asItem(), StatueRegistry.RABBIT_BS_STATUE.asItem(), StatueRegistry.RABBIT_BW_STATUE.asItem(),
+				StatueRegistry.RABBIT_GO_STATUE.asItem(), StatueRegistry.RABBIT_WH_STATUE.asItem(), StatueRegistry.RABBIT_WS_STATUE.asItem(), StatueRegistry.RAVAGER_STATUE.asItem(), StatueRegistry.SALMON_STATUE.asItem(), StatueRegistry.SHEEP_SHAVEN_STATUE.asItem(),
+				StatueRegistry.SHEEP_STATUE_BLACK.asItem(), StatueRegistry.SHEEP_STATUE_BLUE.asItem(), StatueRegistry.SHEEP_STATUE_BROWN.asItem(), StatueRegistry.SHEEP_STATUE_CYAN.asItem(), StatueRegistry.SHEEP_STATUE_GRAY.asItem(), StatueRegistry.SHEEP_STATUE_GREEN.asItem(),
+				StatueRegistry.SHEEP_STATUE_LIGHT_BLUE.asItem(), StatueRegistry.SHEEP_STATUE_LIGHT_GRAY.asItem(), StatueRegistry.SHEEP_STATUE_LIME.asItem(), StatueRegistry.SHEEP_STATUE_MAGENTA.asItem(), StatueRegistry.SHEEP_STATUE_ORANGE.asItem(),
+				StatueRegistry.SHEEP_STATUE_PINK.asItem(), StatueRegistry.SHEEP_STATUE_PURPLE.asItem(), StatueRegistry.SHEEP_STATUE_RED.asItem(), StatueRegistry.SHEEP_STATUE_WHITE.asItem(), StatueRegistry.SHEEP_STATUE_YELLOW.asItem(), StatueRegistry.SHULKER_STATUE.asItem(),
+				StatueRegistry.SLIME_STATUE.asItem(), StatueRegistry.SNOW_GOLEM_STATUE.asItem(), StatueRegistry.SPIDER_STATUE.asItem(), StatueRegistry.SQUID_STATUE.asItem(), StatueRegistry.TOTEM_OF_UNDYING_STATUE.asItem(), StatueRegistry.TROPICAL_FISH_B.asItem(),
+				StatueRegistry.TROPICAL_FISH_BB.asItem(), StatueRegistry.TROPICAL_FISH_BE.asItem(), StatueRegistry.TROPICAL_FISH_BM.asItem(), StatueRegistry.TROPICAL_FISH_BMB.asItem(), StatueRegistry.TROPICAL_FISH_BMS.asItem(), StatueRegistry.TROPICAL_FISH_E.asItem(),
+				StatueRegistry.TROPICAL_FISH_ES.asItem(), StatueRegistry.TROPICAL_FISH_HB.asItem(), StatueRegistry.TROPICAL_FISH_SB.asItem(), StatueRegistry.TROPICAL_FISH_SD.asItem(), StatueRegistry.TROPICAL_FISH_SS.asItem(), StatueRegistry.TURTLE_STATUE.asItem(),
+				StatueRegistry.VILLAGER_BR_STATUE.asItem(), StatueRegistry.VILLAGER_GR_STATUE.asItem(), StatueRegistry.VILLAGER_PU_STATUE.asItem(), StatueRegistry.VILLAGER_WH_STATUE.asItem(), StatueRegistry.VINDICATOR_STATUE.asItem(), StatueRegistry.WASTELAND_STATUE.asItem(),
+				StatueRegistry.WITCH_STATUE.asItem(), StatueRegistry.ZOMBIE_STATUE.asItem(), StatueRegistry.BUMBO_STATUE.asItem(), StatueRegistry.TROPIBEE.asItem(), StatueRegistry.EAGLE_RAY.asItem(), StatueRegistry.SLABFISH.asItem(), StatueRegistry.AZZARO.asItem(),
+				StatueRegistry.ALLAY_STATUE.asItem(), StatueRegistry.AXOLOTL_LUCY_STATUE.asItem(), StatueRegistry.AXOLOTL_WILD_STATUE.asItem(), StatueRegistry.AXOLOTL_GOLD_STATUE.asItem(), StatueRegistry.AXOLOTL_CYAN_STATUE.asItem(), StatueRegistry.AXOLOTL_BLUE_STATUE.asItem(),
+				StatueRegistry.FROG_TEMPERATE_STATUE.asItem(), StatueRegistry.FROG_WARM_STATUE.asItem(), StatueRegistry.FROG_COLD_STATUE.asItem(), StatueRegistry.TADPOLE_STATUE.asItem(), StatueRegistry.WARDEN_STATUE.asItem());
 
+		
 		this.tag(StatueTags.CURIOS_STATUE).addTag(StatueTags.STATUES_ITEMS).add(StatueRegistry.DISPLAY_STAND.get().asItem(), StatueRegistry.SOMBRERO.get().asItem());
 
 		this.tag(StatueTags.STATUE_CORE).add(StatueRegistry.STATUE_CORE.get());

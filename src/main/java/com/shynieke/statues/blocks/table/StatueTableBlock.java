@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -56,22 +57,17 @@ public class StatueTableBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			BlockEntity blockentity = level.getBlockEntity(pos);
-			if (blockentity instanceof StatueTableBlockEntity) {
-				IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
-				if (handler != null) {
-					for (int i = 0; i < handler.getSlots(); ++i) {
-						Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
-					}
+	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+		if (blockEntity instanceof StatueTableBlockEntity) {
+			IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
+			if (handler != null) {
+				for (int i = 0; i < handler.getSlots(); ++i) {
+					Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
 				}
 			}
-
-			super.onRemove(state, level, pos, newState, isMoving);
 		}
+		super.playerDestroy(level, player, pos, state, blockEntity, tool);
 	}
-
 
 	@Nullable
 	@Override

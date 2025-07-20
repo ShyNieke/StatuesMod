@@ -1,3 +1,2 @@
-// 1.21.4	2024-12-03T22:12:26.9379876	Tags for minecraft:worldgen/biome mod id statues
-04ac0a28392a7ff31602fa82ebe378e64220b060 data/statues/tags/worldgen/biome/can_spawn_fewer_statue_bat.json
-d53c843400a1dbb4ebf99c1a390b04994bae4a9a data/statues/tags/worldgen/biome/can_spawn_statue_bat.json
+// 1.21.8	2025-07-20T21:02:34.6478748	Tags for minecraft:worldgen/biome mod id statues
+4f8511a0796a3b12dcb2601fe13bdf2d0155b4bd data/statues/tags/worldgen/biome/can_spawn_statue_bat.json

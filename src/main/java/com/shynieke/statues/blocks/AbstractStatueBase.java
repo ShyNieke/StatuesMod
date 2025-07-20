@@ -151,15 +151,6 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		return true;
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-			super.onRemove(state, level, pos, newState, isMoving);
-			level.removeBlockEntity(pos);
-		}
-	}
-
 	public boolean isHiddenStatue() {
 		return false;
 	}

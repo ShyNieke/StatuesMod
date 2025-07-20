@@ -39,7 +39,7 @@ public class StatueBatEntity extends Bat {
 		SpawnGroupData data = super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn);
 		int random = getRandom().nextInt(10);
 		if (random < 5) {
-			addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2000 * 20, 2, true, false));
+			addEffect(new MobEffectInstance(MobEffects.SPEED, 2000 * 20, 2, true, false));
 		}
 		return data;
 	}

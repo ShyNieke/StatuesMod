@@ -1,6 +1,7 @@
 package com.shynieke.statues.client.model;
 
 import com.shynieke.statues.client.model.state.StatueBatRenderState;
+import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.animation.definitions.BatAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -18,6 +19,8 @@ public class StatueBatModel extends EntityModel<StatueBatRenderState> {
 	private final ModelPart rightWingTip;
 	private final ModelPart leftWingTip;
 	private final ModelPart feet;
+	private final KeyframeAnimation flyingAnimation;
+	private final KeyframeAnimation restingAnimation;
 
 	public StatueBatModel(ModelPart root) {
 		super(root, RenderType::entityCutout);
@@ -29,6 +32,8 @@ public class StatueBatModel extends EntityModel<StatueBatRenderState> {
 		this.leftWing = this.body.getChild("left_wing");
 		this.leftWingTip = this.leftWing.getChild("left_wing_tip");
 		this.feet = this.body.getChild("feet");
+		this.flyingAnimation = BatAnimation.BAT_FLYING.bake(root);
+		this.restingAnimation = BatAnimation.BAT_RESTING.bake(root);
 	}
 
 	/**
@@ -41,8 +46,8 @@ public class StatueBatModel extends EntityModel<StatueBatRenderState> {
 			this.applyHeadRotation(statueBatRenderState.yRot);
 		}
 
-		this.animate(statueBatRenderState.flyAnimationState, BatAnimation.BAT_FLYING, statueBatRenderState.ageInTicks, 1.0F);
-		this.animate(statueBatRenderState.restAnimationState, BatAnimation.BAT_RESTING, statueBatRenderState.ageInTicks, 1.0F);
+		this.flyingAnimation.apply(statueBatRenderState.flyAnimationState, statueBatRenderState.ageInTicks);
+		this.restingAnimation.apply(statueBatRenderState.restAnimationState, statueBatRenderState.ageInTicks);
 	}
 
 	private void applyHeadRotation(float headRotation) {
