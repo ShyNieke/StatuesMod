@@ -83,22 +83,6 @@ public class ClientHandler {
 //		}
 	}
 
-//	public static void registerExtensions(RegisterClientExtensionsEvent event) {
-//		event.registerItem(new IClientItemExtensions() {
-//			@Override
-//			public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-//				return new PlayerBEWLR(new BlockEntityRendererProvider.Context(
-//						Minecraft.getInstance().getBlockEntityRenderDispatcher(),
-//						Minecraft.getInstance().getBlockRenderer(),
-//						Minecraft.getInstance().getItemRenderer(),
-//						Minecraft.getInstance().getEntityRenderDispatcher(),
-//						Minecraft.getInstance().getEntityModels(),
-//						Minecraft.getInstance().font
-//				));
-//			}
-//		}, StatueRegistry.PLAYER_STATUE.asItem());
-//	}
-
 	public static void registerRangeSelectProperties(final RegisterRangeSelectItemModelPropertyEvent event) {
 		event.register(Reference.modLoc("statue_compass_angle"), StatueCompassAngle.MAP_CODEC);
 	}
