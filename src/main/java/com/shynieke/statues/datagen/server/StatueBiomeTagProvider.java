@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterList;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -20,9 +21,12 @@ public class StatueBiomeTagProvider extends BiomeTagsProvider {
 	}
 
 	@Override
-	protected void addTags(HolderLookup.Provider provider) {
+	protected void addTags(@NotNull HolderLookup.Provider provider) {
 		List<ResourceKey<Biome>> list = MultiNoiseBiomeSourceParameterList.Preset.OVERWORLD.usedBiomes().toList();
-		list = list.stream().filter(resourceKey -> !resourceKey.equals(Biomes.DEEP_DARK) && !resourceKey.equals(Biomes.MUSHROOM_FIELDS)).toList();
+		list = list.stream().filter(resourceKey ->
+				!resourceKey.equals(Biomes.DEEP_DARK) && !resourceKey.equals(Biomes.MUSHROOM_FIELDS)
+		).toList();
 		this.tag(StatueTags.CAN_SPAWN_STATUE_BAT).addAll(list);
+		this.tag(StatueTags.CAN_SPAWN_FEWER_STATUE_BAT).addAll(list);
 	}
 }
