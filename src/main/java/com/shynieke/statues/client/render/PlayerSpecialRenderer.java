@@ -16,8 +16,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -108,7 +106,6 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvablePro
 		return gameprofile;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public static record Unbaked() implements SpecialModelRenderer.Unbaked {
 		public static final Unbaked INSTANCE = new Unbaked();
 		public static MapCodec<Unbaked> CODEC = MapCodec.unit(INSTANCE).stable();

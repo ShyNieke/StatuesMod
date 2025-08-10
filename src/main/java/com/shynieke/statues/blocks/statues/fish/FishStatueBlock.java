@@ -29,8 +29,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.Nullable;
 
 public class FishStatueBlock extends AbstractStatueBase {
@@ -105,7 +103,6 @@ public class FishStatueBlock extends AbstractStatueBase {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public static int getColor(BlockState state, BlockGetter getter, BlockPos pos, int tintIndex) {
 		if (pos != null) {
 			BlockEntity blockEntity = getter.getBlockEntity(pos);
@@ -116,7 +113,6 @@ public class FishStatueBlock extends AbstractStatueBase {
 		return -1;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public static int fromColor(int color) {
 		return DyeColor.byId(color).getTextColor();
 	}

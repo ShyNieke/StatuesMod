@@ -28,15 +28,12 @@ import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import java.util.Locale;
 import java.util.Optional;
 
 @SuppressWarnings("rawtypes")
-@OnlyIn(Dist.CLIENT)
 public class PlayerPoseScreen extends Screen {
 	private final PlayerStatue playerStatueEntity;
 	private final PlayerStatueData playerStatueData;

@@ -37,7 +37,7 @@ public class SlimeStatueBlock extends AbstractStatueBase {
 		return SoundEvents.SLIME_SQUISH;
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	@Override
 	public boolean skipRendering(BlockState state, BlockState state2, Direction direction) {
 		return state2.getBlock() == this || super.skipRendering(state, state2, direction);
 	}
