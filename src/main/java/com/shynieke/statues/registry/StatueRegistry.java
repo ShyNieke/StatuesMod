@@ -117,7 +117,7 @@ public class StatueRegistry {
 	public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Reference.MOD_ID);
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Reference.MOD_ID);
 
-	public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Registries.ENTITY_TYPE, Reference.MOD_ID);
+	public static final DeferredRegister.Entities ENTITIES = DeferredRegister.createEntities(Reference.MOD_ID);
 	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, Reference.MOD_ID);
 
 	public static final Supplier<MenuType<StatueTableMenu>> STATUE_TABLE_MENU = MENU_TYPES.register("statue_table", () ->
@@ -125,26 +125,24 @@ public class StatueRegistry {
 	public static final Supplier<MenuType<ShulkerStatueMenu>> SHULKER_STATUE_MENU = MENU_TYPES.register("shulker_statue", () ->
 			IMenuTypeExtension.create(ShulkerStatueMenu::new));
 
-	public static final Supplier<EntityType<PlayerStatue>> PLAYER_STATUE_ENTITY = ENTITIES.register("player_statue",
-			() -> EntityType.Builder.<PlayerStatue>of(PlayerStatue::new, MobCategory.MISC)
+	public static final Supplier<EntityType<PlayerStatue>> PLAYER_STATUE_ENTITY = ENTITIES.registerEntityType("player_statue",
+			PlayerStatue::new,
+			MobCategory.MISC,
+			builder -> builder
 					.sized(0.6F, 1.8F)
 					.eyeHeight(1.62F)
 					.vehicleAttachment(Player.DEFAULT_VEHICLE_ATTACHMENT)
 					.clientTrackingRange(32)
 					.updateInterval(2)
-					.build(statuesEntityId("player_statue"))
 	);
-	public static final Supplier<EntityType<StatueBatEntity>> STATUE_BAT = ENTITIES.register("statue_bat",
-			() -> EntityType.Builder.<StatueBatEntity>of(StatueBatEntity::new, MobCategory.AMBIENT)
+	public static final Supplier<EntityType<StatueBatEntity>> STATUE_BAT = ENTITIES.registerEntityType("statue_bat",
+			StatueBatEntity::new,
+			MobCategory.AMBIENT,
+			builder -> builder
 					.sized(0.5F, 0.9F)
 					.eyeHeight(0.45F)
 					.clientTrackingRange(5)
-					.build(statuesEntityId("statue_bat"))
 	);
-
-	private static ResourceKey<EntityType<?>> statuesEntityId(String p_368595_) {
-		return ResourceKey.create(Registries.ENTITY_TYPE, Reference.modLoc(p_368595_));
-	}
 
 	public static final DeferredBlock<StatueTableBlock> STATUE_TABLE = registerStatue("statue_table", () -> new StatueTableBlock(blockBuilder("statue_table")));
 	public static final DeferredBlock<AngryBeeStatueBlock> ANGRY_BEE_STATUE = registerStatue("angry_bee_statue", () -> new AngryBeeStatueBlock(blockBuilder("angry_bee_statue")));
@@ -274,14 +272,14 @@ public class StatueRegistry {
 	public static final DeferredBlock<SlabFishStatueBlock> SLABFISH = registerBlock("slabfish", () -> new SlabFishStatueBlock(blockBuilder("slabfish")));
 	public static final DeferredBlock<AzzaroStatueBlock> AZZARO = registerBlock("azzaro", () -> new AzzaroStatueBlock(blockBuilder("azzaro")));
 	public static final DeferredBlock<FlowerBlock> CORE_FLOWER = BLOCKS.registerBlock("core_flower", (properties) -> new FlowerBlock(
-			MobEffects.SLOWNESS, 5, properties),
+					MobEffects.SLOWNESS, 5, properties),
 			BlockBehaviour.Properties.of()
-			.mapColor(MapColor.PLANT)
-			.noCollission()
-			.instabreak()
-			.sound(SoundType.GRASS)
-			.offsetType(BlockBehaviour.OffsetType.XZ)
-			.pushReaction(PushReaction.DESTROY));
+					.mapColor(MapColor.PLANT)
+					.noCollission()
+					.instabreak()
+					.sound(SoundType.GRASS)
+					.offsetType(BlockBehaviour.OffsetType.XZ)
+					.pushReaction(PushReaction.DESTROY));
 	public static final DeferredBlock<CoreFlowerCropBlock> CORE_FLOWER_CROP = BLOCKS.registerBlock("core_flower_crop", CoreFlowerCropBlock::new,
 			BlockBehaviour.Properties.of()
 					.mapColor(MapColor.PLANT)
