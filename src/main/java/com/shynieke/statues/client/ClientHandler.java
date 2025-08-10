@@ -102,7 +102,7 @@ public class ClientHandler {
 	}
 
 	public static void registerSpecialModelRenderers(RegisterSpecialModelRendererEvent event) {
-		event.register(Reference.modLoc("player"), PlayerSpecialRenderer.Unbaked.CODEC);
+		event.register(Reference.modLoc("player"), PlayerSpecialRenderer.Unbaked.MAP_CODEC);
 	}
 
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

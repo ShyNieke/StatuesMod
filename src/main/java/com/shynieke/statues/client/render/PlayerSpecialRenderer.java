@@ -16,6 +16,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -35,12 +36,11 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvablePro
 	}
 
 	@Override
-	public void render(@Nullable ResolvableProfile resolvableProfile, ItemDisplayContext displayContext,
-	                   PoseStack poseStack, MultiBufferSource bufferSource,
+	public void render(@Nullable ResolvableProfile resolvableProfile, @NotNull ItemDisplayContext displayContext,
+	                   @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource,
 	                   int packedLight, int packedOverlay, boolean hasFoilType) {
 		poseStack.pushPose();
-		poseStack.scale(0.375F, 0.375F, 0.375F);
-		poseStack.translate(1D, 0D, 0.75D);
+		transform(poseStack);
 		SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
 		if (resolvableProfile != null && isSlim != skinmanager.getInsecureSkin(resolvableProfile.gameProfile()).model().id().equals("slim"))
 			isSlim = !isSlim;
@@ -52,11 +52,15 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvablePro
 
 	@Override
 	public void getExtents(Set<Vector3f> output) {
-//		PoseStack posestack = new PoseStack();
-//		posestack.scale(0.375F, 0.375F, 0.375F);
-//		posestack.translate(1D, 0D, 0.75D);
-//		this.model.root().getExtentsForGui(posestack, output);
-//		this.slimModel.root().getExtentsForGui(posestack, output);
+		PoseStack posestack = new PoseStack();
+		transform(posestack);
+		this.model.root().getExtentsForGui(posestack, output);
+		this.slimModel.root().getExtentsForGui(posestack, output);
+	}
+
+	private static void transform(PoseStack poseStack) {
+		poseStack.scale(0.375F, 0.375F, 0.375F);
+		poseStack.translate(1D, 0D, 0.75D);
 	}
 
 	private static final Map<String, ResolvableProfile> GAMEPROFILE_CACHE = new HashMap<>();
@@ -110,16 +114,17 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvablePro
 		return gameprofile;
 	}
 
-	public static record Unbaked() implements SpecialModelRenderer.Unbaked {
+	public record Unbaked() implements SpecialModelRenderer.Unbaked {
 		public static final Unbaked INSTANCE = new Unbaked();
-		public static MapCodec<Unbaked> CODEC = MapCodec.unit(INSTANCE).stable();
+		public static final MapCodec<PlayerSpecialRenderer.Unbaked> MAP_CODEC = MapCodec.unit(INSTANCE);
 
+		@NotNull
 		@Override
 		public MapCodec<PlayerSpecialRenderer.Unbaked> type() {
-			return CODEC;
+			return MAP_CODEC;
 		}
 
-		@Nullable
+		@NotNull
 		@Override
 		public SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
 			StatuePlayerTileModel model = new StatuePlayerTileModel(entityModelSet.bakeLayer(ClientHandler.PLAYER_STATUE), false);
