@@ -175,11 +175,11 @@ public class DropHandler {
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Axolotl axolotl) {
 			ItemStack itemStackToDrop = switch (axolotl.getVariant()) {
-				default -> new ItemStack(StatueRegistry.AXOLOTL_LUCY_STATUE.get());
 				case WILD -> new ItemStack(StatueRegistry.AXOLOTL_WILD_STATUE.get());
 				case GOLD -> new ItemStack(StatueRegistry.AXOLOTL_GOLD_STATUE.get());
 				case CYAN -> new ItemStack(StatueRegistry.AXOLOTL_CYAN_STATUE.get());
 				case BLUE -> new ItemStack(StatueRegistry.AXOLOTL_BLUE_STATUE.get());
+				default -> new ItemStack(StatueRegistry.AXOLOTL_LUCY_STATUE.get());
 			};
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Frog frog) {
@@ -225,6 +225,18 @@ public class DropHandler {
 			BlockPos entityPos = entity.blockPosition();
 
 			switch (StatuesConfig.COMMON.playerStatueKillSource.get()) {
+				case PLAYER_FAKEPLAYER:
+					if (source instanceof ServerPlayer) {
+						if (random_drop <= playerDropChance) {
+							event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+						}
+					}
+					break;
+				case ALL:
+					if (random_drop <= playerDropChance) {
+						event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+					}
+					break;
 				default:
 					if (source instanceof ServerPlayer sourcePlayer && !(source instanceof FakePlayer)) {
 						List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
@@ -257,18 +269,6 @@ public class DropHandler {
 //                    }
 					}
 					break;
-				case PLAYER_FAKEPLAYER:
-					if (source instanceof ServerPlayer) {
-						if (random_drop <= playerDropChance) {
-							event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
-						}
-					}
-					break;
-				case ALL:
-					if (random_drop <= playerDropChance) {
-						event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
-					}
-					break;
 			}
 		}
 	}
@@ -277,11 +277,6 @@ public class DropHandler {
 		BlockPos entityPos = entity.blockPosition();
 
 		switch (StatuesConfig.COMMON.statueKillSource.get()) {
-			default:
-				if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
-					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
-				}
-				break;
 			case PLAYER_FAKEPLAYER:
 				if (source instanceof ServerPlayer) {
 					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
@@ -289,6 +284,11 @@ public class DropHandler {
 				break;
 			case ALL:
 				event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+				break;
+			default:
+				if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
+					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+				}
 				break;
 		}
 	}
@@ -299,6 +299,18 @@ public class DropHandler {
 		BlockPos entityPos = entity.blockPosition();
 
 		switch (StatuesConfig.COMMON.statueKillSource.get()) {
+			case PLAYER_FAKEPLAYER:
+				if (source instanceof ServerPlayer) {
+					if (random_drop <= default_drop_chance) {
+						event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+					}
+				}
+				break;
+			case ALL:
+				if (random_drop <= default_drop_chance) {
+					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+				}
+				break;
 			default:
 				if (source instanceof ServerPlayer player && !(source instanceof FakePlayer)) {
 					List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
@@ -329,18 +341,6 @@ public class DropHandler {
 						event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 					}
 //                    }
-				}
-				break;
-			case PLAYER_FAKEPLAYER:
-				if (source instanceof ServerPlayer) {
-					if (random_drop <= default_drop_chance) {
-						event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
-					}
-				}
-				break;
-			case ALL:
-				if (random_drop <= default_drop_chance) {
-					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 				}
 				break;
 		}

@@ -29,6 +29,18 @@ public class FishHandler {
 		double default_drop_chance = StatuesConfig.COMMON.statueDropChance.get();
 
 		switch (StatuesConfig.COMMON.statueKillSource.get()) {
+			case PLAYER_FAKEPLAYER:
+				if (source instanceof ServerPlayer) {
+					if (random_drop <= default_drop_chance) {
+						event.getDrops().add(itemStackToDrop);
+					}
+				}
+				break;
+			case ALL:
+				if (random_drop <= default_drop_chance) {
+					event.getDrops().add(itemStackToDrop);
+				}
+				break;
 			default:
 				if (source instanceof ServerPlayer player && !(source instanceof FakePlayer)) {
 					List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
@@ -44,18 +56,6 @@ public class FishHandler {
 					if (random_drop <= default_drop_chance) {
 						event.getDrops().add(itemStackToDrop);
 					}
-				}
-				break;
-			case PLAYER_FAKEPLAYER:
-				if (source instanceof ServerPlayer) {
-					if (random_drop <= default_drop_chance) {
-						event.getDrops().add(itemStackToDrop);
-					}
-				}
-				break;
-			case ALL:
-				if (random_drop <= default_drop_chance) {
-					event.getDrops().add(itemStackToDrop);
 				}
 				break;
 		}
