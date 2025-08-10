@@ -452,8 +452,8 @@ public class StatueLanguageProvider extends LanguageProvider {
 	 * @param description The description of the config entry (optional in case of targeting "title" or similar entries that have no tooltip)
 	 */
 	private void addConfig(String path, String name, @Nullable String description) {
-		this.add("statues.configuration." + path, name);
+		this.add(Reference.MOD_ID + ".configuration." + path, name);
 		if (description != null && !description.isEmpty())
-			this.add("statues.configuration." + path + ".tooltip", description);
+			this.add(Reference.MOD_ID + ".configuration." + path + ".tooltip", description);
 	}
 }
