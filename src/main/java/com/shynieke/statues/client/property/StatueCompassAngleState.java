@@ -20,10 +20,10 @@ import javax.annotation.Nullable;
 
 public class StatueCompassAngleState extends NeedleDirectionHelper {
 	public static final MapCodec<StatueCompassAngleState> MAP_CODEC = RecordCodecBuilder.mapCodec(
-			p_387422_ -> p_387422_.group(
-							Codec.BOOL.optionalFieldOf("wobble", Boolean.TRUE).forGetter(StatueCompassAngleState::wobble)
+			wobble -> wobble.group(
+							Codec.BOOL.optionalFieldOf("wobble", Boolean.FALSE).forGetter(StatueCompassAngleState::wobble)
 					)
-					.apply(p_387422_, StatueCompassAngleState::new)
+					.apply(wobble, StatueCompassAngleState::new)
 	);
 	private final NeedleDirectionHelper.Wobbler wobbler;
 	private final NeedleDirectionHelper.Wobbler noTargetWobbler;
@@ -40,7 +40,8 @@ public class StatueCompassAngleState extends NeedleDirectionHelper {
 		PlayerCompassData compassData = stack.get(StatueDataComponents.PLAYER_COMPASS_DATA.get());
 		GlobalPos globalpos = compassData != null ? compassData.globalPos() : null;
 		long i = level.getGameTime();
-		return !isValidCompassTargetPos(targetPos, globalpos)
+		boolean valid = isValidCompassTargetPos(targetPos, globalpos);
+		return !valid
 				? this.getRandomlySpinningRotation(seed, i)
 				: this.getRotationTowardsCompassTarget(targetPos, i, globalpos.pos());
 	}
