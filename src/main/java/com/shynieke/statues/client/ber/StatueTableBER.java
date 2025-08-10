@@ -31,9 +31,6 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 
 			poseStack.pushPose();
 			switch (direction) {
-				default -> {
-					//Nothing
-				}
 				case EAST -> {
 					poseStack.translate(1, 0, 0);
 					poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
@@ -45,6 +42,9 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 				case WEST -> {
 					poseStack.translate(0, 0, 1);
 					poseStack.mulPose(Axis.YP.rotationDegrees(90F));
+				}
+				default -> {
+					//Nothing
 				}
 			}
 			Minecraft mc = Minecraft.getInstance();
