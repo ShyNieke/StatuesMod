@@ -10,7 +10,6 @@ import com.shynieke.statues.recipe.UpgradeType;
 import com.shynieke.statues.registry.StatueDataComponents;
 import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.SharedSuggestionProvider;

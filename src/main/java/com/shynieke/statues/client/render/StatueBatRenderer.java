@@ -7,9 +7,7 @@ import com.shynieke.statues.entity.StatueBatEntity;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.state.BatRenderState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ambient.Bat;
 
 public class StatueBatRenderer extends MobRenderer<StatueBatEntity, StatueBatRenderState, StatueBatModel> {
 	private static final ResourceLocation BAT_TEXTURES = Reference.modLoc("textures/entity/statue_bat.png");
