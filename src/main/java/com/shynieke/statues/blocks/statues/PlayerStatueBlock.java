@@ -54,6 +54,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
@@ -65,7 +66,11 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	public PlayerStatueBlock(Properties builder) {
 		super(builder.sound(SoundType.STONE));
-		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE).setValue(ONLINE, false));
+		this.registerDefaultState(this.defaultBlockState()
+				.setValue(FACING, Direction.NORTH)
+				.setValue(WATERLOGGED, Boolean.FALSE)
+				.setValue(ONLINE, false)
+		);
 	}
 
 	@Nullable
@@ -88,6 +93,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		return (PlayerBlockEntity) level.getBlockEntity(pos);
 	}
 
+	@NotNull
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.INVISIBLE;
@@ -119,6 +125,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		}
 	}
 
+	@NotNull
 	@Override
 	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData, Player player) {
 		ItemStack stack = super.getCloneItemStack(level, pos, state, includeData, player);
