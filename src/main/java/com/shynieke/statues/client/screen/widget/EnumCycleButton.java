@@ -79,39 +79,39 @@ public class EnumCycleButton<T extends Enum<T>> extends Button {
 			return options[0];
 		}
 
-		public Builder pos(int x, int y) {
+		public Builder<T> pos(int x, int y) {
 			this.x = x;
 			this.y = y;
 			return this;
 		}
 
-		public Builder width(int width) {
+		public Builder<T> width(int width) {
 			this.width = width;
 			return this;
 		}
 
-		public Builder size(int width, int height) {
+		public Builder<T> size(int width, int height) {
 			this.width = width;
 			this.height = height;
 			return this;
 		}
 
-		public Builder bounds(int p_254166_, int p_253872_, int p_254522_, int p_253985_) {
+		public Builder<T> bounds(int p_254166_, int p_253872_, int p_254522_, int p_253985_) {
 			return this.pos(p_254166_, p_253872_).size(p_254522_, p_253985_);
 		}
 
-		public Builder tooltip(@Nullable Tooltip tooltip) {
+		public Builder<T> tooltip(@Nullable Tooltip tooltip) {
 			this.tooltip = tooltip;
 			return this;
 		}
 
-		public Builder createNarration(CreateNarration createNarration) {
+		public Builder<T> createNarration(CreateNarration createNarration) {
 			this.createNarration = createNarration;
 			return this;
 		}
 
-		public EnumCycleButton build() {
-			EnumCycleButton button = new EnumCycleButton(this.x, this.y, this.width, this.height, translationPrefix, this.defaultValue, this.options, this.onPress, this.createNarration);
+		public EnumCycleButton<T> build() {
+			EnumCycleButton<T> button = new EnumCycleButton<T>(this.x, this.y, this.width, this.height, translationPrefix, this.defaultValue, this.options, this.onPress, this.createNarration);
 			button.setTooltip(this.tooltip);
 			return button;
 		}

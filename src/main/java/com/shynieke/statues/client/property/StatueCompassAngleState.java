@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 public class StatueCompassAngleState extends NeedleDirectionHelper {
 	public static final MapCodec<StatueCompassAngleState> MAP_CODEC = RecordCodecBuilder.mapCodec(
 			p_387422_ -> p_387422_.group(
-							Codec.BOOL.optionalFieldOf("wobble", Boolean.valueOf(true)).forGetter(StatueCompassAngleState::wobble)
+							Codec.BOOL.optionalFieldOf("wobble", Boolean.TRUE).forGetter(StatueCompassAngleState::wobble)
 					)
 					.apply(p_387422_, StatueCompassAngleState::new)
 	);

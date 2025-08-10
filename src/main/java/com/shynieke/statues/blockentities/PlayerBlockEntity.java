@@ -76,7 +76,7 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		profileCacheByName = CacheBuilder.newBuilder()
 				.expireAfterAccess(Duration.ofMinutes(10L))
 				.maximumSize(256L)
-				.build(new CacheLoader<String, CompletableFuture<Optional<GameProfile>>>() {
+				.build(new CacheLoader<>() {
 					public CompletableFuture<Optional<GameProfile>> load(String username) {
 						return PlayerBlockEntity.fetchProfileByName(username, services);
 					}
@@ -84,7 +84,7 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		profileCacheById = CacheBuilder.newBuilder()
 				.expireAfterAccess(Duration.ofMinutes(10L))
 				.maximumSize(256L)
-				.build(new CacheLoader<UUID, CompletableFuture<Optional<GameProfile>>>() {
+				.build(new CacheLoader<>() {
 					public CompletableFuture<Optional<GameProfile>> load(UUID id) {
 						return PlayerBlockEntity.fetchProfileById(id, services, booleansupplier);
 					}
