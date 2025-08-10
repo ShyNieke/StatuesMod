@@ -52,7 +52,16 @@ public class StatueRecipeProvider extends RecipeProvider {
 		ItemLore lore = ItemLore.EMPTY;
 		lore = lore.withLineAdded(Component.literal("Only craftable in Hardcore Mode").withStyle(ChatFormatting.DARK_PURPLE));
 		hardcorePlayer.set(DataComponents.LORE, lore);
-		HardcoreRecipeBuilder.hardcore(this.items, RecipeCategory.MISC, hardcorePlayer);
+		HardcoreRecipeBuilder.hardcore(this.items, RecipeCategory.MISC, hardcorePlayer)
+				.pattern("ECE")
+				.pattern("LZL")
+				.pattern("ELE")
+				.define('E', Items.EXPERIENCE_BOTTLE)
+				.define('C', StatueRegistry.STATUE_CORE)
+				.define('L', Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)))
+				.define('Z', StatueRegistry.ZOMBIE_STATUE.get())
+				.unlockedBy("has_statue_core", has(StatueRegistry.STATUE_CORE))
+				.save(this.output);
 
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.BABY_ZOMBIE_STATUE.get()))
 				.result1(Items.ROTTEN_FLESH).result2(Items.IRON_NUGGET).save(this.output);

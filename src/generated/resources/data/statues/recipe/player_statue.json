@@ -1,0 +1,27 @@
+{
+  "type": "statues:hardcore_shaped",
+  "category": "misc",
+  "key": {
+    "C": "statues:statue_core",
+    "E": "minecraft:experience_bottle",
+    "L": "#c:storage_blocks/lapis",
+    "Z": "statues:zombie_statue"
+  },
+  "pattern": [
+    "ECE",
+    "LZL",
+    "ELE"
+  ],
+  "result": {
+    "components": {
+      "minecraft:lore": [
+        {
+          "color": "dark_purple",
+          "text": "Only craftable in Hardcore Mode"
+        }
+      ]
+    },
+    "count": 1,
+    "id": "statues:player_statue"
+  }
+}
