@@ -20,6 +20,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -29,6 +30,7 @@ public class PlayerStatueSpawnItem extends Item {
 		super(builder);
 	}
 
+	@NotNull
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
 		Level level = context.getLevel();

@@ -22,6 +22,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.items.IItemHandler;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
@@ -43,12 +44,13 @@ public class StatueTableBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player playerIn, BlockHitResult hit) {
+	public InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos,
+	                                        @NotNull Player playerIn, @NotNull BlockHitResult hit) {
 		BlockEntity blockentity = level.getBlockEntity(pos);
 		if (blockentity instanceof StatueTableBlockEntity statueTableBlockEntity) {
 			if (!level.isClientSide) {
 				statueTableBlockEntity.hasValidRecipe();
-				playerIn.openMenu((StatueTableBlockEntity) blockentity, pos);
+				playerIn.openMenu(statueTableBlockEntity, pos);
 			}
 
 			return InteractionResult.SUCCESS;
@@ -57,7 +59,8 @@ public class StatueTableBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+	public void playerDestroy(@NotNull Level level, @NotNull Player player, @NotNull BlockPos pos,
+	                          @NotNull BlockState state, @Nullable BlockEntity blockEntity, @NotNull ItemStack tool) {
 		if (blockEntity instanceof StatueTableBlockEntity) {
 			IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
 			if (handler != null) {
