@@ -37,5 +37,14 @@ public class StatueBlockTagProvider extends BlockTagsProvider {
 				StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get(), StatueRegistry.BUMBO_STATUE.get(), StatueRegistry.TROPIBEE.get(), StatueRegistry.EAGLE_RAY.get(), StatueRegistry.SLABFISH.get(), StatueRegistry.AZZARO.get(),
 				StatueRegistry.ALLAY_STATUE.get(), StatueRegistry.AXOLOTL_LUCY_STATUE.get(), StatueRegistry.AXOLOTL_WILD_STATUE.get(), StatueRegistry.AXOLOTL_GOLD_STATUE.get(), StatueRegistry.AXOLOTL_CYAN_STATUE.get(), StatueRegistry.AXOLOTL_BLUE_STATUE.get(),
 				StatueRegistry.FROG_TEMPERATE_STATUE.get(), StatueRegistry.FROG_WARM_STATUE.get(), StatueRegistry.FROG_COLD_STATUE.get(), StatueRegistry.TADPOLE_STATUE.get(), StatueRegistry.WARDEN_STATUE.get());
+
+		this.tag(StatueTags.IS_TROPICAL_FISH).add(
+				StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
+				StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(),
+				StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
+				StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(),
+				StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(),
+				StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()
+		);
 	}
 }

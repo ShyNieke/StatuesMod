@@ -18,6 +18,7 @@ public class StatueTags {
 	public static final TagKey<Item> STATUE_INTERACTABLE = ItemTags.create(new ResourceLocation(Reference.MOD_ID, "statues/interactable"));
 
 	public static final TagKey<Block> STATUE_BLOCKS = BlockTags.create(new ResourceLocation(Reference.MOD_ID, "statues"));
+	public static final TagKey<Block> IS_TROPICAL_FISH = BlockTags.create(new ResourceLocation(Reference.MOD_ID, "is_tropical_fish"));
 
 	public static final TagKey<Item> PLAYER_UPGRADE_ITEM = ItemTags.create(new ResourceLocation(Reference.MOD_ID, "player_upgrade_item"));
 	public static final TagKey<Item> STATUE_CORE = ItemTags.create(new ResourceLocation(Reference.MOD_ID, "core"));

@@ -24,11 +24,6 @@ public class SalmonStatueBlock extends FishStatueBlock {
 	}
 
 	@Override
-	public boolean hasTileEntity(BlockState state) {
-		return state.getValue(INTERACTIVE).booleanValue();
-	}
-
-	@Override
 	public EntityType<?> getEntity() {
 		return EntityType.SALMON;
 	}

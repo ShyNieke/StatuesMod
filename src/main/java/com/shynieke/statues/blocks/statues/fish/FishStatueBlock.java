@@ -4,6 +4,7 @@ import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blockentities.TropicalFishBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.registry.StatueBlockEntities;
+import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -54,7 +55,7 @@ public class FishStatueBlock extends AbstractStatueBase {
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand handIn, BlockHitResult result) {
 		ItemStack stack = playerIn.getItemInHand(InteractionHand.MAIN_HAND);
-		if (stack.getItem() == Items.WET_SPONGE) {
+		if (state.is(StatueTags.IS_TROPICAL_FISH) && stack.getItem() == Items.WET_SPONGE) {
 			TropicalFishBlockEntity fishBlockEntity = getFishTE(level, pos);
 			fishBlockEntity.scrambleColors();
 			level.sendBlockUpdated(pos, state, state, 6);
@@ -73,7 +74,11 @@ public class FishStatueBlock extends AbstractStatueBase {
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return hasTileEntity(state) ? new TropicalFishBlockEntity(pos, state) : null;
+		if (state.is(StatueTags.IS_TROPICAL_FISH)) {
+			return new TropicalFishBlockEntity(pos, state);
+		} else {
+			return super.newBlockEntity(pos, state);
+		}
 	}
 
 	public boolean hasTileEntity(BlockState state) {
@@ -97,9 +102,11 @@ public class FishStatueBlock extends AbstractStatueBase {
 	@Override
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		super.setPlacedBy(level, pos, state, placer, stack);
-		TropicalFishBlockEntity fishBlockEntity = getFishTE(level, pos);
-		if (fishBlockEntity != null) {
-			fishBlockEntity.scrambleColors();
+		if (state.is(StatueTags.IS_TROPICAL_FISH)) {
+			TropicalFishBlockEntity fishBlockEntity = getFishTE(level, pos);
+			if (fishBlockEntity != null) {
+				fishBlockEntity.scrambleColors();
+			}
 		}
 	}
 
@@ -121,10 +128,14 @@ public class FishStatueBlock extends AbstractStatueBase {
 
 	@Nullable
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-		if (state.getValue(INTERACTIVE).booleanValue()) {
-			return createStatueTicker(level, blockEntityType, StatueBlockEntities.TROPICAL_FISH.get());
+		if (state.is(StatueTags.IS_TROPICAL_FISH)) {
+			if (state.getValue(INTERACTIVE).booleanValue()) {
+				return createStatueTicker(level, blockEntityType, StatueBlockEntities.TROPICAL_FISH.get());
+			} else {
+				return null;
+			}
 		} else {
-			return null;
+			return super.getTicker(level, state, blockEntityType);
 		}
 	}
 
