@@ -1,13 +1,19 @@
 package com.shynieke.statues.commands;
 
 import com.mojang.brigadier.context.CommandContext;
+import com.shynieke.statues.Reference;
 import com.shynieke.statues.blocks.AbstractStatueBase;
+import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
@@ -31,18 +37,18 @@ public class StatuesDevCommands {
 		beBlocks.addAll(StatueBlockEntities.SHULKER_STATUE.get().getValidBlocks());
 		beBlocks.addAll(StatueBlockEntities.TROPICAL_FISH.get().getValidBlocks());
 		List<ResourceLocation> missingBlocks = new ArrayList<>();
-//		ctx.getSource().getLevel().getRecipeManager().getAllRecipesFor(StatuesRecipes.LOOT_RECIPE.get()).forEach(recipe -> { TODO: Fix this check loot command!
-//			if (recipe.id().getNamespace().equals(Reference.MOD_ID)) {
-//				for (Ingredient ingredient : recipe.value().getIngredients()) {
-//					for (ItemStack stack : ingredient.getItems()) {
-//						if (stack.getItem() instanceof BlockItem blockItem) {
-//							if (!beBlocks.contains(blockItem.getBlock()))
-//								missingBlocks.add(BuiltInRegistries.BLOCK.getKey(blockItem.getBlock()));
-//						}
-//					}
-//				}
-//			}
-//		});
+		ctx.getSource().getLevel().recipeAccess().recipeMap().byType(StatuesRecipes.LOOT_RECIPE.get()).forEach(recipe -> {
+			if (recipe.id().location().getNamespace().equals(Reference.MOD_ID)) {
+				for (Ingredient ingredient : recipe.value().getIngredients()) {
+					for (Holder<Item> item : ingredient.getValues()) {
+						if (item.value() instanceof BlockItem blockItem) {
+							if (!beBlocks.contains(blockItem.getBlock()))
+								missingBlocks.add(BuiltInRegistries.BLOCK.getKey(blockItem.getBlock()));
+						}
+					}
+				}
+			}
+		});
 		if (missingBlocks.isEmpty()) {
 			ctx.getSource().sendSuccess(() -> Component.literal("No blocks with loot are missing from the Statue block entity valid blocks"), false);
 		} else {
