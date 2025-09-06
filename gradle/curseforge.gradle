@@ -9,6 +9,8 @@ if (System.getenv().CURSEFORGE_KEY) {
             addGameVersion "Forge"
             addGameVersion "${mc_version}"
             addGameVersion "Java 17"
+            addGameVersion "Client"
+            addGameVersion "Server"
             mainArtifact(jar)
             changelog = file("$project.rootDir/changelog.md")
             changelogType = 'markdown'
