@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
@@ -56,7 +55,7 @@ public class LootRecipe implements Recipe<RecipeInput> {
 
 	@Override
 	public ItemStack assemble(RecipeInput recipeInput, HolderLookup.Provider lookupProvider) {
-		return this.getResultItem(lookupProvider).copy();
+		return this.getResultItem();
 	}
 
 //	@Override
@@ -72,8 +71,8 @@ public class LootRecipe implements Recipe<RecipeInput> {
 	/**
 	 * @return the first result item
 	 */
-	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
-		return this.result;
+	public ItemStack getResultItem() {
+		return this.result.copy();
 	}
 
 	/**
@@ -86,8 +85,8 @@ public class LootRecipe implements Recipe<RecipeInput> {
 	/**
 	 * @return the second result item
 	 */
-	public ItemStack getResultItem2(HolderLookup.Provider lookupProvider) {
-		return this.result2;
+	public ItemStack getResultItem2() {
+		return this.result2.copy();
 	}
 
 	/**
@@ -100,8 +99,8 @@ public class LootRecipe implements Recipe<RecipeInput> {
 	/**
 	 * @return the third result item
 	 */
-	public ItemStack getResultItem3(RegistryAccess access) {
-		return this.result3;
+	public ItemStack getResultItem3() {
+		return this.result3.copy();
 	}
 
 	/**

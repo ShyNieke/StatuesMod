@@ -1,4 +1,4 @@
-// 1.21.8	2025-08-10T16:17:54.86778	Statues Recipes
+// 1.21.8	2025-09-06T20:04:03.2038068	Statues Recipes
 18e987dfadfe8b3a50e692cace2f8740225aa39b data/statues/advancement/recipes/decorations/display_stand_from_quartz_block_stonecutting.json
 63a4b8f8cbc1656364761abc74c1b083424037a7 data/statues/advancement/recipes/misc/info_statue.json
 93cb720d6e3f024ca055d26006430b549538b006 data/statues/advancement/recipes/misc/player_statue.json
@@ -79,16 +79,16 @@ f2d3456bcab887ae56ca89b3a49769b25fc1ba8d data/statues/recipe/loot/turtle_statue.
 58eccabd085947a6ccb8a3a73e8dfe855a0a7266 data/statues/recipe/player_statue.json
 fa27eaabcd66330e5738b12f6abe5c60d0de4d14 data/statues/recipe/statue_core.json
 14b4fa5d97f73b1c1020431d4d17ab23d826f06a data/statues/recipe/statue_table.json
-229ea87ae5dc0b931f59a34bf3e48e9e1dcddae5 data/statues/recipe/upgrade/automation.json
-548fe77f63db87c3b2c06f2737e3e3cbc18d6c1c data/statues/recipe/upgrade/despawner.json
-55334c65a5cdd549fca73c7a317703c83f3576d9 data/statues/recipe/upgrade/glowing.json
-f5e2b8022dc138dc207d93cc03e4ede86909b42d data/statues/recipe/upgrade/interaction.json
-6f36cbf0b4293f7e040d468a3d64aad0fd827795 data/statues/recipe/upgrade/looting.json
-2c6533d3d5d96dc95047e9d509ae01257cc08b60 data/statues/recipe/upgrade/mob_killer.json
-a6d3bfccc50263a6916de22de7084af7db92e671 data/statues/recipe/upgrade/mob_killer_2.json
-6bb065f29074066c7d42498b7456152400a90636 data/statues/recipe/upgrade/mob_killer_3.json
-b29a630a6e2ef2feb52e5d16d2f0c0ef83dccb1b data/statues/recipe/upgrade/sound.json
-d99894341ec65bb12a5a524c4e4a0466ff988e27 data/statues/recipe/upgrade/spawner.json
-b3f5b4934a89b103e5b3e48089bf6f56066a74f1 data/statues/recipe/upgrade/speed.json
-7d7871b2ed4cf626cdbf6f34a492036086353f76 data/statues/recipe/upgrade/statue_upgrade.json
-d6cc51a83a7735e22a8749dcbc4394ceccc10aa0 data/statues/recipe/upgrade/unglowing.json
+5c4685fffea9aeab593154cebf8c94e9abff7666 data/statues/recipe/upgrade/automation.json
+2ad66b28761ad0a17d8e429f4e124bd5d88e75d8 data/statues/recipe/upgrade/despawner.json
+30f8b3603d85ced721697119a0a8b529e8e19fb8 data/statues/recipe/upgrade/glowing.json
+77c86de95c744caf874d109c1ad50cb27cb24af2 data/statues/recipe/upgrade/interaction.json
+93e39c5f4f279efe40bd7c24e6c25a8052177285 data/statues/recipe/upgrade/looting.json
+45912a845542c00761f5b78e32efdd455fffe7ea data/statues/recipe/upgrade/mob_killer.json
+99827fb6b8545c72323bfd65d3186804a4a98adf data/statues/recipe/upgrade/mob_killer_2.json
+e1bf9ce259c82c55ab94f0c5abc51b8ec34b1625 data/statues/recipe/upgrade/mob_killer_3.json
+dcddba99b968dc8e9bdf95b2981001ee5ca964f6 data/statues/recipe/upgrade/sound.json
+bf7f7a346682ceda8b08c0a78e4d5131c607b9a0 data/statues/recipe/upgrade/spawner.json
+1bdf05e9d1b36c2ff0c6ffc220ac06d7bfddb7bb data/statues/recipe/upgrade/speed.json
+c29014f7835cbd1611062d8820bab52d35b924de data/statues/recipe/upgrade/statue_upgrade.json
+4c61fc6e6f0cb2cfbd01f1897e68791d231a8962 data/statues/recipe/upgrade/unglowing.json

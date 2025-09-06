@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 public class StatueBlockItem extends BlockItem {
 
 	public StatueBlockItem(Block blockIn, Item.Properties builder) {
-		super(blockIn, builder);
+		super(blockIn, builder.useBlockDescriptionPrefix());
 	}
 
 	@Nullable

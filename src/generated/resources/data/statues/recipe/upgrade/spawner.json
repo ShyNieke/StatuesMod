@@ -7,5 +7,6 @@
     "#minecraft:soul_fire_base_blocks"
   ],
   "center": "#statues:statues/upgradeable",
+  "core": "#statues:core",
   "upgradeType": "spawner"
 }

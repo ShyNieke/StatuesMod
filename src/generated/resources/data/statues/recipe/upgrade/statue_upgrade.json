@@ -2,6 +2,7 @@
   "type": "statues:upgrade",
   "catalysts": [],
   "center": "#statues:statues/upgradeable",
+  "core": "#statues:core",
   "requireCore": true,
   "upgradeType": "upgrade"
 }

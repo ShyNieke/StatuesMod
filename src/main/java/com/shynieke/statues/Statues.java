@@ -31,6 +31,7 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import org.slf4j.Logger;
@@ -72,10 +73,13 @@ public class Statues {
 		NeoForge.EVENT_BUS.register(new DropHandler());
 		NeoForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 
+		NeoForge.EVENT_BUS.addListener(this::onDatapackSync);
+
 		if (dist.isClient()) {
 			container.registerConfig(ModConfig.Type.CLIENT, StatuesConfig.clientSpec);
 			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 			eventBus.addListener(ClientHandler::doClientStuff);
+			NeoForge.EVENT_BUS.addListener(ClientHandler::onRecipeReceived);
 			eventBus.addListener(ClientHandler::registerRangeSelectProperties);
 			eventBus.addListener(ClientHandler::onRegisterMenu);
 			eventBus.addListener(ClientHandler::registerEntityRenderers);
@@ -86,6 +90,11 @@ public class Statues {
 			NeoForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
 		}
 
+	}
+
+	public void onDatapackSync(OnDatapackSyncEvent event) {
+		event.sendRecipes(StatuesRecipes.UPGRADE_RECIPE.get());
+		event.sendRecipes(StatuesRecipes.LOOT_RECIPE.get());
 	}
 
 	public void commonSetup(final FMLCommonSetupEvent event) {

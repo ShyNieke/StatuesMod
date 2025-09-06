@@ -224,58 +224,59 @@ public class StatueRecipeProvider extends RecipeProvider {
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.WARDEN_STATUE.get()))
 				.result1(Items.SCULK_SENSOR).result2(Items.SCULK_SHRIEKER).result3(Items.SCULK_CATALYST).save(this.output);
 
+		HolderSet<Item> coreTag = tagSet(StatueTags.STATUE_CORE);
 		HolderSet<Item> upgradeableStatues = tagSet(StatueTags.UPGRADEABLE_STATUES);
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), new ArrayList<>())
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), new ArrayList<>())
 				.requiresCore().upgradeType(UpgradeType.UPGRADE).save(this.output, Reference.modLoc("upgrade/statue_upgrade"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(Ingredient.of(Items.GLOW_INK_SAC)))
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.GLOW_INK_SAC)))
 				.upgradeType(UpgradeType.GLOWING).save(this.output, Reference.modLoc("upgrade/glowing"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(Ingredient.of(Items.INK_SAC)))
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.INK_SAC)))
 				.upgradeType(UpgradeType.UNGLOWING).save(this.output, Reference.modLoc("upgrade/unglowing"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(Ingredient.of(Items.ECHO_SHARD),
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.ECHO_SHARD),
 						Ingredient.of(tagSet(Tags.Items.EGGS)),
 						Ingredient.of(tagSet(Tags.Items.ENDER_PEARLS)),
 						Ingredient.of(tagSet(ItemTags.SOUL_FIRE_BASE_BLOCKS)))
 				)
 				.upgradeType(UpgradeType.SPAWNER).save(this.output, Reference.modLoc("upgrade/spawner"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(
 						Ingredient.of(tagSet(ItemTags.SKULLS)),
 						Ingredient.of(Items.MYCELIUM), Ingredient.of(Items.LANTERN))
 				)
 				.upgradeType(UpgradeType.DESPAWNER).save(this.output, Reference.modLoc("upgrade/despawner"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(Ingredient.of(Items.DIAMOND_SWORD))).tier(0)
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.DIAMOND_SWORD))).tier(0)
 				.upgradeType(UpgradeType.MOB_KILLER).save(this.output, Reference.modLoc("upgrade/mob_killer"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
 						DataComponentIngredient.of(false, DataComponentExactPredicate.builder().build(), Items.ENCHANTED_BOOK))).tier(1)
 				.upgradeType(UpgradeType.MOB_KILLER).save(this.output, Reference.modLoc("upgrade/mob_killer_2"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(Ingredient.of(Items.EXPERIENCE_BOTTLE))).tier(2)
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.EXPERIENCE_BOTTLE))).tier(2)
 				.upgradeType(UpgradeType.MOB_KILLER).save(this.output, Reference.modLoc("upgrade/mob_killer_3"));
 
 		HolderSet<Item> lootableStatues = tagSet(StatueTags.LOOTABLE_STATUES);
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(lootableStatues), List.of(Ingredient.of(tagSet(Tags.Items.ENDER_PEARLS)),
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(lootableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(tagSet(Tags.Items.ENDER_PEARLS)),
 						Ingredient.of(tagSet(Tags.Items.GUNPOWDERS)), Ingredient.of(tagSet(Tags.Items.BONES)), Ingredient.of(Items.ROTTEN_FLESH)))
 				.upgradeType(UpgradeType.LOOTING).save(this.output, Reference.modLoc("upgrade/looting"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(lootableStatues), List.of(Ingredient.of(Items.HOPPER), Ingredient.of(Items.OBSERVER)))
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(lootableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.HOPPER), Ingredient.of(Items.OBSERVER)))
 				.upgradeType(UpgradeType.AUTOMATION).save(this.output, Reference.modLoc("upgrade/automation"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(Ingredient.of(tagSet(Tags.Items.DUSTS_REDSTONE)),
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(tagSet(Tags.Items.DUSTS_REDSTONE)),
 						Ingredient.of(Items.SUGAR), Ingredient.of(Items.CLOCK)))
 				.upgradeType(UpgradeType.SPEED).save(this.output, Reference.modLoc("upgrade/speed"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(tagSet(StatueTags.STATUE_INTERACTABLE)), List.of(Ingredient.of(Items.SCULK_SENSOR)))
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(tagSet(StatueTags.STATUE_INTERACTABLE)), Ingredient.of(coreTag), List.of(Ingredient.of(Items.SCULK_SENSOR)))
 				.upgradeType(UpgradeType.INTERACTION).save(this.output, Reference.modLoc("upgrade/interaction"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), List.of(Ingredient.of(Items.NOTE_BLOCK),
+		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.NOTE_BLOCK),
 						Ingredient.of(Items.AMETHYST_SHARD)))
 				.upgradeType(UpgradeType.SOUND).save(this.output, Reference.modLoc("upgrade/sound"));
 

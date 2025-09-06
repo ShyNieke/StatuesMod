@@ -7,5 +7,6 @@
     "minecraft:rotten_flesh"
   ],
   "center": "#statues:statues/lootable",
+  "core": "#statues:core",
   "upgradeType": "looting"
 }

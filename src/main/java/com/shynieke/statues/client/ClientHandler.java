@@ -14,6 +14,8 @@ import com.shynieke.statues.client.render.PlayerStatueRenderer;
 import com.shynieke.statues.client.render.StatueBatRenderer;
 import com.shynieke.statues.client.screen.ShulkerStatueScreen;
 import com.shynieke.statues.client.screen.StatueTableScreen;
+import com.shynieke.statues.recipe.StatuesRecipeCache;
+import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.client.Minecraft;
@@ -25,6 +27,7 @@ import net.minecraft.server.players.GameProfileCache;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
@@ -81,6 +84,14 @@ public class ClientHandler {
 //		if (ModList.get().isLoaded("curios")) {
 //			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
 //		}
+	}
+
+	public static void onRecipeReceived(RecipesReceivedEvent event) {
+		StatuesRecipeCache.UPGRADE_RECIPES.clear();
+		StatuesRecipeCache.UPGRADE_RECIPES.addAll(event.getRecipeMap().byType(StatuesRecipes.UPGRADE_RECIPE.get()));
+
+		StatuesRecipeCache.LOOT_RECIPES.clear();
+		StatuesRecipeCache.LOOT_RECIPES.addAll(event.getRecipeMap().byType(StatuesRecipes.LOOT_RECIPE.get()));
 	}
 
 	public static void registerRangeSelectProperties(final RegisterRangeSelectItemModelPropertyEvent event) {

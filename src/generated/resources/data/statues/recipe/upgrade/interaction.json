@@ -4,5 +4,6 @@
     "minecraft:sculk_sensor"
   ],
   "center": "#statues:statues/interactable",
+  "core": "#statues:core",
   "upgradeType": "interaction"
 }

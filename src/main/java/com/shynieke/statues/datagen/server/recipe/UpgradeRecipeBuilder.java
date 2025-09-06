@@ -21,6 +21,7 @@ import java.util.Objects;
 
 public class UpgradeRecipeBuilder implements RecipeBuilder {
 	private final Ingredient center;
+	private final Ingredient core;
 	private final List<Ingredient> catalysts = new ArrayList<>();
 	private ItemStack result = ItemStack.EMPTY;
 	private boolean requireCore = false;
@@ -29,12 +30,13 @@ public class UpgradeRecipeBuilder implements RecipeBuilder {
 	private String group;
 	private boolean showNotification = true;
 
-	private UpgradeRecipeBuilder(Ingredient center) {
+	private UpgradeRecipeBuilder(Ingredient center, Ingredient core) {
 		this.center = center;
+		this.core = core;
 	}
 
-	public static UpgradeRecipeBuilder upgrade(Ingredient statueIngredient, List<Ingredient> catalysts) {
-		UpgradeRecipeBuilder builder = new UpgradeRecipeBuilder(statueIngredient);
+	public static UpgradeRecipeBuilder upgrade(Ingredient statueIngredient, Ingredient core, List<Ingredient> catalysts) {
+		UpgradeRecipeBuilder builder = new UpgradeRecipeBuilder(statueIngredient, core);
 		builder.catalysts.addAll(catalysts);
 		return builder;
 	}
@@ -92,7 +94,7 @@ public class UpgradeRecipeBuilder implements RecipeBuilder {
 	public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> resourceKey) {
 		UpgradeRecipe upgradeRecipe = new UpgradeRecipe(
 				Objects.requireNonNullElse(this.group, ""),
-				center, catalysts, result, requireCore, upgradeType, tier, showNotification);
+				center, catalysts, core, result, requireCore, upgradeType, tier, showNotification);
 
 		recipeOutput.accept(resourceKey, upgradeRecipe, null);
 	}

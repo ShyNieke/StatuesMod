@@ -163,19 +163,19 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 
 			final int looting = getLooting();
 			final RegistryAccess access = level.registryAccess();
-			ItemStack stack1 = loot.getResultItem(access).copy();
+			ItemStack stack1 = loot.getResultItem().copy();
 			float chance1 = loot.getChance1() + (looting * 0.1F);
 			if (!stack1.isEmpty() && level.random.nextDouble() <= chance1) {
 				exportItem(stack1);
 			}
 
-			ItemStack stack2 = loot.getResultItem2(access).copy();
+			ItemStack stack2 = loot.getResultItem2().copy();
 			float chance2 = loot.getChance2() + (looting * 0.1F);
 			if (!stack2.isEmpty() && level.random.nextDouble() <= chance2) {
 				exportItem(stack2);
 			}
 
-			ItemStack stack3 = loot.getResultItem3(access).copy();
+			ItemStack stack3 = loot.getResultItem3().copy();
 			float chance3 = loot.getChance3() + (looting * 0.1F);
 			if (!stack3.isEmpty() && level.random.nextDouble() <= chance3) {
 				exportItem(stack3);

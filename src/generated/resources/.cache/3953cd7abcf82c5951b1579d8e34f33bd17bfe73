@@ -1,4 +1,4 @@
-// 1.21.8	2025-07-20T21:03:23.1793864	Model Definitions - statues
+// 1.21.8	2025-09-06T20:04:03.2068095	Model Definitions - statues
 4427e42906b8877f46bd091919b793be75c3018b assets/statues/blockstates/allay_statue.json
 42d5ac316c690763e56b4fc0cab4ff995f42790a assets/statues/blockstates/angry_bee_statue.json
 a969b3fd05f50339960b7a4fee7a0200e2a085c4 assets/statues/blockstates/axolotl_blue_statue.json
@@ -197,7 +197,7 @@ bf884eb7e38eb14ea5c7794850718728e0cffdd4 assets/statues/items/panda_angry_statue
 ddacad1a3c792bffabd255a2a97a1caa352ca8b9 assets/statues/items/pebble.json
 08d37ff11b4ba58fe40b9c5a408019e1d26c8944 assets/statues/items/pig_statue.json
 66f8b69159e36651d9e30a42318b0f1d014cdc87 assets/statues/items/pillager_statue.json
-1f370b857e8ec9bee3e5369b261c5dbbda352cf2 assets/statues/items/player_compass.json
+06e062edffb8b98335711244e81b9262a5749d27 assets/statues/items/player_compass.json
 31508ee3c40fa9fd92fbc498a08c30c356da2d83 assets/statues/items/player_statue.json
 51c088d060df34170527f6bf012273c1734b194d assets/statues/items/player_statue_spawn_egg.json
 ab7e5f5b730cb53117f2387880975c6ff8eaf135 assets/statues/items/pufferfish_medium_statue.json

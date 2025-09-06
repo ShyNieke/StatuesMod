@@ -15,8 +15,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
@@ -24,6 +26,7 @@ import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.util.RecipeMatcher;
 
@@ -35,6 +38,7 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 	protected final String group;
 	protected final Ingredient center;
 	protected final List<Ingredient> catalysts;
+	protected final Ingredient coreIngredient;
 	protected final ItemStack result;
 	protected final boolean requireCore;
 	private final UpgradeType upgradeType;
@@ -42,10 +46,12 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 	protected final boolean showNotification;
 
 	public UpgradeRecipe(String group, Ingredient center, List<Ingredient> catalysts,
-	                     ItemStack stack, boolean requireCore, UpgradeType upgradeType, int tier, boolean showNotification) {
+	                     Ingredient core, ItemStack stack, boolean requireCore, UpgradeType upgradeType,
+	                     int tier, boolean showNotification) {
 		this.group = group;
 		this.center = center;
 		this.catalysts = catalysts;
+		this.coreIngredient = core;
 		this.result = stack;
 		this.requireCore = requireCore;
 		this.upgradeType = upgradeType;
@@ -53,11 +59,15 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 		this.showNotification = showNotification;
 	}
 
+	public Ingredient getCoreIngredient() {
+		return coreIngredient;
+	}
+
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> nonnulllist = NonNullList.create();
 		nonnulllist.add(center);
 		if (requireCore)
-			nonnulllist.add(Ingredient.of(BuiltInRegistries.ITEM.getOrThrow(StatueTags.STATUE_CORE)));
+			nonnulllist.add(coreIngredient);
 		nonnulllist.addAll(catalysts);
 		return nonnulllist;
 	}
@@ -160,13 +170,8 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 
 	@Override
 	public ItemStack assemble(RecipeInput recipeInput, HolderLookup.Provider lookupProvider) {
-		return this.getResultItem(lookupProvider).copy();
+		return this.getResultItem();
 	}
-
-//	@Override
-//	public boolean canCraftInDimensions(int x, int y) {
-//		return false;
-//	}
 
 	@Override
 	public boolean isSpecial() {
@@ -176,8 +181,8 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 	/**
 	 * @return the first result item
 	 */
-	public ItemStack getResultItem(HolderLookup.Provider lookupProvider) {
-		return this.result;
+	public ItemStack getResultItem() {
+		return this.result.copy();
 	}
 
 	@Override
@@ -205,7 +210,8 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 				instance -> instance.group(
 								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
 								Ingredient.CODEC.fieldOf("center").forGetter(recipe -> recipe.center),
-								Codec.lazyInitialized(() -> Ingredient.CODEC.listOf(0, 4)).fieldOf("catalysts").forGetter(p_360071_ -> p_360071_.catalysts),
+								Codec.lazyInitialized(() -> Ingredient.CODEC.listOf(0, 4)).fieldOf("catalysts").forGetter(recipe -> recipe.catalysts),
+								Ingredient.CODEC.fieldOf("core").forGetter(recipe -> recipe.coreIngredient),
 								ItemStack.SINGLE_ITEM_CODEC.optionalFieldOf("result", ItemStack.EMPTY).forGetter(recipe -> recipe.result),
 								Codec.BOOL.optionalFieldOf("requireCore", false).forGetter(recipe -> recipe.requireCore),
 								UpgradeType.CODEC.optionalFieldOf("upgradeType", UpgradeType.CRAFTING).forGetter(recipe -> recipe.upgradeType),
@@ -214,10 +220,27 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 						)
 						.apply(instance, UpgradeRecipe::new)
 		);
-		public static final StreamCodec<RegistryFriendlyByteBuf, UpgradeRecipe> STREAM_CODEC = StreamCodec.of(
-				UpgradeRecipe.Serializer::toNetwork, UpgradeRecipe.Serializer::fromNetwork
+		public static final StreamCodec<RegistryFriendlyByteBuf, UpgradeRecipe> STREAM_CODEC = StreamCodec.composite(
+				ByteBufCodecs.STRING_UTF8,
+				recipe -> recipe.group,
+				Ingredient.CONTENTS_STREAM_CODEC,
+				recipe -> recipe.center,
+				Ingredient.CONTENTS_STREAM_CODEC.apply(ByteBufCodecs.list(4)),
+				recipe -> recipe.catalysts,
+				Ingredient.CONTENTS_STREAM_CODEC,
+				recipe -> recipe.coreIngredient,
+				ItemStack.OPTIONAL_STREAM_CODEC,
+				recipe -> recipe.result,
+				ByteBufCodecs.BOOL,
+				recipe -> recipe.requireCore,
+				UpgradeType.STREAM_CODEC,
+				recipe -> recipe.upgradeType,
+				ByteBufCodecs.INT,
+				recipe -> recipe.tier,
+				ByteBufCodecs.BOOL,
+				recipe -> recipe.showNotification,
+				UpgradeRecipe::new
 		);
-
 		@Override
 		public MapCodec<UpgradeRecipe> codec() {
 			return CODEC;
@@ -226,44 +249,6 @@ public class UpgradeRecipe implements Recipe<RecipeInput> {
 		@Override
 		public StreamCodec<RegistryFriendlyByteBuf, UpgradeRecipe> streamCodec() {
 			return STREAM_CODEC;
-		}
-
-		public static UpgradeRecipe fromNetwork(RegistryFriendlyByteBuf byteBuf) {
-			String s = byteBuf.readUtf(32767);
-			Ingredient center = Ingredient.CONTENTS_STREAM_CODEC.decode(byteBuf);
-
-			int i = byteBuf.readVarInt();
-			List<Ingredient> catalist = new ArrayList<>();
-
-			for (int j = 0; j < i; ++j) {
-				catalist.set(j, Ingredient.CONTENTS_STREAM_CODEC.decode(byteBuf));
-			}
-
-			ItemStack result = ItemStack.OPTIONAL_STREAM_CODEC.decode(byteBuf);
-			boolean requireCore = byteBuf.readBoolean();
-			int type = byteBuf.readVarInt();
-			UpgradeType upgradeType = UpgradeType.values()[type];
-			int tier = byteBuf.readVarInt();
-			boolean showNotification = byteBuf.readBoolean();
-
-			return new UpgradeRecipe(s, center, catalist, result, requireCore, upgradeType, tier, showNotification);
-		}
-
-		public static void toNetwork(RegistryFriendlyByteBuf byteBuf, UpgradeRecipe recipe) {
-			byteBuf.writeUtf(recipe.group);
-			Ingredient.CONTENTS_STREAM_CODEC.encode(byteBuf, recipe.center);
-			byteBuf.writeVarInt(recipe.catalysts.size());
-
-			for (Ingredient ingredient : recipe.catalysts) {
-				Ingredient.CONTENTS_STREAM_CODEC.encode(byteBuf, ingredient);
-			}
-
-			ItemStack.OPTIONAL_STREAM_CODEC.encode(byteBuf, recipe.result);
-
-			byteBuf.writeBoolean(recipe.requireCore);
-			byteBuf.writeVarInt(recipe.upgradeType.ordinal());
-			byteBuf.writeVarInt(recipe.tier);
-			byteBuf.writeBoolean(recipe.showNotification);
 		}
 	}
 }

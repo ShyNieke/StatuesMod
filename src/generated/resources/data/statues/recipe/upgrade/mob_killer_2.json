@@ -11,6 +11,7 @@
     }
   ],
   "center": "#statues:statues/upgradeable",
+  "core": "#statues:core",
   "tier": 1,
   "upgradeType": "mob_killer"
 }

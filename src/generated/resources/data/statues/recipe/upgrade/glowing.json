@@ -4,5 +4,6 @@
     "minecraft:glow_ink_sac"
   ],
   "center": "#statues:statues/upgradeable",
+  "core": "#statues:core",
   "upgradeType": "glowing"
 }

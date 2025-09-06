@@ -4,5 +4,6 @@
     "minecraft:ink_sac"
   ],
   "center": "#statues:statues/upgradeable",
+  "core": "#statues:core",
   "upgradeType": "unglowing"
 }

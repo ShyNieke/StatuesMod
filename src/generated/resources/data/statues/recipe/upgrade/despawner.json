@@ -6,5 +6,6 @@
     "minecraft:lantern"
   ],
   "center": "#statues:statues/upgradeable",
+  "core": "#statues:core",
   "upgradeType": "despawner"
 }

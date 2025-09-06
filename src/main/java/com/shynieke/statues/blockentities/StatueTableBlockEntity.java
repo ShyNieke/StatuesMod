@@ -122,7 +122,7 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 				handler.getStackInSlot(slot).shrink(1);
 			}
 
-			ItemStack resultStack = recipe.getResultItem(level.registryAccess()).copy();
+			ItemStack resultStack = recipe.getResultItem();
 			ItemStack centerStack = getCenterSlot();
 			if (resultStack.isEmpty()) {
 				if (!recipe.getUpgradeType().apply(centerStack, recipe.getTier())) {

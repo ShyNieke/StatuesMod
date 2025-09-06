@@ -4,6 +4,7 @@
     "minecraft:diamond_sword"
   ],
   "center": "#statues:statues/upgradeable",
+  "core": "#statues:core",
   "tier": 0,
   "upgradeType": "mob_killer"
 }

@@ -235,7 +235,6 @@
       }
     ],
     "property": "statues:statue_compass_angle",
-    "scale": 32.0,
-    "wobble": false
+    "scale": 32.0
   }
 }
