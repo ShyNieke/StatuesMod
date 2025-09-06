@@ -44,7 +44,7 @@ public class StatueModelProvider extends ModelProvider {
 	@Override
 	protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
 		for (DeferredHolder<Block, ? extends Block> registryObject : StatueRegistry.BLOCKS.getEntries()) {
-			 if (registryObject.get() == StatueRegistry.PLAYER_STATUE.get()){
+			if (registryObject.get() == StatueRegistry.PLAYER_STATUE.get()) {
 				blockModels.createParticleOnlyBlock(registryObject.get(), Blocks.SOUL_SAND);
 				Item item = registryObject.get().asItem();
 				ResourceLocation resourcelocation = PLAYER_STATUE.create(item, TextureMapping.particle(registryObject.get()), blockModels.modelOutput);
@@ -60,8 +60,11 @@ public class StatueModelProvider extends ModelProvider {
 			} else if (registryObject.get() instanceof DisplayStandBlock) {
 				blockModels.createNonTemplateModelBlock(registryObject.get());
 			} else {
-				blockModels.createGenericCube(registryObject.get());
-				blockModels.registerSimpleItemModel(registryObject.get(), registryObject.getId().withPrefix("block/"));
+				TextureMapping texturemapping = TextureMapping.cube(registryObject.get());
+				MultiVariant multivariant = BlockModelGenerators.plainVariant(
+						ModelTemplates.CUBE_ALL.create(registryObject.get(), texturemapping, blockModels.modelOutput)
+				);
+				blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(registryObject.get(), multivariant));
 			}
 		}
 

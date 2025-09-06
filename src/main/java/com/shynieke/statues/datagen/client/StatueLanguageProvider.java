@@ -407,6 +407,8 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addConfig("allowScrolling", "Allow Scrolling", "Allow scrolling to increase / decrease an angle value in the posing screen");
 
 		add("config.jade.plugin_statues.upgrades", "Statue Upgrades");
+
+		add("jukebox_song.statues.credits", "Secret ;)");
 	}
 
 	/**
