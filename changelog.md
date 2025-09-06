@@ -1,1 +1,2 @@
-* Fix some statues not being able to generate loot while they should
+* Backport fish related statue fixes from upstream
+* Fix chance displayed in JEI
