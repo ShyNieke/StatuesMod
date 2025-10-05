@@ -38,7 +38,7 @@ public class UpgradeRecipe implements Recipe<Container> {
 	private final int tier;
 
 	public UpgradeRecipe(ResourceLocation id, String group, Ingredient center, NonNullList<Ingredient> catalysts,
-						 ItemStack stack, boolean requireCore, UpgradeType upgradeType, int tier) {
+	                     ItemStack stack, boolean requireCore, UpgradeType upgradeType, int tier) {
 		this.id = id;
 		this.group = group;
 		this.center = center;

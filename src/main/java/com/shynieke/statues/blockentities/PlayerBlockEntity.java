@@ -23,8 +23,8 @@ import net.minecraft.world.Nameable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 
@@ -159,7 +159,6 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		});
 	}
 
-	@Nullable
 	public static void updateGameprofile(@Nullable GameProfile profile, Consumer<GameProfile> profileConsumer) {
 		if (profile != null && !StringUtil.isNullOrEmpty(profile.getName()) && (!profile.isComplete() || !profile.getProperties().containsKey("textures")) && profileCache != null && sessionService != null) {
 			profileCache.getAsync(profile.getName(), (gameProfile) -> {

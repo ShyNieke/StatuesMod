@@ -32,9 +32,9 @@ public class StatueCurioRenderer implements ICurioRenderer {
 
 	@Override
 	public <T extends LivingEntity, M extends EntityModel<T>> void render(ItemStack stack, SlotContext slotContext, PoseStack poseStack,
-																		  RenderLayerParent<T, M> renderLayerParent, MultiBufferSource bufferSource,
-																		  int light, float limbSwing, float limbSwingAmount, float partialTicks,
-																		  float ageInTicks, float netHeadYaw, float headPitch) {
+	                                                                      RenderLayerParent<T, M> renderLayerParent, MultiBufferSource bufferSource,
+	                                                                      int light, float limbSwing, float limbSwingAmount, float partialTicks,
+	                                                                      float ageInTicks, float netHeadYaw, float headPitch) {
 		poseStack.pushPose();
 
 		Minecraft mc = Minecraft.getInstance();

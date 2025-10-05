@@ -11,8 +11,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
@@ -81,7 +81,7 @@ public class UpgradeRecipeBuilder {
 		private final int tier;
 
 		public Result(ResourceLocation idIn, String groupIn, Ingredient center, List<Ingredient> catalysts,
-					  ItemStack result, boolean requireCore, UpgradeType upgradeType, int tier) {
+		              ItemStack result, boolean requireCore, UpgradeType upgradeType, int tier) {
 			this.id = idIn;
 			this.group = groupIn;
 			this.center = center;

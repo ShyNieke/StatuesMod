@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 public class StatueItemTagProvider extends ItemTagsProvider {
 
 	public StatueItemTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
-								 TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
+	                             TagsProvider<Block> blockTagProvider, ExistingFileHelper existingFileHelper) {
 		super(output, lookupProvider, blockTagProvider.contentsGetter(), Reference.MOD_ID, existingFileHelper);
 	}
 

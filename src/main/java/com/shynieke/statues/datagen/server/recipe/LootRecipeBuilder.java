@@ -9,8 +9,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.registries.ForgeRegistries;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class LootRecipeBuilder {
@@ -118,9 +118,9 @@ public class LootRecipeBuilder {
 		private final float result1Chance, result2Chance, result3Chance;
 
 		public Result(ResourceLocation idIn, String groupIn, Ingredient statueIngredient,
-					  ItemStack result, float result1Chance,
-					  ItemStack result2, float result2Chance,
-					  ItemStack result3, float result3Chance) {
+		              ItemStack result, float result1Chance,
+		              ItemStack result2, float result2Chance,
+		              ItemStack result3, float result3Chance) {
 			this.id = idIn;
 			this.group = groupIn;
 			this.statueIngredient = statueIngredient;

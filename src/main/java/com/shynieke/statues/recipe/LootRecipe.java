@@ -26,7 +26,7 @@ public class LootRecipe implements Recipe<Container> {
 	protected final float resultChance, result2Chance, result3Chance;
 
 	public LootRecipe(ResourceLocation id, String group, Ingredient ingredient, ItemStack stack, float resultChance,
-					  ItemStack stack2, float result2Chance, ItemStack stack3, float result3Chance) {
+	                  ItemStack stack2, float result2Chance, ItemStack stack3, float result3Chance) {
 		this.id = id;
 		this.group = group;
 		this.ingredient = ingredient;

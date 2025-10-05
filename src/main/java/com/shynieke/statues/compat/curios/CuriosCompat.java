@@ -46,7 +46,7 @@ public class CuriosCompat {
 			@NotNull
 			@Override
 			public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap,
-													 @Nullable Direction side) {
+			                                         @Nullable Direction side) {
 				return CuriosCapability.ITEM.orEmpty(cap, curioOpt);
 			}
 		};
