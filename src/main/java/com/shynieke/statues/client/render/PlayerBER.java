@@ -71,7 +71,6 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 		poseStack.translate(0.0D, -1.25D, 0.0D);
 
 		boolean isSupporter = false;
-//		boolean isTranslator = false;
 		if (profile != null) {
 			final String s = ChatFormatting.stripFormatting(profile.getName());
 			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
@@ -79,31 +78,26 @@ public class PlayerBER implements BlockEntityRenderer<PlayerBlockEntity> {
 				poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
 			}
 			isSupporter = ClientHandler.SUPPORTER.contains(profile.getId());
-//			isTranslator = ClientHandler.TRANSLATORS.contains(profile.getId());
 		}
 
 		int light = isSupporter ? 15728880 : combinedLight;
 		VertexConsumer vertexConsumer = bufferSource.getBuffer(getRenderType(profile));
 		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
 
-		//TODO: Implement Translator effect
-
 		playerModel.renderToBuffer(poseStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
 		poseStack.popPose();
 	}
 
-	public static RenderType getRenderType(@Nullable GameProfile gameProfileIn) {
-		if (gameProfileIn == null || !gameProfileIn.isComplete()) {
+	public static RenderType getRenderType(@Nullable GameProfile gameProfile) {
+		if (gameProfile == null || !gameProfile.getProperties().containsKey("textures")) {
 			return RenderType.entityCutoutNoCull(defaultTexture);
 		} else {
-			final Minecraft minecraft = Minecraft.getInstance();
-			final Map<Type, MinecraftProfileTexture> map = minecraft.getSkinManager().getInsecureSkinInformation(gameProfileIn);
-			if (map.containsKey(Type.SKIN)) {
-				return RenderType.entityTranslucent(minecraft.getSkinManager().registerTexture((MinecraftProfileTexture) map.get(Type.SKIN), Type.SKIN));
-			} else {
-				return RenderType.entityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(UUIDUtil.getOrCreatePlayerUUID(gameProfileIn)));
-			}
+			Minecraft minecraft = Minecraft.getInstance();
+			Map<MinecraftProfileTexture.Type, MinecraftProfileTexture> map = minecraft.getSkinManager().getInsecureSkinInformation(gameProfile);
+			return map.containsKey(Type.SKIN) ?
+					RenderType.entityTranslucent(minecraft.getSkinManager().registerTexture(map.get(Type.SKIN), Type.SKIN)) :
+					RenderType.entityCutoutNoCull(DefaultPlayerSkin.getDefaultSkin(UUIDUtil.getOrCreatePlayerUUID(gameProfile)));
 		}
 	}
 }

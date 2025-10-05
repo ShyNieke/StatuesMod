@@ -2,11 +2,11 @@ package com.shynieke.statues.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.world.entity.LivingEntity;
 
-public class StatuePlayerTileModel<T extends LivingEntity> extends PlayerModel<T> {
+public class StatuePlayerTileModel extends PlayerModel<PlayerStatue> {
 	public StatuePlayerTileModel(ModelPart part, boolean slim) {
 		super(part, slim);
 		this.hat.setPos(0.0F, -1.75F, 0.0F);

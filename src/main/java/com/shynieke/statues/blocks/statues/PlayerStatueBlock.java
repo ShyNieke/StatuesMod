@@ -10,6 +10,7 @@ import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -23,7 +24,6 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.StringUtil;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.Nameable;
@@ -48,6 +48,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -166,13 +167,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 			GameProfile profile = playerBlockEntity.getPlayerProfile();
 			if (profile != null) {
 				CompoundTag tag = new CompoundTag();
-
-				if (!StringUtil.isNullOrEmpty(profile.getName())) {
-					GameProfile gameprofile = new GameProfile((UUID) null, profile.getName());
-					PlayerBlockEntity.updateGameprofile(gameprofile, (newProfile) -> {
-						tag.put("PlayerProfile", NbtUtils.writeGameProfile(new CompoundTag(), newProfile));
-					});
-				}
+				tag.put("PlayerProfile", NbtUtils.writeGameProfile(new CompoundTag(), profile));
 				stack.setTag(tag);
 			}
 
@@ -188,31 +183,35 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 		if (!level.isClientSide && getBE(level, pos) != null) {
 			PlayerBlockEntity playerBlockEntity = getBE(level, pos);
-			if (stack.hasCustomHoverName()) {
-				String stackName = stack.getHoverName().getString();
-				boolean spaceFlag = stackName.contains(" ");
-				boolean emptyFlag = stackName.isEmpty();
+			CompoundTag tag = stack.getTag();
 
-				if (!spaceFlag && !emptyFlag) {
-					GameProfile newProfile = new GameProfile((UUID) null, stackName);
-
-					if (stack.hasTag() && stack.getTag() != null) {
-						CompoundTag tag = stack.getTag();
-						if (tag.contains("PlayerProfile")) {
-							GameProfile foundProfile = NbtUtils.readGameProfile(tag.getCompound("PlayerProfile"));
-							if (foundProfile != null && foundProfile.getName().equalsIgnoreCase(stackName)) {
-								newProfile = foundProfile;
-							}
-						}
-					}
-
-					playerBlockEntity.setPlayerProfile(newProfile);
+			if (tag != null) {
+				if (tag.contains("PlayerProfile", 10)) {
+					GameProfile gameprofile = NbtUtils.readGameProfile(tag.getCompound("PlayerProfile"));
+					playerBlockEntity.setPlayerProfile(gameprofile);
+				} else if (tag.contains("PlayerProfile", 8) && !Util.isBlank(tag.getString("PlayerProfile"))) {
+					GameProfile gameprofile = new GameProfile((UUID) null, tag.getString("PlayerProfile"));
+					tag.remove("PlayerProfile");
+					SkullBlockEntity.updateGameprofile(gameprofile, (profile) -> {
+						tag.put("PlayerProfile", NbtUtils.writeGameProfile(new CompoundTag(), profile));
+						playerBlockEntity.setPlayerProfile(profile);
+					});
 				}
 			} else {
-				if (placer instanceof Player player) {
-					playerBlockEntity.setPlayerProfile(player.getGameProfile());
+				if (stack.hasCustomHoverName()) {
+					String stackName = stack.getHoverName().getString();
+					boolean spaceFlag = stackName.contains(" ");
+					boolean emptyFlag = stackName.isEmpty();
+
+					if (!spaceFlag && !emptyFlag) {
+						playerBlockEntity.setPlayerProfile(new GameProfile((UUID) null, stackName));
+					}
 				} else {
-					playerBlockEntity.setPlayerProfile(new GameProfile((UUID) null, "steve"));
+					if (placer instanceof Player player) {
+						playerBlockEntity.setPlayerProfile(player.getGameProfile());
+					} else {
+						playerBlockEntity.setPlayerProfile(new GameProfile((UUID) null, "steve"));
+					}
 				}
 			}
 		}
@@ -391,10 +390,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		}
 	}
 
+	@Override
 	public VoxelShape getOcclusionShape(BlockState state, BlockGetter level, BlockPos pos) {
 		return Shapes.empty();
 	}
 
+	@Override
 	public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType computationType) {
 		return false;
 	}

@@ -3,7 +3,6 @@ package com.shynieke.statues.client;
 import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.Statues;
-import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
 import com.shynieke.statues.client.ber.StatueTableBER;
 import com.shynieke.statues.client.model.PlayerStatueModel;
@@ -14,6 +13,7 @@ import com.shynieke.statues.client.screen.ShulkerStatueScreen;
 import com.shynieke.statues.client.screen.StatueTableScreen;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -54,8 +54,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class ClientHandler {
-	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue"), "player_statue");
-	public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue_slim"), "player_statue_slim");
+	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue"), "main");
+	public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "player_statue_slim"), "slim");
 	public static final List<UUID> SUPPORTER = new ArrayList<>();
 	public static final List<UUID> TRANSLATORS = new ArrayList<>();
 
@@ -244,7 +244,7 @@ public class ClientHandler {
 		YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(mc.getProxy());
 		Services services = Services.create(authenticationService, mc.gameDirectory);
 		services.profileCache().setExecutor(mc);
-		PlayerBlockEntity.setup(services, mc);
+		SkinUtil.setup(services, mc);
 		GameProfileCache.setUsesAuthentication(false);
 	}
 }

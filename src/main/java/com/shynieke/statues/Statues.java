@@ -1,7 +1,6 @@
 package com.shynieke.statues;
 
 import com.mojang.logging.LogUtils;
-import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.commands.StatuesCommands;
 import com.shynieke.statues.config.StatuesConfig;
@@ -18,6 +17,7 @@ import com.shynieke.statues.registry.StatueLootModifiers;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSerializers;
 import com.shynieke.statues.registry.StatueSounds;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.GameProfileCache;
 import net.minecraftforge.api.distmarker.Dist;
@@ -94,7 +94,7 @@ public class Statues {
 
 	public void serverAboutToStart(final ServerAboutToStartEvent event) {
 		MinecraftServer server = event.getServer();
-		PlayerBlockEntity.setup(server.getProfileCache(), server.getSessionService(), server);
+		SkinUtil.setup(server.getProfileCache(), server.getSessionService(), server);
 		GameProfileCache.setUsesAuthentication(server.usesAuthentication());
 	}
 }

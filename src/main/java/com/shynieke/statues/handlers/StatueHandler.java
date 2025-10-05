@@ -1,11 +1,15 @@
 package com.shynieke.statues.handlers;
 
+import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.Statues;
 import com.shynieke.statues.fakeplayer.StatueFakePlayer;
+import com.shynieke.statues.items.PlayerStatueBlockItem;
 import com.shynieke.statues.items.StatueBlockItem;
 import com.shynieke.statues.storage.StatueSavedData;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,8 +20,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.player.AnvilRepairEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.Locale;
+import java.util.UUID;
 
 public class StatueHandler {
 	@SubscribeEvent
@@ -85,6 +93,27 @@ public class StatueHandler {
 	public void onLevelUnload(final LevelEvent.Unload event) {
 		if (event.getLevel() instanceof ServerLevel serverLevel) {
 			StatueFakePlayer.unload(serverLevel);
+		}
+	}
+
+	@SubscribeEvent
+	public void onAnvilRepair(final AnvilRepairEvent event) {
+		ItemStack result = event.getOutput();
+		if (result.getItem() instanceof PlayerStatueBlockItem && result.hasCustomHoverName()) {
+			String stackName = result.getHoverName().getString().toLowerCase(Locale.ROOT);
+			boolean validFlag = !stackName.isEmpty() && !stackName.contains(" ");
+			if (validFlag) {
+				CompoundTag stackTag = result.getOrCreateTag();
+				GameProfile stackProfile = new GameProfile((UUID) null, stackName);
+				SkinUtil.updateGameProfile(stackProfile, (profile) -> {
+					if (profile != null) {
+						CompoundTag profileTag = new CompoundTag();
+						NbtUtils.writeGameProfile(profileTag, profile);
+						stackTag.put("PlayerProfile", profileTag);
+						result.setTag(stackTag);
+					}
+				});
+			}
 		}
 	}
 }

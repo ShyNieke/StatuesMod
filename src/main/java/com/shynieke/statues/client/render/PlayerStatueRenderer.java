@@ -23,6 +23,7 @@ import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -41,13 +42,14 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		this.slimPlayerModel = new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER_SLIM), true);
 
 		this.addLayer(new HumanoidArmorLayer<>(this,
-				new HumanoidModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_INNER_ARMOR : ModelLayers.PLAYER_INNER_ARMOR)),
-				new HumanoidModel(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_OUTER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR)), context.getModelManager()));
+				new HumanoidModel<>(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_INNER_ARMOR : ModelLayers.PLAYER_INNER_ARMOR)),
+				new HumanoidModel<>(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_OUTER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR)), context.getModelManager()));
 		this.addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
 		this.addLayer(new ElytraLayer<>(this, context.getModelSet()));
 		this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer()));
 	}
 
+	@NotNull
 	@Override
 	public ResourceLocation getTextureLocation(PlayerStatue playerStatue) {
 		return playerStatue.getGameProfile()
@@ -56,13 +58,13 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	}
 
 	private ResourceLocation getSkin(GameProfile gameProfile) {
-		if (!gameProfile.isComplete()) {
+		if (!gameProfile.getProperties().containsKey("textures")) {
 			return defaultTexture;
 		} else {
 			final Minecraft minecraft = Minecraft.getInstance();
 			SkinManager skinManager = minecraft.getSkinManager();
 			final Map<Type, MinecraftProfileTexture> loadSkinFromCache = skinManager.getInsecureSkinInformation(gameProfile); // returned map may or may not be typed
-			if (loadSkinFromCache.containsKey(MinecraftProfileTexture.Type.SKIN)) {
+			if (loadSkinFromCache.containsKey(Type.SKIN)) {
 				return skinManager.registerTexture(loadSkinFromCache.get(Type.SKIN), Type.SKIN);
 			} else {
 				return DefaultPlayerSkin.getDefaultSkin(gameProfile.getId());
@@ -86,6 +88,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		return playerStatue.isCustomNameVisible();
 	}
 
+	@Override
 	protected void setupRotations(PlayerStatue playerStatue, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
 		poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - rotationYaw));
 		float f = (float) (playerStatue.level().getGameTime() - playerStatue.punchCooldown) + partialTicks;
@@ -99,6 +102,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		}
 	}
 
+	@Override
 	protected void scale(PlayerStatue playerStatue, PoseStack poseStack, float partialTickTime) {
 		float f = 0.9375F;
 		poseStack.scale(f, f, f);

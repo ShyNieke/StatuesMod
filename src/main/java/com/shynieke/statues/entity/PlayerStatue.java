@@ -2,7 +2,6 @@ package com.shynieke.statues.entity;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.screen.PlayerStatueData;
 import com.shynieke.statues.network.StatuesNetworking;
@@ -97,13 +96,18 @@ public class PlayerStatue extends LivingEntity {
 	private Rotations leftLegRotation = DEFAULT_LEFTLEG_ROTATION;
 	private Rotations rightLegRotation = DEFAULT_RIGHTLEG_ROTATION;
 
-
 	public PlayerStatue(EntityType<? extends PlayerStatue> entityType, Level level) {
 		super(entityType, level);
 	}
 
+	public PlayerStatue(Level level, double posX, double posY, double posZ) {
+		this(StatueRegistry.PLAYER_STATUE_ENTITY.get(), level);
+		this.setPos(posX, posY, posZ);
+	}
+
 	public int clientLock = 0;
 
+	@Override
 	public void setYRot(float yRot) {
 		if (this.clientLock > 0) {
 			return;
@@ -116,16 +120,12 @@ public class PlayerStatue extends LivingEntity {
 		return 0.0F;
 	}
 
-	public PlayerStatue(Level level, double posX, double posY, double posZ) {
-		this(StatueRegistry.PLAYER_STATUE_ENTITY.get(), level);
-		this.setPos(posX, posY, posZ);
-	}
-
 	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
+	@Override
 	public void refreshDimensions() {
 		double d0 = this.getX();
 		double d1 = this.getY();
@@ -146,10 +146,12 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Returns whether the entity is in a server level
 	 */
+	@Override
 	public boolean isEffectiveAi() {
 		return super.isEffectiveAi() && this.hasPhysics();
 	}
 
+	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		this.entityData.define(GAMEPROFILE, Optional.empty());
@@ -170,14 +172,14 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	public void setGameProfile(GameProfile playerProfile) {
-		PlayerBlockEntity.updateGameprofile(playerProfile, (profile) -> {
+		SkinUtil.updateGameProfile(playerProfile, (profile) -> {
 			entityData.set(GAMEPROFILE, Optional.of(profile));
 			this.setSlim(profile != null && profile.getId() != null && SkinUtil.isSlimSkin(profile.getId()));
 		});
 
 		synchronized (this) {
 			getGameProfile().ifPresent(profile -> {
-				if (this.level != null && this.level().isClientSide && profile != null && profile.isComplete()) {
+				if (this.level() != null && this.level().isClientSide && profile != null && profile.isComplete()) {
 					Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
 						if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
 							String metadata = profileTexture.getMetadata("model");
@@ -189,7 +191,6 @@ public class PlayerStatue extends LivingEntity {
 		}
 	}
 
-	@Nullable
 	public boolean isLocked() {
 		return this.entityData.get(LOCKED_BY_UUID).isPresent();
 	}
@@ -247,14 +248,17 @@ public class PlayerStatue extends LivingEntity {
 		return entityData.get(Y_OFFSET);
 	}
 
+	@Override
 	public Iterable<ItemStack> getHandSlots() {
 		return this.handItems;
 	}
 
+	@Override
 	public Iterable<ItemStack> getArmorSlots() {
 		return this.armorItems;
 	}
 
+	@Override
 	public ItemStack getItemBySlot(EquipmentSlot slotIn) {
 		return switch (slotIn.getType()) {
 			case HAND -> this.handItems.get(slotIn.getIndex());
@@ -262,15 +266,16 @@ public class PlayerStatue extends LivingEntity {
 		};
 	}
 
+	@Override
 	public void setItemSlot(EquipmentSlot slotIn, ItemStack stack) {
 		this.verifyEquippedItem(stack);
 		switch (slotIn.getType()) {
 			case HAND -> this.onEquipItem(slotIn, this.handItems.set(slotIn.getIndex(), stack), stack);
 			case ARMOR -> this.onEquipItem(slotIn, this.armorItems.set(slotIn.getIndex(), stack), stack);
 		}
-
 	}
 
+	@Override
 	public boolean canTakeItem(ItemStack itemstackIn) {
 		EquipmentSlot equipmentslottype = getEquipmentSlotForItem(itemstackIn);
 		return this.getItemBySlot(equipmentslottype).isEmpty() && !this.isDisabled(equipmentslottype);
@@ -424,10 +429,12 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Returns true if this entity should push and be pushed by other entities when colliding.
 	 */
+	@Override
 	public boolean isPushable() {
 		return false;
 	}
 
+	@Override
 	protected void doPush(Entity entityIn) {
 
 	}
@@ -446,10 +453,11 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Applies the given player interaction to this Entity.
 	 */
+	@Override
 	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
-			if (!level.isClientSide && player != null) {
+			if (!this.level().isClientSide && player != null) {
 				if (canOpenUI(player)) {
 					StatuesNetworking.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new PlayerStatueScreenMessage(getId()));
 				}
@@ -458,7 +466,7 @@ public class PlayerStatue extends LivingEntity {
 			if (itemstack.getItem() != Items.NAME_TAG) {
 				if (player.isSpectator()) {
 					return InteractionResult.SUCCESS;
-				} else if (player.level.isClientSide) {
+				} else if (this.level().isClientSide) {
 					return InteractionResult.CONSUME;
 				} else {
 					if (!isLocked()) {
@@ -556,6 +564,7 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Called when the entity is attacked.
 	 */
+	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (!this.level().isClientSide && !this.isRemoved()) {
 			if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
@@ -568,14 +577,14 @@ public class PlayerStatue extends LivingEntity {
 					return false;
 				} else if (source.is(DamageTypeTags.IGNITES_ARMOR_STANDS)) {
 					if (this.isOnFire()) {
-						this.damageArmorStand(source, 0.15F);
+						this.damagePlayerStatue(source, 0.15F);
 					} else {
 						this.setSecondsOnFire(5);
 					}
 
 					return false;
 				} else if (source.is(DamageTypeTags.BURNS_ARMOR_STANDS) && this.getHealth() > 0.5F) {
-					this.damageArmorStand(source, 4.0F);
+					this.damagePlayerStatue(source, 4.0F);
 					return false;
 				} else {
 					boolean flag = source.getDirectEntity() instanceof AbstractArrow;
@@ -613,6 +622,7 @@ public class PlayerStatue extends LivingEntity {
 	}
 
 	@OnlyIn(Dist.CLIENT)
+	@Override
 	public void handleEntityEvent(byte id) {
 		if (id == 32) {
 			if (this.level().isClientSide) {
@@ -629,6 +639,7 @@ public class PlayerStatue extends LivingEntity {
 	 * Checks if the entity is in range to render.
 	 */
 	@OnlyIn(Dist.CLIENT)
+	@Override
 	public boolean shouldRenderAtSqrDistance(double distance) {
 		double d0 = this.getBoundingBox().getSize() * 4.0D;
 		if (Double.isNaN(d0) || d0 == 0.0D) {
@@ -646,9 +657,9 @@ public class PlayerStatue extends LivingEntity {
 
 	}
 
-	private void damageArmorStand(DamageSource source, float p_213817_2_) {
+	private void damagePlayerStatue(DamageSource source, float amount) {
 		float f = this.getHealth();
-		f = f - p_213817_2_;
+		f = f - amount;
 		if (f <= 0.5F) {
 			this.brokenByAnything(source);
 			this.remove(RemovalReason.KILLED);
@@ -672,8 +683,8 @@ public class PlayerStatue extends LivingEntity {
 			}
 		}
 
-		Block.popResource(this.level, this.blockPosition(), stack);
-		Block.popResource(this.level, this.blockPosition(), new ItemStack(StatueRegistry.STATUE_CORE.get()));
+		Block.popResource(this.level(), this.blockPosition(), stack);
+		Block.popResource(this.level(), this.blockPosition(), new ItemStack(StatueRegistry.STATUE_CORE.get()));
 		this.brokenByAnything(source);
 	}
 
@@ -702,7 +713,7 @@ public class PlayerStatue extends LivingEntity {
 		for (int i = 0; i < this.handItems.size(); ++i) {
 			ItemStack itemstack = this.handItems.get(i);
 			if (!itemstack.isEmpty()) {
-				Block.popResource(this.level, this.blockPosition().above(), itemstack);
+				Block.popResource(this.level(), this.blockPosition().above(), itemstack);
 				this.handItems.set(i, ItemStack.EMPTY);
 			}
 		}
@@ -710,7 +721,7 @@ public class PlayerStatue extends LivingEntity {
 		for (int j = 0; j < this.armorItems.size(); ++j) {
 			ItemStack itemstack1 = this.armorItems.get(j);
 			if (!itemstack1.isEmpty()) {
-				Block.popResource(this.level, this.blockPosition().above(), itemstack1);
+				Block.popResource(this.level(), this.blockPosition().above(), itemstack1);
 				this.armorItems.set(j, ItemStack.EMPTY);
 			}
 		}
@@ -721,23 +732,27 @@ public class PlayerStatue extends LivingEntity {
 		this.level().playSound((Player) null, this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_BREAK, this.getSoundSource(), 1.0F, 1.0F);
 	}
 
+	@Override
 	protected float tickHeadTurn(float p_110146_1_, float p_110146_2_) {
 		this.yBodyRotO = this.yRotO;
 		this.yBodyRot = this.getYRot();
 		return 0.0F;
 	}
 
-	protected float getStandingEdyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	@Override
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return sizeIn.height * (this.isBaby() ? 0.5F : 0.9F);
 	}
 
 	/**
 	 * Returns the Y Offset of this entity.
 	 */
+	@Override
 	public double getMyRidingOffset() {
 		return (double) 0.1F + getYOffsetData(); //TODO: what does this do?
 	}
 
+	@Override
 	public void travel(Vec3 travelVector) {
 		if (this.hasPhysics()) {
 			super.travel(travelVector);
@@ -747,6 +762,7 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Set the render yaw offset
 	 */
+	@Override
 	public void setYBodyRot(float offset) {
 		this.yBodyRotO = this.yRotO = offset;
 		this.yHeadRotO = this.yHeadRot = offset;
@@ -760,6 +776,7 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Sets the head's yaw rotation of the entity.
 	 */
+	@Override
 	public void setYHeadRot(float rotation) {
 		this.yBodyRotO = this.yRotO = rotation;
 		this.yHeadRotO = this.yHeadRot = rotation;
@@ -768,16 +785,17 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Called to update the entity's position/logic.
 	 */
+	@Override
 	public void tick() {
 		super.tick();
 
-		if (level.isClientSide && getGameProfile().isPresent()) {
+		if (this.level().isClientSide && getGameProfile().isPresent()) {
 			if (ClientHandler.TRANSLATORS.contains(getGameProfile().get().getId())) {
-				level.addParticle(ParticleTypes.ENCHANT,
+				this.level().addParticle(ParticleTypes.ENCHANT,
 						(double) getX(), (double) getEyeY() + 1, (double) getZ(),
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D,
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 - random.nextFloat() - 1.0F),
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D);
+						(double) ((float) (this.level().random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D,
+						(double) ((float) (this.level().random.nextFloat() - 0.5) * 3 - random.nextFloat() - 1.0F),
+						(double) ((float) (this.level().random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D);
 			}
 		}
 
@@ -819,6 +837,7 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * If Animal, checks if the age timer is negative
 	 */
+	@Override
 	public boolean isBaby() {
 		return this.isSmall();
 	}
@@ -826,6 +845,7 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Called by the /kill command.
 	 */
+	@Override
 	public void kill() {
 		this.remove(RemovalReason.KILLED);
 	}
@@ -838,14 +858,14 @@ public class PlayerStatue extends LivingEntity {
 		return (this.entityData.get(STATUS) & 1) != 0;
 	}
 
-	private byte setBit(byte p_184797_1_, int p_184797_2_, boolean p_184797_3_) {
-		if (p_184797_3_) {
-			p_184797_1_ = (byte) (p_184797_1_ | p_184797_2_);
+	private byte setBit(byte oldBit, int offset, boolean value) {
+		if (value) {
+			oldBit = (byte) (oldBit | offset);
 		} else {
-			p_184797_1_ = (byte) (p_184797_1_ & ~p_184797_2_);
+			oldBit = (byte) (oldBit & ~offset);
 		}
 
-		return p_184797_1_;
+		return oldBit;
 	}
 
 	public void setHeadRotation(Rotations vec) {
@@ -909,6 +929,7 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Returns true if other Entities should be prevented from moving through this Entity.
 	 */
+	@Override
 	public boolean isPickable() {
 		return true;
 	}
@@ -916,12 +937,19 @@ public class PlayerStatue extends LivingEntity {
 	/**
 	 * Called when a player attacks an entity. If this returns true the attack will not happen.
 	 */
+	@Override
 	public boolean skipAttackInteraction(Entity entityIn) {
 		return entityIn instanceof Player && !this.level().mayInteract((Player) entityIn, this.blockPosition());
 	}
 
-	protected SoundEvent getFallDamageSound(int heightIn) {
-		return SoundEvents.ARMOR_STAND_FALL;
+	@Override
+	protected void playBlockFallSound() {
+		super.playBlockFallSound();
+	}
+
+	@Override
+	public LivingEntity.Fallsounds getFallSounds() {
+		return new LivingEntity.Fallsounds(SoundEvents.ARMOR_STAND_FALL, SoundEvents.ARMOR_STAND_FALL);
 	}
 
 	@Nullable
@@ -934,16 +962,19 @@ public class PlayerStatue extends LivingEntity {
 		return SoundEvents.ARMOR_STAND_BREAK;
 	}
 
+	@Override
 	public void thunderHit(ServerLevel serverLevel, LightningBolt bolt) {
 	}
 
 	/**
 	 * Returns false if the entity is an armor stand. Returns true for all other entity living bases.
 	 */
+	@Override
 	public boolean isAffectedByPotions() {
 		return false;
 	}
 
+	@Override
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		if (STATUS.equals(key)) {
 			this.refreshDimensions();
@@ -952,7 +983,7 @@ public class PlayerStatue extends LivingEntity {
 		if (GAMEPROFILE.equals(key)) {
 			synchronized (this) {
 				getGameProfile().ifPresent(profile -> {
-					if (this.level != null && this.level().isClientSide && profile != null && profile.isComplete()) {
+					if (this.level() != null && this.level().isClientSide && profile != null && profile.isComplete()) {
 						Minecraft.getInstance().getSkinManager().registerSkins(profile, (textureType, textureLocation, profileTexture) -> {
 							if (textureType.equals(MinecraftProfileTexture.Type.SKIN)) {
 								String metadata = profileTexture.getMetadata("model");
@@ -967,6 +998,7 @@ public class PlayerStatue extends LivingEntity {
 		super.onSyncedDataUpdated(key);
 	}
 
+	@Override
 	public boolean attackable() {
 		return false;
 	}

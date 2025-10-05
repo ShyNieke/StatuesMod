@@ -1,14 +1,11 @@
 package com.shynieke.statues.blockentities;
 
-import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftProfileTexture;
-import com.mojang.authlib.minecraft.MinecraftSessionService;
-import com.mojang.authlib.properties.Property;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
-import net.minecraft.Util;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -16,26 +13,13 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.Services;
-import net.minecraft.server.players.GameProfileCache;
-import net.minecraft.util.StringUtil;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.concurrent.Executor;
-import java.util.function.Consumer;
-
 public class PlayerBlockEntity extends BlockEntity implements Nameable {
-	@Nullable
-	private static GameProfileCache profileCache;
-	@Nullable
-	private static MinecraftSessionService sessionService;
-	@Nullable
-	private static Executor mainThreadExecutor;
-
 	private GameProfile playerProfile;
 	private boolean isSlim = false;
 	private boolean comparatorApplied;
@@ -47,22 +31,6 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		this.comparatorApplied = false;
 		this.checkerCooldown = 0;
 		this.onlineChecking = false;
-	}
-
-	public static void setup(GameProfileCache gameProfileCache, MinecraftSessionService service, Executor executor) {
-		profileCache = gameProfileCache;
-		sessionService = service;
-		mainThreadExecutor = executor;
-	}
-
-	public static void setup(Services services, Executor executor) {
-		setup(services.profileCache(), services.sessionService(), executor);
-	}
-
-	public static void clear() {
-		profileCache = null;
-		sessionService = null;
-		mainThreadExecutor = null;
 	}
 
 	@Override
@@ -124,7 +92,7 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 
 	@Override
 	public boolean hasCustomName() {
-		return this.playerProfile != null && !this.playerProfile.getName().isEmpty();
+		return this.playerProfile != null && this.playerProfile.getName() != null && !this.playerProfile.getName().isEmpty();
 	}
 
 	@Nullable
@@ -153,37 +121,10 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 	}
 
 	private void updateOwnerProfile() {
-		updateGameprofile(this.playerProfile, (profile) -> {
+		SkinUtil.updateGameProfile(this.playerProfile, (profile) -> {
 			this.playerProfile = profile;
 			this.setChanged();
 		});
-	}
-
-	public static void updateGameprofile(@Nullable GameProfile profile, Consumer<GameProfile> profileConsumer) {
-		if (profile != null && !StringUtil.isNullOrEmpty(profile.getName()) && (!profile.isComplete() || !profile.getProperties().containsKey("textures")) && profileCache != null && sessionService != null) {
-			profileCache.getAsync(profile.getName(), (gameProfile) -> {
-				Util.backgroundExecutor().execute(() -> {
-					Util.ifElse(gameProfile, (gameProfile1) -> {
-						Property property = Iterables.getFirst(gameProfile1.getProperties().get("textures"), (Property) null);
-						if (property == null) {
-							gameProfile1 = sessionService.fillProfileProperties(gameProfile1, true);
-						}
-
-						GameProfile gameprofile = gameProfile1;
-						mainThreadExecutor.execute(() -> {
-							profileCache.add(gameprofile);
-							profileConsumer.accept(gameprofile);
-						});
-					}, () -> {
-						mainThreadExecutor.execute(() -> {
-							profileConsumer.accept(profile);
-						});
-					});
-				});
-			});
-		} else {
-			profileConsumer.accept(profile);
-		}
 	}
 
 	public void updateOnline() {
