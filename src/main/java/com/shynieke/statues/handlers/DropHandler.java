@@ -1,11 +1,15 @@
 package com.shynieke.statues.handlers;
 
+import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import com.shynieke.statues.blocks.statues.SheepStatueBlock;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.registry.StatueRegistry;
+import com.shynieke.statues.util.SkinUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
@@ -209,12 +213,36 @@ public class DropHandler {
 		}
 
 		if (StatuesConfig.COMMON.playerDropsStatue.get() && entity instanceof Player player) {
-			ItemStack playerStatueStack = new ItemStack(StatueRegistry.PLAYER_STATUE.get()).setHoverName(player.getName());
+			final GameProfile stackProfile = player.getGameProfile();
+			ItemStack playerStatueStack = new ItemStack(StatueRegistry.PLAYER_STATUE.get());
+			playerStatueStack.setHoverName(Component.literal(player.getName().getString()));
+
+			CompoundTag stackTag = playerStatueStack.getOrCreateTag();
+			SkinUtil.updateGameProfile(stackProfile, (profile) -> {
+				if (profile != null) {
+					CompoundTag profileTag = new CompoundTag();
+					NbtUtils.writeGameProfile(profileTag, profile);
+					stackTag.put("PlayerProfile", profileTag);
+					playerStatueStack.setTag(stackTag);
+				}
+			});
 			double random_drop = Math.random();
 			double playerDropChance = StatuesConfig.COMMON.playerStatueDropChance.get();
 			BlockPos entityPos = entity.blockPosition();
 
 			switch (StatuesConfig.COMMON.playerStatueKillSource.get()) {
+				case PLAYER_FAKEPLAYER:
+					if (source instanceof ServerPlayer) {
+						if (random_drop <= playerDropChance) {
+							event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+						}
+					}
+					break;
+				case ALL:
+					if (random_drop <= playerDropChance) {
+						event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
+					}
+					break;
 				default:
 					if (source instanceof ServerPlayer sourcePlayer && !(source instanceof FakePlayer)) {
 						List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
@@ -247,18 +275,6 @@ public class DropHandler {
 //                    }
 					}
 					break;
-				case PLAYER_FAKEPLAYER:
-					if (source instanceof ServerPlayer) {
-						if (random_drop <= playerDropChance) {
-							event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
-						}
-					}
-					break;
-				case ALL:
-					if (random_drop <= playerDropChance) {
-						event.getDrops().add(new ItemEntity(level, entityPos.getX(), entityPos.getY(), entityPos.getZ(), playerStatueStack));
-					}
-					break;
 			}
 		}
 	}
@@ -267,11 +283,6 @@ public class DropHandler {
 		BlockPos entityPos = entity.blockPosition();
 
 		switch (StatuesConfig.COMMON.statueKillSource.get()) {
-			default:
-				if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
-					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
-				}
-				break;
 			case PLAYER_FAKEPLAYER:
 				if (source instanceof ServerPlayer) {
 					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
@@ -279,6 +290,11 @@ public class DropHandler {
 				break;
 			case ALL:
 				event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+				break;
+			default:
+				if (source instanceof ServerPlayer && !(source instanceof FakePlayer)) {
+					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+				}
 				break;
 		}
 	}
@@ -289,6 +305,18 @@ public class DropHandler {
 		BlockPos entityPos = entity.blockPosition();
 
 		switch (StatuesConfig.COMMON.statueKillSource.get()) {
+			case PLAYER_FAKEPLAYER:
+				if (source instanceof ServerPlayer) {
+					if (random_drop <= default_drop_chance) {
+						event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+					}
+				}
+				break;
+			case ALL:
+				if (random_drop <= default_drop_chance) {
+					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
+				}
+				break;
 			default:
 				if (source instanceof ServerPlayer player && !(source instanceof FakePlayer)) {
 					List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
@@ -319,18 +347,6 @@ public class DropHandler {
 						event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 					}
 //                    }
-				}
-				break;
-			case PLAYER_FAKEPLAYER:
-				if (source instanceof ServerPlayer) {
-					if (random_drop <= default_drop_chance) {
-						event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
-					}
-				}
-				break;
-			case ALL:
-				if (random_drop <= default_drop_chance) {
-					event.getDrops().add(new ItemEntity(entity.level(), entityPos.getX(), entityPos.getY(), entityPos.getZ(), itemStackToDrop));
 				}
 				break;
 		}
