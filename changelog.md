@@ -1,2 +1,1 @@
-* Change how Player Statues render (It no longer live updates while renaming to reduce lag)
-* When giving yourself a Player Statue you can supply the `PlayerProfile` (just like Player Heads) and the applied `textures` field will lock to that skin
+* Fix Player Statues not dropping with the right skin attached
