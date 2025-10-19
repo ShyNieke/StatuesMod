@@ -1,9 +1,7 @@
 package com.shynieke.statues.items;
 
-import com.mojang.authlib.GameProfile;
 import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.registry.StatueRegistry;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Rotations;
@@ -54,9 +52,9 @@ public class PlayerStatueSpawnItem extends Item {
 				applyRandomRotations(playerStatue, level.random);
 				if (!stack.has(DataComponents.CUSTOM_NAME)) {
 					if (context.getPlayer() != null) {
-						playerStatue.setGameProfile(new ResolvableProfile(context.getPlayer().getGameProfile()));
+						playerStatue.setResolvableProfile(ResolvableProfile.createResolved(context.getPlayer().getGameProfile()));
 					} else {
-						playerStatue.setGameProfile(new ResolvableProfile(new GameProfile(Util.NIL_UUID, "steve")));
+						playerStatue.setResolvableProfile(ResolvableProfile.createUnresolved("steve"));
 					}
 				}
 				stack.shrink(1);

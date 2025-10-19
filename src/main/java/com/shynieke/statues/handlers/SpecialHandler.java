@@ -41,7 +41,7 @@ public class SpecialHandler {
 	@SubscribeEvent
 	public void playerTick(PlayerTickEvent.Post event) {
 		final Player player = event.getEntity();
-		if (!player.level().isClientSide) {
+		if (!player.level().isClientSide()) {
 			Level level = player.level();
 			BlockPos pos = player.blockPosition();
 			AABB aabb = new AABB(pos.getX() - 0.5f, pos.getY() - 0.5f, pos.getZ() - 0.5f, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f)

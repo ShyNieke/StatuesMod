@@ -34,9 +34,9 @@ public class StatueMooshroomSoup extends Item {
 				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) playerIn, stack);
 			}
 
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				if (playerInv.getFreeSlot() == -1) {
-					playerIn.spawnAtLocation((ServerLevel)level, bowlStack, 0F);
+					playerIn.spawnAtLocation((ServerLevel) level, bowlStack, 0F);
 				} else {
 					playerInv.add(bowlStack);
 				}

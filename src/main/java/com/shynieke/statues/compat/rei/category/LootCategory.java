@@ -1,6 +1,5 @@
 package com.shynieke.statues.compat.rei.category;
 
-import com.shynieke.statues.compat.rei.StatuesREIClientPlugin;
 import com.shynieke.statues.compat.rei.StatuesREIPlugin;
 import com.shynieke.statues.compat.rei.display.LootDisplay;
 import com.shynieke.statues.registry.StatueRegistry;

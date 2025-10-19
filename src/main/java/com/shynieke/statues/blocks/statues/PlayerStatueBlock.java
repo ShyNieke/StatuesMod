@@ -86,7 +86,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Nullable
 	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends PlayerBlockEntity> blockEntityType1) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, PlayerBlockEntity::serverTick);
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, blockEntityType1, PlayerBlockEntity::serverTick);
 	}
 
 	private PlayerBlockEntity getBE(Level level, BlockPos pos) {
@@ -104,7 +104,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 		if (be instanceof PlayerBlockEntity playerBlockEntity && ((Nameable) be).hasCustomName()) {
 			player.causeFoodExhaustion(0.005F);
 
-			if (level.isClientSide)
+			if (level.isClientSide())
 				return;
 
 			if (this == Blocks.AIR)
@@ -159,12 +159,12 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player playerIn, InteractionHand hand, BlockHitResult result) {
-		ResolvableProfile tileProfile = getBE(level, pos).getPlayerProfile();
+		ResolvableProfile resolvableProfile = getBE(level, pos).getPlayerProfile();
 		PlayerBlockEntity playerBlockEntity = getBE(level, pos);
-		if (playerIn instanceof ServerPlayer serverPlayer && playerBlockEntity != null && tileProfile != null) {
-			String playerName = tileProfile.name().orElse("Unknown");
-			UUID id = tileProfile.id().orElse(null);
-			boolean onlineFlag = id != null && level.getPlayerByUUID(tileProfile.id().get()) != null;
+		if (playerIn instanceof ServerPlayer serverPlayer && playerBlockEntity != null && resolvableProfile != null) {
+			String playerName = resolvableProfile.name().orElse("Unknown");
+			UUID id = resolvableProfile.partialProfile().id();
+			boolean onlineFlag = level.getPlayerByUUID(id) != null;
 
 			if (playerIn.isShiftKeyDown()) {
 				if (playerBlockEntity.getComparatorApplied()) {
@@ -184,7 +184,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							Player player = level.getPlayerByUUID(id);
 							if (player != null && player.level().dimension().location().equals(playerIn.level().dimension().location())) {
 								GlobalPos playerPos = GlobalPos.of(player.level().dimension(), player.blockPosition());
-								playerCompass.set(StatueDataComponents.PLAYER_COMPASS_DATA.get(), new PlayerCompassData(playerPos, tileProfile.name().orElse("Unknown")));
+								playerCompass.set(StatueDataComponents.PLAYER_COMPASS_DATA.get(), new PlayerCompassData(playerPos, resolvableProfile.name().orElse("Unknown")));
 
 								if (!isPlayerCompass) {
 									stack.consume(1, playerIn);
@@ -222,7 +222,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 
 							serverLevel.addFreshEntityWithPassengers(playerStatueEntity);
 							float f = (float) Mth.floor((Mth.wrapDegrees(playerIn.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
-							playerStatueEntity.setGameProfile(playerBlockEntity.getPlayerProfile());
+							playerStatueEntity.setResolvableProfile(playerBlockEntity.getPlayerProfile());
 							playerStatueEntity.snapTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
 							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.random);
 							level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
@@ -257,10 +257,10 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
 		super.animateTick(state, level, pos, randomSource);
 
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			PlayerBlockEntity playerBlockEntity = getBE(level, pos);
 			if (playerBlockEntity != null && playerBlockEntity.getPlayerProfile() != null &&
-					com.shynieke.statues.client.ClientHandler.TRANSLATORS.contains(playerBlockEntity.getPlayerProfile().id().orElse(null))) {
+					com.shynieke.statues.client.ClientHandler.TRANSLATORS.contains(playerBlockEntity.getPlayerProfile().partialProfile().id())) {
 				level.addParticle(ParticleTypes.ENCHANT,
 						(double) pos.getX() + 0.5D, (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
 						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D,

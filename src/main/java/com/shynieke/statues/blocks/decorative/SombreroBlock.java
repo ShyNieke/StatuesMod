@@ -44,7 +44,7 @@ public class SombreroBlock extends AbstractBaseBlock {
 
 	@Override
 	public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player playerIn, BlockHitResult result) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			if (canPlaySound(level, pos, state)) {
 				level.playSound(null, pos, SoundEvents.ANVIL_LAND, SoundSource.NEUTRAL, 1F, getPitch());
 			}

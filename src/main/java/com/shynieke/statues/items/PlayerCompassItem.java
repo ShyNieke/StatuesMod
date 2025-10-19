@@ -15,8 +15,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.function.Consumer;
 
 public class PlayerCompassItem extends Item {
@@ -25,13 +25,13 @@ public class PlayerCompassItem extends Item {
 		super(builder);
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
 		Level level = context.getLevel();
 		BlockPos pos = context.getClickedPos();
 		Player playerIn = context.getPlayer();
-		if (!level.isClientSide && playerIn != null) {
+		if (!level.isClientSide() && playerIn != null) {
 			if (playerIn.isShiftKeyDown() && !(level.getBlockState(pos).getBlock() instanceof PlayerStatueBlock)) {
 				playerIn.setItemInHand(context.getHand(), new ItemStack(Items.COMPASS));
 				return InteractionResult.PASS;

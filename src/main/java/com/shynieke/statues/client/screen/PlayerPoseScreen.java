@@ -14,6 +14,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.input.CharacterEvent;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.Rotations;
 import net.minecraft.nbt.CompoundTag;
@@ -103,13 +106,13 @@ public class PlayerPoseScreen extends Screen {
 		this.rotationTextField = new NumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + rowOffset, 38, 17, Component.translatable("statues.playerstatue.gui.label.rotation"));
 		this.rotationTextField.setValue(String.valueOf((int) this.playerStatueData.rotation));
 		this.rotationTextField.setMaxLength(4);
-		this.addWidget(this.rotationTextField);
+		this.addRenderableWidget(this.rotationTextField);
 
 		// Y Offset textbox
 		this.YOffsetTextField = new DecimalNumberFieldBox(this.font, 1 + offsetX, 1 + offsetY + rowOffset * 2, 38, 17, Component.translatable("statues.playerstatue.gui.label.y_offset"));
 		this.YOffsetTextField.setValue(String.valueOf((float) Mth.clamp(this.playerStatueData.yOffset, -1, 1)));
 		this.YOffsetTextField.setMaxLength(5);
-		this.addWidget(this.YOffsetTextField);
+		this.addRenderableWidget(this.YOffsetTextField);
 
 		this.addRenderableWidget(this.lockButton = new ToggleButton.Builder(this.playerStatueData.isLocked(), (button) -> {
 			ToggleButton toggleButton = ((ToggleButton) button);
@@ -150,7 +153,7 @@ public class PlayerPoseScreen extends Screen {
 				this.poseTextFields[i].decimalPoints = 2;
 				this.poseTextFields[i].setMaxLength(6);
 			}
-			this.addWidget(this.poseTextFields[i]);
+			this.addRenderableWidget(this.poseTextFields[i]);
 		}
 
 		// copy & paste buttons
@@ -210,23 +213,13 @@ public class PlayerPoseScreen extends Screen {
 		// Draw gui title
 		guiGraphics.drawCenteredString(font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)),
 				this.width / 2, 20, 0xFFFFFF);
-
-		// Draw textboxes
-		this.rotationTextField.render(guiGraphics, mouseX, mouseY, partialTicks);
-		this.YOffsetTextField.render(guiGraphics, mouseX, mouseY, partialTicks);
-		for (NumberFieldBox textField : this.poseTextFields)
-			if (textField != null) {
-				textField.render(guiGraphics, mouseX, mouseY, partialTicks);
-			}
-
 		int offsetY = 50;
 
 		// left column labels
 		int offsetX = 20;
 		for (int i = 0; i < this.buttonLabels.length; i++) {
-			int x = offsetX;
 			int y = offsetY + (i * 22) + (11 - (this.font.lineHeight / 2));
-			guiGraphics.drawString(font, this.buttonLabels[i], x, y, 0xA0A0A0, false);
+			guiGraphics.drawString(font, this.buttonLabels[i], offsetX, y, 0xA0A0A0, false);
 		}
 
 		// right column labels
@@ -250,8 +243,8 @@ public class PlayerPoseScreen extends Screen {
 	}
 
 	@Override
-	public boolean charTyped(char codePoint, int modifiers) {
-		boolean typed = super.charTyped(codePoint, modifiers);
+	public boolean charTyped(CharacterEvent event) {
+		boolean typed = super.charTyped(event);
 		if (typed) {
 			this.textFieldUpdated();
 		}
@@ -260,7 +253,7 @@ public class PlayerPoseScreen extends Screen {
 
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double xScroll, double yScroll) {
-		var multiplier = Screen.hasShiftDown() ? 10.0f : 1.0f;
+		var multiplier = minecraft.hasShiftDown() ? 10.0f : 1.0f;
 		if (allowScrolling && yScroll > 0) {
 			//Add 1 to the value
 			if (rotationTextField.canConsumeInput()) {
@@ -306,48 +299,47 @@ public class PlayerPoseScreen extends Screen {
 	}
 
 	@Override
-	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-		if (keyCode == 15) { //Tab
+	public boolean keyPressed(KeyEvent event) {
+		if (event.key() == 15) { //Tab
 			for (int i = 0; i < this.poseTextFields.length; i++) {
 				if (this.poseTextFields[i].isFocused()) {
 					this.textFieldUpdated();
 					this.poseTextFields[i].moveCursorToEnd(false);
 					this.poseTextFields[i].setFocused(false);
 
-					int j = (!Screen.hasShiftDown() ? (i == this.poseTextFields.length - 1 ? 0 : i + 1) : (i == 0 ? this.poseTextFields.length - 1 : i - 1));
+					int j = (!minecraft.hasShiftDown() ? (i == this.poseTextFields.length - 1 ? 0 : i + 1) : (i == 0 ? this.poseTextFields.length - 1 : i - 1));
 					this.poseTextFields[j].setFocused(true);
 					this.poseTextFields[j].moveCursorTo(0, false);
 					this.poseTextFields[j].setHighlightPos(this.poseTextFields[j].getValue().length());
 				}
 			}
 		} else {
-			if (this.rotationTextField.keyPressed(keyCode, scanCode, modifiers)) {
+			if (this.rotationTextField.keyPressed(event)) {
 				this.textFieldUpdated();
 				return true;
-			} else if (this.YOffsetTextField.keyPressed(keyCode, scanCode, modifiers)) {
+			} else if (this.YOffsetTextField.keyPressed(event)) {
 				this.textFieldUpdated();
 				return true;
 			} else {
 				for (NumberFieldBox textField : this.poseTextFields) {
-					if (textField.keyPressed(keyCode, scanCode, modifiers)) {
+					if (textField.keyPressed(event)) {
 						this.textFieldUpdated();
 						return true;
 					}
 				}
 			}
 		}
-		return super.keyPressed(keyCode, scanCode, modifiers);
+		return super.keyPressed(event);
 	}
 
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		this.rotationTextField.mouseClicked(mouseX, mouseY, button);
-		this.YOffsetTextField.mouseClicked(mouseX, mouseY, button);
+	public boolean mouseClicked(MouseButtonEvent event, boolean doubleClick) {
+		this.rotationTextField.mouseClicked(event, doubleClick);
+		this.YOffsetTextField.mouseClicked(event, doubleClick);
 		for (NumberFieldBox textField : this.poseTextFields) {
-			textField.mouseClicked(mouseX, mouseY, button);
+			textField.mouseClicked(event, doubleClick);
 		}
-
-		return super.mouseClicked(mouseX, mouseY, button);
+		return super.mouseClicked(event, doubleClick);
 	}
 
 	protected void textFieldUpdated() {

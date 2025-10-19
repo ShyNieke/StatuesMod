@@ -20,10 +20,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.Containers;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
@@ -33,8 +35,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,30 +52,31 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	public static final int[] SLOT_CATALYSTS = new int[]{2, 3, 4, 5};
 	protected RecipeHolder<UpgradeRecipe> currentRecipe;
 
-	private final ItemStackHandler handler = new ItemStackHandler(6) {
+	private final ItemStacksResourceHandler handler = new ItemStacksResourceHandler(6) {
+
 		@Override
-		protected int getStackLimit(int slot, @NotNull ItemStack stack) {
-			if (slot == SLOT_CENTER || slot == SLOT_CORE) {
+		protected int getCapacity(int index, @NotNull ItemResource resource) {
+			if (index == SLOT_CENTER || index == SLOT_CORE) {
 				return 1;
 			} else {
-				return 64;
+				return Item.DEFAULT_MAX_STACK_SIZE;
 			}
 		}
 
 		@Override
-		public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-			if (slot == SLOT_CENTER) {
-				return stack.is(StatueTags.UPGRADEABLE_STATUES);
-			} else if (slot == SLOT_CORE) {
-				return stack.is(StatueTags.STATUE_CORE);
+		public boolean isValid(int index, ItemResource resource) {
+			if (index == SLOT_CENTER) {
+				return resource.is(StatueTags.UPGRADEABLE_STATUES);
+			} else if (index == SLOT_CORE) {
+				return resource.is(StatueTags.STATUE_CORE);
 			} else {
-				return super.isItemValid(slot, stack);
+				return super.isValid(index, resource);
 			}
 		}
 
 		@Override
-		protected void onContentsChanged(int slot) {
-			super.onContentsChanged(slot);
+		protected void onContentsChanged(int index, ItemStack previousContents) {
+			super.onContentsChanged(index, previousContents);
 			refreshClient();
 		}
 	};
@@ -86,19 +90,19 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	}
 
 	protected void updateCachedRecipe() {
-		if (this.level == null || this.level.isClientSide) return;
+		if (this.level == null || this.level.isClientSide()) return;
 
-		if (getCenterSlot().isEmpty()) {
+		if (getCenterResource().isEmpty()) {
 			this.currentRecipe = null;
 			return;
 		}
 		List<ItemStack> inputs = new ArrayList<>();
-		IItemHandler handler = getHandler();
+		ItemStacksResourceHandler handler = getHandler();
 		if (handler == null) return;
-		for (int i = 0; i < handler.getSlots(); i++) {
-			inputs.add(i, handler.getStackInSlot(i));
+		for (int i = 0; i < handler.size(); i++) {
+			inputs.add(i, handler.getResource(i).toStack());
 		}
-		this.currentRecipe = ((ServerLevel)this.level).recipeAccess().getRecipeFor(StatuesRecipes.UPGRADE_RECIPE.get(), new MultipleRecipeInput(inputs), this.level).orElse(null);
+		this.currentRecipe = ((ServerLevel) this.level).recipeAccess().getRecipeFor(StatuesRecipes.UPGRADE_RECIPE.get(), new MultipleRecipeInput(inputs), this.level).orElse(null);
 	}
 
 	@Override
@@ -114,25 +118,42 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	public void executeCraft() {
 		if (hasValidRecipe()) {
 			UpgradeRecipe recipe = this.currentRecipe.value();
-			if (recipe.requiresCore()) {
-				getCoreSlot().shrink(1);
-			}
-			ItemStackHandler handler = getHandler();
-			for (int slot : SLOT_CATALYSTS) {
-				handler.getStackInSlot(slot).shrink(1);
-			}
-
-			ItemStack resultStack = recipe.getResultItem();
-			ItemStack centerStack = getCenterSlot();
-			if (resultStack.isEmpty()) {
-				if (!recipe.getUpgradeType().apply(centerStack, recipe.getTier())) {
-					Statues.LOGGER.debug("Failed to apply upgrade {} to {}", currentRecipe.id(), resultStack);
-					this.currentRecipe = null;
-					return;
+			ItemStacksResourceHandler handler = getHandler();
+			try (Transaction tx = Transaction.openRoot()) {
+				if (recipe.requiresCore()) {
+					ItemResource coreResource = getCoreSlot();
+					if (coreResource.isEmpty()) {
+						return;
+					}
+					if (handler.extract(SLOT_CORE, coreResource, 1, tx) != 1) {
+						return;
+					}
 				}
-			} else {
-				centerStack.shrink(1);
-				handler.setStackInSlot(SLOT_CENTER, resultStack);
+				for (int slot : SLOT_CATALYSTS) {
+					ItemResource resource = handler.getResource(slot);
+					if (!resource.isEmpty() && handler.extract(slot, resource, 1, tx) != 1) {
+						return;
+					}
+				}
+
+				ItemStack resultStack = recipe.getResultItem();
+				ItemResource centerResource = getCenterResource();
+				ItemStack centerStack = centerResource.toStack();
+				if (resultStack.isEmpty()) {
+					if (!recipe.getUpgradeType().apply(centerStack, recipe.getTier())) {
+						handler.set(SLOT_CENTER, ItemResource.of(centerStack), centerStack.getCount());
+						Statues.LOGGER.debug("Failed to apply upgrade {} to {}", currentRecipe.id(), resultStack);
+					}
+				} else {
+					if (handler.extract(SLOT_CENTER, centerResource, 1, tx) != 1) {
+						return;
+					}
+					handler.set(SLOT_CENTER, ItemResource.of(resultStack), resultStack.getCount());
+				}
+
+				tx.commit();
+				this.currentRecipe = null;
+				return;
 			}
 		}
 		level.playSound(null, getBlockPos(), SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
@@ -141,16 +162,19 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 		refreshClient();
 	}
 
-	public ItemStack getCenterSlot() {
-		IItemHandler handler = getHandler();
-		if (handler == null) return ItemStack.EMPTY;
-		return handler.getStackInSlot(SLOT_CENTER);
+	/**
+	 * Returns a copy of the ItemStack in the center slot.
+	 *
+	 * @return ItemStack in the center slot.
+	 */
+	public ItemResource getCenterResource() {
+		if (handler == null) return ItemResource.EMPTY;
+		return handler.getResource(SLOT_CENTER);
 	}
 
-	public ItemStack getCoreSlot() {
-		IItemHandler handler = getHandler();
-		if (handler == null) return ItemStack.EMPTY;
-		return handler.getStackInSlot(SLOT_CORE);
+	public ItemResource getCoreSlot() {
+		if (handler == null) return ItemResource.EMPTY;
+		return handler.getResource(SLOT_CORE);
 	}
 
 	@Override
@@ -165,11 +189,11 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 		handler.serialize(output);
 	}
 
-	public ItemStackHandler getHandler(@Nullable Direction direction) {
+	public ItemStacksResourceHandler getHandler(@Nullable Direction direction) {
 		return handler;
 	}
 
-	public ItemStackHandler getHandler() {
+	public ItemStacksResourceHandler getHandler() {
 		return getHandler(null);
 	}
 
@@ -244,5 +268,17 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 	@Override
 	public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
 		return new StatueTableMenu(id, inventory, this);
+	}
+
+	@Override
+	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+		super.preRemoveSideEffects(pos, state);
+		try (Transaction tx = Transaction.openRoot()) {
+			for (int i = 0; i < handler.size(); ++i) {
+				if (!handler.getResource(i).isEmpty())
+					Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getResource(i).toStack());
+			}
+			tx.commit();
+		}
 	}
 }

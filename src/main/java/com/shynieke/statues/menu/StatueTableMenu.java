@@ -14,8 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -49,20 +51,20 @@ public class StatueTableMenu extends AbstractContainerMenu {
 
 		final Level level = this.player.level();
 		final BlockPos pos = this.statueBE.getBlockPos();
-		IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
-		if (handler == null)
-			throw new IllegalStateException("Item handler is null!");
+		ResourceHandler<ItemResource> handler = level.getCapability(Capabilities.Item.BLOCK, pos, null);
+		if (!(handler instanceof ItemStacksResourceHandler itemHandler))
+			throw new IllegalStateException("Item handler invalid!");
 
 		//Statue Block slot
-		this.addSlot(new TableSlot(handler, 0, 80, 30));
+		this.addSlot(new TableSlot(itemHandler, 0, 80, 30));
 		//Statue Core Slot
-		this.addSlot(new TableSlot(handler, 1, 8, 48));
+		this.addSlot(new TableSlot(itemHandler, 1, 8, 48));
 
 		//Catalyst slots [2, 5]
-		this.addSlot(new TableSlot(handler, 2, 62, 12));
-		this.addSlot(new TableSlot(handler, 3, 98, 12));
-		this.addSlot(new TableSlot(handler, 4, 62, 48));
-		this.addSlot(new TableSlot(handler, 5, 98, 48));
+		this.addSlot(new TableSlot(itemHandler, 2, 62, 12));
+		this.addSlot(new TableSlot(itemHandler, 3, 98, 12));
+		this.addSlot(new TableSlot(itemHandler, 4, 62, 48));
+		this.addSlot(new TableSlot(itemHandler, 5, 98, 48));
 
 		//player inventory here
 		int xPos = 8;
@@ -133,16 +135,16 @@ public class StatueTableMenu extends AbstractContainerMenu {
 			super.slotsChanged(inventoryIn);
 		}
 		getStatueBE().setChanged();
-		if (!player.level().isClientSide) {
+		if (!player.level().isClientSide()) {
 			this.validRecipe[0] = statueBE.hasValidRecipe() ? 1 : 0;
 		}
 	}
 
-	public class TableSlot extends SlotItemHandler {
+	public static class TableSlot extends ResourceHandlerSlot {
 		private final int index;
 
-		public TableSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
-			super(itemHandler, index, xPosition, yPosition);
+		public TableSlot(ItemStacksResourceHandler itemHandler, int index, int xPosition, int yPosition) {
+			super(itemHandler, itemHandler::set, index, xPosition, yPosition);
 			this.index = index;
 		}
 
@@ -153,10 +155,10 @@ public class StatueTableMenu extends AbstractContainerMenu {
 			return super.getMaxStackSize();
 		}
 
-		@Override
-		public void setChanged() {
-			super.setChanged();
-			slotsChanged(null);
-		}
+//		@Override
+//		public void setChanged() {
+//			super.setChanged();
+//			slotsChanged(null);
+//		}
 	}
 }

@@ -1,15 +1,11 @@
 package com.shynieke.statues.blockentities;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.mojang.authlib.GameProfile;
-import com.mojang.authlib.yggdrasil.ProfileResult;
 import com.shynieke.statues.Statues;
 import com.shynieke.statues.blocks.statues.PlayerStatueBlock;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentGetter;
@@ -20,9 +16,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.server.Services;
 import net.minecraft.util.ProblemReporter;
-import net.minecraft.util.StringUtil;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -35,13 +29,11 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.Duration;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
-import java.util.function.BooleanSupplier;
 
 public class PlayerBlockEntity extends BlockEntity implements Nameable {
 	@Nullable
@@ -68,57 +60,6 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		this.comparatorApplied = false;
 		this.checkerCooldown = 0;
 		this.onlineChecking = false;
-	}
-
-	public static void setup(final Services services, Executor p_mainThreadExecutor) {
-		mainThreadExecutor = p_mainThreadExecutor;
-		final BooleanSupplier booleansupplier = () -> profileCacheById == null;
-		profileCacheByName = CacheBuilder.newBuilder()
-				.expireAfterAccess(Duration.ofMinutes(10L))
-				.maximumSize(256L)
-				.build(new CacheLoader<>() {
-					public CompletableFuture<Optional<GameProfile>> load(String username) {
-						return PlayerBlockEntity.fetchProfileByName(username, services);
-					}
-				});
-		profileCacheById = CacheBuilder.newBuilder()
-				.expireAfterAccess(Duration.ofMinutes(10L))
-				.maximumSize(256L)
-				.build(new CacheLoader<>() {
-					public CompletableFuture<Optional<GameProfile>> load(UUID id) {
-						return PlayerBlockEntity.fetchProfileById(id, services, booleansupplier);
-					}
-				});
-	}
-
-	static CompletableFuture<Optional<GameProfile>> fetchProfileByName(String name, Services services) {
-		return services.profileCache()
-				.getAsync(name)
-				.thenCompose(
-						optionalProfile -> {
-							LoadingCache<UUID, CompletableFuture<Optional<GameProfile>>> loadingcache = profileCacheById;
-							return loadingcache != null && !optionalProfile.isEmpty()
-									? loadingcache.getUnchecked(optionalProfile.get().getId()).thenApply(p_339543_ -> p_339543_.or(() -> optionalProfile))
-									: CompletableFuture.completedFuture(Optional.empty());
-						}
-				);
-	}
-
-	static CompletableFuture<Optional<GameProfile>> fetchProfileById(UUID id, Services services, BooleanSupplier cacheUninitialized) {
-		return CompletableFuture.supplyAsync(() -> {
-			if (cacheUninitialized.getAsBoolean()) {
-				return Optional.empty();
-			} else {
-				ProfileResult profileresult = services.sessionService().fetchProfile(id, true);
-				return Optional.ofNullable(profileresult).map(ProfileResult::profile);
-			}
-		}, Util.backgroundExecutor());
-	}
-
-	public static void clear() {
-		mainThreadExecutor = null;
-		profileCacheByName = null;
-		profileCacheById = null;
 	}
 
 	@Override
@@ -189,11 +130,7 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 	}
 
 	public void setPlayerProfile(@Nullable ResolvableProfile profile) {
-		synchronized (this) {
-			this.playerProfile = profile;
-		}
-
-		this.updateOwnerProfile();
+		this.playerProfile = profile;
 	}
 
 	public void setPlayerProfileFromName(@Nullable Component component) {
@@ -206,29 +143,17 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 			boolean emptyFlag = stackName.isEmpty();
 
 			if (!spaceFlag && !emptyFlag) {
-				GameProfile newProfile = new GameProfile(Util.NIL_UUID, stackName);
-				this.setPlayerProfile(new ResolvableProfile(newProfile));
+				this.setPlayerProfile(ResolvableProfile.createUnresolved(stackName));
 			}
 		} else {
-			this.setPlayerProfile(new ResolvableProfile(new GameProfile(Util.NIL_UUID, "steve")));
-		}
-	}
-
-	private void updateOwnerProfile() {
-		if (this.playerProfile != null && !this.playerProfile.isResolved()) {
-			this.resolve(this.playerProfile).thenAcceptAsync(profile -> {
-				this.playerProfile = profile;
-				this.setChanged();
-			}, CHECKED_MAIN_THREAD_EXECUTOR);
-		} else {
-			this.setChanged();
+			this.setPlayerProfile(ResolvableProfile.createUnresolved("steve"));
 		}
 	}
 
 	public void updateOnline() {
 		BlockState state = getBlockState();
 		boolean isStateOnline = state.getValue(PlayerStatueBlock.ONLINE);
-		boolean checkAnswer = level.getPlayerByUUID(this.playerProfile.id().orElse(Util.NIL_UUID)) != null;
+		boolean checkAnswer = level.getPlayerByUUID(this.playerProfile.partialProfile().id()) != null;
 		if (isStateOnline != checkAnswer) {
 			BlockState newState = state.setValue(PlayerStatueBlock.ONLINE, checkAnswer);
 			level.setBlockAndUpdate(getBlockPos(), newState);
@@ -327,31 +252,5 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 		output.discard("OnlineChecking");
 		output.discard("checkerCooldown");
 		output.discard("comparatorApplied");
-	}
-
-	public static CompletableFuture<Optional<GameProfile>> fetchGameProfile(String profileName) {
-		LoadingCache<String, CompletableFuture<Optional<GameProfile>>> loadingcache = profileCacheByName;
-		return loadingcache != null && StringUtil.isValidPlayerName(profileName)
-				? loadingcache.getUnchecked(profileName)
-				: CompletableFuture.completedFuture(Optional.empty());
-	}
-
-	public static CompletableFuture<Optional<GameProfile>> fetchGameProfile(UUID profileUuid) {
-		LoadingCache<UUID, CompletableFuture<Optional<GameProfile>>> loadingcache = profileCacheById;
-		return loadingcache != null ? loadingcache.getUnchecked(profileUuid) : CompletableFuture.completedFuture(Optional.empty());
-	}
-
-	public static CompletableFuture<ResolvableProfile> resolve(ResolvableProfile resolvableProfile) {
-		if (resolvableProfile.isResolved()) {
-			return CompletableFuture.completedFuture(resolvableProfile);
-		} else {
-			return resolvableProfile.id().isPresent() ? fetchGameProfile(resolvableProfile.id().get()).thenApply(p_332081_ -> {
-				GameProfile gameprofile = p_332081_.orElseGet(() -> new GameProfile(resolvableProfile.id().get(), resolvableProfile.name().orElse("")));
-				return new ResolvableProfile(gameprofile);
-			}) : fetchGameProfile(resolvableProfile.name().orElseThrow()).thenApply(p_339530_ -> {
-				GameProfile gameprofile = p_339530_.orElseGet(() -> new GameProfile(Util.NIL_UUID, resolvableProfile.name().get()));
-				return new ResolvableProfile(gameprofile);
-			});
-		}
 	}
 }

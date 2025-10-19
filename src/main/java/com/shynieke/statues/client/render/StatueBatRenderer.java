@@ -2,7 +2,7 @@ package com.shynieke.statues.client.render;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.client.model.StatueBatModel;
-import com.shynieke.statues.client.model.state.StatueBatRenderState;
+import com.shynieke.statues.client.state.StatueBatRenderState;
 import com.shynieke.statues.entity.StatueBatEntity;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;

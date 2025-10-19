@@ -12,8 +12,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.SlotItemHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ResourceHandlerSlot;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -43,9 +45,9 @@ public class ShulkerStatueMenu extends AbstractContainerMenu {
 
 		final Level level = playerInventoryIn.player.level();
 		final BlockPos pos = this.shulkerBE.getBlockPos();
-		IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
-		if (handler == null)
-			throw new IllegalStateException("Item handler is null!");
+		ResourceHandler<ItemResource> handler = level.getCapability(Capabilities.Item.BLOCK, pos, null);
+		if (!(handler instanceof ItemStacksResourceHandler itemHandler))
+			throw new IllegalStateException("Item handler invalid!");
 
 		int xPos = 8;
 		int yPos = 18;
@@ -57,7 +59,7 @@ public class ShulkerStatueMenu extends AbstractContainerMenu {
 				if (middle >= -1 && middle <= 1)
 					continue;
 
-				this.addSlot(new SlotItemHandler(handler, index++, xPos + x * 18, yPos + y * 18));
+				this.addSlot(new ResourceHandlerSlot(itemHandler, itemHandler::set, index++, xPos + x * 18, yPos + y * 18));
 			}
 		}
 

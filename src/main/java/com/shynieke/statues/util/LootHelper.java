@@ -23,8 +23,4 @@ public class LootHelper {
 	public static RecipeHolder<LootRecipe> getMatchingLoot(ServerLevel serverLevel, ItemStack stack) {
 		return serverLevel.recipeAccess().getRecipeFor(StatuesRecipes.LOOT_RECIPE.get(), new SingleRecipeInput(stack), serverLevel).orElse(null);
 	}
-
-	public static boolean hasLoot(ServerLevel serverLevel, ItemStack stack) {
-		return getMatchingLoot(serverLevel, stack) != null;
-	}
 }

@@ -55,7 +55,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 //			}
 			//Debug option specifically for Shy to know what version is being used
 			if (heldItem.is(Items.PAPER) && !(player instanceof FakePlayer) &&
-					player.getGameProfile().getId().equals(UUID.fromString("7135da42-d327-47bb-bb04-5ba4e212fb32"))) {
+					player.getGameProfile().id().equals(UUID.fromString("7135da42-d327-47bb-bb04-5ba4e212fb32"))) {
 				if (player instanceof ServerPlayer serverPlayer)
 					serverPlayer.sendSystemMessage(Component.literal("Statues version: ")
 							.append(Component.literal(ModList.get().getModFileById("statues").versionString())).withStyle(ChatFormatting.GOLD));
@@ -82,7 +82,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 	}
 
 	public void sendInfoMessage(ServerPlayer player, Level level, BlockPos pos) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			int random = level.random.nextInt(100);
 
 			List<String> messages = new ArrayList<>(StatuesConfig.COMMON.info_messages.get());

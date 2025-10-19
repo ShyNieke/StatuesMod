@@ -333,7 +333,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 			return new DisplayInfo(new ItemStack(icon),
 					Component.translatable(titleKey),
 					Component.translatable(descKey),
-					Optional.of(new ClientAsset(background)), AdvancementType.TASK, false, false, false);
+					Optional.of(new ClientAsset.ResourceTexture(background)), AdvancementType.TASK, false, false, false);
 		}
 
 		/**

@@ -17,7 +17,7 @@ public class StatueBeeItem extends StatueBlockItem {
 
 	@Override
 	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
-		if (stack.has(DataComponents.CUSTOM_NAME) && !level.isClientSide) {
+		if (stack.has(DataComponents.CUSTOM_NAME) && !level.isClientSide()) {
 			final String name = stack.getHoverName().getString();
 			if (entity instanceof Player player) {
 				int itemSlot = player.getInventory().findSlotMatchingItem(stack);

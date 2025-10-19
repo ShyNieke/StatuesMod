@@ -3,15 +3,14 @@ package com.shynieke.statues.client.render;
 import com.mojang.authlib.GameProfile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
-import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
 import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.PlayerSkinRenderCache;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.client.resources.SkinManager;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -20,33 +19,32 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 import java.util.Set;
 
-public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvableProfile> {
+public class PlayerSpecialRenderer implements SpecialModelRenderer<PlayerSkinRenderCache.RenderInfo> {
+	private final PlayerSkinRenderCache playerSkinRenderCache;
 	private final StatuePlayerTileModel model;
 	private final StatuePlayerTileModel slimModel;
 	public boolean isSlim = false;
 
-	public PlayerSpecialRenderer(StatuePlayerTileModel model, StatuePlayerTileModel slimModel) {
+	public PlayerSpecialRenderer(PlayerSkinRenderCache playerSkinRenderCache,
+	                             StatuePlayerTileModel model, StatuePlayerTileModel slimModel) {
+		this.playerSkinRenderCache = playerSkinRenderCache;
 		this.model = model;
 		this.slimModel = slimModel;
 	}
 
 	@Override
-	public void render(@Nullable ResolvableProfile resolvableProfile, @NotNull ItemDisplayContext displayContext,
-	                   @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource,
-	                   int packedLight, int packedOverlay, boolean hasFoilType) {
+	public void submit(@Nullable PlayerSkinRenderCache.RenderInfo argument, ItemDisplayContext displayContext,
+	                   PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, int packedOverlay,
+	                   boolean hasFoil, int outlineColor) {
 		poseStack.pushPose();
 		transform(poseStack);
-		SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
-		if (resolvableProfile != null && isSlim != skinmanager.getInsecureSkin(resolvableProfile.gameProfile()).model().id().equals("slim"))
-			isSlim = !isSlim;
 		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
-
-		PlayerBlockRenderer.renderPlayerStatue(null, resolvableProfile, playerModel, poseStack, bufferSource, packedLight, packedOverlay);
+		RenderType rendertype = argument != null ? argument.renderType() : PlayerSkinRenderCache.DEFAULT_PLAYER_SKIN_RENDER_TYPE;
+		GameProfile gameProfile = argument != null ? argument.gameProfile() : new GameProfile(Util.NIL_UUID, "Steve");
+		PlayerBlockRenderer.submitPlayerStatue(nodeCollector, null, gameProfile, playerModel,
+				poseStack, rendertype, packedLight, null);
 		poseStack.popPose();
 	}
 
@@ -63,55 +61,10 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvablePro
 		poseStack.translate(1D, 0D, 0.75D);
 	}
 
-	private static final Map<String, ResolvableProfile> GAMEPROFILE_CACHE = new HashMap<>();
-
 	@Nullable
-	public ResolvableProfile extractArgument(ItemStack stack) {
-		ResolvableProfile gameprofile = null;
-
-		if (stack.has(DataComponents.CUSTOM_NAME)) {
-			String stackName = stack.getHoverName().getString().toLowerCase(Locale.ROOT);
-			boolean validFlag = !stackName.isEmpty() && !stackName.contains(" ");
-
-			if (validFlag) {
-				if (GAMEPROFILE_CACHE.containsKey(stackName)) gameprofile = GAMEPROFILE_CACHE.get(stackName);
-
-				if (!stack.has(DataComponents.PROFILE)) {
-					stack.set(DataComponents.PROFILE, gameprofile);
-				}
-				if (stack.has(DataComponents.PROFILE) && gameprofile == null) {
-					ResolvableProfile resolvableProfile = stack.get(DataComponents.PROFILE);
-					if (resolvableProfile != null && !resolvableProfile.isResolved()) {
-						stack.remove(DataComponents.PROFILE);
-						PlayerBlockEntity.resolve(resolvableProfile).thenAcceptAsync(profile ->
-								stack.set(DataComponents.PROFILE, profile), Minecraft.getInstance());
-					}
-				}
-
-				if (gameprofile == null) {
-					PlayerBlockEntity.fetchGameProfile(stackName).thenAccept((profile) -> {
-						if (profile.isPresent()) {
-							GameProfile profile1 = profile.orElse(new GameProfile(Util.NIL_UUID, stackName));
-							ResolvableProfile resolvableProfile = new ResolvableProfile(profile1);
-							stack.set(DataComponents.PROFILE, resolvableProfile);
-							GAMEPROFILE_CACHE.put(profile1.getName().toLowerCase(), resolvableProfile);
-						}
-					});
-				}
-			} else {
-				if (GAMEPROFILE_CACHE.containsKey("steve")) gameprofile = GAMEPROFILE_CACHE.get("steve");
-
-				if (gameprofile == null) {
-					PlayerBlockEntity.fetchGameProfile("steve").thenAccept((profile) -> {
-						if (profile.isPresent()) {
-							GameProfile profile1 = profile.orElse(new GameProfile(Util.NIL_UUID, "steve"));
-							GAMEPROFILE_CACHE.put(profile1.getName().toLowerCase(), new ResolvableProfile(profile1));
-						}
-					});
-				}
-			}
-		}
-		return gameprofile;
+	public PlayerSkinRenderCache.RenderInfo extractArgument(ItemStack stack) {
+		ResolvableProfile resolvableprofile = stack.get(DataComponents.PROFILE);
+		return resolvableprofile == null ? null : this.playerSkinRenderCache.getOrDefault(resolvableprofile);
 	}
 
 	public record Unbaked() implements SpecialModelRenderer.Unbaked {
@@ -126,10 +79,11 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<ResolvablePro
 
 		@NotNull
 		@Override
-		public SpecialModelRenderer<?> bake(EntityModelSet entityModelSet) {
+		public SpecialModelRenderer<?> bake(SpecialModelRenderer.BakingContext context) {
+			final EntityModelSet entityModelSet = context.entityModelSet();
 			StatuePlayerTileModel model = new StatuePlayerTileModel(entityModelSet.bakeLayer(ClientHandler.PLAYER_STATUE), false);
 			StatuePlayerTileModel slimModel = new StatuePlayerTileModel(entityModelSet.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), true);
-			return new PlayerSpecialRenderer(model, slimModel);
+			return new PlayerSpecialRenderer(context.playerSkinRenderCache(), model, slimModel);
 		}
 	}
 }

@@ -160,7 +160,7 @@ public class StatueItemTagProvider extends ItemTagsProvider {
 				StatueRegistry.ALLAY_STATUE.asItem(), StatueRegistry.AXOLOTL_LUCY_STATUE.asItem(), StatueRegistry.AXOLOTL_WILD_STATUE.asItem(), StatueRegistry.AXOLOTL_GOLD_STATUE.asItem(), StatueRegistry.AXOLOTL_CYAN_STATUE.asItem(), StatueRegistry.AXOLOTL_BLUE_STATUE.asItem(),
 				StatueRegistry.FROG_TEMPERATE_STATUE.asItem(), StatueRegistry.FROG_WARM_STATUE.asItem(), StatueRegistry.FROG_COLD_STATUE.asItem(), StatueRegistry.TADPOLE_STATUE.asItem(), StatueRegistry.WARDEN_STATUE.asItem());
 
-		
+
 		this.tag(StatueTags.CURIOS_STATUE).addTag(StatueTags.STATUES_ITEMS).add(StatueRegistry.DISPLAY_STAND.get().asItem(), StatueRegistry.SOMBRERO.get().asItem());
 
 		this.tag(StatueTags.STATUE_CORE).add(StatueRegistry.STATUE_CORE.get());

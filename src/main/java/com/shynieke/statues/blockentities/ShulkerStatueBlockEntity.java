@@ -19,23 +19,24 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import org.jetbrains.annotations.NotNull;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuProvider {
-	private final ItemStackHandler handler = new ItemStackHandler(18) {
+	private final ItemStacksResourceHandler handler = new ItemStacksResourceHandler(18) {
 
 		@Override
-		public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-			return super.isItemValid(slot, stack) &&
-					!(Block.byItem(stack.getItem()) instanceof ShulkerBoxBlock) &&
-					!(Block.byItem(stack.getItem()) instanceof ShulkerBoxBlock) && stack.getItem().canFitInsideContainerItems();
+		public boolean isValid(int index, ItemResource resource) {
+			return super.isValid(index, resource) &&
+					!(Block.byItem(resource.getItem()) instanceof ShulkerBoxBlock) &&
+					!(Block.byItem(resource.getItem()) instanceof ShulkerBoxBlock) && resource.getItem().canFitInsideContainerItems();
 		}
 
 		@Override
-		protected void onContentsChanged(int slot) {
-			super.onContentsChanged(slot);
+		protected void onContentsChanged(int index, ItemStack previousContents) {
+			super.onContentsChanged(index, previousContents);
 			ShulkerStatueBlockEntity.this.refreshClient();
 		}
 	};
@@ -46,7 +47,7 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 
 	@Override
 	public void onSpecialInteract(Level level, BlockPos pos, BlockState state, Player player, InteractionHand handIn, BlockHitResult result) {
-		if (!level.isClientSide && !player.isCrouching()) {
+		if (!level.isClientSide() && !player.isCrouching()) {
 			player.openMenu(this, pos);
 		}
 	}
@@ -63,7 +64,7 @@ public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuP
 		handler.serialize(output);
 	}
 
-	public ItemStackHandler getHandler(@Nullable Direction direction) {
+	public ResourceHandler<ItemResource> getHandler(@Nullable Direction direction) {
 		if (hasSpecialInteraction())
 			return handler;
 		else

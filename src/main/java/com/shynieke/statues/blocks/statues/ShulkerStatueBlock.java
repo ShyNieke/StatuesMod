@@ -64,6 +64,6 @@ public class ShulkerStatueBlock extends AbstractStatueBase {
 
 	@Nullable
 	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends StatueBlockEntity> blockEntityType1) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, ShulkerStatueBlockEntity::serverTick);
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, blockEntityType1, ShulkerStatueBlockEntity::serverTick);
 	}
 }

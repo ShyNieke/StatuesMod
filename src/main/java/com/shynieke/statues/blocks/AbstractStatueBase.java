@@ -51,18 +51,19 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult result) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			if (canPlaySound(level, pos, state)) {
 				level.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F, getPitch());
 			}
 		}
 		return super.useWithoutItem(state, level, pos, player, result);
 	}
+
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player,
-	                                          InteractionHand hand, BlockHitResult result) {
+	                                      InteractionHand hand, BlockHitResult result) {
 		if (state.getValue(INTERACTIVE) && hand == InteractionHand.MAIN_HAND) {
-			if (!level.isClientSide && (getBE(level, pos) != null)) {
+			if (!level.isClientSide() && (getBE(level, pos) != null)) {
 				return getBE(level, pos).interact(level, pos, state, player, hand, result);
 			}
 		}
@@ -102,7 +103,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 
 	@Nullable
 	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends StatueBlockEntity> blockEntityType1) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, StatueBlockEntity::serverTick);
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, blockEntityType1, StatueBlockEntity::serverTick);
 	}
 
 	@Override
@@ -117,7 +118,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 	@Override
 	public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
 		if (state.getValue(INTERACTIVE) && level.getBlockEntity(pos) instanceof StatueBlockEntity statueBlockEntity) {
-			if (!level.isClientSide && !player.hasInfiniteMaterials()) {
+			if (!level.isClientSide() && !player.hasInfiniteMaterials()) {
 				ItemStack itemstack = new ItemStack(this.asItem());
 				statueBlockEntity.saveToItem(itemstack, level.registryAccess());
 
@@ -189,7 +190,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 
 	@Override
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, @Nullable Orientation orientation, boolean isMoving) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			if (canPlaySound(level, pos, state) && level.hasNeighborSignal(pos)) {
 				level.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F,
 						(level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.5F);

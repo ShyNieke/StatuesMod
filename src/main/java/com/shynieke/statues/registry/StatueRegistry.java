@@ -273,39 +273,39 @@ public class StatueRegistry {
 	public static final DeferredBlock<AzzaroStatueBlock> AZZARO = registerBlock("azzaro", () -> new AzzaroStatueBlock(blockBuilder("azzaro")));
 	public static final DeferredBlock<FlowerBlock> CORE_FLOWER = BLOCKS.registerBlock("core_flower", (properties) -> new FlowerBlock(
 					MobEffects.SLOWNESS, 5, properties),
-			BlockBehaviour.Properties.of()
+			properties -> properties
 					.mapColor(MapColor.PLANT)
-					.noCollission()
+					.noCollision()
 					.instabreak()
 					.sound(SoundType.GRASS)
 					.offsetType(BlockBehaviour.OffsetType.XZ)
 					.pushReaction(PushReaction.DESTROY));
 	public static final DeferredBlock<CoreFlowerCropBlock> CORE_FLOWER_CROP = BLOCKS.registerBlock("core_flower_crop", CoreFlowerCropBlock::new,
-			BlockBehaviour.Properties.of()
+			properties -> properties
 					.mapColor(MapColor.PLANT)
-					.noCollission()
+					.noCollision()
 					.randomTicks()
 					.instabreak()
 					.sound(SoundType.CROP)
 					.pushReaction(PushReaction.DESTROY));
 
-	public static final DeferredItem<Item> CUP = ITEMS.registerItem("cup", (properties) -> new Item(properties.food(StatueFoods.CUP)), itemBuilder());
-	public static final DeferredItem<Item> MARSHMALLOW = ITEMS.registerItem("marshmallow", (properties) -> new Item(properties.food(StatueFoods.MARSHMALLOW)), itemBuilder());
-	public static final DeferredItem<StatueCharredMarshmallow> MARSHMALLOW_CHARRED = ITEMS.registerItem("marshmallow_charred", StatueCharredMarshmallow::new, itemBuilder());
-	public static final DeferredItem<Item> MARSHMALLOW_COOKED = ITEMS.registerItem("marshmallow_cooked", (properties) -> new Item(properties.food(StatueFoods.COOKED_MARSHMALLOW)), itemBuilder());
-	public static final DeferredItem<StatueGoldenMarshmallow> MARSHMALLOW_GOLDEN = ITEMS.registerItem("marshmallow_golden", StatueGoldenMarshmallow::new, itemBuilder());
-	public static final DeferredItem<Item> NUGGET = ITEMS.registerItem("royal_nugget", (properties) -> new Item(properties.food(StatueFoods.ROYAL_NUGGET)), itemBuilder());
-	public static final DeferredItem<PlayerCompassItem> PLAYER_COMPASS = ITEMS.registerItem("player_compass", PlayerCompassItem::new, itemBuilder());
-	public static final DeferredItem<StatueMooshroomSoup> SOUP = ITEMS.registerItem("mooshroom_soup", StatueMooshroomSoup::new, itemBuilder());
-	public static final DeferredItem<StatueCoreItem> STATUE_CORE = ITEMS.registerItem("statue_core", (properties) -> new StatueCoreItem(properties.jukeboxPlayable(StatueJukeboxSongs.CREDITS)), itemBuilder());
-	public static final DeferredItem<StatueTeaItem> TEA = ITEMS.registerItem("tea", (properties) -> new StatueTeaItem(properties, StatueFoods.TEA), itemBuilder());
-	public static final DeferredItem<Item> CORE_ARMOR_TRIM_SMITHING_TEMPLATE = ITEMS.registerItem("core_armor_trim_smithing_template", (properties) -> SmithingTemplateItem.createArmorTrimTemplate(properties.rarity(Rarity.RARE)), itemBuilder());
-	public static final DeferredItem<BlockItem> CORE_FLOWER_SEED = ITEMS.registerSimpleBlockItem("core_flower_seed", CORE_FLOWER_CROP, itemBuilder());
-	public static final DeferredItem<Item> CORE_FLOWER_ITEM = ITEMS.registerItem("core_flower", (properties) -> new BlockItem(CORE_FLOWER.get(), properties), itemBuilder());
-	public static final DeferredItem<Item> STATUE_CORE_POTTERY_SHERD = ITEMS.registerItem("statue_core_pottery_sherd", (properties) -> SmithingTemplateItem.createArmorTrimTemplate(properties.rarity(Rarity.RARE)), itemBuilder());
+	public static final DeferredItem<Item> CUP = ITEMS.registerItem("cup", (properties) -> new Item(properties.food(StatueFoods.CUP)));
+	public static final DeferredItem<Item> MARSHMALLOW = ITEMS.registerItem("marshmallow", (properties) -> new Item(properties.food(StatueFoods.MARSHMALLOW)));
+	public static final DeferredItem<StatueCharredMarshmallow> MARSHMALLOW_CHARRED = ITEMS.registerItem("marshmallow_charred", StatueCharredMarshmallow::new);
+	public static final DeferredItem<Item> MARSHMALLOW_COOKED = ITEMS.registerItem("marshmallow_cooked", (properties) -> new Item(properties.food(StatueFoods.COOKED_MARSHMALLOW)));
+	public static final DeferredItem<StatueGoldenMarshmallow> MARSHMALLOW_GOLDEN = ITEMS.registerItem("marshmallow_golden", StatueGoldenMarshmallow::new);
+	public static final DeferredItem<Item> NUGGET = ITEMS.registerItem("royal_nugget", (properties) -> new Item(properties.food(StatueFoods.ROYAL_NUGGET)));
+	public static final DeferredItem<PlayerCompassItem> PLAYER_COMPASS = ITEMS.registerItem("player_compass", PlayerCompassItem::new);
+	public static final DeferredItem<StatueMooshroomSoup> SOUP = ITEMS.registerItem("mooshroom_soup", StatueMooshroomSoup::new);
+	public static final DeferredItem<StatueCoreItem> STATUE_CORE = ITEMS.registerItem("statue_core", (properties) -> new StatueCoreItem(properties.jukeboxPlayable(StatueJukeboxSongs.CREDITS)));
+	public static final DeferredItem<StatueTeaItem> TEA = ITEMS.registerItem("tea", (properties) -> new StatueTeaItem(properties, StatueFoods.TEA));
+	public static final DeferredItem<Item> CORE_ARMOR_TRIM_SMITHING_TEMPLATE = ITEMS.registerItem("core_armor_trim_smithing_template", (properties) -> SmithingTemplateItem.createArmorTrimTemplate(properties.rarity(Rarity.RARE)));
+	public static final DeferredItem<BlockItem> CORE_FLOWER_SEED = ITEMS.registerSimpleBlockItem("core_flower_seed", CORE_FLOWER_CROP);
+	public static final DeferredItem<Item> CORE_FLOWER_ITEM = ITEMS.registerItem("core_flower", (properties) -> new BlockItem(CORE_FLOWER.get(), properties));
+	public static final DeferredItem<Item> STATUE_CORE_POTTERY_SHERD = ITEMS.registerItem("statue_core_pottery_sherd", (properties) -> SmithingTemplateItem.createArmorTrimTemplate(properties.rarity(Rarity.RARE)));
 
-	public static final DeferredItem<PlayerStatueSpawnItem> PLAYER_STATUE_SPAWN_EGG = ITEMS.registerItem("player_statue_spawn_egg", PlayerStatueSpawnItem::new, itemBuilder());
-	public static final DeferredItem<SpawnEggItem> STATUE_BAT_SPANW_EGG = ITEMS.registerItem("statue_bat_spawn_egg", (properties) -> new SpawnEggItem(StatueRegistry.STATUE_BAT.get(), properties), itemBuilder()); //3421236, 3556687
+	public static final DeferredItem<PlayerStatueSpawnItem> PLAYER_STATUE_SPAWN_EGG = ITEMS.registerItem("player_statue_spawn_egg", PlayerStatueSpawnItem::new);
+	public static final DeferredItem<SpawnEggItem> STATUE_BAT_SPAWN_EGG = ITEMS.registerItem("statue_bat_spawn_egg", (properties) -> new SpawnEggItem(properties.spawnEgg(StatueRegistry.STATUE_BAT.get()))); //3421236, 3556687
 
 	public static <B extends Block> DeferredBlock<B> registerStatue(String name, Supplier<? extends B> supplier) {
 		DeferredBlock<B> block = StatueRegistry.BLOCKS.register(name, supplier);
@@ -329,10 +329,6 @@ public class StatueRegistry {
 		DeferredBlock<B> block = StatueRegistry.BLOCKS.register(name, supplier);
 		ITEMS.registerItem(name, props -> new PlayerStatueBlockItem(block.get(), props));
 		return block;
-	}
-
-	private static Item.Properties itemBuilder() {
-		return new Item.Properties();
 	}
 
 	private static Block.Properties blockBuilder(String path) {

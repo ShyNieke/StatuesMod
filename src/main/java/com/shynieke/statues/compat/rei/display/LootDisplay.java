@@ -73,7 +73,7 @@ public class LootDisplay implements Display {
 	}
 
 	public LootDisplay(RecipeHolder<LootRecipe> lootRecipeRecipeHolder) {
- 		LootRecipe recipe = lootRecipeRecipeHolder.value();
+		LootRecipe recipe = lootRecipeRecipeHolder.value();
 		this.inputEntry = EntryIngredients.ofIngredient(recipe.getIngredients().getFirst());
 
 		this.outputEntry1 = EntryIngredients.of(VanillaEntryTypes.ITEM, List.of(recipe.getResultItem()));

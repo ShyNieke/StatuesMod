@@ -25,7 +25,7 @@ public class StatueGoldenMarshmallow extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entityIn) {
 		if (stack.has(DataComponents.FOOD)) {
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				if (this == StatueRegistry.MARSHMALLOW_GOLDEN.get()) {
 					List<Holder<MobEffect>> effectList = BuiltInRegistries.MOB_EFFECT.listElements().collect(Collectors.toList());
 					effectList.remove(MobEffects.NAUSEA);

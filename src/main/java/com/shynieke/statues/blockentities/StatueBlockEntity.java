@@ -46,8 +46,9 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.common.extensions.IOwnedSpawner;
 import net.neoforged.neoforge.common.util.FakePlayer;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -184,7 +185,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 	}
 
 	private void exportItem(ItemStack stack) {
-		if (level.isClientSide) return;
+		if (level.isClientSide()) return;
 
 		ServerLevel serverLevel = (ServerLevel) this.level;
 		if (canAutomate()) {
@@ -196,11 +197,11 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 					if (foundTile != null) {
 						ResourceLocation typeLocation = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(foundTile.getType());
 						boolean flag2 = typeLocation != null;
-						IItemHandler handler = this.level.getCapability(Capabilities.ItemHandler.BLOCK, offPos, null);
+						ResourceHandler<ItemResource> handler = this.level.getCapability(Capabilities.Item.BLOCK, offPos, null);
 						if (flag2 && !foundTile.isRemoved() && foundTile.hasLevel() && handler != null) {
-							IItemHandler itemHandler = this.level.getCapability(Capabilities.ItemHandler.BLOCK, offPos, dir.getOpposite());
+							ResourceHandler<ItemResource> itemHandler = this.level.getCapability(Capabilities.Item.BLOCK, offPos, dir.getOpposite());
 							if (itemHandler != null) {
-								inventoryList.add(new BiggestInventory(offPos, itemHandler.getSlots(), dir.getOpposite()));
+								inventoryList.add(new BiggestInventory(offPos, itemHandler.size(), dir.getOpposite()));
 							}
 						}
 					}
@@ -211,9 +212,12 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 				level.addFreshEntity(new ItemEntity(level, worldPosition.getX(), worldPosition.getY() + 0.5, worldPosition.getZ(), stack));
 			} else {
 				for (BiggestInventory inventory : inventoryList) {
-					IItemHandler itemHandler = inventory.getIItemHandler(serverLevel);
-					ItemStack rest = ItemHandlerHelper.insertItem(itemHandler, stack, false);
-					if (rest.isEmpty()) {
+					ResourceHandler<ItemResource> itemHandler = inventory.getResourceHandler(serverLevel);
+					try (var tx = Transaction.openRoot()) {
+						if (itemHandler.insert(ItemResource.of(stack), stack.getCount(), tx) != stack.getCount()) {
+							continue;
+						}
+						tx.commit();
 						break;
 					}
 				}
@@ -306,7 +310,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 	}
 
 	public void floodBehavior(Player playerIn, BlockPos pos, InteractionHand hand, float hitX, float hitY, float hitZ) {
-		if (hasSpecialInteraction() && level != null && !level.isClientSide) {
+		if (hasSpecialInteraction() && level != null && !level.isClientSide()) {
 			ItemStack stack = playerIn.getItemInHand(hand);
 			int random = level.random.nextInt(100);
 			if (stack.getItem() == Items.BUCKET && !playerIn.hasInfiniteMaterials()) {
@@ -331,7 +335,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 	}
 
 	public void mooshroomBehavior(Player playerIn, BlockPos pos, InteractionHand hand) {
-		if (hasSpecialInteraction() && level != null && !level.isClientSide) {
+		if (hasSpecialInteraction() && level != null && !level.isClientSide()) {
 			ItemStack stack = playerIn.getItemInHand(hand);
 			if (stack.getItem() == Items.BOWL && !playerIn.hasInfiniteMaterials()) {
 				level.playSound(null, pos, SoundEvents.COW_MILK, SoundSource.NEUTRAL, 1F, 1F);
@@ -348,7 +352,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 	}
 
 	public void cowBehavior(Player playerIn, BlockPos pos, InteractionHand hand) {
-		if (hasSpecialInteraction() && level != null && !level.isClientSide) {
+		if (hasSpecialInteraction() && level != null && !level.isClientSide()) {
 			ItemStack stack = playerIn.getItemInHand(hand);
 			if (stack.getItem() == Items.BUCKET && !playerIn.hasInfiniteMaterials()) {
 				level.playSound(null, pos, SoundEvents.COW_MILK, SoundSource.NEUTRAL, 1F, 1F);
@@ -364,7 +368,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 	}
 
 	public void giveEffect(Player player, BlockPos pos, Holder<MobEffect> effectHolder) {
-		if (hasSpecialInteraction() && level != null && !level.isClientSide) {
+		if (hasSpecialInteraction() && level != null && !level.isClientSide()) {
 			if (level.random.nextDouble() <= 0.1F) {
 				if (player.getEffect(effectHolder) == null) {
 					player.addEffect(new MobEffectInstance(effectHolder, 20 * 20, 1, true, true));

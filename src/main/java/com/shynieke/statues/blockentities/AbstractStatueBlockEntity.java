@@ -42,8 +42,11 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.capabilities.BlockCapabilityCache;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.energy.EnergyStorage;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.energy.EnergyHandler;
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.transaction.Transaction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -54,7 +57,7 @@ import java.util.Optional;
 
 public abstract class AbstractStatueBlockEntity extends BlockEntity {
 	private final Map<String, Short> upgrades = new HashMap<>();
-	protected EnergyStorage energyStorage = new EnergyStorage(10000, 100);
+	protected SimpleEnergyHandler energyHandler = new SimpleEnergyHandler(10000, 100);
 
 	@Nullable
 	private StatueStats stats;
@@ -83,7 +86,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		statueAble = input.getBooleanOr("StatueAble", false);
 		statueInteractable = input.getBooleanOr("StatueInteractable", false);
 
-		energyStorage.deserialize(input);
+		energyHandler.deserialize(input);
 		this.loadFromNbt(input);
 	}
 
@@ -94,7 +97,7 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		output.putInt("InteractionCooldown", interactCooldown);
 		output.putBoolean("StatueAble", statueAble);
 		output.putBoolean("StatueInteractable", statueInteractable);
-		energyStorage.serialize(output);
+		energyHandler.serialize(output);
 		this.saveToNbt(output);
 	}
 
@@ -129,9 +132,9 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		output.discard("energy");
 	}
 
-	public EnergyStorage getEnergyStorage(@Nullable Direction facing) {
+	public EnergyHandler getEnergyStorage(@Nullable Direction facing) {
 		if (StatuesConfig.COMMON.requiresPower.get()) {
-			return energyStorage;
+			return energyHandler;
 		}
 		return null;
 	}
@@ -363,9 +366,15 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 
 	public boolean drainPower(int amount) {
 		if (usesPower() && amount > 0) {
-			boolean hasEnergy = energyStorage.getEnergyStored() >= amount;
-			if (!hasEnergy) return false;
-			energyStorage.extractEnergy(amount, false);
+			try (var tx = Transaction.openRoot()) {
+				if (energyHandler.getAmountAsLong() < amount) {
+					return false;
+				}
+				if (energyHandler.extract(amount, tx) != amount) {
+					return false;
+				}
+				tx.commit();
+			}
 		}
 		return true;
 	}
@@ -422,10 +431,10 @@ public abstract class AbstractStatueBlockEntity extends BlockEntity {
 		}
 
 		@SuppressWarnings("deprecation")
-		protected IItemHandler getIItemHandler(ServerLevel level) {
+		protected ResourceHandler<ItemResource> getResourceHandler(ServerLevel level) {
 			if (level.isAreaLoaded(worldPosition, 1)) {
 				BlockEntity blockEntity = level.getBlockEntity(tilePos);
-				BlockCapabilityCache<IItemHandler, Direction> cache = BlockCapabilityCache.create(Capabilities.ItemHandler.BLOCK, level, tilePos, direction);
+				BlockCapabilityCache<ResourceHandler<ItemResource>, Direction> cache = BlockCapabilityCache.create(Capabilities.Item.BLOCK, level, tilePos, direction);
 				if (!blockEntity.isRemoved() && blockEntity.hasLevel() && cache.getCapability() != null) {
 					return cache.getCapability();
 				}

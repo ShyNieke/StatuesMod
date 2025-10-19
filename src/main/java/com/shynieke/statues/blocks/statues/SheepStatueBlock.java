@@ -45,7 +45,7 @@ public class SheepStatueBlock extends AbstractStatueBase {
 
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
-	                                          Player player, InteractionHand hand, BlockHitResult result) {
+	                                      Player player, InteractionHand hand, BlockHitResult result) {
 		if (stack.getItem() instanceof DyeItem dyeItem && this.COLOR != dyeItem.getDyeColor()) {
 			Block block = COLOR_DYE_STATUE_MAP.get(dyeItem.getDyeColor());
 			if (block != null) {

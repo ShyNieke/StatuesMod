@@ -3,7 +3,6 @@ package com.shynieke.statues.entity;
 import com.mojang.authlib.GameProfile;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.screen.PlayerStatueData;
 import com.shynieke.statues.network.message.PlayerStatueScreenData;
@@ -30,13 +29,13 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -56,7 +55,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
-public class PlayerStatue extends LivingEntity {
+public class PlayerStatue extends Avatar {
 	public static final Rotations DEFAULT_HEAD_POSE = new Rotations(0.0F, 0.0F, 0.0F);
 	public static final Rotations DEFAULT_BODY_POSE = new Rotations(0.0F, 0.0F, 0.0F);
 	public static final Rotations DEFAULT_LEFT_ARM_POSE = new Rotations(-10.0F, 0.0F, -10.0F);
@@ -153,11 +152,11 @@ public class PlayerStatue extends LivingEntity {
 		builder.define(MODEL_TYPE, DEFAULT_MODEL);
 	}
 
-	public Optional<ResolvableProfile> getGameProfile() {
+	public Optional<ResolvableProfile> getResolvableProfile() {
 		return entityData.get(RESOLVABLE_PROFILE);
 	}
 
-	public void setGameProfile(ResolvableProfile profile) {
+	public void setResolvableProfile(ResolvableProfile profile) {
 		entityData.set(RESOLVABLE_PROFILE, Optional.of(profile));
 	}
 
@@ -215,8 +214,8 @@ public class PlayerStatue extends LivingEntity {
 
 		output.putBoolean("profileExists", entityData.get(RESOLVABLE_PROFILE).isPresent());
 
-		if (getGameProfile().isPresent()) {
-			output.store("profile", ResolvableProfile.CODEC, getGameProfile().get());
+		if (getResolvableProfile().isPresent()) {
+			output.store("profile", ResolvableProfile.CODEC, getResolvableProfile().get());
 		}
 
 		output.putFloat("yOffset", getYOffsetData());
@@ -260,7 +259,7 @@ public class PlayerStatue extends LivingEntity {
 				uuid = lockedBy.get();
 			} else {
 				String s = input.getStringOr("LockedBy", "");
-				uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.getServer(), s);
+				uuid = OldUsersConverter.convertMobOwnerIfNecessary(this.level().getServer(), s);
 			}
 
 			if (uuid != null) {
@@ -320,10 +319,7 @@ public class PlayerStatue extends LivingEntity {
 				super.setCustomName(name);
 
 				String username = name.getString().toLowerCase(Locale.ROOT);
-				PlayerBlockEntity.fetchGameProfile(username)
-						.thenAccept(
-								profile -> this.setGameProfile(new ResolvableProfile(profile.orElse(new GameProfile(Util.NIL_UUID, username))))
-						);
+				this.setResolvableProfile(ResolvableProfile.createUnresolved(username));
 			}
 		}
 	}
@@ -334,14 +330,14 @@ public class PlayerStatue extends LivingEntity {
 	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
-			if (!this.level().isClientSide && player != null && canOpenUI(player)) {
+			if (!this.level().isClientSide() && player != null && canOpenUI(player)) {
 				((ServerPlayer) player).connection.send(new PlayerStatueScreenData(getId()));
 			}
 		} else {
 			if (itemstack.getItem() != Items.NAME_TAG) {
 				if (player.isSpectator()) {
 					return InteractionResult.SUCCESS;
-				} else if (player.level().isClientSide) {
+				} else if (player.level().isClientSide()) {
 					return InteractionResult.CONSUME;
 				} else {
 					if (!isLocked()) {
@@ -499,7 +495,7 @@ public class PlayerStatue extends LivingEntity {
 
 	public void handleEntityEvent(byte id) {
 		if (id == 32) {
-			if (this.level().isClientSide) {
+			if (this.level().isClientSide()) {
 				this.level().playLocalSound(this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_HIT, this.getSoundSource(), 0.3F, 1.0F, false);
 				this.punchCooldown = this.level().getGameTime();
 			}
@@ -543,11 +539,11 @@ public class PlayerStatue extends LivingEntity {
 
 	private void breakPlayerStatue(ServerLevel serverLevel, DamageSource source) {
 		ItemStack stack = new ItemStack(StatueRegistry.PLAYER_STATUE.get());
-		if (getGameProfile().isPresent()) {
-			ResolvableProfile resolvableProfile = getGameProfile().get();
+		if (getResolvableProfile().isPresent()) {
+			ResolvableProfile resolvableProfile = getResolvableProfile().get();
 			if (resolvableProfile != null) {
 				stack.set(DataComponents.PROFILE, resolvableProfile);
-				stack.set(DataComponents.CUSTOM_NAME, Component.literal(resolvableProfile.gameProfile().getName()));
+				stack.set(DataComponents.CUSTOM_NAME, Component.literal(resolvableProfile.name().orElse("Steve")));
 			}
 		}
 
@@ -640,9 +636,10 @@ public class PlayerStatue extends LivingEntity {
 	public void tick() {
 		super.tick();
 
-		if (level().isClientSide && getGameProfile().isPresent()) {
-			ResolvableProfile resolvableProfile = getGameProfile().get();
-			if (resolvableProfile.id().isPresent() && ClientHandler.TRANSLATORS.contains(resolvableProfile.id().get())) {
+		if (level().isClientSide() && getResolvableProfile().isPresent()) {
+			ResolvableProfile resolvableProfile = getResolvableProfile().get();
+			GameProfile profile = resolvableProfile.partialProfile();
+			if (ClientHandler.TRANSLATORS.contains(profile.id())) {
 				level().addParticle(ParticleTypes.ENCHANT,
 						(double) getX(), (double) getEyeY() + 1, (double) getZ(),
 						(double) ((float) (level().random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D,

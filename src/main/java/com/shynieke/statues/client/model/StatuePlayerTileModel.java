@@ -1,6 +1,6 @@
 package com.shynieke.statues.client.model;
 
-import com.shynieke.statues.client.model.state.PlayerStatueRenderState;
+import com.shynieke.statues.client.state.PlayerStatueRenderState;
 import net.minecraft.client.model.geom.ModelPart;
 
 public class StatuePlayerTileModel extends PlayerStatueModel {

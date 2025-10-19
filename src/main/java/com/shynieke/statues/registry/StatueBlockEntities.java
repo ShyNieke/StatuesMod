@@ -73,10 +73,10 @@ public class StatueBlockEntities {
 			StatueRegistry.STATUE_TABLE.get()));
 
 	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, SHULKER_STATUE.get(), ShulkerStatueBlockEntity::getHandler);
-		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, STATUE_TABLE.get(), StatueTableBlockEntity::getHandler);
+		event.registerBlockEntity(Capabilities.Item.BLOCK, SHULKER_STATUE.get(), ShulkerStatueBlockEntity::getHandler);
+		event.registerBlockEntity(Capabilities.Item.BLOCK, STATUE_TABLE.get(), StatueTableBlockEntity::getHandler);
 
-		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, SHULKER_STATUE.get(), ShulkerStatueBlockEntity::getEnergyStorage);
-		event.registerBlockEntity(Capabilities.EnergyStorage.BLOCK, STATUE.get(), StatueBlockEntity::getEnergyStorage);
+		event.registerBlockEntity(Capabilities.Energy.BLOCK, SHULKER_STATUE.get(), ShulkerStatueBlockEntity::getEnergyStorage);
+		event.registerBlockEntity(Capabilities.Energy.BLOCK, STATUE.get(), StatueBlockEntity::getEnergyStorage);
 	}
 }

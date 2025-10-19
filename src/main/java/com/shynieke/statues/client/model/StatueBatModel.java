@@ -1,6 +1,6 @@
 package com.shynieke.statues.client.model;
 
-import com.shynieke.statues.client.model.state.StatueBatRenderState;
+import com.shynieke.statues.client.state.StatueBatRenderState;
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.animation.definitions.BatAnimation;
 import net.minecraft.client.model.EntityModel;

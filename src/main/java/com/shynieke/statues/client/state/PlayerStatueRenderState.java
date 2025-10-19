@@ -1,9 +1,8 @@
-package com.shynieke.statues.client.model.state;
+package com.shynieke.statues.client.state;
 
 import net.minecraft.client.renderer.entity.state.ArmorStandRenderState;
-import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.world.entity.player.PlayerSkin;
 
 public class PlayerStatueRenderState extends ArmorStandRenderState {
 	public PlayerSkin skin = DefaultPlayerSkin.getDefaultSkin();
@@ -13,5 +12,4 @@ public class PlayerStatueRenderState extends ArmorStandRenderState {
 	public float yOffset;
 	public boolean supporter;
 	public boolean upsideDown;
-	public final ItemStackRenderState heldOnHead = new ItemStackRenderState();
 }

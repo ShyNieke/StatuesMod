@@ -132,6 +132,6 @@ public class FishStatueBlock extends AbstractStatueBase {
 
 	@Nullable
 	protected static <T extends BlockEntity> BlockEntityTicker<T> createStatueTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends StatueBlockEntity> blockEntityType1) {
-		return level.isClientSide ? null : createTickerHelper(blockEntityType, blockEntityType1, TropicalFishBlockEntity::serverTick);
+		return level.isClientSide() ? null : createTickerHelper(blockEntityType, blockEntityType1, TropicalFishBlockEntity::serverTick);
 	}
 }

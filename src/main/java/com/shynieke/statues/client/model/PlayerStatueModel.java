@@ -1,7 +1,7 @@
 package com.shynieke.statues.client.model;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.shynieke.statues.client.model.state.PlayerStatueRenderState;
+import com.shynieke.statues.client.state.PlayerStatueRenderState;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -10,6 +10,7 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.world.entity.HumanoidArm;
 
 public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
@@ -113,10 +114,6 @@ public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
 		this.rightLeg.xRot = (float) (Math.PI / 180.0) * renderState.rightLegPose.x();
 		this.rightLeg.yRot = (float) (Math.PI / 180.0) * renderState.rightLegPose.y();
 		this.rightLeg.zRot = (float) (Math.PI / 180.0) * renderState.rightLegPose.z();
-		this.hat.copyFrom(this.head);
-		this.jacket.copyFrom(this.body);
-		this.leftPants.copyFrom(this.leftLeg);
-		this.rightPants.copyFrom(this.rightLeg);
 	}
 
 	@Override
@@ -130,11 +127,11 @@ public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
 	}
 
 	@Override
-	public void translateToHand(HumanoidArm side, PoseStack poseStack) {
-		this.root().translateAndRotate(poseStack);
-		ModelPart modelpart = this.getArm(side);
+	public void translateToHand(HumanoidRenderState renderState, HumanoidArm arm, PoseStack poseStack) {
+		this.root.translateAndRotate(poseStack);
+		ModelPart modelpart = this.getArm(arm);
 		if (this.slim) {
-			float f = 0.5F * (float) (side == HumanoidArm.RIGHT ? 1 : -1);
+			float f = 0.5F * (float) (arm == HumanoidArm.RIGHT ? 1 : -1);
 			modelpart.x += f;
 			modelpart.translateAndRotate(poseStack);
 			modelpart.x -= f;

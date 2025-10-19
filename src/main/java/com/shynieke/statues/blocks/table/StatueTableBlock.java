@@ -4,10 +4,8 @@ import com.shynieke.statues.blockentities.StatueTableBlockEntity;
 import com.shynieke.statues.blocks.AbstractBaseBlock;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -20,8 +18,6 @@ import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.items.IItemHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -48,7 +44,7 @@ public class StatueTableBlock extends AbstractBaseBlock {
 	                                        @NotNull Player playerIn, @NotNull BlockHitResult hit) {
 		BlockEntity blockentity = level.getBlockEntity(pos);
 		if (blockentity instanceof StatueTableBlockEntity statueTableBlockEntity) {
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				statueTableBlockEntity.hasValidRecipe();
 				playerIn.openMenu(statueTableBlockEntity, pos);
 			}
@@ -56,20 +52,6 @@ public class StatueTableBlock extends AbstractBaseBlock {
 			return InteractionResult.SUCCESS;
 		}
 		return InteractionResult.PASS;
-	}
-
-	@Override
-	public void playerDestroy(@NotNull Level level, @NotNull Player player, @NotNull BlockPos pos,
-	                          @NotNull BlockState state, @Nullable BlockEntity blockEntity, @NotNull ItemStack tool) {
-		if (blockEntity instanceof StatueTableBlockEntity) {
-			IItemHandler handler = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, null);
-			if (handler != null) {
-				for (int i = 0; i < handler.getSlots(); ++i) {
-					Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), handler.getStackInSlot(i));
-				}
-			}
-		}
-		super.playerDestroy(level, player, pos, state, blockEntity, tool);
 	}
 
 	@Nullable
@@ -91,6 +73,6 @@ public class StatueTableBlock extends AbstractBaseBlock {
 
 	@Nullable
 	protected static <T extends BlockEntity> BlockEntityTicker<T> createTableTicker(Level level, BlockEntityType<T> blockEntityType, BlockEntityType<? extends StatueTableBlockEntity> blockEntityType1) {
-		return level.isClientSide ? createTickerHelper(blockEntityType, blockEntityType1, StatueTableBlockEntity::renderTick) : createTickerHelper(blockEntityType, blockEntityType1, StatueTableBlockEntity::serverTick);
+		return level.isClientSide() ? createTickerHelper(blockEntityType, blockEntityType1, StatueTableBlockEntity::renderTick) : createTickerHelper(blockEntityType, blockEntityType1, StatueTableBlockEntity::serverTick);
 	}
 }

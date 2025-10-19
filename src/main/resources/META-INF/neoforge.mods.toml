@@ -15,12 +15,12 @@ Just a little functional decoration.
 [[dependencies.statues]]
 modId="minecraft"
 type="REQUIRED"
-versionRange="[1.21.4,1.22)"
+versionRange="[1.21.10,1.22)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.statues]]
 modId="neoforge"
 type="REQUIRED"
-versionRange="[21.4.0-beta,)"
+versionRange="[21.10.0-beta,)"
 ordering="NONE"
 side="BOTH"

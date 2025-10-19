@@ -1,9 +1,7 @@
 package com.shynieke.statues.client;
 
-import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.Statues;
-import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
 import com.shynieke.statues.client.ber.StatueTableBER;
 import com.shynieke.statues.client.model.PlayerStatueModel;
@@ -22,8 +20,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.server.Services;
-import net.minecraft.server.players.GameProfileCache;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -136,17 +132,17 @@ public class ClientHandler {
 	}
 
 	public static void onRespawn(ClientPlayerNetworkEvent.Clone event) {
-		Minecraft mc = Minecraft.getInstance();
-		if (!mc.isLocalServer()) {
-			setPlayerCache(mc);
-		}
+//		Minecraft mc = Minecraft.getInstance(); TODO: Check
+//		if (!mc.isLocalServer()) {
+//			setPlayerCache(mc);
+//		}
 	}
 
 	private static void setPlayerCache(Minecraft mc) {
-		YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(mc.getProxy());
-		Services services = Services.create(authenticationService, mc.gameDirectory);
-		services.profileCache().setExecutor(mc);
-		PlayerBlockEntity.setup(services, mc);
-		GameProfileCache.setUsesAuthentication(false);
+//		YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(mc.getProxy()); TODO: Check
+//		Services services = Services.create(authenticationService, mc.gameDirectory);
+//		services.profileCache().setExecutor(mc);
+//		PlayerBlockEntity.setup(services, mc);
+//		GameProfileCache.setUsesAuthentication(false);
 	}
 }

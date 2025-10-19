@@ -43,7 +43,7 @@ public class StatuesCommands {
 						)
 				);
 
-		if (!FMLLoader.isProduction()) {
+		if (FMLLoader.getCurrentOrNull() != null && !FMLLoader.getCurrentOrNull().isProduction()) {
 			root.requires((source) -> source.hasPermission(2))
 					.then(Commands.literal("checkLoot")
 							.executes(StatuesDevCommands::checkLoot));

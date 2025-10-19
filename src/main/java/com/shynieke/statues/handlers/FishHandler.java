@@ -18,7 +18,7 @@ public class FishHandler {
 	public void onItemFished(ItemFishedEvent event) {
 		Player player = event.getEntity();
 		Level level = player.level();
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EAGLE_RAY.get());
 			dropFishedStatue(itemStackToDrop, player, event);
 		}

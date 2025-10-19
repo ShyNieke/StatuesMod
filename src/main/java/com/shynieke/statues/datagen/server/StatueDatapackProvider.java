@@ -14,8 +14,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class StatueDatapackProvider extends DatapackBuiltinEntriesProvider {
 	public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-			.add(Registries.CONFIGURED_FEATURE, $ -> {})
-			.add(Registries.PLACED_FEATURE, $ -> {})
+			.add(Registries.CONFIGURED_FEATURE, $ -> {
+			})
+			.add(Registries.PLACED_FEATURE, $ -> {
+			})
 			.add(Registries.TRIM_PATTERN, StatueTrims::bootstrap)
 			.add(Registries.JUKEBOX_SONG, StatueJukeboxSongs::bootstrap)
 			.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, StatueBiomeModifiers::bootstrap);

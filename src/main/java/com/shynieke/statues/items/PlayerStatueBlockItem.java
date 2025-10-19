@@ -1,8 +1,6 @@
 package com.shynieke.statues.items;
 
-import com.shynieke.statues.blockentities.PlayerBlockEntity;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -12,6 +10,7 @@ import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class PlayerStatueBlockItem extends StatueBlockItem {
@@ -28,29 +27,30 @@ public class PlayerStatueBlockItem extends StatueBlockItem {
 				: super.getName(stack));
 	}
 
-	@Override
-	public void verifyComponentsAfterLoad(ItemStack stack) {
-		ResolvableProfile resolvableprofile = stack.get(DataComponents.PROFILE);
-		if (resolvableprofile != null && !resolvableprofile.isResolved()) {
-			PlayerBlockEntity.resolve(resolvableprofile)
-					.thenAcceptAsync(profile -> stack.set(DataComponents.PROFILE, profile), PlayerBlockEntity.CHECKED_MAIN_THREAD_EXECUTOR);
-		}
-	}
+//	@Override TODO: Check if this can be removed
+//	public void verifyComponentsAfterLoad(ItemStack stack) {
+//		ResolvableProfile resolvableprofile = stack.get(DataComponents.PROFILE);
+//		if (resolvableprofile != null && !resolvableprofile.isResolved()) {
+//			PlayerBlockEntity.resolve(resolvableprofile)
+//					.thenAcceptAsync(profile -> stack.set(DataComponents.PROFILE, profile), PlayerBlockEntity.CHECKED_MAIN_THREAD_EXECUTOR);
+//		}
+//	}
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, TooltipDisplay tooltipDisplay, Consumer<Component> tooltipAdder, TooltipFlag flag) {
-		if (Screen.hasShiftDown()) {
+		if (flag.hasShiftDown()) {
 			MutableComponent userComponent = Component.literal("Username: ").withStyle(ChatFormatting.GOLD);
 			userComponent.append(stack.getHoverName().plainCopy().withStyle(ChatFormatting.WHITE));
 			tooltipAdder.accept(userComponent);
 
 			if (stack.has(DataComponents.PROFILE)) {
 				ResolvableProfile profile = stack.get(DataComponents.PROFILE);
-				profile.id().ifPresent((id) -> {
-					MutableComponent UUIDComponent = Component.literal("UUID: ").withStyle(ChatFormatting.GOLD);
-					UUIDComponent.append(Component.literal(id.toString()).withStyle(ChatFormatting.WHITE));
-					tooltipAdder.accept(UUIDComponent);
-				});
+				UUID playerId = profile.partialProfile().id();
+				if (playerId != null) {
+					MutableComponent idComponent = Component.literal("UUID: ").withStyle(ChatFormatting.GOLD);
+					idComponent.append(Component.literal(playerId.toString()).withStyle(ChatFormatting.WHITE));
+					tooltipAdder.accept(idComponent);
+				}
 			}
 		}
 		super.appendHoverText(stack, context, tooltipDisplay, tooltipAdder, flag);

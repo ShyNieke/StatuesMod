@@ -4,14 +4,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.PlayerStatueModel;
-import com.shynieke.statues.client.model.state.PlayerStatueRenderState;
+import com.shynieke.statues.client.state.PlayerStatueRenderState;
 import com.shynieke.statues.entity.PlayerStatue;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidArmorModel;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.PlayerSkinRenderCache;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -19,23 +18,26 @@ import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.WingsLayer;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.client.resources.PlayerSkin;
-import net.minecraft.client.resources.PlayerSkin.Model;
-import net.minecraft.client.resources.SkinManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.decoration.Mannequin;
+import net.minecraft.world.entity.player.PlayerModelType;
+import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.jetbrains.annotations.Nullable;
 
 public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, PlayerStatueRenderState, PlayerStatueModel> {
+	private PlayerSkinRenderCache playerSkinRenderCache;
 	private final PlayerStatueModel playerModel;
 	private final PlayerStatueModel slimPlayerModel;
-	public static final PlayerSkin defaultSkin = DefaultPlayerSkin.getDefaultSkin();
+	public static final PlayerSkin DEFAULT_SKIN = DefaultPlayerSkin.get(Mannequin.DEFAULT_PROFILE.partialProfile());
 	public boolean isSlim = false;
 
 	public PlayerStatueRenderer(EntityRendererProvider.Context context) {
 		this(context, false);
+		this.playerSkinRenderCache = context.getPlayerSkinRenderCache();
 	}
 
 	@Override
@@ -54,12 +56,11 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		statueRenderState.rightArmPose = statue.getRightArmPose();
 		statueRenderState.leftLegPose = statue.getLeftLegPose();
 		statueRenderState.rightLegPose = statue.getRightLegPose();
-		statueRenderState.wiggle = (float)(statue.level().getGameTime() - statue.punchCooldown) + partialTick;
+		statueRenderState.wiggle = (float) (statue.level().getGameTime() - statue.punchCooldown) + partialTick;
 
-		statueRenderState.skin = getSkin(statue.getGameProfile().orElse(null));
+		statueRenderState.skin = getSkin(statue.getResolvableProfile().orElse(null));
 		statueRenderState.id = statue.getId();
-		statueRenderState.name = statue.getGameProfile().isPresent() ?
-				statue.getGameProfile().get().gameProfile().getName() : "unknown";
+		statueRenderState.name = statue.getResolvableProfile().flatMap(ResolvableProfile::name).orElse("unknown");
 		statueRenderState.clientLock = statue.clientLock;
 		statueRenderState.yOffset = statue.getYOffsetData();
 		statueRenderState.supporter = isSupporter(statue);
@@ -67,11 +68,10 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	}
 
 	private PlayerSkin getSkin(@Nullable ResolvableProfile profile) {
-		SkinManager skinmanager = Minecraft.getInstance().getSkinManager();
-		if (profile != null) {
-			return skinmanager.getInsecureSkin(profile.gameProfile());
+		if (profile == null) {
+			return DEFAULT_SKIN;
 		} else {
-			return defaultSkin;
+			return playerSkinRenderCache.getOrDefault(profile).playerSkin();
 		}
 	}
 
@@ -82,30 +82,34 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		this.addLayer(
 				new HumanoidArmorLayer<>(
 						this,
-						new HumanoidArmorModel<>(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_INNER_ARMOR : ModelLayers.PLAYER_INNER_ARMOR)),
-						new HumanoidArmorModel<>(context.bakeLayer(slim ? ModelLayers.PLAYER_SLIM_OUTER_ARMOR : ModelLayers.PLAYER_OUTER_ARMOR)),
+						ArmorModelSet.bake(
+								slim ? ModelLayers.PLAYER_SLIM_ARMOR : ModelLayers.PLAYER_ARMOR,
+								context.getModelSet(),
+								model -> new PlayerStatueModel(model, slim)
+						),
 						context.getEquipmentRenderer()
 				)
 		);
 		this.addLayer(new ItemInHandLayer<>(this));
 		this.addLayer(new WingsLayer<>(this, context.getModelSet(), context.getEquipmentRenderer()));
-		this.addLayer(new CustomHeadLayer<>(this, context.getModelSet()));
+		this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getPlayerSkinRenderCache()));
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(PlayerStatueRenderState statueRenderState) {
-		return statueRenderState.skin.texture();
+		return statueRenderState.skin.body().texturePath();
 	}
 
 	@Override
-	public void render(PlayerStatueRenderState statueRenderState, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {
-		this.isSlim = statueRenderState.skin != null && statueRenderState.skin.model() == Model.SLIM;
+	public void submit(PlayerStatueRenderState statueRenderState, PoseStack poseStack,
+	                   SubmitNodeCollector bufferSource, CameraRenderState cameraRenderState) {
+		this.isSlim = statueRenderState.skin != null && statueRenderState.skin.model() == PlayerModelType.SLIM;
 		this.model = isSlim ? this.slimPlayerModel : playerModel;
 		poseStack.translate(0, statueRenderState.yOffset, 0);
 		if (statueRenderState.clientLock > 0) {
 			statueRenderState.xRot = statueRenderState.bodyRot;
 		}
-		super.render(statueRenderState, poseStack, bufferSource, statueRenderState.supporter ? 15728880 : packedLightIn);
+		super.submit(statueRenderState, poseStack, bufferSource, cameraRenderState);
 	}
 
 	@Override
@@ -133,8 +137,8 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	}
 
 	public static boolean isPlayerUpsideDown(PlayerStatue playerStatue) {
-		if (playerStatue.getGameProfile().isPresent()) {
-			ResolvableProfile profile = playerStatue.getGameProfile().get();
+		if (playerStatue.getResolvableProfile().isPresent()) {
+			ResolvableProfile profile = playerStatue.getResolvableProfile().get();
 			String s = ChatFormatting.stripFormatting(profile.name().orElse("steve"));
 			return "Dinnerbone".equals(s) || "Grumm".equals(s);
 		}
@@ -143,9 +147,9 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	}
 
 	public static boolean isSupporter(PlayerStatue playerStatue) {
-		if (playerStatue.getGameProfile().isPresent()) {
-			ResolvableProfile profile = playerStatue.getGameProfile().get();
-			return ClientHandler.SUPPORTER.contains(profile.id().orElse(Util.NIL_UUID));
+		if (playerStatue.getResolvableProfile().isPresent()) {
+			ResolvableProfile resolvableProfile = playerStatue.getResolvableProfile().get();
+			return ClientHandler.SUPPORTER.contains(resolvableProfile.partialProfile().id());
 		}
 
 		return false;

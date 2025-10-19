@@ -1,4 +1,4 @@
-// 1.21.8	2025-07-20T21:02:34.6518783	Global Loot Modifiers : statues
+// 1.21.10	2025-10-19T22:27:45.3370485	Global Loot Modifiers : statues
 626b20b272d08ba532f6db7f1dbf4f4529d5c7b2 data/neoforge/loot_modifiers/global_loot_modifiers.json
 c22c7483673fe436fa45b6243a14419f2e3c5d8a data/statues/loot_modifiers/statues_core_flower.json
 9fee9c7f7a191414a67bbfaa11e7d6a7521b13f0 data/statues/loot_modifiers/statues_loot.json

@@ -162,7 +162,7 @@ public class StatueLanguageProvider extends LanguageProvider {
 		addItem(StatueRegistry.MARSHMALLOW_CHARRED, "Charred Marshmallow");
 		addItem(StatueRegistry.PLAYER_COMPASS, "Player Compass");
 		addItem(StatueRegistry.PLAYER_STATUE_SPAWN_EGG, "Player Statue Spawn Egg");
-		addItem(StatueRegistry.STATUE_BAT_SPANW_EGG, "Statue Bat Spawn Egg");
+		addItem(StatueRegistry.STATUE_BAT_SPAWN_EGG, "Statue Bat Spawn Egg");
 		addItem(StatueRegistry.CORE_ARMOR_TRIM_SMITHING_TEMPLATE, "Core Armor Trim Smithing Template");
 		addItem(StatueRegistry.CORE_FLOWER_SEED, "Core Flower Seed");
 		addItem(StatueRegistry.STATUE_CORE_POTTERY_SHERD, "Statue Core Pottery Sherd");
