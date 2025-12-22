@@ -77,8 +77,8 @@ repositories {
         url = "https://maven.shedaniel.me/"
     }
     maven {
-        name = "OctoStudios"
-        url = uri("https://maven.octo-studios.com/releases")
+        name = "Illusive Soulworks maven"
+        url = "https://maven.theillusivec4.top/"
     }
     exclusiveContent {
         forRepository {
