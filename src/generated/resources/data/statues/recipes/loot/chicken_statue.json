@@ -10,5 +10,9 @@
   "result2": {
     "item": "minecraft:chicken"
   },
-  "result2Chance": 0.5
+  "result2Chance": 0.5,
+  "result3": {
+    "item": "minecraft:egg"
+  },
+  "result3Chance": 0.1
 }
