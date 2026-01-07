@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.entity.player.PlayerModelType;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ResolvableProfile;
@@ -25,7 +26,6 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<PlayerSkinRen
 	private final PlayerSkinRenderCache playerSkinRenderCache;
 	private final StatuePlayerTileModel model;
 	private final StatuePlayerTileModel slimModel;
-	public boolean isSlim = false;
 
 	public PlayerSpecialRenderer(PlayerSkinRenderCache playerSkinRenderCache,
 	                             StatuePlayerTileModel model, StatuePlayerTileModel slimModel) {
@@ -38,6 +38,8 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<PlayerSkinRen
 	public void submit(@Nullable PlayerSkinRenderCache.RenderInfo argument, ItemDisplayContext displayContext,
 	                   PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, int packedOverlay,
 	                   boolean hasFoil, int outlineColor) {
+		if (argument == null) return;
+		boolean isSlim = argument.playerSkin().model() == PlayerModelType.SLIM;
 		poseStack.pushPose();
 		transform(poseStack);
 		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
