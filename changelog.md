@@ -1,1 +1,1 @@
-* Fix Player Statues not dropping with the right skin attached
+* Backport Chicken Statue loot table including eggs ([PR #102](https://github.com/ShyNieke/StatuesMod/pull/102))
