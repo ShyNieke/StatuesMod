@@ -13,6 +13,7 @@ import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Bee;
@@ -48,24 +49,24 @@ import java.util.List;
 import java.util.Random;
 
 public class DropHandler {
-	private static final Random rand = new Random();
 
 	@SubscribeEvent
 	public void onLivingDrop(LivingDropsEvent event) {
 		Entity entity = event.getEntity();
 		Entity source = event.getSource().getEntity();
 		Level level = entity.level();
+		RandomSource rand = level.random;
 
 		if (entity instanceof Villager) {
-			switch (level.random.nextInt(4)) {
-				default ->
-						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
+			switch (rand.nextInt(4)) {
 				case 1 ->
 						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_WH_STATUE.get()), source, event);
 				case 2 ->
 						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_PU_STATUE.get()), source, event);
 				case 3 ->
 						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_GR_STATUE.get()), source, event);
+				default ->
+						dropLootStatues(entity, new ItemStack(StatueRegistry.VILLAGER_BR_STATUE.get()), source, event);
 			}
 		} else if (entity instanceof Evoker) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.EVOKER_STATUE.get());
@@ -171,11 +172,11 @@ public class DropHandler {
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Axolotl axolotl) {
 			ItemStack itemStackToDrop = switch (axolotl.getVariant()) {
-				default -> new ItemStack(StatueRegistry.AXOLOTL_LUCY_STATUE.get());
 				case WILD -> new ItemStack(StatueRegistry.AXOLOTL_WILD_STATUE.get());
 				case GOLD -> new ItemStack(StatueRegistry.AXOLOTL_GOLD_STATUE.get());
 				case CYAN -> new ItemStack(StatueRegistry.AXOLOTL_CYAN_STATUE.get());
 				case BLUE -> new ItemStack(StatueRegistry.AXOLOTL_BLUE_STATUE.get());
+				default -> new ItemStack(StatueRegistry.AXOLOTL_LUCY_STATUE.get());
 			};
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Frog frog) {
