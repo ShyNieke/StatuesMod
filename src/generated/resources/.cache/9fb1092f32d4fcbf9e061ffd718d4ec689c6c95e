@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-29T17:42:23.0985242	Recipes
+// 1.20.1	2026-01-07T17:10:17.0496123	Recipes
 28e80424f62a15d0cbd7d55cbc22050a9eca0ddb data/statues/recipes/display_stand_from_quartz_block_stonecutting.json
 a92a91507462bf36dd8d74c5d7e7437a7e12b5f1 data/statues/recipes/info_statue.json
 33402c71eb58a334b22134db4c7bf41938fb82fb data/statues/recipes/loot/allay_statue.json
@@ -14,7 +14,7 @@ df6875ca73f4488fae5cd3bac7196d20291494c6 data/statues/recipes/loot/blaze_statue.
 3be4c4558430a8f5f546823b1624cc745fef97fd data/statues/recipes/loot/campfire_statue.json
 2dbec30115d59fd2d20a90f80bc0124e9f08ff4d data/statues/recipes/loot/cat_statue.json
 91fe2ced62892c115f3b280e71bb91bcddface5e data/statues/recipes/loot/chicken_jockey_statue.json
-3db138d166e31a8dbf2ac779c1361717bfb7a7a0 data/statues/recipes/loot/chicken_statue.json
+09b2adb06082ac1467bc06105a23a8ec3afe4c72 data/statues/recipes/loot/chicken_statue.json
 4fc207b1fd1475eae666923d66d7b016d65b0b13 data/statues/recipes/loot/cod_statue.json
 bc7a9e669649a18132053900a90306acad73e7b8 data/statues/recipes/loot/cow_statue.json
 ec9d9c5796d3003e6b6b5b1bf31a9742477832f7 data/statues/recipes/loot/creeper_statue.json
