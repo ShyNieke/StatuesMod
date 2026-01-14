@@ -1,1 +1,1 @@
-* Initial alpha build for 1.21.8
+* Add a Zombified Piglin statue (Requested by JBHUTT09 on Discord / Patreon)
