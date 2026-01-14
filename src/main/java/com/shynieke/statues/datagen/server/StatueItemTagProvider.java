@@ -78,7 +78,8 @@ public class StatueItemTagProvider extends ItemTagsProvider {
 				StatueRegistry.AXOLOTL_CYAN_STATUE.get().asItem(), StatueRegistry.AXOLOTL_BLUE_STATUE.get().asItem(),
 				StatueRegistry.FROG_TEMPERATE_STATUE.get().asItem(), StatueRegistry.FROG_WARM_STATUE.get().asItem(),
 				StatueRegistry.FROG_COLD_STATUE.get().asItem(), StatueRegistry.WARDEN_STATUE.get().asItem(),
-				StatueRegistry.ENDERMITE_STATUE.get().asItem(), StatueRegistry.TADPOLE_STATUE.get().asItem());
+				StatueRegistry.ENDERMITE_STATUE.get().asItem(), StatueRegistry.TADPOLE_STATUE.get().asItem(),
+				StatueRegistry.ZOMBIFIED_PIGLIN_STATUE.get().asItem());
 
 		this.tag(StatueTags.LOOTABLE_STATUES).add(StatueRegistry.ANGRY_BEE_STATUE.get().asItem(),
 				StatueRegistry.BABY_ZOMBIE_STATUE.get().asItem(), StatueRegistry.BEE_STATUE.get().asItem(),
@@ -135,7 +136,8 @@ public class StatueItemTagProvider extends ItemTagsProvider {
 				StatueRegistry.AXOLOTL_WILD_STATUE.get().asItem(), StatueRegistry.AXOLOTL_GOLD_STATUE.get().asItem(),
 				StatueRegistry.AXOLOTL_CYAN_STATUE.get().asItem(), StatueRegistry.AXOLOTL_BLUE_STATUE.get().asItem(),
 				StatueRegistry.FROG_TEMPERATE_STATUE.get().asItem(), StatueRegistry.FROG_WARM_STATUE.get().asItem(),
-				StatueRegistry.FROG_COLD_STATUE.get().asItem(), StatueRegistry.WARDEN_STATUE.get().asItem());
+				StatueRegistry.FROG_COLD_STATUE.get().asItem(), StatueRegistry.WARDEN_STATUE.get().asItem(),
+				StatueRegistry.ZOMBIFIED_PIGLIN_STATUE.get().asItem());
 
 		this.tag(StatueTags.STATUE_INTERACTABLE).add(StatueRegistry.FLOOD_STATUE.get().asItem(), StatueRegistry.MOOSHROOM_STATUE.get().asItem(),
 				StatueRegistry.BROWN_MOOSHROOM_STATUE.get().asItem(), StatueRegistry.COW_STATUE.get().asItem(), StatueRegistry.SPIDER_STATUE.get().asItem(),

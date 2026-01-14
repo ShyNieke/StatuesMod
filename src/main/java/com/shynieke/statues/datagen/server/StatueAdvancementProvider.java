@@ -198,6 +198,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 			AdvancementHolder blaze = onHoldBlock(consumer, StatueRegistry.BLAZE_STATUE, root);
 			AdvancementHolder ghast = onHoldBlock(consumer, StatueRegistry.GHAST_STATUE, blaze);
 			AdvancementHolder magma = onHoldBlock(consumer, StatueRegistry.MAGMA_STATUE, ghast);
+			AdvancementHolder zombified_piglin = onHoldBlock(consumer, StatueRegistry.ZOMBIFIED_PIGLIN_STATUE, ghast);
 
 			onHoldBlock(consumer, StatueRegistry.PLAYER_STATUE, root);
 
