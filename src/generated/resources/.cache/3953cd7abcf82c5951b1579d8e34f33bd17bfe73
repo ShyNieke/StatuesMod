@@ -1,4 +1,4 @@
-// 1.21.10	2025-10-19T22:27:45.3380513	Model Definitions - statues
+// 1.21.10	2026-01-14T21:20:38.5419831	Model Definitions - statues
 4427e42906b8877f46bd091919b793be75c3018b assets/statues/blockstates/allay_statue.json
 42d5ac316c690763e56b4fc0cab4ff995f42790a assets/statues/blockstates/angry_bee_statue.json
 a969b3fd05f50339960b7a4fee7a0200e2a085c4 assets/statues/blockstates/axolotl_blue_statue.json
@@ -126,6 +126,7 @@ ff1c7007bc7b0f9ddcc157ea5b19985ba9c4bcad assets/statues/blockstates/vindicator_s
 b964885d8668d37da6caabaeede00838ed16895f assets/statues/blockstates/wasteland_statue.json
 6a21847d7d714e18cfcf5ebfdebdf1eadb6829dd assets/statues/blockstates/witch_statue.json
 d9841641a0f227cc36448cb62e0ee47b26e4f89b assets/statues/blockstates/zombie_statue.json
+9d901ae67b12046526b247f9fabd7b680657d095 assets/statues/blockstates/zombified_piglin_statue.json
 addb751b7f9e23e9295aac2e47fab437050b3f15 assets/statues/items/allay_statue.json
 7d125ebe62b3385db81a6112721b38814e930e48 assets/statues/items/angry_bee_statue.json
 b3de19c88845cc4f839b915986ddb09c9452cff8 assets/statues/items/axolotl_blue_statue.json
@@ -267,6 +268,7 @@ f3b4d7f0b8b302701ab96c886027aaedd3340cd6 assets/statues/items/warden_statue.json
 8b07dfd1380248821c6f39aec9fb41f7d9f5c8a9 assets/statues/items/wasteland_statue.json
 cf41dcffedc84c155af9a6637c8e16056bf4ce28 assets/statues/items/witch_statue.json
 14d9a31a84785edfe86f3632d503144227401e00 assets/statues/items/zombie_statue.json
+d285e9cbd2e0a218b8015e1433a92c7b6a8cdf66 assets/statues/items/zombified_piglin_statue.json
 e730be9c3649881d81761624b421bf9819ca83dd assets/statues/models/block/core_flower.json
 38752abb82bbc26e2f3e52b42ba3872910e0515a assets/statues/models/block/core_flower_crop_stage0.json
 ed9ec1158fc126d5bc3233d1a14ae6ea0011cdff assets/statues/models/block/core_flower_crop_stage1.json

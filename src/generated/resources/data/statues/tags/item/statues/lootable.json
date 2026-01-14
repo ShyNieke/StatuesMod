@@ -110,6 +110,7 @@
     "statues:frog_temperate_statue",
     "statues:frog_warm_statue",
     "statues:frog_cold_statue",
-    "statues:warden_statue"
+    "statues:warden_statue",
+    "statues:zombified_piglin_statue"
   ]
 }

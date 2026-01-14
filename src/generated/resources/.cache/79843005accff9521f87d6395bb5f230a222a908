@@ -1,4 +1,4 @@
-// 1.21.10	2025-10-19T22:27:45.3350428	Statues Recipes
+// 1.21.10	2026-01-14T21:20:38.539973	Statues Recipes
 18e987dfadfe8b3a50e692cace2f8740225aa39b data/statues/advancement/recipes/decorations/display_stand_from_quartz_block_stonecutting.json
 63a4b8f8cbc1656364761abc74c1b083424037a7 data/statues/advancement/recipes/misc/info_statue.json
 93cb720d6e3f024ca055d26006430b549538b006 data/statues/advancement/recipes/misc/player_statue.json
@@ -76,6 +76,7 @@ f2d3456bcab887ae56ca89b3a49769b25fc1ba8d data/statues/recipe/loot/turtle_statue.
 613e74cbd05caab47fcaea3cefff8cf4df99b719 data/statues/recipe/loot/wasteland_statue.json
 167b1481738cce9e05293d2c5889d39ec4d2c966 data/statues/recipe/loot/witch_statue.json
 8cdd4433d82a1be3de1d44b2a92c115217a98814 data/statues/recipe/loot/zombie_statue.json
+3c1fb363cd911b843e995423bf461db252066fe2 data/statues/recipe/loot/zombified_piglin_statue.json
 58eccabd085947a6ccb8a3a73e8dfe855a0a7266 data/statues/recipe/player_statue.json
 fa27eaabcd66330e5738b12f6abe5c60d0de4d14 data/statues/recipe/statue_core.json
 14b4fa5d97f73b1c1020431d4d17ab23d826f06a data/statues/recipe/statue_table.json
