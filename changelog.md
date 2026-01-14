@@ -1,1 +1,1 @@
-* Fix the S.T.A.T.U.E table not dropping its content when broken
+* Add a Zombified Piglin statue (Requested by JBHUTT09 on Discord / Patreon)
