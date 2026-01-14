@@ -1,4 +1,4 @@
-// 1.21.1	2024-09-30T20:37:28.7891398	Block States: statues
+// 1.21.1	2026-01-14T21:12:07.4305423	Block States: statues
 4427e42906b8877f46bd091919b793be75c3018b assets/statues/blockstates/allay_statue.json
 42d5ac316c690763e56b4fc0cab4ff995f42790a assets/statues/blockstates/angry_bee_statue.json
 a969b3fd05f50339960b7a4fee7a0200e2a085c4 assets/statues/blockstates/axolotl_blue_statue.json
@@ -126,6 +126,7 @@ ff1c7007bc7b0f9ddcc157ea5b19985ba9c4bcad assets/statues/blockstates/vindicator_s
 b964885d8668d37da6caabaeede00838ed16895f assets/statues/blockstates/wasteland_statue.json
 6a21847d7d714e18cfcf5ebfdebdf1eadb6829dd assets/statues/blockstates/witch_statue.json
 d9841641a0f227cc36448cb62e0ee47b26e4f89b assets/statues/blockstates/zombie_statue.json
+9d901ae67b12046526b247f9fabd7b680657d095 assets/statues/blockstates/zombified_piglin_statue.json
 655a669423c77939cf72a5b13b97bc74dc9f8e7a assets/statues/models/block/core_flower.json
 d0198496def9e65cb5827c68e01abb52d0d58def assets/statues/models/block/core_flower_crop_0.json
 59f51fc58e4b54383b3057209d1056c0203768dd assets/statues/models/block/core_flower_crop_1.json

@@ -1,0 +1,18 @@
+{
+  "type": "statues:loot",
+  "ingredient": {
+    "item": "statues:zombified_piglin_statue"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:rotten_flesh"
+  },
+  "result2": {
+    "count": 1,
+    "id": "minecraft:gold_nugget"
+  },
+  "result3": {
+    "count": 1,
+    "id": "minecraft:gold_ingot"
+  }
+}

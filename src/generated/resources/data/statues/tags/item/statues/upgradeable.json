@@ -112,6 +112,7 @@
     "statues:frog_cold_statue",
     "statues:warden_statue",
     "statues:endermite_statue",
-    "statues:tadpole_statue"
+    "statues:tadpole_statue",
+    "statues:zombified_piglin_statue"
   ]
 }
