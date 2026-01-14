@@ -1,1 +1,1 @@
-* Backport Chicken Statue loot table including eggs ([PR #102](https://github.com/ShyNieke/StatuesMod/pull/102))
+* Add a Zombified Piglin statue (Requested by JBHUTT09 on Discord / Patreon)
