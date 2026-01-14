@@ -33,6 +33,7 @@ import net.minecraft.world.entity.monster.ElderGuardian;
 import net.minecraft.world.entity.monster.Evoker;
 import net.minecraft.world.entity.monster.Ravager;
 import net.minecraft.world.entity.monster.Vindicator;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -186,6 +187,9 @@ public class DropHandler {
 			} else if (frog.getVariant() == FrogVariant.COLD) {
 				itemStackToDrop = new ItemStack(StatueRegistry.FROG_COLD_STATUE.get());
 			}
+			dropLootStatues(entity, itemStackToDrop, source, event);
+		} else if (entity instanceof ZombifiedPiglin) {
+			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.ZOMBIFIED_PIGLIN_STATUE.get());
 			dropLootStatues(entity, itemStackToDrop, source, event);
 		} else if (entity instanceof Warden) {
 			ItemStack itemStackToDrop = new ItemStack(StatueRegistry.WARDEN_STATUE.get());

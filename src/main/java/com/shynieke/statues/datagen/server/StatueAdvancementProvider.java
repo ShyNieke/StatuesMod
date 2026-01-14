@@ -193,6 +193,7 @@ public class StatueAdvancementProvider extends ForgeAdvancementProvider {
 			Advancement blaze = onHoldBlock(consumer, StatueRegistry.BLAZE_STATUE, root);
 			Advancement ghast = onHoldBlock(consumer, StatueRegistry.GHAST_STATUE, blaze);
 			Advancement magma = onHoldBlock(consumer, StatueRegistry.MAGMA_STATUE, ghast);
+			Advancement zombified_piglin = onHoldBlock(consumer, StatueRegistry.ZOMBIFIED_PIGLIN_STATUE, ghast);
 
 			onHoldBlock(consumer, StatueRegistry.PLAYER_STATUE, root);
 
