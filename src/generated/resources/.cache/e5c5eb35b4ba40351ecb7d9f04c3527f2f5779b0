@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-29T17:42:23.1005225	Advancements
+// 1.20.1	2026-01-14T19:20:49.9016293	Advancements
 8f5f0b4688c91fa891ae4d1273b62af6e475af11 data/statues/advancements/allay_statue.json
 af8b4cdc617eece7d05869f196aaf4d49e99ef7b data/statues/advancements/angry_bee_statue.json
 1968647e46faf468b2d3cb5be3f32f4352bbcda9 data/statues/advancements/axolotl_all_statue.json
@@ -66,3 +66,4 @@ d5692e73b2b5c04acf0fa878846d578534485a55 data/statues/advancements/vindicator_st
 8462066428607ed5e5b156682932fe8d9bb17363 data/statues/advancements/wasteland_statue.json
 7cf2a3d5caf22f63943093c2fbd0ea6b7d529a1d data/statues/advancements/witch_statue.json
 cd6123a67b919507da0db2c2f6082ba114ea6f52 data/statues/advancements/zombie_statue.json
+5cb713fff0206d3937d60b55c14fbd1d09b71533 data/statues/advancements/zombified_piglin_statue.json

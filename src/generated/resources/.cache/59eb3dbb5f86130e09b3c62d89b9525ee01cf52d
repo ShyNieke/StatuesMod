@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-29T17:42:23.0970227	Loot Tables
+// 1.20.1	2026-01-14T19:20:49.897122	Loot Tables
 63ebf6ea91a5210188bc8165299f0beaa5759208 data/statues/loot_tables/blocks/allay_statue.json
 0e0103dece0812379551b1784138d8a1da8d34b9 data/statues/loot_tables/blocks/angry_bee_statue.json
 b2974bee64db4765febe3eb74ef004981402308e data/statues/loot_tables/blocks/axolotl_blue_statue.json
@@ -124,5 +124,6 @@ c210d9b2c330d58105a3f0e0111e898b27c69780 data/statues/loot_tables/blocks/village
 81e881ac32ae385e25d217be928623275f1d53e4 data/statues/loot_tables/blocks/wasteland_statue.json
 3ba5d2d71fa828cf1c273435ddd907fd12aee713 data/statues/loot_tables/blocks/witch_statue.json
 a175b802c25582b751da3e4d78b7d712a529b6e0 data/statues/loot_tables/blocks/zombie_statue.json
+e05b136b527f1ed27ae406401a99d3102b4d6fe0 data/statues/loot_tables/blocks/zombified_piglin_statue.json
 b9237d4bff35d7fb6d012e41ea494dd09ea5a717 data/statues/loot_tables/entities/player_statue.json
 647b4b5f464164e8c8627ae15bf7635cb5f9574f data/statues/loot_tables/entities/statue_bat.json

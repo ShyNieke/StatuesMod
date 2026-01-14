@@ -1,0 +1,38 @@
+{
+  "parent": "statues:ghast_statue",
+  "criteria": {
+    "zombified_piglin_statue": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "statues:zombified_piglin_statue"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancement.statues.zombified_piglin_statue.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "statues:zombified_piglin_statue"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancement.statues.zombified_piglin_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "zombified_piglin_statue"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

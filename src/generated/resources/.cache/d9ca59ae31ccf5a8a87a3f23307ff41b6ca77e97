@@ -1,4 +1,4 @@
-// 1.20.1	2023-12-29T17:42:23.0930232	Item Models: statues
+// 1.20.1	2026-01-14T19:20:49.8926037	Item Models: statues
 3bd1b5b2646515290e1ea7df0abf9798e194d549 assets/statues/models/item/allay_statue.json
 7b1e7d4cd383ce69a71bdb343872386329321241 assets/statues/models/item/angry_bee_statue.json
 9880572a3f4467e95bf0796f6d1ee27653ed0e92 assets/statues/models/item/axolotl_blue_statue.json
@@ -136,3 +136,4 @@ a0fd26357a2edd3620d70c8dc02429cd0d14b6c3 assets/statues/models/item/villager_pu_
 0c0f13120c1958138d806743b98321a5a17c7e81 assets/statues/models/item/wasteland_statue.json
 438b1f9203b2a4fd58a4e19bccd9398bd59567b3 assets/statues/models/item/witch_statue.json
 7cd26dfe59794aaade9f3b7690d32df6703cbc04 assets/statues/models/item/zombie_statue.json
+851aff0ab980eccd271cc7273f38ac32b7bb4073 assets/statues/models/item/zombified_piglin_statue.json

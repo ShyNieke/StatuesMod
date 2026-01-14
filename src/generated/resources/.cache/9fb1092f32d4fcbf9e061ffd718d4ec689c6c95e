@@ -1,4 +1,4 @@
-// 1.20.1	2026-01-07T17:10:17.0496123	Recipes
+// 1.20.1	2026-01-14T19:20:49.8981177	Recipes
 28e80424f62a15d0cbd7d55cbc22050a9eca0ddb data/statues/recipes/display_stand_from_quartz_block_stonecutting.json
 a92a91507462bf36dd8d74c5d7e7437a7e12b5f1 data/statues/recipes/info_statue.json
 33402c71eb58a334b22134db4c7bf41938fb82fb data/statues/recipes/loot/allay_statue.json
@@ -71,6 +71,7 @@ d431bab8fe301c90fb7d6ff70b2351c3ff95644a data/statues/recipes/loot/tropical_fish
 b76de5f88f36180b4ef05f494a84173fccc88a34 data/statues/recipes/loot/wasteland_statue.json
 8b46cc9c70a84aff4a9b4d9412a931e7a54a3137 data/statues/recipes/loot/witch_statue.json
 9539ad570a77fa8b1546ba1e32636b47b7ea4580 data/statues/recipes/loot/zombie_statue.json
+442b04d4411b9abe439af4d89c801325ef24c504 data/statues/recipes/loot/zombified_piglin_statue.json
 5d930f0b291a47befa58ebf68867930d34aa8833 data/statues/recipes/statue_table.json
 69a6830cebc6c924cb72fc508010beb4d3f6785b data/statues/recipes/upgrade/automation.json
 9e4c173cd97cc4165bba02a3d385dea225783bf1 data/statues/recipes/upgrade/despawner.json
