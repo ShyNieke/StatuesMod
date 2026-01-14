@@ -55,6 +55,7 @@ import com.shynieke.statues.blocks.statues.WardenStatueBlock;
 import com.shynieke.statues.blocks.statues.WastelandStatueBlock;
 import com.shynieke.statues.blocks.statues.WitchStatueBlock;
 import com.shynieke.statues.blocks.statues.ZombieStatueBlock;
+import com.shynieke.statues.blocks.statues.ZombifiedPiglinStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.AxolotlStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.CodStatueBlock;
 import com.shynieke.statues.blocks.statues.fish.DolphinStatueBlock;
@@ -261,6 +262,8 @@ public class StatueRegistry {
 	public static final DeferredBlock<FrogStatueBlock> FROG_COLD_STATUE = registerStatue("frog_cold_statue", () -> new FrogStatueBlock(blockBuilder("frog_cold_statue")));
 	public static final DeferredBlock<TadpoleStatueBlock> TADPOLE_STATUE = registerStatue("tadpole_statue", () -> new TadpoleStatueBlock(blockBuilder("tadpole_statue")));
 	public static final DeferredBlock<WardenStatueBlock> WARDEN_STATUE = registerStatue("warden_statue", () -> new WardenStatueBlock(blockBuilder("warden_statue")));
+	public static final DeferredBlock<ZombifiedPiglinStatueBlock> ZOMBIFIED_PIGLIN_STATUE = registerStatue("zombified_piglin_statue", () -> new ZombifiedPiglinStatueBlock(blockBuilder("zombified_piglin_statue")));
+
 
 
 	public static final DeferredBlock<DisplayStandBlock> DISPLAY_STAND = registerBlock("display_stand", () -> new DisplayStandBlock(blockBuilder("display_stand")));

@@ -55,7 +55,7 @@ public class StatueBlockEntities {
 			StatueRegistry.WARDEN_STATUE.get(), StatueRegistry.ALLAY_STATUE.get(), StatueRegistry.AXOLOTL_LUCY_STATUE.get(),
 			StatueRegistry.AXOLOTL_WILD_STATUE.get(), StatueRegistry.AXOLOTL_GOLD_STATUE.get(), StatueRegistry.AXOLOTL_CYAN_STATUE.get(),
 			StatueRegistry.AXOLOTL_BLUE_STATUE.get(), StatueRegistry.FROG_TEMPERATE_STATUE.get(), StatueRegistry.FROG_WARM_STATUE.get(),
-			StatueRegistry.FROG_COLD_STATUE.get(), StatueRegistry.TADPOLE_STATUE.get()));
+			StatueRegistry.FROG_COLD_STATUE.get(), StatueRegistry.TADPOLE_STATUE.get(), StatueRegistry.ZOMBIFIED_PIGLIN_STATUE.get()));
 
 	public static final Supplier<BlockEntityType<ShulkerStatueBlockEntity>> SHULKER_STATUE = BLOCK_ENTITIES.register("shulker_statue", () ->
 			new BlockEntityType<>(ShulkerStatueBlockEntity::new, StatueRegistry.SHULKER_STATUE.get()));
