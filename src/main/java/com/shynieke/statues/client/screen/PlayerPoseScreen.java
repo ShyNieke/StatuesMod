@@ -11,7 +11,7 @@ import com.shynieke.statues.entity.PlayerStatue;
 import com.shynieke.statues.network.message.PlayerStatueSyncData;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.input.CharacterEvent;
@@ -207,11 +207,11 @@ public class PlayerPoseScreen extends Screen {
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+	public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
 
 		// Draw gui title
-		guiGraphics.drawCenteredString(font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)),
+		guiGraphics.centeredText(font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)),
 				this.width / 2, 20, 0xFFFFFF);
 		int offsetY = 50;
 
@@ -219,20 +219,20 @@ public class PlayerPoseScreen extends Screen {
 		int offsetX = 20;
 		for (int i = 0; i < this.buttonLabels.length; i++) {
 			int y = offsetY + (i * 22) + (11 - (this.font.lineHeight / 2));
-			guiGraphics.drawString(font, this.buttonLabels[i], offsetX, y, 0xA0A0A0, false);
+			guiGraphics.text(font, this.buttonLabels[i], offsetX, y, 0xA0A0A0, false);
 		}
 
 		// right column labels
 		offsetX = this.width - 20 - 100;
 		// x, y, z
-		guiGraphics.drawString(font, "X", offsetX, 37, 0xA0A0A0, false);
-		guiGraphics.drawString(font, "Y", offsetX + (35), 37, 0xA0A0A0, false);
-		guiGraphics.drawString(font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0, false);
+		guiGraphics.text(font, "X", offsetX, 37, 0xA0A0A0, false);
+		guiGraphics.text(font, "Y", offsetX + (35), 37, 0xA0A0A0, false);
+		guiGraphics.text(font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0, false);
 		// pose textboxes
 		for (int i = 0; i < this.sliderLabels.length; i++) {
 			int x = offsetX - this.font.width(this.sliderLabels[i]) - 10;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			guiGraphics.drawString(font, this.sliderLabels[i], x, y, 0xA0A0A0, false);
+			guiGraphics.text(font, this.sliderLabels[i], x, y, 0xA0A0A0, false);
 		}
 	}
 

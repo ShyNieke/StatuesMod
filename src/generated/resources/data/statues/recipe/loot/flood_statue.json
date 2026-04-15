@@ -2,15 +2,12 @@
   "type": "statues:loot",
   "ingredient": "statues:flood_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:firework_rocket"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:rotten_flesh"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:emerald"
   }
 }

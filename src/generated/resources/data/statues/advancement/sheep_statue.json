@@ -177,7 +177,6 @@
       "translate": "advancement.statues.sheep_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:sheep_statue_white"
     },
     "title": {

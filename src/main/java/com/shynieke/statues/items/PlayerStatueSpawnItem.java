@@ -48,8 +48,9 @@ public class PlayerStatueSpawnItem extends Item {
 			}
 
 			EntityType<?> type = StatueRegistry.PLAYER_STATUE_ENTITY.get();
-			if (type.spawn((ServerLevel) level, stack, context.getPlayer(), relativePos, EntitySpawnReason.SPAWN_ITEM_USE, true, !Objects.equals(pos, relativePos) && direction == Direction.UP) instanceof PlayerStatue playerStatue) {
-				applyRandomRotations(playerStatue, level.random);
+			if (type.spawn((ServerLevel) level, stack, context.getPlayer(), relativePos, EntitySpawnReason.SPAWN_ITEM_USE,
+					true, !Objects.equals(pos, relativePos) && direction == Direction.UP) instanceof PlayerStatue playerStatue) {
+				applyRandomRotations(playerStatue, level.getRandom());
 				if (!stack.has(DataComponents.CUSTOM_NAME)) {
 					if (context.getPlayer() != null) {
 						playerStatue.setResolvableProfile(ResolvableProfile.createResolved(context.getPlayer().getGameProfile()));

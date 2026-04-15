@@ -14,7 +14,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.recipe.types.IRecipeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 
@@ -59,14 +59,14 @@ public class LootCategory implements IRecipeCategory<LootRecipe> {
 	}
 
 	@Override
-	public void draw(LootRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+	public void draw(LootRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphicsExtractor guiGraphics, double mouseX, double mouseY) {
 		background.draw(guiGraphics);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		Font font = minecraft.font;
-		guiGraphics.drawString(font, Component.literal((int) (100 * recipe.getChance1()) + "%"), 74, 8, 0, false);
-		guiGraphics.drawString(font, Component.literal((int) (100 * recipe.getChance2()) + "%"), 74, 27, 0, false);
-		guiGraphics.drawString(font, Component.literal((int) (100 * recipe.getChance3()) + "%"), 74, 45, 0, false);
+		guiGraphics.text(font, Component.literal((int) (100 * recipe.getChance1()) + "%"), 74, 8, 0, false);
+		guiGraphics.text(font, Component.literal((int) (100 * recipe.getChance2()) + "%"), 74, 27, 0, false);
+		guiGraphics.text(font, Component.literal((int) (100 * recipe.getChance3()) + "%"), 74, 45, 0, false);
 	}
 
 	@Override

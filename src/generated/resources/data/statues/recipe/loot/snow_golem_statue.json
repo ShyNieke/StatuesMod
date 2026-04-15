@@ -2,11 +2,9 @@
   "type": "statues:loot",
   "ingredient": "statues:snow_golem_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:snowball"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:pumpkin"
   }
 }

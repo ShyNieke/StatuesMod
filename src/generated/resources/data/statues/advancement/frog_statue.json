@@ -37,7 +37,6 @@
       "translate": "advancement.statues.frog_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:frog_temperate_statue"
     },
     "title": {

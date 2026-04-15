@@ -55,7 +55,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -224,7 +224,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 							float f = (float) Mth.floor((Mth.wrapDegrees(playerIn.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
 							playerStatueEntity.setResolvableProfile(playerBlockEntity.getPlayerProfile());
 							playerStatueEntity.snapTo(playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), f, 0.0F);
-							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.random);
+							PlayerStatueSpawnItem.applyRandomRotations(playerStatueEntity, level.getRandom());
 							level.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 							level.addFreshEntity(playerStatueEntity);
 							level.playSound((Player) null, playerStatueEntity.getX(), playerStatueEntity.getY(), playerStatueEntity.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundSource.BLOCKS, 0.75F, 0.8F);
@@ -263,9 +263,9 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					com.shynieke.statues.client.ClientHandler.TRANSLATORS.contains(playerBlockEntity.getPlayerProfile().partialProfile().id())) {
 				level.addParticle(ParticleTypes.ENCHANT,
 						(double) pos.getX() + 0.5D, (double) pos.getY() + 2.0D, (double) pos.getZ() + 0.5D,
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D,
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 - randomSource.nextFloat() - 1.0F),
-						(double) ((float) (level.random.nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D);
+						(double) ((float) (level.getRandom().nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D,
+						(double) ((float) (level.getRandom().nextFloat() - 0.5) * 3 - randomSource.nextFloat() - 1.0F),
+						(double) ((float) (level.getRandom().nextFloat() - 0.5) * 3 + randomSource.nextFloat()) - 0.5D);
 			}
 		}
 	}

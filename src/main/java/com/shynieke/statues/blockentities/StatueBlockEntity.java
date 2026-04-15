@@ -49,7 +49,7 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.transaction.Transaction;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -166,19 +166,19 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 			final RegistryAccess access = level.registryAccess();
 			ItemStack stack1 = loot.getResultItem().copy();
 			float chance1 = loot.getChance1() + (looting * 0.1F);
-			if (!stack1.isEmpty() && level.random.nextDouble() <= chance1) {
+			if (!stack1.isEmpty() && level.getRandom().nextDouble() <= chance1) {
 				exportItem(stack1);
 			}
 
 			ItemStack stack2 = loot.getResultItem2().copy();
 			float chance2 = loot.getChance2() + (looting * 0.1F);
-			if (!stack2.isEmpty() && level.random.nextDouble() <= chance2) {
+			if (!stack2.isEmpty() && level.getRandom().nextDouble() <= chance2) {
 				exportItem(stack2);
 			}
 
 			ItemStack stack3 = loot.getResultItem3().copy();
 			float chance3 = loot.getChance3() + (looting * 0.1F);
-			if (!stack3.isEmpty() && level.random.nextDouble() <= chance3) {
+			if (!stack3.isEmpty() && level.getRandom().nextDouble() <= chance3) {
 				exportItem(stack3);
 			}
 		}
@@ -258,13 +258,13 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 		final BlockPos pos = getBlockPos();
 		final int spawnerLevel = getSpawnerLevel() + 1;
 		final boolean screwTheRulesIHasMoney = spawnerLevel > 3;
-		int spawnCount = serverLevel.random.nextInt(spawnerLevel) + 1;
+		int spawnCount = serverLevel.getRandom().nextInt(spawnerLevel) + 1;
 		EntityType<?> entityType = getStatue().getEntity();
 
 		for (int i = 0; i < spawnCount; i++) {
-			double d0 = (double) pos.getX() + (serverLevel.random.nextDouble() - serverLevel.random.nextDouble()) * (double) 4 + 0.5D;
-			double d1 = (double) (pos.getY() + serverLevel.random.nextInt(3) - 1);
-			double d2 = (double) pos.getZ() + (serverLevel.random.nextDouble() - serverLevel.random.nextDouble()) * (double) 4 + 0.5D;
+			double d0 = (double) pos.getX() + (serverLevel.getRandom().nextDouble() - serverLevel.getRandom().nextDouble()) * (double) 4 + 0.5D;
+			double d1 = (double) (pos.getY() + serverLevel.getRandom().nextInt(3) - 1);
+			double d2 = (double) pos.getZ() + (serverLevel.getRandom().nextDouble() - serverLevel.getRandom().nextDouble()) * (double) 4 + 0.5D;
 			if (serverLevel.noCollision(entityType.getSpawnAABB(d0, d1, d2))) {
 				BlockPos blockpos = BlockPos.containing(d0, d1, d2);
 				if (!serverLevel.isAreaLoaded(blockpos, 1)) continue;
@@ -286,7 +286,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 					continue;
 				}
 
-				entity.snapTo(entity.getX(), entity.getY(), entity.getZ(), level.random.nextFloat() * 360.0F, 0.0F);
+				entity.snapTo(entity.getX(), entity.getY(), entity.getZ(), level.getRandom().nextFloat() * 360.0F, 0.0F);
 				if (entity instanceof Mob mob) {
 					if (!screwTheRulesIHasMoney && !mob.checkSpawnRules(serverLevel, EntitySpawnReason.SPAWNER) || !mob.checkSpawnObstruction(serverLevel)) {
 						continue;
@@ -312,7 +312,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 	public void floodBehavior(Player playerIn, BlockPos pos, InteractionHand hand, float hitX, float hitY, float hitZ) {
 		if (hasSpecialInteraction() && level != null && !level.isClientSide()) {
 			ItemStack stack = playerIn.getItemInHand(hand);
-			int random = level.random.nextInt(100);
+			int random = level.getRandom().nextInt(100);
 			if (stack.getItem() == Items.BUCKET && !playerIn.hasInfiniteMaterials()) {
 				level.playSound(null, pos, SoundEvents.BUCKET_FILL, SoundSource.NEUTRAL, 1F, 1F);
 				stack.shrink(1);
@@ -328,7 +328,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 
 			if (random < 50) {
 				FireworkRocketEntity firework = new FireworkRocketEntity(level, (double) ((float) pos.getX() + hitX), (double) ((float) pos.getY() + hitY), (double) ((float) pos.getZ() + hitZ),
-						getFirework(level.random));
+						getFirework(level.getRandom()));
 				level.addFreshEntity(firework);
 			}
 		}
@@ -369,7 +369,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 
 	public void giveEffect(Player player, BlockPos pos, Holder<MobEffect> effectHolder) {
 		if (hasSpecialInteraction() && level != null && !level.isClientSide()) {
-			if (level.random.nextDouble() <= 0.1F) {
+			if (level.getRandom().nextDouble() <= 0.1F) {
 				if (player.getEffect(effectHolder) == null) {
 					player.addEffect(new MobEffectInstance(effectHolder, 20 * 20, 1, true, true));
 				}

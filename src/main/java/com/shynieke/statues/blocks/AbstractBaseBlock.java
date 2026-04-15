@@ -19,7 +19,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class AbstractBaseBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
 	public static final MapCodec<AbstractBaseBlock> CODEC = simpleCodec(AbstractBaseBlock::new);

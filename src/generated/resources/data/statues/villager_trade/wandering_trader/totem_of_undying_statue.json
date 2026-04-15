@@ -1,0 +1,11 @@
+{
+  "gives": {
+    "id": "statues:totem_of_undying_statue"
+  },
+  "max_uses": 1.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 32.0,
+    "id": "minecraft:emerald"
+  }
+}

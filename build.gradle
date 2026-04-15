@@ -3,7 +3,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.141'
-    id 'net.darkhax.curseforgegradle' version '1.1.28'
+    id 'net.darkhax.curseforgegradle' version '1.2.30'
     id 'com.modrinth.minotaur' version "2.+"
 }
 
@@ -13,17 +13,12 @@ base {
     archivesName = "${mod_archive_name}-${mc_version}"
 }
 
-// Mojang ships Java 21 to end users in 1.20.5+, so your mod should target Java 21.
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+// Mojang ships Java 25 to end users in 26.1+, so your mod should target Java 25.
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
-
-    parchment {
-        mappingsVersion = "${parchment_mappings_version}"
-        minecraftVersion = "${parchment_minecraft_version}"
-    }
 
     // This line is optional. Access Transformers are automatically detected
     // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
@@ -130,23 +125,23 @@ dependencies {
 
     localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 
-    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
-    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+//    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
 
-    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
 
 //    implementation "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
 
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
     localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
-//    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
-//    localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"
+    compileOnly "vazkii.patchouli:patchouli-neoforge:${patchouli_version}"
+    localRuntime "vazkii.patchouli:patchouli-neoforge:${patchouli_version}"
 
-//    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
-//    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
     compileOnly "curse.maven:jade-324717:${jade_id}" //Jade (WAILA)
     localRuntime "curse.maven:jade-324717:${jade_id}" //Jade (WAILA)
@@ -196,17 +191,17 @@ if (System.getenv().CURSEFORGE_KEY) {
         apiToken = System.getenv().CURSEFORGE_KEY
 
         def mainFile = upload(project.curseforge_id, jar)
-        mainFile.releaseType = 'alpha'
+        mainFile.releaseType = 'beta'
         mainFile.addModLoader("NeoForge")
         mainFile.addGameVersion("${mc_version}")
-        mainFile.addJavaVersion("Java 21")
+        mainFile.addJavaVersion("Java 25")
         mainFile.addEnvironment('Server', 'Client')
 
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'
 
         mainFile.addOptional("jade")
-        mainFile.addOptional("roughly-enough-items")
+//        mainFile.addOptional("roughly-enough-items")
         mainFile.addOptional("jei")
 //        mainFile.addOptional("curios")
 //        mainFile.addOptional("the-cactus-mod")
@@ -218,7 +213,7 @@ if (System.getenv().MODRINTH_KEY) {
     modrinth {
         token = System.getenv().MODRINTH_KEY
         projectId = project.modrinth_id
-        versionType = "alpha"
+        versionType = "beta"
         versionName = "${mod_name} ${mc_version}"
         versionNumber = project.version
         uploadFile = jar
@@ -230,7 +225,7 @@ if (System.getenv().MODRINTH_KEY) {
 //            optional.project "curios-continuation"
 //            optional.project "the-cactus-mod"
             optional.project "jade"
-            optional.project "rei"
+//            optional.project "rei"
             optional.project "jei"
 //            optional.project "patchouli"
         }

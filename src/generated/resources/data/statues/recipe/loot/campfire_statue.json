@@ -2,7 +2,6 @@
   "type": "statues:loot",
   "ingredient": "statues:campfire_statue",
   "result": {
-    "count": 1,
     "id": "statues:marshmallow"
   }
 }

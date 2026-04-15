@@ -2,7 +2,7 @@ package com.shynieke.statues.client;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.Statues;
-import com.shynieke.statues.blocks.statues.fish.FishStatueBlock;
+import com.shynieke.statues.blocks.tint.FishBlockTint;
 import com.shynieke.statues.client.ber.StatueTableBER;
 import com.shynieke.statues.client.model.PlayerStatueModel;
 import com.shynieke.statues.client.property.StatueCompassAngle;
@@ -20,6 +20,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -77,9 +78,9 @@ public class ClientHandler {
 			Statues.LOGGER.info("Loaded {} translators.", TRANSLATORS.size());
 		}, "Statues Perks Data Loader").start();
 
-//		if (ModList.get().isLoaded("curios")) {
-//			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
-//		}
+		if (ModList.get().isLoaded("curios")) {
+			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
+		}
 	}
 
 	public static void onRecipeReceived(RecipesReceivedEvent event) {
@@ -117,8 +118,8 @@ public class ClientHandler {
 		event.registerLayerDefinition(PLAYER_STATUE_SLIM, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, true), 64, 64));
 	}
 
-	public static void registerBlockColors(final RegisterColorHandlersEvent.Block event) {
-		event.register(FishStatueBlock::getColor, StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
+	public static void registerBlockColors(final RegisterColorHandlersEvent.BlockTintSources event) {
+		event.register(List.of(new FishBlockTint()), StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
 				StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
 				StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(),
 				StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get());

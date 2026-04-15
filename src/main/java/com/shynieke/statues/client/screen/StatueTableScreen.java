@@ -4,7 +4,7 @@ import com.shynieke.statues.Reference;
 import com.shynieke.statues.menu.StatueTableMenu;
 import com.shynieke.statues.network.message.StatueTableData;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -22,8 +22,7 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 	private Button buttonChisel;
 
 	public StatueTableScreen(StatueTableMenu screenContainer, Inventory inv, Component titleIn) {
-		super(screenContainer, inv, titleIn);
-		this.imageHeight = 159;
+		super(screenContainer, inv, titleIn, 176, 159);
 	}
 
 	@Override
@@ -49,18 +48,18 @@ public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> 
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		super.render(guiGraphics, mouseX, mouseY, partialTicks);
-		this.renderTooltip(guiGraphics, mouseX, mouseY);
+	public void extractRenderState(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
+		this.extractTooltip(guiGraphics, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int x, int y) {
-		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float partialTicks) {
+		graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, this.leftPos, this.topPos, 0.0F, 0.0F, this.imageWidth, this.imageHeight, 256, 256);
 	}
 
 	@Override
-	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+	protected void extractLabels(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
 		int actualMouseX = mouseX - ((this.width - this.imageWidth) / 2);
 		int actualMouseY = mouseY - ((this.height - this.imageHeight) / 2);
 

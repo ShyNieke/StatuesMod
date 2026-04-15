@@ -3,11 +3,9 @@
   "group": "sheep",
   "ingredient": "statues:sheep_statue_white",
   "result": {
-    "count": 1,
     "id": "minecraft:white_wool"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:mutton"
   }
 }

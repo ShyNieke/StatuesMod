@@ -2,11 +2,9 @@
   "type": "statues:loot",
   "ingredient": "statues:baby_zombie_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:rotten_flesh"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:iron_nugget"
   }
 }

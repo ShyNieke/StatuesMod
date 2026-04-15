@@ -14,7 +14,6 @@
       "translate": "advancement.statues.root.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:statue_core"
     },
     "show_toast": false,

@@ -1,0 +1,11 @@
+{
+  "gives": {
+    "id": "statues:detective_platypus_statue"
+  },
+  "max_uses": 1.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 20.0,
+    "id": "minecraft:emerald"
+  }
+}

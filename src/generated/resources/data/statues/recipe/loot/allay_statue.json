@@ -2,15 +2,12 @@
   "type": "statues:loot",
   "ingredient": "statues:allay_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:light_blue_dye"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:light_blue_dye"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:light_blue_dye"
   }
 }

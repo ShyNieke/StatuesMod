@@ -2,11 +2,9 @@
   "type": "statues:loot",
   "ingredient": "statues:ghast_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:gunpowder"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:ghast_tear"
   }
 }

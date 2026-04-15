@@ -2,11 +2,9 @@
   "type": "statues:loot",
   "ingredient": "statues:cow_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:beef"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:leather"
   }
 }

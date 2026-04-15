@@ -17,7 +17,6 @@
       "translate": "advancement.statues.witch_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:witch_statue"
     },
     "title": {

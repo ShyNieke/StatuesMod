@@ -17,7 +17,6 @@
       "translate": "advancement.statues.allay_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:allay_statue"
     },
     "title": {

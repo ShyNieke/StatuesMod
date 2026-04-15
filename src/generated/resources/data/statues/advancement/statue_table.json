@@ -17,7 +17,6 @@
       "translate": "advancement.statues.statue_table.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:statue_table"
     },
     "title": {

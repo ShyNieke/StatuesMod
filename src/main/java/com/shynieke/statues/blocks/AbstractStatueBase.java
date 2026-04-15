@@ -32,7 +32,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,7 +193,7 @@ public abstract class AbstractStatueBase extends AbstractBaseBlock implements En
 		if (!level.isClientSide()) {
 			if (canPlaySound(level, pos, state) && level.hasNeighborSignal(pos)) {
 				level.playSound(null, pos, getSound(state), SoundSource.NEUTRAL, 1F,
-						(level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.5F);
+						(level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2F + 1.5F);
 			}
 		}
 		super.neighborChanged(state, level, pos, blockIn, orientation, isMoving);

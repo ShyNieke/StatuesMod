@@ -5,7 +5,7 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
 import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class StatueCompassAngle implements RangeSelectItemModelProperty {
 	public static final MapCodec<StatueCompassAngle> MAP_CODEC = StatueCompassAngleState.MAP_CODEC.xmap(StatueCompassAngle::new,

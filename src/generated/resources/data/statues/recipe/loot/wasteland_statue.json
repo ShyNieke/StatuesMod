@@ -2,7 +2,6 @@
   "type": "statues:loot",
   "ingredient": "statues:wasteland_statue",
   "result": {
-    "count": 1,
     "id": "statues:tea"
   },
   "result2": {
@@ -11,7 +10,7 @@
         "color": "light_purple",
         "text": "Wasteland Block"
       },
-      "minecraft:enchantments": {
+      "minecraft:stored_enchantments": {
         "minecraft:vanishing_curse": 1
       },
       "minecraft:tooltip_display": {
@@ -20,7 +19,6 @@
         ]
       }
     },
-    "count": 1,
     "id": "minecraft:sand"
   }
 }

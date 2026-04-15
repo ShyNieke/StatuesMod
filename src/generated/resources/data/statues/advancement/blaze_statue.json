@@ -17,7 +17,6 @@
       "translate": "advancement.statues.blaze_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:blaze_statue"
     },
     "title": {

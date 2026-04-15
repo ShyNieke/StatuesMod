@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.chicken.Chicken;
+import net.minecraft.world.entity.animal.cow.CowSoundVariants;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -49,6 +50,6 @@ public class KingCluckStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.CHICKEN_AMBIENT;
+		return SoundEvents.CHICKEN_SOUNDS.get(CowSoundVariants.SoundSet.CLASSIC).adultSounds().ambientSound().value();
 	}
 }

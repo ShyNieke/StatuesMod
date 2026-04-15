@@ -116,9 +116,7 @@ public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
 		this.rightLeg.zRot = (float) (Math.PI / 180.0) * renderState.rightLegPose.z();
 	}
 
-	@Override
 	public void setAllVisible(boolean visible) {
-		super.setAllVisible(visible);
 		this.leftSleeve.visible = visible;
 		this.rightSleeve.visible = visible;
 		this.leftPants.visible = visible;

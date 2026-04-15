@@ -83,7 +83,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 
 	public void sendInfoMessage(ServerPlayer player, Level level, BlockPos pos) {
 		if (!level.isClientSide()) {
-			int random = level.random.nextInt(100);
+			int random = level.getRandom().nextInt(100);
 
 			List<String> messages = new ArrayList<>(StatuesConfig.COMMON.info_messages.get());
 			List<? extends String> luckyPlayers = StatuesConfig.COMMON.lucky_players.get();
@@ -112,7 +112,7 @@ public class InfoStatueBlock extends AbstractBaseBlock {
 				int i = localdate.getDayOfMonth();
 				int j = localdate.getMonthValue();
 
-				if (level.random.nextDouble() <= 0.3D && j == 11 && i <= 20) {
+				if (level.getRandom().nextDouble() <= 0.3D && j == 11 && i <= 20) {
 					randomMessage = Component.literal("Please check out our friends over at ")
 							.withStyle(ChatFormatting.YELLOW).append(CommonHooks.newChatWithLinks("https://lovetropics.com/"));
 				} else {

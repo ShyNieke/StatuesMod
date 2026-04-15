@@ -17,7 +17,6 @@
       "translate": "advancement.statues.pillager_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:pillager_statue"
     },
     "title": {

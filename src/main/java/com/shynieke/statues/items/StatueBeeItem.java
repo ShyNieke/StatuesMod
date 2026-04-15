@@ -8,7 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class StatueBeeItem extends StatueBlockItem {
 	public StatueBeeItem(Block blockIn, Properties builder) {
@@ -22,9 +22,9 @@ public class StatueBeeItem extends StatueBlockItem {
 			if (entity instanceof Player player) {
 				int itemSlot = player.getInventory().findSlotMatchingItem(stack);
 				if (name.equalsIgnoreCase("Trans Bee")) {
-					player.getInventory().setItem(itemSlot, new ItemStack(StatueRegistry.TRANS_BEE_STATUE.toStack().getItemHolder(), stack.getCount(), stack.getComponentsPatch()));
+					player.getInventory().setItem(itemSlot, new ItemStack(StatueRegistry.TRANS_BEE_STATUE.toStack().typeHolder(), stack.getCount(), stack.getComponentsPatch()));
 				} else if (name.equalsIgnoreCase("Tropibee")) {
-					player.getInventory().setItem(itemSlot, new ItemStack(StatueRegistry.TROPIBEE.toStack().getItemHolder(), stack.getCount(), stack.getComponentsPatch()));
+					player.getInventory().setItem(itemSlot, new ItemStack(StatueRegistry.TROPIBEE.toStack().typeHolder(), stack.getCount(), stack.getComponentsPatch()));
 				}
 			}
 		}

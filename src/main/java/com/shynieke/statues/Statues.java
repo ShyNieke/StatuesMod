@@ -8,7 +8,6 @@ import com.shynieke.statues.handlers.DropHandler;
 import com.shynieke.statues.handlers.FishHandler;
 import com.shynieke.statues.handlers.SpecialHandler;
 import com.shynieke.statues.handlers.StatueHandler;
-import com.shynieke.statues.handlers.TraderHandler;
 import com.shynieke.statues.network.StatuesNetworking;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.registry.StatueBlockEntities;
@@ -66,7 +65,6 @@ public class Statues {
 
 		NeoForge.EVENT_BUS.register(new StatueHandler());
 		NeoForge.EVENT_BUS.register(new FishHandler());
-		NeoForge.EVENT_BUS.register(new TraderHandler());
 		NeoForge.EVENT_BUS.register(new DropHandler());
 		NeoForge.EVENT_BUS.register(new SpecialHandler()); //Used for the Etho Statue
 

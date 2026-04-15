@@ -20,7 +20,7 @@ import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -331,7 +331,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		 * @return The DisplayInfo object.
 		 */
 		protected static DisplayInfo rootDisplay(ItemLike icon, String titleKey, String descKey, Identifier background) {
-			return new DisplayInfo(new ItemStack(icon),
+			return new DisplayInfo(new ItemStackTemplate(icon.asItem()),
 					Component.translatable(titleKey),
 					Component.translatable(descKey),
 					Optional.of(new ClientAsset.ResourceTexture(background)), AdvancementType.TASK, false, false, false);
@@ -345,7 +345,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		 * @return The DisplayInfo object.
 		 */
 		protected static DisplayInfo simpleDisplay(ItemLike icon, String name, AdvancementType type) {
-			return new DisplayInfo(new ItemStack(icon),
+			return new DisplayInfo(new ItemStackTemplate(icon.asItem()),
 					Component.translatable(advancementPrefix(name + ".title")),
 					Component.translatable(advancementPrefix(name + ".desc")),
 					Optional.empty(), type, true, true, false);
@@ -360,7 +360,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		 * @return The DisplayInfo object.
 		 */
 		protected static DisplayInfo hiddenDisplay(ItemLike icon, String name, AdvancementType type) {
-			return new DisplayInfo(new ItemStack(icon),
+			return new DisplayInfo(new ItemStackTemplate(icon.asItem()),
 					Component.translatable(advancementPrefix(name + ".title")),
 					Component.translatable(advancementPrefix(name + ".desc")),
 					Optional.empty(), type, true, true, true);

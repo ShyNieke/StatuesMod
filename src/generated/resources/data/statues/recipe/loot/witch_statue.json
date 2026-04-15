@@ -2,15 +2,12 @@
   "type": "statues:loot",
   "ingredient": "statues:witch_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:glowstone_dust"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:redstone"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:glass_bottle"
   }
 }

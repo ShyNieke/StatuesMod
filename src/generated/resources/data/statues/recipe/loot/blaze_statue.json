@@ -2,11 +2,9 @@
   "type": "statues:loot",
   "ingredient": "statues:blaze_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:blaze_powder"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:blaze_rod"
   }
 }

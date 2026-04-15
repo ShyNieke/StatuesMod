@@ -52,7 +52,7 @@ public class DropHandler {
 		Entity entity = event.getEntity();
 		Entity source = event.getSource().getEntity();
 		Level level = entity.level();
-		RandomSource rand = level.random;
+		RandomSource rand = level.getRandom();
 
 		if (entity instanceof Villager) {
 			switch (rand.nextInt(4)) {

@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.cow.CowSoundVariants;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -19,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.Tags;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class PigStatueBlock extends AbstractStatueBase {
 	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 5.5D, 11.0D);
@@ -62,6 +63,6 @@ public class PigStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public SoundEvent getSound(BlockState state) {
-		return SoundEvents.PIG_AMBIENT;
+		return SoundEvents.PIG_SOUNDS.get(CowSoundVariants.SoundSet.CLASSIC).adultSounds().ambientSound().value();
 	}
 }

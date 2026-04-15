@@ -30,8 +30,8 @@ public class StatueGoldenMarshmallow extends Item {
 					List<Holder<MobEffect>> effectList = BuiltInRegistries.MOB_EFFECT.listElements().collect(Collectors.toList());
 					effectList.remove(MobEffects.NAUSEA);
 
-					int i = level.random.nextInt(effectList.size());
-					int amplifier = level.random.nextInt(2);
+					int i = level.getRandom().nextInt(effectList.size());
+					int amplifier = level.getRandom().nextInt(2);
 					Holder<MobEffect> randomPotion = effectList.get(i);
 					MobEffectInstance randomEffect = new MobEffectInstance(randomPotion, 200, amplifier);
 					entityIn.addEffect(randomEffect);

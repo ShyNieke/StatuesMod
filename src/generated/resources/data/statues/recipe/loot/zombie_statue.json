@@ -3,11 +3,9 @@
   "group": "zombie",
   "ingredient": "statues:zombie_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:rotten_flesh"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:iron_ingot"
   }
 }

@@ -17,7 +17,6 @@
       "translate": "advancement.statues.drowned_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:drowned_statue"
     },
     "title": {

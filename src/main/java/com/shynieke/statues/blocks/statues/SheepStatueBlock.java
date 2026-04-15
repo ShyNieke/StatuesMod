@@ -6,6 +6,7 @@ import com.shynieke.statues.blockentities.StatueBlockEntity;
 import com.shynieke.statues.blocks.AbstractStatueBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -46,8 +47,8 @@ public class SheepStatueBlock extends AbstractStatueBase {
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos,
 	                                      Player player, InteractionHand hand, BlockHitResult result) {
-		if (stack.getItem() instanceof DyeItem dyeItem && this.COLOR != dyeItem.getDyeColor()) {
-			Block block = COLOR_DYE_STATUE_MAP.get(dyeItem.getDyeColor());
+		if (stack.has(DataComponents.DYE) && this.COLOR != stack.get(DataComponents.DYE)) {
+			Block block = COLOR_DYE_STATUE_MAP.get(stack.get(DataComponents.DYE));
 			if (block != null) {
 				CompoundTag blockData = new CompoundTag();
 				if (level.getBlockEntity(pos) instanceof StatueBlockEntity blockEntity) {

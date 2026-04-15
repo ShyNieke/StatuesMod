@@ -6,24 +6,25 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class UpgradeRecipeBuilder implements RecipeBuilder {
 	private final Ingredient center;
 	private final Ingredient core;
 	private final List<Ingredient> catalysts = new ArrayList<>();
-	private ItemStack result = ItemStack.EMPTY;
+	private Optional<ItemStackTemplate> result = Optional.empty();
 	private boolean requireCore = false;
 	private UpgradeType upgradeType = UpgradeType.CRAFTING;
 	private int tier = -1;
@@ -42,12 +43,12 @@ public class UpgradeRecipeBuilder implements RecipeBuilder {
 	}
 
 	public UpgradeRecipeBuilder result(ItemLike resultIn) {
-		this.result = new ItemStack(resultIn.asItem());
+		this.result = Optional.of(new ItemStackTemplate(resultIn.asItem()));
 		return this;
 	}
 
-	public UpgradeRecipeBuilder result(ItemStack resultIn) {
-		this.result = resultIn;
+	public UpgradeRecipeBuilder result(ItemStackTemplate resultIn) {
+		this.result = Optional.of(resultIn);
 		return this;
 	}
 
@@ -82,8 +83,8 @@ public class UpgradeRecipeBuilder implements RecipeBuilder {
 	}
 
 	@Override
-	public Item getResult() {
-		return result.getItem();
+	public ResourceKey<Recipe<?>> defaultId() {
+		return RecipeBuilder.getDefaultRecipeId(this.result.orElse(new ItemStackTemplate(Items.STICK)));
 	}
 
 	public void save(RecipeOutput recipeOutput, Identifier recipeID) {

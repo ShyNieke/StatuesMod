@@ -17,7 +17,6 @@
       "translate": "advancement.statues.cow_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:cow_statue"
     },
     "title": {

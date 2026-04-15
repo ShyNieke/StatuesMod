@@ -5,8 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.shynieke.statues.Reference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class StatueSavedData extends SavedData {
 	public static final StatueSavedData blank = new StatueSavedData();
 
-	private static final String DATA_NAME = Reference.MOD_ID + "_world_data";
+	private static final Identifier DATA_NAME = Reference.modLoc("statue_data");
 	public static final Codec<StatueSavedData> CODEC = RecordCodecBuilder.create(
 			instance -> instance.group(
 							Codec.unboundedMap(ResourceKey.codec(Registries.DIMENSION), Codec.list(BlockPos.CODEC))

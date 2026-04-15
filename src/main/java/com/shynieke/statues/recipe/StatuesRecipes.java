@@ -4,6 +4,7 @@ import com.shynieke.statues.Reference;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
@@ -17,7 +18,7 @@ public class StatuesRecipes {
 	public static final Supplier<RecipeType<UpgradeRecipe>> UPGRADE_RECIPE = RECIPE_TYPES.register("upgrade_recipe", () -> new RecipeType<>() {
 	});
 
-	public static final Supplier<HardcoreRecipe.Serializer> HARDCORE_SHAPED_SERIALIZER = RECIPE_SERIALIZERS.register("hardcore_shaped", HardcoreRecipe.Serializer::new);
-	public static final Supplier<LootRecipe.Serializer> LOOT_SERIALIZER = RECIPE_SERIALIZERS.register("loot", LootRecipe.Serializer::new);
-	public static final Supplier<UpgradeRecipe.Serializer> UPGRADE_SERIALIZER = RECIPE_SERIALIZERS.register("upgrade", UpgradeRecipe.Serializer::new);
+	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<HardcoreRecipe>> HARDCORE_SHAPED_SERIALIZER = RECIPE_SERIALIZERS.register("hardcore_shaped", () -> HardcoreRecipe.SERIALIZER);
+	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<LootRecipe>> LOOT_SERIALIZER = RECIPE_SERIALIZERS.register("loot", () -> LootRecipe.Serializer.SERIALIZER);
+	public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<UpgradeRecipe>> UPGRADE_SERIALIZER = RECIPE_SERIALIZERS.register("upgrade", () -> UpgradeRecipe.SERIALIZER);
 }

@@ -2,15 +2,12 @@
   "type": "statues:loot",
   "ingredient": "statues:warden_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:sculk_sensor"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:sculk_shrieker"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:sculk_catalyst"
   }
 }

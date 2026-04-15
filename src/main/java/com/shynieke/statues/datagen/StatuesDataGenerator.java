@@ -11,6 +11,9 @@ import com.shynieke.statues.datagen.server.StatueGLMProvider;
 import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
+import com.shynieke.statues.datagen.server.StatueVillagerTradesTagProvider;
+import com.shynieke.statues.datagen.server.patchouli.StatuePatchouliProvider;
+import com.shynieke.statues.handlers.TraderHandler;
 import com.shynieke.statues.registry.StatueJukeboxSongs;
 import com.shynieke.statues.registry.StatueTrims;
 import net.minecraft.core.HolderLookup;
@@ -44,8 +47,9 @@ public class StatuesDataGenerator {
 		generator.addProvider(true, blockTags);
 		generator.addProvider(true, new StatueItemTagProvider(packOutput, lookupProvider));
 		generator.addProvider(true, new StatueBiomeTagProvider(packOutput, lookupProvider));
+		generator.addProvider(true, new StatueVillagerTradesTagProvider(packOutput, lookupProvider));
 		generator.addProvider(true, new StatueGLMProvider(packOutput, lookupProvider));
-//			generator.addProvider(true, new StatuePatchouliProvider(packOutput, lookupProvider));
+		generator.addProvider(true, new StatuePatchouliProvider(packOutput, lookupProvider));
 		generator.addProvider(true, new StatueAdvancementProvider(packOutput, lookupProvider));
 
 	}
@@ -57,5 +61,6 @@ public class StatuesDataGenerator {
 			})
 			.add(Registries.TRIM_PATTERN, StatueTrims::bootstrap)
 			.add(Registries.JUKEBOX_SONG, StatueJukeboxSongs::bootstrap)
+			.add(Registries.VILLAGER_TRADE, TraderHandler::bootstrap)
 			.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, StatueBiomeModifiers::bootstrap);
 }

@@ -1,65 +1,38 @@
 package com.shynieke.statues.handlers;
 
+import com.shynieke.statues.Reference;
 import com.shynieke.statues.registry.StatueRegistry;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.npc.villager.VillagerTrades;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.trading.ItemCost;
-import net.minecraft.world.item.trading.MerchantOffer;
-import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.village.WandererTradesEvent;
-import org.jspecify.annotations.Nullable;
+import net.minecraft.world.item.trading.TradeCost;
+import net.minecraft.world.item.trading.VillagerTrade;
+
+import java.util.List;
+import java.util.Optional;
 
 public class TraderHandler {
-	@SubscribeEvent
-	public void onWandererTradesEvent(WandererTradesEvent event) {
-		event.getGenericTrades().add(new TraderHandler.ItemsForEmeraldsTrade(StatueRegistry.INFO_STATUE.get(), 1, 2, 32, 1));
-		event.getGenericTrades().add(new TraderHandler.ItemsForEmeraldsTrade(StatueRegistry.SOMBRERO.get(), 1, 10, 1, 1));
-		event.getGenericTrades().add(new TraderHandler.ItemsForEmeraldsTrade(StatueRegistry.DETECTIVE_PLATYPUS.get(), 1, 20, 1, 1));
-		event.getGenericTrades().add(new TraderHandler.ItemsForEmeraldsTrade(StatueRegistry.SLABFISH.get(), 1, 15, 1, 1));
-		event.getGenericTrades().add(new TraderHandler.ItemsForEmeraldsTrade(StatueRegistry.TOTEM_OF_UNDYING_STATUE.get(), 1, 32, 1, 5));
+	public static final ResourceKey<VillagerTrade> INFO_STATUE = resourceKey("wandering_trader/info_statue");
+	public static final ResourceKey<VillagerTrade> SOMBRERO = resourceKey("wandering_trader/sombrero");
+	public static final ResourceKey<VillagerTrade> DETECTIVE_PLATYPUS = resourceKey("wandering_trader/detective_platypus");
+	public static final ResourceKey<VillagerTrade> SLABFISH = resourceKey("wandering_trader/slabfish");
+	public static final ResourceKey<VillagerTrade> TOTEM_OF_UNDYING_STATUE = resourceKey("wandering_trader/totem_of_undying_statue");
+
+	public static ResourceKey<VillagerTrade> resourceKey(String path) {
+		return ResourceKey.create(Registries.VILLAGER_TRADE, Reference.modLoc(path));
 	}
 
-	public static class ItemsForEmeraldsTrade implements VillagerTrades.ItemListing {
-		private final ItemStack outputStack;
-		private final int outputAmount;
-		private final int priceAmount;
-		private final int maxUses;
-		private final int givenExp;
-		private final float priceMultiplier;
+	public static void bootstrap(BootstrapContext<VillagerTrade> context) {
+		HolderGetter<Item> items = context.lookup(Registries.ITEM);
 
-		public ItemsForEmeraldsTrade(Block block, int outputAmount, int priceAmount, int maxUses, int givenExp) {
-			this(new ItemStack(block), priceAmount, outputAmount, maxUses, givenExp);
-		}
-
-		public ItemsForEmeraldsTrade(Item item, int outputAmount, int priceAmount, int givenExp) {
-			this(new ItemStack(item), priceAmount, outputAmount, 12, givenExp);
-		}
-
-		public ItemsForEmeraldsTrade(Item item, int outputAmount, int priceAmount, int maxUses, int givenExp) {
-			this(new ItemStack(item), priceAmount, outputAmount, maxUses, givenExp);
-		}
-
-		public ItemsForEmeraldsTrade(ItemStack outputStack, int priceAmount, int outputAmount, int maxUses, int givenExp) {
-			this(outputStack, priceAmount, outputAmount, maxUses, givenExp, 0.05F);
-		}
-
-		public ItemsForEmeraldsTrade(ItemStack outputStack, int priceAmount, int outputAmount, int maxUses, int givenExp, float priceMultiplier) {
-			this.priceAmount = priceAmount;
-			this.outputStack = outputStack;
-			this.outputAmount = outputAmount;
-			this.maxUses = maxUses;
-			this.givenExp = givenExp;
-			this.priceMultiplier = priceMultiplier;
-		}
-
-		public @Nullable MerchantOffer getOffer(ServerLevel level, Entity entity, RandomSource random) {
-			return new MerchantOffer(new ItemCost(Items.EMERALD, this.priceAmount), new ItemStack(this.outputStack.getItem(), this.outputAmount), this.maxUses, this.givenExp, this.priceMultiplier);
-		}
+		context.register(INFO_STATUE, new VillagerTrade(new TradeCost(Items.EMERALD, 2), new ItemStackTemplate(StatueRegistry.INFO_STATUE.asItem()), 32, 1, 0.05F, Optional.empty(), List.of()));
+		context.register(SOMBRERO, new VillagerTrade(new TradeCost(Items.EMERALD, 10), new ItemStackTemplate(StatueRegistry.SOMBRERO.asItem()), 1, 1, 0.05F, Optional.empty(), List.of()));
+		context.register(DETECTIVE_PLATYPUS, new VillagerTrade(new TradeCost(Items.EMERALD, 20), new ItemStackTemplate(StatueRegistry.DETECTIVE_PLATYPUS.asItem()), 1, 1, 0.05F, Optional.empty(), List.of()));
+		context.register(SLABFISH, new VillagerTrade(new TradeCost(Items.EMERALD, 15), new ItemStackTemplate(StatueRegistry.SLABFISH.asItem()), 1, 1, 0.05F, Optional.empty(), List.of()));
+		context.register(TOTEM_OF_UNDYING_STATUE, new VillagerTrade(new TradeCost(Items.EMERALD, 32), new ItemStackTemplate(StatueRegistry.TOTEM_OF_UNDYING_STATUE.asItem()), 1, 1, 0.05F, Optional.empty(), List.of()));
 	}
 }

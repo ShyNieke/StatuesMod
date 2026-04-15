@@ -17,7 +17,6 @@
       "translate": "advancement.statues.display_stand.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:display_stand"
     },
     "title": {

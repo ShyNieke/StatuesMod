@@ -17,7 +17,6 @@
       "translate": "advancement.statues.zombified_piglin_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:zombified_piglin_statue"
     },
     "title": {

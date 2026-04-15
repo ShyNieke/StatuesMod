@@ -1,5 +1,10 @@
-// 1.21.11	2026-04-15T23:30:39.4224578	Registries
+// 26.1.2	2026-04-16T00:40:15.0261056	Registries
 bc7ea3f904e7fb36de7d3656abc98016c75a776f data/statues/jukebox_song/credits.json
 aca6701e2de1d3dcb9a0430456d039bae0872717 data/statues/neoforge/biome_modifier/add_fewer_statue_bat_spawn.json
 760c99e0a58a4a3df8d4af59608f1b91e6e06b77 data/statues/neoforge/biome_modifier/add_statue_bat_spawn.json
 6894b87974bcfc491d9e8b390696b8691c10798b data/statues/trim_pattern/core.json
+37ea40f9aa3fd63cc1761bd6c5926a5ab99bba88 data/statues/villager_trade/wandering_trader/detective_platypus.json
+3d761a089362ca15c3323bfae317b1f322844a78 data/statues/villager_trade/wandering_trader/info_statue.json
+17ee1442556e38bbbd93e75f2bf50e800fa98831 data/statues/villager_trade/wandering_trader/slabfish.json
+01bca2b0bdbac38366f4c0d2adfbcfb9956be872 data/statues/villager_trade/wandering_trader/sombrero.json
+b1304d7cec76c2eced69647c892b9347a0abab7e data/statues/villager_trade/wandering_trader/totem_of_undying_statue.json

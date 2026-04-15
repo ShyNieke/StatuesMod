@@ -49,7 +49,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.Locale;
 import java.util.Optional;
@@ -139,7 +139,7 @@ public class PlayerStatue extends Avatar {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(RESOLVABLE_PROFILE, Optional.empty());
+		builder.define(RESOLVABLE_PROFILE, Optional.of(ResolvableProfile.createUnresolved("steve")));
 		builder.define(STATUS, (byte) 0);
 		builder.define(Y_OFFSET, 0F);
 		builder.define(HEAD_ROTATION, DEFAULT_HEAD_POSE);
@@ -622,6 +622,11 @@ public class PlayerStatue extends Avatar {
 		return HumanoidArm.RIGHT;
 	}
 
+	@Override
+	public ResolvableProfile getProfile() {
+		return getResolvableProfile().orElse(ResolvableProfile.createUnresolved("steve"));
+	}
+
 	/**
 	 * Sets the head's yaw rotation of the entity.
 	 */
@@ -642,9 +647,9 @@ public class PlayerStatue extends Avatar {
 			if (ClientHandler.TRANSLATORS.contains(profile.id())) {
 				level().addParticle(ParticleTypes.ENCHANT,
 						(double) getX(), (double) getEyeY() + 1, (double) getZ(),
-						(double) ((float) (level().random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D,
-						(double) ((float) (level().random.nextFloat() - 0.5) * 3 - random.nextFloat() - 1.0F),
-						(double) ((float) (level().random.nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D);
+						(double) ((float) (level().getRandom().nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D,
+						(double) ((float) (level().getRandom().nextFloat() - 0.5) * 3 - random.nextFloat() - 1.0F),
+						(double) ((float) (level().getRandom().nextFloat() - 0.5) * 3 + random.nextFloat()) - 0.5D);
 			}
 		}
 

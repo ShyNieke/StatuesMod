@@ -17,7 +17,6 @@
       "translate": "advancement.statues.turtle_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:turtle_statue"
     },
     "title": {

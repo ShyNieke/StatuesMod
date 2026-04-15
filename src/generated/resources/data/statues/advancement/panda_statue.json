@@ -77,7 +77,6 @@
       "translate": "advancement.statues.panda_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:panda_lazy_statue"
     },
     "title": {

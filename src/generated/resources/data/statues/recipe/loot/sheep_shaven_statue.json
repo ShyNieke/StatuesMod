@@ -3,7 +3,6 @@
   "group": "sheep",
   "ingredient": "statues:sheep_shaven_statue",
   "result3": {
-    "count": 1,
     "id": "minecraft:mutton"
   }
 }

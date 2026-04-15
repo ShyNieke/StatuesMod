@@ -14,7 +14,6 @@
     "statues:cat_white_statue"
   ],
   "result": {
-    "count": 1,
     "id": "minecraft:string"
   },
   "result3": {
@@ -24,7 +23,6 @@
         "text": "I.O.U"
       }
     },
-    "count": 1,
     "id": "minecraft:paper"
   }
 }

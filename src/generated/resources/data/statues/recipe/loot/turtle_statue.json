@@ -2,15 +2,12 @@
   "type": "statues:loot",
   "ingredient": "statues:turtle_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:seagrass"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:bowl"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:turtle_scute"
   }
 }

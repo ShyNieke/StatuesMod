@@ -2,15 +2,12 @@
   "type": "statues:loot",
   "ingredient": "statues:elder_guardian_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:prismarine_crystals"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:wet_sponge"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:prismarine_crystals"
   },
   "result_chance": 0.75,

@@ -32,8 +32,8 @@ public class TropicalFishBlockEntity extends StatueBlockEntity {
 
 	public void scrambleColors() {
 		if (level != null) {
-			this.MAIN_COLOR = level.random.nextInt(16);
-			this.SECONDARY_COLOR = level.random.nextInt(16);
+			this.MAIN_COLOR = level.getRandom().nextInt(16);
+			this.SECONDARY_COLOR = level.getRandom().nextInt(16);
 		}
 		setChanged();
 	}

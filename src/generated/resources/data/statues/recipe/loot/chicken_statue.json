@@ -2,15 +2,12 @@
   "type": "statues:loot",
   "ingredient": "statues:chicken_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:feather"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:chicken"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:egg"
   }
 }

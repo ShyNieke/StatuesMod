@@ -2,11 +2,9 @@
   "type": "statues:loot",
   "ingredient": "statues:king_cluck_statue",
   "result": {
-    "count": 1,
     "id": "statues:royal_nugget"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:gold_nugget"
   }
 }

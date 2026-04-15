@@ -18,7 +18,6 @@ import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.WingsLayer;
-import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -26,7 +25,7 @@ import net.minecraft.world.entity.decoration.Mannequin;
 import net.minecraft.world.entity.player.PlayerModelType;
 import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.component.ResolvableProfile;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, PlayerStatueRenderState, PlayerStatueModel> {
 	private PlayerSkinRenderCache playerSkinRenderCache;
@@ -101,15 +100,14 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	}
 
 	@Override
-	public void submit(PlayerStatueRenderState statueRenderState, PoseStack poseStack,
-	                   SubmitNodeCollector bufferSource, CameraRenderState cameraRenderState) {
-		this.isSlim = statueRenderState.skin != null && statueRenderState.skin.model() == PlayerModelType.SLIM;
+	public void submit(PlayerStatueRenderState state, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, net.minecraft.client.renderer.state.level.CameraRenderState camera) {
+		this.isSlim = state.skin != null && state.skin.model() == PlayerModelType.SLIM;
 		this.model = isSlim ? this.slimPlayerModel : playerModel;
-		poseStack.translate(0, statueRenderState.yOffset, 0);
-		if (statueRenderState.clientLock > 0) {
-			statueRenderState.xRot = statueRenderState.bodyRot;
+		poseStack.translate(0, state.yOffset, 0);
+		if (state.clientLock > 0) {
+			state.xRot = state.bodyRot;
 		}
-		super.submit(statueRenderState, poseStack, bufferSource, cameraRenderState);
+		super.submit(state, poseStack, submitNodeCollector, camera);
 	}
 
 	@Override

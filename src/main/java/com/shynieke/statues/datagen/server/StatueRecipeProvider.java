@@ -1,7 +1,6 @@
 package com.shynieke.statues.datagen.server;
 
 import com.shynieke.statues.Reference;
-import com.shynieke.statues.Statues;
 import com.shynieke.statues.datagen.server.recipe.HardcoreRecipeBuilder;
 import com.shynieke.statues.datagen.server.recipe.LootRecipeBuilder;
 import com.shynieke.statues.datagen.server.recipe.UpgradeRecipeBuilder;
@@ -9,11 +8,11 @@ import com.shynieke.statues.recipe.UpgradeType;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentExactPredicate;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
@@ -25,12 +24,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Blocks;
@@ -48,10 +46,11 @@ public class StatueRecipeProvider extends RecipeProvider {
 
 	@Override
 	protected void buildRecipes() {
-		ItemStack hardcorePlayer = new ItemStack(StatueRegistry.PLAYER_STATUE.get());
 		ItemLore lore = ItemLore.EMPTY;
 		lore = lore.withLineAdded(Component.literal("Only craftable in Hardcore Mode").withStyle(ChatFormatting.DARK_PURPLE));
-		hardcorePlayer.set(DataComponents.LORE, lore);
+		ItemStackTemplate hardcorePlayer = new ItemStackTemplate(StatueRegistry.PLAYER_STATUE.asItem(), DataComponentPatch.builder()
+				.set(DataComponents.LORE, lore)
+				.build());
 		HardcoreRecipeBuilder.hardcore(this.items, RecipeCategory.MISC, hardcorePlayer)
 				.pattern("ECE")
 				.pattern("LZL")
@@ -92,7 +91,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.DOLPHIN_STATUE.get()))
 				.result1(Items.COD).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.ENDERMAN_STATUE.get()))
-				.result1(new ItemStack(StatueRegistry.PEBBLE.get(), 16))
+				.result1(new ItemStackTemplate(StatueRegistry.PEBBLE.asItem(), 16))
 				.result2(Items.ENDER_PEARL).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.ELDER_GUARDIAN_STATUE.get()))
 				.result1(Items.PRISMARINE_CRYSTALS, 0.75F).result2(Items.WET_SPONGE).result3(Items.PRISMARINE_CRYSTALS, 0.25F).save(this.output);
@@ -257,7 +256,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
 						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
-						DataComponentIngredient.of(false, DataComponentExactPredicate.builder().build(), Items.ENCHANTED_BOOK))).tier(1)
+						DataComponentIngredient.of(false, DataComponentExactPredicate.builder().build().asPatch(), Items.ENCHANTED_BOOK))).tier(1)
 				.upgradeType(UpgradeType.MOB_KILLER).save(this.output, Reference.modLoc("upgrade/mob_killer_2"));
 
 		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.EXPERIENCE_BOTTLE))).tier(2)
@@ -315,27 +314,24 @@ public class StatueRecipeProvider extends RecipeProvider {
 		return this.registries.lookupOrThrow(Registries.ITEM).getOrThrow(tagKey);
 	}
 
-	private ItemStack getIOU() {
-		ItemStack paperStack = new ItemStack(Items.PAPER);
-		paperStack.set(DataComponents.CUSTOM_NAME, Component.literal("I.O.U").withStyle(ChatFormatting.LIGHT_PURPLE));
+	private ItemStackTemplate getIOU() {
+		ItemStackTemplate paperStack = new ItemStackTemplate(Items.PAPER, DataComponentPatch.builder()
+				.set(DataComponents.CUSTOM_NAME, Component.literal("I.O.U").withStyle(ChatFormatting.LIGHT_PURPLE))
+				.build());
 		return paperStack;
 	}
 
-	private ItemStack getWastelandBlock(HolderLookup.Provider provider) {
-		ItemStack wasteland = new ItemStack(Blocks.SAND);
-		wasteland.set(DataComponents.CUSTOM_NAME, Component.literal("Wasteland Block").withStyle(ChatFormatting.LIGHT_PURPLE));
+	private ItemStackTemplate getWastelandBlock(HolderLookup.Provider provider) {
+		ItemEnchantments.Mutable enchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+		enchantments.set(provider.lookupOrThrow(Registries.ENCHANTMENT)
+				.getOrThrow(Enchantments.VANISHING_CURSE), 1);
 
-		try {
-			Holder.Reference<Enchantment> VANISHING = provider.lookupOrThrow(Registries.ENCHANTMENT)
-					.getOrThrow(Enchantments.VANISHING_CURSE);
-			wasteland.enchant(VANISHING, 1);
-		} catch (Exception e) {
-			Statues.LOGGER.error("Failed to set vanishing enchant", e);
-		}
+		ItemStackTemplate wasteland = new ItemStackTemplate(Blocks.SAND.asItem(), DataComponentPatch.builder()
+				.set(DataComponents.CUSTOM_NAME, Component.literal("Wasteland Block").withStyle(ChatFormatting.LIGHT_PURPLE))
+				.set(DataComponents.STORED_ENCHANTMENTS, enchantments.toImmutable())
+				.set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT.withHidden(DataComponents.ENCHANTMENTS, true))
+				.build());
 
-		ItemEnchantments enchantments = wasteland.getEnchantments();
-		wasteland.set(DataComponents.ENCHANTMENTS, enchantments);
-		wasteland.set(DataComponents.TOOLTIP_DISPLAY, TooltipDisplay.DEFAULT.withHidden(DataComponents.ENCHANTMENTS, true));
 		return wasteland;
 	}
 

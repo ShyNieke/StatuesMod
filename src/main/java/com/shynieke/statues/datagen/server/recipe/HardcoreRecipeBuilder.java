@@ -3,35 +3,32 @@ package com.shynieke.statues.datagen.server.recipe;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.shynieke.statues.recipe.HardcoreRecipe;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.AdvancementRequirements;
-import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.data.recipes.RecipeUnlockAdvancementBuilder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class HardcoreRecipeBuilder implements RecipeBuilder {
+	private final RecipeUnlockAdvancementBuilder advancementBuilder = new RecipeUnlockAdvancementBuilder();
 	private final HolderGetter<Item> items;
 	private final RecipeCategory category;
-	private final Item result;
-	private final ItemStack resultStack; // Neo: add stack result support
+	private final ItemStackTemplate result;
 	private final List<String> rows = Lists.newArrayList();
 	private final Map<Character, Ingredient> key = Maps.newLinkedHashMap();
 	private final Map<String, Criterion<?>> criteria = new LinkedHashMap<>();
@@ -39,27 +36,26 @@ public class HardcoreRecipeBuilder implements RecipeBuilder {
 	private String group;
 	private boolean showNotification = true;
 
-	private HardcoreRecipeBuilder(HolderGetter<Item> p_365072_, RecipeCategory p_249996_, ItemLike p_251475_, int p_248948_) {
-		this(p_365072_, p_249996_, new ItemStack(p_251475_, p_248948_));
+	private HardcoreRecipeBuilder(HolderGetter<Item> holderGetter, RecipeCategory category, ItemLike itemLike, int count) {
+		this(holderGetter, category, new ItemStackTemplate(itemLike.asItem(), count));
 	}
 
-	private HardcoreRecipeBuilder(HolderGetter<Item> p_365072_, RecipeCategory p_249996_, ItemStack result) {
-		this.items = p_365072_;
-		this.category = p_249996_;
-		this.result = result.getItem();
-		this.resultStack = result;
+	private HardcoreRecipeBuilder(HolderGetter<Item> holderGetter, RecipeCategory category, ItemStackTemplate result) {
+		this.items = holderGetter;
+		this.category = category;
+		this.result = result;
 	}
 
-	public static HardcoreRecipeBuilder hardcore(HolderGetter<Item> p_364036_, RecipeCategory p_250853_, ItemLike p_249747_) {
-		return hardcore(p_364036_, p_250853_, p_249747_, 1);
+	public static HardcoreRecipeBuilder hardcore(HolderGetter<Item> holderGetter, RecipeCategory category, ItemLike itemLike) {
+		return hardcore(holderGetter, category, itemLike, 1);
 	}
 
-	public static HardcoreRecipeBuilder hardcore(HolderGetter<Item> p_365019_, RecipeCategory p_251325_, ItemLike p_250636_, int p_249081_) {
-		return new HardcoreRecipeBuilder(p_365019_, p_251325_, p_250636_, p_249081_);
+	public static HardcoreRecipeBuilder hardcore(HolderGetter<Item> holderGetter, RecipeCategory category, ItemLike itemLike, int count) {
+		return new HardcoreRecipeBuilder(holderGetter, category, itemLike, count);
 	}
 
-	public static HardcoreRecipeBuilder hardcore(HolderGetter<Item> p_365019_, RecipeCategory p_251325_, ItemStack result) {
-		return new HardcoreRecipeBuilder(p_365019_, p_251325_, result);
+	public static HardcoreRecipeBuilder hardcore(HolderGetter<Item> holderGetter, RecipeCategory category, ItemStackTemplate result) {
+		return new HardcoreRecipeBuilder(holderGetter, category, result);
 	}
 
 	/**
@@ -103,7 +99,7 @@ public class HardcoreRecipeBuilder implements RecipeBuilder {
 	}
 
 	public HardcoreRecipeBuilder unlockedBy(String name, Criterion<?> criterion) {
-		this.criteria.put(name, criterion);
+		this.advancementBuilder.unlockedBy(name, criterion);
 		return this;
 	}
 
@@ -118,33 +114,19 @@ public class HardcoreRecipeBuilder implements RecipeBuilder {
 	}
 
 	@Override
-	public Item getResult() {
-		return this.result;
+	public ResourceKey<Recipe<?>> defaultId() {
+		return RecipeBuilder.getDefaultRecipeId(this.result);
 	}
 
 	@Override
-	public void save(RecipeOutput recipeOutput, ResourceKey<Recipe<?>> resourceKey) {
-		ShapedRecipePattern shapedrecipepattern = this.ensureValid(resourceKey);
-		Advancement.Builder advancement$builder = recipeOutput.advancement()
-				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(resourceKey))
-				.rewards(AdvancementRewards.Builder.recipe(resourceKey))
-				.requirements(AdvancementRequirements.Strategy.OR);
-		this.criteria.forEach(advancement$builder::addCriterion);
-		HardcoreRecipe hardcoreRecipe = new HardcoreRecipe(
-				Objects.requireNonNullElse(this.group, ""),
-				RecipeBuilder.determineBookCategory(this.category),
-				shapedrecipepattern,
-				this.resultStack,
-				this.showNotification
+	public void save(RecipeOutput output, ResourceKey<Recipe<?>> id) {
+		ShapedRecipePattern pattern = ShapedRecipePattern.of(this.key, this.rows);
+		HardcoreRecipe recipe = new HardcoreRecipe(
+				RecipeBuilder.createCraftingCommonInfo(this.showNotification),
+				RecipeBuilder.createCraftingBookInfo(this.category, this.group),
+				pattern,
+				this.result
 		);
-		recipeOutput.accept(resourceKey, hardcoreRecipe, advancement$builder.build(resourceKey.identifier().withPrefix("recipes/" + this.category.getFolderName() + "/")));
-	}
-
-	private ShapedRecipePattern ensureValid(ResourceKey<Recipe<?>> resourceKey) {
-		if (this.criteria.isEmpty()) {
-			throw new IllegalStateException("No way of obtaining recipe " + resourceKey.identifier());
-		} else {
-			return ShapedRecipePattern.of(this.key, this.rows);
-		}
+		output.accept(id, recipe, this.advancementBuilder.build(output, id, this.category));
 	}
 }

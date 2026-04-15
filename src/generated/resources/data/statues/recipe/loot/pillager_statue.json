@@ -2,15 +2,12 @@
   "type": "statues:loot",
   "ingredient": "statues:pillager_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:arrow"
   },
   "result2": {
-    "count": 1,
     "id": "minecraft:crossbow"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:emerald"
   },
   "result_chance2": 0.25,

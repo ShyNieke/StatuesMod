@@ -2,11 +2,9 @@
   "type": "statues:loot",
   "ingredient": "statues:frog_cold_statue",
   "result": {
-    "count": 1,
     "id": "minecraft:slime_ball"
   },
   "result3": {
-    "count": 1,
     "id": "minecraft:verdant_froglight"
   }
 }

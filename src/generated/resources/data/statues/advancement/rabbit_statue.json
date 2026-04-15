@@ -67,7 +67,6 @@
       "translate": "advancement.statues.rabbit_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:rabbit_br_statue"
     },
     "title": {

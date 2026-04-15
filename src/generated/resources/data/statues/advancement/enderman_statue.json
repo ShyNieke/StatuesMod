@@ -17,7 +17,6 @@
       "translate": "advancement.statues.enderman_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:enderman_statue"
     },
     "title": {

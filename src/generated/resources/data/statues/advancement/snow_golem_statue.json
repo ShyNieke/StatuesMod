@@ -17,7 +17,6 @@
       "translate": "advancement.statues.snow_golem_statue.desc"
     },
     "icon": {
-      "count": 1,
       "id": "statues:snow_golem_statue"
     },
     "title": {

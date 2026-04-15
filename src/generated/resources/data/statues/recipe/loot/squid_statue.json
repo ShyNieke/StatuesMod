@@ -2,7 +2,6 @@
   "type": "statues:loot",
   "ingredient": "statues:squid_statue",
   "result2": {
-    "count": 1,
     "id": "minecraft:ink_sac"
   }
 }

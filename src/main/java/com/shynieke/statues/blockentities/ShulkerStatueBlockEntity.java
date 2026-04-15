@@ -22,7 +22,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class ShulkerStatueBlockEntity extends StatueBlockEntity implements MenuProvider {
 	private final ItemStacksResourceHandler handler = new ItemStacksResourceHandler(18) {

@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ItemOwner;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.Nullable;
 
 public class StatueCompassAngleState extends NeedleDirectionHelper {
 	public static final MapCodec<StatueCompassAngleState> MAP_CODEC = RecordCodecBuilder.mapCodec(
