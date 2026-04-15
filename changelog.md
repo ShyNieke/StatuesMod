@@ -1,1 +1,1 @@
-* Add a Zombified Piglin statue (Requested by JBHUTT09 on Discord / Patreon)
+* Update to 1.21.11
