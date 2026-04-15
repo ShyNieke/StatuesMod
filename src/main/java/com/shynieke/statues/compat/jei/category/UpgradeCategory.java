@@ -50,10 +50,14 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 		return JEIPlugin.UPGRADE_TYPE;
 	}
 
-	@SuppressWarnings("removal")
 	@Override
-	public IDrawable getBackground() {
-		return background;
+	public int getWidth() {
+		return 148;
+	}
+
+	@Override
+	public int getHeight() {
+		return 62;
 	}
 
 	@Override
@@ -178,7 +182,7 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 
 	@Override
 	public void draw(UpgradeRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
+		background.draw(guiGraphics);
 	}
 
 	public static class UpgradeTooltipCallback implements IRecipeSlotRichTooltipCallback {

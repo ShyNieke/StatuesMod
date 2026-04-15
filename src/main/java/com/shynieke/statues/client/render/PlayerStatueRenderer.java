@@ -20,7 +20,7 @@ import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.WingsLayer;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.resources.DefaultPlayerSkin;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.decoration.Mannequin;
 import net.minecraft.world.entity.player.PlayerModelType;
@@ -96,7 +96,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(PlayerStatueRenderState statueRenderState) {
+	public Identifier getTextureLocation(PlayerStatueRenderState statueRenderState) {
 		return statueRenderState.skin.body().texturePath();
 	}
 

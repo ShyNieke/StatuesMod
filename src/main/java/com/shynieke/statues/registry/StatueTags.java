@@ -2,7 +2,7 @@ package com.shynieke.statues.registry;
 
 import com.shynieke.statues.Reference;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 
 public class StatueTags {
-	public static final TagKey<Item> CURIOS_STATUE = ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", "statue"));
+	public static final TagKey<Item> CURIOS_STATUE = ItemTags.create(Identifier.fromNamespaceAndPath("curios", "statue"));
 
 	public static final TagKey<Item> STATUES_ITEMS = ItemTags.create(Reference.modLoc("statues"));
 	public static final TagKey<Item> UPGRADEABLE_STATUES = ItemTags.create(Reference.modLoc("statues/upgradeable"));

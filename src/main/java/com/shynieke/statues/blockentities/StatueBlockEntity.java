@@ -13,7 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -195,7 +195,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 				if (this.level.isAreaLoaded(worldPosition, 1)) {
 					BlockEntity foundTile = this.level.getBlockEntity(offPos);
 					if (foundTile != null) {
-						ResourceLocation typeLocation = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(foundTile.getType());
+						Identifier typeLocation = BuiltInRegistries.BLOCK_ENTITY_TYPE.getKey(foundTile.getType());
 						boolean flag2 = typeLocation != null;
 						ResourceHandler<ItemResource> handler = this.level.getCapability(Capabilities.Item.BLOCK, offPos, null);
 						if (flag2 && !foundTile.isRemoved() && foundTile.hasLevel() && handler != null) {

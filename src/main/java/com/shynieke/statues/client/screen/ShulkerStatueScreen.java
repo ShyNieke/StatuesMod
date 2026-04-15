@@ -6,11 +6,11 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 
 public class ShulkerStatueScreen extends AbstractContainerScreen<ShulkerStatueMenu> {
-	private final ResourceLocation TEXTURE = Reference.modLoc("textures/gui/container/shulker_statue.png");
+	private final Identifier TEXTURE = Reference.modLoc("textures/gui/container/shulker_statue.png");
 
 
 	public ShulkerStatueScreen(ShulkerStatueMenu screenContainer, Inventory inv, Component titleIn) {

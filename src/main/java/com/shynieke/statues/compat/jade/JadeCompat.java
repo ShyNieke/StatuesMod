@@ -6,7 +6,7 @@ import com.shynieke.statues.blocks.AbstractStatueBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import snownee.jade.api.BlockAccessor;
 import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
@@ -29,7 +29,7 @@ public class JadeCompat implements IWailaPlugin {
 	}
 
 	public static class PastryBodyHandler implements IBlockComponentProvider {
-		private static final ResourceLocation BITES = Reference.modLoc("upgrades");
+		private static final Identifier BITES = Reference.modLoc("upgrades");
 
 		public static final PastryBodyHandler INSTANCE = new PastryBodyHandler();
 
@@ -69,7 +69,7 @@ public class JadeCompat implements IWailaPlugin {
 		}
 
 		@Override
-		public ResourceLocation getUid() {
+		public Identifier getUid() {
 			return BITES;
 		}
 	}

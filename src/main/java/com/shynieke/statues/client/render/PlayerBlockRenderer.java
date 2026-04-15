@@ -11,17 +11,18 @@ import com.shynieke.statues.client.state.PlayerStatueRenderState;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.PlayerSkinRenderCache;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.client.resources.SkinManager;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.PlayerSkin;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.phys.Vec3;
@@ -34,7 +35,7 @@ public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntit
 	private final StatuePlayerTileModel model;
 	private final StatuePlayerTileModel slimModel;
 
-	public static final ResourceLocation defaultTexture = DefaultPlayerSkin.getDefaultTexture();
+	public static final Identifier defaultTexture = DefaultPlayerSkin.getDefaultTexture();
 
 	public PlayerBlockRenderer(BlockEntityRendererProvider.Context context) {
 		this.model = new StatuePlayerTileModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
@@ -121,7 +122,7 @@ public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntit
 
 	public RenderType getRenderType(@Nullable ResolvableProfile resolvableProfile) {
 		if (resolvableProfile == null)
-			return RenderType.entityTranslucent(defaultTexture);
+			return RenderTypes.entityTranslucent(defaultTexture);
 
 		return playerSkinRenderCache.getOrDefault(resolvableProfile).renderType();
 	}

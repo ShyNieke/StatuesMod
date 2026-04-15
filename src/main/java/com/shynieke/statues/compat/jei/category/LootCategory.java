@@ -34,10 +34,14 @@ public class LootCategory implements IRecipeCategory<LootRecipe> {
 		return JEIPlugin.LOOT_TYPE;
 	}
 
-	@SuppressWarnings("removal")
 	@Override
-	public IDrawable getBackground() {
-		return background;
+	public int getWidth() {
+		return 100;
+	}
+
+	@Override
+	public int getHeight() {
+		return 62;
 	}
 
 	@Override
@@ -56,7 +60,7 @@ public class LootCategory implements IRecipeCategory<LootRecipe> {
 
 	@Override
 	public void draw(LootRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
-		IRecipeCategory.super.draw(recipe, recipeSlotsView, guiGraphics, mouseX, mouseY);
+		background.draw(guiGraphics);
 
 		Minecraft minecraft = Minecraft.getInstance();
 		Font font = minecraft.font;

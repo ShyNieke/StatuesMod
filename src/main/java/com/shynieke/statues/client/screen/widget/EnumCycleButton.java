@@ -1,5 +1,6 @@
 package com.shynieke.statues.client.screen.widget;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
@@ -48,6 +49,12 @@ public class EnumCycleButton<T extends Enum<T>> extends Button {
 
 	public void cycleValue() {
 		this.setValue(nextOption(this.value));
+	}
+
+	@Override
+	protected void renderContents(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+		this.renderDefaultSprite(guiGraphics);
+		this.renderDefaultLabel(guiGraphics.textRendererForWidget(this, GuiGraphics.HoveredTextEffects.NONE));
 	}
 
 	public static class Builder<T extends Enum<T>> {

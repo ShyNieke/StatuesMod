@@ -9,7 +9,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class StatueTableScreen extends AbstractContainerScreen<StatueTableMenu> {
 
-	private final ResourceLocation TEXTURE = Reference.modLoc("textures/gui/container/statue_table.png");
+	private final Identifier TEXTURE = Reference.modLoc("textures/gui/container/statue_table.png");
 	private Button buttonChisel;
 
 	public StatueTableScreen(StatueTableMenu screenContainer, Inventory inv, Component titleIn) {

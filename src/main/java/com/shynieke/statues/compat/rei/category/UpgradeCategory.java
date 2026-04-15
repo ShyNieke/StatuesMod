@@ -18,14 +18,14 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.joml.Matrix3x2fStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UpgradeCategory implements DisplayCategory<UpgradeDisplay> {
-	private static final ResourceLocation TEXTURE = Reference.modLoc("textures/gui/jei/upgrade.png");
+	private static final Identifier TEXTURE = Reference.modLoc("textures/gui/jei/upgrade.png");
 
 	@Override
 	public CategoryIdentifier<? extends UpgradeDisplay> getCategoryIdentifier() {

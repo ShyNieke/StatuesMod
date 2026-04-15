@@ -182,7 +182,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 						if (onlineFlag) {
 							ItemStack playerCompass = isPlayerCompass ? stack : new ItemStack(StatueRegistry.PLAYER_COMPASS.get());
 							Player player = level.getPlayerByUUID(id);
-							if (player != null && player.level().dimension().location().equals(playerIn.level().dimension().location())) {
+							if (player != null && player.level().dimension().identifier().equals(playerIn.level().dimension().identifier())) {
 								GlobalPos playerPos = GlobalPos.of(player.level().dimension(), player.blockPosition());
 								playerCompass.set(StatueDataComponents.PLAYER_COMPASS_DATA.get(), new PlayerCompassData(playerPos, resolvableProfile.name().orElse("Unknown")));
 

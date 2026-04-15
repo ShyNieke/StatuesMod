@@ -9,7 +9,7 @@
 //import net.minecraft.client.data.models.model.TextureSlot;
 //import net.minecraft.client.renderer.block.model.BlockModel;
 //import net.minecraft.data.PackOutput;
-//import net.minecraft.resources.ResourceLocation;
+//import net.minecraft.resources.Identifier;
 //import net.minecraft.world.item.BlockItem;
 //import net.minecraft.world.item.Item;
 //import net.minecraft.world.item.SpawnEggItem;
@@ -28,7 +28,7 @@
 //				} else {
 //					if (registryObject.getId().equals(StatueRegistry.CORE_FLOWER_ITEM.getId()))
 //						generator.generateFlatItem(registryObject.get(), ModelTemplates.createItem("generated", TextureSlot.LAYER0));
-//						singleTexture(registryObject.getId().getPath(), ResourceLocation.withDefaultNamespace("item/generated"),
+//						singleTexture(registryObject.getId().getPath(), Identifier.withDefaultNamespace("item/generated"),
 //								"layer0", Reference.modLoc("block/" + registryObject.getId().getPath()));
 //					else
 //						withBlockParent(registryObject.getId());
@@ -37,7 +37,7 @@
 //				if (registryObject.get() instanceof PlayerCompassItem) {
 //					generateStatueCompass(registryObject.getId(), mcLoc("item/compass_16"));
 //				} else if (registryObject.get() instanceof SpawnEggItem) {
-//					withExistingParent(registryObject.getId().getPath(), ResourceLocation.withDefaultNamespace("item/template_spawn_egg"));
+//					withExistingParent(registryObject.getId().getPath(), Identifier.withDefaultNamespace("item/template_spawn_egg"));
 //				} else {
 //					generatedItem(registryObject.getId());
 //				}
@@ -45,50 +45,50 @@
 //		}
 //	}
 //
-//	private void withBlockParent(ResourceLocation location) {
+//	private void withBlockParent(Identifier location) {
 //		withExistingParent(location.getPath(), modLoc("block/" + location.getPath()));
 //	}
 //
-//	private void generatedItem(ResourceLocation location) {
-//		singleTexture(location.getPath(), ResourceLocation.withDefaultNamespace("item/generated"),
+//	private void generatedItem(Identifier location) {
+//		singleTexture(location.getPath(), Identifier.withDefaultNamespace("item/generated"),
 //				"layer0", Reference.modLoc("item/" + location.getPath()));
 //	}
 //
-//	private void generateStatueCompass(ResourceLocation location, ResourceLocation textureLocation) {
-//		ResourceLocation angle = ResourceLocation.withDefaultNamespace("angle");
-//		singleTexture(location.getPath(), ResourceLocation.withDefaultNamespace("item/generated"), "layer0", textureLocation)
-//				.override().predicate(angle, 0f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass"))).end()
-//				.override().predicate(angle, 0.015625f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_17"))).end()
-//				.override().predicate(angle, 0.046875f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_18"))).end()
-//				.override().predicate(angle, 0.078125f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_19"))).end()
-//				.override().predicate(angle, 0.109375f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_20"))).end()
-//				.override().predicate(angle, 0.140625f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_21"))).end()
-//				.override().predicate(angle, 0.171875f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_22"))).end()
-//				.override().predicate(angle, 0.203125f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_23"))).end()
-//				.override().predicate(angle, 0.234375f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_24"))).end()
-//				.override().predicate(angle, 0.265625f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_25"))).end()
-//				.override().predicate(angle, 0.296875f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_26"))).end()
-//				.override().predicate(angle, 0.328125f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_27"))).end()
-//				.override().predicate(angle, 0.359375f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_28"))).end()
-//				.override().predicate(angle, 0.390625f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_29"))).end()
-//				.override().predicate(angle, 0.421875f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_30"))).end()
-//				.override().predicate(angle, 0.453125f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_31"))).end()
-//				.override().predicate(angle, 0.484375f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_00"))).end()
-//				.override().predicate(angle, 0.515625f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_01"))).end()
-//				.override().predicate(angle, 0.546875f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_02"))).end()
-//				.override().predicate(angle, 0.578125f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_03"))).end()
-//				.override().predicate(angle, 0.609375f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_04"))).end()
-//				.override().predicate(angle, 0.640625f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_05"))).end()
-//				.override().predicate(angle, 0.671875f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_06"))).end()
-//				.override().predicate(angle, 0.703125f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_07"))).end()
-//				.override().predicate(angle, 0.734375f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_08"))).end()
-//				.override().predicate(angle, 0.765625f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_09"))).end()
-//				.override().predicate(angle, 0.796875f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_10"))).end()
-//				.override().predicate(angle, 0.828125f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_11"))).end()
-//				.override().predicate(angle, 0.859375f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_12"))).end()
-//				.override().predicate(angle, 0.890625f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_13"))).end()
-//				.override().predicate(angle, 0.921875f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_14"))).end()
-//				.override().predicate(angle, 0.953125f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass_15"))).end()
-//				.override().predicate(angle, 0.984375f).model(new ItemModelBuilder(ResourceLocation.withDefaultNamespace(ITEM_FOLDER + "/compass"))).end();
+//	private void generateStatueCompass(Identifier location, Identifier textureLocation) {
+//		Identifier angle = Identifier.withDefaultNamespace("angle");
+//		singleTexture(location.getPath(), Identifier.withDefaultNamespace("item/generated"), "layer0", textureLocation)
+//				.override().predicate(angle, 0f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass"))).end()
+//				.override().predicate(angle, 0.015625f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_17"))).end()
+//				.override().predicate(angle, 0.046875f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_18"))).end()
+//				.override().predicate(angle, 0.078125f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_19"))).end()
+//				.override().predicate(angle, 0.109375f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_20"))).end()
+//				.override().predicate(angle, 0.140625f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_21"))).end()
+//				.override().predicate(angle, 0.171875f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_22"))).end()
+//				.override().predicate(angle, 0.203125f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_23"))).end()
+//				.override().predicate(angle, 0.234375f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_24"))).end()
+//				.override().predicate(angle, 0.265625f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_25"))).end()
+//				.override().predicate(angle, 0.296875f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_26"))).end()
+//				.override().predicate(angle, 0.328125f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_27"))).end()
+//				.override().predicate(angle, 0.359375f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_28"))).end()
+//				.override().predicate(angle, 0.390625f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_29"))).end()
+//				.override().predicate(angle, 0.421875f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_30"))).end()
+//				.override().predicate(angle, 0.453125f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_31"))).end()
+//				.override().predicate(angle, 0.484375f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_00"))).end()
+//				.override().predicate(angle, 0.515625f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_01"))).end()
+//				.override().predicate(angle, 0.546875f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_02"))).end()
+//				.override().predicate(angle, 0.578125f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_03"))).end()
+//				.override().predicate(angle, 0.609375f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_04"))).end()
+//				.override().predicate(angle, 0.640625f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_05"))).end()
+//				.override().predicate(angle, 0.671875f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_06"))).end()
+//				.override().predicate(angle, 0.703125f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_07"))).end()
+//				.override().predicate(angle, 0.734375f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_08"))).end()
+//				.override().predicate(angle, 0.765625f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_09"))).end()
+//				.override().predicate(angle, 0.796875f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_10"))).end()
+//				.override().predicate(angle, 0.828125f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_11"))).end()
+//				.override().predicate(angle, 0.859375f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_12"))).end()
+//				.override().predicate(angle, 0.890625f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_13"))).end()
+//				.override().predicate(angle, 0.921875f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_14"))).end()
+//				.override().predicate(angle, 0.953125f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass_15"))).end()
+//				.override().predicate(angle, 0.984375f).model(new ItemModelBuilder(Identifier.withDefaultNamespace(ITEM_FOLDER + "/compass"))).end();
 //	}
 //}

@@ -7,7 +7,7 @@
 //import net.minecraft.core.Direction;
 //import net.minecraft.core.registries.BuiltInRegistries;
 //import net.minecraft.data.PackOutput;
-//import net.minecraft.resources.ResourceLocation;
+//import net.minecraft.resources.Identifier;
 //import net.minecraft.world.level.block.Block;
 //import net.minecraft.world.level.block.CropBlock;
 //import net.minecraft.world.level.block.FlowerBlock;
@@ -45,16 +45,16 @@
 //		VariantBlockStateBuilder builder = getVariantBuilder(block);
 //		for (int i = 0; i <= block.getMaxAge(); i++) {
 //			ModelFile file = models().crop(BuiltInRegistries.BLOCK.getKey(block).getPath() + "_" + (i),
-//					ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID,
+//					Identifier.fromNamespaceAndPath(Reference.MOD_ID,
 //							"block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() +
-//									"_stage" + (i))).renderType(ResourceLocation.withDefaultNamespace("cutout"));
+//									"_stage" + (i))).renderType(Identifier.withDefaultNamespace("cutout"));
 //			builder.partialState().with(property, i).modelForState().modelFile(file).addModel();
 //		}
 //	}
 //
 //	private void crossBlock(DeferredHolder<Block, ? extends Block> block) {
 //		simpleBlock(block.get(), models().cross(block.getId().getPath(), blockTexture(block.get()))
-//				.renderType(ResourceLocation.withDefaultNamespace("cutout")));
+//				.renderType(Identifier.withDefaultNamespace("cutout")));
 //	}
 //
 //	private void makeStatue(DeferredHolder<Block, ? extends Block> registryObject) {

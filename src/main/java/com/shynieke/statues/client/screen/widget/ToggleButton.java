@@ -1,5 +1,6 @@
 package com.shynieke.statues.client.screen.widget;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
@@ -21,6 +22,12 @@ public class ToggleButton extends Button {
 	public void setValue(boolean value) {
 		this.value = value;
 		this.setMessage(value ? Component.translatable("gui.yes") : Component.translatable("gui.no"));
+	}
+
+	@Override
+	protected void renderContents(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+		this.renderDefaultSprite(guiGraphics);
+		this.renderDefaultLabel(guiGraphics.textRendererForWidget(this, GuiGraphics.HoveredTextEffects.NONE));
 	}
 
 	public static class Builder {

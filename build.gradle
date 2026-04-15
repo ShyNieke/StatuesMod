@@ -2,8 +2,8 @@ plugins {
     id 'idea'
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.115'
-    id 'net.darkhax.curseforgegradle' version '1.1.26'
+    id 'net.neoforged.moddev' version '2.0.141'
+    id 'net.darkhax.curseforgegradle' version '1.1.28'
     id 'com.modrinth.minotaur' version "2.+"
 }
 
@@ -139,8 +139,8 @@ dependencies {
 
 //    implementation "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
 
-//    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
-//    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
 //    compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 //    localRuntime "vazkii.patchouli:Patchouli:${patchouli_version}"

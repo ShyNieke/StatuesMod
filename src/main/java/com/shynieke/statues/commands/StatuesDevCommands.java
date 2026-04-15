@@ -10,7 +10,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -36,9 +36,9 @@ public class StatuesDevCommands {
 		Set<Block> beBlocks = new HashSet<>(StatueBlockEntities.STATUE.get().getValidBlocks());
 		beBlocks.addAll(StatueBlockEntities.SHULKER_STATUE.get().getValidBlocks());
 		beBlocks.addAll(StatueBlockEntities.TROPICAL_FISH.get().getValidBlocks());
-		List<ResourceLocation> missingBlocks = new ArrayList<>();
+		List<Identifier> missingBlocks = new ArrayList<>();
 		ctx.getSource().getLevel().recipeAccess().recipeMap().byType(StatuesRecipes.LOOT_RECIPE.get()).forEach(recipe -> {
-			if (recipe.id().location().getNamespace().equals(Reference.MOD_ID)) {
+			if (recipe.id().identifier().getNamespace().equals(Reference.MOD_ID)) {
 				for (Ingredient ingredient : recipe.value().getIngredients()) {
 					for (Holder<Item> item : ingredient.getValues()) {
 						if (item.value() instanceof BlockItem blockItem) {
@@ -54,7 +54,7 @@ public class StatuesDevCommands {
 		} else {
 			StringBuilder builder = new StringBuilder();
 			builder.append("The following blocks are missing from the Statue block entity valid blocks: ");
-			for (ResourceLocation location : missingBlocks) {
+			for (Identifier location : missingBlocks) {
 				builder.append(location.toString()).append(", ");
 			}
 			ctx.getSource().sendFailure(Component.literal(builder.toString()));
@@ -72,7 +72,7 @@ public class StatuesDevCommands {
 		Set<Block> beBlocks = new HashSet<>(StatueBlockEntities.STATUE.get().getValidBlocks());
 		beBlocks.addAll(StatueBlockEntities.SHULKER_STATUE.get().getValidBlocks());
 		beBlocks.addAll(StatueBlockEntities.TROPICAL_FISH.get().getValidBlocks());
-		List<ResourceLocation> missingBlocks = new ArrayList<>();
+		List<Identifier> missingBlocks = new ArrayList<>();
 
 		for (DeferredHolder<Block, ? extends Block> holder : StatueRegistry.BLOCKS.getEntries()) {
 			if (holder.get() instanceof AbstractStatueBase base) {
@@ -86,7 +86,7 @@ public class StatuesDevCommands {
 		} else {
 			StringBuilder builder = new StringBuilder();
 			builder.append("The following blocks are missing from the Statue block entity valid blocks: ");
-			for (ResourceLocation location : missingBlocks) {
+			for (Identifier location : missingBlocks) {
 				builder.append(location.toString()).append(", ");
 			}
 			ctx.getSource().sendFailure(Component.literal(builder.toString()));

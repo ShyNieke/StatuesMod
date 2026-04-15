@@ -9,8 +9,8 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.world.entity.HumanoidArm;
 
 public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
@@ -23,7 +23,7 @@ public class PlayerStatueModel extends HumanoidModel<PlayerStatueRenderState> {
 	private final boolean slim;
 
 	public PlayerStatueModel(ModelPart root, boolean slim) {
-		super(root, RenderType::entityTranslucent);
+		super(root, RenderTypes::entityTranslucent);
 		this.slim = slim;
 		this.leftSleeve = this.leftArm.getChild("left_sleeve");
 		this.rightSleeve = this.rightArm.getChild("right_sleeve");

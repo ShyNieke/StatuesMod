@@ -2,7 +2,7 @@
 //
 //import com.shynieke.statues.Reference;
 //import net.minecraft.core.registries.BuiltInRegistries;
-//import net.minecraft.resources.ResourceLocation;
+//import net.minecraft.resources.Identifier;
 //import net.minecraft.sounds.SoundEvents;
 //import net.minecraft.sounds.SoundSource;
 //import net.minecraft.world.entity.item.ItemEntity;
@@ -13,7 +13,7 @@
 //
 //public class PatchouliCompat {
 //	public static void convertBook(Player playerIn) {
-//		Item guideBook = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("patchouli", "guide_book"));
+//		Item guideBook = BuiltInRegistries.ITEM.get(Identifier.fromNamespaceAndPath("patchouli", "guide_book"));
 //		if (guideBook != null) {
 //			playerIn.getMainHandItem().shrink(1);
 //			ItemStack patchouliBook = new ItemStack(guideBook);

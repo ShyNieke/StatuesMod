@@ -6,7 +6,7 @@ import com.shynieke.statues.Reference;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
@@ -66,7 +66,7 @@ public class StatueSavedData extends SavedData {
 	}
 
 	private static ResourceKey<Level> getLevelKey(String location) {
-		return ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(location));
+		return ResourceKey.create(Registries.DIMENSION, Identifier.parse(location));
 	}
 
 	public static StatueSavedData get() {

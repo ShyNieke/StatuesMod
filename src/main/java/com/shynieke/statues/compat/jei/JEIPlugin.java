@@ -23,7 +23,7 @@ import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -34,12 +34,12 @@ import java.util.List;
 @JeiPlugin
 public class JEIPlugin implements IModPlugin {
 
-	public static final ResourceLocation PLUGIN_UID = Reference.modLoc("main");
+	public static final Identifier PLUGIN_UID = Reference.modLoc("main");
 
-	public static final ResourceLocation LOOT_BACKGROUND = Reference.modLoc("textures/gui/jei/loot.png");
+	public static final Identifier LOOT_BACKGROUND = Reference.modLoc("textures/gui/jei/loot.png");
 	public static final IRecipeType<LootRecipe> LOOT_TYPE = IRecipeType.create(Reference.MOD_ID, "loot", LootRecipe.class);
 
-	public static final ResourceLocation UPGRADE_BACKGROUND = Reference.modLoc("textures/gui/jei/upgrade.png");
+	public static final Identifier UPGRADE_BACKGROUND = Reference.modLoc("textures/gui/jei/upgrade.png");
 	public static final IRecipeType<UpgradeRecipe> UPGRADE_TYPE = IRecipeType.create(Reference.MOD_ID, "upgrade", UpgradeRecipe.class);
 
 	@Nullable
@@ -49,7 +49,7 @@ public class JEIPlugin implements IModPlugin {
 	private IRecipeCategory<UpgradeRecipe> upgradeCategory;
 
 	@Override
-	public ResourceLocation getPluginUid() {
+	public Identifier getPluginUid() {
 		return PLUGIN_UID;
 	}
 

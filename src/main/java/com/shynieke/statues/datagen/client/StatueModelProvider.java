@@ -23,7 +23,7 @@ import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel.Entry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -47,8 +47,8 @@ public class StatueModelProvider extends ModelProvider {
 			if (registryObject.get() == StatueRegistry.PLAYER_STATUE.get()) {
 				blockModels.createParticleOnlyBlock(registryObject.get(), Blocks.SOUL_SAND);
 				Item item = registryObject.get().asItem();
-				ResourceLocation resourcelocation = PLAYER_STATUE.create(item, TextureMapping.particle(registryObject.get()), blockModels.modelOutput);
-				ItemModel.Unbaked itemmodel$unbaked = ItemModelUtils.specialModel(resourcelocation, new PlayerSpecialRenderer.Unbaked());
+				Identifier identifier = PLAYER_STATUE.create(item, TextureMapping.particle(registryObject.get()), blockModels.modelOutput);
+				ItemModel.Unbaked itemmodel$unbaked = ItemModelUtils.specialModel(identifier, new PlayerSpecialRenderer.Unbaked());
 				itemModels.itemModelOutput.accept(item, itemmodel$unbaked);
 			} else if (registryObject.get() instanceof AbstractBaseBlock) {
 				makeStatue(blockModels, registryObject.get());

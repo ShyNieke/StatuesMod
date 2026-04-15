@@ -5,10 +5,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
 import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.client.model.StatuePlayerTileModel;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.PlayerSkinRenderCache;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.core.component.DataComponents;
@@ -19,8 +19,10 @@ import net.minecraft.world.item.component.ResolvableProfile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class PlayerSpecialRenderer implements SpecialModelRenderer<PlayerSkinRenderCache.RenderInfo> {
 	private final PlayerSkinRenderCache playerSkinRenderCache;
@@ -51,7 +53,7 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<PlayerSkinRen
 	}
 
 	@Override
-	public void getExtents(Set<Vector3f> output) {
+	public void getExtents(Consumer<Vector3fc> output) {
 		PoseStack posestack = new PoseStack();
 		transform(posestack);
 		this.model.root().getExtentsForGui(posestack, output);

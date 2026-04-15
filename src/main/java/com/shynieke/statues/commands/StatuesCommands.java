@@ -31,7 +31,7 @@ public class StatuesCommands {
 		List<String> upgrades = Arrays.stream(UpgradeType.values())
 				.filter(value -> value != UpgradeType.CRAFTING).map(Enum::name).collect(Collectors.toList());
 
-		root.requires((source) -> source.hasPermission(2))
+		root.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 				.then(Commands.literal("upgrade")
 						.then(Commands.argument("player", EntityArgument.player())
 								.then(Commands.argument("upgrade", EnumArgument.enumArgument(UpgradeType.class))
@@ -44,10 +44,10 @@ public class StatuesCommands {
 				);
 
 		if (FMLLoader.getCurrentOrNull() != null && !FMLLoader.getCurrentOrNull().isProduction()) {
-			root.requires((source) -> source.hasPermission(2))
+			root.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 					.then(Commands.literal("checkLoot")
 							.executes(StatuesDevCommands::checkLoot));
-			root.requires((source) -> source.hasPermission(2))
+			root.requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 					.then(Commands.literal("checkBlockEntity")
 							.executes(StatuesDevCommands::checkBlockEntity));
 		}

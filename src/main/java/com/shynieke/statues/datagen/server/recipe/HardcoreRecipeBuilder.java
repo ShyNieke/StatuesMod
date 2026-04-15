@@ -7,7 +7,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -137,12 +137,12 @@ public class HardcoreRecipeBuilder implements RecipeBuilder {
 				this.resultStack,
 				this.showNotification
 		);
-		recipeOutput.accept(resourceKey, hardcoreRecipe, advancement$builder.build(resourceKey.location().withPrefix("recipes/" + this.category.getFolderName() + "/")));
+		recipeOutput.accept(resourceKey, hardcoreRecipe, advancement$builder.build(resourceKey.identifier().withPrefix("recipes/" + this.category.getFolderName() + "/")));
 	}
 
-	private ShapedRecipePattern ensureValid(ResourceKey<Recipe<?>> p_380175_) {
+	private ShapedRecipePattern ensureValid(ResourceKey<Recipe<?>> resourceKey) {
 		if (this.criteria.isEmpty()) {
-			throw new IllegalStateException("No way of obtaining recipe " + p_380175_.location());
+			throw new IllegalStateException("No way of obtaining recipe " + resourceKey.identifier());
 		} else {
 			return ShapedRecipePattern.of(this.key, this.rows);
 		}

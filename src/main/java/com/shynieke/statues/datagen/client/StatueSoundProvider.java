@@ -3,7 +3,7 @@ package com.shynieke.statues.datagen.client;
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.registry.StatueSounds;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
 
 public class StatueSoundProvider extends SoundDefinitionsProvider {
@@ -171,11 +171,11 @@ public class StatueSoundProvider extends SoundDefinitionsProvider {
 	}
 
 
-	public String modSubtitle(ResourceLocation id) {
+	public String modSubtitle(Identifier id) {
 		return Reference.MOD_ID + ".subtitle." + id.getPath();
 	}
 
-	public ResourceLocation modLoc(String name) {
+	public Identifier modLoc(String name) {
 		return Reference.modLoc(name);
 	}
 }

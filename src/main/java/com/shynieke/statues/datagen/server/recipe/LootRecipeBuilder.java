@@ -7,7 +7,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -126,17 +126,17 @@ public class LootRecipeBuilder implements RecipeBuilder {
 
 	@Override
 	public void save(RecipeOutput recipeOutput) {
-		ResourceLocation itemKey = this.statueIngredient.getValues().get(0).getKey().location();
-		ResourceLocation recipeID = ResourceLocation.fromNamespaceAndPath(itemKey.getNamespace(), "loot/" + itemKey.getPath());
+		Identifier itemKey = this.statueIngredient.getValues().get(0).getKey().identifier();
+		Identifier recipeID = Identifier.fromNamespaceAndPath(itemKey.getNamespace(), "loot/" + itemKey.getPath());
 
 		save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeID));
 	}
 
-	static ResourceLocation getDefaultRecipeId(ItemLike itemLike) {
+	static Identifier getDefaultRecipeId(ItemLike itemLike) {
 		return BuiltInRegistries.ITEM.getKey(itemLike.asItem());
 	}
 
-	public void save(RecipeOutput recipeOutput, ResourceLocation recipeID) {
+	public void save(RecipeOutput recipeOutput, Identifier recipeID) {
 		save(recipeOutput, ResourceKey.create(Registries.RECIPE, recipeID));
 	}
 

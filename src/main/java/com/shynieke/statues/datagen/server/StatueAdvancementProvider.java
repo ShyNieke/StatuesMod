@@ -9,8 +9,8 @@ import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.DisplayInfo;
-import net.minecraft.advancements.critereon.EnterBlockTrigger;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.EnterBlockTrigger;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
@@ -18,7 +18,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
@@ -213,7 +213,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		protected static AdvancementHolder onHoldBlock(Consumer<AdvancementHolder> consumer, DeferredHolder<Block, ? extends Block> registryObject,
 		                                               AdvancementType type, boolean hidden, AdvancementHolder root) {
 			String path = registryObject.getId().getPath();
-			ResourceLocation registryLocation = modLoc(path);
+			Identifier registryLocation = modLoc(path);
 
 			DisplayInfo info = hidden ? hiddenDisplay(registryObject.get(), path, type) : simpleDisplay(registryObject.get(), path, type);
 			return Advancement.Builder.advancement()
@@ -233,7 +233,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		protected static AdvancementHolder onHoldBlock(Consumer<AdvancementHolder> consumer, DeferredBlock<? extends Block> deferredHolder,
 		                                               AdvancementHolder root) {
 			String path = deferredHolder.getId().getPath();
-			ResourceLocation registryLocation = modLoc(path);
+			Identifier registryLocation = modLoc(path);
 
 			return Advancement.Builder.advancement()
 					.display(simpleDisplay(deferredHolder.get(), path, AdvancementType.TASK))
@@ -258,7 +258,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		protected static AdvancementHolder onHoldAnyBlock(Consumer<AdvancementHolder> consumer, DeferredBlock<? extends Block> deferredHolder,
 		                                                  AdvancementType type, boolean hidden, AdvancementHolder root, String path,
 		                                                  AdvancementRequirements.Strategy strategy, DeferredBlock<? extends Block>... registryObjects) {
-			ResourceLocation registryLocation = modLoc(path);
+			Identifier registryLocation = modLoc(path);
 
 			DisplayInfo info = hidden ? hiddenDisplay(deferredHolder.get(), path, type) : simpleDisplay(deferredHolder.get(), path, type);
 			Advancement.Builder builder = Advancement.Builder.advancement()
@@ -283,7 +283,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		@SafeVarargs
 		protected static AdvancementHolder killerCollection(Consumer<AdvancementHolder> consumer, DeferredBlock<? extends Block> displayObject,
 		                                                    AdvancementHolder root, String path, DeferredBlock<? extends Block>... deferredHolders) {
-			ResourceLocation registryLocation = modLoc(path);
+			Identifier registryLocation = modLoc(path);
 
 			Advancement.Builder builder = Advancement.Builder.advancement()
 					.display(simpleDisplay(displayObject.get(), path, AdvancementType.GOAL))
@@ -310,7 +310,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		protected static AdvancementHolder onHoldItem(Consumer<AdvancementHolder> consumer, DeferredHolder<Item, ? extends Item> deferredHolder,
 		                                              AdvancementType type, boolean hidden, AdvancementHolder root) {
 			String path = deferredHolder.getId().getPath();
-			ResourceLocation registryLocation = modLoc(path);
+			Identifier registryLocation = modLoc(path);
 
 			DisplayInfo info = hidden ? hiddenDisplay(deferredHolder.get(), path, type) : simpleDisplay(deferredHolder.get(), path, type);
 			return Advancement.Builder.advancement()
@@ -330,7 +330,7 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		 * @param background The background texture.
 		 * @return The DisplayInfo object.
 		 */
-		protected static DisplayInfo rootDisplay(ItemLike icon, String titleKey, String descKey, ResourceLocation background) {
+		protected static DisplayInfo rootDisplay(ItemLike icon, String titleKey, String descKey, Identifier background) {
 			return new DisplayInfo(new ItemStack(icon),
 					Component.translatable(titleKey),
 					Component.translatable(descKey),
@@ -377,12 +377,12 @@ public class StatueAdvancementProvider extends AdvancementProvider {
 		}
 
 		/**
-		 * Generate a ResourceLocation that has the mod ID as the namespace.
+		 * Generate a Identifier that has the mod ID as the namespace.
 		 *
 		 * @param path The path.
-		 * @return The ResourceLocation.
+		 * @return The Identifier.
 		 */
-		private static ResourceLocation modLoc(String path) {
+		private static Identifier modLoc(String path) {
 			return Reference.modLoc(path);
 		}
 

@@ -7,10 +7,10 @@ import com.shynieke.statues.entity.StatueBatEntity;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class StatueBatRenderer extends MobRenderer<StatueBatEntity, StatueBatRenderState, StatueBatModel> {
-	private static final ResourceLocation BAT_TEXTURES = Reference.modLoc("textures/entity/statue_bat.png");
+	private static final Identifier BAT_TEXTURES = Reference.modLoc("textures/entity/statue_bat.png");
 
 	public StatueBatRenderer(Context context) {
 		super(context, new StatueBatModel(context.bakeLayer(ModelLayers.BAT)), 0.25F);
@@ -32,7 +32,7 @@ public class StatueBatRenderer extends MobRenderer<StatueBatEntity, StatueBatRen
 	 * Returns the location of an entity's texture.
 	 */
 	@Override
-	public ResourceLocation getTextureLocation(StatueBatRenderState renderState) {
+	public Identifier getTextureLocation(StatueBatRenderState renderState) {
 		return BAT_TEXTURES;
 	}
 }

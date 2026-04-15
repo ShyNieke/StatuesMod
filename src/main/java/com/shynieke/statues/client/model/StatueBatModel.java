@@ -5,7 +5,7 @@ import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.animation.definitions.BatAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 
 /**
  * Because vanilla BatModel doesn't allow any other class than BatEntity
@@ -23,7 +23,7 @@ public class StatueBatModel extends EntityModel<StatueBatRenderState> {
 	private final KeyframeAnimation restingAnimation;
 
 	public StatueBatModel(ModelPart root) {
-		super(root, RenderType::entityCutout);
+		super(root, RenderTypes::entityCutout);
 		this.root = root;
 		this.body = root.getChild("body");
 		this.head = root.getChild("head");
