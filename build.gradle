@@ -203,7 +203,7 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.addOptional("jade")
 //        mainFile.addOptional("roughly-enough-items")
         mainFile.addOptional("jei")
-//        mainFile.addOptional("curios")
+        mainFile.addOptional("curios")
 //        mainFile.addOptional("the-cactus-mod")
 //        mainFile.addOptional("patchouli")
     }
@@ -222,7 +222,7 @@ if (System.getenv().MODRINTH_KEY) {
         loaders = ["neoforge"]
 
         dependencies {
-//            optional.project "curios-continuation"
+            optional.project "curios"
 //            optional.project "the-cactus-mod"
             optional.project "jade"
 //            optional.project "rei"
