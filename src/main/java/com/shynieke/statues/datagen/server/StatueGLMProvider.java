@@ -23,14 +23,14 @@ public class StatueGLMProvider extends GlobalLootModifierProvider {
 		this.add("statues_loot", new CityStatuesLootModifier(
 				new LootItemCondition[]{
 						LootTableIdCondition.builder(BuiltInLootTables.ANCIENT_CITY.identifier()).build()
-				}));
+				}, 1000));
 		this.add("statues_sherd", new SherdLootModifier(
 				new LootItemCondition[]{
 						LootTableIdCondition.builder(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY.identifier()).build()
-				}));
+				}, 1000));
 		this.add("statues_core_flower", new SnifferLootModifier(
 				new LootItemCondition[]{
 						LootTableIdCondition.builder(BuiltInLootTables.SNIFFER_DIGGING.identifier()).build()
-				}));
+				}, 1000));
 	}
 }

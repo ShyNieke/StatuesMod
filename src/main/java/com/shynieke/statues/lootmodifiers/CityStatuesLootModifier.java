@@ -29,8 +29,8 @@ public class CityStatuesLootModifier extends LootModifier {
 	public static final Supplier<MapCodec<CityStatuesLootModifier>> CODEC = Suppliers.memoize(() ->
 			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, CityStatuesLootModifier::new)));
 
-	public CityStatuesLootModifier(LootItemCondition[] conditionsIn) {
-		super(conditionsIn);
+	public CityStatuesLootModifier(LootItemCondition[] conditionsIn, int priority) {
+		super(conditionsIn, priority);
 	}
 
 	@NotNull

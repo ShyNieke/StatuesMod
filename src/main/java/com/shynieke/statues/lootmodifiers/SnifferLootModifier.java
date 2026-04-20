@@ -18,8 +18,8 @@ public class SnifferLootModifier extends LootModifier {
 	public static final Supplier<MapCodec<SnifferLootModifier>> CODEC = Suppliers.memoize(() ->
 			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, SnifferLootModifier::new)));
 
-	public SnifferLootModifier(LootItemCondition[] conditionsIn) {
-		super(conditionsIn);
+	public SnifferLootModifier(LootItemCondition[] conditionsIn, int priority) {
+		super(conditionsIn, priority);
 	}
 
 	@NotNull
