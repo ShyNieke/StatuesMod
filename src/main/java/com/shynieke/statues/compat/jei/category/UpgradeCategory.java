@@ -8,6 +8,7 @@ import com.shynieke.statues.registry.StatueDataComponents;
 import com.shynieke.statues.registry.StatueRegistry;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IRecipeSlotRichTooltipCallback;
@@ -151,9 +152,12 @@ public class UpgradeCategory implements IRecipeCategory<UpgradeRecipe> {
 			}
 		}
 
-		builder.addSlot(RecipeIngredientRole.INPUT, 1, 41).add(recipe.requiresCore() ? recipe.getCoreIngredient() : Ingredient.of());
+		IRecipeSlotBuilder coreSlot = builder.addSlot(RecipeIngredientRole.INPUT, 1, 41);
+		if (recipe.requiresCore()) {
+			coreSlot.add(recipe.getCoreIngredient());
+		}
 		List<Ingredient> catalysts = recipe.getCatalysts();
-		if (catalysts.size() > 0) {
+		if (!catalysts.isEmpty()) {
 			builder.addSlot(RecipeIngredientRole.INPUT, 55, 5).add(catalysts.get(0));
 			if (catalysts.size() > 1) {
 				builder.addSlot(RecipeIngredientRole.INPUT, 91, 5).add(catalysts.get(1));
