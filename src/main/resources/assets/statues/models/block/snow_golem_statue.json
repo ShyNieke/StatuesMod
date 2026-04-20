@@ -1,14 +1,14 @@
 {
 	"__comment": "Designed by ShyNieke with Cubik Studio - https://cubik.studio",
 	"textures": {
-		"particle": "block/snow",
-		"Base": "block/quartz_block_bottom",
-		"SnowGolemSnow": "block/snow",
-		"ONLYTHEBESTPART": "block/carved_pumpkin",
-		"ONLYTHEBESTPARTCHAPTER2": "block/pumpkin_side",
-		"ONLYTHEBESTPARTFINALE": "block/pumpkin_top",
-		"Stick": "block/dark_oak_log",
-		"Christmaspresentforsnoopinginthecode": "item/coal"
+		"particle": "minecraft:block/snow",
+		"Base": "minecraft:block/quartz_block_bottom",
+		"SnowGolemSnow": "minecraft:block/snow",
+		"ONLYTHEBESTPART": "minecraft:block/carved_pumpkin",
+		"ONLYTHEBESTPARTCHAPTER2": "minecraft:block/pumpkin_side",
+		"ONLYTHEBESTPARTFINALE": "minecraft:block/pumpkin_top",
+		"Stick": "minecraft:block/dark_oak_log",
+		"Christmaspresentforsnoopinginthecode": "statues:block/coal"
 	},
 	"elements": [
 		{
