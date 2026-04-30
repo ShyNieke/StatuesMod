@@ -36,11 +36,11 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<PlayerSkinRen
 	@Override
 	public void submit(@Nullable PlayerSkinRenderCache.RenderInfo argument, PoseStack poseStack,
 	                   SubmitNodeCollector nodeCollector, int lightCoords, int overlayCoords, boolean hasFoil, int outlineColor) {
-		if (argument == null) return;
-		boolean isSlim = argument.playerSkin().model() == PlayerModelType.SLIM;
+		final boolean isSlim = argument == null || argument.playerSkin().model() == PlayerModelType.SLIM;
+		final StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
+
 		poseStack.pushPose();
 		transform(poseStack);
-		StatuePlayerTileModel playerModel = isSlim ? slimModel : model;
 		RenderType rendertype = argument != null ? argument.renderType() : PlayerSkinRenderCache.DEFAULT_PLAYER_SKIN_RENDER_TYPE;
 		GameProfile gameProfile = argument != null ? argument.gameProfile() : new GameProfile(Util.NIL_UUID, "Steve");
 		PlayerBlockRenderer.submitPlayerStatue(nodeCollector, null, gameProfile, playerModel,
@@ -61,10 +61,9 @@ public class PlayerSpecialRenderer implements SpecialModelRenderer<PlayerSkinRen
 		poseStack.translate(1D, 0D, 0.75D);
 	}
 
-	@Nullable
 	public PlayerSkinRenderCache.RenderInfo extractArgument(ItemStack stack) {
-		ResolvableProfile resolvableprofile = stack.get(DataComponents.PROFILE);
-		return resolvableprofile == null ? null : this.playerSkinRenderCache.getOrDefault(resolvableprofile);
+		ResolvableProfile profile = stack.get(DataComponents.PROFILE);
+		return profile == null ? null : this.playerSkinRenderCache.getOrDefault(profile);
 	}
 
 	public record Unbaked() implements SpecialModelRenderer.Unbaked<PlayerSkinRenderCache.RenderInfo> {

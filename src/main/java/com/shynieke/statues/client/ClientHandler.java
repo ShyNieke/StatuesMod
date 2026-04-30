@@ -20,7 +20,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
@@ -38,16 +41,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@EventBusSubscriber(Dist.CLIENT)
 public class ClientHandler {
 	public static final ModelLayerLocation PLAYER_STATUE = new ModelLayerLocation(Reference.modLoc("player_statue"), "player_statue");
 	public static final ModelLayerLocation PLAYER_STATUE_SLIM = new ModelLayerLocation(Reference.modLoc("player_statue_slim"), "player_statue_slim");
 	public static final List<UUID> SUPPORTER = new ArrayList<>();
 	public static final List<UUID> TRANSLATORS = new ArrayList<>();
 
-	@SuppressWarnings("deprecation")
+	@SubscribeEvent
 	public static void doClientStuff(final FMLClientSetupEvent event) {
-		setPlayerCache(Minecraft.getInstance());
-
 		new Thread(() -> {
 			Statues.LOGGER.info("Loading Statues supporter data...");
 			try {
@@ -83,6 +85,7 @@ public class ClientHandler {
 		}
 	}
 
+	@SubscribeEvent
 	public static void onRecipeReceived(RecipesReceivedEvent event) {
 		StatuesRecipeCache.UPGRADE_RECIPES.clear();
 		StatuesRecipeCache.UPGRADE_RECIPES.addAll(event.getRecipeMap().byType(StatuesRecipes.UPGRADE_RECIPE.get()));
@@ -91,15 +94,18 @@ public class ClientHandler {
 		StatuesRecipeCache.LOOT_RECIPES.addAll(event.getRecipeMap().byType(StatuesRecipes.LOOT_RECIPE.get()));
 	}
 
+	@SubscribeEvent
 	public static void registerRangeSelectProperties(final RegisterRangeSelectItemModelPropertyEvent event) {
 		event.register(Reference.modLoc("statue_compass_angle"), StatueCompassAngle.MAP_CODEC);
 	}
 
+	@SubscribeEvent
 	public static void onRegisterMenu(final RegisterMenuScreensEvent event) {
 		event.register(StatueRegistry.STATUE_TABLE_MENU.get(), StatueTableScreen::new);
 		event.register(StatueRegistry.SHULKER_STATUE_MENU.get(), ShulkerStatueScreen::new);
 	}
 
+	@SubscribeEvent
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerBlockEntityRenderer(StatueBlockEntities.PLAYER.get(), PlayerBlockRenderer::new);
 
@@ -109,41 +115,22 @@ public class ClientHandler {
 		event.registerBlockEntityRenderer(StatueBlockEntities.STATUE_TABLE.get(), StatueTableBER::new);
 	}
 
+	@SubscribeEvent
 	public static void registerSpecialModelRenderers(RegisterSpecialModelRendererEvent event) {
 		event.register(Reference.modLoc("player"), PlayerSpecialRenderer.Unbaked.MAP_CODEC);
 	}
 
+	@SubscribeEvent
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(PLAYER_STATUE, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, false), 64, 64));
 		event.registerLayerDefinition(PLAYER_STATUE_SLIM, () -> LayerDefinition.create(PlayerStatueModel.createStatueMesh(CubeDeformation.NONE, true), 64, 64));
 	}
 
+	@SubscribeEvent
 	public static void registerBlockColors(final RegisterColorHandlersEvent.BlockTintSources event) {
 		event.register(List.of(new FishBlockTint()), StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(),
 				StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
 				StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(),
 				StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get());
-	}
-
-	public static void onLogin(ClientPlayerNetworkEvent.LoggingIn event) {
-		Minecraft mc = Minecraft.getInstance();
-		if (!mc.isLocalServer()) {
-			setPlayerCache(mc);
-		}
-	}
-
-	public static void onRespawn(ClientPlayerNetworkEvent.Clone event) {
-//		Minecraft mc = Minecraft.getInstance(); TODO: Check
-//		if (!mc.isLocalServer()) {
-//			setPlayerCache(mc);
-//		}
-	}
-
-	private static void setPlayerCache(Minecraft mc) {
-//		YggdrasilAuthenticationService authenticationService = new YggdrasilAuthenticationService(mc.getProxy()); TODO: Check
-//		Services services = Services.create(authenticationService, mc.gameDirectory);
-//		services.profileCache().setExecutor(mc);
-//		PlayerBlockEntity.setup(services, mc);
-//		GameProfileCache.setUsesAuthentication(false);
 	}
 }

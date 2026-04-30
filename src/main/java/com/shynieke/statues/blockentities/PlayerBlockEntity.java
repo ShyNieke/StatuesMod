@@ -235,7 +235,8 @@ public class PlayerBlockEntity extends BlockEntity implements Nameable {
 	protected void applyImplicitComponents(DataComponentGetter getter) {
 		super.applyImplicitComponents(getter);
 		this.setPlayerProfileFromName(getter.get(DataComponents.CUSTOM_NAME));
-		this.setPlayerProfile(getter.get(DataComponents.PROFILE));
+		if (getter.has(DataComponents.PROFILE))
+			this.setPlayerProfile(getter.get(DataComponents.PROFILE));
 	}
 
 	@Override

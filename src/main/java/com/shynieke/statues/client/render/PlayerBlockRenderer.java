@@ -70,6 +70,7 @@ public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntit
 		final Direction direction = flag ? renderState.blockState.getValue(PlayerStatueBlock.FACING) : Direction.UP;
 		final StatuePlayerTileModel playerModel = renderState.isSlim ? slimModel : model;
 		final ResolvableProfile resolvableProfile = renderState.profile;
+		if (resolvableProfile == null) return;
 		final RenderType renderType = renderState.renderType;
 
 		poseStack.pushPose();

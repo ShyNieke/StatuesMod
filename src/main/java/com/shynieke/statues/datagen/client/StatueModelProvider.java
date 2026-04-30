@@ -21,11 +21,13 @@ import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.RangeSelectItemModel.Entry;
+import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerBlock;
@@ -39,7 +41,16 @@ public class StatueModelProvider extends ModelProvider {
 		super(output, Reference.MOD_ID);
 	}
 
-	private static final ModelTemplate PLAYER_STATUE = ModelTemplates.create("statues:player_statue", TextureSlot.PARTICLE);
+	private static final ModelTemplate PLAYER_STATUE = ModelTemplates.create("statues:player_statue", TextureSlot.PARTICLE).extend()
+			.guiLight(UnbakedModel.GuiLight.FRONT)
+			.transform(ItemDisplayContext.GUI, t -> {
+				t.rotation(30.0F, 225.0F, 0.0F);
+				t.scale(1.2F);
+			})
+			.transform(ItemDisplayContext.HEAD, t -> {
+				t.translation(0.0F, 6.2608F, 0.0F);
+			})
+			.build();
 
 	@Override
 	protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {

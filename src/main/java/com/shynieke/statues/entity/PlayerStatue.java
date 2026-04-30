@@ -8,7 +8,6 @@ import com.shynieke.statues.client.screen.PlayerStatueData;
 import com.shynieke.statues.network.message.PlayerStatueScreenData;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueSerializers;
-import net.minecraft.util.Util;
 import net.minecraft.core.Rotations;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponents;
@@ -26,6 +25,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Util;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -36,6 +36,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -304,10 +305,12 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Returns true if this entity should push and be pushed by other entities when colliding.
 	 */
+	@Override
 	public boolean isPushable() {
 		return false;
 	}
 
+	@Override
 	protected void doPush(Entity entityIn) {
 
 	}
@@ -327,7 +330,9 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Applies the given player interaction to this Entity.
 	 */
-	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
+
+	@Override
+	public InteractionResult interact(Player player, InteractionHand hand, Vec3 vec) {
 		ItemStack itemstack = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
 			if (!this.level().isClientSide() && player != null && canOpenUI(player)) {
@@ -435,6 +440,7 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Called when the entity is attacked.
 	 */
+	@Override
 	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (this.isRemoved()) {
 			return false;
@@ -493,6 +499,7 @@ public class PlayerStatue extends Avatar {
 		}
 	}
 
+	@Override
 	public void handleEntityEvent(byte id) {
 		if (id == 32) {
 			if (this.level().isClientSide()) {
@@ -508,6 +515,7 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Checks if the entity is in range to render.
 	 */
+	@Override
 	public boolean shouldRenderAtSqrDistance(double distance) {
 		double d0 = this.getBoundingBox().getSize() * 4.0D;
 		if (Double.isNaN(d0) || d0 == 0.0D) {
@@ -522,7 +530,6 @@ public class PlayerStatue extends Avatar {
 		if (this.level() instanceof ServerLevel) {
 			((ServerLevel) this.level()).sendParticles(new BlockParticleOption(ParticleTypes.BLOCK, StatueRegistry.PLAYER_STATUE.get().defaultBlockState()), this.getX(), this.getY(0.6666666666666666D), this.getZ(), 10, (double) (this.getBbWidth() / 4.0F), (double) (this.getBbHeight() / 4.0F), (double) (this.getBbWidth() / 4.0F), 0.05D);
 		}
-
 	}
 
 	private void causeDamage(ServerLevel serverLevel, DamageSource source, float p_213817_2_) {
@@ -534,7 +541,6 @@ public class PlayerStatue extends Avatar {
 		} else {
 			this.setHealth(f);
 		}
-
 	}
 
 	private void breakPlayerStatue(ServerLevel serverLevel, DamageSource source) {
@@ -586,23 +592,21 @@ public class PlayerStatue extends Avatar {
 		this.level().playSound((Player) null, this.getX(), this.getY(), this.getZ(), SoundEvents.ARMOR_STAND_BREAK, this.getSoundSource(), 1.0F, 1.0F);
 	}
 
-	protected float tickHeadTurn(float p_110146_1_, float p_110146_2_) {
+	@Override
+	protected void tickHeadTurn(float yBodyRotT) {
 		this.yBodyRotO = this.yRotO;
 		this.yBodyRot = this.getYRot();
-		return 0.0F;
 	}
 
-	protected float getStandingEdyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return sizeIn.height() * (this.isBaby() ? 0.5F : 0.9F);
 	}
 
 	/**
 	 * Returns the Y Offset of this entity.
 	 */
-//	@Override
-//	protected float ridingOffset(Entity entity) {
-//		return 0.1F + getYOffsetData(); //TODO: what does this do?
-//	}
+
+	@Override
 	public void travel(Vec3 travelVector) {
 		if (this.hasPhysics()) {
 			super.travel(travelVector);
@@ -612,6 +616,7 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Set the render yaw offset
 	 */
+	@Override
 	public void setYBodyRot(float offset) {
 		this.yBodyRotO = this.yRotO = offset;
 		this.yHeadRotO = this.yHeadRot = offset;
@@ -630,6 +635,7 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Sets the head's yaw rotation of the entity.
 	 */
+	@Override
 	public void setYHeadRot(float rotation) {
 		this.yBodyRotO = this.yRotO = rotation;
 		this.yHeadRotO = this.yHeadRot = rotation;
@@ -638,6 +644,7 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Called to update the entity's position/logic.
 	 */
+	@Override
 	public void tick() {
 		super.tick();
 
@@ -691,6 +698,7 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * If Animal, checks if the age timer is negative
 	 */
+	@Override
 	public boolean isBaby() {
 		return this.isSmall();
 	}
@@ -698,7 +706,8 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Called by the /kill command.
 	 */
-	public void kill() {
+	@Override
+	public void kill(ServerLevel level) {
 		this.remove(RemovalReason.KILLED);
 	}
 
@@ -758,21 +767,17 @@ public class PlayerStatue extends Avatar {
 		return this.bodyRotation;
 	}
 
-
 	public Rotations getLeftArmPose() {
 		return this.leftArmRotation;
 	}
-
 
 	public Rotations getRightArmPose() {
 		return this.rightArmRotation;
 	}
 
-
 	public Rotations getLeftLegPose() {
 		return this.leftLegRotation;
 	}
-
 
 	public Rotations getRightLegPose() {
 		return this.rightLegRotation;
@@ -781,6 +786,7 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Returns true if other Entities should be prevented from moving through this Entity.
 	 */
+	@Override
 	public boolean isPickable() {
 		return true;
 	}
@@ -788,34 +794,41 @@ public class PlayerStatue extends Avatar {
 	/**
 	 * Called when a player attacks an entity. If this returns true the attack will not happen.
 	 */
+	@Override
 	public boolean skipAttackInteraction(Entity entityIn) {
 		return entityIn instanceof Player && !this.level().mayInteract((Player) entityIn, this.blockPosition());
 	}
 
-	protected SoundEvent getFallDamageSound(int heightIn) {
-		return SoundEvents.ARMOR_STAND_FALL;
+	@Override
+	public Fallsounds getFallSounds() {
+		return new LivingEntity.Fallsounds(SoundEvents.ARMOR_STAND_FALL, SoundEvents.ARMOR_STAND_FALL);
 	}
 
 	@Nullable
+	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.ARMOR_STAND_HIT;
 	}
 
 	@Nullable
+	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundEvents.ARMOR_STAND_BREAK;
 	}
 
+	@Override
 	public void thunderHit(ServerLevel serverLevel, LightningBolt bolt) {
 	}
 
 	/**
 	 * Returns false if the entity is an armor stand. Returns true for all other entity living bases.
 	 */
+	@Override
 	public boolean isAffectedByPotions() {
 		return false;
 	}
 
+	@Override
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		if (STATUS.equals(key)) {
 			this.refreshDimensions();
@@ -825,6 +838,7 @@ public class PlayerStatue extends Avatar {
 		super.onSyncedDataUpdated(key);
 	}
 
+	@Override
 	public boolean attackable() {
 		return false;
 	}

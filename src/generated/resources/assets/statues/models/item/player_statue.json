@@ -1,5 +1,27 @@
 {
   "parent": "statues:block/player_statue",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "scale": [
+        1.2,
+        1.2,
+        1.2
+      ]
+    },
+    "head": {
+      "translation": [
+        0,
+        6.2608,
+        0
+      ]
+    }
+  },
+  "gui_light": "front",
   "textures": {
     "particle": "statues:block/player_statue"
   }

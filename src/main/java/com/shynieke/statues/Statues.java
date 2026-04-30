@@ -1,7 +1,6 @@
 package com.shynieke.statues;
 
 import com.mojang.logging.LogUtils;
-import com.shynieke.statues.client.ClientHandler;
 import com.shynieke.statues.commands.StatuesCommands;
 import com.shynieke.statues.config.StatuesConfig;
 import com.shynieke.statues.handlers.DropHandler;
@@ -12,7 +11,6 @@ import com.shynieke.statues.network.StatuesNetworking;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueDataComponents;
-import com.shynieke.statues.registry.StatueEntities;
 import com.shynieke.statues.registry.StatueLootModifiers;
 import com.shynieke.statues.registry.StatuePatterns;
 import com.shynieke.statues.registry.StatueRegistry;
@@ -29,7 +27,6 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import org.slf4j.Logger;
 
 @Mod(Reference.MOD_ID)
@@ -41,7 +38,6 @@ public class Statues {
 		eventBus.register(StatuesConfig.class);
 
 		eventBus.addListener(this::commonSetup);
-		NeoForge.EVENT_BUS.addListener(this::serverAboutToStart);
 		NeoForge.EVENT_BUS.addListener(this::onCommandRegister);
 
 		StatueSerializers.ENTITY_DATA_SERIALIZER.register(eventBus);
@@ -58,8 +54,6 @@ public class Statues {
 		StatueLootModifiers.GLM.register(eventBus);
 		StatuePatterns.POT_PATTERNS.register(eventBus);
 
-		eventBus.addListener(StatueEntities::registerEntityAttributes);
-		eventBus.addListener(StatueEntities::registerSpawnPlacements);
 		eventBus.addListener(StatueBlockEntities::registerCapabilities);
 		eventBus.addListener(StatuesNetworking::setupPackets);
 
@@ -73,16 +67,6 @@ public class Statues {
 		if (dist.isClient()) {
 			container.registerConfig(ModConfig.Type.CLIENT, StatuesConfig.clientSpec);
 			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-			eventBus.addListener(ClientHandler::doClientStuff);
-			NeoForge.EVENT_BUS.addListener(ClientHandler::onRecipeReceived);
-			eventBus.addListener(ClientHandler::registerRangeSelectProperties);
-			eventBus.addListener(ClientHandler::onRegisterMenu);
-			eventBus.addListener(ClientHandler::registerEntityRenderers);
-			eventBus.addListener(ClientHandler::registerSpecialModelRenderers);
-			eventBus.addListener(ClientHandler::registerLayerDefinitions);
-			eventBus.addListener(ClientHandler::registerBlockColors);
-			NeoForge.EVENT_BUS.addListener(ClientHandler::onLogin);
-			NeoForge.EVENT_BUS.addListener(ClientHandler::onRespawn);
 		}
 
 	}
@@ -100,11 +84,5 @@ public class Statues {
 
 	public void onCommandRegister(RegisterCommandsEvent event) {
 		StatuesCommands.initializeCommands(event.getDispatcher());
-	}
-
-	public void serverAboutToStart(final ServerAboutToStartEvent event) {
-//		MinecraftServer server = event.getServer();
-//		PlayerBlockEntity.setup(server.services, server);
-//		GameProfileCache.setUsesAuthentication(server.usesAuthentication());
 	}
 }

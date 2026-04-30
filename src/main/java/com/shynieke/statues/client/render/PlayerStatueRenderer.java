@@ -34,6 +34,27 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 	public static final PlayerSkin DEFAULT_SKIN = DefaultPlayerSkin.get(Mannequin.DEFAULT_PROFILE.partialProfile());
 	public boolean isSlim = false;
 
+
+	public PlayerStatueRenderer(EntityRendererProvider.Context context, boolean slim) {
+		super(context, new PlayerStatueModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), slim), 0.0F);
+		this.playerModel = new PlayerStatueModel(context.bakeLayer(ClientHandler.PLAYER_STATUE), false);
+		this.slimPlayerModel = new PlayerStatueModel(context.bakeLayer(ClientHandler.PLAYER_STATUE_SLIM), true);
+		this.addLayer(
+				new HumanoidArmorLayer<>(
+						this,
+						ArmorModelSet.bake(
+								slim ? ModelLayers.PLAYER_SLIM_ARMOR : ModelLayers.PLAYER_ARMOR,
+								context.getModelSet(),
+								model -> new PlayerStatueModel(model, slim)
+						),
+						context.getEquipmentRenderer()
+				)
+		);
+		this.addLayer(new ItemInHandLayer<>(this));
+		this.addLayer(new WingsLayer<>(this, context.getModelSet(), context.getEquipmentRenderer()));
+		this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getPlayerSkinRenderCache()));
+	}
+
 	public PlayerStatueRenderer(EntityRendererProvider.Context context) {
 		this(context, false);
 		this.playerSkinRenderCache = context.getPlayerSkinRenderCache();
@@ -72,26 +93,6 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 		} else {
 			return playerSkinRenderCache.getOrDefault(profile).playerSkin();
 		}
-	}
-
-	public PlayerStatueRenderer(EntityRendererProvider.Context context, boolean slim) {
-		super(context, new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER), slim), 0.0F);
-		this.playerModel = new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER), false);
-		this.slimPlayerModel = new PlayerStatueModel(context.bakeLayer(ModelLayers.PLAYER_SLIM), true);
-		this.addLayer(
-				new HumanoidArmorLayer<>(
-						this,
-						ArmorModelSet.bake(
-								slim ? ModelLayers.PLAYER_SLIM_ARMOR : ModelLayers.PLAYER_ARMOR,
-								context.getModelSet(),
-								model -> new PlayerStatueModel(model, slim)
-						),
-						context.getEquipmentRenderer()
-				)
-		);
-		this.addLayer(new ItemInHandLayer<>(this));
-		this.addLayer(new WingsLayer<>(this, context.getModelSet(), context.getEquipmentRenderer()));
-		this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getPlayerSkinRenderCache()));
 	}
 
 	@Override
