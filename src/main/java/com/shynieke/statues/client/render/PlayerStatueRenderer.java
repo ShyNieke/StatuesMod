@@ -67,6 +67,7 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 
 	@Override
 	public void extractRenderState(PlayerStatue statue, PlayerStatueRenderState statueRenderState, float partialTick) {
+		super.extractRenderState(statue, statueRenderState, partialTick);
 		HumanoidMobRenderer.extractHumanoidRenderState(statue, statueRenderState, partialTick, this.itemModelResolver);
 		statueRenderState.yRot = Mth.rotLerp(partialTick, statue.yRotO, statue.getYRot());
 		statueRenderState.isSmall = statue.isSmall();
