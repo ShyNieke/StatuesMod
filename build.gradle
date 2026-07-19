@@ -205,7 +205,7 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.addOptional("jei")
         mainFile.addOptional("curios")
 //        mainFile.addOptional("the-cactus-mod")
-//        mainFile.addOptional("patchouli")
+        mainFile.addOptional("patchouli")
     }
 }
 
@@ -227,7 +227,7 @@ if (System.getenv().MODRINTH_KEY) {
             optional.project "jade"
 //            optional.project "rei"
             optional.project "jei"
-//            optional.project "patchouli"
+            optional.project "patchouli"
         }
     }
 }
