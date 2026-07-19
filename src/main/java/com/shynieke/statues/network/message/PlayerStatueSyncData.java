@@ -13,9 +13,9 @@ import java.util.UUID;
 public record PlayerStatueSyncData(UUID playerUUID, CompoundTag tag) implements CustomPacketPayload {
 	public static final StreamCodec<FriendlyByteBuf, PlayerStatueSyncData> CODEC = StreamCodec.composite(
 			UUIDUtil.STREAM_CODEC,
-			PlayerStatueSyncData::playerUUID,
+			o -> o.playerUUID,
 			ByteBufCodecs.COMPOUND_TAG,
-			PlayerStatueSyncData::tag,
+			o -> o.tag,
 			PlayerStatueSyncData::new);
 	public static final Type<PlayerStatueSyncData> ID = new Type<>(Reference.modLoc("statue_sync"));
 
