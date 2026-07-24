@@ -1,4 +1,4 @@
-// 26.1.2	2026-04-30T21:40:23.6248473	Model Definitions - statues
+// 26.1.2	2026-07-24T21:27:11.8031325	Model Definitions - statues
 4427e42906b8877f46bd091919b793be75c3018b assets/statues/blockstates/allay_statue.json
 42d5ac316c690763e56b4fc0cab4ff995f42790a assets/statues/blockstates/angry_bee_statue.json
 a969b3fd05f50339960b7a4fee7a0200e2a085c4 assets/statues/blockstates/axolotl_blue_statue.json
@@ -322,7 +322,7 @@ b82347889185276f402668bcf46f3cea9f0c1056 assets/statues/models/item/player_compa
 a5624573226002f4e92d2fa5ab3121a6b869a417 assets/statues/models/item/player_compass_29.json
 3a8b8d11eb0123fe437c97d349386155435e4955 assets/statues/models/item/player_compass_30.json
 6b0d2e6529d91a98139ff81370a5f11c0b64fa00 assets/statues/models/item/player_compass_31.json
-f86e462b54c86eadac77f372a5bb1f5b4a863786 assets/statues/models/item/player_statue.json
+3adff794ee3a64241eb77e1b8c2697cb05ddafbf assets/statues/models/item/player_statue.json
 2f97193100bda21982466751167f006cd4472014 assets/statues/models/item/player_statue_spawn_egg.json
 691f96a85f14b4edd2e414c98ca8b973161d425d assets/statues/models/item/royal_nugget.json
 9c7292a42aed65f13f4b82fd323580584f7af2ae assets/statues/models/item/statue_bat_spawn_egg.json

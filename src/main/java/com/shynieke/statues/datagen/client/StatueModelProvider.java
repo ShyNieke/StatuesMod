@@ -45,6 +45,7 @@ public class StatueModelProvider extends ModelProvider {
 			.guiLight(UnbakedModel.GuiLight.FRONT)
 			.transform(ItemDisplayContext.GUI, t -> {
 				t.rotation(30.0F, 225.0F, 0.0F);
+				t.translation(0.0F, 2.0F, 0.0F);
 				t.scale(1.2F);
 			})
 			.transform(ItemDisplayContext.HEAD, t -> {
