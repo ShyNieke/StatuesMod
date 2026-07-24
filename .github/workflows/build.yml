@@ -2,16 +2,19 @@ name: Build and Publish
 
 on: [push, workflow_dispatch]
 
+env:
+  JDK_VERSION: 25
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Set up JDK 25
+      - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: 25
+          java-version: ${{ env.JDK_VERSION }}
           cache: 'gradle'
       - name: Make gradlew executable
         run: chmod +x ./gradlew
@@ -20,7 +23,7 @@ jobs:
       - uses: actions/upload-artifact@v5
         with:
           name: build-output
-          path: ./build/libs/
+          path: ./build/libs/*.jar
 
   publish-maven:
     needs: build
@@ -28,11 +31,11 @@ jobs:
     if: contains(github.event.head_commit.message, '[push]') || contains(github.event.head_commit.message, '[build]')
     steps:
       - uses: actions/checkout@v5
-      - name: Set up JDK 25
+      - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: 25
+          java-version: ${{ env.JDK_VERSION }}
           cache: 'gradle'
       - name: Make gradlew executable
         run: chmod +x ./gradlew
@@ -51,18 +54,18 @@ jobs:
     if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[curseforge]')
     steps:
       - uses: actions/checkout@v5
-      - name: Set up JDK 25
+      - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: 25
+          java-version: ${{ env.JDK_VERSION }}
           cache: 'gradle'
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - uses: actions/download-artifact@v5
         with:
           name: build-output
-          path: ./build/libs/
+          path: ./
       - name: Publish To Curseforge
         env:
           CURSEFORGE_KEY: ${{ secrets.CURSEFORGE_KEY }}
@@ -85,7 +88,7 @@ jobs:
       - uses: actions/download-artifact@v5
         with:
           name: build-output
-          path: ./build/libs/
+          path: ./
       - name: Publish To Modrinth
         env:
           MODRINTH_KEY: ${{ secrets.MODRINTH_KEY }}
