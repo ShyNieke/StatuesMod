@@ -110,6 +110,7 @@ public class ServerPayloadHandler {
 						if (container instanceof StatueTableMenu menu) {
 							if (tableData.isButtonPressed()) {
 								menu.getStatueBE().executeCraft();
+								menu.slotsChanged(null);
 							}
 						}
 					}
