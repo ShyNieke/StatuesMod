@@ -140,8 +140,9 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 				ItemResource centerResource = getCenterResource();
 				ItemStack centerStack = centerResource.toStack();
 				if (resultStack.isEmpty()) {
-					if (!recipe.getUpgradeType().apply(centerStack, recipe.getTier())) {
+					if (recipe.getUpgradeType().apply(centerStack, recipe.getTier())) {
 						handler.set(SLOT_CENTER, ItemResource.of(centerStack), centerStack.getCount());
+					} else {
 						Statues.LOGGER.debug("Failed to apply upgrade {} to {}", currentRecipe.id(), resultStack);
 					}
 				} else {
@@ -153,7 +154,6 @@ public class StatueTableBlockEntity extends BlockEntity implements MenuProvider 
 
 				tx.commit();
 				this.currentRecipe = null;
-				return;
 			}
 		}
 		level.playSound(null, getBlockPos(), SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
