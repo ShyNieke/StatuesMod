@@ -1,2 +1,1 @@
-* Fix player statue entity crashing upon spawn
-* Fix player statue item not rendering in inventory
+* Fix S.T.A.T.U.E table not being able to upgrade a statue properly
