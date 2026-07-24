@@ -140,7 +140,7 @@ public class StatueTableMenu extends AbstractContainerMenu {
 		}
 	}
 
-	public static class TableSlot extends ResourceHandlerSlot {
+	public class TableSlot extends ResourceHandlerSlot {
 		private final int index;
 
 		public TableSlot(ItemStacksResourceHandler itemHandler, int index, int xPosition, int yPosition) {
@@ -155,10 +155,10 @@ public class StatueTableMenu extends AbstractContainerMenu {
 			return super.getMaxStackSize();
 		}
 
-//		@Override
-//		public void setChanged() {
-//			super.setChanged();
-//			slotsChanged(null);
-//		}
+		@Override
+		protected void setStackCopy(ItemStack stack) {
+			super.setStackCopy(stack);
+			StatueTableMenu.this.slotsChanged(null);
+		}
 	}
 }
