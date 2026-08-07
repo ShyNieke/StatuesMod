@@ -1,6 +1,7 @@
 package com.shynieke.statues.handlers;
 
 import com.shynieke.statues.blockentities.AbstractStatueBlockEntity;
+import com.shynieke.statues.compat.curios.CuriosCompat;
 import com.shynieke.statues.datacomponent.StatueStats;
 import com.shynieke.statues.fakeplayer.StatueFakePlayer;
 import com.shynieke.statues.items.StatueBlockItem;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
@@ -29,13 +31,22 @@ public class StatueHandler {
 			Inventory inventory = player.getInventory();
 			for (int i = 0; i < inventory.getContainerSize(); i++) {
 				ItemStack stack = inventory.getItem(i);
-				if (stack.getCount() == 1 && stack.getItem() instanceof StatueBlockItem statue &&
-						upgraded(stack) && statue.matchesEntity(target)) {
-					increaseKillCounter(stack);
-					break;
-				}
+				if (handleStack(stack, target)) break;
+			}
+			if (ModList.get().isLoaded("curios")) {
+				ItemStack curiosStack = CuriosCompat.getCuriosStack(player);
+				handleStack(curiosStack, target);
 			}
 		}
+	}
+
+	private boolean handleStack(ItemStack stack, LivingEntity target) {
+		if (stack.getCount() == 1 && stack.getItem() instanceof StatueBlockItem statue &&
+				upgraded(stack) && statue.matchesEntity(target)) {
+			increaseKillCounter(stack);
+			return true;
+		}
+		return false;
 	}
 
 	private boolean upgraded(ItemStack stack) {
