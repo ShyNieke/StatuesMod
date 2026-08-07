@@ -1,1 +1,1 @@
-* Add a Zombified Piglin statue (Requested by JBHUTT09 on Discord / Patreon)
+* Allow Statues inside the Statue Curio slot to level
