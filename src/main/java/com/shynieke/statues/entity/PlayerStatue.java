@@ -32,13 +32,11 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -659,24 +657,6 @@ public class PlayerStatue extends LivingEntity {
 		Block.popResource(this.level(), this.blockPosition(), new ItemStack(StatueRegistry.STATUE_CORE.get()));
 		this.brokenByAnything(serverLevel, source);
 	}
-
-//	@Override TODO: Re-implement?
-//	public ItemStack getPickedResult(HitResult target) {
-//		ItemStack stack = new ItemStack(StatueRegistry.PLAYER_STATUE.get());
-//		if (getGameProfile().isPresent()) {
-//			GameProfile profile = getGameProfile().get();
-//			if (profile != null) {
-//				CompoundTag stackTag = stack.getTag() != null ? stack.getTag() : new CompoundTag();
-//				CompoundTag nbttagcompound = new CompoundTag();
-//				NbtUtils.writeGameProfile(nbttagcompound, profile);
-//				stackTag.put("PlayerProfile", nbttagcompound);
-//				stack.setTag(stackTag);
-//				stack.setHoverName(Component.literal(profile.getName()));
-//			}
-//		}
-//
-//		return stack;
-//	}
 
 	private void brokenByAnything(ServerLevel serverLevel, DamageSource source) {
 		this.playBrokenSound();
