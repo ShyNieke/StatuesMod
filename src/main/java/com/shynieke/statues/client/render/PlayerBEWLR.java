@@ -53,10 +53,11 @@ public class PlayerBEWLR extends BlockEntityWithoutLevelRenderer {
 				boolean validFlag = !stackName.isEmpty() && !stackName.contains(" ");
 
 				if (validFlag) {
-					if (GAMEPROFILE_CACHE.containsKey(stackName)) gameprofile = GAMEPROFILE_CACHE.get(stackName);
-
 					if (!stack.has(DataComponents.PROFILE)) {
+						if (GAMEPROFILE_CACHE.containsKey(stackName)) gameprofile = GAMEPROFILE_CACHE.get(stackName);
 						stack.set(DataComponents.PROFILE, gameprofile);
+					} else {
+						gameprofile = stack.get(DataComponents.PROFILE);
 					}
 					if (stack.has(DataComponents.PROFILE) && gameprofile == null) {
 						ResolvableProfile resolvableProfile = stack.get(DataComponents.PROFILE);
