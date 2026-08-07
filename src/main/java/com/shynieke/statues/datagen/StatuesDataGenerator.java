@@ -13,6 +13,7 @@ import com.shynieke.statues.datagen.server.StatueGLMProvider;
 import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
+import com.shynieke.statues.datagen.server.curios.StatueCurioProvider;
 import com.shynieke.statues.datagen.server.patchouli.StatuePatchouliProvider;
 import com.shynieke.statues.registry.StatueJukeboxSongs;
 import com.shynieke.statues.registry.StatueTrims;
@@ -54,6 +55,7 @@ public class StatuesDataGenerator {
 			generator.addProvider(event.includeServer(), new StatueGLMProvider(packOutput, lookupProvider));
 			generator.addProvider(event.includeServer(), new StatuePatchouliProvider(packOutput, lookupProvider));
 			generator.addProvider(event.includeServer(), new StatueAdvancementProvider(packOutput, lookupProvider, helper));
+			generator.addProvider(event.includeServer(), new StatueCurioProvider(packOutput, lookupProvider, helper));
 
 			generator.addProvider(event.includeServer(), new DatapackBuiltinEntriesProvider(
 					packOutput, CompletableFuture.supplyAsync(StatuesDataGenerator::getProvider), Set.of(Reference.MOD_ID)));
