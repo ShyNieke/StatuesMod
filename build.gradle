@@ -125,12 +125,12 @@ dependencies {
 
     localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 
-//    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
-//    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
-//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
-//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
+    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
 
-//    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
 
 //    implementation "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
 
