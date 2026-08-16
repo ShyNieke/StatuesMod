@@ -77,11 +77,11 @@ jobs:
     if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[modrinth]')
     steps:
       - uses: actions/checkout@v5
-      - name: Set up JDK 25
+      - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: 25
+          java-version: ${{ env.JDK_VERSION }}
           cache: 'gradle'
       - name: Make gradlew executable
         run: chmod +x ./gradlew
