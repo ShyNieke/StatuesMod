@@ -1,1 +1,1 @@
-* Fix S.T.A.T.U.E table not being able to upgrade a statue properly
+* Re-enable REI support
