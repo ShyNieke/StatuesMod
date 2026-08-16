@@ -201,7 +201,7 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelogType = 'markdown'
 
         mainFile.addOptional("jade")
-//        mainFile.addOptional("roughly-enough-items")
+        mainFile.addOptional("roughly-enough-items")
         mainFile.addOptional("jei")
         mainFile.addOptional("curios")
 //        mainFile.addOptional("the-cactus-mod")
@@ -225,7 +225,7 @@ if (System.getenv().MODRINTH_KEY) {
             optional.project "curios"
 //            optional.project "the-cactus-mod"
             optional.project "jade"
-//            optional.project "rei"
+            optional.project "rei"
             optional.project "jei"
             optional.project "patchouli"
         }
