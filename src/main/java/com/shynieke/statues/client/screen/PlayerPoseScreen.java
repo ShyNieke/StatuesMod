@@ -25,6 +25,7 @@ import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.storage.TagValueInput;
@@ -38,6 +39,7 @@ import java.util.Optional;
 
 @SuppressWarnings("rawtypes")
 public class PlayerPoseScreen extends Screen {
+	private final int whiteColor = ARGB.opaque(16777215);
 	private final PlayerStatue playerStatueEntity;
 	private final PlayerStatueData playerStatueData;
 
@@ -212,27 +214,27 @@ public class PlayerPoseScreen extends Screen {
 
 		// Draw gui title
 		guiGraphics.centeredText(font, I18n.get(String.format("%s.playerstatue.gui.title", Reference.MOD_ID)),
-				this.width / 2, 20, 0xFFFFFF);
+				this.width / 2, 20, ARGB.opaque(0xFFFFFF));
 		int offsetY = 50;
 
 		// left column labels
 		int offsetX = 20;
 		for (int i = 0; i < this.buttonLabels.length; i++) {
 			int y = offsetY + (i * 22) + (11 - (this.font.lineHeight / 2));
-			guiGraphics.text(font, this.buttonLabels[i], offsetX, y, 0xA0A0A0, false);
+			guiGraphics.text(font, this.buttonLabels[i], offsetX, y,  whiteColor, false);
 		}
 
 		// right column labels
 		offsetX = this.width - 20 - 100;
 		// x, y, z
-		guiGraphics.text(font, "X", offsetX, 37, 0xA0A0A0, false);
-		guiGraphics.text(font, "Y", offsetX + (35), 37, 0xA0A0A0, false);
-		guiGraphics.text(font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0, false);
+		guiGraphics.text(font, "X", offsetX, 37, whiteColor, false);
+		guiGraphics.text(font, "Y", offsetX + (35), 37, whiteColor, false);
+		guiGraphics.text(font, "Z", offsetX + (2 * 35), 37, whiteColor, false);
 		// pose textboxes
 		for (int i = 0; i < this.sliderLabels.length; i++) {
 			int x = offsetX - this.font.width(this.sliderLabels[i]) - 10;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			guiGraphics.text(font, this.sliderLabels[i], x, y, 0xA0A0A0, false);
+			guiGraphics.text(font, this.sliderLabels[i], x, y, whiteColor, false);
 		}
 	}
 
