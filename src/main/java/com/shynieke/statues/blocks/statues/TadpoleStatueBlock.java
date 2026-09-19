@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -32,7 +33,7 @@ public class TadpoleStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.TADPOLE;
+		return EntityTypes.TADPOLE;
 	}
 
 	private static boolean isntSolid(BlockState state, BlockGetter getter, BlockPos pos) {

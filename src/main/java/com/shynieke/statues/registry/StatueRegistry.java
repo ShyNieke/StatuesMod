@@ -75,7 +75,6 @@ import com.shynieke.statues.items.PlayerStatueBlockItem;
 import com.shynieke.statues.items.PlayerStatueSpawnItem;
 import com.shynieke.statues.items.StatueBeeItem;
 import com.shynieke.statues.items.StatueBlockItem;
-import com.shynieke.statues.items.StatueCharredMarshmallow;
 import com.shynieke.statues.items.StatueCoreItem;
 import com.shynieke.statues.items.StatueGoldenMarshmallow;
 import com.shynieke.statues.items.StatueMooshroomSoup;
@@ -282,7 +281,7 @@ public class StatueRegistry {
 					.instabreak()
 					.sound(SoundType.GRASS)
 					.offsetType(BlockBehaviour.OffsetType.XZ)
-					.pushReaction(PushReaction.DESTROY));
+					.pushReaction(PushReaction.POPPED));
 	public static final DeferredBlock<CoreFlowerCropBlock> CORE_FLOWER_CROP = BLOCKS.registerBlock("core_flower_crop", CoreFlowerCropBlock::new,
 			properties -> properties
 					.mapColor(MapColor.PLANT)
@@ -290,11 +289,11 @@ public class StatueRegistry {
 					.randomTicks()
 					.instabreak()
 					.sound(SoundType.CROP)
-					.pushReaction(PushReaction.DESTROY));
+					.pushReaction(PushReaction.POPPED));
 
 	public static final DeferredItem<Item> CUP = ITEMS.registerItem("cup", (properties) -> new Item(properties.food(StatueFoods.CUP)));
 	public static final DeferredItem<Item> MARSHMALLOW = ITEMS.registerItem("marshmallow", (properties) -> new Item(properties.food(StatueFoods.MARSHMALLOW)));
-	public static final DeferredItem<StatueCharredMarshmallow> MARSHMALLOW_CHARRED = ITEMS.registerItem("marshmallow_charred", StatueCharredMarshmallow::new);
+	public static final DeferredItem<Item> MARSHMALLOW_CHARRED = ITEMS.registerSimpleItem("marshmallow_charred", (properties) -> properties.cookingFuel(StatuesIntProviders.COOKING_TIME_CHARRED_MARSHMALLOW));
 	public static final DeferredItem<Item> MARSHMALLOW_COOKED = ITEMS.registerItem("marshmallow_cooked", (properties) -> new Item(properties.food(StatueFoods.COOKED_MARSHMALLOW)));
 	public static final DeferredItem<StatueGoldenMarshmallow> MARSHMALLOW_GOLDEN = ITEMS.registerItem("marshmallow_golden", StatueGoldenMarshmallow::new);
 	public static final DeferredItem<Item> NUGGET = ITEMS.registerItem("royal_nugget", (properties) -> new Item(properties.food(StatueFoods.ROYAL_NUGGET)));

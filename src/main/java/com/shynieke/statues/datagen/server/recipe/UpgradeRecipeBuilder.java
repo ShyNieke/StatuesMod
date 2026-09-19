@@ -2,7 +2,7 @@ package com.shynieke.statues.datagen.server.recipe;
 
 import com.shynieke.statues.recipe.UpgradeRecipe;
 import com.shynieke.statues.recipe.UpgradeType;
-import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;

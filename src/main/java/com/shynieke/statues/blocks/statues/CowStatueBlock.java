@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.animal.cow.CowSoundVariants;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -22,7 +23,7 @@ public class CowStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.COW;
+		return EntityTypes.COW;
 	}
 
 	@Override

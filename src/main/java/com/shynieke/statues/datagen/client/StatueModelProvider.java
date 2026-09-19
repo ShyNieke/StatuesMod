@@ -67,7 +67,7 @@ public class StatueModelProvider extends ModelProvider {
 			} else if (registryObject.get() == StatueRegistry.CORE_FLOWER_CROP.get()) {
 				blockModels.createCropBlock(registryObject.get(), CoreFlowerCropBlock.AGE, 0, 1, 2, 3, 4, 5, 6, 7, 8);
 			} else if (registryObject.get() instanceof FlowerBlock) {
-				blockModels.registerSimpleItemModel(registryObject.get(), PlantType.NOT_TINTED.createItemModel(blockModels, registryObject.get()));
+				blockModels.registerSimpleItemModel(registryObject.get(), PlantType.NOT_TINTED.createItemModelUsingBlockTexture(blockModels, registryObject.get()));
 				blockModels.createCrossBlock(registryObject.get(), PlantType.NOT_TINTED);
 			} else if (registryObject.get() instanceof DisplayStandBlock) {
 				blockModels.createNonTemplateModelBlock(registryObject.get());

@@ -17,6 +17,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffect;
@@ -322,7 +323,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 				if (stack.isEmpty()) {
 					playerIn.setItemInHand(hand, floodBucket);
 				} else if (!playerIn.getInventory().add(floodBucket)) {
-					playerIn.drop(floodBucket, false);
+					playerIn.drop(floodBucket, false, Prediction.SERVER_ONLY);
 				}
 			}
 
@@ -345,7 +346,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 				if (stack.isEmpty()) {
 					playerIn.setItemInHand(hand, soupStack);
 				} else if (!playerIn.getInventory().add(soupStack)) {
-					playerIn.drop(soupStack, false);
+					playerIn.drop(soupStack, false, Prediction.SERVER_ONLY);
 				}
 			}
 		}
@@ -361,7 +362,7 @@ public class StatueBlockEntity extends AbstractStatueBlockEntity implements IOwn
 				if (stack.isEmpty()) {
 					playerIn.setItemInHand(hand, new ItemStack(Items.MILK_BUCKET));
 				} else if (!playerIn.getInventory().add(new ItemStack(Items.MILK_BUCKET))) {
-					playerIn.drop(new ItemStack(Items.MILK_BUCKET), false);
+					playerIn.drop(new ItemStack(Items.MILK_BUCKET), false, Prediction.SERVER_ONLY);
 				}
 			}
 		}

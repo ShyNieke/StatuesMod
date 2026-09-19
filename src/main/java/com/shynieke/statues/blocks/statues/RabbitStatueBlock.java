@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.level.BlockGetter;
@@ -23,7 +24,7 @@ public class RabbitStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.RABBIT;
+		return EntityTypes.RABBIT;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -29,7 +30,7 @@ public class ElderGuardianStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.ELDER_GUARDIAN;
+		return EntityTypes.ELDER_GUARDIAN;
 	}
 
 	@Override

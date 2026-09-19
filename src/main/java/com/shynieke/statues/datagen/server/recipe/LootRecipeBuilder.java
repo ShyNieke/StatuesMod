@@ -2,7 +2,7 @@ package com.shynieke.statues.datagen.server.recipe;
 
 import com.shynieke.statues.Reference;
 import com.shynieke.statues.recipe.LootRecipe;
-import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;

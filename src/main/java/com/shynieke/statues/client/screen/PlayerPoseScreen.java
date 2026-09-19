@@ -83,7 +83,7 @@ public class PlayerPoseScreen extends Screen {
 	}
 
 	public static void openScreen(PlayerStatue playerStatue) {
-		Minecraft.getInstance().setScreen(new PlayerPoseScreen(playerStatue));
+		Minecraft.getInstance().gui.setScreen(new PlayerPoseScreen(playerStatue));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -188,7 +188,7 @@ public class PlayerPoseScreen extends Screen {
 		offsetX = this.width - 20;
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), (button) -> {
 			this.updateEntity(this.writeFieldsToNBT());
-			this.minecraft.setScreen((Screen) null);
+			this.minecraft.gui.setScreen((Screen) null);
 		}).bounds(offsetX - ((2 * 96) + 2), offsetY, 96, 20).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), (button) -> {
 			this.poseTextFields[18].setValue("0");
@@ -196,7 +196,7 @@ public class PlayerPoseScreen extends Screen {
 			this.poseTextFields[20].setValue("0");
 			this.textFieldUpdated();
 			this.updateEntity(this.playerStatueData.writeToNBT());
-			this.minecraft.setScreen((Screen) null);
+			this.minecraft.gui.setScreen((Screen) null);
 		}).bounds(offsetX - 96, offsetY, 96, 20).build());
 	}
 

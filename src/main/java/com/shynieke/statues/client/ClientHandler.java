@@ -16,7 +16,6 @@ import com.shynieke.statues.recipe.StatuesRecipeCache;
 import com.shynieke.statues.recipe.StatuesRecipes;
 import com.shynieke.statues.registry.StatueBlockEntities;
 import com.shynieke.statues.registry.StatueRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -25,7 +24,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
@@ -81,7 +79,7 @@ public class ClientHandler {
 		}, "Statues Perks Data Loader").start();
 
 		if (ModList.get().isLoaded("curios")) {
-			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
+//			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
 		}
 	}
 

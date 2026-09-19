@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "statues:statue_core"
+        "recipes": "statues:statue_core"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

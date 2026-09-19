@@ -1,9 +1,7 @@
 {
   "type": "statues:statues_city_loot",
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/ancient_city"
-    }
-  ]
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/ancient_city"
+  }
 }

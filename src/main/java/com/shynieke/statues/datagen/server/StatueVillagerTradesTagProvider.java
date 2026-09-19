@@ -5,7 +5,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.VillagerTradesTagsProvider;
 import net.minecraft.tags.VillagerTradeTags;
-import net.minecraft.world.item.trading.VillagerTrades;
 
 import java.util.concurrent.CompletableFuture;
 

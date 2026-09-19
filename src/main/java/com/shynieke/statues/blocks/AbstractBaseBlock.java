@@ -1,6 +1,5 @@
 package com.shynieke.statues.blocks;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -22,7 +21,6 @@ import net.minecraft.world.level.material.Fluids;
 import org.jspecify.annotations.Nullable;
 
 public class AbstractBaseBlock extends BaseEntityBlock implements SimpleWaterloggedBlock {
-	public static final MapCodec<AbstractBaseBlock> CODEC = simpleCodec(AbstractBaseBlock::new);
 
 	protected static final RandomSource RANDOM = RandomSource.create();
 	public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -31,11 +29,6 @@ public class AbstractBaseBlock extends BaseEntityBlock implements SimpleWaterlog
 	public AbstractBaseBlock(Block.Properties builder) {
 		super(builder.strength(0.6F));
 		this.registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
-	}
-
-	@Override
-	protected MapCodec<? extends BaseEntityBlock> codec() {
-		return CODEC;
 	}
 
 	@Override

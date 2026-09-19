@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -29,7 +30,7 @@ public class ShulkerStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.SHULKER;
+		return EntityTypes.SHULKER;
 	}
 
 	@Override

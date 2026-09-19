@@ -16,35 +16,35 @@ public class StatueBlockTagProvider extends BlockTagsProvider {
 
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
-		this.tag(StatueTags.STATUE_BLOCKS).add(StatueRegistry.ANGRY_BEE_STATUE.get(), StatueRegistry.BABY_ZOMBIE_STATUE.get(), StatueRegistry.BEE_STATUE.get(), StatueRegistry.TRANS_BEE_STATUE.get(), StatueRegistry.BLAZE_STATUE.get(),
-				StatueRegistry.BROWN_MOOSHROOM_STATUE.get(), StatueRegistry.CAMPFIRE_STATUE.get(), StatueRegistry.CAT_BLACK_STATUE.get(), StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.get(), StatueRegistry.CAT_CALICO_STATUE.get(),
-				StatueRegistry.CAT_JELLIE_STATUE.get(), StatueRegistry.CAT_PERSIAN_STATUE.get(), StatueRegistry.CAT_RAGDOLL_STATUE.get(), StatueRegistry.CAT_RED_STATUE.get(), StatueRegistry.CAT_SIAMESE_STATUE.get(), StatueRegistry.CAT_TABBY_STATUE.get(),
-				StatueRegistry.CAT_TUXEDO_STATUE.get(), StatueRegistry.CAT_WHITE_STATUE.get(), StatueRegistry.CHICKEN_JOCKEY_STATUE.get(), StatueRegistry.CHICKEN_STATUE.get(), StatueRegistry.COD_STATUE.get(), StatueRegistry.COW_STATUE.get(),
-				StatueRegistry.CREEPER_STATUE.get(), StatueRegistry.DETECTIVE_PLATYPUS.get(), StatueRegistry.DOLPHIN_STATUE.get(), StatueRegistry.DROWNED_STATUE.get(), StatueRegistry.ELDER_GUARDIAN_STATUE.get(), StatueRegistry.ENDERMAN_STATUE.get(),
-				StatueRegistry.ENDERMITE_STATUE.get(), StatueRegistry.EVOKER_STATUE.get(), StatueRegistry.FLOOD_STATUE.get(), StatueRegistry.FOX_SNOW_STATUE.get(), StatueRegistry.FOX_STATUE.get(), StatueRegistry.GHAST_STATUE.get(), StatueRegistry.GUARDIAN_STATUE.get(),
-				StatueRegistry.HUSK_STATUE.get(), StatueRegistry.INFO_STATUE.get(), StatueRegistry.KING_CLUCK_STATUE.get(), StatueRegistry.MAGMA_STATUE.get(), StatueRegistry.MOOSHROOM_STATUE.get(), StatueRegistry.PANDA_ANGRY_STATUE.get(),
-				StatueRegistry.PANDA_BROWN_STATUE.get(), StatueRegistry.PANDA_LAZY_STATUE.get(), StatueRegistry.PANDA_NORMAL_STATUE.get(), StatueRegistry.PANDA_PLAYFUL_STATUE.get(), StatueRegistry.PANDA_WEAK_STATUE.get(),
-				StatueRegistry.PANDA_WORRIED_STATUE.get(), StatueRegistry.PIG_STATUE.get(), StatueRegistry.PILLAGER_STATUE.get(), StatueRegistry.PLAYER_STATUE.get(), StatueRegistry.PUFFERFISH_MEDIUM_STATUE.get(),
-				StatueRegistry.PUFFERFISH_SMALL_STATUE.get(), StatueRegistry.PUFFERFISH_STATUE.get(), StatueRegistry.RABBIT_BR_STATUE.get(), StatueRegistry.RABBIT_BS_STATUE.get(), StatueRegistry.RABBIT_BW_STATUE.get(),
-				StatueRegistry.RABBIT_GO_STATUE.get(), StatueRegistry.RABBIT_WH_STATUE.get(), StatueRegistry.RABBIT_WS_STATUE.get(), StatueRegistry.RAVAGER_STATUE.get(), StatueRegistry.SALMON_STATUE.get(), StatueRegistry.SHEEP_SHAVEN_STATUE.get(),
-				StatueRegistry.SHEEP_STATUE_BLACK.get(), StatueRegistry.SHEEP_STATUE_BLUE.get(), StatueRegistry.SHEEP_STATUE_BROWN.get(), StatueRegistry.SHEEP_STATUE_CYAN.get(), StatueRegistry.SHEEP_STATUE_GRAY.get(), StatueRegistry.SHEEP_STATUE_GREEN.get(),
-				StatueRegistry.SHEEP_STATUE_LIGHT_BLUE.get(), StatueRegistry.SHEEP_STATUE_LIGHT_GRAY.get(), StatueRegistry.SHEEP_STATUE_LIME.get(), StatueRegistry.SHEEP_STATUE_MAGENTA.get(), StatueRegistry.SHEEP_STATUE_ORANGE.get(),
-				StatueRegistry.SHEEP_STATUE_PINK.get(), StatueRegistry.SHEEP_STATUE_PURPLE.get(), StatueRegistry.SHEEP_STATUE_RED.get(), StatueRegistry.SHEEP_STATUE_WHITE.get(), StatueRegistry.SHEEP_STATUE_YELLOW.get(), StatueRegistry.SHULKER_STATUE.get(),
-				StatueRegistry.SLIME_STATUE.get(), StatueRegistry.SNOW_GOLEM_STATUE.get(), StatueRegistry.SPIDER_STATUE.get(), StatueRegistry.SQUID_STATUE.get(), StatueRegistry.TOTEM_OF_UNDYING_STATUE.get(), StatueRegistry.TROPICAL_FISH_B.get(),
-				StatueRegistry.TROPICAL_FISH_BB.get(), StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(), StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(), StatueRegistry.TROPICAL_FISH_E.get(),
-				StatueRegistry.TROPICAL_FISH_ES.get(), StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(), StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get(), StatueRegistry.TURTLE_STATUE.get(),
-				StatueRegistry.VILLAGER_BR_STATUE.get(), StatueRegistry.VILLAGER_GR_STATUE.get(), StatueRegistry.VILLAGER_PU_STATUE.get(), StatueRegistry.VILLAGER_WH_STATUE.get(), StatueRegistry.VINDICATOR_STATUE.get(), StatueRegistry.WASTELAND_STATUE.get(),
-				StatueRegistry.WITCH_STATUE.get(), StatueRegistry.ZOMBIE_STATUE.get(), StatueRegistry.BUMBO_STATUE.get(), StatueRegistry.TROPIBEE.get(), StatueRegistry.EAGLE_RAY.get(), StatueRegistry.SLABFISH.get(), StatueRegistry.AZZARO.get(),
-				StatueRegistry.ALLAY_STATUE.get(), StatueRegistry.AXOLOTL_LUCY_STATUE.get(), StatueRegistry.AXOLOTL_WILD_STATUE.get(), StatueRegistry.AXOLOTL_GOLD_STATUE.get(), StatueRegistry.AXOLOTL_CYAN_STATUE.get(), StatueRegistry.AXOLOTL_BLUE_STATUE.get(),
-				StatueRegistry.FROG_TEMPERATE_STATUE.get(), StatueRegistry.FROG_WARM_STATUE.get(), StatueRegistry.FROG_COLD_STATUE.get(), StatueRegistry.TADPOLE_STATUE.get(), StatueRegistry.WARDEN_STATUE.get(), StatueRegistry.ZOMBIFIED_PIGLIN_STATUE.get());
+		this.tag(StatueTags.STATUE_BLOCKS).add(StatueRegistry.ANGRY_BEE_STATUE.getKey(), StatueRegistry.BABY_ZOMBIE_STATUE.getKey(), StatueRegistry.BEE_STATUE.getKey(), StatueRegistry.TRANS_BEE_STATUE.getKey(), StatueRegistry.BLAZE_STATUE.getKey(),
+				StatueRegistry.BROWN_MOOSHROOM_STATUE.getKey(), StatueRegistry.CAMPFIRE_STATUE.getKey(), StatueRegistry.CAT_BLACK_STATUE.getKey(), StatueRegistry.CAT_BRITISH_SHORTHAIR_STATUE.getKey(), StatueRegistry.CAT_CALICO_STATUE.getKey(),
+				StatueRegistry.CAT_JELLIE_STATUE.getKey(), StatueRegistry.CAT_PERSIAN_STATUE.getKey(), StatueRegistry.CAT_RAGDOLL_STATUE.getKey(), StatueRegistry.CAT_RED_STATUE.getKey(), StatueRegistry.CAT_SIAMESE_STATUE.getKey(), StatueRegistry.CAT_TABBY_STATUE.getKey(),
+				StatueRegistry.CAT_TUXEDO_STATUE.getKey(), StatueRegistry.CAT_WHITE_STATUE.getKey(), StatueRegistry.CHICKEN_JOCKEY_STATUE.getKey(), StatueRegistry.CHICKEN_STATUE.getKey(), StatueRegistry.COD_STATUE.getKey(), StatueRegistry.COW_STATUE.getKey(),
+				StatueRegistry.CREEPER_STATUE.getKey(), StatueRegistry.DETECTIVE_PLATYPUS.getKey(), StatueRegistry.DOLPHIN_STATUE.getKey(), StatueRegistry.DROWNED_STATUE.getKey(), StatueRegistry.ELDER_GUARDIAN_STATUE.getKey(), StatueRegistry.ENDERMAN_STATUE.getKey(),
+				StatueRegistry.ENDERMITE_STATUE.getKey(), StatueRegistry.EVOKER_STATUE.getKey(), StatueRegistry.FLOOD_STATUE.getKey(), StatueRegistry.FOX_SNOW_STATUE.getKey(), StatueRegistry.FOX_STATUE.getKey(), StatueRegistry.GHAST_STATUE.getKey(), StatueRegistry.GUARDIAN_STATUE.getKey(),
+				StatueRegistry.HUSK_STATUE.getKey(), StatueRegistry.INFO_STATUE.getKey(), StatueRegistry.KING_CLUCK_STATUE.getKey(), StatueRegistry.MAGMA_STATUE.getKey(), StatueRegistry.MOOSHROOM_STATUE.getKey(), StatueRegistry.PANDA_ANGRY_STATUE.getKey(),
+				StatueRegistry.PANDA_BROWN_STATUE.getKey(), StatueRegistry.PANDA_LAZY_STATUE.getKey(), StatueRegistry.PANDA_NORMAL_STATUE.getKey(), StatueRegistry.PANDA_PLAYFUL_STATUE.getKey(), StatueRegistry.PANDA_WEAK_STATUE.getKey(),
+				StatueRegistry.PANDA_WORRIED_STATUE.getKey(), StatueRegistry.PIG_STATUE.getKey(), StatueRegistry.PILLAGER_STATUE.getKey(), StatueRegistry.PLAYER_STATUE.getKey(), StatueRegistry.PUFFERFISH_MEDIUM_STATUE.getKey(),
+				StatueRegistry.PUFFERFISH_SMALL_STATUE.getKey(), StatueRegistry.PUFFERFISH_STATUE.getKey(), StatueRegistry.RABBIT_BR_STATUE.getKey(), StatueRegistry.RABBIT_BS_STATUE.getKey(), StatueRegistry.RABBIT_BW_STATUE.getKey(),
+				StatueRegistry.RABBIT_GO_STATUE.getKey(), StatueRegistry.RABBIT_WH_STATUE.getKey(), StatueRegistry.RABBIT_WS_STATUE.getKey(), StatueRegistry.RAVAGER_STATUE.getKey(), StatueRegistry.SALMON_STATUE.getKey(), StatueRegistry.SHEEP_SHAVEN_STATUE.getKey(),
+				StatueRegistry.SHEEP_STATUE_BLACK.getKey(), StatueRegistry.SHEEP_STATUE_BLUE.getKey(), StatueRegistry.SHEEP_STATUE_BROWN.getKey(), StatueRegistry.SHEEP_STATUE_CYAN.getKey(), StatueRegistry.SHEEP_STATUE_GRAY.getKey(), StatueRegistry.SHEEP_STATUE_GREEN.getKey(),
+				StatueRegistry.SHEEP_STATUE_LIGHT_BLUE.getKey(), StatueRegistry.SHEEP_STATUE_LIGHT_GRAY.getKey(), StatueRegistry.SHEEP_STATUE_LIME.getKey(), StatueRegistry.SHEEP_STATUE_MAGENTA.getKey(), StatueRegistry.SHEEP_STATUE_ORANGE.getKey(),
+				StatueRegistry.SHEEP_STATUE_PINK.getKey(), StatueRegistry.SHEEP_STATUE_PURPLE.getKey(), StatueRegistry.SHEEP_STATUE_RED.getKey(), StatueRegistry.SHEEP_STATUE_WHITE.getKey(), StatueRegistry.SHEEP_STATUE_YELLOW.getKey(), StatueRegistry.SHULKER_STATUE.getKey(),
+				StatueRegistry.SLIME_STATUE.getKey(), StatueRegistry.SNOW_GOLEM_STATUE.getKey(), StatueRegistry.SPIDER_STATUE.getKey(), StatueRegistry.SQUID_STATUE.getKey(), StatueRegistry.TOTEM_OF_UNDYING_STATUE.getKey(), StatueRegistry.TROPICAL_FISH_B.getKey(),
+				StatueRegistry.TROPICAL_FISH_BB.getKey(), StatueRegistry.TROPICAL_FISH_BE.getKey(), StatueRegistry.TROPICAL_FISH_BM.getKey(), StatueRegistry.TROPICAL_FISH_BMB.getKey(), StatueRegistry.TROPICAL_FISH_BMS.getKey(), StatueRegistry.TROPICAL_FISH_E.getKey(),
+				StatueRegistry.TROPICAL_FISH_ES.getKey(), StatueRegistry.TROPICAL_FISH_HB.getKey(), StatueRegistry.TROPICAL_FISH_SB.getKey(), StatueRegistry.TROPICAL_FISH_SD.getKey(), StatueRegistry.TROPICAL_FISH_SS.getKey(), StatueRegistry.TURTLE_STATUE.getKey(),
+				StatueRegistry.VILLAGER_BR_STATUE.getKey(), StatueRegistry.VILLAGER_GR_STATUE.getKey(), StatueRegistry.VILLAGER_PU_STATUE.getKey(), StatueRegistry.VILLAGER_WH_STATUE.getKey(), StatueRegistry.VINDICATOR_STATUE.getKey(), StatueRegistry.WASTELAND_STATUE.getKey(),
+				StatueRegistry.WITCH_STATUE.getKey(), StatueRegistry.ZOMBIE_STATUE.getKey(), StatueRegistry.BUMBO_STATUE.getKey(), StatueRegistry.TROPIBEE.getKey(), StatueRegistry.EAGLE_RAY.getKey(), StatueRegistry.SLABFISH.getKey(), StatueRegistry.AZZARO.getKey(),
+				StatueRegistry.ALLAY_STATUE.getKey(), StatueRegistry.AXOLOTL_LUCY_STATUE.getKey(), StatueRegistry.AXOLOTL_WILD_STATUE.getKey(), StatueRegistry.AXOLOTL_GOLD_STATUE.getKey(), StatueRegistry.AXOLOTL_CYAN_STATUE.getKey(), StatueRegistry.AXOLOTL_BLUE_STATUE.getKey(),
+				StatueRegistry.FROG_TEMPERATE_STATUE.getKey(), StatueRegistry.FROG_WARM_STATUE.getKey(), StatueRegistry.FROG_COLD_STATUE.getKey(), StatueRegistry.TADPOLE_STATUE.getKey(), StatueRegistry.WARDEN_STATUE.getKey(), StatueRegistry.ZOMBIFIED_PIGLIN_STATUE.getKey());
 
 		this.tag(StatueTags.IS_TROPICAL_FISH).add(
-				StatueRegistry.TROPICAL_FISH_B.get(), StatueRegistry.TROPICAL_FISH_BB.get(),
-				StatueRegistry.TROPICAL_FISH_BE.get(), StatueRegistry.TROPICAL_FISH_BM.get(),
-				StatueRegistry.TROPICAL_FISH_BMB.get(), StatueRegistry.TROPICAL_FISH_BMS.get(),
-				StatueRegistry.TROPICAL_FISH_E.get(), StatueRegistry.TROPICAL_FISH_ES.get(),
-				StatueRegistry.TROPICAL_FISH_HB.get(), StatueRegistry.TROPICAL_FISH_SB.get(),
-				StatueRegistry.TROPICAL_FISH_SD.get(), StatueRegistry.TROPICAL_FISH_SS.get()
+				StatueRegistry.TROPICAL_FISH_B.getKey(), StatueRegistry.TROPICAL_FISH_BB.getKey(),
+				StatueRegistry.TROPICAL_FISH_BE.getKey(), StatueRegistry.TROPICAL_FISH_BM.getKey(),
+				StatueRegistry.TROPICAL_FISH_BMB.getKey(), StatueRegistry.TROPICAL_FISH_BMS.getKey(),
+				StatueRegistry.TROPICAL_FISH_E.getKey(), StatueRegistry.TROPICAL_FISH_ES.getKey(),
+				StatueRegistry.TROPICAL_FISH_HB.getKey(), StatueRegistry.TROPICAL_FISH_SB.getKey(),
+				StatueRegistry.TROPICAL_FISH_SD.getKey(), StatueRegistry.TROPICAL_FISH_SS.getKey()
 		);
 	}
 }

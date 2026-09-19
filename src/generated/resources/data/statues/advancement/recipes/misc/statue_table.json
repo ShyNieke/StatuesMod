@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "statues:statue_table"
+        "recipes": "statues:statue_table"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

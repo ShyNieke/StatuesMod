@@ -8,6 +8,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.Weighted;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.neoforged.neoforge.common.world.BiomeModifier;
@@ -27,12 +28,12 @@ public class StatueBiomeModifiers {
 
 		context.register(ADD_SPAWN_MODIFIER, BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
 				biomeGetter.getOrThrow(StatueTags.CAN_SPAWN_STATUE_BAT),
-				new Weighted<>(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), 1, 2), 4)
+				new Weighted<>(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), UniformInt.of(1, 2)), 4)
 		));
 
 		context.register(ADD_FEWER_SPAWN_MODIFIER, BiomeModifiers.AddSpawnsBiomeModifier.singleSpawn(
 				biomeGetter.getOrThrow(StatueTags.CAN_SPAWN_FEWER_STATUE_BAT),
-				new Weighted<>(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), 1, 1), 1)
+				new Weighted<>(new MobSpawnSettings.SpawnerData(StatueRegistry.STATUE_BAT.get(), UniformInt.of(1, 1)), 1)
 		));
 	}
 }

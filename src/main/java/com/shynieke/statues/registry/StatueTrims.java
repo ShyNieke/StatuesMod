@@ -1,12 +1,12 @@
 package com.shynieke.statues.registry;
 
 import com.shynieke.statues.Reference;
-import net.minecraft.util.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 
 public class StatueTrims {

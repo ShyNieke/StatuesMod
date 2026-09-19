@@ -12,9 +12,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.TradeCost;
 import net.minecraft.world.item.trading.VillagerTrade;
 
-import java.util.List;
-import java.util.Optional;
-
 public class TraderHandler {
 	public static final ResourceKey<VillagerTrade> INFO_STATUE = resourceKey("wandering_trader/info_statue");
 	public static final ResourceKey<VillagerTrade> SOMBRERO = resourceKey("wandering_trader/sombrero");
@@ -29,10 +26,10 @@ public class TraderHandler {
 	public static void bootstrap(BootstrapContext<VillagerTrade> context) {
 		HolderGetter<Item> items = context.lookup(Registries.ITEM);
 
-		context.register(INFO_STATUE, new VillagerTrade(new TradeCost(Items.EMERALD, 2), new ItemStackTemplate(StatueRegistry.INFO_STATUE.asItem()), 32, 1, 0.05F, Optional.empty(), List.of()));
-		context.register(SOMBRERO, new VillagerTrade(new TradeCost(Items.EMERALD, 10), new ItemStackTemplate(StatueRegistry.SOMBRERO.asItem()), 1, 1, 0.05F, Optional.empty(), List.of()));
-		context.register(DETECTIVE_PLATYPUS, new VillagerTrade(new TradeCost(Items.EMERALD, 20), new ItemStackTemplate(StatueRegistry.DETECTIVE_PLATYPUS.asItem()), 1, 1, 0.05F, Optional.empty(), List.of()));
-		context.register(SLABFISH, new VillagerTrade(new TradeCost(Items.EMERALD, 15), new ItemStackTemplate(StatueRegistry.SLABFISH.asItem()), 1, 1, 0.05F, Optional.empty(), List.of()));
-		context.register(TOTEM_OF_UNDYING_STATUE, new VillagerTrade(new TradeCost(Items.EMERALD, 32), new ItemStackTemplate(StatueRegistry.TOTEM_OF_UNDYING_STATUE.asItem()), 1, 1, 0.05F, Optional.empty(), List.of()));
+		context.register(INFO_STATUE, VillagerTrade.builder(new TradeCost(Items.EMERALD, 2), new ItemStackTemplate(StatueRegistry.INFO_STATUE.asItem()), 32, 1, 0.05F).build());
+		context.register(SOMBRERO, VillagerTrade.builder(new TradeCost(Items.EMERALD, 10), new ItemStackTemplate(StatueRegistry.SOMBRERO.asItem()), 1, 1, 0.05F).build());
+		context.register(DETECTIVE_PLATYPUS, VillagerTrade.builder(new TradeCost(Items.EMERALD, 20), new ItemStackTemplate(StatueRegistry.DETECTIVE_PLATYPUS.asItem()), 1, 1, 0.05F).build());
+		context.register(SLABFISH, VillagerTrade.builder(new TradeCost(Items.EMERALD, 15), new ItemStackTemplate(StatueRegistry.SLABFISH.asItem()), 1, 1, 0.05F).build());
+		context.register(TOTEM_OF_UNDYING_STATUE, VillagerTrade.builder(new TradeCost(Items.EMERALD, 32), new ItemStackTemplate(StatueRegistry.TOTEM_OF_UNDYING_STATUE.asItem()), 1, 1, 0.05F).build());
 	}
 }

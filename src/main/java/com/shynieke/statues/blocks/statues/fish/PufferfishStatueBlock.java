@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -26,15 +27,15 @@ public class PufferfishStatueBlock extends AbstractStatueBase {
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return switch (size) {
-			default -> SHAPE;
 			case 1 -> SHAPE_MEDIUM;
 			case 2 -> SHAPE_BIG;
+			default -> SHAPE;
 		};
 	}
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.PUFFERFISH;
+		return EntityTypes.PUFFERFISH;
 	}
 
 	@Override

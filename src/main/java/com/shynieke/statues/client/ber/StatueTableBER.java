@@ -71,15 +71,15 @@ public class StatueTableBER implements BlockEntityRenderer<StatueTableBlockEntit
 		switch (direction) {
 			case EAST -> {
 				poseStack.translate(1, 0, 0);
-				poseStack.mulPose(Axis.YP.rotationDegrees(-90F));
+				poseStack.rotateDegrees(Axis.YP, (-90F));
 			}
 			case SOUTH -> {
 				poseStack.translate(1, 0, 1);
-				poseStack.mulPose(Axis.YP.rotationDegrees(180F));
+				poseStack.rotateDegrees(Axis.YP, (180F));
 			}
 			case WEST -> {
 				poseStack.translate(0, 0, 1);
-				poseStack.mulPose(Axis.YP.rotationDegrees(90F));
+				poseStack.rotateDegrees(Axis.YP, (90F));
 			}
 			default -> {
 				//Nothing

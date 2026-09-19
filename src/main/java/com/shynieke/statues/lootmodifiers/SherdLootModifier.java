@@ -7,6 +7,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.shynieke.statues.registry.StatueLootModifiers;
 import com.shynieke.statues.registry.StatueRegistry;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -14,12 +15,14 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 public class SherdLootModifier extends LootModifier {
 	public static final Supplier<MapCodec<SherdLootModifier>> CODEC = Suppliers.memoize(() ->
 			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).apply(inst, SherdLootModifier::new)));
 
-	public SherdLootModifier(LootItemCondition[] conditionsIn, int priority) {
-		super(conditionsIn, priority);
+	public SherdLootModifier(Optional<Holder<LootItemCondition>> condition, int priority) {
+		super(condition, priority);
 	}
 
 	@NotNull

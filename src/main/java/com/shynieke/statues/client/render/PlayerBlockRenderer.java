@@ -91,13 +91,13 @@ public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntit
 				case NORTH:
 					break;
 				case SOUTH:
-					poseStack.mulPose(Axis.YP.rotationDegrees(180));
+					poseStack.rotateDegrees(Axis.YP, (180));
 					break;
 				case WEST:
-					poseStack.mulPose(Axis.YP.rotationDegrees(90));
+					poseStack.rotateDegrees(Axis.YP, (90));
 					break;
 				default:
-					poseStack.mulPose(Axis.YP.rotationDegrees(270));
+					poseStack.rotateDegrees(Axis.YP, (270));
 			}
 		}
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
@@ -108,7 +108,7 @@ public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntit
 			final String s = ChatFormatting.stripFormatting(profile.name());
 			if ("Dinnerbone".equalsIgnoreCase(s) || "Grumm".equalsIgnoreCase(s)) {
 				poseStack.translate(0.0D, (double) (1.85F), 0.0D);
-				poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+				poseStack.rotateDegrees(Axis.ZP, (180.0F));
 			}
 			isSupporter = ClientHandler.SUPPORTER.contains(profile.id());
 		}
@@ -117,7 +117,7 @@ public class PlayerBlockRenderer implements BlockEntityRenderer<PlayerBlockEntit
 		PlayerStatueRenderState renderState = new PlayerStatueRenderState();
 		playerModel.setupAnim(renderState);
 		nodeCollector.submitModel(playerModel, renderState, poseStack, renderType,
-				light, OverlayTexture.NO_OVERLAY, 0, crumblingOverlay);
+				light, OverlayTexture.NO_OVERLAY, 0);
 		poseStack.popPose();
 	}
 

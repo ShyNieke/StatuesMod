@@ -22,12 +22,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.Prediction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.Nameable;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PostSpawnProcessor;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -58,7 +60,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.Nullable;
 
 import java.util.UUID;
-import java.util.function.Consumer;
 
 public class PlayerStatueBlock extends AbstractBaseBlock {
 	private static final VoxelShape SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
@@ -100,7 +101,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 	}
 
 	@Override
-	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, BlockEntity be, ItemStack stack) {
+	public void playerDestroy(ServerLevel level, ServerPlayer player, BlockPos pos, BlockState state, @Nullable BlockEntity be, ItemStack destroyedWith) {
 		if (be instanceof PlayerBlockEntity playerBlockEntity && ((Nameable) be).hasCustomName()) {
 			player.causeFoodExhaustion(0.005F);
 
@@ -121,7 +122,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 				popResource(level, pos, new ItemStack(Blocks.COMPARATOR.asItem()));
 			}
 		} else {
-			super.playerDestroy(level, player, pos, state, null, stack);
+			super.playerDestroy(level, player, pos, state, be, destroyedWith);
 		}
 	}
 
@@ -191,7 +192,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 									if (stack.isEmpty()) {
 										playerIn.setItemInHand(hand, playerCompass);
 									} else if (!playerIn.getInventory().add(playerCompass)) {
-										playerIn.drop(playerCompass, false);
+										playerIn.drop(playerCompass, false, Prediction.SERVER_ONLY);
 									}
 								}
 							} else {
@@ -213,7 +214,7 @@ public class PlayerStatueBlock extends AbstractBaseBlock {
 					}
 					if (stack.is(StatueTags.PLAYER_UPGRADE_ITEM)) {
 						if (level instanceof ServerLevel serverLevel) {
-							Consumer<PlayerStatue> consumer = EntityType.appendCustomEntityStackConfig((p_263581_) -> {
+							PostSpawnProcessor<PlayerStatue> consumer = EntityType.appendDefaultStackConfig((entity) -> {
 							}, serverLevel, stack, playerIn);
 							PlayerStatue playerStatueEntity = StatueRegistry.PLAYER_STATUE_ENTITY.get().create(serverLevel, consumer, pos, EntitySpawnReason.SPAWN_ITEM_USE, true, true);
 							if (playerStatueEntity == null) {

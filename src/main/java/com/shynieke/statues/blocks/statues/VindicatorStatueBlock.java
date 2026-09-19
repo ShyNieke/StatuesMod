@@ -4,6 +4,7 @@ import com.shynieke.statues.blocks.AbstractStatueBase;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -20,6 +21,6 @@ public class VindicatorStatueBlock extends AbstractStatueBase {
 
 	@Override
 	public EntityType<?> getEntity() {
-		return EntityType.VINDICATOR;
+		return EntityTypes.VINDICATOR;
 	}
 }

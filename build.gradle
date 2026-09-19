@@ -2,7 +2,7 @@ plugins {
     id 'idea'
     id 'java-library'
     id 'maven-publish'
-    id 'net.neoforged.moddev' version '2.0.142'
+    id 'net.neoforged.moddev' version '2.0.147'
     id 'net.darkhax.curseforgegradle' version '1.3.33'
     id 'com.modrinth.minotaur' version "2.+"
 }
@@ -20,8 +20,11 @@ neoForge {
     // Specify the version of NeoForge to use.
     version = project.neo_version
 
-    // This line is optional. Access Transformers are automatically detected
-    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+    // Automatically enable AccessTransformers if the file exists
+    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers.from(at.absolutePath)
+    }
 
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
@@ -125,23 +128,23 @@ dependencies {
 
     localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 
-    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
-    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
-    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
+//    compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-api-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin-neoforge:${rei_version}"
 
-    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
+//    compileOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${rei_version}"
 
 //    implementation "com.blamejared.crafttweaker:CraftTweaker-neoforge-${mc_version}:${crafttweaker_version}"
 
-    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
-    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+//    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+//    localRuntime "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
-    compileOnly "vazkii.patchouli:patchouli-neoforge:${patchouli_version}"
-    localRuntime "vazkii.patchouli:patchouli-neoforge:${patchouli_version}"
+//    compileOnly "vazkii.patchouli:patchouli-neoforge:${patchouli_version}"
+//    localRuntime "vazkii.patchouli:patchouli-neoforge:${patchouli_version}"
 
-    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
-    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+//    compileOnly "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
+//    localRuntime "xyz.brassgoggledcoders:PatchouliProvider:${patchouli_provider_version}"
 
     compileOnly "curse.maven:jade-324717:${jade_id}" //Jade (WAILA)
     localRuntime "curse.maven:jade-324717:${jade_id}" //Jade (WAILA)
@@ -201,11 +204,11 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelogType = 'markdown'
 
         mainFile.addOptional("jade")
-        mainFile.addOptional("roughly-enough-items")
+//        mainFile.addOptional("roughly-enough-items")
         mainFile.addOptional("jei")
-        mainFile.addOptional("curios")
+//        mainFile.addOptional("curios")
 //        mainFile.addOptional("the-cactus-mod")
-        mainFile.addOptional("patchouli")
+//        mainFile.addOptional("patchouli")
     }
 }
 
@@ -222,12 +225,12 @@ if (System.getenv().MODRINTH_KEY) {
         loaders = ["neoforge"]
 
         dependencies {
-            optional.project "curios"
+//            optional.project "curios"
 //            optional.project "the-cactus-mod"
             optional.project "jade"
-            optional.project "rei"
+//            optional.project "rei"
             optional.project "jei"
-            optional.project "patchouli"
+//            optional.project "patchouli"
         }
     }
 }

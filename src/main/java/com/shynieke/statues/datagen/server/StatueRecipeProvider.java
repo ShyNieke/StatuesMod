@@ -8,27 +8,25 @@ import com.shynieke.statues.recipe.UpgradeType;
 import com.shynieke.statues.registry.StatueRegistry;
 import com.shynieke.statues.registry.StatueTags;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.HolderSet;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SingleItemRecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.block.Blocks;
@@ -37,11 +35,13 @@ import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 
 public class StatueRecipeProvider extends RecipeProvider {
-	public StatueRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
-		super(provider, recipeOutput);
+
+	private final HolderGetter<Enchantment> enchantments;
+	public StatueRecipeProvider(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+		super(recipeOutput, advancementOutput);
+		enchantments = advancementOutput.lookup(Registries.ENCHANTMENT);
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.pattern("ELE")
 				.define('E', Items.EXPERIENCE_BOTTLE)
 				.define('C', StatueRegistry.STATUE_CORE)
-				.define('L', Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)))
+				.define('L', tag(Tags.Items.STORAGE_BLOCKS_LAPIS))
 				.define('Z', StatueRegistry.ZOMBIE_STATUE.get())
 				.unlockedBy("has_statue_core", has(StatueRegistry.STATUE_CORE))
 				.save(this.output);
@@ -141,37 +141,37 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.result3(Items.SHULKER_SHELL).save(this.output);
 
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_WHITE.get())).group("sheep")
-				.result1(Blocks.WHITE_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.white()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_ORANGE.get())).group("sheep")
-				.result1(Blocks.ORANGE_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.orange()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_MAGENTA.get())).group("sheep")
-				.result1(Blocks.MAGENTA_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.magenta()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_LIGHT_BLUE.get())).group("sheep")
-				.result1(Blocks.LIGHT_BLUE_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.lightBlue()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_YELLOW.get())).group("sheep")
-				.result1(Blocks.YELLOW_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.yellow()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_LIME.get())).group("sheep")
-				.result1(Blocks.LIME_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.lime()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_PINK.get())).group("sheep")
-				.result1(Blocks.PINK_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.pink()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_GRAY.get())).group("sheep")
-				.result1(Blocks.GRAY_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.gray()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_LIGHT_GRAY.get())).group("sheep")
-				.result1(Blocks.LIGHT_GRAY_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.lightGray()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_CYAN.get())).group("sheep")
-				.result1(Blocks.CYAN_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.cyan()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_PURPLE.get())).group("sheep")
-				.result1(Blocks.PURPLE_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.purple()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_BLUE.get())).group("sheep")
-				.result1(Blocks.BLUE_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.blue()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_BROWN.get())).group("sheep")
-				.result1(Blocks.BROWN_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.brown()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_GREEN.get())).group("sheep")
-				.result1(Blocks.GREEN_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.green()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_RED.get())).group("sheep")
-				.result1(Blocks.RED_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.red()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_STATUE_BLACK.get())).group("sheep")
-				.result1(Blocks.BLACK_WOOL).result3(Items.MUTTON).save(this.output);
+				.result1(Blocks.WOOL.black()).result3(Items.MUTTON).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.SHEEP_SHAVEN_STATUE.get())).group("sheep")
 				.result3(Items.MUTTON).save(this.output);
 
@@ -187,7 +187,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.WITCH_STATUE.get()))
 				.result1(Items.GLOWSTONE_DUST).result2(Items.REDSTONE).result3(Items.GLASS_BOTTLE).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.WASTELAND_STATUE.get()))
-				.result1(StatueRegistry.TEA.get()).result2(getWastelandBlock(this.registries)).save(this.output);
+				.result1(StatueRegistry.TEA.get()).result2(getWastelandBlock(enchantments)).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.ZOMBIE_STATUE.get())).group("zombie")
 				.result1(Items.ROTTEN_FLESH).result3(Items.IRON_INGOT).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.PUFFERFISH_STATUE.get(),
@@ -208,7 +208,7 @@ public class StatueRecipeProvider extends RecipeProvider {
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.VINDICATOR_STATUE.get()))
 				.result2(Items.EMERALD).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.ALLAY_STATUE.get()))
-				.result1(Items.LIGHT_BLUE_DYE).result2(Items.LIGHT_BLUE_DYE).result3(Items.LIGHT_BLUE_DYE).save(this.output);
+				.result1(Items.DYE.lightBlue()).result2(Items.DYE.lightBlue()).result3(Items.DYE.lightBlue()).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.AXOLOTL_LUCY_STATUE.get())).result1(Items.TROPICAL_FISH).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.AXOLOTL_WILD_STATUE.get())).result1(Items.TROPICAL_FISH).save(this.output);
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.AXOLOTL_GOLD_STATUE.get())).result1(Items.TROPICAL_FISH).save(this.output);
@@ -225,59 +225,59 @@ public class StatueRecipeProvider extends RecipeProvider {
 		LootRecipeBuilder.loot(Ingredient.of(StatueRegistry.ZOMBIFIED_PIGLIN_STATUE.get()))
 				.result1(Items.ROTTEN_FLESH).result2(Items.GOLD_NUGGET).result3(Items.GOLD_INGOT).save(this.output);
 
-		HolderSet<Item> coreTag = tagSet(StatueTags.STATUE_CORE);
-		HolderSet<Item> upgradeableStatues = tagSet(StatueTags.UPGRADEABLE_STATUES);
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), new ArrayList<>())
+		Ingredient coreTag = tag(StatueTags.STATUE_CORE);
+		Ingredient upgradeableStatues = tag(StatueTags.UPGRADEABLE_STATUES);
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, new ArrayList<>())
 				.requiresCore().upgradeType(UpgradeType.UPGRADE).save(this.output, Reference.modLoc("upgrade/statue_upgrade"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.GLOW_INK_SAC)))
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(Ingredient.of(Items.GLOW_INK_SAC)))
 				.upgradeType(UpgradeType.GLOWING).save(this.output, Reference.modLoc("upgrade/glowing"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.INK_SAC)))
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(Ingredient.of(Items.INK_SAC)))
 				.upgradeType(UpgradeType.UNGLOWING).save(this.output, Reference.modLoc("upgrade/unglowing"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.ECHO_SHARD),
-						Ingredient.of(tagSet(Tags.Items.EGGS)),
-						Ingredient.of(tagSet(Tags.Items.ENDER_PEARLS)),
-						Ingredient.of(tagSet(ItemTags.SOUL_FIRE_BASE_BLOCKS)))
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(Ingredient.of(Items.ECHO_SHARD),
+						tag(Tags.Items.EGGS),
+						tag(Tags.Items.ENDER_PEARLS),
+						tag(ItemTags.SOUL_FIRE_BASE_BLOCKS))
 				)
 				.upgradeType(UpgradeType.SPAWNER).save(this.output, Reference.modLoc("upgrade/spawner"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(
-						Ingredient.of(tagSet(ItemTags.SKULLS)),
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(
+						tag(ItemTags.SKULLS),
 						Ingredient.of(Items.MYCELIUM), Ingredient.of(Items.LANTERN))
 				)
 				.upgradeType(UpgradeType.DESPAWNER).save(this.output, Reference.modLoc("upgrade/despawner"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.DIAMOND_SWORD))).tier(0)
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(Ingredient.of(Items.DIAMOND_SWORD))).tier(0)
 				.upgradeType(UpgradeType.MOB_KILLER).save(this.output, Reference.modLoc("upgrade/mob_killer"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(
-						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
-						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
-						Ingredient.of(tagSet(Tags.Items.STORAGE_BLOCKS_LAPIS)),
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(
+						tag(Tags.Items.STORAGE_BLOCKS_LAPIS),
+						tag(Tags.Items.STORAGE_BLOCKS_LAPIS),
+						tag(Tags.Items.STORAGE_BLOCKS_LAPIS),
 						DataComponentIngredient.of(false, DataComponentExactPredicate.builder().build().asPatch(), Items.ENCHANTED_BOOK))).tier(1)
 				.upgradeType(UpgradeType.MOB_KILLER).save(this.output, Reference.modLoc("upgrade/mob_killer_2"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.EXPERIENCE_BOTTLE))).tier(2)
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(Ingredient.of(Items.EXPERIENCE_BOTTLE))).tier(2)
 				.upgradeType(UpgradeType.MOB_KILLER).save(this.output, Reference.modLoc("upgrade/mob_killer_3"));
 
-		HolderSet<Item> lootableStatues = tagSet(StatueTags.LOOTABLE_STATUES);
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(lootableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(tagSet(Tags.Items.ENDER_PEARLS)),
-						Ingredient.of(tagSet(Tags.Items.GUNPOWDERS)), Ingredient.of(tagSet(Tags.Items.BONES)), Ingredient.of(Items.ROTTEN_FLESH)))
+		Ingredient lootableStatues = tag(StatueTags.LOOTABLE_STATUES);
+		UpgradeRecipeBuilder.upgrade(lootableStatues, coreTag, List.of(tag(Tags.Items.ENDER_PEARLS),
+						tag(Tags.Items.GUNPOWDERS), tag(Tags.Items.BONES), Ingredient.of(Items.ROTTEN_FLESH)))
 				.upgradeType(UpgradeType.LOOTING).save(this.output, Reference.modLoc("upgrade/looting"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(lootableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.HOPPER), Ingredient.of(Items.OBSERVER)))
+		UpgradeRecipeBuilder.upgrade(lootableStatues, coreTag, List.of(Ingredient.of(Items.HOPPER), Ingredient.of(Items.OBSERVER)))
 				.upgradeType(UpgradeType.AUTOMATION).save(this.output, Reference.modLoc("upgrade/automation"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(tagSet(Tags.Items.DUSTS_REDSTONE)),
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(tag(Tags.Items.DUSTS_REDSTONE),
 						Ingredient.of(Items.SUGAR), Ingredient.of(Items.CLOCK)))
 				.upgradeType(UpgradeType.SPEED).save(this.output, Reference.modLoc("upgrade/speed"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(tagSet(StatueTags.STATUE_INTERACTABLE)), Ingredient.of(coreTag), List.of(Ingredient.of(Items.SCULK_SENSOR)))
+		UpgradeRecipeBuilder.upgrade(tag(StatueTags.STATUE_INTERACTABLE), coreTag, List.of(Ingredient.of(Items.SCULK_SENSOR)))
 				.upgradeType(UpgradeType.INTERACTION).save(this.output, Reference.modLoc("upgrade/interaction"));
 
-		UpgradeRecipeBuilder.upgrade(Ingredient.of(upgradeableStatues), Ingredient.of(coreTag), List.of(Ingredient.of(Items.NOTE_BLOCK),
+		UpgradeRecipeBuilder.upgrade(upgradeableStatues, coreTag, List.of(Ingredient.of(Items.NOTE_BLOCK),
 						Ingredient.of(Items.AMETHYST_SHARD)))
 				.upgradeType(UpgradeType.SOUND).save(this.output, Reference.modLoc("upgrade/sound"));
 
@@ -310,10 +310,6 @@ public class StatueRecipeProvider extends RecipeProvider {
 
 	}
 
-	private HolderSet<Item> tagSet(TagKey<Item> tagKey) {
-		return this.registries.lookupOrThrow(Registries.ITEM).getOrThrow(tagKey);
-	}
-
 	private ItemStackTemplate getIOU() {
 		ItemStackTemplate paperStack = new ItemStackTemplate(Items.PAPER, DataComponentPatch.builder()
 				.set(DataComponents.CUSTOM_NAME, Component.literal("I.O.U").withStyle(ChatFormatting.LIGHT_PURPLE))
@@ -321,9 +317,9 @@ public class StatueRecipeProvider extends RecipeProvider {
 		return paperStack;
 	}
 
-	private ItemStackTemplate getWastelandBlock(HolderLookup.Provider provider) {
+	private ItemStackTemplate getWastelandBlock(HolderGetter<Enchantment> provider) {
 		ItemEnchantments.Mutable enchantments = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
-		enchantments.set(provider.lookupOrThrow(Registries.ENCHANTMENT)
+		enchantments.set(provider
 				.getOrThrow(Enchantments.VANISHING_CURSE), 1);
 
 		ItemStackTemplate wasteland = new ItemStackTemplate(Blocks.SAND.asItem(), DataComponentPatch.builder()
@@ -333,21 +329,5 @@ public class StatueRecipeProvider extends RecipeProvider {
 				.build());
 
 		return wasteland;
-	}
-
-	public static class Runner extends RecipeProvider.Runner {
-		public Runner(PackOutput output, CompletableFuture<Provider> completableFuture) {
-			super(output, completableFuture);
-		}
-
-		@Override
-		protected RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
-			return new StatueRecipeProvider(provider, recipeOutput);
-		}
-
-		@Override
-		public String getName() {
-			return "Statues Recipes";
-		}
 	}
 }

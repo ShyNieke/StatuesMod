@@ -24,7 +24,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jspecify.annotations.Nullable;
@@ -84,9 +84,9 @@ public class JEIPlugin implements IModPlugin {
 				Statues.LOGGER.error("Tried adding info to statue but statue {} has no entity linked", BuiltInRegistries.ITEM.getKey(statue));
 			} else {
 				int chancePercentage = (int) (chance * 100);
-				if (statue.getEntity() == EntityType.WARDEN || statue.getEntity() == EntityType.ELDER_GUARDIAN) {
+				if (statue.getEntity() == EntityTypes.WARDEN || statue.getEntity() == EntityTypes.ELDER_GUARDIAN) {
 					chancePercentage = 100;
-				} else if (statue.getEntity() == EntityType.RAVAGER) {
+				} else if (statue.getEntity() == EntityTypes.RAVAGER) {
 					chancePercentage = 25;
 				}
 				registration.addItemStackInfo(statue.getDefaultInstance(),

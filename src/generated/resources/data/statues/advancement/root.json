@@ -2,7 +2,7 @@
   "criteria": {
     "core": {
       "conditions": {
-        "block": "minecraft:air"
+        "blocks": "minecraft:air"
       },
       "trigger": "minecraft:enter_block"
     }

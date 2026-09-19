@@ -1,6 +1,5 @@
 package com.shynieke.statues.blocks;
 
-import com.mojang.serialization.MapCodec;
 import com.shynieke.statues.registry.StatueRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -11,7 +10,6 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.TorchflowerCropBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -20,7 +18,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class CoreFlowerCropBlock extends CropBlock {
-	public static final MapCodec<TorchflowerCropBlock> CODEC = simpleCodec(TorchflowerCropBlock::new);
 	public static final int MAX_AGE = 8;
 	public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 8);
 	private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
@@ -34,11 +31,6 @@ public class CoreFlowerCropBlock extends CropBlock {
 			Block.box(5.0, 0.0, 5.0, 11.0, 10.0, 11.0),
 			Block.box(5.0, 0.0, 5.0, 11.0, 10.0, 11.0)
 	};
-
-	@Override
-	public MapCodec<TorchflowerCropBlock> codec() {
-		return CODEC;
-	}
 
 	public CoreFlowerCropBlock(BlockBehaviour.Properties properties) {
 		super(properties);

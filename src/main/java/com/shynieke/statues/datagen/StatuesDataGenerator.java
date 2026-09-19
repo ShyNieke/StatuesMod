@@ -12,58 +12,50 @@ import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
 import com.shynieke.statues.datagen.server.StatueVillagerTradesTagProvider;
-import com.shynieke.statues.datagen.server.curios.StatueCurioProvider;
-import com.shynieke.statues.datagen.server.patchouli.StatuePatchouliProvider;
 import com.shynieke.statues.handlers.TraderHandler;
 import com.shynieke.statues.registry.StatueJukeboxSongs;
+import com.shynieke.statues.registry.StatuePatterns;
 import com.shynieke.statues.registry.StatueTrims;
-import net.minecraft.core.HolderLookup;
+import com.shynieke.statues.registry.StatuesIntProviders;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeProvider;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
-import java.util.concurrent.CompletableFuture;
-
 @EventBusSubscriber
 public class StatuesDataGenerator {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
-		DataGenerator generator = event.getGenerator();
-		PackOutput packOutput = generator.getPackOutput();
-		event.createDatapackRegistryObjects(BUILDER);
-		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+		event.createWorldRegistryObjects(BUILDER);
+		event.createReloadableRegistryObjects(RELOADABLE_BUILDER);
 
-		generator.addProvider(true, new StatueLanguageProvider(packOutput));
-		generator.addProvider(true, new StatueSoundProvider(packOutput));
-		generator.addProvider(true, new StatueModelProvider(packOutput));
+		event.createProvider(StatueLanguageProvider::new);
+		event.createProvider(StatueSoundProvider::new);
+		event.createProvider(StatueModelProvider::new);
 
-		generator.addProvider(true, new StatueLootProvider(packOutput, lookupProvider));
-		generator.addProvider(true, new StatueRecipeProvider.Runner(packOutput, lookupProvider));
-		StatueBlockTagProvider blockTags = new StatueBlockTagProvider(packOutput, lookupProvider);
-		generator.addProvider(true, blockTags);
-		generator.addProvider(true, new StatueItemTagProvider(packOutput, lookupProvider));
-		generator.addProvider(true, new StatueBiomeTagProvider(packOutput, lookupProvider));
-		generator.addProvider(true, new StatueVillagerTradesTagProvider(packOutput, lookupProvider));
-		generator.addProvider(true, new StatueGLMProvider(packOutput, lookupProvider));
-		generator.addProvider(true, new StatueAdvancementProvider(packOutput, lookupProvider));
+		event.createProvider(StatueBlockTagProvider::new);
+		event.createProvider(StatueItemTagProvider::new);
+		event.createProvider(StatueBiomeTagProvider::new);
+		event.createProvider(StatueVillagerTradesTagProvider::new);
+		event.createProvider(StatueGLMProvider::new);
 
-		generator.addProvider(true, new StatuePatchouliProvider(packOutput, lookupProvider));
-		generator.addProvider(true, new StatueCurioProvider(packOutput, lookupProvider));
-
+//		event.createProvider(StatuePatchouliProvider::new);
+//		event.createProvider(StatueCurioProvider::new);
 	}
 
 	public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-			.add(Registries.CONFIGURED_FEATURE, $ -> {
-			})
-			.add(Registries.PLACED_FEATURE, $ -> {
-			})
 			.add(Registries.TRIM_PATTERN, StatueTrims::bootstrap)
 			.add(Registries.JUKEBOX_SONG, StatueJukeboxSongs::bootstrap)
 			.add(Registries.VILLAGER_TRADE, TraderHandler::bootstrap)
+			.add(Registries.DECORATED_POT_PATTERN, StatuePatterns::bootstrap)
 			.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, StatueBiomeModifiers::bootstrap);
+
+	public static final RegistrySetBuilder RELOADABLE_BUILDER = new RegistrySetBuilder()
+			.add(RecipeProvider.asBootstrap(StatueRecipeProvider::new))
+			.add(Registries.ADVANCEMENT, StatueAdvancementProvider.create())
+			.add(Registries.CONTEXT_INT_PROVIDER, StatuesIntProviders::bootstrap)
+			.add(Registries.LOOT_TABLE, StatueLootProvider.create());
 }

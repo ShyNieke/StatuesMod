@@ -1,6 +1,5 @@
 {
   "type": "statues:hardcore_shaped",
-  "category": "misc",
   "key": {
     "C": "statues:statue_core",
     "E": "minecraft:experience_bottle",

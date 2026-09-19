@@ -119,14 +119,14 @@ public class PlayerStatueRenderer extends LivingEntityRenderer<PlayerStatue, Pla
 
 	@Override
 	protected void setupRotations(PlayerStatueRenderState statueRenderState, PoseStack poseStack, float partialTicks, float scale) {
-		poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - partialTicks));
+		poseStack.rotateDegrees(Axis.YP, (180.0F - partialTicks));
 		if (statueRenderState.wiggle < 5.0F) {
-			poseStack.mulPose(Axis.YP.rotationDegrees(Mth.sin(statueRenderState.wiggle / 1.5F * (float) Math.PI) * 3.0F));
+			poseStack.rotateDegrees(Axis.YP, (Mth.sin(statueRenderState.wiggle / 1.5F * (float) Math.PI) * 3.0F));
 		}
 
 		if (statueRenderState.upsideDown) {
 			poseStack.translate(0.0D, (double) (statueRenderState.boundingBoxHeight + 0.1F), 0.0D);
-			poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+			poseStack.rotateDegrees(Axis.ZP,(180.0F));
 		}
 	}
 
