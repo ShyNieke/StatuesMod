@@ -1,1 +1,1 @@
-* Re-enable REI support
+* Update to 26.3
