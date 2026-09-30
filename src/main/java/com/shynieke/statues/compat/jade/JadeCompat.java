@@ -29,7 +29,7 @@ public class JadeCompat implements IWailaPlugin {
 	}
 
 	public static class PastryBodyHandler implements IBlockComponentProvider {
-		private static final Identifier BITES = Reference.modLoc("upgrades");
+		private static final Identifier UPGRADES = Reference.modLoc("upgrades");
 
 		public static final PastryBodyHandler INSTANCE = new PastryBodyHandler();
 
@@ -70,7 +70,7 @@ public class JadeCompat implements IWailaPlugin {
 
 		@Override
 		public Identifier getUid() {
-			return BITES;
+			return UPGRADES;
 		}
 	}
 }
