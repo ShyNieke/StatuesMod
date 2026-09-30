@@ -123,10 +123,8 @@ repositories {
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
-    compileOnly "mezz.jei:jei-${jei_minecraft}-common-api:${jei_version}"
     compileOnly "mezz.jei:jei-${jei_minecraft}-neoforge-api:${jei_version}"
-
-    localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
+//    localRuntime "mezz.jei:jei-${jei_minecraft}-neoforge:${jei_version}"
 
     compileOnly "me.shedaniel.cloth:cloth-config-neoforge:${cloth_config_version}"
     compileOnly "dev.architectury:architectury-neoforge:${architectury_version}"
