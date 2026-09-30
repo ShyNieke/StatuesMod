@@ -32,7 +32,7 @@ public class Statues {
 	public static final Logger LOGGER = LogUtils.getLogger();
 
 	public Statues(IEventBus eventBus, Dist dist, ModContainer container) {
-		container.registerConfig(ModConfig.Type.COMMON, StatuesConfig.commonSpec);
+		container.registerConfig(ModConfig.Type.LOCAL, StatuesConfig.commonSpec);
 		eventBus.register(StatuesConfig.class);
 
 		NeoForge.EVENT_BUS.addListener(this::onCommandRegister);
@@ -64,7 +64,6 @@ public class Statues {
 			container.registerConfig(ModConfig.Type.CLIENT, StatuesConfig.clientSpec);
 			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 		}
-
 	}
 
 	public void onDatapackSync(OnDatapackSyncEvent event) {
