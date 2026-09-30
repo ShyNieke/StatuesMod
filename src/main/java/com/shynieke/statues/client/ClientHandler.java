@@ -79,7 +79,7 @@ public class ClientHandler {
 		}, "Statues Perks Data Loader").start();
 
 		if (ModList.get().isLoaded("curios")) {
-//			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
+			com.shynieke.statues.compat.curios.client.StatueCurioRenderer.setupRenderer();
 		}
 	}
 

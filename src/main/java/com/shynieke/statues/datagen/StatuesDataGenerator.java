@@ -12,6 +12,7 @@ import com.shynieke.statues.datagen.server.StatueItemTagProvider;
 import com.shynieke.statues.datagen.server.StatueLootProvider;
 import com.shynieke.statues.datagen.server.StatueRecipeProvider;
 import com.shynieke.statues.datagen.server.StatueVillagerTradesTagProvider;
+import com.shynieke.statues.datagen.server.curios.StatueCurioProvider;
 import com.shynieke.statues.handlers.TraderHandler;
 import com.shynieke.statues.registry.StatueJukeboxSongs;
 import com.shynieke.statues.registry.StatuePatterns;
@@ -43,7 +44,7 @@ public class StatuesDataGenerator {
 		event.createProvider(StatueGLMProvider::new);
 
 //		event.createProvider(StatuePatchouliProvider::new);
-//		event.createProvider(StatueCurioProvider::new);
+		event.createProvider(StatueCurioProvider::new);
 	}
 
 	public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
